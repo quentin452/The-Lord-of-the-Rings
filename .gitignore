@@ -1,18 +1,47 @@
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-#Ignore EVERYTHING
-/*
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 
-#Don't ignore src folder
-!src/
-!lib/
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 
-#Also don't ignore the install scripts
-!gradle*
-!gradle/
-!build.gradle
-!setup.bat
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
-#Or this file ;) (or readme)
-!.gitignore
-!README.md
-Setup.bat
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Minecraft ###
+forge*changelog.txt
+run
+
+### LOTR ###
+**/libs/**/*.lang
+**/libs/**/*.txt
