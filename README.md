@@ -1,5 +1,5 @@
-Hello everyone!
+Декомпилированный, исправленный и прошедший рефакторинг код мода "The Lord of the Rings" для Minecraft 1.7.10. 
 
-This is the source code of the "Lord of the Rings" mod for Minecraft. I decompiled it, fixed bugs, cleaned it up. I think it will be useful for developers, because LOTR is a great platform for different medieval universes.
+Для запуска и редактирования кода потребуется среда разработки Java и JDK. Подойдёт IntelliJ IDEA или Eclipse IDE, а также JDK 1.8.0_382.
 
-Report bugs you find, and I'll fix them.
+© Mevans, 2022 - разработчик оригинального мода.
