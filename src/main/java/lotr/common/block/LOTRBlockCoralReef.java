@@ -14,7 +14,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class LOTRBlockCoralReef extends Block {
-	public static String[] plantNames = { "purple", "yellow", "blue", "red", "green" };
+	public static String[] plantNames = {"purple", "yellow", "blue", "red", "green"};
 	public static Random iconRand = new Random();
 	public IIcon[] plantIcons;
 
@@ -33,7 +33,7 @@ public class LOTRBlockCoralReef extends Block {
 		dropXpOnBlockBreak(world, i, j, k, amountXp);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return super.getIcon(i, j);
@@ -70,7 +70,7 @@ public class LOTRBlockCoralReef extends Block {
 
 	@Override
 	public int quantityDroppedWithBonus(int i, Random random) {
-		int drops = this.quantityDropped(random);
+		int drops = quantityDropped(random);
 		if (i > 0) {
 			int factor = random.nextInt(i + 2) - 1;
 			factor = Math.max(factor, 0);
@@ -79,7 +79,7 @@ public class LOTRBlockCoralReef extends Block {
 		return drops;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		super.registerBlockIcons(iconregister);

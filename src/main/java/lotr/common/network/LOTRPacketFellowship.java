@@ -48,7 +48,7 @@ public class LOTRPacketFellowship implements IMessage {
 		isAdminned = fs.isAdmin(thisPlayer);
 		List<UUID> playerIDs = fs.getAllPlayerUUIDs();
 		for (UUID player : playerIDs) {
-			GameProfile profile = LOTRPacketFellowship.getPlayerProfileWithUsername(player);
+			GameProfile profile = getPlayerProfileWithUsername(player);
 			if (fs.isOwner(player)) {
 				owner = profile;
 			} else {
@@ -85,11 +85,11 @@ public class LOTRPacketFellowship implements IMessage {
 		fellowshipIcon = ItemStack.loadItemStackFromNBT(iconData);
 		isOwned = data.readBoolean();
 		isAdminned = data.readBoolean();
-		owner = LOTRPacketFellowship.readPlayerUuidAndUsername(data);
+		owner = readPlayerUuidAndUsername(data);
 		readTitleForPlayer(data, owner.getId());
 		int numMembers = data.readInt();
 		for (int i = 0; i < numMembers; ++i) {
-			GameProfile member = LOTRPacketFellowship.readPlayerUuidAndUsername(data);
+			GameProfile member = readPlayerUuidAndUsername(data);
 			if (member == null) {
 				continue;
 			}
@@ -134,14 +134,14 @@ public class LOTRPacketFellowship implements IMessage {
 		}
 		data.writeBoolean(isOwned);
 		data.writeBoolean(isAdminned);
-		LOTRPacketFellowship.writePlayerUuidAndUsername(data, owner);
+		writePlayerUuidAndUsername(data, owner);
 		LOTRTitle.PlayerTitle.writeNullableTitle(data, titleMap.get(owner.getId()));
 		data.writeInt(members.size());
 		for (GameProfile member : members) {
 			UUID memberUuid = member.getId();
 			LOTRTitle.PlayerTitle title = titleMap.get(memberUuid);
 			boolean admin = adminUuids.contains(memberUuid);
-			LOTRPacketFellowship.writePlayerUuidAndUsername(data, member);
+			writePlayerUuidAndUsername(data, member);
 			LOTRTitle.PlayerTitle.writeNullableTitle(data, title);
 			data.writeBoolean(admin);
 		}

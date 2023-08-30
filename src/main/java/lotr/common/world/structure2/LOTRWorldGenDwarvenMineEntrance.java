@@ -18,7 +18,7 @@ public class LOTRWorldGenDwarvenMineEntrance extends LOTRWorldGenStructureBase2 
 	public int logMeta;
 	public Block fenceBlock;
 	public int fenceMeta;
-	public boolean isRuined = false;
+	public boolean isRuined;
 
 	public LOTRWorldGenDwarvenMineEntrance(boolean flag) {
 		super(flag);
@@ -30,7 +30,7 @@ public class LOTRWorldGenDwarvenMineEntrance extends LOTRWorldGenStructureBase2 
 		int j1;
 		int i12;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, usingPlayer != null ? 5 : 0);
+		setOriginAndRotation(world, i, j, k, rotation, usingPlayer != null ? 5 : 0);
 		setupRandomBlocks(random);
 		int coordDepth = 40;
 		if (usingPlayer != null) {
@@ -127,13 +127,7 @@ public class LOTRWorldGenDwarvenMineEntrance extends LOTRWorldGenStructureBase2 
 				setBlockAndMetadata(world, i12, relDepth, k1, Blocks.stone, 0);
 			}
 		}
-		if (!isRuined) {
-			for (i12 = -2; i12 <= 2; ++i12) {
-				for (k1 = -2; k1 <= 2; ++k1) {
-					setBlockAndMetadata(world, i12, relDepth, k1, LOTRMod.pillar, 0);
-				}
-			}
-		} else {
+		if (isRuined) {
 			for (i12 = -2; i12 <= 2; ++i12) {
 				for (k1 = -2; k1 <= 2; ++k1) {
 					int h = 0;
@@ -147,6 +141,12 @@ public class LOTRWorldGenDwarvenMineEntrance extends LOTRWorldGenStructureBase2 
 						}
 						setBlockAndMetadata(world, i12, relDepth + h, k1, Blocks.stone, 0);
 					}
+				}
+			}
+		} else {
+			for (i12 = -2; i12 <= 2; ++i12) {
+				for (k1 = -2; k1 <= 2; ++k1) {
+					setBlockAndMetadata(world, i12, relDepth, k1, LOTRMod.pillar, 0);
 				}
 			}
 		}

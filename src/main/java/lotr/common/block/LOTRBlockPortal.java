@@ -20,7 +20,7 @@ public abstract class LOTRBlockPortal extends BlockContainer {
 	public LOTRFaction[] portalFactions;
 	public Class teleporterClass;
 
-	public LOTRBlockPortal(LOTRFaction[] factions, Class c) {
+	protected LOTRBlockPortal(LOTRFaction[] factions, Class c) {
 		super(Material.portal);
 		portalFactions = factions;
 		teleporterClass = c;
@@ -54,13 +54,13 @@ public abstract class LOTRBlockPortal extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int i, int j) {
 		return Blocks.portal.getIcon(i, j);
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public Item getItem(World world, int i, int j, int k) {
 		return Item.getItemById(0);
 	}
@@ -127,7 +127,7 @@ public abstract class LOTRBlockPortal extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		if (random.nextInt(100) == 0) {
 			world.playSound(i + 0.5, j + 0.5, k + 0.5, "portal.portal", 0.5f, random.nextFloat() * 0.4f + 0.8f, false);
@@ -135,7 +135,7 @@ public abstract class LOTRBlockPortal extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}
 
@@ -153,9 +153,9 @@ public abstract class LOTRBlockPortal extends BlockContainer {
 	public abstract void setPlayerInPortal(EntityPlayer var1);
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess world, int i, int j, int k, int side) {
-		return side != 0 ? false : super.shouldSideBeRendered(world, i, j, k, side);
+		return side == 0 && super.shouldSideBeRendered(world, i, j, k, side);
 	}
 
 	public void transferEntity(Entity entity, World world) {

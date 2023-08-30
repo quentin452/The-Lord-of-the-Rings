@@ -54,14 +54,14 @@ public class LOTRWorldGenTauredainHouseLarge extends LOTRWorldGenTauredainHouse 
 				setBlockAndMetadata(world, i13, 8, k1, plankBlock, plankMeta);
 			}
 		}
-		for (int i14 : new int[] { -6, 5 }) {
-			for (int k13 : new int[] { -4, 4 }) {
+		for (int i14 : new int[]{-6, 5}) {
+			for (int k13 : new int[]{-4, 4}) {
 				for (int j13 = 1; j13 <= 5; ++j13) {
 					setBlockAndMetadata(world, i14, j13, k13, woodBlock, woodMeta);
 				}
 			}
 		}
-		for (int k14 : new int[] { -4, 4 }) {
+		for (int k14 : new int[]{-4, 4}) {
 			for (int i15 = -5; i15 <= 4; ++i15) {
 				setBlockAndMetadata(world, i15, 5, k14, brickSlabBlock, brickSlabMeta);
 				if (IntMath.mod(i15, 3) == 1) {
@@ -74,7 +74,7 @@ public class LOTRWorldGenTauredainHouseLarge extends LOTRWorldGenTauredainHouse 
 				setBlockAndMetadata(world, -5, j14, k14, brickBlock, brickMeta);
 				setBlockAndMetadata(world, 4, j14, k14, brickBlock, brickMeta);
 			}
-			for (int i16 : new int[] { -4, 2 }) {
+			for (int i16 : new int[]{-4, 2}) {
 				setBlockAndMetadata(world, i16, 1, k14, brickBlock, brickMeta);
 				setBlockAndMetadata(world, i16 + 1, 1, k14, brickBlock, brickMeta);
 				if (random.nextInt(3) == 0) {
@@ -93,7 +93,7 @@ public class LOTRWorldGenTauredainHouseLarge extends LOTRWorldGenTauredainHouse 
 			setBlockAndMetadata(world, -1, j15, 4, brickBlock, brickMeta);
 			setBlockAndMetadata(world, 0, j15, 4, brickBlock, brickMeta);
 		}
-		int[] j15 = { -6, 5 };
+		int[] j15 = {-6, 5};
 		k1 = j15.length;
 		for (j1 = 0; j1 < k1; ++j1) {
 			int i14;
@@ -110,7 +110,7 @@ public class LOTRWorldGenTauredainHouseLarge extends LOTRWorldGenTauredainHouse 
 				setBlockAndMetadata(world, i14, j16, -3, brickBlock, brickMeta);
 				setBlockAndMetadata(world, i14, j16, 3, brickBlock, brickMeta);
 			}
-			for (int k13 : new int[] { -2, 1 }) {
+			for (int k13 : new int[]{-2, 1}) {
 				setBlockAndMetadata(world, i14, 1, k13, brickBlock, brickMeta);
 				setBlockAndMetadata(world, i14, 1, k13 + 1, brickBlock, brickMeta);
 				if (random.nextInt(3) == 0) {
@@ -150,7 +150,7 @@ public class LOTRWorldGenTauredainHouseLarge extends LOTRWorldGenTauredainHouse 
 		setBlockAndMetadata(world, -4, 8, 0, woodBlock, woodMeta | 4);
 		setBlockAndMetadata(world, 3, 8, 0, woodBlock, woodMeta | 4);
 		setBlockAndMetadata(world, 4, 8, 0, woodBlock, woodMeta | 4);
-		for (int k14 : new int[] { -2, 2 }) {
+		for (int k14 : new int[]{-2, 2}) {
 			setBlockAndMetadata(world, -3, 6, k14, brickStairBlock, 0);
 			setBlockAndMetadata(world, -3, 7, k14, brickStairBlock, 4);
 			setBlockAndMetadata(world, 2, 6, k14, brickStairBlock, 1);
@@ -162,7 +162,7 @@ public class LOTRWorldGenTauredainHouseLarge extends LOTRWorldGenTauredainHouse 
 				placeTauredainFlowerPot(world, i18, 6, k14, random);
 			}
 		}
-		for (int i14 : new int[] { -4, 3 }) {
+		for (int i14 : new int[]{-4, 3}) {
 			setBlockAndMetadata(world, i14, 6, -1, brickStairBlock, 3);
 			setBlockAndMetadata(world, i14, 7, -1, brickStairBlock, 7);
 			setBlockAndMetadata(world, i14, 6, 1, brickStairBlock, 2);
@@ -194,9 +194,9 @@ public class LOTRWorldGenTauredainHouseLarge extends LOTRWorldGenTauredainHouse 
 		}
 		setBlockAndMetadata(world, -3, 5, -1, woodBlock, woodMeta);
 		placeTauredainFlowerPot(world, -3, 6, -1, random);
-		this.placeSkull(world, random, -2, 9, 0);
-		this.placeSkull(world, random, 1, 9, 0);
-		int[] k17 = { -1, 1 };
+		placeSkull(world, random, -2, 9, 0);
+		placeSkull(world, random, 1, 9, 0);
+		int[] k17 = {-1, 1};
 		k1 = k17.length;
 		for (j1 = 0; j1 < k1; ++j1) {
 			int k14;
@@ -222,7 +222,7 @@ public class LOTRWorldGenTauredainHouseLarge extends LOTRWorldGenTauredainHouse 
 					placePlateWithCertainty(world, random, i12, 2, k1, plateBlock, LOTRFoods.TAUREDAIN);
 					continue;
 				}
-				this.placeMug(world, random, i12, 2, k1, random.nextInt(4), LOTRFoods.TAUREDAIN_DRINK);
+				placeMug(world, random, i12, 2, k1, random.nextInt(4), LOTRFoods.TAUREDAIN_DRINK);
 			}
 		}
 		for (i12 = -5; i12 <= -4; ++i12) {
@@ -231,7 +231,7 @@ public class LOTRWorldGenTauredainHouseLarge extends LOTRWorldGenTauredainHouse 
 		setBlockAndMetadata(world, -3, 1, 3, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, -2, 1, 3, LOTRMod.tauredainTable, 0);
 		for (i12 = 1; i12 <= 2; ++i12) {
-			this.placeChest(world, random, i12, 1, 3, 2, LOTRChestContents.TAUREDAIN_HOUSE);
+			placeChest(world, random, i12, 1, 3, 2, LOTRChestContents.TAUREDAIN_HOUSE);
 		}
 		for (i12 = 3; i12 <= 4; ++i12) {
 			setBlockAndMetadata(world, i12, 1, 3, woodBlock, woodMeta);
@@ -239,9 +239,9 @@ public class LOTRWorldGenTauredainHouseLarge extends LOTRWorldGenTauredainHouse 
 		setBlockAndMetadata(world, -5, 1, -3, woodBlock, woodMeta);
 		setBlockAndMetadata(world, -5, 1, -2, plankBlock, plankMeta);
 		setBlockAndMetadata(world, -5, 1, -1, woodBlock, woodMeta);
-		this.placeBarrel(world, random, -5, 2, -3, 4, LOTRFoods.TAUREDAIN_DRINK);
-		this.placeMug(world, random, -5, 2, -2, 3, LOTRFoods.TAUREDAIN_DRINK);
-		this.placeMug(world, random, -5, 2, -1, 3, LOTRFoods.TAUREDAIN_DRINK);
+		placeBarrel(world, random, -5, 2, -3, 4, LOTRFoods.TAUREDAIN_DRINK);
+		placeMug(world, random, -5, 2, -2, 3, LOTRFoods.TAUREDAIN_DRINK);
+		placeMug(world, random, -5, 2, -1, 3, LOTRFoods.TAUREDAIN_DRINK);
 		setBlockAndMetadata(world, 4, 1, -3, woodBlock, woodMeta);
 		setBlockAndMetadata(world, 4, 1, -2, plankBlock, plankMeta);
 		setBlockAndMetadata(world, 4, 1, -1, woodBlock, woodMeta);

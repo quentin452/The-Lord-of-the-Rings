@@ -5,6 +5,7 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.relauncher.*;
 import lotr.common.*;
 import lotr.common.entity.*;
@@ -46,39 +47,39 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	public static float MOUNT_RANGE_BONUS = 1.5f;
 	public float npcWidth = -1.0f;
 	public float npcHeight;
-	public boolean loadingFromNBT = false;
-	public boolean isPassive = false;
-	public boolean isImmuneToFrost = false;
-	public boolean isChilly = false;
-	public boolean spawnsInDarkness = false;
-	public boolean isNPCPersistent = false;
-	public boolean liftSpawnRestrictions = false;
-	public boolean isConquestSpawning = false;
-	public boolean liftBannerRestrictions = false;
-	public boolean addedBurningPanic = false;
+	public boolean loadingFromNBT;
+	public boolean isPassive;
+	public boolean isImmuneToFrost;
+	public boolean isChilly;
+	public boolean spawnsInDarkness;
+	public boolean isNPCPersistent;
+	public boolean liftSpawnRestrictions;
+	public boolean isConquestSpawning;
+	public boolean liftBannerRestrictions;
+	public boolean addedBurningPanic;
 	public List<LOTRFaction> killBonusFactions = new ArrayList<>();
-	public UUID invasionID = null;
-	public boolean isTargetSeeker = false;
+	public UUID invasionID;
+	public boolean isTargetSeeker;
 	public String npcLocationName;
 	public boolean hasSpecificLocationName;
 	public boolean spawnRidingHorse;
-	public boolean canBannerBearerSpawnRiding = false;
+	public boolean canBannerBearerSpawnRiding;
 	public boolean ridingMount;
 	public LOTRFamilyInfo familyInfo;
 	public LOTREntityQuestInfo questInfo;
 	public LOTRHiredNPCInfo hiredNPCInfo;
 	public LOTRTraderNPCInfo traderNPCInfo;
 	public LOTRTravellingTraderInfo travellingTraderInfo;
-	public boolean isTraderEscort = false;
-	public boolean shouldTraderRespawn = false;
+	public boolean isTraderEscort;
+	public boolean shouldTraderRespawn;
 	public LOTRBossInfo bossInfo;
-	public boolean setInitialHome = false;
+	public boolean setInitialHome;
 	public int initHomeX;
 	public int initHomeY;
 	public int initHomeZ;
 	public int initHomeRange = -1;
 	public AttackMode currentAttackMode = AttackMode.IDLE;
-	public boolean firstUpdatedAttackMode = false;
+	public boolean firstUpdatedAttackMode;
 	public UUID prevAttackTarget;
 	public int combatCooldown;
 	public boolean combatStance;
@@ -89,15 +90,15 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	public LOTRInventoryHiredReplacedItems hiredReplacedInv;
 	public ItemStack[] festiveItems = new ItemStack[5];
 	public Random festiveRand = new Random();
-	public boolean initFestiveItems = false;
+	public boolean initFestiveItems;
 	public LOTRShields npcShield;
 	public ResourceLocation npcCape;
-	public int npcTalkTick = 0;
+	public int npcTalkTick;
 	public boolean hurtOnlyByPlates = true;
 	public List<ItemStack> enpouchedDrops = new ArrayList<>();
-	public boolean enpouchNPCDrops = false;
+	public boolean enpouchNPCDrops;
 
-	public LOTREntityNPC(World world) {
+	protected LOTREntityNPC(World world) {
 		super(world);
 		if (this instanceof LOTRBoss || this instanceof LOTRCharacter) {
 			isNPCPersistent = true;
@@ -105,7 +106,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	}
 
 	public int addTargetTasks(boolean seekTargets) {
-		return this.addTargetTasks(seekTargets, LOTREntityAINearestAttackableTargetBasic.class);
+		return addTargetTasks(seekTargets, LOTREntityAINearestAttackableTargetBasic.class);
 	}
 
 	public int addTargetTasks(boolean seekTargets, Class<? extends LOTREntityAINearestAttackableTargetBasic> c) {
@@ -115,7 +116,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		targetTasks.addTask(3, new LOTREntityAINPCHurtByTarget(this, false));
 		isTargetSeeker = seekTargets;
 		if (seekTargets) {
-			return LOTREntityNPC.addTargetTasks(this, 4, c);
+			return addTargetTasks(this, 4, c);
 		}
 		return 3;
 	}
@@ -162,7 +163,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 			int fireAspectModifier;
 			if (weapon != null && entity instanceof EntityLivingBase) {
 				int weaponItemDamage = weapon.getItemDamage();
-				weapon.getItem().hitEntity(weapon, (EntityLivingBase) entity, (EntityLivingBase) this);
+				weapon.getItem().hitEntity(weapon, (EntityLivingBase) entity, this);
 				weapon.setItemDamage(weaponItemDamage);
 			}
 			if (knockbackModifier > 0) {
@@ -292,7 +293,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	}
 
 	public void dropChestContents(LOTRChestContents itemPool, int min, int max) {
-		InventoryBasic drops = new InventoryBasic("drops", false, max * 5);
+		IInventory drops = new InventoryBasic("drops", false, max * 5);
 		LOTRChestContents.fillInventory(drops, rand, itemPool, MathHelper.getRandomIntegerInRange(rand, min, max), true);
 		for (int i = 0; i < drops.getSizeInventory(); ++i) {
 			ItemStack item = drops.getStackInSlot(i);
@@ -313,19 +314,19 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		dropNPCEquipment(flag, i);
 		if (flag && canDropRares()) {
 			int coinChance = 8 - i * 2;
-			if (rand.nextInt(coinChance = Math.max(coinChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(coinChance, 1)) == 0) {
 				int coins = getRandomCoinDropAmount();
-				dropItem(LOTRMod.silverCoin, coins *= MathHelper.getRandomIntegerInRange(rand, 1, i + 1));
+				dropItem(LOTRMod.silverCoin, coins * MathHelper.getRandomIntegerInRange(rand, 1, i + 1));
 			}
 			int rareChance = 50 - i * 5;
-			if (rand.nextInt(rareChance = Math.max(rareChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(rareChance, 1)) == 0) {
 				dropChestContents(LOTRChestContents.RARE_DROPS, 1, 1);
 			}
 		}
 		if (flag && canDropRares()) {
 			int modChance = 60;
 			modChance -= i * 5;
-			if (rand.nextInt(modChance = Math.max(modChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(modChance, 1)) == 0) {
 				ItemStack modItem = LOTRItemModifierTemplate.getRandomCommonTemplate(rand);
 				entityDropItem(modItem, 0.0f);
 			}
@@ -338,34 +339,34 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 					ItemStack keypart = new ItemStack(LOTRMod.utumnoKey);
 					l = rand.nextInt(3);
 					switch (l) {
-					case 0:
-						keypart.setItemDamage(2);
-						break;
-					case 1:
-						keypart.setItemDamage(3);
-						break;
-					case 2:
-						keypart.setItemDamage(4);
-						break;
-					default:
-						break;
+						case 0:
+							keypart.setItemDamage(2);
+							break;
+						case 1:
+							keypart.setItemDamage(3);
+							break;
+						case 2:
+							keypart.setItemDamage(4);
+							break;
+						default:
+							break;
 					}
 					entityDropItem(keypart, 0.0f);
 				} else if (level == LOTRUtumnoLevel.OBSIDIAN) {
 					ItemStack keypart = new ItemStack(LOTRMod.utumnoKey);
 					l = rand.nextInt(3);
 					switch (l) {
-					case 0:
-						keypart.setItemDamage(5);
-						break;
-					case 1:
-						keypart.setItemDamage(6);
-						break;
-					case 2:
-						keypart.setItemDamage(7);
-						break;
-					default:
-						break;
+						case 0:
+							keypart.setItemDamage(5);
+							break;
+						case 1:
+							keypart.setItemDamage(6);
+							break;
+						case 2:
+							keypart.setItemDamage(7);
+							break;
+						default:
+							break;
 					}
 					entityDropItem(keypart, 0.0f);
 				}
@@ -373,7 +374,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 			if (level == LOTRUtumnoLevel.ICE && isChilly) {
 				int chillChance = 30;
 				chillChance -= i * 3;
-				if (rand.nextInt(chillChance = Math.max(chillChance, 1)) == 0) {
+				if (rand.nextInt(Math.max(chillChance, 1)) == 0) {
 					int chills = 1;
 					if (i > 0) {
 						float x = MathHelper.randomFloatClamp(rand, 0.0f, i * 0.667f);
@@ -393,7 +394,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 			if (level == LOTRUtumnoLevel.FIRE && canDropRares()) {
 				int pickChance = 100;
 				pickChance -= i * 20;
-				if (rand.nextInt(pickChance = Math.max(pickChance, 1)) == 0) {
+				if (rand.nextInt(Math.max(pickChance, 1)) == 0) {
 					entityDropItem(new ItemStack(LOTRMod.utumnoPickaxe), 0.0f);
 				}
 			}
@@ -403,11 +404,11 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		}
 	}
 
-	public void dropItemList(List<ItemStack> items) {
-		this.dropItemList(items, true);
+	public void dropItemList(Collection<ItemStack> items) {
+		dropItemList(items, true);
 	}
 
-	public void dropItemList(List<ItemStack> items, boolean applyOwnership) {
+	public void dropItemList(Collection<ItemStack> items, boolean applyOwnership) {
 		if (!items.isEmpty()) {
 			for (ItemStack item : items) {
 				npcDropItem(item, 0.0f, true, applyOwnership);
@@ -450,7 +451,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 					dropGuaranteed = equipmentDropChances[j] >= 1.0f;
 					if (!dropGuaranteed) {
 						int chance = 20 * equipmentCount - i * 4 * equipmentCount;
-						if (rand.nextInt(chance = Math.max(chance, 1)) != 0) {
+						if (rand.nextInt(Math.max(chance, 1)) != 0) {
 							continue;
 						}
 					}
@@ -498,12 +499,10 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	}
 
 	public void fillPouchFromListAndRetainUnfilled(ItemStack pouch, List<ItemStack> items) {
-		ArrayList<ItemStack> pouchContents = new ArrayList<>();
+		Collection<ItemStack> pouchContents = new ArrayList<>();
 		while (!items.isEmpty()) {
 			pouchContents.add(items.remove(0));
-			if (pouchContents.size() < LOTRItemPouch.getCapacity(pouch)) {
-				continue;
-			}
+			LOTRItemPouch.getCapacity(pouch);
 		}
 		for (ItemStack itemstack : pouchContents) {
 			if (LOTRItemPouch.tryAddItemToPouch(pouch, itemstack, false)) {
@@ -558,10 +557,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	@Override
 	public boolean getCanSpawnHere() {
 		if ((!spawnsInDarkness || liftSpawnRestrictions || isConquestSpawning && conquestSpawnIgnoresDarkness() || isValidLightLevelForDarkSpawn()) && super.getCanSpawnHere()) {
-			if (!liftBannerRestrictions && (LOTRBannerProtection.isProtected(worldObj, this, LOTRBannerProtection.forNPC(this), false) || !isConquestSpawning && LOTREntityNPCRespawner.isSpawnBlocked(this))) {
-				return false;
-			}
-			return true;
+			return liftBannerRestrictions || (!LOTRBannerProtection.isProtected(worldObj, this, LOTRBannerProtection.forNPC(this), false) && (isConquestSpawning || !LOTREntityNPCRespawner.isSpawnBlocked(this)));
 		}
 		return false;
 	}
@@ -645,10 +641,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 			return new ItemStack(LOTRMod.banner, 1, bannerBearer.getBannerType().bannerID);
 		}
 		if (isTrader()) {
-			boolean showCoin = false;
-			if (npcShield == null || !clientCombatStance && hiredNPCInfo.getHiringPlayerUUID() == null) {
-				showCoin = true;
-			}
+			boolean showCoin = npcShield == null || !clientCombatStance && hiredNPCInfo.getHiringPlayerUUID() == null;
 			if (showCoin) {
 				return new ItemStack(LOTRMod.silverCoin);
 			}
@@ -812,7 +805,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public boolean isInRangeToRenderDist(double dist) {
 		EntityPlayer entityplayer = LOTRMod.proxy.getClientPlayer();
 		if (entityplayer != null && !LOTRLevelData.getData(entityplayer).getMiniQuestsForEntity(this, true).isEmpty()) {
@@ -822,7 +815,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	}
 
 	public boolean isInvasionSpawned() {
-		return getInvasionID() != null;
+		return invasionID != null;
 	}
 
 	public boolean isTrader() {
@@ -863,7 +856,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		float str = 1.3f + getDistanceToEntity(target) / 80.0f;
 		float accuracy = (float) getEntityAttribute(npcRangedAccuracy).getAttributeValue();
 		float poisonChance = getPoisonedArrowChance();
-		EntityArrow arrow = rand.nextFloat() < poisonChance ? new LOTREntityArrowPoisoned(worldObj, this, target, str, accuracy) : new EntityArrow(worldObj, this, target, str *= LOTRItemBow.getLaunchSpeedFactor(heldItem), accuracy);
+		EntityArrow arrow = rand.nextFloat() < poisonChance ? new LOTREntityArrowPoisoned(worldObj, this, target, str, accuracy) : new EntityArrow(worldObj, this, target, str * LOTRItemBow.getLaunchSpeedFactor(heldItem), accuracy);
 		if (heldItem != null) {
 			LOTRItemBow.applyBowModifiers(arrow, heldItem);
 		}
@@ -876,7 +869,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		float str = 1.0f + getDistanceToEntity(target) / 16.0f * 0.015f;
 		boolean poison = rand.nextFloat() < getPoisonedArrowChance();
 		ItemStack boltItem = poison ? new ItemStack(LOTRMod.crossbowBoltPoisoned) : new ItemStack(LOTRMod.crossbowBolt);
-		LOTREntityCrossbowBolt bolt = new LOTREntityCrossbowBolt(worldObj, this, target, boltItem, str *= LOTRItemCrossbow.getCrossbowLaunchSpeedFactor(heldItem), 1.0f);
+		LOTREntityCrossbowBolt bolt = new LOTREntityCrossbowBolt(worldObj, this, target, boltItem, str * LOTRItemCrossbow.getCrossbowLaunchSpeedFactor(heldItem), 1.0f);
 		if (heldItem != null) {
 			LOTRItemCrossbow.applyCrossbowModifiers(bolt, heldItem);
 		}
@@ -921,13 +914,11 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 			entityDropItem(pouch, 0.0f);
 		}
 		enpouchNPCDrops = false;
-		this.dropItemList(enpouchedDrops, false);
+		dropItemList(enpouchedDrops, false);
 		if (!worldObj.isRemote && damagesource.getEntity() instanceof EntityPlayer) {
 			entityplayer = (EntityPlayer) damagesource.getEntity();
 			if (hurtOnlyByPlates && damagesource.getSourceOfDamage() instanceof LOTREntityPlate) {
-				if (LOTRLevelData.getData(entityplayer).getAlignment(getFaction()) < 0.0f) {
-					// empty if block
-				}
+				LOTRLevelData.getData(entityplayer).getAlignment(getFaction());// empty if block
 				LOTRLevelData.getData(entityplayer).addAchievement(LOTRAchievement.killUsingOnlyPlates);
 			}
 			if (damagesource.getSourceOfDamage() instanceof LOTREntityPebble && ((LOTREntityPebble) damagesource.getSourceOfDamage()).isSling() && width * width * height > 5.0f && LOTRLevelData.getData(entityplayer).getAlignment(getFaction()) < 0.0f) {
@@ -1001,7 +992,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 				setInitialHome = true;
 			}
 			preventKidnap = LOTRConfig.preventTraderKidnap;
-			if (preventKidnap > 0 && setInitialHome && initHomeRange > 0 && getDistanceSq(initHomeX + 0.5, initHomeY + 0.5, initHomeZ + 0.5) > preventKidnap * preventKidnap) {
+			if (preventKidnap > 0 && initHomeRange > 0 && getDistanceSq(initHomeX + 0.5, initHomeY + 0.5, initHomeZ + 0.5) > preventKidnap * preventKidnap) {
 				if (ridingEntity != null) {
 					mountEntity(null);
 				}
@@ -1085,7 +1076,6 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 				detachHome();
 				boolean goDirectlyHome = false;
 				if (worldObj.blockExists(homeX, homeY, homeZ) && hiredNPCInfo.isGuardMode()) {
-					hiredNPCInfo.getGuardRange();
 					goDirectlyHome = distToHome < 16.0;
 				}
 				double homeSpeed = 1.3;
@@ -1184,7 +1174,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		ridingMount = nbt.getBoolean("RidingHorse");
 		isPassive = nbt.getBoolean("NPCPassive");
 		isTraderEscort = nbt.getBoolean("TraderEscort");
-		shouldTraderRespawn = nbt.hasKey("TraderShouldRespawn") ? nbt.getBoolean("TraderShouldRespawn") : this instanceof LOTRTradeable || this instanceof LOTRUnitTradeable ? this instanceof LOTRTravellingTrader ? false : isNPCPersistent : false;
+		shouldTraderRespawn = nbt.hasKey("TraderShouldRespawn") ? nbt.getBoolean("TraderShouldRespawn") : (this instanceof LOTRTradeable || this instanceof LOTRUnitTradeable) && !(this instanceof LOTRTravellingTrader) && isNPCPersistent;
 		if (nbt.hasKey("BonusFactions")) {
 			NBTTagList bonusTags = nbt.getTagList("BonusFactions", 8);
 			for (int i = 0; i < bonusTags.tagCount(); ++i) {
@@ -1222,12 +1212,12 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	}
 
 	public void sendCombatStance(EntityPlayerMP entityplayer) {
-		LOTRPacketNPCCombatStance packet = new LOTRPacketNPCCombatStance(getEntityId(), combatStance);
+		IMessage packet = new LOTRPacketNPCCombatStance(getEntityId(), combatStance);
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 
 	public void sendIsEatingPacket(EntityPlayerMP entityplayer) {
-		LOTRPacketNPCIsEating packet = new LOTRPacketNPCIsEating(getEntityId(), npcItemsInv.getIsEating());
+		IMessage packet = new LOTRPacketNPCIsEating(getEntityId(), npcItemsInv.getIsEating());
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 
@@ -1246,7 +1236,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	}
 
 	public void sendSpeechBank(EntityPlayer entityplayer, String speechBank) {
-		this.sendSpeechBank(entityplayer, speechBank, null);
+		sendSpeechBank(entityplayer, speechBank, null);
 	}
 
 	public void sendSpeechBank(EntityPlayer entityplayer, String speechBank, LOTRMiniQuest miniquest) {
@@ -1258,10 +1248,10 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		if (miniquest != null) {
 			objective = miniquest.getProgressedObjectiveInSpeech();
 		}
-		this.sendSpeechBank(entityplayer, speechBank, location, objective);
+		sendSpeechBank(entityplayer, speechBank, location, objective);
 	}
 
-	public void sendSpeechBank(EntityPlayer entityplayer, String speechBank, String location, String objective) {
+	public void sendSpeechBank(EntityPlayer entityplayer, String speechBank, CharSequence location, CharSequence objective) {
 		LOTRSpeech.sendSpeech(entityplayer, this, LOTRSpeech.getRandomSpeechForPlayer(this, speechBank, entityplayer, location, objective));
 		markNPCSpoken();
 	}
@@ -1274,9 +1264,10 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	@Override
 	public void setAttackTarget(EntityLivingBase target) {
 		boolean speak = target != null && getEntitySenses().canSee(target) && rand.nextInt(3) == 0;
-		this.setAttackTarget(target, speak);
+		setAttackTarget(target, speak);
 	}
 
+	@SuppressWarnings("Convert2Lambda")
 	public void setAttackTarget(EntityLivingBase target, boolean speak) {
 		EntityLivingBase prevEntityTarget = getAttackTarget();
 		super.setAttackTarget(target);
@@ -1304,7 +1295,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 					double range = 16.0;
 					List nearbyMobs = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.expand(range, range, range), selectorAttackingNPCs);
 					if (nearbyMobs.size() <= 5) {
-						this.sendSpeechBank(entityplayer, speechBank);
+						sendSpeechBank(entityplayer, speechBank);
 					}
 				}
 			}
@@ -1336,13 +1327,13 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 
 	public void setPersistentAndTraderShouldRespawn() {
 		isNPCPersistent = true;
-		setShouldTraderRespawn(true);
+		shouldTraderRespawn = true;
 	}
 
 	public void setRidingHorse(boolean flag) {
 		ridingMount = flag;
 		double d = getEntityAttribute(SharedMonsterAttributes.followRange).getAttributeValue();
-		d = flag ? (d *= 1.5) : (d /= 1.5);
+		d = flag ? d * 1.5 : d / 1.5;
 		getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(d);
 	}
 
@@ -1401,10 +1392,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		if (getHeldItem() == null) {
 			return;
 		}
-		if (!worldObj.isRemote) {
-			LOTRPacketNPCFX packet = new LOTRPacketNPCFX(getEntityId(), LOTRPacketNPCFX.FXType.EATING);
-			LOTRPacketHandler.networkWrapper.sendToAllAround(packet, LOTRPacketHandler.nearEntity(this, 32.0));
-		} else {
+		if (worldObj.isRemote) {
 			for (int i = 0; i < 5; ++i) {
 				Vec3 vec1 = Vec3.createVectorHelper((rand.nextFloat() - 0.5) * 0.1, Math.random() * 0.1 + 0.1, 0.0);
 				vec1.rotateAroundX(-rotationPitch * 3.1415927f / 180.0f);
@@ -1415,34 +1403,37 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 				vec2 = vec2.addVector(posX, posY + getEyeHeight(), posZ);
 				worldObj.spawnParticle("iconcrack_" + Item.getIdFromItem(getHeldItem().getItem()), vec2.xCoord, vec2.yCoord, vec2.zCoord, vec1.xCoord, vec1.yCoord + 0.05, vec1.zCoord);
 			}
+		} else {
+			IMessage packet = new LOTRPacketNPCFX(getEntityId(), LOTRPacketNPCFX.FXType.EATING);
+			LOTRPacketHandler.networkWrapper.sendToAllAround(packet, LOTRPacketHandler.nearEntity(this, 32.0));
 		}
 	}
 
 	public void spawnHearts() {
-		if (!worldObj.isRemote) {
-			LOTRPacketNPCFX packet = new LOTRPacketNPCFX(getEntityId(), LOTRPacketNPCFX.FXType.HEARTS);
-			LOTRPacketHandler.networkWrapper.sendToAllAround(packet, LOTRPacketHandler.nearEntity(this, 32.0));
-		} else {
+		if (worldObj.isRemote) {
 			for (int i = 0; i < 8; ++i) {
 				double d = rand.nextGaussian() * 0.02;
 				double d1 = rand.nextGaussian() * 0.02;
 				double d2 = rand.nextGaussian() * 0.02;
 				worldObj.spawnParticle("heart", posX + rand.nextFloat() * width * 2.0f - width, posY + 0.5 + rand.nextFloat() * height, posZ + rand.nextFloat() * width * 2.0f - width, d, d1, d2);
 			}
+		} else {
+			IMessage packet = new LOTRPacketNPCFX(getEntityId(), LOTRPacketNPCFX.FXType.HEARTS);
+			LOTRPacketHandler.networkWrapper.sendToAllAround(packet, LOTRPacketHandler.nearEntity(this, 32.0));
 		}
 	}
 
 	public void spawnSmokes() {
-		if (!worldObj.isRemote) {
-			LOTRPacketNPCFX packet = new LOTRPacketNPCFX(getEntityId(), LOTRPacketNPCFX.FXType.SMOKE);
-			LOTRPacketHandler.networkWrapper.sendToAllAround(packet, LOTRPacketHandler.nearEntity(this, 32.0));
-		} else {
+		if (worldObj.isRemote) {
 			for (int i = 0; i < 8; ++i) {
 				double d = rand.nextGaussian() * 0.02;
 				double d1 = rand.nextGaussian() * 0.02;
 				double d2 = rand.nextGaussian() * 0.02;
 				worldObj.spawnParticle("smoke", posX + rand.nextFloat() * width * 2.0f - width, posY + 0.5 + rand.nextFloat() * height, posZ + rand.nextFloat() * width * 2.0f - width, d, d1, d2);
 			}
+		} else {
+			IMessage packet = new LOTRPacketNPCFX(getEntityId(), LOTRPacketNPCFX.FXType.SMOKE);
+			LOTRPacketHandler.networkWrapper.sendToAllAround(packet, LOTRPacketHandler.nearEntity(this, 32.0));
 		}
 	}
 
@@ -1463,7 +1454,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 			speechBank = "special/smilebc";
 		}
 		if (speechBank != null) {
-			this.sendSpeechBank(entityplayer, speechBank);
+			sendSpeechBank(entityplayer, speechBank);
 			if (getTalkAchievement() != null) {
 				LOTRLevelData.getData(entityplayer).addAchievement(getTalkAchievement());
 			}
@@ -1472,6 +1463,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		return false;
 	}
 
+	@SuppressWarnings("all")
 	public void startTraderVisiting(EntityPlayer entityplayer) {
 		travellingTraderInfo.startVisiting(entityplayer);
 	}
@@ -1479,7 +1471,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	public void updateCombat() {
 		EntityLivingBase entity;
 		if (!worldObj.isRemote && getAttackTarget() != null && (!(entity = getAttackTarget()).isEntityAlive() || entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.isCreativeMode)) {
-			this.setAttackTarget(null);
+			setAttackTarget(null);
 		}
 		boolean changedMounted = false;
 		boolean changedAttackMode = false;
@@ -1542,6 +1534,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		}
 	}
 
+	@SuppressWarnings("Convert2Lambda")
 	public void updateNearbyBanners() {
 		if (getFaction() == LOTRFaction.UNALIGNED || this instanceof LOTRBannerBearer) {
 			nearbyBannerFactor = 0;
@@ -1552,7 +1545,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 				@Override
 				public boolean isEntityApplicable(Entity entity) {
 					EntityLivingBase living = (EntityLivingBase) entity;
-					return living != LOTREntityNPC.this && living.isEntityAlive() && LOTRMod.getNPCFaction(living) == LOTREntityNPC.this.getFaction();
+					return living != LOTREntityNPC.this && living.isEntityAlive() && LOTRMod.getNPCFaction(living) == getFaction();
 				}
 			});
 			nearbyBannerFactor = Math.min(bannerBearers.size(), 5);
@@ -1619,7 +1612,7 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 	}
 
 	public enum AttackMode {
-		MELEE, RANGED, IDLE;
+		MELEE, RANGED, IDLE
 
 	}
 

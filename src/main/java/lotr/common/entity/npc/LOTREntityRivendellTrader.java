@@ -12,7 +12,7 @@ public class LOTREntityRivendellTrader extends LOTREntityRivendellElf implements
 	public LOTREntityRivendellTrader(World world) {
 		super(world);
 		tasks.addTask(2, new LOTREntityAIAttackOnCollide(this, 1.6, false));
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.RIVENDELL_TRADER;
 	}
 
@@ -67,7 +67,7 @@ public class LOTREntityRivendellTrader extends LOTREntityRivendellElf implements
 		return 10;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
 		if (b != 15) {

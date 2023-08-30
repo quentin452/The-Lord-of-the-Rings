@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class LOTREntityDwarfSmith extends LOTREntityDwarf implements LOTRTradeable.Smith {
 	public LOTREntityDwarfSmith(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -60,11 +60,6 @@ public class LOTREntityDwarfSmith extends LOTREntityDwarf implements LOTRTradeab
 		npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.blacksmithHammer));
 		npcItemsInv.setIdleItem(npcItemsInv.getMeleeWeapon());
 		return data;
-	}
-
-	@Override
-	public void setupNPCGender() {
-		familyInfo.setMale(true);
 	}
 
 	@Override

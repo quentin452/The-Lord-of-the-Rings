@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityHarnedorTrader extends LOTREntityHarnedhrim implements LOTRTradeable {
-	public LOTREntityHarnedorTrader(World world) {
+	protected LOTREntityHarnedorTrader(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -28,15 +28,6 @@ public abstract class LOTREntityHarnedorTrader extends LOTREntityHarnedhrim impl
 			return "nearHarad/harnennor/bazaarTrader/friendly";
 		}
 		return "nearHarad/harnennor/bazaarTrader/hostile";
-	}
-
-	@Override
-	public void onAttackModeChange(LOTREntityNPC.AttackMode mode, boolean mounted) {
-		if (mode == LOTREntityNPC.AttackMode.IDLE) {
-			setCurrentItemOrArmor(0, npcItemsInv.getIdleItem());
-		} else {
-			setCurrentItemOrArmor(0, npcItemsInv.getMeleeWeapon());
-		}
 	}
 
 	@Override

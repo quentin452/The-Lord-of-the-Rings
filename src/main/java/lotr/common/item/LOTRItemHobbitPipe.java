@@ -21,11 +21,11 @@ public class LOTRItemHobbitPipe extends Item {
 		setCreativeTab(LOTRCreativeTabs.tabMisc);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-		int color = LOTRItemHobbitPipe.getSmokeColor(itemstack);
-		list.add(StatCollector.translateToLocal(this.getUnlocalizedName() + ".subtitle." + color));
+		int color = getSmokeColor(itemstack);
+		list.add(StatCollector.translateToLocal(getUnlocalizedName() + ".subtitle." + color));
 	}
 
 	@Override
@@ -38,12 +38,12 @@ public class LOTRItemHobbitPipe extends Item {
 		return 40;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i <= 16; ++i) {
 			ItemStack itemstack = new ItemStack(this);
-			LOTRItemHobbitPipe.setSmokeColor(itemstack, i);
+			setSmokeColor(itemstack, i);
 			list.add(itemstack);
 		}
 	}
@@ -60,7 +60,7 @@ public class LOTRItemHobbitPipe extends Item {
 			}
 			if (!world.isRemote) {
 				LOTREntitySmokeRing smoke = new LOTREntitySmokeRing(world, entityplayer);
-				int color = LOTRItemHobbitPipe.getSmokeColor(itemstack);
+				int color = getSmokeColor(itemstack);
 				smoke.setSmokeColour(color);
 				world.spawnEntityInWorld(smoke);
 				if (color == 16) {
@@ -88,12 +88,12 @@ public class LOTRItemHobbitPipe extends Item {
 	}
 
 	public static boolean isPipeDyed(ItemStack itemstack) {
-		int color = LOTRItemHobbitPipe.getSmokeColor(itemstack);
+		int color = getSmokeColor(itemstack);
 		return color != 0 && color != 16;
 	}
 
 	public static void removePipeDye(ItemStack itemstack) {
-		LOTRItemHobbitPipe.setSmokeColor(itemstack, 0);
+		setSmokeColor(itemstack, 0);
 	}
 
 	public static void setSmokeColor(ItemStack itemstack, int i) {

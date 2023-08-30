@@ -13,13 +13,13 @@ import net.minecraft.world.*;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRBlockOrcChain extends Block {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconMiddle;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconTop;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconBottom;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconSingle;
 
 	public LOTRBlockOrcChain() {
@@ -59,7 +59,7 @@ public class LOTRBlockOrcChain extends Block {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess world, int i, int j, int k, int side) {
 		boolean chainBelow;
 		Block above = world.getBlock(i, j + 1, k);
@@ -79,13 +79,13 @@ public class LOTRBlockOrcChain extends Block {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int i, int j) {
 		return iconMiddle;
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public String getItemIconName() {
 		return getTextureName();
 	}
@@ -111,7 +111,8 @@ public class LOTRBlockOrcChain extends Block {
 		if (itemstack != null && itemstack.getItem() == Item.getItemFromBlock(this)) {
 			int j1;
 			Block block;
-			for (j1 = j; j1 >= 0 && j1 < world.getHeight() && (block = world.getBlock(i, j1, k)) == this; --j1) {
+			//noinspection StatementWithEmptyBody
+			for (j1 = j; j1 >= 0 && j1 < world.getHeight() && world.getBlock(i, j1, k) == this; --j1) {
 			}
 			if (j1 >= 0 && j1 < world.getHeight()) {
 				block = world.getBlock(i, j1, k);
@@ -136,14 +137,14 @@ public class LOTRBlockOrcChain extends Block {
 	public void onNeighborBlockChange(World world, int i, int j, int k, Block block) {
 		if (!canBlockStay(world, i, j, k)) {
 			int meta = world.getBlockMetadata(i, j, k);
-			this.dropBlockAsItem(world, i, j, k, meta, 0);
+			dropBlockAsItem(world, i, j, k, meta, 0);
 			world.setBlockToAir(i, j, k);
 		}
 		super.onNeighborBlockChange(world, i, j, k, block);
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconregister) {
 		iconMiddle = iconregister.registerIcon(getTextureName() + "_mid");
 		iconTop = iconregister.registerIcon(getTextureName() + "_top");

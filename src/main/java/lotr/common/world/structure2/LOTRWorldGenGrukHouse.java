@@ -28,7 +28,7 @@ public class LOTRWorldGenGrukHouse extends LOTRWorldGenStructureBase2 {
 		int k12;
 		int j1;
 		int k13;
-		this.setOriginAndRotation(world, i, j, k, rotation, 9);
+		setOriginAndRotation(world, i, j, k, rotation, 9);
 		if (restrictions) {
 			for (i1 = -5; i1 <= 5; ++i1) {
 				for (k12 = -8; k12 <= 8; ++k12) {
@@ -132,7 +132,7 @@ public class LOTRWorldGenGrukHouse extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, 0, 1, 7, Blocks.fence, 1);
 		setBlockAndMetadata(world, 0, 2, 7, Blocks.torch, 5);
 		for (k13 = -7; k13 <= 7; ++k13) {
-			int[] k22 = { -4, 4 };
+			int[] k22 = {-4, 4};
 			j1 = k22.length;
 			for (k2 = 0; k2 < j1; ++k2) {
 				int i13 = k22[k2];
@@ -140,15 +140,15 @@ public class LOTRWorldGenGrukHouse extends LOTRWorldGenStructureBase2 {
 				if (!random.nextBoolean()) {
 					continue;
 				}
-				this.placeMug(world, random, i13, 2, k13, random.nextInt(4), getRandomDrink(random), new LOTRItemMug.Vessel[] { LOTRItemMug.Vessel.GOBLET_GOLD, LOTRItemMug.Vessel.GOBLET_SILVER, LOTRItemMug.Vessel.HORN, LOTRItemMug.Vessel.HORN_GOLD });
+				placeMug(world, random, i13, 2, k13, random.nextInt(4), getRandomDrink(random), new LOTRItemMug.Vessel[]{LOTRItemMug.Vessel.GOBLET_GOLD, LOTRItemMug.Vessel.GOBLET_SILVER, LOTRItemMug.Vessel.HORN, LOTRItemMug.Vessel.HORN_GOLD});
 			}
 		}
 		for (i1 = -3; i1 <= 3; ++i1) {
 			if (i1 == 0) {
 				continue;
 			}
-			this.placeBarrel(world, random, i1, 1, 7, 2, getRandomDrink(random));
-			this.placeBarrel(world, random, i1, 2, 7, 2, getRandomDrink(random));
+			placeBarrel(world, random, i1, 1, 7, 2, getRandomDrink(random));
+			placeBarrel(world, random, i1, 2, 7, 2, getRandomDrink(random));
 		}
 		for (i1 = -1; i1 <= 1; ++i1) {
 			setBlockAndMetadata(world, i1, 4, 7, Blocks.wool, 14);
@@ -162,7 +162,7 @@ public class LOTRWorldGenGrukHouse extends LOTRWorldGenStructureBase2 {
 				setBlockAndMetadata(world, i1, 1, k1, Blocks.carpet, 0);
 			}
 		}
-		int[] i14 = { -8, 8 };
+		int[] i14 = {-8, 8};
 		k1 = i14.length;
 		for (j1 = 0; j1 < k1; ++j1) {
 			int i15 = i14[j1];
@@ -176,7 +176,7 @@ public class LOTRWorldGenGrukHouse extends LOTRWorldGenStructureBase2 {
 					for (j13 = 5; j13 <= 10; ++j13) {
 						setAir(world, i2, j13, k14);
 					}
-					if (Math.abs(i2 - i15) > 1 || Math.abs(k14 - -18) > 1) {
+					if (Math.abs(i2 - i15) > 1 || Math.abs(k14 + 18) > 1) {
 						continue;
 					}
 					setBlockAndMetadata(world, i2, 4, k14, LOTRMod.hearth, 0);
@@ -186,9 +186,8 @@ public class LOTRWorldGenGrukHouse extends LOTRWorldGenStructureBase2 {
 		}
 		for (int i16 = -12; i16 <= 12; ++i16) {
 			for (k1 = -20; k1 <= 0; ++k1) {
-				int dx = i16 - 0;
-				int dz = k1 - -8;
-				int dSq = dx * dx + dz * dz;
+				int dz = k1 + 8;
+				int dSq = i16 * i16 + dz * dz;
 				if (dSq > 144 || random.nextInt(6) == 0) {
 					continue;
 				}

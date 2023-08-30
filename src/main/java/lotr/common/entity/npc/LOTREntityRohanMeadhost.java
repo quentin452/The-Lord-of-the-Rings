@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityRohanMeadhost extends LOTREntityRohanMan implements LOTRTradeable.Bartender {
 	public LOTREntityRohanMeadhost(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcLocationName = "entity.lotr.RohanMeadhost.locationName";
 	}
 
@@ -36,42 +36,42 @@ public class LOTREntityRohanMeadhost extends LOTREntityRohanMan implements LOTRT
 	public void dropFewItems(boolean flag, int i) {
 		super.dropFewItems(flag, i);
 		int j = rand.nextInt(3) + rand.nextInt(i + 1);
-		block9: for (int k = 0; k < j; ++k) {
+		for (int k = 0; k < j; ++k) {
 			int l = rand.nextInt(11);
 			switch (l) {
-			case 0:
-			case 1:
-			case 2: {
-				Item food = LOTRFoods.ROHAN.getRandomFood(rand).getItem();
-				entityDropItem(new ItemStack(food), 0.0f);
-				continue block9;
-			}
-			case 3: {
-				entityDropItem(new ItemStack(Items.gold_nugget, 2 + rand.nextInt(3)), 0.0f);
-				continue block9;
-			}
-			case 4: {
-				entityDropItem(new ItemStack(Items.wheat, 1 + rand.nextInt(4)), 0.0f);
-				continue block9;
-			}
-			case 5: {
-				entityDropItem(new ItemStack(Items.sugar, 1 + rand.nextInt(3)), 0.0f);
-				continue block9;
-			}
-			case 6: {
-				entityDropItem(new ItemStack(Items.paper, 1 + rand.nextInt(2)), 0.0f);
-				continue block9;
-			}
-			case 7:
-			case 8: {
-				entityDropItem(new ItemStack(LOTRMod.mug), 0.0f);
-				continue block9;
-			}
-			case 9:
-			case 10: {
-				Item drink = LOTRMod.mugMead;
-				entityDropItem(new ItemStack(drink, 1, 1 + rand.nextInt(3)), 0.0f);
-			}
+				case 0:
+				case 1:
+				case 2: {
+					Item food = LOTRFoods.ROHAN.getRandomFood(rand).getItem();
+					entityDropItem(new ItemStack(food), 0.0f);
+					continue;
+				}
+				case 3: {
+					entityDropItem(new ItemStack(Items.gold_nugget, 2 + rand.nextInt(3)), 0.0f);
+					continue;
+				}
+				case 4: {
+					entityDropItem(new ItemStack(Items.wheat, 1 + rand.nextInt(4)), 0.0f);
+					continue;
+				}
+				case 5: {
+					entityDropItem(new ItemStack(Items.sugar, 1 + rand.nextInt(3)), 0.0f);
+					continue;
+				}
+				case 6: {
+					entityDropItem(new ItemStack(Items.paper, 1 + rand.nextInt(2)), 0.0f);
+					continue;
+				}
+				case 7:
+				case 8: {
+					entityDropItem(new ItemStack(LOTRMod.mug), 0.0f);
+					continue;
+				}
+				case 9:
+				case 10: {
+					Item drink = LOTRMod.mugMead;
+					entityDropItem(new ItemStack(drink, 1, 1 + rand.nextInt(3)), 0.0f);
+				}
 			}
 		}
 	}
@@ -112,11 +112,6 @@ public class LOTREntityRohanMeadhost extends LOTREntityRohanMan implements LOTRT
 		npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.mugMead));
 		npcItemsInv.setIdleItem(npcItemsInv.getMeleeWeapon());
 		return data;
-	}
-
-	@Override
-	public void setupNPCGender() {
-		familyInfo.setMale(rand.nextBoolean());
 	}
 
 	@Override

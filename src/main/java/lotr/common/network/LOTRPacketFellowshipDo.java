@@ -9,10 +9,10 @@ import lotr.common.fellowship.*;
 public abstract class LOTRPacketFellowshipDo implements IMessage {
 	public UUID fellowshipID;
 
-	public LOTRPacketFellowshipDo() {
+	protected LOTRPacketFellowshipDo() {
 	}
 
-	public LOTRPacketFellowshipDo(LOTRFellowshipClient fsClient) {
+	protected LOTRPacketFellowshipDo(LOTRFellowshipClient fsClient) {
 		fellowshipID = fsClient.getFellowshipID();
 	}
 

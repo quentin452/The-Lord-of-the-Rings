@@ -60,7 +60,7 @@ public class LOTRTileEntityDwarvenDoor extends TileEntity {
 		return glowLogic.getGlowBrightness(worldObj, xCoord, yCoord, zCoord, f);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public double getMaxRenderDistanceSquared() {
 		double range = GLOW_RANGE + 20;

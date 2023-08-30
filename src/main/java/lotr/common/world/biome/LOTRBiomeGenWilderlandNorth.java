@@ -36,7 +36,7 @@ public class LOTRBiomeGenWilderlandNorth extends LOTRBiomeGenWilderland {
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer5);
 		clearBiomeVariants();
 		addBiomeVariantSet(LOTRBiomeVariant.SET_NORMAL_OAK_SPRUCE);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE);
 		decorator.setTreeCluster(6, 8);
 		decorator.flowersPerChunk = 2;
 		decorator.doubleFlowersPerChunk = 0;

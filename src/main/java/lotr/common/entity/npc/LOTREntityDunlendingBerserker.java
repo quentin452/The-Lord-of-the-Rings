@@ -33,7 +33,7 @@ public class LOTREntityDunlendingBerserker extends LOTREntityDunlendingWarrior {
 		int i = rand.nextInt(2);
 		if (i == 0) {
 			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeIron));
-		} else if (i == 1) {
+		} else {
 			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeBronze));
 		}
 		npcItemsInv.setIdleItem(npcItemsInv.getMeleeWeapon());

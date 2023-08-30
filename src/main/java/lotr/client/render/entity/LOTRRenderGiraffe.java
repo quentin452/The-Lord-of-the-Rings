@@ -1,7 +1,7 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelGiraffe;
-import lotr.common.entity.animal.LOTREntityGiraffe;
+import lotr.common.entity.npc.LOTRNPCMount;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
@@ -22,7 +22,7 @@ public class LOTRRenderGiraffe extends RenderLiving {
 
 	@Override
 	public int shouldRenderPass(EntityLivingBase entity, int pass, float f) {
-		if (pass == 0 && ((LOTREntityGiraffe) entity).isMountSaddled()) {
+		if (pass == 0 && ((LOTRNPCMount) entity).isMountSaddled()) {
 			bindTexture(saddleTexture);
 			return 1;
 		}

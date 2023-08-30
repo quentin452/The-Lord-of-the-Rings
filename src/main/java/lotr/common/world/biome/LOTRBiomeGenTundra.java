@@ -46,13 +46,13 @@ public class LOTRBiomeGenTundra extends LOTRBiome {
 		arrspawnListContainer2[0] = LOTRBiomeSpawnList.entry(LOTRSpawnList.RANGERS_NORTH, 10).setSpawnChance(5000);
 		npcSpawnList.newFactionList(10).add(arrspawnListContainer2);
 		variantChance = 0.2f;
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE);
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE_BARREN);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_SPRUCE);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK_SPRUCE);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE_BARREN);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_SPRUCE);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK_SPRUCE);
 		decorator.treesPerChunk = 0;
 		decorator.flowersPerChunk = 2;
 		decorator.grassPerChunk = 4;
@@ -134,14 +134,14 @@ public class LOTRBiomeGenTundra extends LOTRBiome {
 		fillerBlockMeta = fillerBlockMeta_pre;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getBiomeGrassColor(int i, int j, int k) {
 		int color1 = 10708034;
 		int color2 = 13747522;
 		double d1 = biomeTerrainNoise.func_151601_a(i * 0.002, k * 0.002);
 		double d2 = biomeTerrainNoise.func_151601_a(i * 0.04, k * 0.04);
-		float noise = (float) MathHelper.clamp_double(d1 + (d2 *= 0.4), -2.0, 2.0);
+		float noise = (float) MathHelper.clamp_double(d1 + d2 * 0.4, -2.0, 2.0);
 		noise += 2.0f;
 		noise /= 4.0f;
 		float[] rgb1 = new Color(color1).getColorComponents(null);
@@ -177,6 +177,6 @@ public class LOTRBiomeGenTundra extends LOTRBiome {
 		double d1 = noiseSnow.func_151601_a(i * 0.002, k * 0.002);
 		double d2 = noiseSnow.func_151601_a(i * 0.05, k * 0.05);
 		double d3 = noiseSnow.func_151601_a(i * 0.3, k * 0.3);
-		return d1 + (d2 *= 0.3) + (d3 *= 0.3) > 0.8;
+		return d1 + d2 * 0.3 + d3 * 0.3 > 0.8;
 	}
 }

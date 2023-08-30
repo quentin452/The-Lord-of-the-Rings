@@ -86,9 +86,9 @@ public class LOTRModelElf extends LOTRModelBiped implements LOTRGlowingEyes.Mode
 		LOTREntityElf elf;
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		if (entity instanceof LOTREntityElf && (elf = (LOTREntityElf) entity).isJazz() && elf.isSolo()) {
-			bipedRightArm.rotateAngleY = (float) Math.toRadians(-45.0);
+			bipedRightArm.rotateAngleY = -0.7853981633974483f;
 			bipedLeftArm.rotateAngleY = -bipedRightArm.rotateAngleY;
-			bipedLeftArm.rotateAngleX = bipedRightArm.rotateAngleX = (float) Math.toRadians(-50.0);
+			bipedLeftArm.rotateAngleX = bipedRightArm.rotateAngleX = -0.8726646259971648f;
 		}
 	}
 }

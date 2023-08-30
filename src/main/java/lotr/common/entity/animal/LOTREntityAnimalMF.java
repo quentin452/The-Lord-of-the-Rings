@@ -8,7 +8,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityAnimalMF extends EntityAnimal {
-	public LOTREntityAnimalMF(World world) {
+	protected LOTREntityAnimalMF(World world) {
 		super(world);
 	}
 

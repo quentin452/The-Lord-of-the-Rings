@@ -22,7 +22,8 @@ public class LOTRWorldGenTrollHoard extends WorldGenerator {
 		int maxCaveHeight = height - 4;
 		int chests = 2 + random.nextInt(5);
 		int chestsGenerated = 0;
-		block0: for (l = 0; l < 64; ++l) {
+		block0:
+		for (l = 0; l < 64; ++l) {
 			i1 = i + MathHelper.getRandomIntegerInRange(random, -3, 3);
 			j1 = j + MathHelper.getRandomIntegerInRange(random, -3, 3);
 			k1 = k + MathHelper.getRandomIntegerInRange(random, -3, 3);

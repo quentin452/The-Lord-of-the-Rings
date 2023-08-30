@@ -3,6 +3,7 @@ package lotr.common;
 import com.google.common.primitives.*;
 
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.entity.LOTRMountFunctions;
 import lotr.common.item.LOTRWeaponStats;
 import lotr.common.network.*;
@@ -20,7 +21,7 @@ import net.minecraft.world.WorldServer;
 public class LOTRNetHandlerPlayServer extends NetHandlerPlayServer {
 	public MinecraftServer theServer;
 	public double defaultReach = -1.0;
-	public int lastAttackTime = 0;
+	public int lastAttackTime;
 	public double lastX;
 	public double lastY;
 	public double lastZ;
@@ -65,7 +66,7 @@ public class LOTRNetHandlerPlayServer extends NetHandlerPlayServer {
 			double distSq = dx * dx + dy * dy + dz * dz;
 			double speedSq = mount.motionX * mount.motionX + mount.motionY * mount.motionY + mount.motionZ * mount.motionZ;
 			if (distSq - speedSq > 150.0 && (!server.isSinglePlayer() || !server.getServerOwner().equals(playerEntity.getCommandSenderName()))) {
-				LOTRPacketMountControlServerEnforce pktClient = new LOTRPacketMountControlServerEnforce(mount);
+				IMessage pktClient = new LOTRPacketMountControlServerEnforce(mount);
 				LOTRPacketHandler.networkWrapper.sendTo(pktClient, playerEntity);
 				return;
 			}
@@ -83,17 +84,14 @@ public class LOTRNetHandlerPlayServer extends NetHandlerPlayServer {
 				dy = 0.0;
 			}
 			distSq = dx * dx + dy * dy + dz * dz;
-			boolean clientServerConflict = false;
-			if (distSq > 10.0) {
-				clientServerConflict = true;
-			}
+			boolean clientServerConflict = distSq > 10.0;
 			mount.setPositionAndRotation(x, y, z, yaw, pitch);
 			playerEntity.setPositionAndRotation(x, y, z, yaw, pitch);
 			boolean noCollideAfterMove = world.getCollidingBoundingBoxes(mount, mount.boundingBox.copy().contract(check, check, check)).isEmpty();
 			if (noCollideBeforeMove && (clientServerConflict || !noCollideAfterMove)) {
 				mount.setPositionAndRotation(d0, d1, d2, yaw, pitch);
 				playerEntity.setPositionAndRotation(d0, d1, d2, yaw, pitch);
-				LOTRPacketMountControlServerEnforce pktClient = new LOTRPacketMountControlServerEnforce(mount);
+				IMessage pktClient = new LOTRPacketMountControlServerEnforce(mount);
 				LOTRPacketHandler.networkWrapper.sendTo(pktClient, playerEntity);
 				return;
 			}
@@ -175,7 +173,7 @@ public class LOTRNetHandlerPlayServer extends NetHandlerPlayServer {
 			defaultReach = playerEntity.theItemInWorldManager.getBlockReachDistance();
 		}
 		double reach = defaultReach;
-		playerEntity.theItemInWorldManager.setBlockReachDistance(reach *= LOTRWeaponStats.getMeleeReachFactor(playerEntity.getHeldItem()));
+		playerEntity.theItemInWorldManager.setBlockReachDistance(reach * LOTRWeaponStats.getMeleeReachFactor(playerEntity.getHeldItem()));
 	}
 
 	public void update() {

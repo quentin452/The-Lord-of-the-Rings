@@ -16,9 +16,9 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class LOTRItemDye extends Item {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] dyeIcons;
-	public String[] dyeNames = { "elanor", "niphredil", "bluebell", "green", "charcoal", "brown" };
+	public String[] dyeNames = {"elanor", "niphredil", "bluebell", "green", "charcoal", "brown"};
 
 	public LOTRItemDye() {
 		setHasSubtypes(true);
@@ -26,7 +26,7 @@ public class LOTRItemDye extends Item {
 		setCreativeTab(LOTRCreativeTabs.tabMaterials);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIconFromDamage(int i) {
 		if (i >= dyeIcons.length) {
@@ -35,7 +35,7 @@ public class LOTRItemDye extends Item {
 		return dyeIcons[i];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < dyeNames.length; ++i) {
@@ -45,14 +45,14 @@ public class LOTRItemDye extends Item {
 
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
-		return super.getUnlocalizedName() + "." + itemstack.getItemDamage();
+		return getUnlocalizedName() + "." + itemstack.getItemDamage();
 	}
 
 	@Override
 	public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer entityplayer, EntityLivingBase entityliving) {
 		if (entityliving instanceof EntitySheep) {
 			EntitySheep sheep = (EntitySheep) entityliving;
-			int dye = LOTRItemDye.isItemDye(itemstack);
+			int dye = isItemDye(itemstack);
 			if (dye == -1) {
 				return false;
 			}
@@ -66,7 +66,7 @@ public class LOTRItemDye extends Item {
 		return false;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerIcons(IIconRegister iconregister) {
 		dyeIcons = new IIcon[dyeNames.length];

@@ -16,10 +16,10 @@ public class LOTRTileEntityMobSpawner extends TileEntity {
 	public int delay = 20;
 	public String entityClassName = "";
 	public double yaw;
-	public double prevYaw = 0.0;
+	public double prevYaw;
 	public Entity spawnedMob;
 	public int active = 1;
-	public boolean spawnsPersistentNPCs = false;
+	public boolean spawnsPersistentNPCs;
 	public int minSpawnDelay = 200;
 	public int maxSpawnDelay = 800;
 	public int nearbyMobLimit = 6;
@@ -192,7 +192,7 @@ public class LOTRTileEntityMobSpawner extends TileEntity {
 						return;
 					}
 					List nearbyEntitiesList = worldObj.getEntitiesWithinAABB(entity.getClass(), AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 1, zCoord + 1).expand(nearbyMobCheckRange, nearbyMobCheckRange, nearbyMobCheckRange));
-					ArrayList<Entity> nearbySameEntitiesList = new ArrayList<>();
+					Collection<Entity> nearbySameEntitiesList = new ArrayList<>();
 					for (Object element : nearbyEntitiesList) {
 						Entity nearbyEntity = (Entity) element;
 						if (nearbyEntity.getClass() != entity.getClass()) {
@@ -276,7 +276,7 @@ public class LOTRTileEntityMobSpawner extends TileEntity {
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		nbt.setString("EntityID", getEntityClassName());
+		nbt.setString("EntityID", entityClassName);
 		nbt.setShort("Delay", (short) delay);
 		nbt.setShort("MinSpawnDelay", (short) minSpawnDelay);
 		nbt.setShort("MaxSpawnDelay", (short) maxSpawnDelay);

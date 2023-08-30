@@ -43,7 +43,7 @@ public class LOTREntityAIHorseMoveToRiderTarget extends EntityAIBase {
 		if (rider == null || !rider.isEntityAlive() || !(rider instanceof LOTREntityNPC)) {
 			return false;
 		}
-		EntityLivingBase riderTarget = ((LOTREntityNPC) rider).getAttackTarget();
+		EntityLivingBase riderTarget = ((EntityLiving) rider).getAttackTarget();
 		if (riderTarget == null || !riderTarget.isEntityAlive()) {
 			return false;
 		}
@@ -53,7 +53,7 @@ public class LOTREntityAIHorseMoveToRiderTarget extends EntityAIBase {
 
 	@Override
 	public void startExecuting() {
-		speed = ((LOTREntityNPC) livingHorse.riddenByEntity).getEntityAttribute(LOTREntityNPC.horseAttackSpeed).getAttributeValue();
+		speed = ((EntityLivingBase) livingHorse.riddenByEntity).getEntityAttribute(LOTREntityNPC.horseAttackSpeed).getAttributeValue();
 		livingHorse.getNavigator().setPath(entityPathEntity, speed);
 		pathCheckTimer = 0;
 	}

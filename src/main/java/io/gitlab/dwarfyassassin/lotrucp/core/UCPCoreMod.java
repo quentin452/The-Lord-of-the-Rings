@@ -8,12 +8,10 @@ import io.gitlab.dwarfyassassin.lotrucp.core.patches.base.Patcher;
 
 public class UCPCoreMod {
 	public static Logger log;
-	public static List<Patcher> activePatches;
-	public static List<Patcher> modPatches;
+	public static List<Patcher> activePatches = new ArrayList<>();
+	public static List<Patcher> modPatches = new ArrayList<>();
 
 	static {
-		activePatches = new ArrayList<>();
-		modPatches = new ArrayList<>();
 		System.out.println("LOTR-UCP: Found core mod.");
 	}
 
@@ -22,7 +20,7 @@ public class UCPCoreMod {
 	}
 
 	public String[] getASMTransformerClass() {
-		return new String[] { UCPClassTransformer.class.getName() };
+		return new String[]{UCPClassTransformer.class.getName()};
 	}
 
 	public String getModContainerClass() {
@@ -33,6 +31,7 @@ public class UCPCoreMod {
 		return UCPCoreSetup.class.getName();
 	}
 
+	@SuppressWarnings("all")
 	public void injectData(Map<String, Object> data) {
 	}
 

@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityHalfTrollWarlord extends LOTREntityHalfTrollWarrior implements LOTRUnitTradeable {
 	public LOTREntityHalfTrollWarlord(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

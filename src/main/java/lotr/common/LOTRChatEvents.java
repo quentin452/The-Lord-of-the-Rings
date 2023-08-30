@@ -4,7 +4,7 @@ import net.minecraft.event.HoverEvent;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class LOTRChatEvents {
-	public static Class[][] hoverParams = { { HoverEvent.Action.class, String.class, Boolean.TYPE } };
+	public static Class[][] hoverParams = {{HoverEvent.Action.class, String.class, Boolean.TYPE}};
 	public static HoverEvent.Action SHOW_LOTR_ACHIEVEMENT;
 
 	public static void createEvents() {

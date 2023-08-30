@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityBlackUrukCaptain extends LOTREntityBlackUruk implements LOTRUnitTradeable {
 	public LOTREntityBlackUrukCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

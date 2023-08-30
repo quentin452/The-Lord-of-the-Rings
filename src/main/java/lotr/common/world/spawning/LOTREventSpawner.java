@@ -19,8 +19,8 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 public class LOTREventSpawner {
 	public static Set<ChunkCoordIntPair> eligibleSpawnChunks = new HashSet<>();
-	public static List<LOTRTravellingTraderSpawner> travellingTraders = new ArrayList<>();
-	public static Set<Class> traderClasses = new HashSet<>();
+	public static Collection<LOTRTravellingTraderSpawner> travellingTraders = new ArrayList<>();
+	public static Collection<Class> traderClasses = new HashSet<>();
 
 	public static void createTraderSpawner(Class entityClass) {
 		if (!traderClasses.contains(entityClass)) {
@@ -37,19 +37,20 @@ public class LOTREventSpawner {
 			LOTRSpawnerNPCs.getSpawnableChunksWithPlayerInRange(world, eligibleSpawnChunks, 32);
 			List<ChunkCoordIntPair> shuffled = LOTRSpawnerNPCs.shuffle(eligibleSpawnChunks);
 			if (LOTRConfig.enableBandits && world.difficultySetting != EnumDifficulty.PEACEFUL) {
-				LOTREventSpawner.spawnBandits(world, shuffled);
+				spawnBandits(world, shuffled);
 			}
 			if (LOTRConfig.enableInvasions && world.difficultySetting != EnumDifficulty.PEACEFUL) {
-				LOTREventSpawner.spawnInvasions(world, shuffled);
+				spawnInvasions(world, shuffled);
 			}
 		}
 		LOTRGollumSpawner.performSpawning(world);
 		LOTRGreyWandererTracker.performSpawning(world);
 	}
 
-	public static void spawnBandits(World world, List<ChunkCoordIntPair> spawnChunks) {
+	public static void spawnBandits(World world, Iterable<ChunkCoordIntPair> spawnChunks) {
 		Random rand = world.rand;
-		block0: for (ChunkCoordIntPair chunkCoords : spawnChunks) {
+		block0:
+		for (ChunkCoordIntPair chunkCoords : spawnChunks) {
 			int i;
 			BiomeGenBase biome;
 			int k;
@@ -91,9 +92,11 @@ public class LOTREventSpawner {
 		}
 	}
 
-	public static void spawnInvasions(World world, List<ChunkCoordIntPair> spawnChunks) {
+	@SuppressWarnings("Convert2Lambda")
+	public static void spawnInvasions(World world, Iterable<ChunkCoordIntPair> spawnChunks) {
 		Random rand = world.rand;
-		block0: for (ChunkCoordIntPair chunkCoords : spawnChunks) {
+		block0:
+		for (ChunkCoordIntPair chunkCoords : spawnChunks) {
 			int i;
 			BiomeGenBase biome;
 			int k;
@@ -136,7 +139,7 @@ public class LOTREventSpawner {
 					}
 					LOTREntityInvasionSpawner invasion = new LOTREntityInvasionSpawner(world);
 					invasion.setInvasionType(invasionType);
-					invasion.setLocationAndAngles(i1 + 0.5, j1 += 3 + rand.nextInt(3), k1 + 0.5, 0.0f, 0.0f);
+					invasion.setLocationAndAngles(i1 + 0.5, j1 + (3 + rand.nextInt(3)), k1 + 0.5, 0.0f, 0.0f);
 					if (!invasion.canInvasionSpawnHere()) {
 						continue;
 					}
@@ -156,10 +159,10 @@ public class LOTREventSpawner {
 		public double[] chancesPerSecondPerChunk;
 
 		EventChance(float prob, int s) {
-			chancePerSecond = EventChance.getChance(prob, s);
+			chancePerSecond = getChance(prob, s);
 			chancesPerSecondPerChunk = new double[64];
 			for (int i = 0; i < chancesPerSecondPerChunk.length; ++i) {
-				chancesPerSecondPerChunk[i] = EventChance.getChance(chancePerSecond, i);
+				chancesPerSecondPerChunk[i] = getChance(chancePerSecond, i);
 			}
 		}
 

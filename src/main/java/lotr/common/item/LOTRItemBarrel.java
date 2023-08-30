@@ -19,10 +19,10 @@ public class LOTRItemBarrel extends ItemBlock {
 		super(block);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-		NBTTagCompound barrelData = LOTRItemBarrel.getBarrelData(itemstack);
+		NBTTagCompound barrelData = getBarrelData(itemstack);
 		if (barrelData != null) {
 			LOTRTileEntityBarrel tileEntity = new LOTRTileEntityBarrel();
 			tileEntity.readBarrelFromNBT(barrelData);
@@ -32,7 +32,7 @@ public class LOTRItemBarrel extends ItemBlock {
 
 	@Override
 	public int getItemStackLimit(ItemStack itemstack) {
-		NBTTagCompound nbt = LOTRItemBarrel.getBarrelData(itemstack);
+		NBTTagCompound nbt = getBarrelData(itemstack);
 		if (nbt != null) {
 			return 1;
 		}
@@ -58,7 +58,7 @@ public class LOTRItemBarrel extends ItemBlock {
 				return itemstack;
 			}
 			if (!world.isRemote) {
-				barrel.barrelItemData = LOTRItemBarrel.getBarrelData(itemstack);
+				barrel.barrelItemData = getBarrelData(itemstack);
 				world.spawnEntityInWorld(barrel);
 			}
 			if (!entityplayer.capabilities.isCreativeMode) {
@@ -74,7 +74,7 @@ public class LOTRItemBarrel extends ItemBlock {
 			TileEntity tileentity = world.getTileEntity(i, j, k);
 			if (tileentity instanceof LOTRTileEntityBarrel) {
 				LOTRTileEntityBarrel barrel = (LOTRTileEntityBarrel) tileentity;
-				LOTRItemBarrel.loadBarrelDataToTE(itemstack, barrel);
+				loadBarrelDataToTE(itemstack, barrel);
 			}
 			return true;
 		}
@@ -89,7 +89,7 @@ public class LOTRItemBarrel extends ItemBlock {
 	}
 
 	public static void loadBarrelDataToTE(ItemStack itemstack, LOTRTileEntityBarrel barrel) {
-		NBTTagCompound nbt = LOTRItemBarrel.getBarrelData(itemstack);
+		NBTTagCompound nbt = getBarrelData(itemstack);
 		if (nbt != null) {
 			barrel.readBarrelFromNBT(nbt);
 		}
@@ -103,6 +103,6 @@ public class LOTRItemBarrel extends ItemBlock {
 	public static void setBarrelDataFromTE(ItemStack itemstack, LOTRTileEntityBarrel barrel) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		barrel.writeBarrelToNBT(nbt);
-		LOTRItemBarrel.setBarrelData(itemstack, nbt);
+		setBarrelData(itemstack, nbt);
 	}
 }

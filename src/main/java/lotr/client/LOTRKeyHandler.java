@@ -38,18 +38,18 @@ public class LOTRKeyHandler {
 	@SubscribeEvent
 	public void KeyInputEvent(InputEvent.KeyInputEvent event) {
 		LOTRAttackTiming.doAttackTiming();
-		if (keyBindingMenu.getIsKeyPressed() && LOTRKeyHandler.mc.currentScreen == null) {
-			LOTRKeyHandler.mc.thePlayer.openGui(LOTRMod.instance, 11, LOTRKeyHandler.mc.theWorld, 0, 0, 0);
+		if (keyBindingMenu.getIsKeyPressed() && mc.currentScreen == null) {
+			mc.thePlayer.openGui(LOTRMod.instance, 11, mc.theWorld, 0, 0, 0);
 		}
-		LOTRPlayerData pd = LOTRLevelData.getData(LOTRKeyHandler.mc.thePlayer);
+		LOTRPlayerData pd = LOTRLevelData.getData(mc.thePlayer);
 		boolean usedAlignmentKeys = false;
-		HashMap<LOTRDimension.DimensionRegion, LOTRFaction> lastViewedRegions = new HashMap<>();
-		LOTRDimension currentDimension = LOTRDimension.getCurrentDimensionWithFallback(LOTRKeyHandler.mc.theWorld);
+		Map<LOTRDimension.DimensionRegion, LOTRFaction> lastViewedRegions = new EnumMap<>(LOTRDimension.DimensionRegion.class);
+		LOTRDimension currentDimension = LOTRDimension.getCurrentDimensionWithFallback(mc.theWorld);
 		LOTRFaction currentFaction = pd.getViewingFaction();
 		LOTRDimension.DimensionRegion currentRegion = currentFaction.factionRegion;
 		List<LOTRDimension.DimensionRegion> regionList = currentDimension.dimensionRegions;
 		List<LOTRFaction> factionList = currentRegion.factionList;
-		if (LOTRKeyHandler.mc.currentScreen == null && alignmentChangeTick <= 0) {
+		if (mc.currentScreen == null && alignmentChangeTick <= 0) {
 			int i;
 			if (keyBindingAlignmentCycleLeft.getIsKeyPressed()) {
 				i = factionList.indexOf(currentFaction);
@@ -65,7 +65,7 @@ public class LOTRKeyHandler {
 				currentFaction = factionList.get(i);
 				usedAlignmentKeys = true;
 			}
-			if (regionList != null && currentRegion != null) {
+			if (regionList != null) {
 				if (keyBindingAlignmentGroupPrev.getIsKeyPressed()) {
 					pd.setRegionLastViewedFaction(currentRegion, currentFaction);
 					lastViewedRegions.put(currentRegion, currentFaction);
@@ -73,7 +73,6 @@ public class LOTRKeyHandler {
 					--i;
 					i = IntMath.mod(i, regionList.size());
 					currentRegion = regionList.get(i);
-					factionList = currentRegion.factionList;
 					currentFaction = pd.getRegionLastViewedFaction(currentRegion);
 					usedAlignmentKeys = true;
 				}
@@ -84,7 +83,6 @@ public class LOTRKeyHandler {
 					++i;
 					i = IntMath.mod(i, regionList.size());
 					currentRegion = regionList.get(i);
-					factionList = currentRegion.factionList;
 					currentFaction = pd.getRegionLastViewedFaction(currentRegion);
 					usedAlignmentKeys = true;
 				}

@@ -22,7 +22,7 @@ public class LOTRWorldGenRohanSmithy extends LOTRWorldGenRohanStructure {
 		int i1;
 		int j13;
 		int j14;
-		this.setOriginAndRotation(world, i, j, k, rotation, 4);
+		setOriginAndRotation(world, i, j, k, rotation, 4);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -86,7 +86,7 @@ public class LOTRWorldGenRohanSmithy extends LOTRWorldGenRohanStructure {
 				}
 			}
 			if (i2 == 4) {
-				int[] j15 = { -2, 3 };
+				int[] j15 = {-2, 3};
 				j1 = j15.length;
 				for (j14 = 0; j14 < j1; ++j14) {
 					int k14 = j15[j14];
@@ -118,7 +118,7 @@ public class LOTRWorldGenRohanSmithy extends LOTRWorldGenRohanStructure {
 			setBlockAndMetadata(world, i1, 5, 3, roofSlabBlock, roofSlabMeta);
 			for (k1 = -2; k1 <= 2; ++k1) {
 				if (i2 == 3 && k1 == -2) {
-					setBlockAndMetadata(world, i1, 5, k1, roofSlabBlock, roofSlabMeta);
+					setBlockAndMetadata(world, i1, 5, -2, roofSlabBlock, roofSlabMeta);
 					continue;
 				}
 				setBlockAndMetadata(world, i1, 5, k1, roofBlock, roofMeta);
@@ -127,10 +127,7 @@ public class LOTRWorldGenRohanSmithy extends LOTRWorldGenRohanStructure {
 				continue;
 			}
 			for (k1 = -2; k1 <= 2; ++k1) {
-				boolean slab = false;
-				if (i2 == 0 && k1 == -2) {
-					slab = true;
-				}
+				boolean slab = i2 == 0 && k1 == -2;
 				if (i2 == 1 && (k1 == -1 || k1 == 2)) {
 					slab = true;
 				}
@@ -140,20 +137,14 @@ public class LOTRWorldGenRohanSmithy extends LOTRWorldGenRohanStructure {
 				if (slab) {
 					setBlockAndMetadata(world, i1, 6, k1, roofSlabBlock, roofSlabMeta);
 				}
-				boolean full = false;
-				if (i2 == 0 && k1 >= -1 && k1 <= 2) {
-					full = true;
-				}
+				boolean full = i2 == 0 && k1 >= -1;
 				if (i2 == 1 && k1 >= 0 && k1 <= 1) {
 					full = true;
 				}
 				if (full) {
 					setBlockAndMetadata(world, i1, 6, k1, roofBlock, roofMeta);
 				}
-				slab = false;
-				if (i2 == 0 && k1 >= 0 && k1 <= 1) {
-					slab = true;
-				}
+				slab = i2 == 0 && k1 >= 0 && k1 <= 1;
 				if (!slab) {
 					continue;
 				}

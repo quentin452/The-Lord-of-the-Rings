@@ -17,10 +17,10 @@ public abstract class LOTRWorldGenTentBase extends LOTRWorldGenStructureBase2 {
 	public int fenceMeta;
 	public Block tableBlock;
 	public LOTRChestContents chestContents;
-	public boolean hasOrcForge = false;
-	public boolean hasOrcTorches = false;
+	public boolean hasOrcForge;
+	public boolean hasOrcTorches;
 
-	public LOTRWorldGenTentBase(boolean flag) {
+	protected LOTRWorldGenTentBase(boolean flag) {
 		super(flag);
 	}
 
@@ -30,7 +30,7 @@ public abstract class LOTRWorldGenTentBase extends LOTRWorldGenStructureBase2 {
 		int k1;
 		int j1;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 4);
+		setOriginAndRotation(world, i, j, k, rotation, 4);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -2; i1 <= 2; ++i1) {
@@ -51,36 +51,36 @@ public abstract class LOTRWorldGenTentBase extends LOTRWorldGenStructureBase2 {
 					if (biome instanceof LOTRBiomeGenMordor) {
 						randomGround = random.nextInt(3);
 						switch (randomGround) {
-						case 0:
-							setBlockAndMetadata(world, i1, j1, k1, LOTRMod.rock, 0);
-							break;
-						case 1:
-							setBlockAndMetadata(world, i1, j1, k1, LOTRMod.mordorDirt, 0);
-							break;
-						case 2:
-							setBlockAndMetadata(world, i1, j1, k1, LOTRMod.mordorGravel, 0);
-							break;
-						default:
-							break;
+							case 0:
+								setBlockAndMetadata(world, i1, j1, k1, LOTRMod.rock, 0);
+								break;
+							case 1:
+								setBlockAndMetadata(world, i1, j1, k1, LOTRMod.mordorDirt, 0);
+								break;
+							case 2:
+								setBlockAndMetadata(world, i1, j1, k1, LOTRMod.mordorGravel, 0);
+								break;
+							default:
+								break;
 						}
 					} else {
 						randomGround = random.nextInt(3);
 						switch (randomGround) {
-						case 0:
-							if (j1 == 0) {
-								setBiomeTop(world, i1, j1, k1);
-							} else {
-								setBiomeFiller(world, i1, j1, k1);
-							}
-							break;
-						case 1:
-							setBlockAndMetadata(world, i1, j1, k1, Blocks.gravel, 0);
-							break;
-						case 2:
-							setBlockAndMetadata(world, i1, j1, k1, Blocks.cobblestone, 0);
-							break;
-						default:
-							break;
+							case 0:
+								if (j1 == 0) {
+									setBiomeTop(world, i1, 0, k1);
+								} else {
+									setBiomeFiller(world, i1, j1, k1);
+								}
+								break;
+							case 1:
+								setBlockAndMetadata(world, i1, j1, k1, Blocks.gravel, 0);
+								break;
+							case 2:
+								setBlockAndMetadata(world, i1, j1, k1, Blocks.cobblestone, 0);
+								break;
+							default:
+								break;
 						}
 					}
 					setGrassToDirt(world, i1, j1 - 1, k1);
@@ -91,7 +91,7 @@ public abstract class LOTRWorldGenTentBase extends LOTRWorldGenStructureBase2 {
 			}
 		}
 		for (int k12 = -3; k12 <= 3; ++k12) {
-			for (int i12 : new int[] { -2, 2 }) {
+			for (int i12 : new int[]{-2, 2}) {
 				for (int j12 = 1; j12 <= 2; ++j12) {
 					setBlockAndMetadata(world, i12, j12, k12, tentBlock, tentMeta);
 				}
@@ -123,7 +123,7 @@ public abstract class LOTRWorldGenTentBase extends LOTRWorldGenStructureBase2 {
 				setBlockAndMetadata(world, -1, 1, -1, fenceBlock, fenceMeta);
 				setBlockAndMetadata(world, -1, 1, 1, fenceBlock, fenceMeta);
 			} else {
-				this.placeChest(world, random, -1, 1, 0, 4, chestContents);
+				placeChest(world, random, -1, 1, 0, 4, chestContents);
 				setBlockAndMetadata(world, -1, 1, -1, Blocks.crafting_table, 0);
 				setGrassToDirt(world, -1, 0, -1);
 				setBlockAndMetadata(world, -1, 1, 1, tableBlock, 0);
@@ -135,7 +135,7 @@ public abstract class LOTRWorldGenTentBase extends LOTRWorldGenStructureBase2 {
 			setBlockAndMetadata(world, 1, 1, -1, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, 1, 1, 1, fenceBlock, fenceMeta);
 		} else {
-			this.placeChest(world, random, 1, 1, 0, 5, chestContents);
+			placeChest(world, random, 1, 1, 0, 5, chestContents);
 			setBlockAndMetadata(world, 1, 1, -1, Blocks.crafting_table, 0);
 			setGrassToDirt(world, 1, 0, -1);
 			setBlockAndMetadata(world, 1, 1, 1, tableBlock, 0);

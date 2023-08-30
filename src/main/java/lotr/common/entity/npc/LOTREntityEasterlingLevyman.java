@@ -9,16 +9,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTREntityEasterlingLevyman extends LOTREntityEasterling {
-	public static ItemStack[] levyWeapons = { new ItemStack(LOTRMod.daggerRhun), new ItemStack(LOTRMod.daggerRhunPoisoned), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.daggerBronze), new ItemStack(LOTRMod.swordRhun), new ItemStack(LOTRMod.battleaxeRhun), new ItemStack(Items.iron_sword), new ItemStack(LOTRMod.swordBronze), new ItemStack(LOTRMod.battleaxeIron), new ItemStack(LOTRMod.battleaxeBronze), new ItemStack(LOTRMod.spearRhun), new ItemStack(LOTRMod.spearIron), new ItemStack(LOTRMod.spearBronze) };
-	public static ItemStack[] levySpears = { new ItemStack(LOTRMod.spearRhun), new ItemStack(LOTRMod.spearIron), new ItemStack(LOTRMod.spearBronze) };
-	public static ItemStack[] levyBodies = { new ItemStack(Items.leather_chestplate), new ItemStack(LOTRMod.bodyBronze) };
-	public static ItemStack[] levyLegs = { new ItemStack(Items.leather_leggings), new ItemStack(LOTRMod.legsBronze) };
-	public static ItemStack[] levyBoots = { new ItemStack(Items.leather_boots), new ItemStack(LOTRMod.bootsBronze) };
-	public static int[] kaftanColors = { 14823729, 11862016, 5512477, 14196753, 11374145, 7366222 };
+	public static ItemStack[] levyWeapons = {new ItemStack(LOTRMod.daggerRhun), new ItemStack(LOTRMod.daggerRhunPoisoned), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.daggerBronze), new ItemStack(LOTRMod.swordRhun), new ItemStack(LOTRMod.battleaxeRhun), new ItemStack(Items.iron_sword), new ItemStack(LOTRMod.swordBronze), new ItemStack(LOTRMod.battleaxeIron), new ItemStack(LOTRMod.battleaxeBronze), new ItemStack(LOTRMod.spearRhun), new ItemStack(LOTRMod.spearIron), new ItemStack(LOTRMod.spearBronze)};
+	public static ItemStack[] levySpears = {new ItemStack(LOTRMod.spearRhun), new ItemStack(LOTRMod.spearIron), new ItemStack(LOTRMod.spearBronze)};
+	public static ItemStack[] levyBodies = {new ItemStack(Items.leather_chestplate), new ItemStack(LOTRMod.bodyBronze)};
+	public static ItemStack[] levyLegs = {new ItemStack(Items.leather_leggings), new ItemStack(LOTRMod.legsBronze)};
+	public static ItemStack[] levyBoots = {new ItemStack(Items.leather_boots), new ItemStack(LOTRMod.bootsBronze)};
+	public static int[] kaftanColors = {14823729, 11862016, 5512477, 14196753, 11374145, 7366222};
 
 	public LOTREntityEasterlingLevyman(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 	}
 
 	@Override

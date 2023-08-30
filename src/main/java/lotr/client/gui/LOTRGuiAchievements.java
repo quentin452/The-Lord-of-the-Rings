@@ -26,8 +26,8 @@ public class LOTRGuiAchievements extends LOTRGuiMenuBase {
 	public LOTRGuiButtonAchievements buttonCategoryNext;
 	public int totalTakenCount;
 	public int totalAvailableCount;
-	public float currentScroll = 0.0f;
-	public boolean isScrolling = false;
+	public float currentScroll;
+	public boolean isScrolling;
 	public boolean wasMouseDown;
 	public int catScrollAreaX0;
 	public int catScrollAreaX1;
@@ -57,7 +57,7 @@ public class LOTRGuiAchievements extends LOTRGuiMenuBase {
 		GL11.glEnable(32826);
 		GL11.glEnable(2903);
 		int size = currentCategoryTakenCount + currentCategoryUntakenCount;
-		int min = 0 + Math.round(currentScroll * (size - 4));
+		int min = Math.round(currentScroll * (size - 4));
 		int max = 3 + Math.round(currentScroll * (size - 4));
 		if (max > size - 1) {
 			max = size - 1;
@@ -75,7 +75,7 @@ public class LOTRGuiAchievements extends LOTRGuiMenuBase {
 			int offset = 47 + 50 * (i - min);
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			mc.getTextureManager().bindTexture(iconsTexture);
-			this.drawTexturedModalRect(guiLeft + 9, guiTop + offset, 0, hasAchievement ? 0 : 50, 190, 50);
+			drawTexturedModalRect(guiLeft + 9, guiTop + offset, 0, hasAchievement ? 0 : 50, 190, 50);
 			int iconLeft = guiLeft + 12;
 			int iconTop = guiTop + offset + 3;
 			GL11.glEnable(2896);
@@ -97,7 +97,7 @@ public class LOTRGuiAchievements extends LOTRGuiMenuBase {
 				continue;
 			}
 			mc.getTextureManager().bindTexture(iconsTexture);
-			this.drawTexturedModalRect(guiLeft + 179, guiTop + offset + 2, 190, 17, 16, 16);
+			drawTexturedModalRect(guiLeft + 179, guiTop + offset + 2, 190, 17, 16, 16);
 		}
 		GL11.glDisable(2929);
 		GL11.glEnable(3042);
@@ -143,12 +143,12 @@ public class LOTRGuiAchievements extends LOTRGuiMenuBase {
 		drawDefaultBackground();
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		mc.getTextureManager().bindTexture(pageTexture);
-		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		String title = StatCollector.translateToLocalFormatted("lotr.gui.achievements.title", currentDimension.getDimensionName(), totalTakenCount, totalAvailableCount);
-		this.drawCenteredString(title, guiLeft + xSize / 2, guiTop - 30, 16777215);
+		drawCenteredString(title, guiLeft + xSize / 2, guiTop - 30, 16777215);
 		String categoryName = currentCategory.getDisplayName();
 		categoryName = StatCollector.translateToLocalFormatted("lotr.gui.achievements.category", categoryName, currentCategoryTakenCount, currentCategoryTakenCount + currentCategoryUntakenCount);
-		this.drawCenteredString(categoryName, guiLeft + xSize / 2, guiTop + 28, 8019267);
+		drawCenteredString(categoryName, guiLeft + xSize / 2, guiTop + 28, 8019267);
 		buttonCategoryPrev.buttonCategory = getCategoryAtRelativeIndex(-1);
 		buttonCategoryNext.buttonCategory = getCategoryAtRelativeIndex(1);
 		super.drawScreen(i, j, f);
@@ -156,7 +156,7 @@ public class LOTRGuiAchievements extends LOTRGuiMenuBase {
 		int catScrollX = catScrollCentre - 76;
 		int catScrollY = guiTop + 13;
 		mc.getTextureManager().bindTexture(iconsTexture);
-		this.drawTexturedModalRect(catScrollX, catScrollY, 0, 100, 152, 10);
+		drawTexturedModalRect(catScrollX, catScrollY, 0, 100, 152, 10);
 		catScrollAreaX0 = catScrollX;
 		catScrollAreaX1 = catScrollX + 152;
 		catScrollAreaY0 = catScrollY;
@@ -186,27 +186,27 @@ public class LOTRGuiAchievements extends LOTRGuiMenuBase {
 			float[] catColors = thisCategory.getCategoryRGB();
 			mc.getTextureManager().bindTexture(iconsTexture);
 			GL11.glColor4f(catColors[0], catColors[1], catColors[2], 1.0f);
-			this.drawTexturedModalRect(catX0, catY0, catX0 - catScrollAreaX0 + 0, 100, catX1 - catX0, catY1 - catY0);
+			drawTexturedModalRect(catX0, catY0, catX0 - catScrollAreaX0, 100, catX1 - catX0, catY1 - catY0);
 		}
 		mc.getTextureManager().bindTexture(iconsTexture);
-		this.drawTexturedModalRect(catScrollX, catScrollY, 0, 110, 152, 10);
+		drawTexturedModalRect(catScrollX, catScrollY, 0, 110, 152, 10);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		mc.getTextureManager().bindTexture(iconsTexture);
 		if (hasScrollBar()) {
 			int offset = (int) (currentScroll * 181.0f);
-			this.drawTexturedModalRect(scrollBarX0, scrollBarY0 + offset, 190, 0, 10, 17);
+			drawTexturedModalRect(scrollBarX0, scrollBarY0 + offset, 190, 0, 10, 17);
 		} else {
-			this.drawTexturedModalRect(scrollBarX0, scrollBarY0, 200, 0, 10, 17);
+			drawTexturedModalRect(scrollBarX0, scrollBarY0, 200, 0, 10, 17);
 		}
 		drawAchievements(i, j);
 	}
 
 	public LOTRAchievement.Category getCategoryAtRelativeIndex(int i) {
-		List<LOTRAchievement.Category> categories = LOTRGuiAchievements.currentDimension.achievementCategories;
+		List<LOTRAchievement.Category> categories = currentDimension.achievementCategories;
 		int index = categories.indexOf(currentCategory);
 		index += i;
-		index = IntMath.mod(index, LOTRGuiAchievements.currentDimension.achievementCategories.size());
-		return LOTRGuiAchievements.currentDimension.achievementCategories.get(index);
+		index = IntMath.mod(index, currentDimension.achievementCategories.size());
+		return currentDimension.achievementCategories.get(index);
 	}
 
 	@Override
@@ -221,7 +221,7 @@ public class LOTRGuiAchievements extends LOTRGuiMenuBase {
 			if (i < 0) {
 				i = -1;
 			}
-			currentScroll = (float) (currentScroll - (double) i / (double) j);
+			currentScroll = (float) (currentScroll - (double) i / j);
 			if (currentScroll < 0.0f) {
 				currentScroll = 0.0f;
 			}
@@ -263,12 +263,12 @@ public class LOTRGuiAchievements extends LOTRGuiMenuBase {
 	public void updateAchievementLists() {
 		currentDimension = LOTRDimension.getCurrentDimensionWithFallback(mc.theWorld);
 		if (currentDimension != prevDimension) {
-			currentCategory = LOTRGuiAchievements.currentDimension.achievementCategories.get(0);
+			currentCategory = currentDimension.achievementCategories.get(0);
 		}
 		prevDimension = currentDimension;
 		currentCategoryTakenAchievements.clear();
 		currentCategoryUntakenAchievements.clear();
-		for (LOTRAchievement achievement : LOTRGuiAchievements.currentCategory.list) {
+		for (LOTRAchievement achievement : currentCategory.list) {
 			if (!achievement.canPlayerEarn(mc.thePlayer)) {
 				continue;
 			}
@@ -282,15 +282,15 @@ public class LOTRGuiAchievements extends LOTRGuiMenuBase {
 		currentCategoryUntakenCount = currentCategoryUntakenAchievements.size();
 		totalTakenCount = LOTRLevelData.getData(mc.thePlayer).getEarnedAchievements(currentDimension).size();
 		totalAvailableCount = 0;
-		for (LOTRAchievement achievement : LOTRGuiAchievements.currentDimension.allAchievements) {
+		for (LOTRAchievement achievement : currentDimension.allAchievements) {
 			if (!achievement.canPlayerEarn(mc.thePlayer)) {
 				continue;
 			}
 			++totalAvailableCount;
 		}
 		Comparator<LOTRAchievement> sorter = LOTRAchievement.sortForDisplay(mc.thePlayer);
-		Collections.sort(currentCategoryTakenAchievements, sorter);
-		Collections.sort(currentCategoryUntakenAchievements, sorter);
+		currentCategoryTakenAchievements.sort(sorter);
+		currentCategoryUntakenAchievements.sort(sorter);
 	}
 
 	@Override

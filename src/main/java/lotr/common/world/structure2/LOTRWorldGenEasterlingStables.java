@@ -25,7 +25,7 @@ public class LOTRWorldGenEasterlingStables extends LOTRWorldGenEasterlingStructu
 		int j1;
 		int k12;
 		int i2;
-		this.setOriginAndRotation(world, i, j, k, rotation, 1);
+		setOriginAndRotation(world, i, j, k, rotation, 1);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -99,11 +99,11 @@ public class LOTRWorldGenEasterlingStables extends LOTRWorldGenEasterlingStructu
 				k2 = IntMath.mod(k1, 4);
 				if (i2 >= 5 && i2 <= 7) {
 					if (k1 == 0) {
-						setBlockAndMetadata(world, i12, 1, k1, plankStairBlock, 3);
-						setBlockAndMetadata(world, i12, 2, k1, plankStairBlock, 2);
+						setBlockAndMetadata(world, i12, 1, 0, plankStairBlock, 3);
+						setBlockAndMetadata(world, i12, 2, 0, plankStairBlock, 2);
 					} else if (k1 == 12) {
-						setBlockAndMetadata(world, i12, 1, k1, plankStairBlock, 2);
-						setBlockAndMetadata(world, i12, 2, k1, plankStairBlock, 3);
+						setBlockAndMetadata(world, i12, 1, 12, plankStairBlock, 2);
+						setBlockAndMetadata(world, i12, 2, 12, plankStairBlock, 3);
 					} else if (k2 == 0) {
 						setBlockAndMetadata(world, i12, 1, k1, plankBlock, plankMeta);
 						setBlockAndMetadata(world, i12, 2, k1, plankBlock, plankMeta);
@@ -111,15 +111,15 @@ public class LOTRWorldGenEasterlingStables extends LOTRWorldGenEasterlingStructu
 						int randomGround = random.nextInt(2);
 						if (randomGround == 0) {
 							setBlockAndMetadata(world, i12, 0, k1, Blocks.dirt, 1);
-						} else if (randomGround == 1) {
+						} else {
 							setBlockAndMetadata(world, i12, 0, k1, LOTRMod.dirtPath, 1);
 						}
 					}
 				}
 				if (i2 >= 1 && i2 <= 3 && k1 == 12) {
-					setBlockAndMetadata(world, i12, 1, k1, plankStairBlock, 2);
-					setBlockAndMetadata(world, i12, 2, k1, plankStairBlock, 3);
-					setBlockAndMetadata(world, i12, 3, k1, fenceBlock, fenceMeta);
+					setBlockAndMetadata(world, i12, 1, 12, plankStairBlock, 2);
+					setBlockAndMetadata(world, i12, 2, 12, plankStairBlock, 3);
+					setBlockAndMetadata(world, i12, 3, 12, fenceBlock, fenceMeta);
 				}
 				if (i2 == 4 && k2 != 0) {
 					setBlockAndMetadata(world, i12, 1, k1, fenceGateBlock, i12 > 0 ? 1 : 3);
@@ -180,7 +180,7 @@ public class LOTRWorldGenEasterlingStables extends LOTRWorldGenEasterlingStructu
 			}
 			setBlockAndMetadata(world, 8, 4, k12, roofStairBlock, 0);
 		}
-		for (int k13 : new int[] { -1, 13 }) {
+		for (int k13 : new int[]{-1, 13}) {
 			setBlockAndMetadata(world, -8, 3, k13, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, -4, 4, k13, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, 0, 5, k13, fenceBlock, fenceMeta);
@@ -198,8 +198,8 @@ public class LOTRWorldGenEasterlingStables extends LOTRWorldGenEasterlingStructu
 		spawnItemFrame(world, 0, 4, -1, 2, new ItemStack(Items.saddle));
 		spawnItemFrame(world, 0, 4, -1, 1, new ItemStack(Items.saddle));
 		spawnItemFrame(world, 0, 4, -1, 3, new ItemStack(Items.saddle));
-		this.placeChest(world, random, -3, 1, 4, 4, chestContents);
-		this.placeChest(world, random, 3, 1, 4, 5, chestContents);
+		placeChest(world, random, -3, 1, 4, 4, chestContents);
+		placeChest(world, random, 3, 1, 4, 5, chestContents);
 		setBlockAndMetadata(world, 0, 1, 4, plankStairBlock, 2);
 		setBlockAndMetadata(world, 0, 1, 5, Blocks.cauldron, 3);
 		setBlockAndMetadata(world, 0, 1, 6, Blocks.cauldron, 3);

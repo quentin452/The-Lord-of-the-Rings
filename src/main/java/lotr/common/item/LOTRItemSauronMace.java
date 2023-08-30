@@ -2,6 +2,7 @@ package lotr.common.item;
 
 import java.util.List;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.*;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.network.*;
@@ -33,7 +34,7 @@ public class LOTRItemSauronMace extends LOTRItemHammer implements LOTRStoryItem 
 	@Override
 	public ItemStack onEaten(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		itemstack.damageItem(2, entityplayer);
-		return LOTRItemSauronMace.useSauronMace(itemstack, world, entityplayer);
+		return useSauronMace(itemstack, world, entityplayer);
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class LOTRItemSauronMace extends LOTRItemHammer implements LOTRStoryItem 
 					entity.addVelocity(-MathHelper.sin(user.rotationYaw * 3.1415927f / 180.0f) * 0.7f * knockback, 0.2 + 0.12 * knockback, MathHelper.cos(user.rotationYaw * 3.1415927f / 180.0f) * 0.7f * knockback);
 				}
 			}
-			LOTRPacketWeaponFX packet = new LOTRPacketWeaponFX(LOTRPacketWeaponFX.Type.MACE_SAURON, user);
+			IMessage packet = new LOTRPacketWeaponFX(LOTRPacketWeaponFX.Type.MACE_SAURON, user);
 			LOTRPacketHandler.networkWrapper.sendToAllAround(packet, LOTRPacketHandler.nearEntity(user, 64.0));
 		}
 		return itemstack;

@@ -16,7 +16,7 @@ import net.minecraft.world.*;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class LOTRBlockAnimalJar extends BlockContainer {
-	public LOTRBlockAnimalJar(Material material) {
+	protected LOTRBlockAnimalJar(Material material) {
 		super(material);
 		setCreativeTab(LOTRCreativeTabs.tabDeco);
 	}
@@ -98,7 +98,7 @@ public abstract class LOTRBlockAnimalJar extends BlockContainer {
 		if (entityplayer.capabilities.isCreativeMode) {
 			world.setBlockMetadataWithNotify(i, j, k, meta |= 8, 4);
 		}
-		this.dropBlockAsItem(world, i, j, k, meta, 0);
+		dropBlockAsItem(world, i, j, k, meta, 0);
 		super.onBlockHarvested(world, i, j, k, meta, entityplayer);
 	}
 
@@ -106,7 +106,7 @@ public abstract class LOTRBlockAnimalJar extends BlockContainer {
 	public void onNeighborBlockChange(World world, int i, int j, int k, Block block) {
 		if (!canBlockStay(world, i, j, k)) {
 			int meta = world.getBlockMetadata(i, j, k);
-			this.dropBlockAsItem(world, i, j, k, meta, 0);
+			dropBlockAsItem(world, i, j, k, meta, 0);
 			world.setBlockToAir(i, j, k);
 		}
 	}

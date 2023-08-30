@@ -48,9 +48,9 @@ public class LOTREntityMallornEntSummonFX extends EntityDiggingFX {
 			setDead();
 			return;
 		}
-		double[] posA = { summoner.posX, summoner.boundingBox.minY + summoner.height * 0.7, summoner.posZ };
-		double[] posC = { summoned.posX, summoned.boundingBox.minY + summoned.height * 0.7, summoned.posZ };
-		double[] posB = { (posA[0] + posC[0]) / 2.0, (posA[1] + posC[1]) / 2.0 + 20.0, (posA[2] + posC[2]) / 2.0 };
+		double[] posA = {summoner.posX, summoner.boundingBox.minY + summoner.height * 0.7, summoner.posZ};
+		double[] posC = {summoned.posX, summoned.boundingBox.minY + summoned.height * 0.7, summoned.posZ};
+		double[] posB = {(posA[0] + posC[0]) / 2.0, (posA[1] + posC[1]) / 2.0 + 20.0, (posA[2] + posC[2]) / 2.0};
 		double[] ab = lerp(posA, posB, arcParam);
 		double[] bc = lerp(posB, posC, arcParam);
 		double[] abbc = lerp(ab, bc, arcParam);

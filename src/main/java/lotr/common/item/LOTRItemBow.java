@@ -25,7 +25,7 @@ public class LOTRItemBow extends ItemBow {
 	public Item.ToolMaterial bowMaterial;
 	public double arrowDamageFactor;
 	public int bowPullTime;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] bowPullIcons;
 
 	public LOTRItemBow(Item.ToolMaterial material) {
@@ -51,7 +51,7 @@ public class LOTRItemBow extends ItemBow {
 	public BowState getBowState(EntityLivingBase entity, ItemStack usingItem, int useRemaining) {
 		if (entity instanceof EntityPlayer && usingItem != null && usingItem.getItem() == this) {
 			int ticksInUse = usingItem.getMaxItemUseDuration() - useRemaining;
-			double useAmount = (double) ticksInUse / (double) bowPullTime;
+			double useAmount = (double) ticksInUse / bowPullTime;
 			if (useAmount >= 0.9) {
 				return BowState.PULL_2;
 			}
@@ -65,7 +65,7 @@ public class LOTRItemBow extends ItemBow {
 		return BowState.HELD;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(ItemStack itemstack, int renderPass, EntityPlayer entityplayer, ItemStack usingItem, int useRemaining) {
 		BowState bowState = getBowState(entityplayer, usingItem, useRemaining);
@@ -94,7 +94,7 @@ public class LOTRItemBow extends ItemBow {
 
 	@Override
 	public boolean getIsRepairable(ItemStack itemstack, ItemStack repairItem) {
-		return repairItem.getItem() == Items.string ? true : super.getIsRepairable(itemstack, repairItem);
+		return repairItem.getItem() == Items.string || super.getIsRepairable(itemstack, repairItem);
 	}
 
 	@Override
@@ -138,29 +138,29 @@ public class LOTRItemBow extends ItemBow {
 			arrowItem = new ItemStack(Items.arrow);
 		}
 		if (arrowItem != null) {
-			float charge = (float) useTick / (float) getMaxDrawTime();
+			float charge = (float) useTick / bowPullTime;
 			if (charge < 0.65f) {
 				return;
 			}
 			charge = (charge * charge + charge * 2.0f) / 3.0f;
 			charge = Math.min(charge, 1.0f);
-			EntityArrow arrow = arrowItem.getItem() == LOTRMod.arrowPoisoned ? new LOTREntityArrowPoisoned(world, entityplayer, charge * 2.0f * LOTRItemBow.getLaunchSpeedFactor(itemstack)) : new EntityArrow(world, entityplayer, charge * 2.0f * LOTRItemBow.getLaunchSpeedFactor(itemstack));
+			EntityArrow arrow = arrowItem.getItem() == LOTRMod.arrowPoisoned ? new LOTREntityArrowPoisoned(world, entityplayer, charge * 2.0f * getLaunchSpeedFactor(itemstack)) : new EntityArrow(world, entityplayer, charge * 2.0f * getLaunchSpeedFactor(itemstack));
 			if (arrow.getDamage() < 1.0) {
 				arrow.setDamage(1.0);
 			}
 			if (charge >= 1.0f) {
 				arrow.setIsCritical(true);
 			}
-			LOTRItemBow.applyBowModifiers(arrow, itemstack);
+			applyBowModifiers(arrow, itemstack);
 			itemstack.damageItem(1, entityplayer);
 			world.playSoundAtEntity(entityplayer, "random.bow", 1.0f, 1.0f / (itemRand.nextFloat() * 0.4f + 1.2f) + charge * 0.5f);
-			if (!shouldConsume) {
-				arrow.canBePickedUp = 2;
-			} else if (arrowSlot >= 0) {
+			if (shouldConsume) {
 				--arrowItem.stackSize;
 				if (arrowItem.stackSize <= 0) {
 					entityplayer.inventory.mainInventory[arrowSlot] = null;
 				}
+			} else {
+				arrow.canBePickedUp = 2;
 			}
 			if (!world.isRemote) {
 				world.spawnEntityInWorld(arrow);
@@ -168,7 +168,7 @@ public class LOTRItemBow extends ItemBow {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerIcons(IIconRegister iconregister) {
 		itemIcon = iconregister.registerIcon(getIconString());

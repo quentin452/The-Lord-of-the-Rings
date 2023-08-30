@@ -1,7 +1,7 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelRhino;
-import lotr.common.entity.animal.LOTREntityRhino;
+import lotr.common.entity.npc.LOTRNPCMount;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
@@ -17,13 +17,13 @@ public class LOTRRenderRhino extends RenderLiving {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityRhino rhino = (LOTREntityRhino) entity;
+		LOTRNPCMount rhino = (LOTRNPCMount) entity;
 		return LOTRRenderHorse.getLayeredMountTexture(rhino, rhinoTexture);
 	}
 
 	@Override
 	public int shouldRenderPass(EntityLivingBase entity, int pass, float f) {
-		if (pass == 0 && ((LOTREntityRhino) entity).isMountSaddled()) {
+		if (pass == 0 && ((LOTRNPCMount) entity).isMountSaddled()) {
 			bindTexture(saddleTexture);
 			return 1;
 		}

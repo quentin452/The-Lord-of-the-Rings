@@ -18,7 +18,7 @@ public class LOTRWorldGenNomadChieftainTent extends LOTRWorldGenNomadStructure {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 9);
+		setOriginAndRotation(world, i, j, k, rotation, 9);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -44,8 +44,6 @@ public class LOTRWorldGenNomadChieftainTent extends LOTRWorldGenNomadStructure {
 		}
 		for (int i1 = -12; i1 <= 12; ++i1) {
 			for (int k1 = -8; k1 <= 8; ++k1) {
-				Math.abs(i1);
-				Math.abs(k1);
 				if (!isSurface(world, i1, 0, k1)) {
 					laySandBase(world, i1, 0, k1);
 				}
@@ -74,14 +72,14 @@ public class LOTRWorldGenNomadChieftainTent extends LOTRWorldGenNomadStructure {
 		setBlockAndMetadata(world, 5, 1, 5, bedBlock, 8);
 		setBlockAndMetadata(world, 6, 1, 4, bedBlock, 0);
 		setBlockAndMetadata(world, 6, 1, 5, bedBlock, 8);
-		this.placeChest(world, random, -11, 1, 0, LOTRMod.chestBasket, 4, LOTRChestContents.NOMAD_TENT);
-		this.placeChest(world, random, 11, 1, 0, LOTRMod.chestBasket, 5, LOTRChestContents.NOMAD_TENT);
+		placeChest(world, random, -11, 1, 0, LOTRMod.chestBasket, 4, LOTRChestContents.NOMAD_TENT);
+		placeChest(world, random, 11, 1, 0, LOTRMod.chestBasket, 5, LOTRChestContents.NOMAD_TENT);
 		placeWeaponRack(world, -5, 3, -5, 4, getRandomUmbarWeapon(random));
 		placeWeaponRack(world, 5, 3, -5, 4, getRandomUmbarWeapon(random));
-		this.placeMug(world, random, -4, 2, -5, 2, LOTRFoods.NOMAD_DRINK);
+		placeMug(world, random, -4, 2, -5, 2, LOTRFoods.NOMAD_DRINK);
 		placePlateWithCertainty(world, random, -6, 2, -5, LOTRMod.ceramicPlateBlock, LOTRFoods.NOMAD);
 		placePlateWithCertainty(world, random, 6, 2, -5, LOTRMod.ceramicPlateBlock, LOTRFoods.NOMAD);
-		this.placeMug(world, random, 4, 2, -5, 2, LOTRFoods.NOMAD_DRINK);
+		placeMug(world, random, 4, 2, -5, 2, LOTRFoods.NOMAD_DRINK);
 		placeWallBanner(world, 0, 3, 7, LOTRItemBanner.BannerType.NEAR_HARAD, 2);
 		placeWallBanner(world, -5, 4, 6, LOTRItemBanner.BannerType.HARAD_NOMAD, 2);
 		placeWallBanner(world, 5, 4, 6, LOTRItemBanner.BannerType.HARAD_NOMAD, 2);
@@ -98,10 +96,10 @@ public class LOTRWorldGenNomadChieftainTent extends LOTRWorldGenNomadStructure {
 			warrior.spawnRidingHorse = false;
 			spawnNPCAndSetHome(warrior, world, random.nextBoolean() ? -6 : 6, 1, 0, 8);
 		}
-		for (int i1 : new int[] { -5, 5 }) {
+		for (int i1 : new int[]{-5, 5}) {
 			int j12 = 1;
 			int k1 = -8;
-			if (!isOpaque(world, i1, j12 - 1, k1) || !isAir(world, i1, j12, k1)) {
+			if (!isOpaque(world, i1, 0, k1) || !isAir(world, i1, j12, k1)) {
 				continue;
 			}
 			setBlockAndMetadata(world, i1, j12, k1, fenceBlock, fenceMeta);

@@ -1,6 +1,7 @@
 package lotr.common.entity.npc;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.zip.*;
 
@@ -15,16 +16,16 @@ public class LOTRNames {
 	public static Map<String, String[]> allNameBanks = new HashMap<>();
 
 	public static void changeHobbitSurnameForMarriage(LOTREntityHobbit maleHobbit, LOTREntityHobbit femaleHobbit) {
-		String surname = maleHobbit.getNPCName().substring(maleHobbit.getNPCName().indexOf(" ") + 1);
-		String femaleFirstName = femaleHobbit.getNPCName().substring(0, femaleHobbit.getNPCName().indexOf(" "));
+		String surname = maleHobbit.getNPCName().substring(maleHobbit.getNPCName().indexOf(' ') + 1);
+		String femaleFirstName = femaleHobbit.getNPCName().substring(0, femaleHobbit.getNPCName().indexOf(' '));
 		femaleHobbit.familyInfo.setName(femaleFirstName + " " + surname);
 	}
 
 	public static String[] getBreeCoupleAndHomeNames(Random rand) {
 		String[] names = new String[4];
-		String surname = LOTRNames.getRandomName("bree_surname", rand);
-		String maleName = LOTRNames.getRandomName("bree_male", rand);
-		String femaleName = LOTRNames.getRandomName("bree_female", rand);
+		String surname = getRandomName("bree_surname", rand);
+		String maleName = getRandomName("bree_male", rand);
+		String femaleName = getRandomName("bree_female", rand);
 		names[0] = maleName + " " + surname;
 		names[1] = femaleName + " " + surname;
 		names[2] = surname;
@@ -33,17 +34,17 @@ public class LOTRNames {
 	}
 
 	public static String getBreeHobbitChildNameForParent(Random rand, boolean male, LOTREntityHobbit parent) {
-		String name = LOTRNames.getBreeHobbitForename(rand, male);
-		String surname = parent.getNPCName().substring(parent.getNPCName().indexOf(" ") + 1);
+		String name = getBreeHobbitForename(rand, male);
+		String surname = parent.getNPCName().substring(parent.getNPCName().indexOf(' ') + 1);
 		return name + " " + surname;
 	}
 
 	public static String[] getBreeHobbitCoupleAndHomeNames(Random rand) {
 		String[] names = new String[4];
-		String surname = LOTRNames.getBreeHobbitSurname(rand);
-		String maleName = LOTRNames.getBreeHobbitForename(rand, true);
-		String femaleName = LOTRNames.getBreeHobbitForename(rand, false);
-		String homeName = LOTRNames.getRandomName("hobbit_home", rand);
+		String surname = getBreeHobbitSurname(rand);
+		String maleName = getBreeHobbitForename(rand, true);
+		String femaleName = getBreeHobbitForename(rand, false);
+		String homeName = getRandomName("hobbit_home", rand);
 		names[0] = maleName + " " + surname;
 		names[1] = femaleName + " " + surname;
 		names[2] = surname;
@@ -54,36 +55,36 @@ public class LOTRNames {
 	public static String getBreeHobbitForename(Random rand, boolean male) {
 		boolean shirelike;
 		shirelike = rand.nextInt(3) == 0;
-		return LOTRNames.getRandomName(shirelike ? male ? "hobbit_male" : "hobbit_female" : male ? "bree_male" : "bree_female", rand);
+		return getRandomName(shirelike ? male ? "hobbit_male" : "hobbit_female" : male ? "bree_male" : "bree_female", rand);
 	}
 
 	public static String getBreeHobbitName(Random rand, boolean male) {
-		String name = LOTRNames.getBreeHobbitForename(rand, male);
-		String surname = LOTRNames.getBreeHobbitSurname(rand);
+		String name = getBreeHobbitForename(rand, male);
+		String surname = getBreeHobbitSurname(rand);
 		return name + " " + surname;
 	}
 
 	public static String getBreeHobbitSurname(Random rand) {
 		boolean shirelike = rand.nextInt(3) == 0;
-		return LOTRNames.getRandomName(shirelike ? "hobbit_surname" : "bree_surname", rand);
+		return getRandomName(shirelike ? "hobbit_surname" : "bree_surname", rand);
 	}
 
 	public static String[] getBreeInnName(Random rand) {
-		String prefix = LOTRNames.getRandomName("breeInn_prefix", rand);
-		String suffix = LOTRNames.getRandomName("breeInn_suffix", rand);
-		return new String[] { prefix, suffix };
+		String prefix = getRandomName("breeInn_prefix", rand);
+		String suffix = getRandomName("breeInn_suffix", rand);
+		return new String[]{prefix, suffix};
 	}
 
 	public static String getBreeName(Random rand, boolean male) {
-		String name = LOTRNames.getRandomName(male ? "bree_male" : "bree_female", rand);
-		String surname = LOTRNames.getRandomName("bree_surname", rand);
+		String name = getRandomName(male ? "bree_male" : "bree_female", rand);
+		String surname = getRandomName("bree_surname", rand);
 		return name + " " + surname;
 	}
 
 	public static String[] getBreeRuffianSign(Random rand) {
 		String[] sign = new String[4];
 		Arrays.fill(sign, "");
-		String text = LOTRNames.getRandomName("bree_ruffian_sign", rand);
+		String text = getRandomName("bree_ruffian_sign", rand);
 		String[] split = text.split("#");
 		sign[1] = split[0];
 		sign[2] = split.length < 2 ? "" : split[1];
@@ -91,109 +92,109 @@ public class LOTRNames {
 	}
 
 	public static String[] getDaleBakeryName(Random rand, String name) {
-		String title = LOTRNames.getRandomName("dale_bakery", rand);
-		return new String[] { name + "'s", title };
+		String title = getRandomName("dale_bakery", rand);
+		return new String[]{name + "'s", title};
 	}
 
 	public static String getDalishName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "dale_male" : "dale_female", rand);
+		return getRandomName(male ? "dale_male" : "dale_female", rand);
 	}
 
 	public static String getDorwinionName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "dorwinion_male" : "dorwinion_female", rand);
+		return getRandomName(male ? "dorwinion_male" : "dorwinion_female", rand);
 	}
 
 	public static String getDunlendingName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "dunlending_male" : "dunlending_female", rand);
+		return getRandomName(male ? "dunlending_male" : "dunlending_female", rand);
 	}
 
 	public static String[] getDunlendingTavernName(Random rand) {
-		String prefix = LOTRNames.getRandomName("dunlendingTavern_prefix", rand);
-		String suffix = LOTRNames.getRandomName("dunlendingTavern_suffix", rand);
-		return new String[] { prefix, suffix };
+		String prefix = getRandomName("dunlendingTavern_prefix", rand);
+		String suffix = getRandomName("dunlendingTavern_suffix", rand);
+		return new String[]{prefix, suffix};
 	}
 
 	public static String getDwarfChildNameForParent(Random rand, boolean male, LOTREntityDwarf parent) {
-		String name = LOTRNames.getRandomName(male ? "dwarf_male" : "dwarf_female", rand);
+		String name = getRandomName(male ? "dwarf_male" : "dwarf_female", rand);
 		String parentName = parent.getNPCName();
-		parentName = parentName.substring(0, parentName.indexOf(" "));
+		parentName = parentName.substring(0, parentName.indexOf(' '));
 		return name + (male ? " son of " : " daughter of ") + parentName;
 	}
 
 	public static String getDwarfName(Random rand, boolean male) {
-		String name = LOTRNames.getRandomName(male ? "dwarf_male" : "dwarf_female", rand);
-		String parentName = LOTRNames.getRandomName("dwarf_male", rand);
+		String name = getRandomName(male ? "dwarf_male" : "dwarf_female", rand);
+		String parentName = getRandomName("dwarf_male", rand);
 		return name + (male ? " son of " : " daughter of ") + parentName;
 	}
 
 	public static String getEntName(Random rand) {
-		String prefix = LOTRNames.getRandomName("ent_prefix", rand);
-		String suffix = LOTRNames.getRandomName("ent_suffix", rand);
+		String prefix = getRandomName("ent_prefix", rand);
+		String suffix = getRandomName("ent_suffix", rand);
 		return prefix + suffix;
 	}
 
 	public static String getGondorName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "gondor_male" : "gondor_female", rand);
+		return getRandomName(male ? "gondor_male" : "gondor_female", rand);
 	}
 
 	public static String[] getGondorTavernName(Random rand) {
-		String prefix = LOTRNames.getRandomName("gondorTavern_prefix", rand);
-		String suffix = LOTRNames.getRandomName("gondorTavern_suffix", rand);
-		return new String[] { prefix, suffix };
+		String prefix = getRandomName("gondorTavern_prefix", rand);
+		String suffix = getRandomName("gondorTavern_suffix", rand);
+		return new String[]{prefix, suffix};
 	}
 
 	public static String[] getGondorVillageName(Random rand) {
 		String suffix;
 		String welcome = "Welcome to";
-		String prefix = LOTRNames.getRandomName("gondorVillage_prefix", rand);
-		if (prefix.endsWith((suffix = LOTRNames.getRandomName("gondorVillage_suffix", rand)).substring(0, 1))) {
+		String prefix = getRandomName("gondorVillage_prefix", rand);
+		if (prefix.endsWith((suffix = getRandomName("gondorVillage_suffix", rand)).substring(0, 1))) {
 			suffix = suffix.substring(1);
 		}
 		String name = prefix + suffix;
-		String date = LOTRNames.getRandomVillageDate(rand, 50, 5000, 1500);
+		String date = getRandomVillageDate(rand, 50, 5000, 1500);
 		String est = "est. " + date;
-		return new String[] { welcome, name, "", est };
+		return new String[]{welcome, name, "", est};
 	}
 
 	public static String getGulfHaradName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "gulf_male" : "gulf_female", rand);
+		return getRandomName(male ? "gulf_male" : "gulf_female", rand);
 	}
 
 	public static String[] getHaradTavernName(Random rand) {
-		String prefix = LOTRNames.getRandomName("haradTavern_prefix", rand);
-		String suffix = LOTRNames.getRandomName("haradTavern_suffix", rand);
-		return new String[] { prefix, suffix };
+		String prefix = getRandomName("haradTavern_prefix", rand);
+		String suffix = getRandomName("haradTavern_suffix", rand);
+		return new String[]{prefix, suffix};
 	}
 
 	public static String[] getHaradVillageName(Random rand) {
 		String suffix;
 		String welcome = "Welcome to";
-		String prefix = LOTRNames.getRandomName("haradVillage_prefix", rand);
-		if (prefix.endsWith((suffix = LOTRNames.getRandomName("haradVillage_suffix", rand)).substring(0, 1))) {
+		String prefix = getRandomName("haradVillage_prefix", rand);
+		if (prefix.endsWith((suffix = getRandomName("haradVillage_suffix", rand)).substring(0, 1))) {
 			suffix = suffix.substring(1);
 		}
 		String name = prefix + suffix;
-		String date = LOTRNames.getRandomVillageDate(rand, 50, 4000, 1000);
+		String date = getRandomVillageDate(rand, 50, 4000, 1000);
 		String est = "est. " + date;
-		return new String[] { welcome, name, "", est };
+		return new String[]{welcome, name, "", est};
 	}
 
 	public static String getHarnennorName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "nearHaradrim_male" : "nearHaradrim_female", rand);
+		return getRandomName(male ? "nearHaradrim_male" : "nearHaradrim_female", rand);
 	}
 
 	public static String getHobbitChildNameForParent(Random rand, boolean male, LOTREntityHobbit parent) {
-		String name = LOTRNames.getHobbitForename(rand, male);
-		String surname = parent.getNPCName().substring(parent.getNPCName().indexOf(" ") + 1);
+		String name = getHobbitForename(rand, male);
+		String surname = parent.getNPCName().substring(parent.getNPCName().indexOf(' ') + 1);
 		return name + " " + surname;
 	}
 
 	public static String[] getHobbitCoupleAndHomeNames(Random rand) {
 		String[] names = new String[4];
-		String surname = LOTRNames.getHobbitSurname(rand);
-		String maleName = LOTRNames.getHobbitForename(rand, true);
-		String femaleName = LOTRNames.getHobbitForename(rand, false);
-		String homeName = LOTRNames.getRandomName("hobbit_home", rand);
+		String surname = getHobbitSurname(rand);
+		String maleName = getHobbitForename(rand, true);
+		String femaleName = getHobbitForename(rand, false);
+		String homeName = getRandomName("hobbit_home", rand);
 		names[0] = maleName + " " + surname;
 		names[1] = femaleName + " " + surname;
 		names[2] = surname;
@@ -202,19 +203,19 @@ public class LOTRNames {
 	}
 
 	public static String getHobbitForename(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "hobbit_male" : "hobbit_female", rand);
+		return getRandomName(male ? "hobbit_male" : "hobbit_female", rand);
 	}
 
 	public static String getHobbitName(Random rand, boolean male) {
-		String name = LOTRNames.getHobbitForename(rand, male);
-		String surname = LOTRNames.getHobbitSurname(rand);
+		String name = getHobbitForename(rand, male);
+		String surname = getHobbitSurname(rand);
 		return name + " " + surname;
 	}
 
 	public static String[] getHobbitSign(Random rand) {
 		String[] sign = new String[4];
 		Arrays.fill(sign, "");
-		String text = LOTRNames.getRandomName("hobbit_sign", rand);
+		String text = getRandomName("hobbit_sign", rand);
 		String[] split = text.split("#");
 		sign[1] = split[0];
 		sign[2] = split.length < 2 ? "" : split[1];
@@ -226,19 +227,19 @@ public class LOTRNames {
 	}
 
 	public static String getHobbitSurname(Random rand) {
-		return LOTRNames.getRandomName("hobbit_surname", rand);
+		return getRandomName("hobbit_surname", rand);
 	}
 
 	public static String[] getHobbitTavernName(Random rand) {
-		String prefix = LOTRNames.getRandomName("hobbitTavern_prefix", rand);
-		String suffix = LOTRNames.getRandomName("hobbitTavern_suffix", rand);
-		return new String[] { prefix, suffix };
+		String prefix = getRandomName("hobbitTavern_prefix", rand);
+		String suffix = getRandomName("hobbitTavern_suffix", rand);
+		return new String[]{prefix, suffix};
 	}
 
 	public static String[] getHobbitTavernQuote(Random rand) {
 		String[] sign = new String[4];
 		Arrays.fill(sign, "");
-		String text = LOTRNames.getRandomName("hobbitTavern_quote", rand);
+		String text = getRandomName("hobbitTavern_quote", rand);
 		String[] split = text.split("#");
 		for (int l = 0; l < sign.length && l < split.length; ++l) {
 			sign[l] = split[l];
@@ -247,7 +248,7 @@ public class LOTRNames {
 	}
 
 	public static String getMoredainName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "moredain_male" : "moredain_female", rand);
+		return getRandomName(male ? "moredain_male" : "moredain_female", rand);
 	}
 
 	public static String[] getNameBank(String nameBankName) {
@@ -255,26 +256,26 @@ public class LOTRNames {
 	}
 
 	public static String getNomadName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "nomad_male" : "nomad_female", rand);
+		return getRandomName(male ? "nomad_male" : "nomad_female", rand);
 	}
 
 	public static String getOrcName(Random rand) {
-		String prefix = LOTRNames.getRandomName("orc_prefix", rand);
-		String suffix = LOTRNames.getRandomName("orc_suffix", rand);
+		String prefix = getRandomName("orc_prefix", rand);
+		String suffix = getRandomName("orc_suffix", rand);
 		return prefix + suffix;
 	}
 
 	public static String getQuenyaName(Random rand, boolean male) {
-		StringBuilder name = new StringBuilder().append(LOTRNames.getRandomName(male ? "quenya_male" : "quenya_female", rand));
+		StringBuilder name = new StringBuilder().append(getRandomName(male ? "quenya_male" : "quenya_female", rand));
 		if (rand.nextInt(5) == 0) {
-			name.append(" ").append(LOTRNames.getRandomName("quenya_title", rand));
+			name.append(" ").append(getRandomName("quenya_title", rand));
 		}
 		return name.toString();
 	}
 
 	public static String getRandomName(String nameBankName, Random rand) {
 		if (allNameBanks.containsKey(nameBankName)) {
-			String[] nameBank = LOTRNames.getNameBank(nameBankName);
+			String[] nameBank = getNameBank(nameBankName);
 			return nameBank[rand.nextInt(nameBank.length)];
 		}
 		return "Unnamed";
@@ -284,105 +285,105 @@ public class LOTRNames {
 		double d = rand.nextGaussian();
 		d = Math.abs(d);
 		int ago = min + (int) Math.round(d * std);
-		int date = LOTRDate.THIRD_AGE_CURRENT - (ago = Math.min(ago, max));
+		int date = LOTRDate.THIRD_AGE_CURRENT - Math.min(ago, max);
 		if (date >= 1) {
 			return "T.A. " + date;
 		}
-		return "S.A. " + (date += LOTRDate.SECOND_AGE_LENGTH);
+		return "S.A. " + date + LOTRDate.SECOND_AGE_LENGTH;
 	}
 
 	public static String getRhudaurName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "rhudaur_male" : "rhudaur_female", rand);
+		return getRandomName(male ? "rhudaur_male" : "rhudaur_female", rand);
 	}
 
 	public static String getRhunicName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "rhun_male" : "rhun_female", rand);
+		return getRandomName(male ? "rhun_male" : "rhun_female", rand);
 	}
 
 	public static String[] getRhunTavernName(Random rand) {
-		String prefix = LOTRNames.getRandomName("rhunTavern_prefix", rand);
-		String suffix = LOTRNames.getRandomName("rhunTavern_suffix", rand);
-		return new String[] { prefix, suffix };
+		String prefix = getRandomName("rhunTavern_prefix", rand);
+		String suffix = getRandomName("rhunTavern_suffix", rand);
+		return new String[]{prefix, suffix};
 	}
 
 	public static String[] getRhunVillageName(Random rand) {
 		String suffix;
 		String welcome = "Welcome to";
-		String prefix = LOTRNames.getRandomName("rhunVillage_prefix", rand);
-		if (prefix.endsWith((suffix = LOTRNames.getRandomName("rhunVillage_suffix", rand)).substring(0, 1))) {
+		String prefix = getRandomName("rhunVillage_prefix", rand);
+		if (prefix.endsWith((suffix = getRandomName("rhunVillage_suffix", rand)).substring(0, 1))) {
 			suffix = suffix.substring(1);
 		}
 		String name = prefix + suffix;
-		String date = LOTRNames.getRandomVillageDate(rand, 50, 2000, 300);
+		String date = getRandomVillageDate(rand, 50, 2000, 300);
 		String est = "est. " + date;
-		return new String[] { welcome, name, "", est };
+		return new String[]{welcome, name, "", est};
 	}
 
 	public static String[] getRohanMeadHallName(Random rand) {
-		String prefix = LOTRNames.getRandomName("rohanMeadHall_prefix", rand);
-		String suffix = LOTRNames.getRandomName("rohanMeadHall_suffix", rand);
-		return new String[] { prefix, suffix };
+		String prefix = getRandomName("rohanMeadHall_prefix", rand);
+		String suffix = getRandomName("rohanMeadHall_suffix", rand);
+		return new String[]{prefix, suffix};
 	}
 
 	public static String[] getRohanVillageName(Random rand) {
 		String suffix;
 		String welcome = "Welcome to";
-		String prefix = LOTRNames.getRandomName("rohanVillage_prefix", rand);
-		if (prefix.endsWith((suffix = LOTRNames.getRandomName("rohanVillage_suffix", rand)).substring(0, 1))) {
+		String prefix = getRandomName("rohanVillage_prefix", rand);
+		if (prefix.endsWith((suffix = getRandomName("rohanVillage_suffix", rand)).substring(0, 1))) {
 			suffix = suffix.substring(1);
 		}
 		String name = prefix + suffix;
-		String date = LOTRNames.getRandomVillageDate(rand, 50, 500, 100);
+		String date = getRandomVillageDate(rand, 50, 500, 100);
 		String est = "est. " + date;
-		return new String[] { welcome, name, "", est };
+		return new String[]{welcome, name, "", est};
 	}
 
 	public static String getRohirricName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "rohan_male" : "rohan_female", rand);
+		return getRandomName(male ? "rohan_male" : "rohan_female", rand);
 	}
 
 	public static String getSindarinName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "sindarin_male" : "sindarin_female", rand);
+		return getRandomName(male ? "sindarin_male" : "sindarin_female", rand);
 	}
 
 	public static String getSindarinOrQuenyaName(Random rand, boolean male) {
 		if (male) {
-			String[] sNames = LOTRNames.getNameBank("sindarin_male");
-			int i = sNames.length + LOTRNames.getNameBank("quenya_male").length;
+			String[] sNames = getNameBank("sindarin_male");
+			int i = sNames.length + getNameBank("quenya_male").length;
 			if (rand.nextInt(i) < sNames.length) {
-				return LOTRNames.getSindarinName(rand, male);
+				return getSindarinName(rand, true);
 			}
-			return LOTRNames.getQuenyaName(rand, male);
+			return getQuenyaName(rand, true);
 		}
-		String[] sNames = LOTRNames.getNameBank("sindarin_female");
-		int i = sNames.length + LOTRNames.getNameBank("quenya_female").length;
+		String[] sNames = getNameBank("sindarin_female");
+		int i = sNames.length + getNameBank("quenya_female").length;
 		if (rand.nextInt(i) < sNames.length) {
-			return LOTRNames.getSindarinName(rand, male);
+			return getSindarinName(rand, false);
 		}
-		return LOTRNames.getQuenyaName(rand, male);
+		return getQuenyaName(rand, false);
 	}
 
 	public static String getSouthronCoastName(Random rand, boolean male) {
 		if (rand.nextInt(3) == 0) {
-			return LOTRNames.getUmbarName(rand, male);
+			return getUmbarName(rand, male);
 		}
-		return LOTRNames.getHarnennorName(rand, male);
+		return getHarnennorName(rand, male);
 	}
 
 	public static String getTauredainName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "tauredain_male" : "tauredain_female", rand);
+		return getRandomName(male ? "tauredain_male" : "tauredain_female", rand);
 	}
 
 	public static String getTrollName(Random rand) {
-		return LOTRNames.getRandomName("troll", rand);
+		return getRandomName("troll", rand);
 	}
 
 	public static String getUmbarName(Random rand, boolean male) {
-		return LOTRNames.getRandomName(male ? "umbar_male" : "umbar_female", rand);
+		return getRandomName(male ? "umbar_male" : "umbar_female", rand);
 	}
 
 	public static void loadAllNameBanks() {
-		HashMap<String, BufferedReader> nameBankNamesAndReaders = new HashMap<>();
+		Map<String, BufferedReader> nameBankNamesAndReaders = new HashMap<>();
 		ZipFile zip = null;
 		try {
 			ModContainer mc = LOTRMod.getModContainer();
@@ -400,7 +401,7 @@ public class LOTRNames {
 					int i = s.indexOf(".txt");
 					try {
 						s = s.substring(0, i);
-						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(zip.getInputStream(entry)), Charsets.UTF_8.name()));
+						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(zip.getInputStream(entry)), Charsets.UTF_8));
 						nameBankNamesAndReaders.put(s, reader);
 					} catch (Exception e) {
 						FMLLog.severe("Failed to load LOTR name bank " + s + "from zip file");
@@ -418,7 +419,7 @@ public class LOTRNames {
 					}
 					try {
 						s = s.substring(0, i);
-						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(new FileInputStream(file)), Charsets.UTF_8.name()));
+						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(Files.newInputStream(file.toPath())), Charsets.UTF_8));
 						nameBankNamesAndReaders.put(s, reader);
 					} catch (Exception e) {
 						FMLLog.severe("Failed to load LOTR name bank " + s + " from MCP folder");
@@ -461,6 +462,6 @@ public class LOTRNames {
 	}
 
 	public static boolean nameBankExists(String nameBankName) {
-		return LOTRNames.getNameBank(nameBankName) != null;
+		return getNameBank(nameBankName) != null;
 	}
 }

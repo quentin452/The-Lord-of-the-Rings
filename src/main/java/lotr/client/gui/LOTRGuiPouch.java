@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.lwjgl.opengl.GL11;
 
 import lotr.common.inventory.LOTRContainerPouch;
@@ -65,7 +66,7 @@ public class LOTRGuiPouch extends GuiContainer {
 	public void renamePouch() {
 		String name = theGuiTextField.getText();
 		thePouch.renamePouch(name);
-		LOTRPacketRenamePouch packet = new LOTRPacketRenamePouch(name);
+		IMessage packet = new LOTRPacketRenamePouch(name);
 		LOTRPacketHandler.networkWrapper.sendToServer(packet);
 	}
 

@@ -36,7 +36,7 @@ public class LOTREntityGiraffe extends LOTREntityHorse {
 		super.dropFewItems(flag, i);
 		if (flag) {
 			int rugChance = 30 - i * 5;
-			if (rand.nextInt(rugChance = Math.max(rugChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(rugChance, 1)) == 0) {
 				entityDropItem(new ItemStack(LOTRMod.giraffeRug), 0.0f);
 			}
 		}
@@ -72,6 +72,6 @@ public class LOTREntityGiraffe extends LOTREntityHorse {
 	@Override
 	public void onLOTRHorseSpawn() {
 		double jumpStrength = getEntityAttribute(LOTRReflection.getHorseJumpStrength()).getAttributeValue();
-		getEntityAttribute(LOTRReflection.getHorseJumpStrength()).setBaseValue(jumpStrength *= 0.8);
+		getEntityAttribute(LOTRReflection.getHorseJumpStrength()).setBaseValue(jumpStrength * 0.8);
 	}
 }

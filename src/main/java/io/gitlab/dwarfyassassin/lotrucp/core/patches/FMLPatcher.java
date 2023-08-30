@@ -9,13 +9,7 @@ import io.gitlab.dwarfyassassin.lotrucp.core.utils.ASMUtils;
 public class FMLPatcher extends Patcher {
 	public FMLPatcher() {
 		super("FML");
-		classes.put("cpw.mods.fml.common.LoadController", new Patcher.ConsumerImplBecauseNoLambdas<ClassNode>() {
-
-			@Override
-			public void accept(ClassNode node) {
-				FMLPatcher.this.patchLoadController(node);
-			}
-		});
+		classes.put("cpw.mods.fml.common.LoadController", this::patchLoadController);
 	}
 
 	public void patchLoadController(ClassNode classNode) {

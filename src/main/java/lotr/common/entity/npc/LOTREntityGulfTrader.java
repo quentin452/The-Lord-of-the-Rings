@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityGulfTrader extends LOTREntityGulfHaradrim implements LOTRTradeable {
-	public LOTREntityGulfTrader(World world) {
+	protected LOTREntityGulfTrader(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -28,15 +28,6 @@ public abstract class LOTREntityGulfTrader extends LOTREntityGulfHaradrim implem
 			return "nearHarad/gulf/bazaarTrader/friendly";
 		}
 		return "nearHarad/gulf/bazaarTrader/hostile";
-	}
-
-	@Override
-	public void onAttackModeChange(LOTREntityNPC.AttackMode mode, boolean mounted) {
-		if (mode == LOTREntityNPC.AttackMode.IDLE) {
-			setCurrentItemOrArmor(0, npcItemsInv.getIdleItem());
-		} else {
-			setCurrentItemOrArmor(0, npcItemsInv.getMeleeWeapon());
-		}
 	}
 
 	@Override

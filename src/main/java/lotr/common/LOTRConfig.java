@@ -11,7 +11,7 @@ import net.minecraftforge.common.config.*;
 
 public class LOTRConfig {
 	public static Configuration config;
-	public static List<ConfigCategory> allCategories;
+	public static List<ConfigCategory> allCategories= new ArrayList<>();
 	public static String CATEGORY_DIMENSION;
 	public static String CATEGORY_GAMEPLAY;
 	public static String CATEGORY_GUI;
@@ -110,10 +110,6 @@ public class LOTRConfig {
 	public static int playerDataClearingInterval;
 	public static int MIN_PLAYER_DATA_CLEARING_INTERVAL = 600;
 
-	static {
-		allCategories = new ArrayList<>();
-	}
-
 	public static boolean areStrictFactionTitleRequirementsEnabled(World world) {
 		if (!world.isRemote) {
 			return strictFactionTitleRequirements;
@@ -122,9 +118,9 @@ public class LOTRConfig {
 	}
 
 	public static List<IConfigElement> getConfigElements() {
-		ArrayList<IConfigElement> list = new ArrayList<>();
+		List<IConfigElement> list = new ArrayList<>();
 		for (ConfigCategory category : allCategories) {
-			ConfigElement categoryElement = new ConfigElement(category);
+			IConfigElement categoryElement = new ConfigElement(category);
 			list.add(categoryElement);
 		}
 		return list;
@@ -247,7 +243,7 @@ public class LOTRConfig {
 		strTimelapse = config.get(CATEGORY_MISC, "Structure Timelapse", false, "Structure spawners generate as a timelapse instead of instantly. WARNING: May be buggy. See also the command /strTimelapse").getBoolean();
 		strTimelapseInterval = config.get(CATEGORY_MISC, "Structure Timelapse Interval", 5, "Structure timelapse interval (in ms) between each block placement").getInt();
 		if (strTimelapseInterval < 0) {
-			LOTRConfig.setStructureTimelapseInterval(0);
+			setStructureTimelapseInterval(0);
 		}
 		protectHobbitKillers = config.get(CATEGORY_MISC, "Protect Hobbit Killers", false, "For servers: Disable broadcasting of the 'Hobbit Slayer' achievement, to protect new evil players from being persecuted").getBoolean();
 		fixMobSpawning = config.get(CATEGORY_MISC, "Fix mob spawning lag", true, "Fix a major source of server lag caused by the vanilla mob spawning system").getBoolean();
@@ -283,23 +279,23 @@ public class LOTRConfig {
 	}
 
 	public static void setStructureTimelapseInterval(int i) {
-		strTimelapseInterval = i = Math.max(i, 0);
+		strTimelapseInterval = Math.max(i, 0);
 		config.getCategory(CATEGORY_MISC).get("Structure Timelapse Interval").set(strTimelapseInterval);
 		config.save();
 	}
 
 	public static void setupAndLoad(FMLPreInitializationEvent event) {
 		config = new Configuration(event.getSuggestedConfigurationFile());
-		LOTRConfig.setupCategories();
-		LOTRConfig.load();
+		setupCategories();
+		load();
 	}
 
 	public static void setupCategories() {
-		CATEGORY_DIMENSION = LOTRConfig.makeCategory("dimension");
-		CATEGORY_GAMEPLAY = LOTRConfig.makeCategory("gameplay");
-		CATEGORY_GUI = LOTRConfig.makeCategory("gui");
-		CATEGORY_ENVIRONMENT = LOTRConfig.makeCategory("environment");
-		CATEGORY_MISC = LOTRConfig.makeCategory("misc");
+		CATEGORY_DIMENSION = makeCategory("dimension");
+		CATEGORY_GAMEPLAY = makeCategory("gameplay");
+		CATEGORY_GUI = makeCategory("gui");
+		CATEGORY_ENVIRONMENT = makeCategory("environment");
+		CATEGORY_MISC = makeCategory("misc");
 	}
 
 	public static void toggleMapLabels() {

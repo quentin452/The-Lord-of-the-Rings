@@ -13,7 +13,7 @@ public class LOTRWorldGenMoredainMercDummy extends LOTRWorldGenStructureBase2 {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (int i1 = -1; i1 <= 1; ++i1) {
@@ -33,7 +33,7 @@ public class LOTRWorldGenMoredainMercDummy extends LOTRWorldGenStructureBase2 {
 		}
 		setBlockAndMetadata(world, 0, 1, 0, LOTRMod.fence2, 2);
 		setBlockAndMetadata(world, 0, 2, 0, Blocks.wool, 12);
-		this.placeSkull(world, random, 0, 3, 0);
+		placeSkull(world, random, 0, 3, 0);
 		setBlockAndMetadata(world, -1, 2, 0, Blocks.lever, 1);
 		setBlockAndMetadata(world, 1, 2, 0, Blocks.lever, 2);
 		return true;

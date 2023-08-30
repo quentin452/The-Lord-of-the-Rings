@@ -20,7 +20,7 @@ public class LOTRWorldGenDaleVillageTower extends LOTRWorldGenDaleStructure {
 		int k1;
 		int i1;
 		int i12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 3);
+		setOriginAndRotation(world, i, j, k, rotation, 3);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i12 = -3; i12 <= 3; ++i12) {
@@ -104,11 +104,11 @@ public class LOTRWorldGenDaleVillageTower extends LOTRWorldGenDaleStructure {
 				setBlockAndMetadata(world, i12, 14, k1, roofSlabBlock, roofSlabMeta);
 			}
 		}
-		for (int i13 : new int[] { -2, 2 }) {
+		for (int i13 : new int[]{-2, 2}) {
 			setBlockAndMetadata(world, i13, 3, -1, brickStairBlock, 7);
 			setBlockAndMetadata(world, i13, 3, 1, brickStairBlock, 6);
 		}
-		for (int k12 : new int[] { -2, 2 }) {
+		for (int k12 : new int[]{-2, 2}) {
 			setBlockAndMetadata(world, -1, 3, k12, brickStairBlock, 4);
 			setBlockAndMetadata(world, 1, 3, k12, brickStairBlock, 5);
 		}
@@ -130,11 +130,11 @@ public class LOTRWorldGenDaleVillageTower extends LOTRWorldGenDaleStructure {
 			setBlockAndMetadata(world, -3, 6, k13, brickWallBlock, brickWallMeta);
 			setBlockAndMetadata(world, 3, 6, k13, brickWallBlock, brickWallMeta);
 		}
-		for (int i13 : new int[] { -2, 2 }) {
+		for (int i13 : new int[]{-2, 2}) {
 			setBlockAndMetadata(world, i13, 8, -1, brickStairBlock, 2);
 			setBlockAndMetadata(world, i13, 8, 1, brickStairBlock, 3);
 		}
-		for (int k12 : new int[] { -2, 2 }) {
+		for (int k12 : new int[]{-2, 2}) {
 			setBlockAndMetadata(world, -1, 8, k12, brickStairBlock, 1);
 			setBlockAndMetadata(world, 1, 8, k12, brickStairBlock, 0);
 		}

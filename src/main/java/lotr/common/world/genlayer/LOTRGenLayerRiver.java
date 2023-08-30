@@ -22,9 +22,9 @@ public class LOTRGenLayerRiver extends LOTRGenLayer {
 		for (int k3 = 0; k3 < zSize; ++k3) {
 			for (int i3 = 0; i3 < xSize; ++i3) {
 				int centre = riverInit[i3 + 1 + (k3 + 1) * i2];
-				int xn = riverInit[i3 + 0 + (k3 + 1) * i2];
+				int xn = riverInit[i3 + (k3 + 1) * i2];
 				int xp = riverInit[i3 + 2 + (k3 + 1) * i2];
-				int zn = riverInit[i3 + 1 + (k3 + 0) * i2];
+				int zn = riverInit[i3 + 1 + (k3) * i2];
 				int zp = riverInit[i3 + 1 + (k3 + 2) * i2];
 				ints[i3 + k3 * xSize] = centre == xn && centre == zn && centre == xp && centre == zp ? 0 : 1;
 			}

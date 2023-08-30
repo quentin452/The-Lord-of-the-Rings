@@ -33,7 +33,7 @@ public class LOTREntityWaveFX extends EntityExplodeFX {
 			particleAlpha += 0.02f;
 			particleAlpha = Math.min(particleAlpha, 1.0f);
 		}
-		particleScale = initScale + (float) particleAge / (float) particleMaxAge * (finalScale - initScale);
+		particleScale = initScale + (float) particleAge / particleMaxAge * (finalScale - initScale);
 		setParticleTextureIndex((particleMaxAge - particleAge) % 8);
 		handleWaterMovement();
 		if (inWater) {

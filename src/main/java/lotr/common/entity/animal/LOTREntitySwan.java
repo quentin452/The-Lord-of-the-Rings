@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class LOTREntitySwan extends EntityCreature implements LOTRAmbientCreature {
 	public static Random violenceRand = new Random();
-	public static boolean wreckBalrogs = false;
+	public static boolean wreckBalrogs;
 	public float flapPhase;
 	public float flapPower;
 	public float prevFlapPower;
@@ -27,14 +27,15 @@ public class LOTREntitySwan extends EntityCreature implements LOTRAmbientCreatur
 	public int peckTime;
 	public int peckLength;
 	public int timeUntilHiss;
-	public boolean assignedAttackOrFlee = false;
+	public boolean assignedAttackOrFlee;
 	public EntityAIBase attackAI = new LOTREntityAIAttackOnCollide(this, 1.4, true);
 	public EntityAIBase fleeAI = new EntityAIPanic(this, 1.8);
+	@SuppressWarnings("Convert2Lambda")
 	public IEntitySelector swanAttackRange = new IEntitySelector() {
 
 		@Override
 		public boolean isEntityApplicable(Entity entity) {
-			return entity instanceof EntityLivingBase && entity.isEntityAlive() && LOTREntitySwan.this.getDistanceSqToEntity(entity) < 16.0;
+			return entity instanceof EntityLivingBase && entity.isEntityAlive() && getDistanceSqToEntity(entity) < 16.0;
 		}
 	};
 
@@ -150,7 +151,7 @@ public class LOTREntitySwan extends EntityCreature implements LOTRAmbientCreatur
 		return new ItemStack(LOTRMod.spawnEgg, 1, LOTREntities.getEntityID(this));
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
 		if (b == 20) {
@@ -227,7 +228,7 @@ public class LOTREntitySwan extends EntityCreature implements LOTRAmbientCreatur
 				EntityPlayer entityplayer = (EntityPlayer) nearbyPlayers.get(rand.nextInt(nearbyPlayers.size()));
 				getNavigator().clearPathEntity();
 				float hissLook = (float) Math.toDegrees(Math.atan2(entityplayer.posZ - posZ, entityplayer.posX - posX));
-				rotationYaw = rotationYawHead = hissLook -= 90.0f;
+				rotationYaw = rotationYawHead = hissLook - 90.0f;
 				worldObj.setEntityState(this, (byte) 21);
 				playSound("lotr:swan.hiss", getSoundVolume(), getSoundPitch());
 				timeUntilHiss = 80 + rand.nextInt(80);

@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class LOTREntityGulfBlacksmith extends LOTREntityGulfHaradrim implements LOTRTradeable.Smith {
 	public LOTREntityGulfBlacksmith(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

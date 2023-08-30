@@ -37,7 +37,7 @@ public enum LOTRShields {
 		shieldType = type;
 		shieldID = shieldType.list.size();
 		shieldType.list.add(this);
-		shieldTexture = new ResourceLocation("lotr:shield/" + name().toLowerCase() + ".png");
+		shieldTexture = new ResourceLocation("lotr:shield/" + name().toLowerCase(Locale.ROOT) + ".png");
 		isHidden = hidden;
 		alignmentFaction = faction;
 		exclusiveGroup = group;
@@ -98,11 +98,12 @@ public enum LOTRShields {
 		return shieldTexture;
 	}
 
+	@SuppressWarnings("all")
 	public static void forceClassLoad() {
 	}
 
 	public static LOTRShields shieldForName(String shieldName) {
-		for (LOTRShields shield : LOTRShields.values()) {
+		for (LOTRShields shield : values()) {
 			if (!shield.name().equals(shieldName)) {
 				continue;
 			}
@@ -111,7 +112,7 @@ public enum LOTRShields {
 		return null;
 	}
 
-	public static enum ShieldType {
+	public enum ShieldType {
 		ALIGNMENT, ACHIEVABLE, EXCLUSIVE;
 
 		public List<LOTRShields> list = new ArrayList<>();

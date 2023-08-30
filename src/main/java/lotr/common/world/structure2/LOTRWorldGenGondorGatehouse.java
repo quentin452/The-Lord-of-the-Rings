@@ -30,7 +30,7 @@ public class LOTRWorldGenGondorGatehouse extends LOTRWorldGenGondorStructure {
 		int k2;
 		int k13;
 		int j13;
-		this.setOriginAndRotation(world, i, j, k, rotation, 4);
+		setOriginAndRotation(world, i, j, k, rotation, 4);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -103,7 +103,7 @@ public class LOTRWorldGenGondorGatehouse extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i13, j1, 1, LOTRMod.gateIronBars, 10);
 			}
 		}
-		for (int k14 : new int[] { -3, 3 }) {
+		for (int k14 : new int[]{-3, 3}) {
 			setBlockAndMetadata(world, -2, 6, k14, brickStairBlock, 4);
 			setBlockAndMetadata(world, 2, 6, k14, brickStairBlock, 5);
 			setBlockAndMetadata(world, -2, 5, k14, Blocks.torch, 2);
@@ -123,11 +123,11 @@ public class LOTRWorldGenGondorGatehouse extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i16, 10, k14, brickBlock, brickMeta);
 			}
 		}
-		int[] i17 = { -3, 3 };
+		int[] i17 = {-3, 3};
 		j1 = i17.length;
 		for (i22 = 0; i22 < j1; ++i22) {
 			i142 = i17[i22];
-			for (int k15 : new int[] { -2, 2 }) {
+			for (int k15 : new int[]{-2, 2}) {
 				setBlockAndMetadata(world, i142, 8, k15, rockSlabDoubleBlock, rockSlabDoubleMeta);
 				setBlockAndMetadata(world, i142, 9, k15, brickBlock, brickMeta);
 				setBlockAndMetadata(world, i142, 10, k15, brickBlock, brickMeta);
@@ -150,6 +150,7 @@ public class LOTRWorldGenGondorGatehouse extends LOTRWorldGenGondorStructure {
 				if (i22 > 3 && k2 > 3 || i22 != 4 && k2 != 4) {
 					continue;
 				}
+				//noinspection BadOddness
 				if ((i22 + k2) % 2 == 1) {
 					setBlockAndMetadata(world, i1, 12, k1, brickBlock, brickMeta);
 					setBlockAndMetadata(world, i1, 13, k1, brickSlabBlock, brickSlabMeta);
@@ -164,7 +165,7 @@ public class LOTRWorldGenGondorGatehouse extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 0, 8, 1, plankBlock, plankMeta);
 		setBlockAndMetadata(world, 0, 9, -1, Blocks.lever, 14);
 		setBlockAndMetadata(world, 0, 9, 1, Blocks.lever, 14);
-		for (int i1421 : new int[] { -1, 1 }) {
+		for (int i1421 : new int[]{-1, 1}) {
 			for (j12 = 8; j12 <= 11; ++j12) {
 				setBlockAndMetadata(world, i1421, j12, 2, Blocks.ladder, 2);
 			}
@@ -277,7 +278,7 @@ public class LOTRWorldGenGondorGatehouse extends LOTRWorldGenGondorStructure {
 			}
 			setBlockAndMetadata(world, i12, 3, 1, brickStairBlock, 7);
 		}
-		for (int i1421 : new int[] { -1, 1 }) {
+		for (int i1421 : new int[]{-1, 1}) {
 			j12 = 8;
 			int k17 = 0;
 			LOTREntityNPC levyman = (LOTREntityNPC) LOTREntities.createEntityByClass(strFief.getLevyClasses()[0], world);

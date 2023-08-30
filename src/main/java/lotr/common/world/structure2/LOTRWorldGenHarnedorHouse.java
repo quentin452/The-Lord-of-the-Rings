@@ -15,7 +15,7 @@ public class LOTRWorldGenHarnedorHouse extends LOTRWorldGenHarnedorStructure {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -43,7 +43,7 @@ public class LOTRWorldGenHarnedorHouse extends LOTRWorldGenHarnedorStructure {
 			for (int k1 = -6; k1 <= 6; ++k1) {
 				int i2 = Math.abs(i1);
 				int k2 = Math.abs(k1);
-				if ((i2 > 2 || k2 > 6) && (k2 > 2 || i2 > 6)) {
+				if (i2 > 2 && k2 > 2) {
 					continue;
 				}
 				for (j1 = 1; j1 <= 6; ++j1) {
@@ -74,10 +74,10 @@ public class LOTRWorldGenHarnedorHouse extends LOTRWorldGenHarnedorStructure {
 			setBlockAndMetadata(world, 0, 1, 4, bedBlock, 8);
 			placeWeaponRack(world, 0, 3, -4, 4, getRandomHarnedorWeapon(random));
 			placeWeaponRack(world, 0, 3, 4, 6, getRandomHarnedorWeapon(random));
-			this.placeChest(world, random, -4, 1, 0, LOTRMod.chestBasket, 4, LOTRChestContents.HARNENNOR_HOUSE);
+			placeChest(world, random, -4, 1, 0, LOTRMod.chestBasket, 4, LOTRChestContents.HARNENNOR_HOUSE);
 			placePlate(world, random, 4, 2, 0, LOTRMod.ceramicPlateBlock, LOTRFoods.HARNEDOR);
 			placePlate(world, random, -1, 2, 4, LOTRMod.ceramicPlateBlock, LOTRFoods.HARNEDOR);
-			this.placeMug(world, random, 1, 2, 4, 0, LOTRFoods.HARNEDOR_DRINK);
+			placeMug(world, random, 1, 2, 4, 0, LOTRFoods.HARNEDOR_DRINK);
 			int men = 1 + random.nextInt(2);
 			for (int l = 0; l < men; ++l) {
 				LOTREntityHarnedhrim haradrim = new LOTREntityHarnedhrim(world);

@@ -18,7 +18,7 @@ public class LOTRWorldGenDolGuldurAltar extends LOTRWorldGenStructureBase2 {
 		int k1;
 		int k12;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		if (restrictions) {
 			for (i1 = -5; i1 <= 5; ++i1) {
 				for (k12 = -5; k12 <= 5; ++k12) {

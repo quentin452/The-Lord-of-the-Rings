@@ -5,23 +5,21 @@ import java.util.*;
 import net.minecraft.world.gen.structure.*;
 
 public class LOTRStructureDwarvenMinePieces {
-	public static StructureComponent getNextComponent(StructureComponent component, List list, Random random, int i, int j, int k, int direction, int iteration, boolean ruined) {
-		return LOTRStructureDwarvenMinePieces.getNextMineComponent(component, list, random, i, j, k, direction, iteration, ruined);
+	public static void getNextComponent(StructureComponent component, List list, Random random, int i, int j, int k, int direction, int iteration, boolean ruined) {
+		getNextMineComponent(component, list, random, i, j, k, direction, iteration, ruined);
 	}
 
-	public static StructureComponent getNextMineComponent(StructureComponent component, List list, Random random, int i, int j, int k, int direction, int iteration, boolean ruined) {
+	public static void getNextMineComponent(StructureComponent component, List list, Random random, int i, int j, int k, int direction, int iteration, boolean ruined) {
 		if (iteration > 12) {
-			return null;
+			return;
 		}
 		if (Math.abs(i - component.getBoundingBox().minX) <= 80 && Math.abs(k - component.getBoundingBox().minZ) <= 80) {
-			StructureComponent structurecomponent1 = LOTRStructureDwarvenMinePieces.getRandomComponent(list, random, i, j, k, direction, iteration + 1, ruined);
+			StructureComponent structurecomponent1 = getRandomComponent(list, random, i, j, k, direction, iteration + 1, ruined);
 			if (structurecomponent1 != null) {
 				list.add(structurecomponent1);
 				structurecomponent1.buildComponent(component, list, random);
 			}
-			return structurecomponent1;
 		}
-		return null;
 	}
 
 	public static StructureComponent getRandomComponent(List list, Random random, int i, int j, int k, int direction, int iteration, boolean ruined) {

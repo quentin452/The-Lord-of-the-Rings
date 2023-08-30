@@ -14,7 +14,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class LOTRWorldGenLairelosse extends WorldGenAbstractTree {
 	public int minHeight = 5;
 	public int maxHeight = 8;
-	public int extraTrunk = 0;
+	public int extraTrunk;
 	public Block woodBlock = LOTRMod.wood7;
 	public int woodMeta = 2;
 	public Block leafBlock = LOTRMod.leaves7;
@@ -58,7 +58,7 @@ public class LOTRWorldGenLairelosse extends WorldGenAbstractTree {
 			for (i1 = i; i1 <= i + extraTrunk && canGrow; ++i1) {
 				for (k1 = k; k1 <= k + extraTrunk && canGrow; ++k1) {
 					below = world.getBlock(i1, j - 1, k1);
-					if (below.canSustainPlant((IBlockAccess) world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
+					if (below.canSustainPlant(world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 						continue;
 					}
 					canGrow = false;

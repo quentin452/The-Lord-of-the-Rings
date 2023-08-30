@@ -93,8 +93,4 @@ public class LOTRBiomeGenBrownLands extends LOTRBiome {
 		return new LOTRBiome.GrassBlockAndMeta(LOTRMod.tallGrass, 0);
 	}
 
-	@Override
-	public float getTreeIncreaseChance() {
-		return 0.1f;
-	}
 }

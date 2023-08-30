@@ -13,7 +13,7 @@ public class LOTRItemMugTermite extends LOTRItemMug {
 		super(f);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
 		super.addInformation(itemstack, entityplayer, list, flag);

@@ -12,7 +12,7 @@ public class LOTRWorldGenDaleVillage extends LOTRWorldGenStructureBase2 {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		LOTRWorldGenDaleVillageTower tower = new LOTRWorldGenDaleVillageTower(notifyChanges);
 		tower.restrictions = true;
@@ -44,38 +44,37 @@ public class LOTRWorldGenDaleVillage extends LOTRWorldGenStructureBase2 {
 		return true;
 	}
 
-	public boolean tryGenerateHouse(World world, Random random, LOTRWorldGenStructureBase2 structure) {
+	public void tryGenerateHouse(World world, Random random, LOTRWorldGenStructureBase2 structure) {
 		int attempts = 8;
 		for (int l = 0; l < attempts; ++l) {
 			int i1 = 0;
 			int k1 = 0;
 			int r = random.nextInt(4);
 			switch (r) {
-			case 0:
-				i1 = MathHelper.getRandomIntegerInRange(random, -16, 16);
-				k1 = MathHelper.getRandomIntegerInRange(random, 7, 10);
-				break;
-			case 1:
-				k1 = MathHelper.getRandomIntegerInRange(random, -16, 16);
-				i1 = -MathHelper.getRandomIntegerInRange(random, 7, 10);
-				break;
-			case 2:
-				i1 = MathHelper.getRandomIntegerInRange(random, -16, 16);
-				k1 = -MathHelper.getRandomIntegerInRange(random, 7, 10);
-				break;
-			case 3:
-				k1 = MathHelper.getRandomIntegerInRange(random, -16, 16);
-				i1 = MathHelper.getRandomIntegerInRange(random, 7, 10);
-				break;
-			default:
-				break;
+				case 0:
+					i1 = MathHelper.getRandomIntegerInRange(random, -16, 16);
+					k1 = MathHelper.getRandomIntegerInRange(random, 7, 10);
+					break;
+				case 1:
+					k1 = MathHelper.getRandomIntegerInRange(random, -16, 16);
+					i1 = -MathHelper.getRandomIntegerInRange(random, 7, 10);
+					break;
+				case 2:
+					i1 = MathHelper.getRandomIntegerInRange(random, -16, 16);
+					k1 = -MathHelper.getRandomIntegerInRange(random, 7, 10);
+					break;
+				case 3:
+					k1 = MathHelper.getRandomIntegerInRange(random, -16, 16);
+					i1 = MathHelper.getRandomIntegerInRange(random, 7, 10);
+					break;
+				default:
+					break;
 			}
 			int j1 = getTopBlock(world, i1, k1);
 			if (!structure.generateWithSetRotation(world, random, getX(i1, k1), getY(j1), getZ(i1, k1), (getRotationMode() + r) % 4)) {
 				continue;
 			}
-			return true;
+			return;
 		}
-		return false;
 	}
 }

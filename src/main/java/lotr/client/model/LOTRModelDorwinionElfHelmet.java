@@ -19,7 +19,7 @@ public class LOTRModelDorwinionElfHelmet extends LOTRModelBiped {
 		ModelRenderer crest = new ModelRenderer(this, 0, 16);
 		crest.setRotationPoint(0.0f, -f, 0.0f);
 		crest.addBox(-1.0f, -11.0f, -6.0f, 2, 5, 8, 0.0f);
-		crest.rotateAngleX = (float) Math.toRadians(-15.0);
+		crest.rotateAngleX = -0.2617993877991494f;
 		bipedHead.addChild(crest);
 		bipedBody.cubeList.clear();
 		bipedRightArm.cubeList.clear();

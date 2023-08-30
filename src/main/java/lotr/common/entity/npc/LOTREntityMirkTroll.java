@@ -23,7 +23,7 @@ public class LOTREntityMirkTroll extends LOTREntityTroll {
 		tasks.addTask(5, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 8.0f, 0.02f));
 		tasks.addTask(6, new EntityAIWatchClosest(this, EntityLiving.class, 12.0f, 0.01f));
 		tasks.addTask(7, new EntityAILookIdle(this));
-		this.addTargetTasks(true, LOTREntityAINearestAttackableTargetOrc.class);
+		addTargetTasks(true, LOTREntityAINearestAttackableTargetOrc.class);
 		trollImmuneToSun = true;
 	}
 

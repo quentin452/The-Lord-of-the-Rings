@@ -15,10 +15,10 @@ import net.minecraft.util.*;
 import net.minecraft.world.*;
 
 public abstract class LOTRBlockForgeBase extends BlockContainer {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] forgeIcons;
 
-	public LOTRBlockForgeBase() {
+	protected LOTRBlockForgeBase() {
 		super(Material.rock);
 		setCreativeTab(LOTRCreativeTabs.tabUtil);
 		setHardness(4.0f);
@@ -27,7 +27,7 @@ public abstract class LOTRBlockForgeBase extends BlockContainer {
 
 	@Override
 	public void breakBlock(World world, int i, int j, int k, Block block, int meta) {
-		LOTRTileEntityForgeBase forge = (LOTRTileEntityForgeBase) world.getTileEntity(i, j, k);
+		IInventory forge = (IInventory) world.getTileEntity(i, j, k);
 		if (forge != null) {
 			LOTRMod.dropContainerItems(forge, world, i, j, k);
 			world.func_147453_f(i, j, k, block);
@@ -40,17 +40,17 @@ public abstract class LOTRBlockForgeBase extends BlockContainer {
 		return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(i, j, k));
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(IBlockAccess world, int i, int j, int k, int side) {
 		if (side == 1 || side == 0) {
 			return forgeIcons[1];
 		}
 		int meta = world.getBlockMetadata(i, j, k) & 7;
-		return side != meta ? forgeIcons[0] : LOTRBlockForgeBase.isForgeActive(world, i, j, k) ? forgeIcons[3] : forgeIcons[2];
+		return side != meta ? forgeIcons[0] : isForgeActive(world, i, j, k) ? forgeIcons[3] : forgeIcons[2];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return i == 1 || i == 0 ? forgeIcons[1] : i == 3 ? forgeIcons[2] : forgeIcons[0];
@@ -58,7 +58,7 @@ public abstract class LOTRBlockForgeBase extends BlockContainer {
 
 	@Override
 	public int getLightValue(IBlockAccess world, int i, int j, int k) {
-		return LOTRBlockForgeBase.isForgeActive(world, i, j, k) ? 13 : 0;
+		return isForgeActive(world, i, j, k) ? 13 : 0;
 	}
 
 	@Override
@@ -92,10 +92,10 @@ public abstract class LOTRBlockForgeBase extends BlockContainer {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
-		if (LOTRBlockForgeBase.isForgeActive(world, i, j, k)) {
+		if (isForgeActive(world, i, j, k)) {
 			int meta = world.getBlockMetadata(i, j, k) & 7;
 			float f = i + 0.5f;
 			float f1 = j + 0.0f + random.nextFloat() * 6.0f / 16.0f;
@@ -103,24 +103,24 @@ public abstract class LOTRBlockForgeBase extends BlockContainer {
 			float f3 = 0.52f;
 			float f4 = random.nextFloat() * 0.6f - 0.3f;
 			switch (meta) {
-			case 4:
-				world.spawnParticle("smoke", f - f3, f1, f2 + f4, 0.0, 0.0, 0.0);
-				world.spawnParticle("flame", f - f3, f1, f2 + f4, 0.0, 0.0, 0.0);
-				break;
-			case 5:
-				world.spawnParticle("smoke", f + f3, f1, f2 + f4, 0.0, 0.0, 0.0);
-				world.spawnParticle("flame", f + f3, f1, f2 + f4, 0.0, 0.0, 0.0);
-				break;
-			case 2:
-				world.spawnParticle("smoke", f + f4, f1, f2 - f3, 0.0, 0.0, 0.0);
-				world.spawnParticle("flame", f + f4, f1, f2 - f3, 0.0, 0.0, 0.0);
-				break;
-			case 3:
-				world.spawnParticle("smoke", f + f4, f1, f2 + f3, 0.0, 0.0, 0.0);
-				world.spawnParticle("flame", f + f4, f1, f2 + f3, 0.0, 0.0, 0.0);
-				break;
-			default:
-				break;
+				case 4:
+					world.spawnParticle("smoke", f - f3, f1, f2 + f4, 0.0, 0.0, 0.0);
+					world.spawnParticle("flame", f - f3, f1, f2 + f4, 0.0, 0.0, 0.0);
+					break;
+				case 5:
+					world.spawnParticle("smoke", f + f3, f1, f2 + f4, 0.0, 0.0, 0.0);
+					world.spawnParticle("flame", f + f3, f1, f2 + f4, 0.0, 0.0, 0.0);
+					break;
+				case 2:
+					world.spawnParticle("smoke", f + f4, f1, f2 - f3, 0.0, 0.0, 0.0);
+					world.spawnParticle("flame", f + f4, f1, f2 - f3, 0.0, 0.0, 0.0);
+					break;
+				case 3:
+					world.spawnParticle("smoke", f + f4, f1, f2 + f3, 0.0, 0.0, 0.0);
+					world.spawnParticle("flame", f + f4, f1, f2 + f3, 0.0, 0.0, 0.0);
+					break;
+				default:
+					break;
 			}
 			if (useLargeSmoke()) {
 				for (int l = 0; l < 6; ++l) {
@@ -139,7 +139,7 @@ public abstract class LOTRBlockForgeBase extends BlockContainer {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		forgeIcons = new IIcon[4];

@@ -37,6 +37,6 @@ public enum LOTRMapLabels {
 	}
 
 	public static LOTRMapLabels[] allMapLabels() {
-		return LOTRMapLabels.values();
+		return values();
 	}
 }

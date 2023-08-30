@@ -11,7 +11,7 @@ public class LOTRBlockSlab6 extends LOTRBlockSlabBase {
 		super(flag, Material.rock, 8);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		j &= 7;
@@ -19,27 +19,27 @@ public class LOTRBlockSlab6 extends LOTRBlockSlabBase {
 			return LOTRMod.pillar.getIcon(i, 10);
 		}
 		switch (j) {
-		case 1:
-			return LOTRMod.pillar.getIcon(i, 11);
-		case 2:
-			return LOTRMod.brick3.getIcon(i, 5);
-		case 3:
-			return LOTRMod.brick3.getIcon(i, 6);
-		case 4:
-			return LOTRMod.brick3.getIcon(i, 7);
-		case 5:
-			return LOTRMod.pillar.getIcon(i, 12);
-		case 6:
-			return LOTRMod.pillar.getIcon(i, 13);
-		case 7:
-			return LOTRMod.brick3.getIcon(i, 9);
-		default:
-			break;
+			case 1:
+				return LOTRMod.pillar.getIcon(i, 11);
+			case 2:
+				return LOTRMod.brick3.getIcon(i, 5);
+			case 3:
+				return LOTRMod.brick3.getIcon(i, 6);
+			case 4:
+				return LOTRMod.brick3.getIcon(i, 7);
+			case 5:
+				return LOTRMod.pillar.getIcon(i, 12);
+			case 6:
+				return LOTRMod.pillar.getIcon(i, 13);
+			case 7:
+				return LOTRMod.brick3.getIcon(i, 9);
+			default:
+				break;
 		}
 		return super.getIcon(i, j);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

@@ -10,7 +10,7 @@ public class LOTREnchantmentProtectionFall extends LOTREnchantmentProtectionSpec
 
 	@Override
 	public int calcIntProtection() {
-		float f = (float) protectLevel * (float) (protectLevel + 1) / 2.0f;
+		float f = (float) protectLevel * (protectLevel + 1) / 2.0f;
 		return 3 + MathHelper.floor_float(f);
 	}
 

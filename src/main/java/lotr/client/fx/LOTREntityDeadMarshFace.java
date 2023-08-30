@@ -20,7 +20,7 @@ public class LOTREntityDeadMarshFace extends EntityFX {
 		prevPosY = posY;
 		prevPosZ = posZ;
 		++particleAge;
-		faceAlpha = MathHelper.sin((float) particleAge / (float) particleMaxAge * 3.1415927f);
+		faceAlpha = MathHelper.sin((float) particleAge / particleMaxAge * 3.1415927f);
 		if (particleAge > particleMaxAge) {
 			setDead();
 		}

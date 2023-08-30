@@ -14,9 +14,9 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.*;
 
 public class LOTRBlockTermite extends Block {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon sideIcon;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon topIcon;
 
 	public LOTRBlockTermite() {
@@ -37,7 +37,7 @@ public class LOTRBlockTermite extends Block {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int i, int j) {
 		if (i == 0 || i == 1) {
 			return topIcon;
@@ -46,7 +46,7 @@ public class LOTRBlockTermite extends Block {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i <= 1; ++i) {
 			list.add(new ItemStack(item, 1, i));
@@ -78,7 +78,7 @@ public class LOTRBlockTermite extends Block {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconregister) {
 		topIcon = iconregister.registerIcon(getTextureName());
 		sideIcon = iconregister.registerIcon(getTextureName() + "_side");

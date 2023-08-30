@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityDorwinionMerchantElf extends LOTREntityDorwinionElf implements LOTRTravellingTrader {
 	public LOTREntityDorwinionMerchantElf(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -21,11 +21,6 @@ public class LOTREntityDorwinionMerchantElf extends LOTREntityDorwinionElf imple
 	@Override
 	public LOTREntityNPC createTravellingEscort() {
 		return new LOTREntityDorwinionGuard(worldObj);
-	}
-
-	@Override
-	public float getAlignmentBonus() {
-		return 2.0f;
 	}
 
 	@Override

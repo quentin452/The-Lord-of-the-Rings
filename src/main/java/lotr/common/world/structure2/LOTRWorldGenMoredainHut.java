@@ -9,13 +9,13 @@ import net.minecraft.world.World;
 
 public abstract class LOTRWorldGenMoredainHut extends LOTRWorldGenStructureBase2 {
 	public Block clayBlock = Blocks.hardened_clay;
-	public int clayMeta = 0;
+	public int clayMeta;
 	public Block stainedClayBlock = Blocks.stained_hardened_clay;
 	public int stainedClayMeta = 1;
 	public Block brickBlock = LOTRMod.brick3;
 	public int brickMeta = 10;
 	public Block brickSlabBlock = LOTRMod.slabSingle7;
-	public int brickSlabMeta = 0;
+	public int brickSlabMeta;
 	public Block plankBlock = Blocks.planks;
 	public int plankMeta = 4;
 	public Block plankSlabBlock = Blocks.wooden_slab;
@@ -23,11 +23,11 @@ public abstract class LOTRWorldGenMoredainHut extends LOTRWorldGenStructureBase2
 	public Block fenceBlock = Blocks.fence;
 	public int fenceMeta = 4;
 	public Block thatchBlock = LOTRMod.thatch;
-	public int thatchMeta = 0;
+	public int thatchMeta;
 	public Block thatchSlabBlock = LOTRMod.slabSingleThatch;
-	public int thatchSlabMeta = 0;
+	public int thatchSlabMeta;
 
-	public LOTRWorldGenMoredainHut(boolean flag) {
+	protected LOTRWorldGenMoredainHut(boolean flag) {
 		super(flag);
 	}
 
@@ -43,7 +43,7 @@ public abstract class LOTRWorldGenMoredainHut extends LOTRWorldGenStructureBase2
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, getOffset());
+		setOriginAndRotation(world, i, j, k, rotation, getOffset());
 		if (restrictions) {
 			int minHeight = 0;
 			int maxHeight = 0;

@@ -18,7 +18,7 @@ public class LOTRWorldGenGondorHouse extends LOTRWorldGenGondorStructure {
 		int i1;
 		int j1;
 		int i2;
-		this.setOriginAndRotation(world, i, j, k, rotation, 5);
+		setOriginAndRotation(world, i, j, k, rotation, 5);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -79,7 +79,7 @@ public class LOTRWorldGenGondorHouse extends LOTRWorldGenGondorStructure {
 				}
 			}
 		}
-		int[] i13 = { -4, 4 };
+		int[] i13 = {-4, 4};
 		k1 = i13.length;
 		for (i2 = 0; i2 < k1; ++i2) {
 			int i14 = i13[i2];
@@ -143,7 +143,7 @@ public class LOTRWorldGenGondorHouse extends LOTRWorldGenGondorStructure {
 				continue;
 			}
 			int drinkMeta = random.nextInt(4);
-			this.placeMug(world, random, i1, 2, -2, drinkMeta, LOTRFoods.GONDOR_DRINK);
+			placeMug(world, random, i1, 2, -2, drinkMeta, LOTRFoods.GONDOR_DRINK);
 		}
 		setBlockAndMetadata(world, 2, 1, -3, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, 3, 1, -3, plankBlock, plankMeta);
@@ -156,8 +156,8 @@ public class LOTRWorldGenGondorHouse extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 3, 1, 1, bedBlock, 9);
 		setBlockAndMetadata(world, -3, 1, 3, plankBlock, plankMeta);
 		setBlockAndMetadata(world, 3, 1, 3, plankBlock, plankMeta);
-		this.placeChest(world, random, -2, 1, 3, 2, chestContents);
-		this.placeChest(world, random, 2, 1, 3, 2, chestContents);
+		placeChest(world, random, -2, 1, 3, 2, chestContents);
+		placeChest(world, random, 2, 1, 3, 2, chestContents);
 		setBlockAndMetadata(world, 0, 1, 3, barsBlock, 0);
 		setBlockAndMetadata(world, 0, 2, 3, Blocks.furnace, 2);
 		setBlockAndMetadata(world, 0, 0, 4, LOTRMod.hearth, 0);

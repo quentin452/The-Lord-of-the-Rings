@@ -30,19 +30,19 @@ public class LOTRBlockDaub extends Block implements LOTRConnectedBlock {
 		return textureName;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(IBlockAccess world, int i, int j, int k, int side) {
 		return LOTRConnectedTextures.getConnectedIconBlock(this, world, i, j, k, side, false);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return LOTRConnectedTextures.getConnectedIconItem(this, j);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		LOTRConnectedTextures.registerConnectedIcons(iconregister, this, 0, false);

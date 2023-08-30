@@ -44,7 +44,7 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 		int k15;
 		int j15;
 		int k16;
-		this.setOriginAndRotation(world, i, j, k, rotation, 12);
+		setOriginAndRotation(world, i, j, k, rotation, 12);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -147,9 +147,9 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 			}
 			if (i2 <= 1) {
 				if (i14 == 0) {
-					setBlockAndMetadata(world, i14, 0, -12, pathBlock, pathMeta);
-					setBlockAndMetadata(world, i14, 0, -11, pathBlock, pathMeta);
-					setBlockAndMetadata(world, i14, 0, -10, pathBlock, pathMeta);
+					setBlockAndMetadata(world, 0, 0, -12, pathBlock, pathMeta);
+					setBlockAndMetadata(world, 0, 0, -11, pathBlock, pathMeta);
+					setBlockAndMetadata(world, 0, 0, -10, pathBlock, pathMeta);
 				}
 				setBlockAndMetadata(world, i14, 0, -9, pathBlock, pathMeta);
 				setBlockAndMetadata(world, i14, 0, -8, pathBlock, pathMeta);
@@ -322,7 +322,7 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 			}
 			setBlockAndMetadata(world, i14, 0, 18, plankStairBlock, 7);
 		}
-		int[] i18 = { -15, 12 };
+		int[] i18 = {-15, 12};
 		i2 = i18.length;
 		for (j12 = 0; j12 < i2; ++j12) {
 			int i23;
@@ -337,14 +337,14 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 				setBlockAndMetadata(world, i23, 12, 7, Blocks.flower_pot, 0);
 			}
 		}
-		for (int i1221 : new int[] { -16, 16 }) {
+		for (int i1221 : new int[]{-16, 16}) {
 			for (k1 = 3; k1 <= 4; ++k1) {
 				for (j15 = 2; j15 <= 3; ++j15) {
 					setBlockAndMetadata(world, i1221, j15, k1, LOTRMod.glassPane, 0);
 				}
 			}
 		}
-		for (int i1221 : new int[] { -17, 17 }) {
+		for (int i1221 : new int[]{-17, 17}) {
 			for (k1 = 2; k1 <= 10; ++k1) {
 				if (k1 == 6) {
 					continue;
@@ -357,7 +357,7 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 				}
 				placeFlowerPot(world, i1221, 2, k1, getRandomFlower(world, random));
 			}
-			for (int k19 : new int[] { 1, 6, 11 }) {
+			for (int k19 : new int[]{1, 6, 11}) {
 				for (int j17 = 5; (j17 >= 0 || !isOpaque(world, i1221, j17, k19)) && getY(j17) >= 0; --j17) {
 					setBlockAndMetadata(world, i1221, j17, k19, beamBlock, beamMeta);
 					setGrassToDirt(world, i1221, j17, k19);
@@ -388,7 +388,7 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 			setBlockAndMetadata(world, -18, 6, k14, roofStairBlock, 1);
 			setBlockAndMetadata(world, 18, 6, k14, roofStairBlock, 0);
 		}
-		for (int i1221 : new int[] { -18, 18 }) {
+		for (int i1221 : new int[]{-18, 18}) {
 			setBlockAndMetadata(world, i1221, 6, 0, roofStairBlock, 2);
 			setBlockAndMetadata(world, i1221, 6, 12, roofStairBlock, 3);
 		}
@@ -703,15 +703,15 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 				setBlockAndMetadata(world, i13, 2, 9, fence2Block, fence2Meta);
 			}
 			if (i2 == 2) {
-				this.placeBarrel(world, random, i13, 3, 11, 3, LOTRFoods.HOBBIT_DRINK);
+				placeBarrel(world, random, i13, 3, 11, 3, LOTRFoods.HOBBIT_DRINK);
 			}
 			if (i2 != 1) {
 				continue;
 			}
-			this.placeMug(world, random, i13, 3, 11, 0, LOTRFoods.HOBBIT_DRINK);
+			placeMug(world, random, i13, 3, 11, 0, LOTRFoods.HOBBIT_DRINK);
 		}
 		for (k13 = 12; k13 <= 13; ++k13) {
-			int[] i24 = { -3, 3 };
+			int[] i24 = {-3, 3};
 			j12 = i24.length;
 			for (room = 0; room < j12; ++room) {
 				i152 = i24[room];
@@ -726,12 +726,12 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 		setBlockAndMetadata(world, -2, 4, 14, Blocks.torch, 2);
 		setBlockAndMetadata(world, 2, 4, 14, Blocks.torch, 1);
 		setBlockAndMetadata(world, -2, 2, 15, Blocks.crafting_table, 0);
-		this.placeChest(world, random, -1, 2, 15, 2, LOTRChestContents.HOBBIT_HOLE_LARDER);
+		placeChest(world, random, -1, 2, 15, 2, LOTRChestContents.HOBBIT_HOLE_LARDER);
 		setBlockAndMetadata(world, 0, 2, 15, plankBlock, plankMeta);
 		placeFlowerPot(world, 0, 3, 15, new ItemStack(LOTRMod.shireHeather));
 		setBlockAndMetadata(world, 1, 2, 15, Blocks.cauldron, 3);
 		setBlockAndMetadata(world, 2, 2, 15, LOTRMod.hobbitOven, 2);
-		int[] i19 = { -7, 7 };
+		int[] i19 = {-7, 7};
 		i2 = i19.length;
 		for (j12 = 0; j12 < i2; ++j12) {
 			i122 = i19[j12];
@@ -1118,7 +1118,7 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 		}
 		for (i1 = -3; i1 <= 4; ++i1) {
 			int k110;
-			int[] k111 = { 10, 16 };
+			int[] k111 = {10, 16};
 			j12 = k111.length;
 			for (i122 = 0; i122 < j12; ++i122) {
 				k1 = k111[i122];
@@ -1137,7 +1137,7 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 			}
 		}
 		for (k15 = 11; k15 <= 15; ++k15) {
-			int[] k112 = { -4, 5 };
+			int[] k112 = {-4, 5};
 			j12 = k112.length;
 			for (i122 = 0; i122 < j12; ++i122) {
 				i152 = k112[i122];
@@ -1152,17 +1152,17 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 			setBlockAndMetadata(world, 4, j14, 11, beamBlock, beamMeta);
 			setBlockAndMetadata(world, 0, j14, 11, beamBlock, beamMeta);
 		}
-		this.placeBarrel(world, random, 4, -3, 14, 5, LOTRFoods.HOBBIT_DRINK);
+		placeBarrel(world, random, 4, -3, 14, 5, LOTRFoods.HOBBIT_DRINK);
 		for (k15 = 12; k15 <= 13; ++k15) {
-			this.placeChest(world, random, 4, -3, k15, 5, LOTRChestContents.HOBBIT_HOLE_LARDER);
+			placeChest(world, random, 4, -3, k15, 5, LOTRChestContents.HOBBIT_HOLE_LARDER);
 		}
 		for (k15 = 12; k15 <= 14; ++k15) {
 			setBlockAndMetadata(world, 4, -2, k15, plankSlabBlock, plankSlabMeta | 8);
-			this.placeBarrel(world, random, 4, -1, k15, 5, LOTRFoods.HOBBIT_DRINK);
+			placeBarrel(world, random, 4, -1, k15, 5, LOTRFoods.HOBBIT_DRINK);
 		}
-		this.placeBarrel(world, random, 1, -3, 11, 3, LOTRFoods.HOBBIT_DRINK);
+		placeBarrel(world, random, 1, -3, 11, 3, LOTRFoods.HOBBIT_DRINK);
 		for (i1 = 2; i1 <= 3; ++i1) {
-			this.placeChest(world, random, i1, -3, 11, 3, LOTRChestContents.HOBBIT_HOLE_LARDER);
+			placeChest(world, random, i1, -3, 11, 3, LOTRChestContents.HOBBIT_HOLE_LARDER);
 		}
 		for (i1 = 1; i1 <= 3; ++i1) {
 			setBlockAndMetadata(world, i1, -2, 11, plankSlabBlock, plankSlabMeta | 8);
@@ -1214,7 +1214,7 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 		LOTREntityHobbitBartender bartender = new LOTREntityHobbitBartender(world);
 		bartender.setSpecificLocationName(tavernNameNPC);
 		spawnNPCAndSetHome(bartender, world, 1, 2, 13, 2);
-		for (int i1521 : new int[] { -10, 10 }) {
+		for (int i1521 : new int[]{-10, 10}) {
 			j15 = 1;
 			int k113 = 7;
 			int hobbits = 3 + random.nextInt(6);
@@ -1235,13 +1235,13 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 	}
 
 	public ItemStack getTavernFramedItem(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.leatherHat), LOTRItemLeatherHat.setFeatherColor(new ItemStack(LOTRMod.leatherHat), 16777215), LOTRItemLeatherHat.setHatColor(new ItemStack(LOTRMod.leatherHat), 2301981), LOTRItemLeatherHat.setFeatherColor(LOTRItemLeatherHat.setHatColor(new ItemStack(LOTRMod.leatherHat), 2301981), 3381529), new ItemStack(LOTRMod.hobbitPipe), new ItemStack(Items.book), new ItemStack(Items.feather), new ItemStack(Items.wooden_sword), new ItemStack(Items.bow), new ItemStack(LOTRMod.mug), new ItemStack(LOTRMod.mugAle), new ItemStack(LOTRMod.mugCider), new ItemStack(LOTRMod.ceramicMug), new ItemStack(Items.glass_bottle), new ItemStack(Items.arrow), new ItemStack(LOTRMod.shireHeather), new ItemStack(LOTRMod.bluebell), new ItemStack(Blocks.yellow_flower, 1, 0), new ItemStack(Blocks.red_flower, 1, 0), new ItemStack(Blocks.red_flower, 1, 3) };
+		ItemStack[] items = {new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.leatherHat), LOTRItemLeatherHat.setFeatherColor(new ItemStack(LOTRMod.leatherHat), 16777215), LOTRItemLeatherHat.setHatColor(new ItemStack(LOTRMod.leatherHat), 2301981), LOTRItemLeatherHat.setFeatherColor(LOTRItemLeatherHat.setHatColor(new ItemStack(LOTRMod.leatherHat), 2301981), 3381529), new ItemStack(LOTRMod.hobbitPipe), new ItemStack(Items.book), new ItemStack(Items.feather), new ItemStack(Items.wooden_sword), new ItemStack(Items.bow), new ItemStack(LOTRMod.mug), new ItemStack(LOTRMod.mugAle), new ItemStack(LOTRMod.mugCider), new ItemStack(LOTRMod.ceramicMug), new ItemStack(Items.glass_bottle), new ItemStack(Items.arrow), new ItemStack(LOTRMod.shireHeather), new ItemStack(LOTRMod.bluebell), new ItemStack(Blocks.yellow_flower, 1, 0), new ItemStack(Blocks.red_flower, 1, 0), new ItemStack(Blocks.red_flower, 1, 3)};
 		return items[random.nextInt(items.length)].copy();
 	}
 
 	public void placePlateOrMug(World world, Random random, int i, int j, int k) {
 		if (random.nextBoolean()) {
-			this.placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.HOBBIT_DRINK);
+			placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.HOBBIT_DRINK);
 		} else {
 			placePlate(world, random, i, j, k, plateBlock, LOTRFoods.HOBBIT);
 		}
@@ -1251,7 +1251,7 @@ public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 	public void setupRandomBlocks(Random random) {
 		super.setupRandomBlocks(random);
 		tavernName = LOTRNames.getHobbitTavernName(random);
-		tavernNameSign = new String[] { "", tavernName[0], tavernName[1], "" };
+		tavernNameSign = new String[]{"", tavernName[0], tavernName[1], ""};
 		tavernNameNPC = tavernName[0] + " " + tavernName[1];
 	}
 }

@@ -35,7 +35,7 @@ public class LOTREntityMoredain extends LOTREntityMan {
 		tasks.addTask(7, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 5.0f, 0.02f));
 		tasks.addTask(8, new EntityAIWatchClosest(this, EntityLiving.class, 8.0f, 0.02f));
 		tasks.addTask(9, new EntityAILookIdle(this));
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 	}
 
 	@Override
@@ -105,9 +105,7 @@ public class LOTREntityMoredain extends LOTREntityMan {
 			int j = MathHelper.floor_double(boundingBox.minY);
 			int k = MathHelper.floor_double(posZ);
 			Block block = worldObj.getBlock(i, j - 1, k);
-			if (j > 62 && (block == Blocks.grass || block == Blocks.sand)) {
-				return true;
-			}
+			return j > 62 && (block == Blocks.grass || block == Blocks.sand);
 		}
 		return false;
 	}
@@ -124,7 +122,7 @@ public class LOTREntityMoredain extends LOTREntityMan {
 
 	@Override
 	public String getNPCFormattedName(String npcName, String entityName) {
-		if (this.getClass() == LOTREntityMoredain.class) {
+		if (getClass() == LOTREntityMoredain.class) {
 			return StatCollector.translateToLocalFormatted("entity.lotr.Moredain.entityName", npcName);
 		}
 		return super.getNPCFormattedName(npcName, entityName);

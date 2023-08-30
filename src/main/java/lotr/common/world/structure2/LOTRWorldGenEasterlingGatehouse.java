@@ -31,7 +31,7 @@ public class LOTRWorldGenEasterlingGatehouse extends LOTRWorldGenEasterlingStruc
 		int j1;
 		int k2;
 		int k14;
-		this.setOriginAndRotation(world, i, j, k, rotation, 4);
+		setOriginAndRotation(world, i, j, k, rotation, 4);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i12 = -7; i12 <= 7; ++i12) {
@@ -81,11 +81,11 @@ public class LOTRWorldGenEasterlingGatehouse extends LOTRWorldGenEasterlingStruc
 			setBlockAndMetadata(world, -2, 6, k15, brickStairBlock, 4);
 			setBlockAndMetadata(world, 2, 6, k15, brickStairBlock, 5);
 		}
-		int[] k15 = { -3, 3 };
+		int[] k15 = {-3, 3};
 		k12 = k15.length;
 		for (i2 = 0; i2 < k12; ++i2) {
 			k16 = k15[i2];
-			for (int i14 : new int[] { -3, 3 }) {
+			for (int i14 : new int[]{-3, 3}) {
 				for (int j14 = 1; j14 <= 6; ++j14) {
 					setBlockAndMetadata(world, i14, j14, k16, brickRedBlock, brickRedMeta);
 				}
@@ -103,13 +103,13 @@ public class LOTRWorldGenEasterlingGatehouse extends LOTRWorldGenEasterlingStruc
 		for (int i15 = -2; i15 <= 2; ++i15) {
 			for (k12 = -2; k12 <= 2; ++k12) {
 				if (k12 == 0) {
-					setBlockAndMetadata(world, i15, 7, k12, brickRedBlock, brickRedMeta);
+					setBlockAndMetadata(world, i15, 7, 0, brickRedBlock, brickRedMeta);
 					continue;
 				}
 				setBlockAndMetadata(world, i15, 7, k12, pillarBlock, pillarMeta);
 			}
 		}
-		for (int k161 : new int[] { -2, 2 }) {
+		for (int k161 : new int[]{-2, 2}) {
 			for (int i16 = -2; i16 <= 2; ++i16) {
 				for (int j15 = 1; j15 <= (Math.abs(i16) <= 1 ? 7 : 6); ++j15) {
 					setBlockAndMetadata(world, i16, j15, k161, gateBlock, k161 > 0 ? 2 : 3);
@@ -126,7 +126,7 @@ public class LOTRWorldGenEasterlingGatehouse extends LOTRWorldGenEasterlingStruc
 			setBlockAndMetadata(world, -3, j16, 2, brickBlock, brickMeta);
 			setBlockAndMetadata(world, 3, j16, 2, brickBlock, brickMeta);
 		}
-		int[] j16 = { -3, 3 };
+		int[] j16 = {-3, 3};
 		k12 = j16.length;
 		for (i2 = 0; i2 < k12; ++i2) {
 			k16 = j16[i2];
@@ -239,10 +239,10 @@ public class LOTRWorldGenEasterlingGatehouse extends LOTRWorldGenEasterlingStruc
 		for (i1 = -7; i1 <= 7; ++i1) {
 			int i22 = Math.abs(i1);
 			if (i22 >= 4 && i22 <= 6) {
-				for (int k17 : new int[] { -2, 2 }) {
+				for (int k17 : new int[]{-2, 2}) {
 					for (int j17 = 1; j17 <= 8; ++j17) {
 						if (j17 == 1) {
-							setBlockAndMetadata(world, i1, j17, k17, brickRedBlock, brickRedMeta);
+							setBlockAndMetadata(world, i1, 1, k17, brickRedBlock, brickRedMeta);
 						} else {
 							setBlockAndMetadata(world, i1, j17, k17, brickBlock, brickMeta);
 						}

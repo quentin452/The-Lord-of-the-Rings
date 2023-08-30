@@ -84,10 +84,10 @@ public class LOTRMiniQuestCollect extends LOTRMiniQuestCollectBase {
 
 		@Override
 		public Q createQuest(LOTREntityNPC npc, Random rand) {
-			LOTRMiniQuestCollect quest = super.createQuest(npc, rand);
-			quest.collectItem = this.collectItem.copy();
-			quest.collectTarget = MathHelper.getRandomIntegerInRange(rand, this.minTarget, this.maxTarget);
-			return (Q) quest;
+			Q quest = super.createQuest(npc, rand);
+			quest.collectItem = collectItem.copy();
+			quest.collectTarget = MathHelper.getRandomIntegerInRange(rand, minTarget, maxTarget);
+			return quest;
 		}
 
 		@Override
@@ -96,12 +96,12 @@ public class LOTRMiniQuestCollect extends LOTRMiniQuestCollectBase {
 		}
 
 		public QFCollect setCollectItem(ItemStack itemstack, int min, int max) {
-			this.collectItem = itemstack;
-			if (this.collectItem.isItemStackDamageable()) {
-				this.collectItem.setItemDamage(32767);
+			collectItem = itemstack;
+			if (collectItem.isItemStackDamageable()) {
+				collectItem.setItemDamage(32767);
 			}
-			this.minTarget = min;
-			this.maxTarget = max;
+			minTarget = min;
+			maxTarget = max;
 			return this;
 		}
 	}

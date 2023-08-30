@@ -9,7 +9,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityHighElfBase extends LOTREntityElf {
-	public LOTREntityHighElfBase(World world) {
+	protected LOTREntityHighElfBase(World world) {
 		super(world);
 	}
 
@@ -26,7 +26,7 @@ public abstract class LOTREntityHighElfBase extends LOTREntityElf {
 		super.dropElfItems(flag, i);
 		if (flag) {
 			int dropChance = 20 - i * 4;
-			if (rand.nextInt(dropChance = Math.max(dropChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(dropChance, 1)) == 0) {
 				ItemStack elfDrink = new ItemStack(LOTRMod.mugMiruvor);
 				elfDrink.setItemDamage(1 + rand.nextInt(3));
 				LOTRItemMug.setVessel(elfDrink, LOTRFoods.ELF_DRINK.getRandomVessel(rand), true);
@@ -45,8 +45,4 @@ public abstract class LOTREntityHighElfBase extends LOTREntityElf {
 		return LOTRFaction.HIGH_ELF;
 	}
 
-	@Override
-	public void setupNPCName() {
-		familyInfo.setName(LOTRNames.getSindarinOrQuenyaName(rand, familyInfo.isMale()));
-	}
 }

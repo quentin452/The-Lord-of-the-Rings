@@ -20,8 +20,8 @@ public enum LOTRGuiMessageTypes {
 	}
 
 	public static LOTRGuiMessageTypes forSaveName(String name) {
-		for (LOTRGuiMessageTypes message : LOTRGuiMessageTypes.values()) {
-			if (!message.getSaveName().equals(name)) {
+		for (LOTRGuiMessageTypes message : values()) {
+			if (!message.messageName.equals(name)) {
 				continue;
 			}
 			return message;

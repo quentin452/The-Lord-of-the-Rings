@@ -24,7 +24,7 @@ public class LOTRGollumSpawner {
 			int i = MathHelper.getRandomIntegerInRange(world.rand, x - homeRange, x + homeRange);
 			if (world.checkChunksExist(i - (checkRange = 16), (j = MathHelper.getRandomIntegerInRange(world.rand, 16, 32)) - checkRange, (k = MathHelper.getRandomIntegerInRange(world.rand, z - homeRange, z + homeRange)) - checkRange, i + checkRange, j + checkRange, k + checkRange)) {
 				AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(i, j, k, i + 1, j + 1, k + 1);
-				if (world.getEntitiesWithinAABB(EntityPlayer.class, aabb = aabb.expand(checkRange, checkRange, checkRange)).isEmpty()) {
+				if (world.getEntitiesWithinAABB(EntityPlayer.class, aabb.expand(checkRange, checkRange, checkRange)).isEmpty()) {
 					Block block = world.getBlock(i, j, k);
 					Block below = world.getBlock(i, j - 1, k);
 					Block above = world.getBlock(i, j + 1, k);

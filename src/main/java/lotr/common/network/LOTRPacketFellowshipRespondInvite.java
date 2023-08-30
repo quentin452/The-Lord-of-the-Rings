@@ -42,7 +42,7 @@ public class LOTRPacketFellowshipRespondInvite extends LOTRPacketFellowshipDo {
 					playerData.rejectFellowshipInvite(fellowship);
 				}
 			} else {
-				LOTRPacketFellowshipAcceptInviteResult resultPacket = new LOTRPacketFellowshipAcceptInviteResult(LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.NONEXISTENT);
+				IMessage resultPacket = new LOTRPacketFellowshipAcceptInviteResult(LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.NONEXISTENT);
 				LOTRPacketHandler.networkWrapper.sendTo(resultPacket, entityplayer);
 			}
 			return null;

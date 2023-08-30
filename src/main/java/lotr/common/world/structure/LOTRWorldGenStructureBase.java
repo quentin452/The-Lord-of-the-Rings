@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.MathHelper;
@@ -22,11 +23,11 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 public abstract class LOTRWorldGenStructureBase extends WorldGenerator {
 	public boolean restrictions = true;
-	public EntityPlayer usingPlayer = null;
+	public EntityPlayer usingPlayer;
 	public boolean notifyChanges;
 	public LOTRStructureTimelapse.ThreadTimelapse threadTimelapse;
 
-	public LOTRWorldGenStructureBase(boolean flag) {
+	protected LOTRWorldGenStructureBase(boolean flag) {
 		super(flag);
 		notifyChanges = flag;
 	}
@@ -36,7 +37,7 @@ public abstract class LOTRWorldGenStructureBase extends WorldGenerator {
 		setBlockAndNotifyAdequately(world, i, j + 1, k, LOTRMod.armorStand, direction | 4);
 		TileEntity tileentity = world.getTileEntity(i, j, k);
 		if (tileentity instanceof LOTRTileEntityArmorStand) {
-			LOTRTileEntityArmorStand armorStand = (LOTRTileEntityArmorStand) tileentity;
+			IInventory armorStand = (IInventory) tileentity;
 			for (int l = 0; l < armor.length; ++l) {
 				ItemStack armorPart = armor[l];
 				if (armorPart == null) {
@@ -70,7 +71,7 @@ public abstract class LOTRWorldGenStructureBase extends WorldGenerator {
 	}
 
 	public void placeBarrel(World world, Random random, int i, int j, int k, int meta, LOTRFoods foodList) {
-		this.placeBarrel(world, random, i, j, k, meta, foodList.getRandomBrewableDrink(random));
+		placeBarrel(world, random, i, j, k, meta, foodList.getRandomBrewableDrink(random));
 	}
 
 	public void placeFlowerPot(World world, int i, int j, int k, ItemStack itemstack) {
@@ -87,7 +88,7 @@ public abstract class LOTRWorldGenStructureBase extends WorldGenerator {
 	}
 
 	public void placeMug(World world, Random random, int i, int j, int k, int meta, ItemStack drink, LOTRFoods foodList) {
-		this.placeMug(world, random, i, j, k, meta, drink, foodList.getPlaceableDrinkVessels());
+		placeMug(world, random, i, j, k, meta, drink, foodList.getPlaceableDrinkVessels());
 	}
 
 	public void placeMug(World world, Random random, int i, int j, int k, int meta, ItemStack drink, LOTRItemMug.Vessel[] vesselTypes) {
@@ -105,7 +106,7 @@ public abstract class LOTRWorldGenStructureBase extends WorldGenerator {
 	}
 
 	public void placeMug(World world, Random random, int i, int j, int k, int meta, LOTRFoods foodList) {
-		this.placeMug(world, random, i, j, k, meta, foodList.getRandomPlaceableDrink(random), foodList);
+		placeMug(world, random, i, j, k, meta, foodList.getRandomPlaceableDrink(random), foodList);
 	}
 
 	public void placeNPCRespawner(LOTREntityNPCRespawner entity, World world, int i, int j, int k) {

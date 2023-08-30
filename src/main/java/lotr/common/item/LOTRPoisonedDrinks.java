@@ -12,11 +12,11 @@ public class LOTRPoisonedDrinks {
 
 	public static void addPoisonEffect(EntityPlayer entityplayer, ItemStack itemstack) {
 		int duration = 300;
-		entityplayer.addPotionEffect(new PotionEffect(LOTRPoisonedDrinks.killingPoison.id, duration));
+		entityplayer.addPotionEffect(new PotionEffect(killingPoison.id, duration));
 	}
 
 	public static boolean canPlayerSeePoisoned(ItemStack itemstack, EntityPlayer entityplayer) {
-		UUID uuid = LOTRPoisonedDrinks.getPoisonerUUID(itemstack);
+		UUID uuid = getPoisonerUUID(itemstack);
 		if (uuid == null) {
 			return true;
 		}
@@ -57,7 +57,7 @@ public class LOTRPoisonedDrinks {
 	}
 
 	public static void setPoisonerPlayer(ItemStack itemstack, EntityPlayer entityplayer) {
-		LOTRPoisonedDrinks.setPoisonerUUID(itemstack, entityplayer.getUniqueID());
+		setPoisonerUUID(itemstack, entityplayer.getUniqueID());
 	}
 
 	public static void setPoisonerUUID(ItemStack itemstack, UUID uuid) {

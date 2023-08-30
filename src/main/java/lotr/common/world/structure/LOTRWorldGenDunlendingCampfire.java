@@ -27,21 +27,21 @@ public class LOTRWorldGenDunlendingCampfire extends LOTRWorldGenStructureBase {
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			k += 5;
-			break;
-		}
-		case 1: {
-			i -= 5;
-			break;
-		}
-		case 2: {
-			k -= 5;
-			break;
-		}
-		case 3: {
-			i += 5;
-		}
+			case 0: {
+				k += 5;
+				break;
+			}
+			case 1: {
+				i -= 5;
+				break;
+			}
+			case 2: {
+				k -= 5;
+				break;
+			}
+			case 3: {
+				i += 5;
+			}
 		}
 		if (restrictions) {
 			for (i1 = i - 5; i1 <= i + 5; ++i1) {
@@ -122,29 +122,29 @@ public class LOTRWorldGenDunlendingCampfire extends LOTRWorldGenStructureBase {
 			int chestMeta = 0;
 			int l = random.nextInt(4);
 			switch (l) {
-			case 0: {
-				chestX = i - 3 + random.nextInt(6);
-				chestZ = k + 3;
-				chestMeta = 3;
-				break;
-			}
-			case 1: {
-				chestX = i - 3;
-				chestZ = k - 3 + random.nextInt(6);
-				chestMeta = 4;
-				break;
-			}
-			case 2: {
-				chestX = i - 3 + random.nextInt(6);
-				chestZ = k - 3;
-				chestMeta = 2;
-				break;
-			}
-			case 3: {
-				chestX = i + 3;
-				chestZ = k - 3 + random.nextInt(6);
-				chestMeta = 5;
-			}
+				case 0: {
+					chestX = i - 3 + random.nextInt(6);
+					chestZ = k + 3;
+					chestMeta = 3;
+					break;
+				}
+				case 1: {
+					chestX = i - 3;
+					chestZ = k - 3 + random.nextInt(6);
+					chestMeta = 4;
+					break;
+				}
+				case 2: {
+					chestX = i - 3 + random.nextInt(6);
+					chestZ = k - 3;
+					chestMeta = 2;
+					break;
+				}
+				case 3: {
+					chestX = i + 3;
+					chestZ = k - 3 + random.nextInt(6);
+					chestMeta = 5;
+				}
 			}
 			setBlockAndNotifyAdequately(world, chestX, j + 1, chestZ, LOTRMod.chestBasket, chestMeta);
 			LOTRChestContents.fillChest(world, random, chestX, j + 1, chestZ, LOTRChestContents.DUNLENDING_CAMPFIRE);

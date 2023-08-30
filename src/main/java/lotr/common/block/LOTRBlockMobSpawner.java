@@ -23,7 +23,7 @@ public class LOTRBlockMobSpawner extends BlockMobSpawner {
 		return new LOTRTileEntityMobSpawner();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return Blocks.mob_spawner.getIcon(i, j);
@@ -53,7 +53,7 @@ public class LOTRBlockMobSpawner extends BlockMobSpawner {
 		return false;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

@@ -7,7 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
 public class LOTRModelBiped extends ModelBiped {
-	public boolean setup = false;
+	public boolean setup;
 	public float base_bodyRotateX;
 	public float base_armX;
 	public float base_armY;
@@ -50,12 +50,12 @@ public class LOTRModelBiped extends ModelBiped {
 		bipedRightLeg.rotateAngleX = MathHelper.cos(f * 0.6662f) * 1.4f * f1;
 		bipedLeftLeg.rotateAngleX = MathHelper.cos(f * 0.6662f + 3.1415927f) * 1.4f * f1;
 		if (entity instanceof LOTREntityNPC) {
-			bipedRightLeg.rotateAngleY = (float) Math.toRadians(5.0);
-			bipedLeftLeg.rotateAngleY = (float) Math.toRadians(-5.0);
+			bipedRightLeg.rotateAngleY = 0.08726646259971647f;
+			bipedLeftLeg.rotateAngleY = -0.08726646259971647f;
 		}
 		if (isRiding) {
-			bipedRightArm.rotateAngleX += -0.62831855f;
-			bipedLeftArm.rotateAngleX += -0.62831855f;
+			bipedRightArm.rotateAngleX -= 0.62831855f;
+			bipedLeftArm.rotateAngleX -= 0.62831855f;
 			bipedRightLeg.rotateAngleX = -1.2566371f;
 			bipedLeftLeg.rotateAngleX = -1.2566371f;
 			bipedRightLeg.rotateAngleY = 0.31415927f;
@@ -131,8 +131,8 @@ public class LOTRModelBiped extends ModelBiped {
 		if (entity instanceof LOTREntityNPC && (npc = (LOTREntityNPC) entity).isDrunkard()) {
 			float f62 = f2 / 80.0f;
 			float f72 = (f2 + 40.0f) / 80.0f;
-			float f8 = MathHelper.sin(f62 *= 6.2831855f) * 0.5f;
-			float f9 = MathHelper.sin(f72 *= 6.2831855f) * 0.5f;
+			float f8 = MathHelper.sin(f62 * 6.2831855f) * 0.5f;
+			float f9 = MathHelper.sin(f72 * 6.2831855f) * 0.5f;
 			bipedHead.rotateAngleX += f8;
 			bipedHead.rotateAngleY += f9;
 			bipedHeadwear.rotateAngleX += f8;
@@ -148,7 +148,7 @@ public class LOTRModelBiped extends ModelBiped {
 			bowing = bowAmount != 0.0f;
 		}
 		if (bowing) {
-			float bowAmountRad = (float) Math.toRadians(bowAmount *= 30.0f);
+			float bowAmountRad = (float) Math.toRadians(bowAmount * 30.0f);
 			float bowCos = MathHelper.cos(bowAmountRad);
 			float bowSin = MathHelper.sin(bowAmountRad);
 			bipedHead.rotationPointY = base_headY + 12.0f * (1.0f - bowCos);

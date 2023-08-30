@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityDwarfCommander extends LOTREntityDwarfWarrior implements LOTRUnitTradeable {
 	public LOTREntityDwarfCommander(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public class LOTRBlockSapling4 extends LOTRBlockSaplingBase {
 		int xOffset = 0;
 		int zOffset = 0;
 		if (meta == 0) {
-			int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta);
+			int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, 0);
 			if (partyTree != null) {
 				treeGen = LOTRTreeType.CHESTNUT_PARTY.create(true, random);
 				trunkPos = 1;

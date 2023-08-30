@@ -2,6 +2,7 @@ package lotr.client.gui;
 
 import java.util.UUID;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -51,7 +52,7 @@ public class LOTRGuiBeacon extends LOTRGuiScreenBase {
 		drawDefaultBackground();
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		mc.getTextureManager().bindTexture(guiTexture);
-		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		TileEntity te = mc.theWorld.getTileEntity(beaconX, beaconY, beaconZ);
 		String s = new ItemStack(te.getBlockType(), 1, te.getBlockMetadata()).getDisplayName();
 		fontRendererObj.drawString(s, guiLeft + xSize / 2 - fontRendererObj.getStringWidth(s) / 2, guiTop + 11, 4210752);
@@ -126,7 +127,7 @@ public class LOTRGuiBeacon extends LOTRGuiScreenBase {
 			fsID = fs.getFellowshipID();
 		}
 		String beaconName = currentBeaconName;
-		LOTRPacketBeaconEdit packet = new LOTRPacketBeaconEdit(beaconX, beaconY, beaconZ, fsID, beaconName, true);
+		IMessage packet = new LOTRPacketBeaconEdit(beaconX, beaconY, beaconZ, fsID, beaconName, true);
 		LOTRPacketHandler.networkWrapper.sendToServer(packet);
 	}
 

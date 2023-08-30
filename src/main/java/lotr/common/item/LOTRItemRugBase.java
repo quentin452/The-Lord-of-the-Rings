@@ -16,11 +16,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class LOTRItemRugBase extends Item {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] rugIcons;
 	public String[] rugNames;
 
-	public LOTRItemRugBase(String... names) {
+	protected LOTRItemRugBase(String... names) {
 		rugNames = names;
 		setCreativeTab(LOTRCreativeTabs.tabDeco);
 		setMaxStackSize(1);
@@ -30,7 +30,7 @@ public abstract class LOTRItemRugBase extends Item {
 
 	public abstract LOTREntityRugBase createRug(World var1, ItemStack var2);
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIconFromDamage(int i) {
 		if (i >= rugIcons.length) {
@@ -39,7 +39,7 @@ public abstract class LOTRItemRugBase extends Item {
 		return rugIcons[i];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < rugNames.length; ++i) {
@@ -78,7 +78,7 @@ public abstract class LOTRItemRugBase extends Item {
 		if (world.getBlock(i, j - 1, k).isSideSolid(world, i, j - 1, k, ForgeDirection.UP) && !world.isRemote) {
 			LOTREntityRugBase rug = createRug(world, itemstack);
 			rug.setLocationAndAngles(i + f, j, k + f2, 180.0f - entityplayer.rotationYaw % 360.0f, 0.0f);
-			if (world.checkNoEntityCollision(rug.boundingBox) && world.getCollidingBoundingBoxes(rug, rug.boundingBox).size() == 0 && !world.isAnyLiquid(rug.boundingBox)) {
+			if (world.checkNoEntityCollision(rug.boundingBox) && world.getCollidingBoundingBoxes(rug, rug.boundingBox).isEmpty() && !world.isAnyLiquid(rug.boundingBox)) {
 				world.spawnEntityInWorld(rug);
 				world.playSoundAtEntity(rug, Blocks.wool.stepSound.func_150496_b(), (Blocks.wool.stepSound.getVolume() + 1.0f) / 2.0f, Blocks.wool.stepSound.getPitch() * 0.8f);
 				--itemstack.stackSize;
@@ -89,7 +89,7 @@ public abstract class LOTRItemRugBase extends Item {
 		return false;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerIcons(IIconRegister iconregister) {
 		rugIcons = new IIcon[rugNames.length];

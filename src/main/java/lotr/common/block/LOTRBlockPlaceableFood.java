@@ -14,13 +14,13 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRBlockPlaceableFood extends Block {
 	public static int MAX_EATS = 6;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconBottom;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconTop;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconSide;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconEaten;
 	public Item foodItem;
 	public float foodHalfWidth;
@@ -69,7 +69,7 @@ public class LOTRBlockPlaceableFood extends Block {
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k) {
 		float f = 0.5f - foodHalfWidth;
 		float f1 = 0.5f + foodHalfWidth;
-		float f2 = f + (f1 - f) * ((float) world.getBlockMetadata(i, j, k) / (float) MAX_EATS);
+		float f2 = f + (f1 - f) * ((float) world.getBlockMetadata(i, j, k) / MAX_EATS);
 		return AxisAlignedBB.getBoundingBox(i + f2, j, k + f, i + f1, j + foodHeight, k + f1);
 	}
 
@@ -86,7 +86,7 @@ public class LOTRBlockPlaceableFood extends Block {
 		return drops;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (i == 0) {
@@ -101,7 +101,7 @@ public class LOTRBlockPlaceableFood extends Block {
 		return iconSide;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public Item getItem(World world, int i, int j, int k) {
 		if (foodItem != null) {
@@ -115,7 +115,7 @@ public class LOTRBlockPlaceableFood extends Block {
 		return null;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int i, int j, int k) {
 		return getCollisionBoundingBoxFromPool(world, i, j, k);
@@ -136,7 +136,7 @@ public class LOTRBlockPlaceableFood extends Block {
 	public void onNeighborBlockChange(World world, int i, int j, int k, Block block) {
 		if (!canBlockStay(world, i, j, k)) {
 			int meta = world.getBlockMetadata(i, j, k);
-			this.dropBlockAsItem(world, i, j, k, meta, 0);
+			dropBlockAsItem(world, i, j, k, meta, 0);
 			world.setBlockToAir(i, j, k);
 		}
 	}
@@ -146,7 +146,7 @@ public class LOTRBlockPlaceableFood extends Block {
 		return 0;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		iconBottom = iconregister.registerIcon(getTextureName() + "_bottom");
@@ -165,7 +165,7 @@ public class LOTRBlockPlaceableFood extends Block {
 		world.getBlockMetadata(i, j, k);
 		float f = 0.5f - foodHalfWidth;
 		float f1 = 0.5f + foodHalfWidth;
-		float f2 = f + (f1 - f) * ((float) world.getBlockMetadata(i, j, k) / (float) MAX_EATS);
+		float f2 = f + (f1 - f) * ((float) world.getBlockMetadata(i, j, k) / MAX_EATS);
 		setBlockBounds(f2, 0.0f, f, f1, foodHeight, f1);
 	}
 

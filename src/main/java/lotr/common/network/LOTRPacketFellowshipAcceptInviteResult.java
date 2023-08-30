@@ -56,7 +56,7 @@ public class LOTRPacketFellowshipAcceptInviteResult implements IMessage {
 	}
 
 	public enum AcceptInviteResult {
-		JOINED, DISBANDED, TOO_LARGE, NONEXISTENT;
+		JOINED, DISBANDED, TOO_LARGE, NONEXISTENT
 
 	}
 

@@ -91,11 +91,6 @@ public class LOTRBiomeGenPelennor extends LOTRBiomeGenGondor {
 	}
 
 	@Override
-	public float getTreeIncreaseChance() {
-		return 0.02f;
-	}
-
-	@Override
 	public boolean hasDomesticAnimals() {
 		return true;
 	}

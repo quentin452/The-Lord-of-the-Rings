@@ -29,10 +29,10 @@ public class LOTRModelAleHorn extends ModelBase {
 		horn3.setTextureOffset(20, 6).addBox(1.5f, -6.0f, -1.5f, 1, 5, 3);
 		horn3.setTextureOffset(28, 8).addBox(-2.5f, -6.0f, 1.5f, 5, 5, 1);
 		horn2.addChild(horn3);
-		horn.rotateAngleZ = (float) Math.toRadians(90.0);
-		horn1.rotateAngleZ = (float) Math.toRadians(-20.0);
-		horn2.rotateAngleZ = (float) Math.toRadians(-20.0);
-		horn3.rotateAngleZ = (float) Math.toRadians(-20.0);
+		horn.rotateAngleZ = 1.5707963267948966f;
+		horn1.rotateAngleZ = -0.3490658503988659f;
+		horn2.rotateAngleZ = -0.3490658503988659f;
+		horn3.rotateAngleZ = -0.3490658503988659f;
 		stand = new ModelRenderer(this, 40, 16);
 		stand.setRotationPoint(0.0f, -1.0f, 0.0f);
 		stand.addBox(1.5f, -8.0f, -2.5f, 1, 9, 1);

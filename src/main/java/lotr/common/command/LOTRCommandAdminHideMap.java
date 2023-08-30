@@ -1,7 +1,5 @@
 package lotr.common.command;
 
-import java.util.List;
-
 import lotr.common.LOTRLevelData;
 import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,10 +7,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 
 public class LOTRCommandAdminHideMap extends CommandBase {
-	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args) {
-		return null;
-	}
 
 	@Override
 	public String getCommandName() {
@@ -27,11 +21,6 @@ public class LOTRCommandAdminHideMap extends CommandBase {
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 2;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int i) {
-		return false;
 	}
 
 	@Override
@@ -50,7 +39,7 @@ public class LOTRCommandAdminHideMap extends CommandBase {
 		throw new WrongUsageException("commands.lotr.opHideMap.notOp");
 	}
 
-	public static void notifyUnhidden(EntityPlayer entityplayer) {
+	public static void notifyUnhidden(ICommandSender entityplayer) {
 		entityplayer.addChatMessage(new ChatComponentTranslation("commands.lotr.opHideMap.unhide"));
 	}
 }

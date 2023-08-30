@@ -54,10 +54,10 @@ public class LOTRRenderSmokeRing extends Render {
 	}
 
 	public void drawSprite(Tessellator tessellator, int index) {
-		float var3 = (index % 16 * 16 + 0) / 128.0f;
+		float var3 = (index % 16 * 16) / 128.0f;
 		float var4 = (index % 16 * 16 + 16) / 128.0f;
-		float var5 = (index / 16 * 16 + 0) / 128.0f;
-		float var6 = (index / 16 * 16 + 16) / 128.0f;
+		float var5 = ((float) index / 16 * 16) / 128.0f;
+		float var6 = ((float) index / 16 * 16 + 16) / 128.0f;
 		float var7 = 1.0f;
 		float var8 = 0.5f;
 		float var9 = 0.25f;

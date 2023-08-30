@@ -11,7 +11,7 @@ public class LOTRBlockAleHorn extends LOTRBlockMug {
 		setStepSound(Block.soundTypeStone);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return Blocks.stained_hardened_clay.getIcon(i, 0);

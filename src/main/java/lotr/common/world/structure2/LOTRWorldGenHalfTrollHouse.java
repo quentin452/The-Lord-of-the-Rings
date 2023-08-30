@@ -23,7 +23,7 @@ public class LOTRWorldGenHalfTrollHouse extends LOTRWorldGenStructureBase2 {
 		int k1;
 		int radius = 5;
 		int height = 6 + random.nextInt(4);
-		this.setOriginAndRotation(world, i, j, k, rotation, radius + 1);
+		setOriginAndRotation(world, i, j, k, rotation, radius + 1);
 		if (restrictions) {
 			for (i1 = -radius; i1 <= radius; ++i1) {
 				for (k1 = -radius; k1 <= radius; ++k1) {
@@ -58,7 +58,7 @@ public class LOTRWorldGenHalfTrollHouse extends LOTRWorldGenStructureBase2 {
 						continue;
 					}
 					if (j1 == 0) {
-						setBlockAndMetadata(world, i1, j1, k1, Blocks.cobblestone, 0);
+						setBlockAndMetadata(world, i1, 0, k1, Blocks.cobblestone, 0);
 						continue;
 					}
 					setAir(world, i1, j1, k1);
@@ -115,7 +115,7 @@ public class LOTRWorldGenHalfTrollHouse extends LOTRWorldGenStructureBase2 {
 		for (i1 = -3; i1 <= 3; i1 += 6) {
 			setBlockAndMetadata(world, i1, 1, -1, Blocks.stone_slab, 11);
 			setBlockAndMetadata(world, i1, 1, 1, Blocks.stone_slab, 11);
-			this.placeChest(world, random, i1, 1, 0, LOTRMod.chestBasket, 0, LOTRChestContents.HALF_TROLL_HOUSE);
+			placeChest(world, random, i1, 1, 0, LOTRMod.chestBasket, 0, LOTRChestContents.HALF_TROLL_HOUSE);
 		}
 		setBlockAndMetadata(world, -1, 1, 3, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, 0, 1, 3, Blocks.stone_slab, 11);

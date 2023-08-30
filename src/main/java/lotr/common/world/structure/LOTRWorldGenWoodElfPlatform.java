@@ -19,42 +19,42 @@ public class LOTRWorldGenWoodElfPlatform extends LOTRWorldGenStructureBase {
 		if (restrictions) {
 			rotation = random.nextInt(4);
 			switch (rotation) {
-			case 0: {
-				k -= 3;
-				break;
-			}
-			case 1: {
-				i += 3;
-				break;
-			}
-			case 2: {
-				k += 3;
-				break;
-			}
-			case 3: {
-				i -= 3;
-			}
+				case 0: {
+					k -= 3;
+					break;
+				}
+				case 1: {
+					i += 3;
+					break;
+				}
+				case 2: {
+					k += 3;
+					break;
+				}
+				case 3: {
+					i -= 3;
+				}
 			}
 		} else if (usingPlayer != null) {
 			rotation = usingPlayerRotation();
 		}
 		boolean flag = false;
 		switch (rotation) {
-		case 0: {
-			flag = generateFacingSouth(world, random, i, j, k);
-			break;
-		}
-		case 1: {
-			flag = generateFacingWest(world, random, i, j, k);
-			break;
-		}
-		case 2: {
-			flag = generateFacingNorth(world, random, i, j, k);
-			break;
-		}
-		case 3: {
-			flag = generateFacingEast(world, random, i, j, k);
-		}
+			case 0: {
+				flag = generateFacingSouth(world, random, i, j, k);
+				break;
+			}
+			case 1: {
+				flag = generateFacingWest(world, random, i, j, k);
+				break;
+			}
+			case 2: {
+				flag = generateFacingNorth(world, random, i, j, k);
+				break;
+			}
+			case 3: {
+				flag = generateFacingEast(world, random, i, j, k);
+			}
 		}
 		if (flag) {
 			LOTREntityNPCRespawner respawner = new LOTREntityNPCRespawner(world);

@@ -16,7 +16,7 @@ public class LOTRWorldGenSouthronTownFlowers extends LOTRWorldGenSouthronStructu
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int k1;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 1);
+		setOriginAndRotation(world, i, j, k, rotation, 1);
 		setupRandomBlocks(random);
 		ItemStack flower = getRandomFlower(world, random);
 		Block flowerBlock = Block.getBlockFromItem(flower.getItem());
@@ -43,6 +43,7 @@ public class LOTRWorldGenSouthronTownFlowers extends LOTRWorldGenSouthronStructu
 					setBlockAndMetadata(world, i1, j1, k1, stoneBlock, stoneMeta);
 					setGrassToDirt(world, i1, j1 - 1, k1);
 				}
+				//noinspection BadOddness
 				if ((k1 == 0 || k1 == 3) && i2 % 2 == 1) {
 					setBlockAndMetadata(world, i1, 1, k1, brickSlabBlock, brickSlabMeta);
 				}

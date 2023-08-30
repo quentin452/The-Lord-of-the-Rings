@@ -25,14 +25,14 @@ public class LOTRModelEasterlingHelmet extends LOTRModelBiped {
 		ModelRenderer horn = new ModelRenderer(this, 44, 16);
 		horn.setRotationPoint(0.0f, 0.0f, 0.0f);
 		horn.addBox(-0.5f, -14.0f - f, -2.0f - f, 1, 8, 2, 0.0f);
-		horn.rotateAngleX = (float) Math.toRadians(20.0);
+		horn.rotateAngleX = 0.3490658503988659f;
 		bipedHead.addChild(horn);
 		bipedHead.setTextureOffset(24, 0).addBox(-1.0f, -8.0f - f, 4.0f + f, 2, 4, 1, 0.0f);
 		bipedHead.setTextureOffset(32, 2).addBox(-6.0f, -12.0f - f, 5.0f + f, 12, 4, 0, 0.0f);
 		ModelRenderer crest = new ModelRenderer(this, 32, 0);
 		crest.setRotationPoint(0.0f, -12.0f - f, 5.0f + f);
 		crest.addBox(-6.0f, -2.0f, 0.0f, 12, 2, 0, 0.0f);
-		crest.rotateAngleX = (float) Math.toRadians(30.0);
+		crest.rotateAngleX = 0.5235987755982988f;
 		bipedHead.addChild(crest);
 		if (kineHorns) {
 			ModelRenderer kineHornRight = new ModelRenderer(this, 0, 32);
@@ -56,11 +56,11 @@ public class LOTRModelEasterlingHelmet extends LOTRModelBiped {
 			kineHornLeft2.mirror = true;
 			kineHornLeft2.setRotationPoint(5.0f, 0.0f, 0.0f);
 			kineHornLeft2.addBox(-1.0f, -0.5f, -0.5f, 4, 1, 1, 0.0f);
-			kineHornRight.rotateAngleZ = (float) Math.toRadians(40.0);
+			kineHornRight.rotateAngleZ = 0.6981317007977318f;
 			kineHornLeft.rotateAngleZ = -kineHornRight.rotateAngleZ;
-			kineHornRight1.rotateAngleZ = (float) Math.toRadians(-30.0);
+			kineHornRight1.rotateAngleZ = -0.5235987755982988f;
 			kineHornLeft1.rotateAngleZ = -kineHornRight1.rotateAngleZ;
-			kineHornRight2.rotateAngleZ = (float) Math.toRadians(-30.0);
+			kineHornRight2.rotateAngleZ = -0.5235987755982988f;
 			kineHornLeft2.rotateAngleZ = -kineHornRight2.rotateAngleZ;
 			bipedHead.addChild(kineHornRight);
 			kineHornRight.addChild(kineHornRight1);

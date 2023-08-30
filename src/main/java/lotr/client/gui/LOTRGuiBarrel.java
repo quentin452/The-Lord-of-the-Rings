@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.lwjgl.opengl.GL11;
 
 import lotr.common.inventory.LOTRContainerBarrel;
@@ -30,7 +31,7 @@ public class LOTRGuiBarrel extends GuiContainer {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button.enabled && button.id == 0) {
-			LOTRPacketBrewingButton packet = new LOTRPacketBrewingButton();
+			IMessage packet = new LOTRPacketBrewingButton();
 			LOTRPacketHandler.networkWrapper.sendToServer(packet);
 		}
 	}

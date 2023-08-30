@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityRivendellLord extends LOTREntityRivendellWarrior implements LOTRUnitTradeable {
 	public LOTREntityRivendellLord(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.RIVENDELL;
 	}
 

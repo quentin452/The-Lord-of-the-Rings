@@ -11,7 +11,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
-import net.minecraft.world.Teleporter;
 
 public class LOTRTileEntityUtumnoPortal extends TileEntity {
 	public static int WIDTH = 3;
@@ -42,14 +41,14 @@ public class LOTRTileEntityUtumnoPortal extends TileEntity {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public double getMaxRenderDistanceSquared() {
 		double d = 256.0;
 		return d * d;
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public AxisAlignedBB getRenderBoundingBox() {
 		return AxisAlignedBB.getBoundingBox(xCoord - 2, yCoord, zCoord - 2, xCoord + 3, yCoord + 30, zCoord + 3);
 	}
@@ -70,7 +69,7 @@ public class LOTRTileEntityUtumnoPortal extends TileEntity {
 			LOTRTeleporterUtumno teleporter = LOTRTeleporterUtumno.newTeleporter(dimension);
 			teleporter.setTargetCoords(actingPortal.targetX, actingPortal.targetZ);
 			if (entity instanceof EntityPlayerMP) {
-				MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension((EntityPlayerMP) entity, dimension, (Teleporter) teleporter);
+				MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension((EntityPlayerMP) entity, dimension, teleporter);
 			} else {
 				LOTRMod.transferEntityToDimension(entity, dimension, teleporter);
 			}

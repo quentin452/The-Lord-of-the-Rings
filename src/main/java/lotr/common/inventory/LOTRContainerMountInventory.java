@@ -17,7 +17,7 @@ public class LOTRContainerMountInventory extends ContainerHorseInventory {
 		Slot armorSlot = (Slot) slots.get(1);
 		addSlotToContainer(new Slot(armorSlot.inventory, armorSlot.slotNumber, armorSlot.xDisplayPosition, armorSlot.yDisplayPosition) {
 
-			@SideOnly(value = Side.CLIENT)
+			@SideOnly(Side.CLIENT)
 			@Override
 			public boolean func_111238_b() {
 				return horse.func_110259_cr();

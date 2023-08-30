@@ -7,7 +7,7 @@ public class LOTREnchantmentLooting extends LOTREnchantment {
 	public int lootLevel;
 
 	public LOTREnchantmentLooting(String s, int level) {
-		super(s, new LOTREnchantmentType[] { LOTREnchantmentType.TOOL, LOTREnchantmentType.MELEE });
+		super(s, new LOTREnchantmentType[]{LOTREnchantmentType.TOOL, LOTREnchantmentType.MELEE});
 		lootLevel = level;
 		setValueModifier(1.0f + lootLevel);
 	}

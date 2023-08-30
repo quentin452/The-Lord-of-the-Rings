@@ -8,6 +8,7 @@ import lotr.common.LOTRFoods;
 import lotr.common.entity.npc.*;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class LOTRWorldGenRohanWatchtower extends LOTRWorldGenRohanStructure {
@@ -22,7 +23,7 @@ public class LOTRWorldGenRohanWatchtower extends LOTRWorldGenRohanStructure {
 		int k1;
 		int k12;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		int height = 7 + random.nextInt(3);
 		originY += height;
@@ -37,11 +38,11 @@ public class LOTRWorldGenRohanWatchtower extends LOTRWorldGenRohanStructure {
 				}
 			}
 		}
-		int[] i12 = { -3, 3 };
+		int[] i12 = {-3, 3};
 		k12 = i12.length;
 		for (j12 = 0; j12 < k12; ++j12) {
 			int i13 = i12[j12];
-			for (int k13 : new int[] { -3, 3 }) {
+			for (int k13 : new int[]{-3, 3}) {
 				int j13 = 3;
 				while (!isOpaque(world, i13, j13, k13) && getY(j13) >= 0) {
 					setBlockAndMetadata(world, i13, j13, k13, plank2Block, plank2Meta);
@@ -125,17 +126,17 @@ public class LOTRWorldGenRohanWatchtower extends LOTRWorldGenRohanStructure {
 			}
 			--j1;
 		}
-		this.placeChest(world, random, -2, 1, 2, 2, LOTRChestContents.ROHAN_WATCHTOWER);
+		placeChest(world, random, -2, 1, 2, 2, LOTRChestContents.ROHAN_WATCHTOWER);
 		setBlockAndMetadata(world, 2, 1, 2, tableBlock, 0);
 		for (k1 = -2; k1 <= 2; ++k1) {
 			int k2 = Math.abs(k1);
-			for (int i14 : new int[] { -3, 3 }) {
+			for (int i14 : new int[]{-3, 3}) {
 				int j14 = -1;
 				while (!isOpaque(world, i14, j14, k1) && getY(j14) >= 0) {
 					if (k2 == 2 && IntMath.mod(j14, 4) == 1 || k2 == 1 && IntMath.mod(j14, 2) == 0 || k2 == 0 && IntMath.mod(j14, 4) == 3) {
 						setBlockAndMetadata(world, i14, j14, k1, logBlock, logMeta);
 						if (k2 == 0) {
-							setBlockAndMetadata(world, i14 - 1 * Integer.signum(i14), j14, k1, Blocks.torch, i14 > 0 ? 1 : 2);
+							setBlockAndMetadata(world, i14 - Integer.signum(i14), j14, k1, Blocks.torch, i14 > 0 ? 1 : 2);
 						}
 					}
 					--j14;
@@ -143,11 +144,11 @@ public class LOTRWorldGenRohanWatchtower extends LOTRWorldGenRohanStructure {
 			}
 		}
 		int belowTop = getBelowTop(world, 2, -1, 2);
-		this.placeChest(world, random, 2, belowTop, 2, 5, LOTRChestContents.ROHAN_WATCHTOWER);
+		placeChest(world, random, 2, belowTop, 2, 5, LOTRChestContents.ROHAN_WATCHTOWER);
 		belowTop = getBelowTop(world, 2, -1, 0);
 		setBlockAndMetadata(world, 2, belowTop, 0, plankBlock, plankMeta);
 		setGrassToDirt(world, 2, belowTop - 1, 0);
-		this.placeBarrel(world, random, 2, belowTop + 1, 0, 5, LOTRFoods.ROHAN_DRINK);
+		placeBarrel(world, random, 2, belowTop + 1, 0, 5, LOTRFoods.ROHAN_DRINK);
 		belowTop = getBelowTop(world, -2, -1, 1);
 		setBlockAndMetadata(world, -2, belowTop, 1, Blocks.hay_block, 0);
 		setGrassToDirt(world, -2, belowTop - 1, 1);
@@ -167,7 +168,7 @@ public class LOTRWorldGenRohanWatchtower extends LOTRWorldGenRohanStructure {
 		return true;
 	}
 
-	public int getBelowTop(World world, int i, int j, int k) {
+	public int getBelowTop(IBlockAccess world, int i, int j, int k) {
 		while (!isOpaque(world, i, j, k) && getY(j) >= 0) {
 			--j;
 		}

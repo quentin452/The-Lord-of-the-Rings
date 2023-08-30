@@ -28,37 +28,37 @@ public class LOTRWorldGenHobbitPicnicBench extends LOTRWorldGenStructureBase {
 		}
 		int randomWood = random.nextInt(4);
 		switch (randomWood) {
-		case 0: {
-			baseBlock = Blocks.planks;
-			baseMeta = 0;
-			stairBlock = Blocks.oak_stairs;
-			halfBlock = Blocks.wooden_slab;
-			halfMeta = 0;
-			break;
-		}
-		case 1: {
-			baseBlock = Blocks.planks;
-			baseMeta = 1;
-			stairBlock = Blocks.spruce_stairs;
-			halfBlock = Blocks.wooden_slab;
-			halfMeta = 1;
-			break;
-		}
-		case 2: {
-			baseBlock = Blocks.planks;
-			baseMeta = 2;
-			stairBlock = Blocks.birch_stairs;
-			halfBlock = Blocks.wooden_slab;
-			halfMeta = 2;
-			break;
-		}
-		case 3: {
-			baseBlock = LOTRMod.planks;
-			baseMeta = 0;
-			stairBlock = LOTRMod.stairsShirePine;
-			halfBlock = LOTRMod.woodSlabSingle;
-			halfMeta = 0;
-		}
+			case 0: {
+				baseBlock = Blocks.planks;
+				baseMeta = 0;
+				stairBlock = Blocks.oak_stairs;
+				halfBlock = Blocks.wooden_slab;
+				halfMeta = 0;
+				break;
+			}
+			case 1: {
+				baseBlock = Blocks.planks;
+				baseMeta = 1;
+				stairBlock = Blocks.spruce_stairs;
+				halfBlock = Blocks.wooden_slab;
+				halfMeta = 1;
+				break;
+			}
+			case 2: {
+				baseBlock = Blocks.planks;
+				baseMeta = 2;
+				stairBlock = Blocks.birch_stairs;
+				halfBlock = Blocks.wooden_slab;
+				halfMeta = 2;
+				break;
+			}
+			case 3: {
+				baseBlock = LOTRMod.planks;
+				baseMeta = 0;
+				stairBlock = LOTRMod.stairsShirePine;
+				halfBlock = LOTRMod.woodSlabSingle;
+				halfMeta = 0;
+			}
 		}
 		plateBlock = random.nextBoolean() ? LOTRMod.woodPlateBlock : LOTRMod.ceramicPlateBlock;
 		int rotation = random.nextInt(4);
@@ -66,18 +66,18 @@ public class LOTRWorldGenHobbitPicnicBench extends LOTRWorldGenStructureBase {
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			return generateFacingSouth(world, random, i, j, k);
-		}
-		case 1: {
-			return generateFacingWest(world, random, i, j, k);
-		}
-		case 2: {
-			return generateFacingNorth(world, random, i, j, k);
-		}
-		case 3: {
-			return generateFacingEast(world, random, i, j, k);
-		}
+			case 0: {
+				return generateFacingSouth(world, random, i, j, k);
+			}
+			case 1: {
+				return generateFacingWest(world, random, i, j, k);
+			}
+			case 2: {
+				return generateFacingNorth(world, random, i, j, k);
+			}
+			case 3: {
+				return generateFacingEast(world, random, i, j, k);
+			}
 		}
 		return false;
 	}
@@ -117,10 +117,9 @@ public class LOTRWorldGenHobbitPicnicBench extends LOTRWorldGenStructureBase {
 		for (int i12 = 0; i12 < hobbits; ++i12) {
 			LOTREntityHobbit hobbit = new LOTREntityHobbit(world);
 			int hobbitX = i + random.nextInt(6);
-			int hobbitY = j;
 			int hobbitZ = k - 1 + random.nextInt(2) * 3;
-			hobbit.setLocationAndAngles(hobbitX + 0.5, hobbitY, hobbitZ + 0.5, 0.0f, 0.0f);
-			hobbit.setHomeArea(hobbitX, hobbitY, hobbitZ, 16);
+			hobbit.setLocationAndAngles(hobbitX + 0.5, j, hobbitZ + 0.5, 0.0f, 0.0f);
+			hobbit.setHomeArea(hobbitX, j, hobbitZ, 16);
 			hobbit.onSpawnWithEgg(null);
 			hobbit.isNPCPersistent = true;
 			world.spawnEntityInWorld(hobbit);
@@ -163,10 +162,9 @@ public class LOTRWorldGenHobbitPicnicBench extends LOTRWorldGenStructureBase {
 		for (i1 = 0; i1 < hobbits; ++i1) {
 			LOTREntityHobbit hobbit = new LOTREntityHobbit(world);
 			int hobbitX = i - 1 + random.nextInt(2) * 3;
-			int hobbitY = j;
 			int hobbitZ = k - random.nextInt(6);
-			hobbit.setLocationAndAngles(hobbitX + 0.5, hobbitY, hobbitZ + 0.5, 0.0f, 0.0f);
-			hobbit.setHomeArea(hobbitX, hobbitY, hobbitZ, 16);
+			hobbit.setLocationAndAngles(hobbitX + 0.5, j, hobbitZ + 0.5, 0.0f, 0.0f);
+			hobbit.setHomeArea(hobbitX, j, hobbitZ, 16);
 			hobbit.onSpawnWithEgg(null);
 			hobbit.isNPCPersistent = true;
 			world.spawnEntityInWorld(hobbit);
@@ -209,10 +207,9 @@ public class LOTRWorldGenHobbitPicnicBench extends LOTRWorldGenStructureBase {
 		for (i1 = 0; i1 < hobbits; ++i1) {
 			LOTREntityHobbit hobbit = new LOTREntityHobbit(world);
 			int hobbitX = i + 1 - random.nextInt(2) * 3;
-			int hobbitY = j;
 			int hobbitZ = k + random.nextInt(6);
-			hobbit.setLocationAndAngles(hobbitX + 0.5, hobbitY, hobbitZ + 0.5, 0.0f, 0.0f);
-			hobbit.setHomeArea(hobbitX, hobbitY, hobbitZ, 16);
+			hobbit.setLocationAndAngles(hobbitX + 0.5, j, hobbitZ + 0.5, 0.0f, 0.0f);
+			hobbit.setHomeArea(hobbitX, j, hobbitZ, 16);
 			hobbit.onSpawnWithEgg(null);
 			hobbit.isNPCPersistent = true;
 			world.spawnEntityInWorld(hobbit);
@@ -255,10 +252,9 @@ public class LOTRWorldGenHobbitPicnicBench extends LOTRWorldGenStructureBase {
 		for (int i12 = 0; i12 < hobbits; ++i12) {
 			LOTREntityHobbit hobbit = new LOTREntityHobbit(world);
 			int hobbitX = i - random.nextInt(6);
-			int hobbitY = j;
 			int hobbitZ = k + 1 - random.nextInt(2) * 3;
-			hobbit.setLocationAndAngles(hobbitX + 0.5, hobbitY, hobbitZ + 0.5, 0.0f, 0.0f);
-			hobbit.setHomeArea(hobbitX, hobbitY, hobbitZ, 16);
+			hobbit.setLocationAndAngles(hobbitX + 0.5, j, hobbitZ + 0.5, 0.0f, 0.0f);
+			hobbit.setHomeArea(hobbitX, j, hobbitZ, 16);
 			hobbit.onSpawnWithEgg(null);
 			hobbit.isNPCPersistent = true;
 			world.spawnEntityInWorld(hobbit);

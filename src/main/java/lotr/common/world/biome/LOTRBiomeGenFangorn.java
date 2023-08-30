@@ -49,9 +49,9 @@ public class LOTRBiomeGenFangorn extends LOTRBiome {
 		arrspawnListContainer6[3] = LOTRBiomeSpawnList.entry(LOTRSpawnList.OLOG_HAI, 1).setConquestThreshold(200.0f);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer6);
 		npcSpawnList.conquestGainRate = 0.2f;
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
 		decorator.treesPerChunk = 12;
 		decorator.willowPerChunk = 3;
 		decorator.logsPerChunk = 5;
@@ -97,6 +97,7 @@ public class LOTRBiomeGenFangorn extends LOTRBiome {
 		if (random.nextInt(2) == 0) {
 			i1 = i + random.nextInt(16) + 8;
 			k1 = k + random.nextInt(16) + 8;
+			//noinspection StatementWithEmptyBody
 			for (j1 = 64 + random.nextInt(64); j1 > 0 && world.getBlock(i1, j1 - 1, k1) == Blocks.air; --j1) {
 			}
 			new LOTRWorldGenWaterPlant(LOTRMod.fangornRiverweed).generate(world, random, i1, j1, k1);

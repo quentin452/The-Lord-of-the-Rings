@@ -15,20 +15,20 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.UsernameCache;
 
 public class LOTRFactionBounties {
-	public static Map<LOTRFaction, LOTRFactionBounties> factionBountyMap = new HashMap<>();
+	public static Map<LOTRFaction, LOTRFactionBounties> factionBountyMap = new EnumMap<>(LOTRFaction.class);
 	public static boolean needsLoad = true;
 	public static int KILL_RECORD_TIME = 3456000;
 	public static int BOUNTY_KILLED_TIME = 864000;
 	public LOTRFaction theFaction;
 	public Map<UUID, PlayerData> playerList = new HashMap<>();
-	public boolean needsSave = false;
+	public boolean needsSave;
 
 	public LOTRFactionBounties(LOTRFaction f) {
 		theFaction = f;
 	}
 
 	public List<PlayerData> findBountyTargets(int killAmount) {
-		ArrayList<PlayerData> players = new ArrayList<>();
+		List<PlayerData> players = new ArrayList<>();
 		for (PlayerData pd : playerList.values()) {
 			if (pd.recentlyBountyKilled() || pd.getNumKills() < killAmount) {
 				continue;
@@ -39,7 +39,7 @@ public class LOTRFactionBounties {
 	}
 
 	public PlayerData forPlayer(EntityPlayer entityplayer) {
-		return this.forPlayer(entityplayer.getUniqueID());
+		return forPlayer(entityplayer.getUniqueID());
 	}
 
 	public PlayerData forPlayer(UUID id) {
@@ -62,9 +62,6 @@ public class LOTRFactionBounties {
 			for (int i = 0; i < playerTags.tagCount(); ++i) {
 				NBTTagCompound playerData = playerTags.getCompoundTagAt(i);
 				UUID id = UUID.fromString(playerData.getString("UUID"));
-				if (id == null) {
-					continue;
-				}
 				PlayerData pd = new PlayerData(this, id);
 				pd.readFromNBT(playerData);
 				playerList.put(id, pd);
@@ -107,7 +104,7 @@ public class LOTRFactionBounties {
 	public static LOTRFactionBounties forFaction(LOTRFaction fac) {
 		LOTRFactionBounties bounties = factionBountyMap.get(fac);
 		if (bounties == null) {
-			bounties = LOTRFactionBounties.loadFaction(fac);
+			bounties = loadFaction(fac);
 			if (bounties == null) {
 				bounties = new LOTRFactionBounties(fac);
 			}
@@ -116,6 +113,7 @@ public class LOTRFactionBounties {
 		return bounties;
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static File getBountiesDir() {
 		File dir = new File(LOTRLevelData.getOrCreateLOTRDir(), "factionbounties");
 		if (!dir.exists()) {
@@ -125,12 +123,12 @@ public class LOTRFactionBounties {
 	}
 
 	public static File getFactionFile(LOTRFaction f, boolean findLegacy) {
-		File defaultFile = new File(LOTRFactionBounties.getBountiesDir(), f.codeName() + ".dat");
+		File defaultFile = new File(getBountiesDir(), f.codeName() + ".dat");
 		if (!findLegacy || defaultFile.exists()) {
 			return defaultFile;
 		}
 		for (String alias : f.listAliases()) {
-			File aliasFile = new File(LOTRFactionBounties.getBountiesDir(), alias + ".dat");
+			File aliasFile = new File(getBountiesDir(), alias + ".dat");
 			if (!aliasFile.exists()) {
 				continue;
 			}
@@ -143,7 +141,7 @@ public class LOTRFactionBounties {
 		try {
 			factionBountyMap.clear();
 			needsLoad = false;
-			LOTRFactionBounties.saveAll();
+			saveAll();
 		} catch (Exception e) {
 			FMLLog.severe("Error loading LOTR faction bounty data");
 			e.printStackTrace();
@@ -151,7 +149,7 @@ public class LOTRFactionBounties {
 	}
 
 	public static LOTRFactionBounties loadFaction(LOTRFaction fac) {
-		File file = LOTRFactionBounties.getFactionFile(fac, true);
+		File file = getFactionFile(fac, true);
 		try {
 			NBTTagCompound nbt = LOTRLevelData.loadNBTFromFile(file);
 			if (nbt.hasNoTags()) {
@@ -173,7 +171,7 @@ public class LOTRFactionBounties {
 				if (!fb.needsSave) {
 					continue;
 				}
-				LOTRFactionBounties.saveFaction(fb);
+				saveFaction(fb);
 				fb.needsSave = false;
 			}
 		} catch (Exception e) {
@@ -186,7 +184,7 @@ public class LOTRFactionBounties {
 		try {
 			NBTTagCompound nbt = new NBTTagCompound();
 			fb.writeToNBT(nbt);
-			LOTRLevelData.saveNBTToFile(LOTRFactionBounties.getFactionFile(fb.theFaction, false), nbt);
+			LOTRLevelData.saveNBTToFile(getFactionFile(fb.theFaction, false), nbt);
 		} catch (Exception e) {
 			FMLLog.severe("Error saving LOTR faction bounty data for %s", fb.theFaction.codeName());
 			e.printStackTrace();
@@ -203,7 +201,7 @@ public class LOTRFactionBounties {
 		public LOTRFactionBounties bountyList;
 		public UUID playerID;
 		public String username;
-		public List<KillRecord> killRecords = new ArrayList<>();
+		public Collection<KillRecord> killRecords = new ArrayList<>();
 		public int recentBountyKilled;
 
 		public PlayerData(LOTRFactionBounties b, UUID id) {
@@ -274,7 +272,7 @@ public class LOTRFactionBounties {
 				--recentBountyKilled;
 				minorChanges = true;
 			}
-			ArrayList<KillRecord> toRemove = new ArrayList<>();
+			Collection<KillRecord> toRemove = new ArrayList<>();
 			for (KillRecord kr : killRecords) {
 				kr.timeElapsed--;
 				if (kr.timeElapsed <= 0) {

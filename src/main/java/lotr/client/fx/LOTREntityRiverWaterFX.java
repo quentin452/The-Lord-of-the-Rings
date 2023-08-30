@@ -27,6 +27,6 @@ public class LOTREntityRiverWaterFX extends EntitySpellParticleFX {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		particleAlpha = 0.5f + 0.5f * ((float) particleAge / (float) particleMaxAge);
+		particleAlpha = 0.5f + 0.5f * ((float) particleAge / particleMaxAge);
 	}
 }

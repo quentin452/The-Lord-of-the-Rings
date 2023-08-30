@@ -11,7 +11,7 @@ public class LOTRModelGiraffeRug extends ModelBase {
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		giraffeModel.setRiddenHeadNeckRotation(f, f1, f2, f3, f4, f5);
-		this.setRotationAngles();
+		setRotationAngles();
 		GL11.glTranslatef(0.0f, 0.1f, 0.0f);
 		GL11.glPushMatrix();
 		GL11.glScalef(1.5f, 0.4f, 1.0f);
@@ -37,13 +37,13 @@ public class LOTRModelGiraffeRug extends ModelBase {
 	}
 
 	public void setRotationAngles() {
-		giraffeModel.leg1.rotateAngleX = (float) Math.toRadians(30.0);
-		giraffeModel.leg1.rotateAngleZ = (float) Math.toRadians(90.0);
-		giraffeModel.leg2.rotateAngleX = (float) Math.toRadians(30.0);
-		giraffeModel.leg2.rotateAngleZ = (float) Math.toRadians(-90.0);
-		giraffeModel.leg3.rotateAngleX = (float) Math.toRadians(-20.0);
-		giraffeModel.leg3.rotateAngleZ = (float) Math.toRadians(90.0);
-		giraffeModel.leg4.rotateAngleX = (float) Math.toRadians(-20.0);
-		giraffeModel.leg4.rotateAngleZ = (float) Math.toRadians(-90.0);
+		giraffeModel.leg1.rotateAngleX = 0.5235987755982988f;
+		giraffeModel.leg1.rotateAngleZ = 1.5707963267948966f;
+		giraffeModel.leg2.rotateAngleX = 0.5235987755982988f;
+		giraffeModel.leg2.rotateAngleZ = -1.5707963267948966f;
+		giraffeModel.leg3.rotateAngleX = -0.3490658503988659f;
+		giraffeModel.leg3.rotateAngleZ = 1.5707963267948966f;
+		giraffeModel.leg4.rotateAngleX = -0.3490658503988659f;
+		giraffeModel.leg4.rotateAngleZ = -1.5707963267948966f;
 	}
 }

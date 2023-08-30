@@ -1,59 +1,86 @@
 package lotr.client;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import lotr.client.fx.LOTREntityDeadMarshFace;
-import lotr.client.gui.*;
+import lotr.client.gui.LOTRGuiMap;
+import lotr.client.gui.LOTRGuiMenu;
+import lotr.client.gui.LOTRGuiMiniquestTracker;
+import lotr.client.gui.LOTRGuiNotificationDisplay;
 import lotr.client.model.LOTRModelCompass;
-import lotr.client.render.*;
+import lotr.client.render.LOTRCloudRenderer;
+import lotr.client.render.LOTRRenderNorthernLights;
 import lotr.client.render.entity.LOTRNPCRendering;
 import lotr.client.render.tileentity.LOTRTileEntityMobSpawnerRenderer;
-import lotr.client.sound.*;
+import lotr.client.sound.LOTRAmbience;
+import lotr.client.sound.LOTRMusicTicker;
+import lotr.client.sound.LOTRMusicTrack;
 import lotr.common.*;
 import lotr.common.block.LOTRBlockLeavesBase;
-import lotr.common.enchant.*;
-import lotr.common.entity.*;
+import lotr.common.enchant.LOTREnchantment;
+import lotr.common.enchant.LOTREnchantmentHelper;
+import lotr.common.entity.LOTRInvasionStatus;
+import lotr.common.entity.LOTRMountFunctions;
 import lotr.common.entity.item.LOTREntityPortal;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityBalrog;
+import lotr.common.entity.npc.LOTREntityBarrowWight;
+import lotr.common.entity.npc.LOTREntityScrapTrader;
+import lotr.common.entity.npc.LOTREntitySpiderBase;
 import lotr.common.fac.*;
 import lotr.common.fellowship.LOTRFellowshipData;
 import lotr.common.item.*;
 import lotr.common.quest.IPickpocketable;
-import lotr.common.util.*;
-import lotr.common.world.*;
-import lotr.common.world.biome.*;
+import lotr.common.util.LOTRColorUtil;
+import lotr.common.util.LOTRFunctions;
+import lotr.common.util.LOTRLog;
+import lotr.common.util.LOTRVersionChecker;
+import lotr.common.world.LOTRWorldChunkManager;
+import lotr.common.world.LOTRWorldProvider;
+import lotr.common.world.biome.LOTRBiome;
+import lotr.common.world.biome.LOTRBiomeGenUtumno;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.map.LOTRConquestGrid;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.entity.*;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.BossStatus;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
-import net.minecraft.potion.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.GuiIngameForge;
-import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import org.lwjgl.opengl.GL11;
+
+import java.util.*;
 
 public class LOTRTickHandlerClient {
 	public static ResourceLocation portalOverlay = new ResourceLocation("lotr:misc/portal_overlay.png");
@@ -61,11 +88,11 @@ public class LOTRTickHandlerClient {
 	public static ResourceLocation morgulPortalOverlay = new ResourceLocation("lotr:misc/morgulportal_overlay.png");
 	public static ResourceLocation mistOverlay = new ResourceLocation("lotr:misc/mist_overlay.png");
 	public static ResourceLocation frostOverlay = new ResourceLocation("lotr:misc/frost_overlay.png");
-	public static float[] frostRGBMiddle = { 0.4F, 0.46F, 0.74F };
-	public static float[] frostRGBEdge = { 1.0F, 1.0F, 1.0F };
+	public static float[] frostRGBMiddle = {0.4F, 0.46F, 0.74F};
+	public static float[] frostRGBEdge = {1.0F, 1.0F, 1.0F};
 	public static ResourceLocation burnOverlay = new ResourceLocation("lotr:misc/burn_overlay.png");
 	public static ResourceLocation wightOverlay = new ResourceLocation("lotr:misc/wight.png");
-	public static HashMap playersInPortals = new HashMap<>();
+	public static HashMap<Object, Object> playersInPortals = new HashMap<>();
 	public static HashMap playersInElvenPortals = new HashMap<>();
 	public static HashMap playersInMorgulPortals = new HashMap<>();
 	public static int clientTick;
@@ -77,7 +104,7 @@ public class LOTRTickHandlerClient {
 	public static LOTRGuiNotificationDisplay notificationDisplay;
 	public static LOTRGuiMiniquestTracker miniquestTracker;
 	public static boolean anyWightsViewed;
-	public static int scrapTraderMisbehaveTick = 0;
+	public static int scrapTraderMisbehaveTick;
 	public LOTRAmbience ambienceTicker;
 	public GuiScreen lastGuiOpen;
 	public int mistTick;
@@ -99,25 +126,25 @@ public class LOTRTickHandlerClient {
 	public int frostTick;
 	public int burnTick;
 	public int drunkennessDirection = 1;
-	public int newDate = 0;
-	public float utumnoCamRoll = 0.0F;
-	public boolean inUtumnoReturnPortal = false;
+	public int newDate;
+	public float utumnoCamRoll;
+	public boolean inUtumnoReturnPortal;
 	public int utumnoReturnX;
 	public int utumnoReturnZ;
 	public double lastUtumnoReturnY = -1.0D;
-	public int prevWightLookTick = 0;
-	public int wightLookTick = 0;
-	public int prevWightNearTick = 0;
-	public int wightNearTick = 0;
-	public int prevBalrogNearTick = 0;
-	public int balrogNearTick = 0;
+	public int prevWightLookTick;
+	public int wightLookTick;
+	public int prevWightNearTick;
+	public int wightNearTick;
+	public int prevBalrogNearTick;
+	public int balrogNearTick;
 	public float balrogFactor;
 	public float[] storedLightTable;
 	public int storedScrapID;
-	public boolean addedClientPoisonEffect = false;
-	public LOTRMusicTrack lastTrack = null;
-	public int musicTrackTick = 0;
-	public boolean cancelItemHighlight = false;
+	public boolean addedClientPoisonEffect;
+	public LOTRMusicTrack lastTrack;
+	public int musicTrackTick;
+	public boolean cancelItemHighlight;
 	public ItemStack lastHighlightedItemstack;
 	public String highlightedItemstackName;
 
@@ -144,7 +171,7 @@ public class LOTRTickHandlerClient {
 		if (itemstack.getItem() instanceof LOTRSquadrons.SquadronItem) {
 			String squadron = LOTRSquadrons.getSquadron(itemstack);
 			if (!StringUtils.isNullOrEmpty(squadron)) {
-				List<String> newTooltip = new ArrayList<>();
+				Collection<String> newTooltip = new ArrayList<>();
 				newTooltip.add(tooltip.get(0));
 				newTooltip.add(StatCollector.translateToLocalFormatted("item.lotr.generic.squadron", squadron));
 				for (int i = 1; i < tooltip.size(); i++) {
@@ -164,21 +191,21 @@ public class LOTRTickHandlerClient {
 				}
 			}
 			if (dmgIndex >= 0) {
-				List<String> newTooltip = new ArrayList<>();
+				Collection<String> newTooltip = new ArrayList<>();
 				for (int j = 0; j <= dmgIndex - 1; j++) {
 					newTooltip.add(tooltip.get(j));
 				}
 				float meleeDamage = LOTRWeaponStats.getMeleeDamageBonus(itemstack);
-				newTooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("lotr.weaponstat.meleeDamage", Float.valueOf(meleeDamage)));
+				newTooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("lotr.weaponstat.meleeDamage", meleeDamage));
 				float meleeSpeed = LOTRWeaponStats.getMeleeSpeed(itemstack);
 				int pcSpeed = Math.round(meleeSpeed * 100.0F);
-				newTooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("lotr.weaponstat.meleeSpeed", Integer.valueOf(pcSpeed)));
+				newTooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("lotr.weaponstat.meleeSpeed", pcSpeed));
 				float reach = LOTRWeaponStats.getMeleeReachFactor(itemstack);
 				int pcReach = Math.round(reach * 100.0F);
-				newTooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("lotr.weaponstat.reach", Integer.valueOf(pcReach)));
+				newTooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("lotr.weaponstat.reach", pcReach));
 				int kb = LOTRWeaponStats.getTotalKnockback(itemstack);
 				if (kb > 0) {
-					newTooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("lotr.weaponstat.kb", Integer.valueOf(kb)));
+					newTooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("lotr.weaponstat.kb", kb));
 				}
 				for (int k = dmgIndex + 1; k < tooltip.size(); k++) {
 					newTooltip.add(tooltip.get(k));
@@ -192,21 +219,21 @@ public class LOTRTickHandlerClient {
 			float drawSpeed = LOTRWeaponStats.getRangedSpeed(itemstack);
 			if (drawSpeed > 0.0F) {
 				int pcSpeed = Math.round(drawSpeed * 100.0F);
-				tooltip.add(EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocalFormatted("lotr.weaponstat.rangedSpeed", Integer.valueOf(pcSpeed)));
+				tooltip.add(EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocalFormatted("lotr.weaponstat.rangedSpeed", pcSpeed));
 			}
 			float damage = LOTRWeaponStats.getRangedDamageFactor(itemstack, false);
 			if (damage > 0.0F) {
 				int pcDamage = Math.round(damage * 100.0F);
-				tooltip.add(EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocalFormatted("lotr.weaponstat.rangedDamage", Integer.valueOf(pcDamage)));
+				tooltip.add(EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocalFormatted("lotr.weaponstat.rangedDamage", pcDamage));
 				if (itemstack.getItem() instanceof net.minecraft.item.ItemBow || itemstack.getItem() instanceof LOTRItemCrossbow) {
 					float range = LOTRWeaponStats.getRangedDamageFactor(itemstack, true);
 					int pcRange = Math.round(range * 100.0F);
-					tooltip.add(EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocalFormatted("lotr.weaponstat.range", Integer.valueOf(pcRange)));
+					tooltip.add(EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocalFormatted("lotr.weaponstat.range", pcRange));
 				}
 			}
 			int kb = LOTRWeaponStats.getRangedKnockback(itemstack);
 			if (kb > 0) {
-				tooltip.add(EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocalFormatted("lotr.weaponstat.kb", Integer.valueOf(kb)));
+				tooltip.add(EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocalFormatted("lotr.weaponstat.kb", kb));
 			}
 		}
 		if (LOTRWeaponStats.isPoisoned(itemstack)) {
@@ -216,12 +243,12 @@ public class LOTRTickHandlerClient {
 		if (armorProtect > 0) {
 			tooltip.add("");
 			int pcProtection = Math.round(armorProtect / 25.0F * 100.0F);
-			tooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("lotr.weaponstat.protection", Integer.valueOf(armorProtect), Integer.valueOf(pcProtection)));
+			tooltip.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("lotr.weaponstat.protection", armorProtect, pcProtection));
 		}
 		if (!enchantments.isEmpty()) {
 			tooltip.add("");
-			List<String> enchGood = new ArrayList<>();
-			List<String> enchBad = new ArrayList<>();
+			Collection<String> enchGood = new ArrayList<>();
+			Collection<String> enchBad = new ArrayList<>();
 			for (LOTREnchantment ench : enchantments) {
 				String enchDesc = ench.getNamedFormattedDescription(itemstack);
 				if (ench.isBeneficial()) {
@@ -350,7 +377,7 @@ public class LOTRTickHandlerClient {
 					}
 				} catch (Exception exception) {
 				}
-				boolean fancyGraphics = optifineSetting == 0 ? minecraft.gameSettings.fancyGraphics : optifineSetting == 1 ? false : optifineSetting == 2;
+				boolean fancyGraphics = optifineSetting == 0 ? minecraft.gameSettings.fancyGraphics : optifineSetting == 2;
 				LOTRBlockLeavesBase.setAllGraphicsLevels(fancyGraphics);
 			} else {
 				LOTRBlockLeavesBase.setAllGraphicsLevels(minecraft.gameSettings.fancyGraphics);
@@ -445,14 +472,13 @@ public class LOTRTickHandlerClient {
 						if (biome instanceof LOTRBiome) {
 							biomeHasSun = ((LOTRBiome) biome).hasSky();
 						}
-						float celestialAngle = world.getCelestialAngle(renderTick) * 360.0F - 90.0F;
-						float sunPitch = celestialAngle;
+						float sunPitch = world.getCelestialAngle(renderTick) * 360.0F - 90.0F;
 						float sunYaw = 90.0F;
-						float yc = MathHelper.cos((float) Math.toRadians(-sunYaw - 180.0F));
-						float ys = MathHelper.sin((float) Math.toRadians(-sunYaw - 180.0F));
+						float yc = MathHelper.cos((float) Math.toRadians((-sunYaw - 180.0F)));
+						float ys = MathHelper.sin((float) Math.toRadians((-sunYaw - 180.0F)));
 						float pc = -MathHelper.cos((float) Math.toRadians(-sunPitch));
 						float ps = MathHelper.sin((float) Math.toRadians(-sunPitch));
-						Vec3 sunVec = Vec3.createVectorHelper(ys * pc, ps, yc * pc);
+						Vec3 sunVec = Vec3.createVectorHelper((ys * pc), ps, (yc * pc));
 						Vec3 lookVec = viewer.getLook(renderTick);
 						double cos = lookVec.dotProduct(sunVec) / lookVec.lengthVector() * sunVec.lengthVector();
 						float cosThreshold = 0.95F;
@@ -568,7 +594,7 @@ public class LOTRTickHandlerClient {
 					if (inPortal) {
 						i = (Integer) playersInPortals.get(entityplayer);
 						i++;
-						playersInPortals.put(entityplayer, Integer.valueOf(i));
+						playersInPortals.put(entityplayer, i);
 						if (i >= 100) {
 							minecraft.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("portal.trigger"), world.rand.nextFloat() * 0.4F + 0.8F));
 							playersInPortals.remove(entityplayer);
@@ -629,9 +655,9 @@ public class LOTRTickHandlerClient {
 	public void onFogColors(EntityViewRenderEvent.FogColors event) {
 		Minecraft mc = Minecraft.getMinecraft();
 		WorldClient worldClient = mc.theWorld;
-		WorldProvider provider = ((World) worldClient).provider;
+		WorldProvider provider = worldClient.provider;
 		if (provider instanceof LOTRWorldProvider) {
-			float[] rgb = { event.red, event.green, event.blue };
+			float[] rgb = {event.red, event.green, event.blue};
 			rgb = ((LOTRWorldProvider) provider).handleFinalFogColors(event.entity, event.renderPartialTicks, rgb);
 			event.red = rgb[0];
 			event.green = rgb[1];
@@ -639,7 +665,7 @@ public class LOTRTickHandlerClient {
 		}
 		if (balrogFactor > 0.0F) {
 			int shadowColor = 1114112;
-			float[] rgb = { event.red, event.green, event.blue };
+			float[] rgb = {event.red, event.green, event.blue};
 			rgb = LOTRColorUtil.lerpColors(rgb, shadowColor, balrogFactor);
 			event.red = rgb[0];
 			event.green = rgb[1];
@@ -808,19 +834,19 @@ public class LOTRTickHandlerClient {
 				if (playersInElvenPortals.containsKey(entityClientPlayerMP)) {
 					int i = (Integer) playersInElvenPortals.get(entityClientPlayerMP);
 					if (i > 0) {
-						renderOverlay(null, 0.1F + i / entityClientPlayerMP.getMaxInPortalTime() * 0.6F, mc, elvenPortalOverlay);
+						renderOverlay(null, 0.1F + (float) i / entityClientPlayerMP.getMaxInPortalTime() * 0.6F, mc, elvenPortalOverlay);
 					}
 				}
 				if (playersInMorgulPortals.containsKey(entityClientPlayerMP)) {
 					int i = (Integer) playersInMorgulPortals.get(entityClientPlayerMP);
 					if (i > 0) {
-						renderOverlay(null, 0.1F + i / entityClientPlayerMP.getMaxInPortalTime() * 0.6F, mc, morgulPortalOverlay);
+						renderOverlay(null, 0.1F + (float) i / entityClientPlayerMP.getMaxInPortalTime() * 0.6F, mc, morgulPortalOverlay);
 					}
 				}
 				if (LOTRConfig.enableMistyMountainsMist) {
 					float mistTickF = prevMistTick + (mistTick - prevMistTick) * partialTicks;
 					mistTickF /= 80.0F;
-					float mistFactorY = (float) ((EntityPlayer) entityClientPlayerMP).posY / 256.0F;
+					float mistFactorY = (float) entityClientPlayerMP.posY / 256.0F;
 					mistFactor = mistTickF * mistFactorY;
 					if (mistFactor > 0.0F) {
 						renderOverlay(null, mistFactor * 0.75F, mc, mistOverlay);
@@ -846,8 +872,8 @@ public class LOTRTickHandlerClient {
 				if (LOTRConfig.meleeAttackMeter) {
 					LOTRAttackTiming.renderAttackMeter(event.resolution, partialTicks);
 				}
-				if (((EntityPlayer) entityClientPlayerMP).ridingEntity instanceof LOTREntitySpiderBase) {
-					LOTREntitySpiderBase spider = (LOTREntitySpiderBase) ((EntityPlayer) entityClientPlayerMP).ridingEntity;
+				if (entityClientPlayerMP.ridingEntity instanceof LOTREntitySpiderBase) {
+					LOTREntitySpiderBase spider = (LOTREntitySpiderBase) entityClientPlayerMP.ridingEntity;
 					if (spider.shouldRenderClimbingMeter()) {
 						mc.getTextureManager().bindTexture(Gui.icons);
 						GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -874,12 +900,12 @@ public class LOTRTickHandlerClient {
 				entityClientPlayerMP.addPotionEffect(new PotionEffect(Potion.poison.id, 20));
 				addedClientPoisonEffect = true;
 			}
-			boolean enchantingDisabled = !LOTRLevelData.clientside_thisServer_enchanting && ((World) worldClient).provider instanceof LOTRWorldProvider;
+			boolean enchantingDisabled = !LOTRLevelData.clientside_thisServer_enchanting && worldClient.provider instanceof LOTRWorldProvider;
 			if (event.type == RenderGameOverlayEvent.ElementType.EXPERIENCE && enchantingDisabled) {
 				event.setCanceled(true);
 				return;
 			}
-			if (event.type == RenderGameOverlayEvent.ElementType.ALL && enchantingDisabled && ((EntityPlayer) entityClientPlayerMP).ridingEntity == null) {
+			if (event.type == RenderGameOverlayEvent.ElementType.ALL && enchantingDisabled && entityClientPlayerMP.ridingEntity == null) {
 				GuiIngameForge.left_height -= 6;
 				GuiIngameForge.right_height -= 6;
 			}
@@ -899,7 +925,7 @@ public class LOTRTickHandlerClient {
 							guiIngame.drawTexturedModalRect(left, top, 34, 9, 9, 9);
 						} else if (i == level) {
 							guiIngame.drawTexturedModalRect(left, top, 25, 9, 9, 9);
-						} else if (i > level) {
+						} else {
 							guiIngame.drawTexturedModalRect(left, top, 16, 9, 9, 9);
 						}
 						left += 8;
@@ -934,7 +960,7 @@ public class LOTRTickHandlerClient {
 		Minecraft mc = Minecraft.getMinecraft();
 		EntityLivingBase viewer = event.entity;
 		WorldClient worldClient = mc.theWorld;
-		WorldProvider provider = ((World) worldClient).provider;
+		WorldProvider provider = worldClient.provider;
 		int i = MathHelper.floor_double(viewer.posX);
 		int j = MathHelper.floor_double(viewer.boundingBox.minY);
 		int k = MathHelper.floor_double(viewer.posZ);
@@ -1017,11 +1043,11 @@ public class LOTRTickHandlerClient {
 		}
 		if (event.phase == TickEvent.Phase.END) {
 			if (entityplayer != null && worldClient != null) {
-				if ((((World) worldClient).provider instanceof LOTRWorldProvider || LOTRConfig.alwaysShowAlignment) && Minecraft.isGuiEnabled()) {
+				if ((worldClient.provider instanceof LOTRWorldProvider || LOTRConfig.alwaysShowAlignment) && Minecraft.isGuiEnabled()) {
 					alignmentXPrev = alignmentXCurrent;
 					alignmentYPrev = alignmentYCurrent;
 					alignmentXCurrent = alignmentXBase;
-					int yMove = (int) ((alignmentYBase - -20) / 10.0F);
+					int yMove = (int) ((alignmentYBase + 20) / 10.0F);
 					boolean alignmentOnscreen = (minecraft.currentScreen == null || minecraft.currentScreen instanceof lotr.client.gui.LOTRGuiMessage) && !minecraft.gameSettings.keyBindPlayerList.getIsKeyPressed() && !minecraft.gameSettings.showDebugInfo;
 					if (alignmentOnscreen) {
 						alignmentYCurrent = Math.min(alignmentYCurrent + yMove, alignmentYBase);
@@ -1033,7 +1059,6 @@ public class LOTRTickHandlerClient {
 						GL11.glPushMatrix();
 						ScaledResolution resolution = new ScaledResolution(minecraft, minecraft.displayWidth, minecraft.displayHeight);
 						int i = resolution.getScaledWidth();
-						resolution.getScaledHeight();
 						int compassX = i - 60;
 						int compassY = 40;
 						GL11.glTranslatef(compassX, compassY, 0.0F);
@@ -1067,11 +1092,11 @@ public class LOTRTickHandlerClient {
 				}
 				if (entityplayer.dimension == LOTRDimension.MIDDLE_EARTH.dimensionID && minecraft.currentScreen == null && newDate > 0) {
 					int halfMaxDate = 100;
-					float alpha = 0.0F;
+					float alpha;
 					if (newDate > halfMaxDate) {
-						alpha = (200 - newDate) / halfMaxDate;
+						alpha = (float) (200 - newDate) / halfMaxDate;
 					} else {
-						alpha = newDate / halfMaxDate;
+						alpha = (float) newDate / halfMaxDate;
 					}
 					String date = LOTRDate.ShireReckoning.getShireDate().getDateName(true);
 					ScaledResolution resolution = new ScaledResolution(minecraft, minecraft.displayWidth, minecraft.displayHeight);
@@ -1091,7 +1116,7 @@ public class LOTRTickHandlerClient {
 					GL11.glScalef(invScale, invScale, invScale);
 				}
 				if (LOTRConfig.displayMusicTrack && minecraft.currentScreen == null && lastTrack != null && musicTrackTick > 0) {
-					List<String> lines = new ArrayList<>();
+					Collection<String> lines = new ArrayList<>();
 					lines.add(StatCollector.translateToLocal("lotr.music.nowPlaying"));
 					String title = lastTrack.getTitle();
 					lines.add(title);
@@ -1112,7 +1137,7 @@ public class LOTRTickHandlerClient {
 					int w = resolution.getScaledWidth();
 					int h = resolution.getScaledHeight();
 					int border = 20;
-					int x = w - border;
+					int x;
 					int y = h - border - lines.size() * minecraft.fontRenderer.FONT_HEIGHT;
 					float alpha = 1.0F;
 					if (musicTrackTick >= 140) {
@@ -1165,7 +1190,6 @@ public class LOTRTickHandlerClient {
 		LOTRFaction viewingFac = pd.getViewingFaction();
 		ScaledResolution resolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 		int width = resolution.getScaledWidth();
-		resolution.getScaledHeight();
 		alignmentXBase = width / 2 + LOTRConfig.alignmentXOffset;
 		alignmentYBase = 4 + LOTRConfig.alignmentYOffset;
 		if (isBossActive()) {
@@ -1189,7 +1213,7 @@ public class LOTRTickHandlerClient {
 			float alpha = 1.0F;
 			int fadeTick = 20;
 			if (alignDrainTick < fadeTick) {
-				alpha = alignDrainTick / fadeTick;
+				alpha = 0;
 			}
 			renderAlignmentDrain(mc, (int) alignmentXF - 155, (int) alignmentYF + 2, alignDrainNum, alpha);
 		}
@@ -1333,7 +1357,7 @@ public class LOTRTickHandlerClient {
 			if (inPortal) {
 				int i = players.get(entityplayer);
 				i++;
-				players.put(entityplayer, Integer.valueOf(i));
+				players.put(entityplayer, i);
 				if (i >= entityplayer.getMaxInPortalTime()) {
 					Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("portal.trigger"), entityplayer.worldObj.rand.nextFloat() * 0.4F + 0.8F));
 					players.remove(entityplayer);
@@ -1352,14 +1376,14 @@ public class LOTRTickHandlerClient {
 		int alpha = (int) (alphaF * 255.0F);
 		alpha = MathHelper.clamp_int(alpha, 4, 255);
 		alpha <<= 24;
-		f.drawString(s, x - 1, y - 1, 0x0 | alpha);
-		f.drawString(s, x, y - 1, 0x0 | alpha);
-		f.drawString(s, x + 1, y - 1, 0x0 | alpha);
-		f.drawString(s, x + 1, y, 0x0 | alpha);
-		f.drawString(s, x + 1, y + 1, 0x0 | alpha);
-		f.drawString(s, x, y + 1, 0x0 | alpha);
-		f.drawString(s, x - 1, y + 1, 0x0 | alpha);
-		f.drawString(s, x - 1, y, 0x0 | alpha);
+		f.drawString(s, x - 1, y - 1, alpha);
+		f.drawString(s, x, y - 1, alpha);
+		f.drawString(s, x + 1, y - 1, alpha);
+		f.drawString(s, x + 1, y, alpha);
+		f.drawString(s, x + 1, y + 1, alpha);
+		f.drawString(s, x, y + 1, alpha);
+		f.drawString(s, x - 1, y + 1, alpha);
+		f.drawString(s, x - 1, y, alpha);
 		f.drawString(s, x, y, color | alpha);
 	}
 
@@ -1371,10 +1395,10 @@ public class LOTRTickHandlerClient {
 		float f = 0.00390625F;
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads();
-		tessellator.addVertexWithUV(x + 0.0D, y + height, 0.0D, (u + 0) * f, (v + height) * f);
+		tessellator.addVertexWithUV(x + 0.0D, y + height, 0.0D, (u) * f, (v + height) * f);
 		tessellator.addVertexWithUV(x + width, y + height, 0.0D, (u + width) * f, (v + height) * f);
-		tessellator.addVertexWithUV(x + width, y + 0.0D, 0.0D, (u + width) * f, (v + 0) * f);
-		tessellator.addVertexWithUV(x + 0.0D, y + 0.0D, 0.0D, (u + 0) * f, (v + 0) * f);
+		tessellator.addVertexWithUV(x + width, y + 0.0D, 0.0D, (u + width) * f, (v) * f);
+		tessellator.addVertexWithUV(x + 0.0D, y + 0.0D, 0.0D, (u) * f, (v) * f);
 		tessellator.draw();
 	}
 
@@ -1389,26 +1413,11 @@ public class LOTRTickHandlerClient {
 		LOTRFactionRank rank = faction.getRank(alignment);
 		boolean pledged = clientPD.isPledgedTo(faction);
 		LOTRAlignmentTicker ticker = LOTRAlignmentTicker.forFaction(faction);
-		float alignMin = 0.0F;
-		float alignMax = 0.0F;
-		LOTRFactionRank rankMin = null;
-		LOTRFactionRank rankMax = null;
-		if (!rank.isDummyRank()) {
-			alignMin = rank.alignment;
-			rankMin = rank;
-			LOTRFactionRank nextRank = faction.getRankAbove(rank);
-			if (nextRank != null && !nextRank.isDummyRank() && nextRank != rank) {
-				alignMax = nextRank.alignment;
-				rankMax = nextRank;
-			} else {
-				alignMax = rank.alignment * 10.0F;
-				rankMax = rank;
-				while (alignment >= alignMax) {
-					alignMin = alignMax;
-					alignMax = alignMin * 10.0F;
-				}
-			}
-		} else {
+		float alignMin;
+		float alignMax;
+		LOTRFactionRank rankMin;
+		LOTRFactionRank rankMax;
+		if (rank.isDummyRank()) {
 			float firstRankAlign;
 			LOTRFactionRank firstRank = faction.getFirstRank();
 			if (firstRank != null && !firstRank.isDummyRank()) {
@@ -1438,6 +1447,21 @@ public class LOTRTickHandlerClient {
 					alignMax = alignMin * 10.0F;
 				}
 			}
+		} else {
+			alignMin = rank.alignment;
+			rankMin = rank;
+			LOTRFactionRank nextRank = faction.getRankAbove(rank);
+			if (nextRank != null && !nextRank.isDummyRank() && nextRank != rank) {
+				alignMax = nextRank.alignment;
+				rankMax = nextRank;
+			} else {
+				alignMax = rank.alignment * 10.0F;
+				rankMax = rank;
+				while (alignment >= alignMax) {
+					alignMin = alignMax;
+					alignMax = alignMin * 10.0F;
+				}
+			}
 		}
 		float ringProgress = (alignment - alignMin) / (alignMax - alignMin);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -1447,22 +1471,22 @@ public class LOTRTickHandlerClient {
 		int activeBarWidth = 220;
 		float[] factionColors = faction.getFactionRGB();
 		GL11.glColor4f(factionColors[0], factionColors[1], factionColors[2], 1.0F);
-		drawTexturedModalRect(x - barWidth / 2, y, 0, 14, barWidth, barHeight);
+		drawTexturedModalRect(x - (double) barWidth / 2, y, 0, 14, barWidth, barHeight);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawTexturedModalRect(x - barWidth / 2, y, 0, 0, barWidth, barHeight);
+		drawTexturedModalRect(x - (double) barWidth / 2, y, 0, 0, barWidth, barHeight);
 		float ringProgressAdj = (ringProgress - 0.5F) * 2.0F;
 		int ringSize = 16;
-		float ringX = x - ringSize / 2 + ringProgressAdj * activeBarWidth / 2.0F;
-		float ringY = y + barHeight / 2 - ringSize / 2;
+		float ringX = x - (float) ringSize / 2 + ringProgressAdj * activeBarWidth / 2.0F;
+		float ringY = y + (float) barHeight / 2 - (float) ringSize / 2;
 		int flashTick = ticker.flashTick;
 		if (pledged) {
-			drawTexturedModalRect(ringX, ringY, 16 * Math.round(flashTick / 3), 212, ringSize, ringSize);
+			drawTexturedModalRect(ringX, ringY, 16 * Math.round((float) flashTick / 3), 212, ringSize, ringSize);
 		} else {
-			drawTexturedModalRect(ringX, ringY, 16 * Math.round(flashTick / 3), 36, ringSize, ringSize);
+			drawTexturedModalRect(ringX, ringY, 16 * Math.round((float) flashTick / 3), 36, ringSize, ringSize);
 		}
 		if (faction.isPlayableAlignmentFaction()) {
-			float alpha = 0.0F;
-			boolean definedZone = false;
+			float alpha;
+			boolean definedZone;
 			if (faction.inControlZone(entityClientPlayerMP)) {
 				alpha = 1.0F;
 				definedZone = faction.inDefinedControlZone(entityClientPlayerMP);
@@ -1477,11 +1501,11 @@ public class LOTRTickHandlerClient {
 				GL11.glEnable(3042);
 				OpenGlHelper.glBlendFunc(770, 771, 1, 0);
 				GL11.glColor4f(factionColors[0], factionColors[1], factionColors[2], alpha);
-				drawTexturedModalRect(x - barWidth / 2 - arrowSize, y, 0, y1, arrowSize, arrowSize);
-				drawTexturedModalRect(x + barWidth / 2, y, arrowSize, y1, arrowSize, arrowSize);
+				drawTexturedModalRect(x - (double) barWidth / 2 - arrowSize, y, 0, y1, arrowSize, arrowSize);
+				drawTexturedModalRect(x + (double) barWidth / 2, y, arrowSize, y1, arrowSize, arrowSize);
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
-				drawTexturedModalRect(x - barWidth / 2 - arrowSize, y, 0, y0, arrowSize, arrowSize);
-				drawTexturedModalRect(x + barWidth / 2, y, arrowSize, y0, arrowSize, arrowSize);
+				drawTexturedModalRect(x - (double) barWidth / 2 - arrowSize, y, 0, y0, arrowSize, arrowSize);
+				drawTexturedModalRect(x + (double) barWidth / 2, y, arrowSize, y0, arrowSize, arrowSize);
 				GL11.glDisable(3042);
 			}
 		}
@@ -1517,7 +1541,7 @@ public class LOTRTickHandlerClient {
 				alignAlpha = LOTRFunctions.triangleWave(numericalTick, 0.7F, 1.0F, 30.0F);
 				int fadeTick = 15;
 				if (numericalTick < fadeTick) {
-					alignAlpha *= numericalTick / fadeTick;
+					alignAlpha *= 0;
 				}
 			} else {
 				alignS = rank.getShortNameWithGender(clientPD);

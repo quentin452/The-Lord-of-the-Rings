@@ -6,7 +6,7 @@ import net.minecraft.world.gen.layer.GenLayer;
 public abstract class LOTRGenLayer extends GenLayer {
 	public LOTRGenLayer lotrParent;
 
-	public LOTRGenLayer(long l) {
+	protected LOTRGenLayer(long l) {
 		super(l);
 	}
 

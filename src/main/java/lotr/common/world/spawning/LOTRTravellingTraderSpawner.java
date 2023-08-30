@@ -34,7 +34,8 @@ public class LOTRTravellingTraderSpawner {
 			boolean spawned = false;
 			LOTREntityNPC entityTrader = (LOTREntityNPC) EntityList.createEntityByName(LOTREntities.getStringFromClass(theEntityClass), world);
 			LOTRTravellingTrader trader = (LOTRTravellingTrader) entityTrader;
-			block0: for (int players = 0; players < world.playerEntities.size(); ++players) {
+			block0:
+			for (int players = 0; players < world.playerEntities.size(); ++players) {
 				EntityPlayer entityplayer = (EntityPlayer) world.playerEntities.get(players);
 				if (LOTRLevelData.getData(entityplayer).getAlignment(entityTrader.getFaction()) < 0.0f) {
 					continue;
@@ -66,7 +67,7 @@ public class LOTRTravellingTraderSpawner {
 					entityTrader.setShouldTraderRespawn(false);
 					trader.startTraderVisiting(entityplayer);
 					spawned = true;
-					timeUntilTrader = LOTRTravellingTraderSpawner.getRandomTraderTime();
+					timeUntilTrader = getRandomTraderTime();
 					LOTRLevelData.markDirty();
 					break block0;
 				}
@@ -78,7 +79,7 @@ public class LOTRTravellingTraderSpawner {
 	}
 
 	public void readFromNBT(NBTTagCompound nbt) {
-		timeUntilTrader = nbt.hasKey("TraderTime") ? nbt.getInteger("TraderTime") : LOTRTravellingTraderSpawner.getRandomTraderTime();
+		timeUntilTrader = nbt.hasKey("TraderTime") ? nbt.getInteger("TraderTime") : getRandomTraderTime();
 	}
 
 	public void writeToNBT(NBTTagCompound nbt) {

@@ -107,8 +107,8 @@ public class LOTREntityMallornLeafBomb extends EntityThrowable {
 			EntityLivingBase livingTarget = (EntityLivingBase) target;
 			EntityLivingBase thrower = getThrower();
 			if (thrower instanceof LOTREntityNPC) {
-				((LOTREntityNPC) thrower).getJumpHelper().doJump();
-				return LOTRMod.canNPCAttackEntity((LOTREntityNPC) thrower, livingTarget, false);
+				((EntityLiving) thrower).getJumpHelper().doJump();
+				return LOTRMod.canNPCAttackEntity((EntityCreature) thrower, livingTarget, false);
 			}
 			return true;
 		}
@@ -130,18 +130,13 @@ public class LOTREntityMallornLeafBomb extends EntityThrowable {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (!worldObj.isRemote) {
-			++leavesAge;
-			if (leavesAge >= MAX_LEAVES_AGE) {
-				explode(null);
-			}
-		} else {
+		if (worldObj.isRemote) {
 			Vec3 axis = Vec3.createVectorHelper(-motionX, -motionY, -motionZ);
 			int leaves = 20;
 			for (int l = 0; l < leaves; ++l) {
-				float angle = (float) l / (float) leaves * 2.0f * 3.1415927f;
+				float angle = (float) l / leaves * 2.0f * 3.1415927f;
 				Vec3 rotate = Vec3.createVectorHelper(1.0, 1.0, 1.0);
-				rotate.rotateAroundX((float) Math.toRadians(40.0));
+				rotate.rotateAroundX(0.6981317007977318f);
 				rotate.rotateAroundY(angle);
 				float dot = (float) rotate.dotProduct(axis);
 				Vec3 parallel = Vec3.createVectorHelper(axis.xCoord * dot, axis.yCoord * dot, axis.zCoord * dot);
@@ -160,6 +155,11 @@ public class LOTREntityMallornLeafBomb extends EntityThrowable {
 				double d5 = result.zCoord / 10.0;
 				LOTRMod.proxy.spawnParticle("leafGold_30", d, d1, d2, d3, d4, d5);
 				LOTRMod.proxy.spawnParticle("mEntHeal_" + Block.getIdFromBlock(LOTRMod.leaves) + "_" + 1, d, d1, d2, d3 * 0.5, d4 * 0.5, d5 * 0.5);
+			}
+		} else {
+			++leavesAge;
+			if (leavesAge >= MAX_LEAVES_AGE) {
+				explode(null);
 			}
 		}
 	}

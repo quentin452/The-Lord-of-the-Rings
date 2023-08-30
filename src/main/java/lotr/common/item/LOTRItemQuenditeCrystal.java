@@ -24,13 +24,13 @@ public class LOTRItemQuenditeCrystal extends LOTRItemWithAnvilNameColor {
 				world.setBlock(i, j, k, LOTRMod.quenditeGrass, 0, 3);
 				--itemstack.stackSize;
 				for (int l = 0; l < 8; ++l) {
-					world.spawnParticle("iconcrack_" + Item.getIdFromItem(this), (double) i + (double) world.rand.nextFloat(), j + 1.5, (double) k + (double) world.rand.nextFloat(), 0.0, 0.0, 0.0);
+					world.spawnParticle("iconcrack_" + Item.getIdFromItem(this), (double) i + world.rand.nextFloat(), j + 1.5, (double) k + world.rand.nextFloat(), 0.0, 0.0, 0.0);
 				}
 			} else {
 				for (int l = 0; l < 8; ++l) {
-					double d = (double) i + (double) world.rand.nextFloat();
+					double d = (double) i + world.rand.nextFloat();
 					double d1 = j + 1.0;
-					double d2 = (double) k + (double) world.rand.nextFloat();
+					double d2 = (double) k + world.rand.nextFloat();
 					world.spawnParticle("smoke", d, d1, d2, 0.0, 0.0, 0.0);
 				}
 				if (!world.isRemote) {

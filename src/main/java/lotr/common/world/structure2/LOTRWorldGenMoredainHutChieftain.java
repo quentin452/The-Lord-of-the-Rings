@@ -50,15 +50,15 @@ public class LOTRWorldGenMoredainHutChieftain extends LOTRWorldGenMoredainHut {
 					}
 				}
 				if (k1 == 5 && i2 <= 1) {
-					layFoundation(world, i12, k1);
-					setBlockAndMetadata(world, i12, 1, k1, clayBlock, clayMeta);
+					layFoundation(world, i12, 5);
+					setBlockAndMetadata(world, i12, 1, 5, clayBlock, clayMeta);
 					for (j12 = 2; j12 <= 4; ++j12) {
-						setBlockAndMetadata(world, i12, j12, k1, brickBlock, brickMeta);
+						setBlockAndMetadata(world, i12, j12, 5, brickBlock, brickMeta);
 					}
 					if (i2 == 0) {
-						setBlockAndMetadata(world, i12, 5, k1, plankBlock, plankMeta);
+						setBlockAndMetadata(world, i12, 5, 5, plankBlock, plankMeta);
 					} else {
-						setBlockAndMetadata(world, i12, 5, k1, plankSlabBlock, plankSlabMeta);
+						setBlockAndMetadata(world, i12, 5, 5, plankSlabBlock, plankSlabMeta);
 					}
 				}
 				if (i2 == 4 && k2 <= 2 || k2 == 4 && i2 <= 2) {
@@ -150,7 +150,7 @@ public class LOTRWorldGenMoredainHutChieftain extends LOTRWorldGenMoredainHut {
 				setBlockAndMetadata(world, i12, 8, k1, thatchSlabBlock, thatchSlabMeta | 8);
 			}
 		}
-		int[] i13 = { -1, 1 };
+		int[] i13 = {-1, 1};
 		k1 = i13.length;
 		for (i2 = 0; i2 < k1; ++i2) {
 			int f = i13[i2];
@@ -160,20 +160,20 @@ public class LOTRWorldGenMoredainHutChieftain extends LOTRWorldGenMoredainHut {
 			setBlockAndMetadata(world, 2 * f, 3, -5, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, 2 * f, 2, -4, stainedClayBlock, stainedClayMeta);
 			setBlockAndMetadata(world, 2 * f, 3, -4, stainedClayBlock, stainedClayMeta);
-			setAir(world, 1 * f, 1, -4);
-			setAir(world, 1 * f, 2, -4);
-			setBlockAndMetadata(world, 1 * f, 3, -4, stainedClayBlock, stainedClayMeta);
-			setBlockAndMetadata(world, 1 * f, 4, -4, stainedClayBlock, stainedClayMeta);
-			setAir(world, 0 * f, 1, -4);
-			setAir(world, 0 * f, 2, -4);
-			setAir(world, 0 * f, 3, -4);
-			setBlockAndMetadata(world, 0 * f, 4, -4, stainedClayBlock, stainedClayMeta);
+			setAir(world, f, 1, -4);
+			setAir(world, f, 2, -4);
+			setBlockAndMetadata(world, f, 3, -4, stainedClayBlock, stainedClayMeta);
+			setBlockAndMetadata(world, f, 4, -4, stainedClayBlock, stainedClayMeta);
+			setAir(world, 0, 1, -4);
+			setAir(world, 0, 2, -4);
+			setAir(world, 0, 3, -4);
+			setBlockAndMetadata(world, 0, 4, -4, stainedClayBlock, stainedClayMeta);
 			setBlockAndMetadata(world, 2 * f, 4, -5, thatchSlabBlock, thatchSlabMeta);
-			setBlockAndMetadata(world, 1 * f, 4, -5, thatchSlabBlock, thatchSlabMeta | 8);
-			setBlockAndMetadata(world, 0 * f, 5, -5, thatchSlabBlock, thatchSlabMeta);
+			setBlockAndMetadata(world, f, 4, -5, thatchSlabBlock, thatchSlabMeta | 8);
+			setBlockAndMetadata(world, 0, 5, -5, thatchSlabBlock, thatchSlabMeta);
 			setBlockAndMetadata(world, 2 * f, 3, -3, thatchSlabBlock, thatchSlabMeta | 8);
-			setBlockAndMetadata(world, 1 * f, 4, -3, thatchSlabBlock, thatchSlabMeta);
-			setBlockAndMetadata(world, 0 * f, 4, -3, thatchSlabBlock, thatchSlabMeta | 8);
+			setBlockAndMetadata(world, f, 4, -3, thatchSlabBlock, thatchSlabMeta);
+			setBlockAndMetadata(world, 0, 4, -3, thatchSlabBlock, thatchSlabMeta | 8);
 		}
 		placeWallBanner(world, 0, 4, -4, LOTRItemBanner.BannerType.MOREDAIN, 2);
 		placeWallBanner(world, -4, 5, 0, LOTRItemBanner.BannerType.MOREDAIN, 1);
@@ -190,7 +190,7 @@ public class LOTRWorldGenMoredainHutChieftain extends LOTRWorldGenMoredainHut {
 		setBlockAndMetadata(world, -3, 1, 2, plankSlabBlock, plankSlabMeta | 8);
 		setBlockAndMetadata(world, 3, 1, 2, plankSlabBlock, plankSlabMeta | 8);
 		setBlockAndMetadata(world, 3, 1, 1, Blocks.crafting_table, 0);
-		this.placeChest(world, random, 3, 1, 0, LOTRMod.chestBasket, 5, LOTRChestContents.MOREDAIN_HUT);
+		placeChest(world, random, 3, 1, 0, LOTRMod.chestBasket, 5, LOTRChestContents.MOREDAIN_HUT);
 		setBlockAndMetadata(world, 3, 1, -1, LOTRMod.moredainTable, 0);
 		setBlockAndMetadata(world, 3, 1, -2, plankSlabBlock, plankSlabMeta | 8);
 		for (i1 = -1; i1 <= 1; ++i1) {
@@ -210,11 +210,11 @@ public class LOTRWorldGenMoredainHutChieftain extends LOTRWorldGenMoredainHut {
 		setBlockAndMetadata(world, 0, 1, 2, thatchSlabBlock, thatchSlabMeta);
 		setBlockAndMetadata(world, 1, 1, 2, plankBlock, plankMeta);
 		setBlockAndMetadata(world, 0, 2, 3, LOTRMod.goldBars, 0);
-		for (int f : new int[] { -1, 1 }) {
+		for (int f : new int[]{-1, 1}) {
 			for (int k12 = 2; k12 <= 3; ++k12) {
 				setBlockAndMetadata(world, 2 * f, 3, k12, thatchSlabBlock, thatchSlabMeta | 8);
-				setBlockAndMetadata(world, 1 * f, 4, k12, thatchSlabBlock, thatchSlabMeta);
-				setBlockAndMetadata(world, 0 * f, 4, k12, thatchSlabBlock, thatchSlabMeta | 8);
+				setBlockAndMetadata(world, f, 4, k12, thatchSlabBlock, thatchSlabMeta);
+				setBlockAndMetadata(world, 0, 4, k12, thatchSlabBlock, thatchSlabMeta | 8);
 			}
 		}
 		setBlockAndMetadata(world, -3, 3, -5, Blocks.torch, 4);

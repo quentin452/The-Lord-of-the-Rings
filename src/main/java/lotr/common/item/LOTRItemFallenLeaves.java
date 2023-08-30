@@ -15,7 +15,7 @@ public class LOTRItemFallenLeaves extends LOTRItemBlockMetadata {
 	@Override
 	public String getItemStackDisplayName(ItemStack itemstack) {
 		Object[] obj = ((LOTRBlockFallenLeaves) field_150939_a).leafBlockMetaFromFallenMeta(itemstack.getItemDamage());
-		ItemStack leaves = new ItemStack((Block) obj[0], 1, (int) (Integer) obj[1]);
+		ItemStack leaves = new ItemStack((Block) obj[0], 1, (Integer) obj[1]);
 		String name = leaves.getDisplayName();
 		return StatCollector.translateToLocalFormatted("tile.lotr.fallenLeaves", name);
 	}

@@ -97,7 +97,7 @@ public class LOTREntityCamel extends LOTREntityHorse implements LOTRBiomeGenNear
 	@Override
 	public void onLOTRHorseSpawn() {
 		double jumpStrength = getEntityAttribute(LOTRReflection.getHorseJumpStrength()).getAttributeValue();
-		getEntityAttribute(LOTRReflection.getHorseJumpStrength()).setBaseValue(jumpStrength *= 0.5);
+		getEntityAttribute(LOTRReflection.getHorseJumpStrength()).setBaseValue(jumpStrength * 0.5);
 	}
 
 	public void setNomadChestAndCarpet() {

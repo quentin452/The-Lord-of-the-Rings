@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.lwjgl.opengl.GL11;
 
 import lotr.common.entity.npc.LOTREntityNPC;
@@ -27,7 +28,7 @@ public class LOTRGuiCoinExchange extends GuiContainer {
 	public void actionPerformed(GuiButton button) {
 		if (button.enabled) {
 			if (button == buttonLeft || button == buttonRight) {
-				LOTRPacketCoinExchange packet = new LOTRPacketCoinExchange(button.id);
+				IMessage packet = new LOTRPacketCoinExchange(button.id);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 			} else {
 				super.actionPerformed(button);
@@ -57,7 +58,7 @@ public class LOTRGuiCoinExchange extends GuiContainer {
 
 	@Override
 	public void drawGuiContainerForegroundLayer(int i, int j) {
-		this.drawCenteredString(StatCollector.translateToLocal("container.lotr.coinExchange"), 89, 11, 4210752);
+		drawCenteredString(StatCollector.translateToLocal("container.lotr.coinExchange"), 89, 11, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, 94, 4210752);
 	}
 

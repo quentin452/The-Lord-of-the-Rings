@@ -73,15 +73,15 @@ public class LOTRModelDeer extends ModelBase {
 		ModelRenderer earRight = new ModelRenderer(this, 0, 22);
 		earRight.setRotationPoint(-2.0f, -8.0f, 0.0f);
 		earRight.addBox(-1.0f, -2.0f, -0.5f, 2, 3, 1, f);
-		earRight.rotateAngleY = (float) Math.toRadians(30.0);
-		earRight.rotateAngleZ = (float) Math.toRadians(-50.0);
+		earRight.rotateAngleY = 0.5235987755982988f;
+		earRight.rotateAngleZ = -0.8726646259971648f;
 		head.addChild(earRight);
 		ModelRenderer earLeft = new ModelRenderer(this, 0, 22);
 		earLeft.setRotationPoint(2.0f, -8.0f, 0.0f);
 		earLeft.mirror = true;
 		earLeft.addBox(-1.0f, -2.0f, -0.5f, 2, 3, 1, f);
-		earLeft.rotateAngleY = (float) Math.toRadians(-30.0);
-		earLeft.rotateAngleZ = (float) Math.toRadians(50.0);
+		earLeft.rotateAngleY = -0.5235987755982988f;
+		earLeft.rotateAngleZ = 0.8726646259971648f;
 		head.addChild(earLeft);
 		antlers = new ModelRenderer(this, 0, 0);
 		antlers.setRotationPoint(0.0f, 0.0f, 0.0f);
@@ -89,30 +89,30 @@ public class LOTRModelDeer extends ModelBase {
 		ModelRenderer antlerRight1 = new ModelRenderer(this, 0, 33);
 		antlerRight1.setRotationPoint(-2.0f, -7.0f, 1.0f);
 		antlerRight1.addBox(-0.5f, -8.0f, -0.5f, 1, 9, 1, f);
-		antlerRight1.rotateAngleX = (float) Math.toRadians(-40.0);
-		antlerRight1.rotateAngleZ = (float) Math.toRadians(-35.0);
+		antlerRight1.rotateAngleX = -0.6981317007977318f;
+		antlerRight1.rotateAngleZ = -0.6108652381980153f;
 		antlers.addChild(antlerRight1);
 		ModelRenderer antlerRight2 = new ModelRenderer(this, 4, 33);
 		antlerRight2.setRotationPoint(-2.0f, -6.0f, 0.0f);
 		antlerRight2.addBox(-0.5f, -6.0f, -0.5f, 1, 6, 1, f);
-		antlerRight2.rotateAngleX = (float) Math.toRadians(-60.0);
-		antlerRight2.rotateAngleY = (float) Math.toRadians(-50.0);
-		antlerRight2.rotateAngleZ = (float) Math.toRadians(-20.0);
+		antlerRight2.rotateAngleX = -1.0471975511965976f;
+		antlerRight2.rotateAngleY = -0.8726646259971648f;
+		antlerRight2.rotateAngleZ = -0.3490658503988659f;
 		antlers.addChild(antlerRight2);
 		ModelRenderer antlerLeft1 = new ModelRenderer(this, 0, 33);
 		antlerLeft1.setRotationPoint(2.0f, -7.0f, 1.0f);
 		antlerLeft1.mirror = true;
 		antlerLeft1.addBox(-0.5f, -8.0f, -0.5f, 1, 9, 1, f);
-		antlerLeft1.rotateAngleX = (float) Math.toRadians(-40.0);
-		antlerLeft1.rotateAngleZ = (float) Math.toRadians(35.0);
+		antlerLeft1.rotateAngleX = -0.6981317007977318f;
+		antlerLeft1.rotateAngleZ = 0.6108652381980153f;
 		antlers.addChild(antlerLeft1);
 		ModelRenderer antlerLeft2 = new ModelRenderer(this, 4, 33);
 		antlerLeft2.setRotationPoint(2.0f, -6.0f, 0.0f);
 		antlerLeft2.mirror = true;
 		antlerLeft2.addBox(-0.5f, -6.0f, -0.5f, 1, 6, 1, f);
-		antlerLeft2.rotateAngleX = (float) Math.toRadians(-60.0);
-		antlerLeft2.rotateAngleY = (float) Math.toRadians(50.0);
-		antlerLeft2.rotateAngleZ = (float) Math.toRadians(20.0);
+		antlerLeft2.rotateAngleX = -1.0471975511965976f;
+		antlerLeft2.rotateAngleY = 0.8726646259971648f;
+		antlerLeft2.rotateAngleZ = 0.3490658503988659f;
 		antlers.addChild(antlerLeft2);
 	}
 
@@ -147,7 +147,7 @@ public class LOTRModelDeer extends ModelBase {
 
 	@Override
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-		head.rotateAngleX = (float) Math.toRadians(30.0);
+		head.rotateAngleX = 0.5235987755982988f;
 		head.rotateAngleY = 0.0f;
 		head.rotateAngleX += (float) Math.toRadians(f4);
 		head.rotateAngleY += (float) Math.toRadians(f3);
@@ -159,6 +159,6 @@ public class LOTRModelDeer extends ModelBase {
 		leg2Foot.rotateAngleX = leg2.rotateAngleX * -0.6f;
 		leg3Foot.rotateAngleX = leg3.rotateAngleX * -0.6f;
 		leg4Foot.rotateAngleX = leg4.rotateAngleX * -0.6f;
-		tail.rotateAngleX = (float) Math.toRadians(-50.0);
+		tail.rotateAngleX = -0.8726646259971648f;
 	}
 }

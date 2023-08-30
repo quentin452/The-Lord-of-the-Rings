@@ -10,6 +10,7 @@ import lotr.common.tileentity.LOTRTileEntityAlloyForge;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
 import net.minecraft.init.*;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -23,7 +24,7 @@ public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 	public Block brickWallBlock = LOTRMod.wall;
 	public int brickWallMeta = 7;
 	public Block pillarBlock = LOTRMod.pillar;
-	public int pillarMeta = 0;
+	public int pillarMeta;
 	public Block plankBlock;
 	public int plankMeta;
 	public Block plankSlabBlock;
@@ -37,7 +38,7 @@ public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 	public Block plateBlock;
 	public LOTRItemBanner.BannerType bannerType = LOTRItemBanner.BannerType.DWARF;
 	public LOTRChestContents chestContents = LOTRChestContents.DWARVEN_TOWER;
-	public boolean ruined = false;
+	public boolean ruined;
 
 	public LOTRWorldGenDwarvenTower(boolean flag) {
 		super(flag);
@@ -66,7 +67,7 @@ public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 		int k1;
 		int k12;
 		LOTREntityNPC commander;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		setupRandomBlocks(random);
 		int sections = 5 + random.nextInt(3);
 		if (restrictions) {
@@ -121,7 +122,7 @@ public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 			for (j1 = sectionBase + 1; j1 <= sectionBase + 5; ++j1) {
 				boolean flag;
 				for (int i14 = -5; i14 <= 5; ++i14) {
-					for (int k15 : new int[] { -5, 5 }) {
+					for (int k15 : new int[]{-5, 5}) {
 						flag = true;
 						if (ruined) {
 							flag = random.nextInt(20) != 0;
@@ -133,7 +134,7 @@ public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 					}
 				}
 				for (k14 = -4; k14 <= 4; ++k14) {
-					for (int i15 : new int[] { -5, 5 }) {
+					for (int i15 : new int[]{-5, 5}) {
 						flag = true;
 						if (ruined) {
 							flag = random.nextInt(20) != 0;
@@ -189,7 +190,7 @@ public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 				for (k14 = -1; k14 <= 4; ++k14) {
 					for (i12 = 1; i12 <= 2; ++i12) {
 						setAir(world, i12, sectionBase + 5, k14);
-						k2 = k14 - -1;
+						k2 = k14 + 1;
 						for (j13 = sectionBase + 1; j13 <= sectionBase + k2; ++j13) {
 							placeBrick(world, random, i12, j13, k14);
 						}
@@ -209,7 +210,7 @@ public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 				for (k14 = -4; k14 <= 1; ++k14) {
 					for (i12 = -2; i12 <= -1; ++i12) {
 						setAir(world, i12, sectionBase + 5, k14);
-						k2 = 5 - (k14 - -4);
+						k2 = 5 - (k14 + 4);
 						for (j13 = sectionBase + 1; j13 <= sectionBase + k2; ++j13) {
 							placeBrick(world, random, i12, j13, k14);
 						}
@@ -257,11 +258,11 @@ public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 				setBlockAndMetadata(world, i1, j12, -5, gateBlock, 2);
 			}
 		}
-		for (int i14 : new int[] { -2, 2 }) {
+		for (int i14 : new int[]{-2, 2}) {
 			int j15 = 4;
 			while (!isOpaque(world, i14, j15, -6) && getY(j15) >= 0) {
 				if (j15 == 3) {
-					setBlockAndMetadata(world, i14, j15, -6, glowBrickBlock, glowBrickMeta);
+					setBlockAndMetadata(world, i14, 3, -6, glowBrickBlock, glowBrickMeta);
 				} else {
 					placePillar(world, random, i14, j15, -6);
 				}
@@ -292,9 +293,9 @@ public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 		placePillar(world, random, 4, (sections + 1) * 5 + 2, 0);
 		if (bannerType != null) {
 			placeBrick(world, random, -4, (sections + 1) * 5 + 1, 0);
-			this.placeBanner(world, -4, (sections + 1) * 5 + 1, 0, bannerType, 1);
+			placeBanner(world, -4, (sections + 1) * 5 + 1, 0, bannerType, 1);
 			placeBrick(world, random, 4, (sections + 1) * 5 + 1, 0);
-			this.placeBanner(world, 4, (sections + 1) * 5 + 1, 0, bannerType, 3);
+			placeBanner(world, 4, (sections + 1) * 5 + 1, 0, bannerType, 3);
 		}
 		if (!ruined) {
 			LOTREntityNPCRespawner respawner = new LOTREntityNPCRespawner(world);
@@ -332,35 +333,35 @@ public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 
 	public void placeRandomFeature(World world, Random random, int i, int j, int k, int randomFeature, boolean flip) {
 		switch (randomFeature) {
-		case 0:
-			setBlockAndMetadata(world, i, j, k, tableBlock, 0);
-			break;
-		case 1: {
-			setBlockAndMetadata(world, i, j, k, forgeBlock, flip ? 3 : 2);
-			TileEntity tileentity = getTileEntity(world, i, j, k);
-			if (tileentity instanceof LOTRTileEntityAlloyForge) {
-				((LOTRTileEntityAlloyForge) tileentity).setInventorySlotContents(12, new ItemStack(Items.coal, 1 + random.nextInt(4)));
+			case 0:
+				setBlockAndMetadata(world, i, j, k, tableBlock, 0);
+				break;
+			case 1: {
+				setBlockAndMetadata(world, i, j, k, forgeBlock, flip ? 3 : 2);
+				TileEntity tileentity = getTileEntity(world, i, j, k);
+				if (tileentity instanceof LOTRTileEntityAlloyForge) {
+					((IInventory) tileentity).setInventorySlotContents(12, new ItemStack(Items.coal, 1 + random.nextInt(4)));
+				}
+				break;
 			}
-			break;
-		}
-		case 2:
-			setBlockAndMetadata(world, i, j, k, plankSlabBlock, plankSlabMeta | 8);
-			this.placeChest(world, random, i, j + 1, k, flip ? 3 : 2, chestContents);
-			break;
-		case 3:
-			setBlockAndMetadata(world, i, j, k, plankSlabBlock, plankSlabMeta | 8);
-			if (!ruined) {
-				placePlateWithCertainty(world, random, i, j + 1, k, plateBlock, LOTRFoods.DWARF);
-			}
-			break;
-		case 4:
-			setBlockAndMetadata(world, i, j, k, plankSlabBlock, plankSlabMeta | 8);
-			if (!ruined) {
-				this.placeBarrel(world, random, i, j + 1, k, flip ? 3 : 2, LOTRFoods.DWARF_DRINK);
-			}
-			break;
-		default:
-			break;
+			case 2:
+				setBlockAndMetadata(world, i, j, k, plankSlabBlock, plankSlabMeta | 8);
+				placeChest(world, random, i, j + 1, k, flip ? 3 : 2, chestContents);
+				break;
+			case 3:
+				setBlockAndMetadata(world, i, j, k, plankSlabBlock, plankSlabMeta | 8);
+				if (!ruined) {
+					placePlateWithCertainty(world, random, i, j + 1, k, plateBlock, LOTRFoods.DWARF);
+				}
+				break;
+			case 4:
+				setBlockAndMetadata(world, i, j, k, plankSlabBlock, plankSlabMeta | 8);
+				if (!ruined) {
+					placeBarrel(world, random, i, j + 1, k, flip ? 3 : 2, LOTRFoods.DWARF_DRINK);
+				}
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -368,32 +369,32 @@ public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 	public void setupRandomBlocks(Random random) {
 		int randomWood = random.nextInt(4);
 		switch (randomWood) {
-		case 0:
-			plankBlock = Blocks.planks;
-			plankMeta = 1;
-			plankSlabBlock = Blocks.wooden_slab;
-			plankSlabMeta = 1;
-			break;
-		case 1:
-			plankBlock = LOTRMod.planks;
-			plankMeta = 13;
-			plankSlabBlock = LOTRMod.woodSlabSingle2;
-			plankSlabMeta = 5;
-			break;
-		case 2:
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 4;
-			plankSlabBlock = LOTRMod.woodSlabSingle3;
-			plankSlabMeta = 4;
-			break;
-		case 3:
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 3;
-			plankSlabBlock = LOTRMod.woodSlabSingle3;
-			plankSlabMeta = 3;
-			break;
-		default:
-			break;
+			case 0:
+				plankBlock = Blocks.planks;
+				plankMeta = 1;
+				plankSlabBlock = Blocks.wooden_slab;
+				plankSlabMeta = 1;
+				break;
+			case 1:
+				plankBlock = LOTRMod.planks;
+				plankMeta = 13;
+				plankSlabBlock = LOTRMod.woodSlabSingle2;
+				plankSlabMeta = 5;
+				break;
+			case 2:
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 4;
+				plankSlabBlock = LOTRMod.woodSlabSingle3;
+				plankSlabMeta = 4;
+				break;
+			case 3:
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 3;
+				plankSlabBlock = LOTRMod.woodSlabSingle3;
+				plankSlabMeta = 3;
+				break;
+			default:
+				break;
 		}
 		plateBlock = random.nextBoolean() ? LOTRMod.ceramicPlateBlock : LOTRMod.woodPlateBlock;
 	}

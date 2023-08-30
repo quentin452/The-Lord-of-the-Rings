@@ -8,7 +8,7 @@ public class LOTRModelWeaponRack extends ModelBase {
 	public ModelRenderer stand;
 	public ModelRenderer holder;
 	public ModelRenderer holderUpperParts;
-	public boolean onWall = false;
+	public boolean onWall;
 
 	public LOTRModelWeaponRack() {
 		base.setRotationPoint(0.0f, 24.0f, 0.0f);
@@ -45,7 +45,7 @@ public class LOTRModelWeaponRack extends ModelBase {
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		if (onWall) {
-			base.rotateAngleX = (float) Math.toRadians(-90.0);
+			base.rotateAngleX = -1.5707963267948966f;
 			stand.isHidden = true;
 			holder.rotateAngleX = 0.0f;
 			holder.setRotationPoint(0.0f, -2.0f, 0.0f);

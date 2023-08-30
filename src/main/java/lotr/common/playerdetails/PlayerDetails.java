@@ -41,6 +41,6 @@ public class PlayerDetails {
 	}
 
 	public static PlayerDetails getPlaceholder(UUID uuid) {
-		return new PlayerDetails(uuid, Collections.<String>emptyList(), false);
+		return new PlayerDetails(uuid, Collections.emptyList(), false);
 	}
 }

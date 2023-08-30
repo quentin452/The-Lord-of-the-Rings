@@ -10,7 +10,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 public class LOTREntityDarkHuorn extends LOTREntityHuornBase {
 	public LOTREntityDarkHuorn(World world) {
 		super(world);
-		this.addTargetTasks(true, LOTREntityAINearestAttackableTargetHuorn.class);
+		addTargetTasks(true, LOTREntityAINearestAttackableTargetHuorn.class);
 	}
 
 	@Override

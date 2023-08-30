@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityCorsairCaptain extends LOTREntityCorsair implements LOTRUnitTradeable {
 	public LOTREntityCorsairCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = null;
 	}
 

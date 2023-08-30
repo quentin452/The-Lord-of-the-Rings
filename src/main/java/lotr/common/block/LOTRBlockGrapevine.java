@@ -19,20 +19,20 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class LOTRBlockGrapevine extends Block implements IPlantable, IGrowable {
 	public static int MAX_GROWTH = 7;
 	public static int MAX_HEIGHT = 3;
-	public static boolean hoeing = false;
+	public static boolean hoeing;
 	public boolean hasGrapes;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon postIcon;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] vineIcons;
 
 	public LOTRBlockGrapevine(boolean grapes) {
 		super(Material.plants);
 		hasGrapes = grapes;
-		if (!hasGrapes) {
-			setCreativeTab(LOTRCreativeTabs.tabDeco);
-		} else {
+		if (hasGrapes) {
 			setCreativeTab(null);
+		} else {
+			setCreativeTab(LOTRCreativeTabs.tabDeco);
 		}
 		if (hasGrapes) {
 			setStepSound(Block.soundTypeGrass);
@@ -61,7 +61,7 @@ public class LOTRBlockGrapevine extends Block implements IPlantable, IGrowable {
 	public boolean checkCanStay(World world, int i, int j, int k) {
 		if (!canBlockStay(world, i, j, k)) {
 			int meta = world.getBlockMetadata(i, j, k);
-			this.dropBlockAsItem(world, i, j, k, meta, 0);
+			dropBlockAsItem(world, i, j, k, meta, 0);
 			if (hasGrapes) {
 				world.setBlock(i, j, k, LOTRMod.grapevine, 0, 3);
 				Block newBlock = world.getBlock(i, j, k);
@@ -126,7 +126,7 @@ public class LOTRBlockGrapevine extends Block implements IPlantable, IGrowable {
 	}
 
 	public float getGrowthFactor(World world, int i, int j, int k) {
-		if (!LOTRBlockGrapevine.canPlantGrapesAt(world, i, j, k, this)) {
+		if (!canPlantGrapesAt(world, i, j, k, this)) {
 			return 0.0f;
 		}
 		int farmlandHeight = 0;
@@ -166,7 +166,7 @@ public class LOTRBlockGrapevine extends Block implements IPlantable, IGrowable {
 		return growth;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (i == -1) {
@@ -178,7 +178,7 @@ public class LOTRBlockGrapevine extends Block implements IPlantable, IGrowable {
 		return postIcon;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public Item getItem(World world, int i, int j, int k) {
 		if (hasGrapes) {
@@ -210,8 +210,8 @@ public class LOTRBlockGrapevine extends Block implements IPlantable, IGrowable {
 		return 0;
 	}
 
-	public ArrayList<ItemStack> getVineDrops(World world, int i, int j, int k, int meta, int fortune) {
-		ArrayList<ItemStack> drops = new ArrayList<>();
+	public Collection<ItemStack> getVineDrops(World world, int i, int j, int k, int meta, int fortune) {
+		Collection<ItemStack> drops = new ArrayList<>();
 		int seeds = 3 + fortune;
 		for (int l = 0; l < seeds; ++l) {
 			if (world.rand.nextInt(15) > meta) {
@@ -250,9 +250,9 @@ public class LOTRBlockGrapevine extends Block implements IPlantable, IGrowable {
 		int meta;
 		if (hasGrapes && (meta = world.getBlockMetadata(i, j, k)) >= 7) {
 			if (!world.isRemote) {
-				ArrayList<ItemStack> drops = getVineDrops(world, i, j, k, meta, 0);
+				Iterable<ItemStack> drops = getVineDrops(world, i, j, k, meta, 0);
 				for (ItemStack itemstack : drops) {
-					this.dropBlockAsItem(world, i, j, k, itemstack);
+					dropBlockAsItem(world, i, j, k, itemstack);
 				}
 				LOTRLevelData.getData(entityplayer).addAchievement(LOTRAchievement.harvestGrapes);
 			}
@@ -267,7 +267,7 @@ public class LOTRBlockGrapevine extends Block implements IPlantable, IGrowable {
 		checkCanStay(world, i, j, k);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		postIcon = !hasGrapes ? iconregister.registerIcon(getTextureName()) : LOTRMod.grapevine.getIcon(0, 0);
@@ -313,7 +313,7 @@ public class LOTRBlockGrapevine extends Block implements IPlantable, IGrowable {
 		setBlockBounds(0.5f - f, 0.0f, 0.5f - f, 0.5f + f, 1.0f, 0.5f + f);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean shouldSideBeRendered(IBlockAccess world, int i, int j, int k, int side) {
 		if (hasGrapes) {
@@ -344,7 +344,7 @@ public class LOTRBlockGrapevine extends Block implements IPlantable, IGrowable {
 		}
 	}
 
-	public static boolean canPlantGrapesAt(World world, int i, int j, int k, IPlantable plantable) {
+	public static boolean canPlantGrapesAt(IBlockAccess world, int i, int j, int k, IPlantable plantable) {
 		for (int l = 1; l <= 3; ++l) {
 			int j1 = j - l;
 			Block block = world.getBlock(i, j1, k);

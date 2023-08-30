@@ -14,7 +14,7 @@ public abstract class LOTREntityAIConsumeBase extends EntityAIBase {
 	public int chanceToConsume;
 	public int consumeTick;
 
-	public LOTREntityAIConsumeBase(LOTREntityNPC entity, LOTRFoods foods, int chance) {
+	protected LOTREntityAIConsumeBase(LOTREntityNPC entity, LOTRFoods foods, int chance) {
 		theEntity = entity;
 		rand = theEntity.getRNG();
 		foodPool = foods;

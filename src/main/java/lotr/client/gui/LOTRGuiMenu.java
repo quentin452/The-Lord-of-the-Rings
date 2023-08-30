@@ -12,7 +12,7 @@ import net.minecraft.util.*;
 
 public class LOTRGuiMenu extends LOTRGuiScreenBase {
 	public static ResourceLocation menuIconsTexture = new ResourceLocation("lotr:gui/menu_icons.png");
-	public static Class<? extends LOTRGuiMenuBase> lastMenuScreen = null;
+	public static Class<? extends LOTRGuiMenuBase> lastMenuScreen;
 
 	@Override
 	public void actionPerformed(GuiButton button) {
@@ -47,7 +47,7 @@ public class LOTRGuiMenu extends LOTRGuiScreenBase {
 	@Override
 	public void initGui() {
 		super.initGui();
-		LOTRGuiMenu.resetLastMenuScreen();
+		resetLastMenuScreen();
 		int midX = width / 2;
 		int midY = height / 2;
 		int buttonGap = 10;
@@ -112,7 +112,7 @@ public class LOTRGuiMenu extends LOTRGuiScreenBase {
 		}
 		if (lastMenuScreen != null) {
 			try {
-				return lastMenuScreen.newInstance();
+				return lastMenuScreen.getConstructor().newInstance();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

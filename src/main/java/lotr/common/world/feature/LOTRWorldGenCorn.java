@@ -20,7 +20,8 @@ public class LOTRWorldGenCorn extends WorldGenerator {
 				continue;
 			}
 			boolean adjWater = false;
-			block1: for (int i2 = -1; i2 <= 1; ++i2) {
+			block1:
+			for (int i2 = -1; i2 <= 1; ++i2) {
 				for (int k2 = -1; k2 <= 1; ++k2) {
 					if (Math.abs(i2) + Math.abs(k2) != 1 || world.getBlock(i1 + i2, j - 1, k1 + k2).getMaterial() != Material.water) {
 						continue;

@@ -25,7 +25,7 @@ public class LOTRWorldGenSouthronTavern extends LOTRWorldGenSouthronStructure {
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int i1;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 16);
+		setOriginAndRotation(world, i, j, k, rotation, 16);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -106,7 +106,7 @@ public class LOTRWorldGenSouthronTavern extends LOTRWorldGenSouthronStructure {
 		for (i1 = -1; i1 <= 1; ++i1) {
 			for (k1 = 1; k1 <= 3; ++k1) {
 				if (i1 == 0 && k1 == 2) {
-					setBlockAndMetadata(world, i1, 2, k1, LOTRMod.lemonCake, 0);
+					setBlockAndMetadata(world, 0, 2, 2, LOTRMod.lemonCake, 0);
 					continue;
 				}
 				placeFoodOrDrink(world, random, i1, 2, k1);
@@ -116,9 +116,9 @@ public class LOTRWorldGenSouthronTavern extends LOTRWorldGenSouthronStructure {
 		placeFoodOrDrink(world, random, -2, 2, 7);
 		placeFoodOrDrink(world, random, -1, 2, 7);
 		placeKebabStand(world, random, -4, 2, 9, LOTRMod.kebabStand, 4);
-		this.placeChest(world, random, 3, 1, 14, LOTRMod.chestBasket, 2, LOTRChestContents.NEAR_HARAD_HOUSE);
-		this.placeBarrel(world, random, 4, 2, 11, 5, LOTRFoods.SOUTHRON_DRINK);
-		this.placeBarrel(world, random, 4, 2, 12, 5, LOTRFoods.SOUTHRON_DRINK);
+		placeChest(world, random, 3, 1, 14, LOTRMod.chestBasket, 2, LOTRChestContents.NEAR_HARAD_HOUSE);
+		placeBarrel(world, random, 4, 2, 11, 5, LOTRFoods.SOUTHRON_DRINK);
+		placeBarrel(world, random, 4, 2, 12, 5, LOTRFoods.SOUTHRON_DRINK);
 		setBlockAndMetadata(world, -3, 8, -13, bedBlock, 2);
 		setBlockAndMetadata(world, -3, 8, -14, bedBlock, 10);
 		setBlockAndMetadata(world, -4, 8, -13, bedBlock, 2);
@@ -150,7 +150,8 @@ public class LOTRWorldGenSouthronTavern extends LOTRWorldGenSouthronStructure {
 			LOTREntityNearHaradrimBase southron = createHaradrim(world);
 			spawnNPCAndSetHome(southron, world, 0, 1, 0, 16);
 		}
-		block11: for (int i13 = -1; i13 <= 1; ++i13) {
+		block11:
+		for (int i13 = -1; i13 <= 1; ++i13) {
 			int j1 = 0;
 			for (int step = 0; step < 12; ++step) {
 				int j2;
@@ -190,16 +191,16 @@ public class LOTRWorldGenSouthronTavern extends LOTRWorldGenSouthronStructure {
 		setBlockAndMetadata(world, 0, 5, -16, fenceBlock, fenceMeta);
 		setBlockAndMetadata(world, 0, 5, -17, fenceBlock, fenceMeta);
 		setBlockAndMetadata(world, 0, 4, -17, plankBlock, plankMeta);
-		placeSign(world, -1, 4, -17, Blocks.wall_sign, 5, new String[] { "", tavernName[0], tavernName[1], "" });
-		placeSign(world, 0, 4, -18, Blocks.wall_sign, 2, new String[] { "", tavernName[0], tavernName[1], "" });
-		placeSign(world, 1, 4, -17, Blocks.wall_sign, 4, new String[] { "", tavernName[0], tavernName[1], "" });
+		placeSign(world, -1, 4, -17, Blocks.wall_sign, 5, new String[]{"", tavernName[0], tavernName[1], ""});
+		placeSign(world, 0, 4, -18, Blocks.wall_sign, 2, new String[]{"", tavernName[0], tavernName[1], ""});
+		placeSign(world, 1, 4, -17, Blocks.wall_sign, 4, new String[]{"", tavernName[0], tavernName[1], ""});
 		return true;
 	}
 
 	public void placeFoodOrDrink(World world, Random random, int i, int j, int k) {
 		if (random.nextBoolean()) {
 			if (random.nextBoolean()) {
-				this.placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.SOUTHRON_DRINK);
+				placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.SOUTHRON_DRINK);
 			} else {
 				Block plateBlock;
 				plateBlock = random.nextBoolean() ? LOTRMod.woodPlateBlock : LOTRMod.ceramicPlateBlock;

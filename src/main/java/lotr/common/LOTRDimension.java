@@ -22,12 +22,12 @@ public enum LOTRDimension {
 	public Map<Integer, Integer> colorsToBiomeIDs = new HashMap<>();
 	public List<LOTRBiome> majorBiomes = new ArrayList<>();
 	public List<LOTRAchievement.Category> achievementCategories = new ArrayList<>();
-	public List<LOTRAchievement> allAchievements = new ArrayList<>();
-	public List<LOTRFaction> factionList = new ArrayList<>();
+	public Collection<LOTRAchievement> allAchievements = new ArrayList<>();
+	public Collection<LOTRFaction> factionList = new ArrayList<>();
 	public List<DimensionRegion> dimensionRegions = new ArrayList<>();
 	public int spawnCap;
 
-	LOTRDimension(String s, int i, Class c, boolean flag, int spawns, EnumSet<DimensionRegion> regions) {
+	LOTRDimension(String s, int i, Class c, boolean flag, int spawns, Collection<DimensionRegion> regions) {
 		dimensionName = s;
 		defaultID = i;
 		providerClass = c;
@@ -48,13 +48,13 @@ public enum LOTRDimension {
 	}
 
 	public static void configureDimensions(Configuration config, String category) {
-		for (LOTRDimension dim : LOTRDimension.values()) {
+		for (LOTRDimension dim : values()) {
 			dim.dimensionID = config.get(category, "Dimension ID: " + dim.dimensionName, dim.defaultID).getInt();
 		}
 	}
 
 	public static LOTRDimension forName(String s) {
-		for (LOTRDimension dim : LOTRDimension.values()) {
+		for (LOTRDimension dim : values()) {
 			if (!dim.dimensionName.equals(s)) {
 				continue;
 			}
@@ -72,7 +72,7 @@ public enum LOTRDimension {
 	}
 
 	public static LOTRDimension getCurrentDimensionWithFallback(World world) {
-		LOTRDimension dim = LOTRDimension.getCurrentDimension(world);
+		LOTRDimension dim = getCurrentDimension(world);
 		if (dim == null) {
 			return MIDDLE_EARTH;
 		}
@@ -80,13 +80,13 @@ public enum LOTRDimension {
 	}
 
 	public static void registerDimensions() {
-		for (LOTRDimension dim : LOTRDimension.values()) {
+		for (LOTRDimension dim : values()) {
 			DimensionManager.registerProviderType(dim.dimensionID, dim.providerClass, dim.loadSpawn);
 			DimensionManager.registerDimension(dim.dimensionID, dim.dimensionID);
 		}
 	}
 
-	public static enum DimensionRegion {
+	public enum DimensionRegion {
 		WEST("west"), EAST("east"), SOUTH("south"), REG_UTUMNO("utumno");
 
 		public String regionName;
@@ -114,7 +114,7 @@ public enum LOTRDimension {
 		}
 
 		public static DimensionRegion forID(int ID) {
-			for (DimensionRegion r : DimensionRegion.values()) {
+			for (DimensionRegion r : values()) {
 				if (r.ordinal() != ID) {
 					continue;
 				}
@@ -124,7 +124,7 @@ public enum LOTRDimension {
 		}
 
 		public static DimensionRegion forName(String regionName) {
-			for (DimensionRegion r : DimensionRegion.values()) {
+			for (DimensionRegion r : values()) {
 				if (!r.codeName().equals(regionName)) {
 					continue;
 				}

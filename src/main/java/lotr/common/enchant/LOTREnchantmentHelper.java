@@ -8,6 +8,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.*;
 import lotr.common.item.LOTRMaterial;
 import lotr.common.network.*;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -21,22 +22,22 @@ public class LOTREnchantmentHelper {
 
 	public static void applyRandomEnchantments(ItemStack itemstack, Random random, boolean skilful, boolean keepBanes) {
 		LOTREnchantment ench;
-		if (!keepBanes) {
-			LOTREnchantmentHelper.clearEnchantsAndProgress(itemstack);
-		} else {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+		if (keepBanes) {
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench2 : enchants) {
 				if (ench2.persistsReforge()) {
 					continue;
 				}
-				LOTREnchantmentHelper.removeEnchant(itemstack, ench2);
+				removeEnchant(itemstack, ench2);
 			}
+		} else {
+			clearEnchantsAndProgress(itemstack);
 		}
 		if (itemstack.getItem() instanceof ItemSword && LOTRMaterial.getToolMaterialByName(((ItemSword) itemstack.getItem()).getToolMaterialName()) == LOTRMaterial.BARROW.toToolMaterial() && (ench = LOTREnchantment.baneWight).canApply(itemstack, false)) {
-			LOTREnchantmentHelper.setHasEnchant(itemstack, ench);
+			setHasEnchant(itemstack, ench);
 		}
 		if (itemstack.getItem() == LOTRMod.sting && (ench = LOTREnchantment.baneSpider).canApply(itemstack, false)) {
-			LOTREnchantmentHelper.setHasEnchant(itemstack, ench);
+			setHasEnchant(itemstack, ench);
 		}
 		int enchants = 0;
 		float chance = random.nextFloat();
@@ -51,13 +52,13 @@ public class LOTREnchantmentHelper {
 		} else if (chance < 0.65f) {
 			enchants = 1;
 		}
-		ArrayList<WeightedRandomEnchant> applicable = new ArrayList<>();
+		Collection<WeightedRandomEnchant> applicable = new ArrayList<>();
 		for (LOTREnchantment ench3 : LOTREnchantment.allEnchantments) {
 			int weight;
 			if (!ench3.canApply(itemstack, true) || ench3.isSkilful() && !skilful || (weight = ench3.getEnchantWeight()) <= 0) {
 				continue;
 			}
-			weight = skilful ? LOTREnchantmentHelper.getSkilfulWeight(ench3) : (weight *= 100);
+			weight = skilful ? getSkilfulWeight(ench3) : weight * 100;
 			if (weight > 0 && itemstack.getItem() instanceof ItemTool && !ench3.itemTypes.contains(LOTREnchantmentType.TOOL) && !ench3.itemTypes.contains(LOTREnchantmentType.BREAKABLE)) {
 				weight /= 3;
 				weight = Math.max(weight, 1);
@@ -66,13 +67,13 @@ public class LOTREnchantmentHelper {
 			applicable.add(wre);
 		}
 		if (!applicable.isEmpty()) {
-			ArrayList<LOTREnchantment> chosenEnchants = new ArrayList<>();
+			Collection<LOTREnchantment> chosenEnchants = new ArrayList<>();
 			for (int l = 0; l < enchants && !applicable.isEmpty(); ++l) {
 				WeightedRandomEnchant chosenWre = (WeightedRandomEnchant) WeightedRandom.getRandomItem(random, applicable);
 				LOTREnchantment chosenEnch = chosenWre.theEnchant;
 				chosenEnchants.add(chosenEnch);
 				applicable.remove(chosenWre);
-				ArrayList<WeightedRandomEnchant> nowIncompatibles = new ArrayList<>();
+				Collection<WeightedRandomEnchant> nowIncompatibles = new ArrayList<>();
 				for (WeightedRandomEnchant wre : applicable) {
 					LOTREnchantment otherEnch = wre.theEnchant;
 					if (otherEnch.isCompatibleWith(chosenEnch)) {
@@ -86,18 +87,18 @@ public class LOTREnchantmentHelper {
 				if (!ench4.canApply(itemstack, false)) {
 					continue;
 				}
-				LOTREnchantmentHelper.setHasEnchant(itemstack, ench4);
+				setHasEnchant(itemstack, ench4);
 			}
 		}
-		if (!LOTREnchantmentHelper.getEnchantList(itemstack).isEmpty() || LOTREnchantmentHelper.canApplyAnyEnchant(itemstack)) {
-			LOTREnchantmentHelper.setAppliedRandomEnchants(itemstack);
+		if (!getEnchantList(itemstack).isEmpty() || canApplyAnyEnchant(itemstack)) {
+			setAppliedRandomEnchants(itemstack);
 		}
 	}
 
 	public static float calcBaseMeleeDamageBoost(ItemStack itemstack) {
 		float damage = 0.0f;
 		if (itemstack != null) {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				if (!(ench instanceof LOTREnchantmentDamage)) {
 					continue;
@@ -111,7 +112,7 @@ public class LOTREnchantmentHelper {
 	public static int calcCommonArmorProtection(ItemStack itemstack) {
 		int protection = 0;
 		if (itemstack != null) {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				if (!(ench instanceof LOTREnchantmentProtection)) {
 					continue;
@@ -125,7 +126,7 @@ public class LOTREnchantmentHelper {
 	public static float calcEntitySpecificDamage(ItemStack itemstack, EntityLivingBase entity) {
 		float damage = 0.0f;
 		if (itemstack != null) {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				if (!(ench instanceof LOTREnchantmentDamage)) {
 					continue;
@@ -139,7 +140,7 @@ public class LOTREnchantmentHelper {
 	public static int calcExtraKnockback(ItemStack itemstack) {
 		int kb = 0;
 		if (itemstack != null) {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				if (!(ench instanceof LOTREnchantmentKnockback)) {
 					continue;
@@ -153,7 +154,7 @@ public class LOTREnchantmentHelper {
 	public static int calcFireAspect(ItemStack itemstack) {
 		int fire = 0;
 		if (itemstack != null) {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				if (ench != LOTREnchantment.fire) {
 					continue;
@@ -166,7 +167,7 @@ public class LOTREnchantmentHelper {
 
 	public static int calcFireAspectForMelee(ItemStack itemstack) {
 		if (itemstack != null && LOTREnchantmentType.MELEE.canApply(itemstack, false)) {
-			return LOTREnchantmentHelper.calcFireAspect(itemstack);
+			return calcFireAspect(itemstack);
 		}
 		return 0;
 	}
@@ -174,7 +175,7 @@ public class LOTREnchantmentHelper {
 	public static int calcLootingLevel(ItemStack itemstack) {
 		int looting = 0;
 		if (itemstack != null) {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				if (!(ench instanceof LOTREnchantmentLooting)) {
 					continue;
@@ -188,7 +189,7 @@ public class LOTREnchantmentHelper {
 	public static float calcMeleeReachFactor(ItemStack itemstack) {
 		float reach = 1.0f;
 		if (itemstack != null) {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				if (!(ench instanceof LOTREnchantmentMeleeReach)) {
 					continue;
@@ -202,7 +203,7 @@ public class LOTREnchantmentHelper {
 	public static float calcMeleeSpeedFactor(ItemStack itemstack) {
 		float speed = 1.0f;
 		if (itemstack != null) {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				if (!(ench instanceof LOTREnchantmentMeleeSpeed)) {
 					continue;
@@ -216,7 +217,7 @@ public class LOTREnchantmentHelper {
 	public static float calcRangedDamageFactor(ItemStack itemstack) {
 		float damage = 1.0f;
 		if (itemstack != null) {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				if (!(ench instanceof LOTREnchantmentRangedDamage)) {
 					continue;
@@ -230,7 +231,7 @@ public class LOTREnchantmentHelper {
 	public static int calcRangedKnockback(ItemStack itemstack) {
 		int kb = 0;
 		if (itemstack != null) {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				if (!(ench instanceof LOTREnchantmentRangedKnockback)) {
 					continue;
@@ -248,7 +249,7 @@ public class LOTREnchantmentHelper {
 				if (itemstack == null) {
 					continue;
 				}
-				List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+				List<LOTREnchantment> enchants = getEnchantList(itemstack);
 				for (LOTREnchantment ench : enchants) {
 					if (!(ench instanceof LOTREnchantmentProtectionSpecial)) {
 						continue;
@@ -263,7 +264,7 @@ public class LOTREnchantmentHelper {
 	public static float calcToolEfficiency(ItemStack itemstack) {
 		float speed = 1.0f;
 		if (itemstack != null) {
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				if (!(ench instanceof LOTREnchantmentToolSpeed)) {
 					continue;
@@ -276,7 +277,7 @@ public class LOTREnchantmentHelper {
 
 	public static float calcTradeValueFactor(ItemStack itemstack) {
 		float value = 1.0f;
-		List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+		List<LOTREnchantment> enchants = getEnchantList(itemstack);
 		for (LOTREnchantment ench : enchants) {
 			value *= ench.getValueModifier();
 			if (!ench.isSkilful()) {
@@ -298,7 +299,7 @@ public class LOTREnchantmentHelper {
 	}
 
 	public static boolean checkEnchantCompatible(ItemStack itemstack, LOTREnchantment ench) {
-		List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+		List<LOTREnchantment> enchants = getEnchantList(itemstack);
 		for (LOTREnchantment itemEnch : enchants) {
 			if (itemEnch.isCompatibleWith(ench) && ench.isCompatibleWith(itemEnch)) {
 				continue;
@@ -316,7 +317,7 @@ public class LOTREnchantmentHelper {
 	}
 
 	public static void clearEnchantsAndProgress(ItemStack itemstack) {
-		LOTREnchantmentHelper.clearEnchants(itemstack);
+		clearEnchants(itemstack);
 		NBTTagCompound itemData = itemstack.getTagCompound();
 		if (itemData != null && itemData.hasKey("LOTREnchProgress")) {
 			itemData.removeTag("LOTREnchProgress");
@@ -332,8 +333,8 @@ public class LOTREnchantmentHelper {
 	}
 
 	public static List<LOTREnchantment> getEnchantList(ItemStack itemstack) {
-		ArrayList<LOTREnchantment> enchants = new ArrayList<>();
-		NBTTagList tags = LOTREnchantmentHelper.getItemEnchantTags(itemstack, false);
+		List<LOTREnchantment> enchants = new ArrayList<>();
+		NBTTagList tags = getItemEnchantTags(itemstack, false);
 		if (tags != null) {
 			for (int i = 0; i < tags.tagCount(); ++i) {
 				String s = tags.getStringTagAt(i);
@@ -360,7 +361,7 @@ public class LOTREnchantmentHelper {
 	}
 
 	public static String getFullEnchantedName(ItemStack itemstack, String name) {
-		List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+		List<LOTREnchantment> enchants = getEnchantList(itemstack);
 		enchants = Lists.reverse(enchants);
 		for (LOTREnchantment ench : enchants) {
 			name = StatCollector.translateToLocalFormatted("lotr.enchant.nameFormat", ench.getDisplayName(), name);
@@ -423,10 +424,10 @@ public class LOTREnchantmentHelper {
 				if (itemstack == null) {
 					continue;
 				}
-				List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+				List<LOTREnchantment> enchants = getEnchantList(itemstack);
 				for (LOTREnchantment ench : enchants) {
 					int protection;
-					if (!(ench instanceof LOTREnchantmentProtectionFire) || (protection = ((LOTREnchantmentProtectionFire) ench).protectLevel) <= max) {
+					if (!(ench instanceof LOTREnchantmentProtectionFire) || (protection = ((LOTREnchantmentProtectionSpecial) ench).protectLevel) <= max) {
 						continue;
 					}
 					max = protection;
@@ -459,7 +460,7 @@ public class LOTREnchantmentHelper {
 	}
 
 	public static boolean hasEnchant(ItemStack itemstack, LOTREnchantment ench) {
-		NBTTagList tags = LOTREnchantmentHelper.getItemEnchantTags(itemstack, false);
+		NBTTagList tags = getItemEnchantTags(itemstack, false);
 		if (tags != null) {
 			for (int i = 0; i < tags.tagCount(); ++i) {
 				String s = tags.getStringTagAt(i);
@@ -477,14 +478,14 @@ public class LOTREnchantmentHelper {
 		EntityLivingBase attackerLiving;
 		Entity attacker = source.getEntity();
 		Entity sourceEntity = source.getSourceOfDamage();
-		if (attacker instanceof EntityLivingBase && (attackerLiving = (EntityLivingBase) attacker) == sourceEntity && (weapon = attackerLiving.getHeldItem()) != null && LOTREnchantmentType.MELEE.canApply(weapon, false) && LOTREnchantmentHelper.hasEnchant(weapon, ench)) {
+		if (attacker instanceof EntityLivingBase && (attackerLiving = (EntityLivingBase) attacker) == sourceEntity && (weapon = attackerLiving.getHeldItem()) != null && LOTREnchantmentType.MELEE.canApply(weapon, false) && hasEnchant(weapon, ench)) {
 			return true;
 		}
-		return sourceEntity != null && LOTREnchantmentHelper.hasProjectileEnchantment(sourceEntity, ench);
+		return sourceEntity != null && hasProjectileEnchantment(sourceEntity, ench);
 	}
 
 	public static boolean hasProjectileEnchantment(Entity entity, LOTREnchantment ench) {
-		NBTTagList tags = LOTREnchantmentHelper.getEntityEnchantTags(entity, false);
+		NBTTagList tags = getEntityEnchantTags(entity, false);
 		if (tags != null) {
 			for (int i = 0; i < tags.tagCount(); ++i) {
 				String s = tags.getStringTagAt(i);
@@ -498,11 +499,11 @@ public class LOTREnchantmentHelper {
 	}
 
 	public static boolean isReforgeable(ItemStack itemstack) {
-		return !LOTREnchantmentHelper.getEnchantList(itemstack).isEmpty() || LOTREnchantmentHelper.canApplyAnyEnchant(itemstack);
+		return !getEnchantList(itemstack).isEmpty() || canApplyAnyEnchant(itemstack);
 	}
 
 	public static boolean isSilkTouch(ItemStack itemstack) {
-		return itemstack != null && LOTREnchantmentHelper.hasEnchant(itemstack, LOTREnchantment.toolSilk);
+		return itemstack != null && hasEnchant(itemstack, LOTREnchantment.toolSilk);
 	}
 
 	public static boolean negateDamage(ItemStack itemstack, Random random) {
@@ -513,7 +514,7 @@ public class LOTREnchantmentHelper {
 				}
 				random = backupRand;
 			}
-			List<LOTREnchantment> enchants = LOTREnchantmentHelper.getEnchantList(itemstack);
+			List<LOTREnchantment> enchants = getEnchantList(itemstack);
 			for (LOTREnchantment ench : enchants) {
 				float durability;
 				if (!(ench instanceof LOTREnchantmentDurability) || (durability = ((LOTREnchantmentDurability) ench).durabilityFactor) <= 1.0f) {
@@ -535,7 +536,7 @@ public class LOTREnchantmentHelper {
 			if (entity instanceof EntityLiving && !entity.getEntityData().getBoolean("LOTREnchantInit")) {
 				for (int i = 0; i < entity.getLastActiveItems().length; ++i) {
 					ItemStack itemstack = entity.getEquipmentInSlot(i);
-					LOTREnchantmentHelper.tryApplyRandomEnchantsForEntity(itemstack, rand);
+					tryApplyRandomEnchantsForEntity(itemstack, rand);
 				}
 				entity.getEntityData().setBoolean("LOTREnchantInit", true);
 			}
@@ -552,10 +553,10 @@ public class LOTREnchantmentHelper {
 					if (ItemStack.areItemStacksEqual(itemstack, lastKnownInv[i])) {
 						continue;
 					}
-					LOTREnchantmentHelper.tryApplyRandomEnchantsForEntity(itemstack, rand);
+					tryApplyRandomEnchantsForEntity(itemstack, rand);
 					lastKnownInv[i] = itemstack == null ? null : itemstack.copy();
 				}
-				if (LOTREnchantmentHelper.tryApplyRandomEnchantsForEntity(inv.getItemStack(), rand)) {
+				if (tryApplyRandomEnchantsForEntity(inv.getItemStack(), rand)) {
 					entityplayer.updateHeldItem();
 				}
 				lastKnownPlayerInventories.put(playerID, lastKnownInv);
@@ -581,7 +582,7 @@ public class LOTREnchantmentHelper {
 					if (!enchBane.isAchievable || !enchBane.doesEntityKillCountTowardsBane(target, entityplayer.worldObj)) {
 						continue;
 					}
-					NBTTagCompound nbt = LOTREnchantmentHelper.getItemEnchantProgress(weapon, ench, true);
+					NBTTagCompound nbt = getItemEnchantProgress(weapon, ench, true);
 					int killed = 0;
 					if (nbt.hasKey("Kills")) {
 						killed = nbt.getInteger("Kills");
@@ -589,21 +590,21 @@ public class LOTREnchantmentHelper {
 					killed++;
 					nbt.setInteger("Kills", killed);
 					progressChanged = true;
-					int requiredKills = 0;
+					int requiredKills;
 					if (nbt.hasKey("KillsRequired")) {
 						requiredKills = nbt.getInteger("KillsRequired");
 					} else {
 						requiredKills = enchBane.getRandomKillsRequired(rand);
 						nbt.setInteger("KillsRequired", requiredKills);
 					}
-					if (killed < requiredKills || LOTREnchantmentHelper.hasEnchant(weapon, enchBane) || !LOTREnchantmentHelper.checkEnchantCompatible(weapon, enchBane)) {
+					if (killed < requiredKills || hasEnchant(weapon, enchBane) || !checkEnchantCompatible(weapon, enchBane)) {
 						continue;
 					}
-					LOTREnchantmentHelper.setHasEnchant(weapon, enchBane);
+					setHasEnchant(weapon, enchBane);
 					enchantsChanged = true;
 					entityplayer.addChatMessage(enchBane.getEarnMessage(weapon));
 					for (Object obj : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
-						EntityPlayer otherPlayer = (EntityPlayer) obj;
+						ICommandSender otherPlayer = (ICommandSender) obj;
 						if (otherPlayer == entityplayer) {
 							continue;
 						}
@@ -639,15 +640,15 @@ public class LOTREnchantmentHelper {
 					LOTRLevelData.getData(entityplayer).addAchievement(LOTRAchievement.enchantBaneWight);
 				}
 				if (progressChanged && !enchantsChanged) {
-					LOTRPacketCancelItemHighlight pkt = new LOTRPacketCancelItemHighlight();
-					LOTRPacketHandler.networkWrapper.sendTo((IMessage) pkt, (EntityPlayerMP) entityplayer);
+					IMessage pkt = new LOTRPacketCancelItemHighlight();
+					LOTRPacketHandler.networkWrapper.sendTo(pkt, (EntityPlayerMP) entityplayer);
 				}
 			}
 		}
 	}
 
 	public static void removeEnchant(ItemStack itemstack, LOTREnchantment ench) {
-		NBTTagList tags = LOTREnchantmentHelper.getItemEnchantTags(itemstack, true);
+		NBTTagList tags = getItemEnchantTags(itemstack, true);
 		if (tags != null) {
 			String enchName = ench.enchantName;
 			for (int i = 0; i < tags.tagCount(); ++i) {
@@ -675,16 +676,16 @@ public class LOTREnchantmentHelper {
 		itemstack.getTagCompound().setBoolean("LOTRRandomEnch", true);
 	}
 
-	public static void setEnchantList(ItemStack itemstack, List<LOTREnchantment> enchants) {
-		LOTREnchantmentHelper.clearEnchants(itemstack);
+	public static void setEnchantList(ItemStack itemstack, Iterable<LOTREnchantment> enchants) {
+		clearEnchants(itemstack);
 		for (LOTREnchantment ench : enchants) {
-			LOTREnchantmentHelper.setHasEnchant(itemstack, ench);
+			setHasEnchant(itemstack, ench);
 		}
 	}
 
 	public static void setHasEnchant(ItemStack itemstack, LOTREnchantment ench) {
 		NBTTagList tags;
-		if (!LOTREnchantmentHelper.hasEnchant(itemstack, ench) && (tags = LOTREnchantmentHelper.getItemEnchantTags(itemstack, true)) != null) {
+		if (!hasEnchant(itemstack, ench) && (tags = getItemEnchantTags(itemstack, true)) != null) {
 			String enchName = ench.enchantName;
 			tags.appendTag(new NBTTagString(enchName));
 		}
@@ -692,15 +693,15 @@ public class LOTREnchantmentHelper {
 
 	public static void setProjectileEnchantment(Entity entity, LOTREnchantment ench) {
 		NBTTagList tags;
-		if (!LOTREnchantmentHelper.hasProjectileEnchantment(entity, ench) && (tags = LOTREnchantmentHelper.getEntityEnchantTags(entity, true)) != null) {
+		if (!hasProjectileEnchantment(entity, ench) && (tags = getEntityEnchantTags(entity, true)) != null) {
 			String enchName = ench.enchantName;
 			tags.appendTag(new NBTTagString(enchName));
 		}
 	}
 
 	public static boolean tryApplyRandomEnchantsForEntity(ItemStack itemstack, Random rand) {
-		if (itemstack != null && !LOTREnchantmentHelper.hasAppliedRandomEnchants(itemstack) && LOTREnchantmentHelper.canApplyAnyEnchant(itemstack)) {
-			LOTREnchantmentHelper.applyRandomEnchantments(itemstack, rand, false, false);
+		if (itemstack != null && !hasAppliedRandomEnchants(itemstack) && canApplyAnyEnchant(itemstack)) {
+			applyRandomEnchantments(itemstack, rand, false, false);
 			return true;
 		}
 		return false;

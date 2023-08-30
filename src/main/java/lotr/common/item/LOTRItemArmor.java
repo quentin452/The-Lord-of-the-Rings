@@ -6,6 +6,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.*;
 import net.minecraft.util.StringUtils;
 
+import java.util.Locale;
+
 public class LOTRItemArmor extends ItemArmor {
 	public LOTRMaterial lotrMaterial;
 	public String extraName;
@@ -23,7 +25,7 @@ public class LOTRItemArmor extends ItemArmor {
 
 	public String getArmorName() {
 		String suffix;
-		String prefix = getArmorMaterial().name().substring("lotr".length() + 1).toLowerCase();
+		String prefix = getArmorMaterial().name().substring("lotr".length() + 1).toLowerCase(Locale.ROOT);
 		suffix = armorType == 2 ? "2" : "1";
 		if (!StringUtils.isNullOrEmpty(extraName)) {
 			suffix = extraName;

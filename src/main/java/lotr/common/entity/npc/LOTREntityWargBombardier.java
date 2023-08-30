@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityWargBombardier extends LOTREntityWarg {
-	public LOTREntityWargBombardier(World world) {
+	protected LOTREntityWargBombardier(World world) {
 		super(world);
 	}
 

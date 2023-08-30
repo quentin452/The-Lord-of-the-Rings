@@ -70,10 +70,10 @@ public class LOTREntityLossarnachAxeman extends LOTREntityGondorSoldier {
 		setCurrentItemOrArmor(1, new ItemStack(LOTRMod.bootsLossarnach));
 		setCurrentItemOrArmor(2, new ItemStack(LOTRMod.legsLossarnach));
 		setCurrentItemOrArmor(3, new ItemStack(LOTRMod.bodyLossarnach));
-		if (rand.nextInt(3) != 0) {
-			setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetLossarnach));
-		} else {
+		if (rand.nextInt(3) == 0) {
 			setCurrentItemOrArmor(4, null);
+		} else {
+			setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetLossarnach));
 		}
 		return data;
 	}

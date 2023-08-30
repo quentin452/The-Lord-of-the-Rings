@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityGundabadOrcMercenaryCaptain extends LOTREntityGundabadUruk implements LOTRUnitTradeable {
 	public LOTREntityGundabadOrcMercenaryCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

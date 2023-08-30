@@ -16,7 +16,7 @@ public class LOTRWorldGenUtumnoEntrance extends LOTRWorldGenStructureBase2 {
 		int j1;
 		int j2;
 		rotation = 2;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		originY = 0;
 		int radius = 8;
 		int baseHeight = 40;
@@ -127,7 +127,7 @@ public class LOTRWorldGenUtumnoEntrance extends LOTRWorldGenStructureBase2 {
 							setAir(world, i1, j14, k1);
 							continue;
 						}
-						if (j14 == portalHeight && i2 <= 1 && k2 <= 1) {
+						if (j14 == portalHeight) {
 							setBlockAndMetadata(world, i1, j14, k1, LOTRMod.utumnoPortal, 0);
 							continue;
 						}

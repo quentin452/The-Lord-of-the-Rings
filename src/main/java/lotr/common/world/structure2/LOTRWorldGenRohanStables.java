@@ -24,7 +24,7 @@ public class LOTRWorldGenRohanStables extends LOTRWorldGenRohanStructure {
 		int k1;
 		int i2;
 		int k2;
-		this.setOriginAndRotation(world, i, j, k, rotation, 1);
+		setOriginAndRotation(world, i, j, k, rotation, 1);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -69,20 +69,20 @@ public class LOTRWorldGenRohanStables extends LOTRWorldGenRohanStructure {
 					while (!isOpaque(world, i13, j1, k1) && getY(j1) >= 0) {
 						int randomGround = random.nextInt(4);
 						switch (randomGround) {
-						case 0:
-							setBlockAndMetadata(world, i13, j1, k1, Blocks.dirt, 0);
-							break;
-						case 1:
-							setBlockAndMetadata(world, i13, j1, k1, Blocks.gravel, 0);
-							break;
-						case 2:
-							setBlockAndMetadata(world, i13, j1, k1, cobbleBlock, cobbleMeta);
-							break;
-						case 3:
-							setBlockAndMetadata(world, i13, j1, k1, rockBlock, rockMeta);
-							break;
-						default:
-							break;
+							case 0:
+								setBlockAndMetadata(world, i13, j1, k1, Blocks.dirt, 0);
+								break;
+							case 1:
+								setBlockAndMetadata(world, i13, j1, k1, Blocks.gravel, 0);
+								break;
+							case 2:
+								setBlockAndMetadata(world, i13, j1, k1, cobbleBlock, cobbleMeta);
+								break;
+							case 3:
+								setBlockAndMetadata(world, i13, j1, k1, rockBlock, rockMeta);
+								break;
+							default:
+								break;
 						}
 						setGrassToDirt(world, i13, j1 - 1, k1);
 						--j1;
@@ -159,9 +159,9 @@ public class LOTRWorldGenRohanStables extends LOTRWorldGenRohanStructure {
 					}
 					if (k1 == 0 && i2 >= 1 && i2 <= 2) {
 						for (j1 = 1; j1 <= 3; ++j1) {
-							setBlockAndMetadata(world, i13, j1, k1, gateBlock, 2);
+							setBlockAndMetadata(world, i13, j1, 0, gateBlock, 2);
 						}
-						setBlockAndMetadata(world, i13, 4, k1, plank2SlabBlock, plank2SlabMeta);
+						setBlockAndMetadata(world, i13, 4, 0, plank2SlabBlock, plank2SlabMeta);
 					}
 					if (k1 != 12 || i2 < 1 || i2 > 2) {
 						continue;
@@ -172,10 +172,7 @@ public class LOTRWorldGenRohanStables extends LOTRWorldGenRohanStructure {
 					continue;
 				}
 				if (i2 == 7 || k1 == 26) {
-					boolean beam = false;
-					if (k1 == 19 && i2 == 7) {
-						beam = true;
-					}
+					boolean beam = k1 == 19;
 					if (k1 == 26 && i2 % 7 == 0) {
 						beam = true;
 					}
@@ -194,7 +191,7 @@ public class LOTRWorldGenRohanStables extends LOTRWorldGenRohanStructure {
 				if (random.nextInt(3) == 0) {
 					plantTallGrass(world, random, i13, 1, k1);
 				}
-				dx = i13 - 0;
+				dx = i13;
 				dz = k1 - 20;
 				hayDist = 1 + random.nextInt(3);
 				if (dx * dx + dz * dz < hayDist * hayDist && random.nextInt(3) != 0) {
@@ -244,7 +241,7 @@ public class LOTRWorldGenRohanStables extends LOTRWorldGenRohanStructure {
 				setBlockAndMetadata(world, i12, j14 - 1, k13, block, meta);
 			}
 		}
-		for (int k12 : new int[] { -1, 13 }) {
+		for (int k12 : new int[]{-1, 13}) {
 			for (int step = 0; step <= 7; ++step) {
 				int i14 = 8 - step;
 				int j15 = 4 + step / 2;
@@ -263,11 +260,11 @@ public class LOTRWorldGenRohanStables extends LOTRWorldGenRohanStructure {
 			setBlockAndMetadata(world, 0, 7, k14, logBlock, logMeta | 8);
 			setBlockAndMetadata(world, 0, 8, k14, plank2SlabBlock, plank2SlabMeta);
 		}
-		for (int k12 : new int[] { -1, 6, 13 }) {
+		for (int k12 : new int[]{-1, 6, 13}) {
 			setBlockAndMetadata(world, -1, 8, k12, plank2StairBlock, 5);
 			setBlockAndMetadata(world, 1, 8, k12, plank2StairBlock, 4);
 		}
-		for (int k12 : new int[] { 0, 12 }) {
+		for (int k12 : new int[]{0, 12}) {
 			setBlockAndMetadata(world, -5, 4, k12, plankBlock, plankMeta);
 			setBlockAndMetadata(world, -4, 4, k12, plankSlabBlock, plankSlabMeta | 8);
 			setBlockAndMetadata(world, 4, 4, k12, plankSlabBlock, plankSlabMeta | 8);
@@ -320,7 +317,7 @@ public class LOTRWorldGenRohanStables extends LOTRWorldGenRohanStructure {
 			setBlockAndMetadata(world, i1, 3, -1, Blocks.torch, 4);
 			setBlockAndMetadata(world, i1, 3, 13, Blocks.torch, 3);
 		}
-		for (int k12 : new int[] { 4, 8 }) {
+		for (int k12 : new int[]{4, 8}) {
 			setBlockAndMetadata(world, -1, 3, k12, Blocks.torch, 1);
 			setBlockAndMetadata(world, 1, 3, k12, Blocks.torch, 2);
 		}

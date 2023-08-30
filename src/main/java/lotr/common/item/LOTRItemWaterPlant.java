@@ -14,7 +14,7 @@ public class LOTRItemWaterPlant extends ItemBlock {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		return LOTRItemWaterPlant.tryPlaceWaterPlant(this, itemstack, world, entityplayer, getMovingObjectPositionFromPlayer(world, entityplayer, true));
+		return tryPlaceWaterPlant(this, itemstack, world, entityplayer, getMovingObjectPositionFromPlayer(world, entityplayer, true));
 	}
 
 	public static ItemStack tryPlaceWaterPlant(ItemBlock itemblock, ItemStack itemstack, World world, EntityPlayer entityplayer, MovingObjectPosition targetBlock) {

@@ -27,7 +27,7 @@ public class LOTRWorldGenDaleBakery extends LOTRWorldGenDaleStructure {
 		int k13;
 		int k14;
 		int k15;
-		this.setOriginAndRotation(world, i, j, k, rotation, 2);
+		setOriginAndRotation(world, i, j, k, rotation, 2);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -116,7 +116,7 @@ public class LOTRWorldGenDaleBakery extends LOTRWorldGenDaleStructure {
 			setBlockAndMetadata(world, -7, 4, k13, brickSlabBlock, brickSlabMeta | 8);
 			setBlockAndMetadata(world, 7, 4, k13, brickSlabBlock, brickSlabMeta | 8);
 		}
-		for (int i15 : new int[] { -5, 2 }) {
+		for (int i15 : new int[]{-5, 2}) {
 			setBlockAndMetadata(world, i15, 2, -1, trapdoorBlock, 12);
 			setBlockAndMetadata(world, i15, 3, -1, brickSlabBlock, brickSlabMeta | 8);
 			setBlockAndMetadata(world, i15, 4, -2, brickBlock, brickMeta);
@@ -128,7 +128,7 @@ public class LOTRWorldGenDaleBakery extends LOTRWorldGenDaleStructure {
 			setBlockAndMetadata(world, i15 + 3, 3, -1, brickSlabBlock, brickSlabMeta | 8);
 			setBlockAndMetadata(world, i15 + 3, 4, -2, brickBlock, brickMeta);
 		}
-		int[] k16 = { -5, 2 };
+		int[] k16 = {-5, 2};
 		k12 = k16.length;
 		for (j1 = 0; j1 < k12; ++j1) {
 			int i15;
@@ -187,7 +187,7 @@ public class LOTRWorldGenDaleBakery extends LOTRWorldGenDaleStructure {
 				setBlockAndMetadata(world, i13, 6, k14, roofBlock, roofMeta);
 			}
 		}
-		for (int k171 : new int[] { -1, 14 }) {
+		for (int k171 : new int[]{-1, 14}) {
 			int i16;
 			for (i16 = -6; i16 <= 6; ++i16) {
 				setBlockAndMetadata(world, i16, 5, k171, plankBlock, plankMeta);
@@ -196,7 +196,7 @@ public class LOTRWorldGenDaleBakery extends LOTRWorldGenDaleStructure {
 				setBlockAndMetadata(world, i16, 6, k171, plankBlock, plankMeta);
 			}
 		}
-		int[] k18 = { -2, 15 };
+		int[] k18 = {-2, 15};
 		i13 = k18.length;
 		for (i2 = 0; i2 < i13; ++i2) {
 			k17 = k18[i2];
@@ -204,7 +204,7 @@ public class LOTRWorldGenDaleBakery extends LOTRWorldGenDaleStructure {
 			setBlockAndMetadata(world, -5, 6, k17, roofStairBlock, 4);
 			setBlockAndMetadata(world, 5, 6, k17, roofStairBlock, 5);
 			setBlockAndMetadata(world, 6, 5, k17, roofStairBlock, 5);
-			for (int i17 : new int[] { -3, 0, 3 }) {
+			for (int i17 : new int[]{-3, 0, 3}) {
 				for (int j13 = 5; j13 <= 6; ++j13) {
 					setBlockAndMetadata(world, i17, j13, k17, brickBlock, brickMeta);
 				}
@@ -231,7 +231,7 @@ public class LOTRWorldGenDaleBakery extends LOTRWorldGenDaleStructure {
 			setBlockAndMetadata(world, 1, j14, 12, Blocks.brick_block, 0);
 			setBlockAndMetadata(world, 0, j14, 13, Blocks.brick_block, 0);
 		}
-		for (int j15 : new int[] { 1, 8 }) {
+		for (int j15 : new int[]{1, 8}) {
 			setBlockAndMetadata(world, 0, j15, 12, LOTRMod.hearth, 0);
 			setBlockAndMetadata(world, 0, j15 + 1, 12, Blocks.fire, 0);
 		}
@@ -316,7 +316,7 @@ public class LOTRWorldGenDaleBakery extends LOTRWorldGenDaleStructure {
 		setBlockAndMetadata(world, 3, 1, 12, plankSlabBlock, plankSlabMeta | 8);
 		placeRandomCake(world, random, 3, 2, 12);
 		setBlockAndMetadata(world, 2, 1, 12, plankBlock, plankMeta);
-		this.placeBarrel(world, random, 2, 2, 12, 2, LOTRFoods.DALE_DRINK);
+		placeBarrel(world, random, 2, 2, 12, 2, LOTRFoods.DALE_DRINK);
 		spawnItemFrame(world, 5, 3, 9, 3, new ItemStack(Items.clock));
 		LOTREntityDaleBaker baker = new LOTREntityDaleBaker(world);
 		spawnNPCAndSetHome(baker, world, 0, 1, 8, 8);
@@ -329,7 +329,7 @@ public class LOTRWorldGenDaleBakery extends LOTRWorldGenDaleStructure {
 		baker.setSpecificLocationName(bakeryName[0] + " " + bakeryName[1]);
 		setBlockAndMetadata(world, -1, 4, -4, Blocks.wall_sign, 5);
 		setBlockAndMetadata(world, 1, 4, -4, Blocks.wall_sign, 4);
-		for (int i18 : new int[] { -1, 1 }) {
+		for (int i18 : new int[]{-1, 1}) {
 			TileEntity te = getTileEntity(world, i18, 4, -4);
 			if (!(te instanceof TileEntitySign)) {
 				continue;
@@ -349,20 +349,20 @@ public class LOTRWorldGenDaleBakery extends LOTRWorldGenDaleStructure {
 			} else {
 				int randomCake = random.nextInt(4);
 				switch (randomCake) {
-				case 0:
-					cakeBlock = Blocks.cake;
-					break;
-				case 1:
-					cakeBlock = LOTRMod.appleCrumble;
-					break;
-				case 2:
-					cakeBlock = LOTRMod.berryPie;
-					break;
-				case 3:
-					cakeBlock = LOTRMod.marzipanBlock;
-					break;
-				default:
-					break;
+					case 0:
+						cakeBlock = Blocks.cake;
+						break;
+					case 1:
+						cakeBlock = LOTRMod.appleCrumble;
+						break;
+					case 2:
+						cakeBlock = LOTRMod.berryPie;
+						break;
+					case 3:
+						cakeBlock = LOTRMod.marzipanBlock;
+						break;
+					default:
+						break;
 				}
 			}
 			setBlockAndMetadata(world, i, j, k, cakeBlock, 0);

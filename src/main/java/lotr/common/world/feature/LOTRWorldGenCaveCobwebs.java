@@ -5,6 +5,7 @@ import java.util.Random;
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -18,10 +19,7 @@ public class LOTRWorldGenCaveCobwebs extends WorldGenerator {
 			if (!world.isAirBlock(i1, j1 = j - random.nextInt(4) + random.nextInt(4), k1 = k - random.nextInt(6) + random.nextInt(6))) {
 				continue;
 			}
-			boolean flag = false;
-			if (isStoneBlock(world, i1 - 1, j1, k1)) {
-				flag = true;
-			}
+			boolean flag = isStoneBlock(world, i1 - 1, j1, k1);
 			if (isStoneBlock(world, i1 + 1, j1, k1)) {
 				flag = true;
 			}
@@ -45,7 +43,7 @@ public class LOTRWorldGenCaveCobwebs extends WorldGenerator {
 		return true;
 	}
 
-	public boolean isStoneBlock(World world, int i, int j, int k) {
+	public boolean isStoneBlock(IBlockAccess world, int i, int j, int k) {
 		Block block = world.getBlock(i, j, k);
 		return block == Blocks.stone || block == LOTRMod.rock;
 	}

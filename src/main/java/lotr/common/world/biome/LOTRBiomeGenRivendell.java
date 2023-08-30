@@ -31,8 +31,8 @@ public class LOTRBiomeGenRivendell extends LOTRBiome {
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer3);
 		npcSpawnList.conquestGainRate = 0.2f;
 		variantChance = 0.3f;
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
 		decorator.addOre(new WorldGenMinable(LOTRMod.oreQuendite, 6), 6.0f, 0, 48);
 		decorator.treesPerChunk = 0;
 		decorator.willowPerChunk = 1;

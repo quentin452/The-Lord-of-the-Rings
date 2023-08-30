@@ -10,11 +10,11 @@ import net.minecraft.util.ResourceLocation;
 public class LOTRMusicTrack extends PositionedSound {
 	public String filename;
 	public String title;
-	public Map<LOTRMusicRegion, LOTRTrackRegionInfo> regions = new HashMap<>();
+	public Map<LOTRMusicRegion, LOTRTrackRegionInfo> regions = new EnumMap<>(LOTRMusicRegion.class);
 	public List<String> authors = new ArrayList<>();
 
 	public LOTRMusicTrack(String s) {
-		super(LOTRMusicTrack.getMusicResource(s));
+		super(getMusicResource(s));
 		volume = 1.0f;
 		field_147663_c = 1.0f;
 		xPosF = 0.0f;
@@ -68,7 +68,7 @@ public class LOTRMusicTrack extends PositionedSound {
 	public String[] getTrackInfo() {
 		ArrayList<String> list = new ArrayList<>();
 		list.add("Title: " + getTitle());
-		list.add("Filename: " + getFilename());
+		list.add("Filename: " + filename);
 		list.add("Regions:");
 		for (LOTRMusicRegion reg : getAllRegions()) {
 			List<LOTRMusicCategory> categories;
@@ -91,7 +91,7 @@ public class LOTRMusicTrack extends PositionedSound {
 			}
 		}
 		list.add("Authors:");
-		for (String auth : getAuthors()) {
+		for (String auth : authors) {
 			list.add(">" + auth);
 		}
 		return list.toArray(new String[0]);
@@ -119,7 +119,7 @@ public class LOTRMusicTrack extends PositionedSound {
 			sndRegistry.registerSound(soundAccessorComp);
 		}
 		SoundPoolEntry soundPoolEntry = new SoundPoolEntry(resource, soundEntry.getSoundEntryPitch(), soundEntry.getSoundEntryVolume(), soundEntry.isStreaming());
-		TrackSoundAccessor soundAccessor = new TrackSoundAccessor(soundPoolEntry, soundEntry.getSoundEntryWeight());
+		ISoundEventAccessor soundAccessor = new TrackSoundAccessor(soundPoolEntry, soundEntry.getSoundEntryWeight());
 		soundAccessorComp.addSoundToEventPool(soundAccessor);
 	}
 

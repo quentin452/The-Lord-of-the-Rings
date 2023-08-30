@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityMoredainChieftain extends LOTREntityMoredainWarrior implements LOTRUnitTradeable {
 	public LOTREntityMoredainChieftain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

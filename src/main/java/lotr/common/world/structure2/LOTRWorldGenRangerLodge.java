@@ -21,7 +21,7 @@ public class LOTRWorldGenRangerLodge extends LOTRWorldGenRangerStructure {
 		int j12;
 		int i2;
 		int j13;
-		this.setOriginAndRotation(world, i, j, k, rotation, 5);
+		setOriginAndRotation(world, i, j, k, rotation, 5);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -61,10 +61,7 @@ public class LOTRWorldGenRangerLodge extends LOTRWorldGenRangerStructure {
 				}
 				if (k2 == 4 || i2 == 5) {
 					int j14;
-					boolean beam = false;
-					if (k12 == -4 && (i2 == 1 || i2 == 4)) {
-						beam = true;
-					}
+					boolean beam = k12 == -4 && (i2 == 1 || i2 == 4);
 					if (k12 == 4 && (i2 == 0 || i2 == 4)) {
 						beam = true;
 					}
@@ -93,12 +90,12 @@ public class LOTRWorldGenRangerLodge extends LOTRWorldGenRangerStructure {
 				}
 			}
 		}
-		for (int k131 : new int[] { -4, 4 }) {
+		for (int k131 : new int[]{-4, 4}) {
 			for (int i1 = -4; i1 <= 4; ++i1) {
 				setBlockAndMetadata(world, i1, 4, k131, woodBeamBlock, woodBeamMeta | 4);
 			}
 		}
-		for (int i1 : new int[] { -5, 5 }) {
+		for (int i1 : new int[]{-5, 5}) {
 			for (int k14 = -3; k14 <= 3; ++k14) {
 				int k2 = Math.abs(k14);
 				if (k2 == 0) {
@@ -143,8 +140,8 @@ public class LOTRWorldGenRangerLodge extends LOTRWorldGenRangerStructure {
 		setBlockAndMetadata(world, -5, 2, 1, fenceBlock, fenceMeta);
 		setBlockAndMetadata(world, 0, 3, 3, Blocks.torch, 4);
 		setBlockAndMetadata(world, -4, 4, 0, Blocks.torch, 2);
-		for (int i1 : new int[] { -4, 4 }) {
-			for (int k16 : new int[] { -3, 3 }) {
+		for (int i1 : new int[]{-4, 4}) {
+			for (int k16 : new int[]{-3, 3}) {
 				setBlockAndMetadata(world, i1, 1, k16, plankBlock, plankMeta);
 				for (j13 = 2; j13 <= 4; ++j13) {
 					setBlockAndMetadata(world, i1, j13, k16, fenceBlock, fenceMeta);
@@ -156,17 +153,17 @@ public class LOTRWorldGenRangerLodge extends LOTRWorldGenRangerStructure {
 		setBlockAndMetadata(world, -3, 1, -3, plankBlock, plankMeta);
 		placePlate(world, random, -3, 2, -3, plateBlock, LOTRFoods.RANGER);
 		setBlockAndMetadata(world, -4, 1, -2, plankBlock, plankMeta);
-		this.placeMug(world, random, -4, 2, -2, 3, LOTRFoods.RANGER_DRINK);
-		this.placeChest(world, random, -4, 1, -1, 4, chestContentsHouse);
+		placeMug(world, random, -4, 2, -2, 3, LOTRFoods.RANGER_DRINK);
+		placeChest(world, random, -4, 1, -1, 4, chestContentsHouse);
 		setBlockAndMetadata(world, -4, 1, 0, Blocks.crafting_table, 0);
-		this.placeChest(world, random, -4, 1, 1, 4, chestContentsHouse);
+		placeChest(world, random, -4, 1, 1, 4, chestContentsHouse);
 		setBlockAndMetadata(world, -4, 1, 2, plankBlock, plankMeta);
-		this.placeBarrel(world, random, -4, 2, 2, 4, LOTRFoods.RANGER_DRINK);
+		placeBarrel(world, random, -4, 2, 2, 4, LOTRFoods.RANGER_DRINK);
 		setBlockAndMetadata(world, -3, 1, 3, plankBlock, plankMeta);
-		this.placeBarrel(world, random, -3, 2, 3, 2, LOTRFoods.RANGER_DRINK);
+		placeBarrel(world, random, -3, 2, 3, 2, LOTRFoods.RANGER_DRINK);
 		setBlockAndMetadata(world, -2, 1, 3, plankBlock, plankMeta);
-		this.placeMug(world, random, -2, 2, 3, 0, LOTRFoods.RANGER_DRINK);
-		int[] k15 = { -3, 3 };
+		placeMug(world, random, -2, 2, 3, 0, LOTRFoods.RANGER_DRINK);
+		int[] k15 = {-3, 3};
 		k12 = k15.length;
 		for (i2 = 0; i2 < k12; ++i2) {
 			k13 = k15[i2];
@@ -204,8 +201,8 @@ public class LOTRWorldGenRangerLodge extends LOTRWorldGenRangerStructure {
 		for (j12 = -2; j12 <= 0; ++j12) {
 			setBlockAndMetadata(world, 4, j12, 2, Blocks.ladder, 3);
 		}
-		for (int i1 : new int[] { -4, 4 }) {
-			for (int k16 : new int[] { -3, 3 }) {
+		for (int i1 : new int[]{-4, 4}) {
+			for (int k16 : new int[]{-3, 3}) {
 				setBlockAndMetadata(world, i1, 0, k16, plankBlock, plankMeta);
 				for (j13 = -2; j13 <= -1; ++j13) {
 					setBlockAndMetadata(world, i1, j13, k16, woodBeamBlock, woodBeamMeta);
@@ -216,24 +213,24 @@ public class LOTRWorldGenRangerLodge extends LOTRWorldGenRangerStructure {
 		setBlockAndMetadata(world, 3, -1, -3, Blocks.torch, 1);
 		setBlockAndMetadata(world, -3, -1, 3, Blocks.torch, 2);
 		setBlockAndMetadata(world, 3, -1, 3, Blocks.torch, 1);
-		for (int i1 : new int[] { -2, 0, 2 }) {
+		for (int i1 : new int[]{-2, 0, 2}) {
 			setBlockAndMetadata(world, i1, -2, -2, bedBlock, 2);
 			setBlockAndMetadata(world, i1, -2, -3, bedBlock, 10);
 		}
-		for (int k131 : new int[] { -2, 2 }) {
+		for (int k131 : new int[]{-2, 2}) {
 			ItemStack[] armor = null;
 			if (random.nextInt(3) == 0) {
-				armor = new ItemStack[] { new ItemStack(LOTRMod.helmetRanger), new ItemStack(LOTRMod.bodyRanger), new ItemStack(LOTRMod.legsRanger), new ItemStack(LOTRMod.bootsRanger) };
+				armor = new ItemStack[]{new ItemStack(LOTRMod.helmetRanger), new ItemStack(LOTRMod.bodyRanger), new ItemStack(LOTRMod.legsRanger), new ItemStack(LOTRMod.bootsRanger)};
 			}
 			placeArmorStand(world, -4, -2, k131, 3, armor);
 		}
-		for (int k131 : new int[] { -1, 1 }) {
+		for (int k131 : new int[]{-1, 1}) {
 			spawnItemFrame(world, -5, -1, k131, 1, getRangerFramedItem(random));
 		}
 		setBlockAndMetadata(world, 0, -2, 3, tableBlock, 0);
-		for (int i1 : new int[] { -1, 1 }) {
+		for (int i1 : new int[]{-1, 1}) {
 			int amount = 2 + random.nextInt(5);
-			this.placeChest(world, random, i1, -2, 3, 2, chestContentsRanger, amount);
+			placeChest(world, random, i1, -2, 3, 2, chestContentsRanger, amount);
 		}
 		int men = 1 + random.nextInt(2);
 		for (int l = 0; l < men; ++l) {

@@ -1,7 +1,7 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelAurochs;
-import lotr.common.entity.animal.LOTREntityAurochs;
+import lotr.common.entity.LOTRRandomSkinEntity;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +16,7 @@ public class LOTRRenderAurochs extends RenderLiving {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityAurochs aurochs = (LOTREntityAurochs) entity;
+		LOTRRandomSkinEntity aurochs = (LOTRRandomSkinEntity) entity;
 		return aurochsSkins.getRandomSkin(aurochs);
 	}
 }

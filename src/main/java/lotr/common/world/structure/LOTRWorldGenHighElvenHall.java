@@ -54,25 +54,25 @@ public class LOTRWorldGenHighElvenHall extends LOTRWorldGenStructureBase {
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			i -= 8;
-			++k;
-			break;
-		}
-		case 1: {
-			i -= 16;
-			k -= 8;
-			break;
-		}
-		case 2: {
-			i -= 7;
-			k -= 16;
-			break;
-		}
-		case 3: {
-			++i;
-			k -= 7;
-		}
+			case 0: {
+				i -= 8;
+				++k;
+				break;
+			}
+			case 1: {
+				i -= 16;
+				k -= 8;
+				break;
+			}
+			case 2: {
+				i -= 7;
+				k -= 16;
+				break;
+			}
+			case 3: {
+				++i;
+				k -= 7;
+			}
 		}
 		if (restrictions) {
 			int minHeight = j + 1;
@@ -110,67 +110,67 @@ public class LOTRWorldGenHighElvenHall extends LOTRWorldGenStructureBase {
 		}
 		int randomWood = random.nextInt(4);
 		switch (randomWood) {
-		case 0: {
-			plankBlock = Blocks.planks;
-			plankMeta = 0;
-			slabBlock = Blocks.wooden_slab;
-			slabMeta = 0;
-			stairBlock = Blocks.oak_stairs;
-			break;
-		}
-		case 1: {
-			plankBlock = Blocks.planks;
-			plankMeta = 2;
-			slabBlock = Blocks.wooden_slab;
-			slabMeta = 2;
-			stairBlock = Blocks.birch_stairs;
-			break;
-		}
-		case 2: {
-			plankBlock = LOTRMod.planks;
-			plankMeta = 9;
-			slabBlock = LOTRMod.woodSlabSingle2;
-			slabMeta = 1;
-			stairBlock = LOTRMod.stairsBeech;
-			break;
-		}
-		case 3: {
-			plankBlock = LOTRMod.planks;
-			plankMeta = 4;
-			slabBlock = LOTRMod.woodSlabSingle;
-			slabMeta = 4;
-			stairBlock = LOTRMod.stairsApple;
-		}
+			case 0: {
+				plankBlock = Blocks.planks;
+				plankMeta = 0;
+				slabBlock = Blocks.wooden_slab;
+				slabMeta = 0;
+				stairBlock = Blocks.oak_stairs;
+				break;
+			}
+			case 1: {
+				plankBlock = Blocks.planks;
+				plankMeta = 2;
+				slabBlock = Blocks.wooden_slab;
+				slabMeta = 2;
+				stairBlock = Blocks.birch_stairs;
+				break;
+			}
+			case 2: {
+				plankBlock = LOTRMod.planks;
+				plankMeta = 9;
+				slabBlock = LOTRMod.woodSlabSingle2;
+				slabMeta = 1;
+				stairBlock = LOTRMod.stairsBeech;
+				break;
+			}
+			case 3: {
+				plankBlock = LOTRMod.planks;
+				plankMeta = 4;
+				slabBlock = LOTRMod.woodSlabSingle;
+				slabMeta = 4;
+				stairBlock = LOTRMod.stairsApple;
+			}
 		}
 		int randomRoof = random.nextInt(5);
 		switch (randomRoof) {
-		case 0:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 11;
-			roofStairBlock = LOTRMod.stairsClayTileDyedBlue;
-			break;
-		case 1:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 3;
-			roofStairBlock = LOTRMod.stairsClayTileDyedLightBlue;
-			break;
-		case 2:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 9;
-			roofStairBlock = LOTRMod.stairsClayTileDyedCyan;
-			break;
-		case 3:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 8;
-			roofStairBlock = LOTRMod.stairsClayTileDyedLightGray;
-			break;
-		case 4:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 7;
-			roofStairBlock = LOTRMod.stairsClayTileDyedGray;
-			break;
-		default:
-			break;
+			case 0:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 11;
+				roofStairBlock = LOTRMod.stairsClayTileDyedBlue;
+				break;
+			case 1:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 3;
+				roofStairBlock = LOTRMod.stairsClayTileDyedLightBlue;
+				break;
+			case 2:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 9;
+				roofStairBlock = LOTRMod.stairsClayTileDyedCyan;
+				break;
+			case 3:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 8;
+				roofStairBlock = LOTRMod.stairsClayTileDyedLightGray;
+				break;
+			case 4:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 7;
+				roofStairBlock = LOTRMod.stairsClayTileDyedGray;
+				break;
+			default:
+				break;
 		}
 		for (i14 = i; i14 <= i + 15; ++i14) {
 			for (k14 = k; k14 <= k + 15; ++k14) {
@@ -293,7 +293,7 @@ public class LOTRWorldGenHighElvenHall extends LOTRWorldGenStructureBase {
 		setBlockAndNotifyAdequately(world, i + 1, j + 6, k + 4, plankBlock, plankMeta);
 		setBlockAndNotifyAdequately(world, i + 1, j + 6, k + 3, Blocks.bookshelf, 0);
 		setBlockAndNotifyAdequately(world, i + 3, j + 6, k + 4, stairBlock, 0);
-		this.placeMug(world, random, i + 1, j + 7, k + 4, 1, LOTRFoods.ELF_DRINK);
+		placeMug(world, random, i + 1, j + 7, k + 4, 1, LOTRFoods.ELF_DRINK);
 		setBlockAndNotifyAdequately(world, i + 11, j + 6, k + 10, plankBlock, plankMeta);
 		setBlockAndNotifyAdequately(world, i + 11, j + 6, k + 11, plankBlock, plankMeta);
 		for (k13 = k + 10; k13 <= k + 12; ++k13) {
@@ -337,9 +337,9 @@ public class LOTRWorldGenHighElvenHall extends LOTRWorldGenStructureBase {
 		setBlockAndNotifyAdequately(world, i + 6, j + 3, k + 6, LOTRMod.highElvenTorch, 2);
 		setBlockAndNotifyAdequately(world, i + 8, j + 3, k + 7, LOTRMod.highElvenTorch, 3);
 		setBlockAndNotifyAdequately(world, i + 10, j + 1, k + 4, LOTRMod.pillar, 10);
-		this.placeBarrel(world, random, i + 10, j + 2, k + 4, 2, LOTRFoods.ELF_DRINK);
+		placeBarrel(world, random, i + 10, j + 2, k + 4, 2, LOTRFoods.ELF_DRINK);
 		setBlockAndNotifyAdequately(world, i + 7, j + 1, k + 4, LOTRMod.pillar, 10);
-		this.placeBarrel(world, random, i + 7, j + 2, k + 4, 2, LOTRFoods.ELF_DRINK);
+		placeBarrel(world, random, i + 7, j + 2, k + 4, 2, LOTRFoods.ELF_DRINK);
 		setBlockAndNotifyAdequately(world, i + 8, j + 1, k + 4, Blocks.chest, 0);
 		setBlockAndNotifyAdequately(world, i + 9, j + 1, k + 4, Blocks.chest, 0);
 		LOTRChestContents.fillChest(world, random, i + 8, j + 1, k + 4, chestContents);
@@ -374,23 +374,23 @@ public class LOTRWorldGenHighElvenHall extends LOTRWorldGenStructureBase {
 		for (k13 = k + 7; k13 <= k + 11; k13 += 2) {
 			l = random.nextInt(3);
 			switch (l) {
-			case 0:
-				setBlockAndNotifyAdequately(world, i + 3, j + 2, k13, LOTRMod.appleCrumble, 0);
-				break;
-			case 1:
-				setBlockAndNotifyAdequately(world, i + 3, j + 2, k13, LOTRMod.cherryPie, 0);
-				break;
-			case 2:
-				setBlockAndNotifyAdequately(world, i + 3, j + 2, k13, LOTRMod.berryPie, 0);
-				break;
-			default:
-				break;
+				case 0:
+					setBlockAndNotifyAdequately(world, i + 3, j + 2, k13, LOTRMod.appleCrumble, 0);
+					break;
+				case 1:
+					setBlockAndNotifyAdequately(world, i + 3, j + 2, k13, LOTRMod.cherryPie, 0);
+					break;
+				case 2:
+					setBlockAndNotifyAdequately(world, i + 3, j + 2, k13, LOTRMod.berryPie, 0);
+					break;
+				default:
+					break;
 			}
-			this.placeMug(world, random, i + 2, j + 2, k13, 3, LOTRFoods.ELF_DRINK);
-			this.placeMug(world, random, i + 4, j + 2, k13, 1, LOTRFoods.ELF_DRINK);
+			placeMug(world, random, i + 2, j + 2, k13, 3, LOTRFoods.ELF_DRINK);
+			placeMug(world, random, i + 4, j + 2, k13, 1, LOTRFoods.ELF_DRINK);
 		}
-		this.placeMug(world, random, i + 3, j + 2, k + 6, 0, LOTRFoods.ELF_DRINK);
-		this.placeMug(world, random, i + 3, j + 2, k + 12, 2, LOTRFoods.ELF_DRINK);
+		placeMug(world, random, i + 3, j + 2, k + 6, 0, LOTRFoods.ELF_DRINK);
+		placeMug(world, random, i + 3, j + 2, k + 12, 2, LOTRFoods.ELF_DRINK);
 		placeFlowerPot(world, i + 3, j + 2, k + 8, getRandomPlant(random));
 		placeFlowerPot(world, i + 3, j + 2, k + 10, getRandomPlant(random));
 		for (int j16 = j + 3; j16 <= j + 8; j16 += 5) {
@@ -419,21 +419,19 @@ public class LOTRWorldGenHighElvenHall extends LOTRWorldGenStructureBase {
 	public ItemStack getRandomPlant(Random random) {
 		int l = random.nextInt(5);
 		switch (l) {
-		case 0: {
-			return new ItemStack(Blocks.sapling, 1, 0);
-		}
-		case 1: {
-			return new ItemStack(Blocks.sapling, 1, 2);
-		}
-		case 2: {
-			return new ItemStack(Blocks.sapling, 1, 2);
-		}
-		case 3: {
-			return new ItemStack(Blocks.red_flower);
-		}
-		case 4: {
-			return new ItemStack(Blocks.yellow_flower);
-		}
+			case 0: {
+				return new ItemStack(Blocks.sapling, 1, 0);
+			}
+			case 1:
+			case 2: {
+				return new ItemStack(Blocks.sapling, 1, 2);
+			}
+			case 3: {
+				return new ItemStack(Blocks.red_flower);
+			}
+			case 4: {
+				return new ItemStack(Blocks.yellow_flower);
+			}
 		}
 		return new ItemStack(Blocks.sapling, 1, 0);
 	}

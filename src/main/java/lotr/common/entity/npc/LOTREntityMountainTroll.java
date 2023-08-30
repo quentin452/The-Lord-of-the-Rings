@@ -59,7 +59,7 @@ public class LOTREntityMountainTroll extends LOTREntityTroll {
 
 	public void dropTrollTotemPart(boolean flag, int i) {
 		int totemChance = 15 - i * 3;
-		if (rand.nextInt(totemChance = Math.max(totemChance, 1)) == 0) {
+		if (rand.nextInt(Math.max(totemChance, 1)) == 0) {
 			entityDropItem(new ItemStack(LOTRMod.trollTotem, 1, rand.nextInt(3)), 0.0f);
 		}
 	}
@@ -116,7 +116,7 @@ public class LOTREntityMountainTroll extends LOTREntityTroll {
 		return 1.6f;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
 		if (b == 15) {

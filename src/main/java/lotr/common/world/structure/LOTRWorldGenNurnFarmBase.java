@@ -11,7 +11,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public abstract class LOTRWorldGenNurnFarmBase extends LOTRWorldGenStructureBase {
-	public LOTRWorldGenNurnFarmBase(boolean flag) {
+	protected LOTRWorldGenNurnFarmBase(boolean flag) {
 		super(flag);
 	}
 
@@ -29,21 +29,21 @@ public abstract class LOTRWorldGenNurnFarmBase extends LOTRWorldGenStructureBase
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			k += 8;
-			break;
-		}
-		case 1: {
-			i -= 8;
-			break;
-		}
-		case 2: {
-			k -= 8;
-			break;
-		}
-		case 3: {
-			i += 8;
-		}
+			case 0: {
+				k += 8;
+				break;
+			}
+			case 1: {
+				i -= 8;
+				break;
+			}
+			case 2: {
+				k -= 8;
+				break;
+			}
+			case 3: {
+				i += 8;
+			}
 		}
 		if (restrictions) {
 			for (i1 = i - 8; i1 <= i + 8; ++i1) {
@@ -73,8 +73,6 @@ public abstract class LOTRWorldGenNurnFarmBase extends LOTRWorldGenStructureBase
 					setBlockAndNotifyAdequately(world, i1, j + 1, k1, LOTRMod.brick, 0);
 					setBlockAndNotifyAdequately(world, i1, j + 2, k1, LOTRMod.wall, 1);
 				} else {
-					if (Math.abs(i1 - i) <= 4 && Math.abs(k1 - k) <= 4) {
-					}
 					setBlockAndNotifyAdequately(world, i1, j + 1, k1, LOTRMod.slabSingle, 1);
 				}
 				if (Math.abs(i1 - i) != 7 || Math.abs(k1 - k) != 7) {
@@ -84,44 +82,44 @@ public abstract class LOTRWorldGenNurnFarmBase extends LOTRWorldGenStructureBase
 			}
 		}
 		switch (rotation) {
-		case 0:
-			setBlockAndNotifyAdequately(world, i, j + 1, k - 7, LOTRMod.slabSingle, 1);
-			setBlockAndNotifyAdequately(world, i, j + 2, k - 7, Blocks.air, 0);
-			setBlockAndNotifyAdequately(world, i - 1, j + 3, k - 7, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i + 1, j + 3, k - 7, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i - 1, j + 4, k - 7, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i, j + 4, k - 7, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i + 1, j + 4, k - 7, LOTRMod.wall, 1);
-			break;
-		case 1:
-			setBlockAndNotifyAdequately(world, i + 7, j + 1, k, LOTRMod.slabSingle, 1);
-			setBlockAndNotifyAdequately(world, i + 7, j + 2, k, Blocks.air, 0);
-			setBlockAndNotifyAdequately(world, i + 7, j + 3, k - 1, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i + 7, j + 3, k + 1, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i + 7, j + 4, k - 1, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i + 7, j + 4, k, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i + 7, j + 4, k + 1, LOTRMod.wall, 1);
-			break;
-		case 2:
-			setBlockAndNotifyAdequately(world, i, j + 1, k + 7, LOTRMod.slabSingle, 1);
-			setBlockAndNotifyAdequately(world, i, j + 2, k + 7, Blocks.air, 0);
-			setBlockAndNotifyAdequately(world, i - 1, j + 3, k + 7, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i + 1, j + 3, k + 7, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i - 1, j + 4, k + 7, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i, j + 4, k + 7, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i + 1, j + 4, k + 7, LOTRMod.wall, 1);
-			break;
-		case 3:
-			setBlockAndNotifyAdequately(world, i - 7, j + 1, k, LOTRMod.slabSingle, 1);
-			setBlockAndNotifyAdequately(world, i - 7, j + 2, k, Blocks.air, 0);
-			setBlockAndNotifyAdequately(world, i - 7, j + 3, k - 1, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i - 7, j + 3, k + 1, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i - 7, j + 4, k - 1, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i - 7, j + 4, k, LOTRMod.wall, 1);
-			setBlockAndNotifyAdequately(world, i - 7, j + 4, k + 1, LOTRMod.wall, 1);
-			break;
-		default:
-			break;
+			case 0:
+				setBlockAndNotifyAdequately(world, i, j + 1, k - 7, LOTRMod.slabSingle, 1);
+				setBlockAndNotifyAdequately(world, i, j + 2, k - 7, Blocks.air, 0);
+				setBlockAndNotifyAdequately(world, i - 1, j + 3, k - 7, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i + 1, j + 3, k - 7, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i - 1, j + 4, k - 7, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i, j + 4, k - 7, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i + 1, j + 4, k - 7, LOTRMod.wall, 1);
+				break;
+			case 1:
+				setBlockAndNotifyAdequately(world, i + 7, j + 1, k, LOTRMod.slabSingle, 1);
+				setBlockAndNotifyAdequately(world, i + 7, j + 2, k, Blocks.air, 0);
+				setBlockAndNotifyAdequately(world, i + 7, j + 3, k - 1, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i + 7, j + 3, k + 1, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i + 7, j + 4, k - 1, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i + 7, j + 4, k, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i + 7, j + 4, k + 1, LOTRMod.wall, 1);
+				break;
+			case 2:
+				setBlockAndNotifyAdequately(world, i, j + 1, k + 7, LOTRMod.slabSingle, 1);
+				setBlockAndNotifyAdequately(world, i, j + 2, k + 7, Blocks.air, 0);
+				setBlockAndNotifyAdequately(world, i - 1, j + 3, k + 7, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i + 1, j + 3, k + 7, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i - 1, j + 4, k + 7, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i, j + 4, k + 7, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i + 1, j + 4, k + 7, LOTRMod.wall, 1);
+				break;
+			case 3:
+				setBlockAndNotifyAdequately(world, i - 7, j + 1, k, LOTRMod.slabSingle, 1);
+				setBlockAndNotifyAdequately(world, i - 7, j + 2, k, Blocks.air, 0);
+				setBlockAndNotifyAdequately(world, i - 7, j + 3, k - 1, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i - 7, j + 3, k + 1, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i - 7, j + 4, k - 1, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i - 7, j + 4, k, LOTRMod.wall, 1);
+				setBlockAndNotifyAdequately(world, i - 7, j + 4, k + 1, LOTRMod.wall, 1);
+				break;
+			default:
+				break;
 		}
 		generateCrops(world, random, i, j, k);
 		int slaves = 2 + random.nextInt(4);

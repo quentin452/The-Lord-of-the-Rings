@@ -1,6 +1,6 @@
 package lotr.client.gui;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -43,20 +43,18 @@ public class LOTRGuiScrollPane {
 		Gui.drawRect(x0, y0, x1, y1, widgetColor);
 	}
 
-	public int[] getMinMaxIndices(List list, int displayed) {
+	public int[] getMinMaxIndices(Collection list, int displayed) {
 		int size = list.size();
-		int min = 0 + Math.round(currentScroll * (size - displayed));
+		int min = Math.round(currentScroll * (size - displayed));
 		int max = displayed - 1 + Math.round(currentScroll * (size - displayed));
 		min = Math.max(min, 0);
 		max = Math.min(max, size - 1);
-		return new int[] { min, max };
+		return new int[]{min, max};
 	}
 
 	public void mouseDragScroll(int i, int j) {
 		boolean isMouseDown = Mouse.isButtonDown(0);
-		if (!hasScrollBar) {
-			resetScroll();
-		} else {
+		if (hasScrollBar) {
 			boolean mouseOverScroll;
 			int x0 = paneX0;
 			int x1 = scrollBarX0 + scrollWidgetWidth;
@@ -72,15 +70,17 @@ public class LOTRGuiScrollPane {
 				isScrolling = false;
 			}
 			if (isScrolling) {
-				currentScroll = (j - y0 - scrollWidgetHeight / 2.0f) / ((float) (y1 - y0) - (float) scrollWidgetHeight);
+				currentScroll = (j - y0 - scrollWidgetHeight / 2.0f) / ((float) (y1 - y0) - scrollWidgetHeight);
 				currentScroll = MathHelper.clamp_float(currentScroll, 0.0f, 1.0f);
 			}
+		} else {
+			resetScroll();
 		}
 		wasMouseDown = isMouseDown;
 	}
 
 	public void mouseWheelScroll(int delta, int size) {
-		currentScroll -= (float) delta / (float) size;
+		currentScroll -= (float) delta / size;
 		currentScroll = MathHelper.clamp_float(currentScroll, 0.0f, 1.0f);
 	}
 

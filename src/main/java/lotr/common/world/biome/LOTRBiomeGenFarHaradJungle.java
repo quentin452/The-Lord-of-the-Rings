@@ -57,10 +57,10 @@ public class LOTRBiomeGenFarHaradJungle extends LOTRBiomeGenFarHarad {
 		LOTRBiomeSpawnList.SpawnListContainer[] arrspawnListContainer6 = new LOTRBiomeSpawnList.SpawnListContainer[1];
 		arrspawnListContainer6[0] = LOTRBiomeSpawnList.entry(LOTRSpawnList.HALF_TROLLS, 10);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer6);
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.MOUNTAIN);
-		this.addBiomeVariant(LOTRBiomeVariant.JUNGLE_DENSE);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.MOUNTAIN);
+		addBiomeVariant(LOTRBiomeVariant.JUNGLE_DENSE);
 		if (isMuddy()) {
 			decorator.addSoil(new WorldGenMinable(LOTRMod.mud, 32), 80.0f, 0, 256);
 			decorator.addSoil(new WorldGenMinable(LOTRMod.mud, 32), 80.0f, 0, 64);

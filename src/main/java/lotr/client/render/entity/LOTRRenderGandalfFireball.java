@@ -24,10 +24,10 @@ public class LOTRRenderGandalfFireball extends Render {
 	}
 
 	public void drawSprite(Tessellator tessellator, int index) {
-		float f = (index % 8 * 16 + 0) / 128.0f;
+		float f = (index % 8 * 16) / 128.0f;
 		float f1 = (index % 8 * 16 + 16) / 128.0f;
-		float f2 = (index / 8 * 16 + 0) / 128.0f;
-		float f3 = (index / 8 * 16 + 16) / 128.0f;
+		float f2 = ((float) index / 8 * 16) / 128.0f;
+		float f3 = ((float) index / 8 * 16 + 16) / 128.0f;
 		float f4 = 1.0f;
 		float f5 = 0.5f;
 		float f6 = 0.25f;

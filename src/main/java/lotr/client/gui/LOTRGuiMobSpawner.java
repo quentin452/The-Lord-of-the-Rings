@@ -1,17 +1,17 @@
 package lotr.client.gui;
 
-import java.util.ArrayList;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.entity.LOTREntities;
 import lotr.common.entity.npc.LOTREntityNPC;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketMobSpawner;
 import lotr.common.tileentity.LOTRTileEntityMobSpawner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
 
 public class LOTRGuiMobSpawner extends LOTRGuiScreenBase {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/mob_spawner.png");
@@ -28,7 +28,7 @@ public class LOTRGuiMobSpawner extends LOTRGuiScreenBase {
 	public ArrayList spawnerControls = new ArrayList();
 	public ArrayList mobControls = new ArrayList();
 	public int page;
-	public String[] pageNames = { "Spawner Properties", "Entity Properties" };
+	public String[] pageNames = {"Spawner Properties", "Entity Properties"};
 	public GuiButton buttonPage;
 	public GuiButton buttonRedstone;
 	public LOTRGuiSlider sliderMinSpawnDelay;
@@ -80,17 +80,17 @@ public class LOTRGuiMobSpawner extends LOTRGuiScreenBase {
 					active = 0;
 				}
 				switch (active) {
-				case 0: {
-					button.displayString = "Inactive";
-					break;
-				}
-				case 1: {
-					button.displayString = "Active";
-					break;
-				}
-				case 2: {
-					button.displayString = "Redstone Activated";
-				}
+					case 0: {
+						button.displayString = "Inactive";
+						break;
+					}
+					case 1: {
+						button.displayString = "Active";
+						break;
+					}
+					case 2: {
+						button.displayString = "Redstone Activated";
+					}
 				}
 			}
 			if (button == buttonMobType) {
@@ -109,31 +109,23 @@ public class LOTRGuiMobSpawner extends LOTRGuiScreenBase {
 
 	@Override
 	public void drawScreen(int i, int j, float f) {
-		block4: {
-			int k;
-			block3: {
-				drawDefaultBackground();
-				GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-				mc.getTextureManager().bindTexture(guiTexture);
-				this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
-				fontRendererObj.drawString("Mob Spawner", guiLeft + 127 - fontRendererObj.getStringWidth("Mob Spawner") / 2, guiTop + 11, 4210752);
-				fontRendererObj.drawString(mobName, guiLeft + 127 - fontRendererObj.getStringWidth(mobName) / 2, guiTop + 26, 4210752);
-				super.drawScreen(i, j, f);
-				for (k = 0; k < pageControls.size(); ++k) {
-					((GuiButton) pageControls.get(k)).drawButton(mc, i, j);
-				}
-				if (page != 0) {
-					break block3;
-				}
-				for (k = 0; k < spawnerControls.size(); ++k) {
-					((GuiButton) spawnerControls.get(k)).drawButton(mc, i, j);
-				}
-				break block4;
+		drawDefaultBackground();
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		mc.getTextureManager().bindTexture(guiTexture);
+		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		fontRendererObj.drawString("Mob Spawner", guiLeft + 127 - fontRendererObj.getStringWidth("Mob Spawner") / 2, guiTop + 11, 4210752);
+		fontRendererObj.drawString(mobName, guiLeft + 127 - fontRendererObj.getStringWidth(mobName) / 2, guiTop + 26, 4210752);
+		super.drawScreen(i, j, f);
+		int k;
+		for (k = 0; k < pageControls.size(); k++) {
+			((GuiButton) pageControls.get(k)).drawButton(mc, i, j);
+		}
+		if (page == 0) {
+			for (k = 0; k < spawnerControls.size(); k++) {
+				((GuiButton) spawnerControls.get(k)).drawButton(mc, i, j);
 			}
-			if (page != 1) {
-				break block4;
-			}
-			for (k = 0; k < mobControls.size(); ++k) {
+		} else if (page == 1) {
+			for (k = 0; k < mobControls.size(); k++) {
 				((GuiButton) mobControls.get(k)).drawButton(mc, i, j);
 			}
 		}

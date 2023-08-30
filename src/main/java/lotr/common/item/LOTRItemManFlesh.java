@@ -19,7 +19,7 @@ public class LOTRItemManFlesh extends ItemFood {
 	public ItemStack onEaten(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		--itemstack.stackSize;
 		boolean orcAligned = false;
-		for (LOTRFaction faction : LOTRItemManFlesh.getManFleshFactions()) {
+		for (LOTRFaction faction : getManFleshFactions()) {
 			float alignment = LOTRLevelData.getData(entityplayer).getAlignment(faction);
 			if (alignment <= 0.0f) {
 				continue;

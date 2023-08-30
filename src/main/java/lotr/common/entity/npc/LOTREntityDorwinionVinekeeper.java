@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class LOTREntityDorwinionVinekeeper extends LOTREntityDorwinionMan implements LOTRTradeable, LOTRUnitTradeable {
 	public LOTREntityDorwinionVinekeeper(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

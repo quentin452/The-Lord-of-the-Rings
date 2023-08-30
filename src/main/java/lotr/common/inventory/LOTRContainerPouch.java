@@ -55,7 +55,7 @@ public class LOTRContainerPouch extends Container {
 
 	@Override
 	public ItemStack slotClick(int slotNo, int subActionNo, int actionNo, EntityPlayer entityplayer) {
-		if (LOTRContainerPouch.isPouchSlot(this, slotNo, entityplayer, thePouchSlot) || actionNo == 2 && subActionNo == thePouchSlot) {
+		if (isPouchSlot(this, slotNo, entityplayer, thePouchSlot) || actionNo == 2 && subActionNo == thePouchSlot) {
 			return null;
 		}
 		return super.slotClick(slotNo, subActionNo, actionNo, entityplayer);
@@ -92,9 +92,7 @@ public class LOTRContainerPouch extends Container {
 	public static boolean isPouchSlot(Container container, int slotNo, EntityPlayer entityplayer, int pouchSlotNo) {
 		if (slotNo >= 0 && slotNo < container.inventorySlots.size()) {
 			Slot slot = (Slot) container.inventorySlots.get(slotNo);
-			if (slot.inventory == entityplayer.inventory && slot.getSlotIndex() == pouchSlotNo) {
-				return true;
-			}
+			return slot.inventory == entityplayer.inventory && slot.getSlotIndex() == pouchSlotNo;
 		}
 		return false;
 	}

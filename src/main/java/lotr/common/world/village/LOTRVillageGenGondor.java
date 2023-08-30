@@ -107,14 +107,14 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 			if (random.nextInt(5) == 0) {
 				int i = random.nextInt(3);
 				switch (i) {
-				case 0:
-					return new LOTRWorldGenGondorStables(false);
-				case 1:
-					return new LOTRWorldGenGondorSmithy(false);
-				case 2:
-					return new LOTRWorldGenGondorBarn(false);
-				default:
-					break;
+					case 0:
+						return new LOTRWorldGenGondorStables(false);
+					case 1:
+						return new LOTRWorldGenGondorSmithy(false);
+					case 2:
+						return new LOTRWorldGenGondorBarn(false);
+					default:
+						break;
 				}
 			}
 			return new LOTRWorldGenGondorHouse(false);
@@ -188,7 +188,7 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 		}
 
 		public void setupFortVillage(Random random) {
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -198,9 +198,9 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 					spawner.setBlockEnemySpawnRange(60);
 				}
 			}, 0, 0, 0);
-			for (int i1 : new int[] { -20, 20 }) {
-				for (int k1 : new int[] { -20, 20 }) {
-					this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			for (int i1 : new int[]{-20, 20}) {
+				for (int k1 : new int[]{-20, 20}) {
+					addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 						@Override
 						public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -212,48 +212,48 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 					}, i1, k1, 0);
 				}
 			}
-			this.addStructure(getVillageFortress(), 0, 12, 2, true);
-			this.addStructure(new LOTRWorldGenGondorFortGate(false), 0, -37, 0, true);
-			this.addStructure(new LOTRWorldGenGondorFortWall.Right(false), -11, -37, 0, true);
-			this.addStructure(new LOTRWorldGenGondorFortWall.Left(false), 11, -37, 0, true);
-			this.addStructure(getVillageWatchtower(), -23, -33, 2, true);
-			this.addStructure(getVillageWatchtower(), 23, -33, 2, true);
-			this.addStructure(new LOTRWorldGenGondorFortGate(false), -37, 0, 3, true);
-			this.addStructure(new LOTRWorldGenGondorFortWall.Left(false), -37, -11, 3, true);
-			this.addStructure(new LOTRWorldGenGondorFortWall.Right(false), -37, 11, 3, true);
-			this.addStructure(getVillageWatchtower(), -33, -23, 1, true);
-			this.addStructure(getVillageWatchtower(), -33, 23, 1, true);
-			this.addStructure(new LOTRWorldGenGondorFortGate(false), 0, 37, 2, true);
-			this.addStructure(new LOTRWorldGenGondorFortWall.Left(false), -11, 37, 2, true);
-			this.addStructure(new LOTRWorldGenGondorFortWall.Right(false), 11, 37, 2, true);
-			this.addStructure(getVillageWatchtower(), -23, 33, 0, true);
-			this.addStructure(getVillageWatchtower(), 23, 33, 0, true);
-			this.addStructure(new LOTRWorldGenGondorFortGate(false), 37, 0, 1, true);
-			this.addStructure(new LOTRWorldGenGondorFortWall.Right(false), 37, -11, 1, true);
-			this.addStructure(new LOTRWorldGenGondorFortWall.Left(false), 37, 11, 1, true);
-			this.addStructure(getVillageWatchtower(), 33, -23, 3, true);
-			this.addStructure(getVillageWatchtower(), 33, 23, 3, true);
-			this.addStructure(new LOTRWorldGenGondorFortWallCorner(false), -30, -30, 3);
-			this.addStructure(new LOTRWorldGenGondorFortWallCorner(false), -30, 30, 2);
-			this.addStructure(new LOTRWorldGenGondorFortWallCorner(false), 30, 30, 1);
-			this.addStructure(new LOTRWorldGenGondorFortWallCorner(false), 30, -30, 0);
-			this.addStructure(new LOTRWorldGenGondorStables(false), -24, 2, 0);
-			this.addStructure(new LOTRWorldGenGondorStables(false), -24, -2, 2);
-			this.addStructure(new LOTRWorldGenGondorSmithy(false), 24, 1, 0);
-			this.addStructure(new LOTRWorldGenGondorSmithy(false), 24, -1, 2);
-			this.addStructure(new LOTRWorldGenGondorStoneHouse(false), -3, -25, 1);
-			this.addStructure(new LOTRWorldGenGondorStoneHouse(false), 3, -25, 3);
-			this.addStructure(new LOTRWorldGenGondorVillageFarm.Crops(false), -18, -21, 1);
-			this.addStructure(new LOTRWorldGenGondorVillageFarm.Crops(false), 18, -21, 3);
-			this.addStructure(new LOTRWorldGenGondorWell(false), -12, 27, 1);
-			this.addStructure(new LOTRWorldGenGondorWell(false), 12, 27, 3);
+			addStructure(getVillageFortress(), 0, 12, 2, true);
+			addStructure(new LOTRWorldGenGondorFortGate(false), 0, -37, 0, true);
+			addStructure(new LOTRWorldGenGondorFortWall.Right(false), -11, -37, 0, true);
+			addStructure(new LOTRWorldGenGondorFortWall.Left(false), 11, -37, 0, true);
+			addStructure(getVillageWatchtower(), -23, -33, 2, true);
+			addStructure(getVillageWatchtower(), 23, -33, 2, true);
+			addStructure(new LOTRWorldGenGondorFortGate(false), -37, 0, 3, true);
+			addStructure(new LOTRWorldGenGondorFortWall.Left(false), -37, -11, 3, true);
+			addStructure(new LOTRWorldGenGondorFortWall.Right(false), -37, 11, 3, true);
+			addStructure(getVillageWatchtower(), -33, -23, 1, true);
+			addStructure(getVillageWatchtower(), -33, 23, 1, true);
+			addStructure(new LOTRWorldGenGondorFortGate(false), 0, 37, 2, true);
+			addStructure(new LOTRWorldGenGondorFortWall.Left(false), -11, 37, 2, true);
+			addStructure(new LOTRWorldGenGondorFortWall.Right(false), 11, 37, 2, true);
+			addStructure(getVillageWatchtower(), -23, 33, 0, true);
+			addStructure(getVillageWatchtower(), 23, 33, 0, true);
+			addStructure(new LOTRWorldGenGondorFortGate(false), 37, 0, 1, true);
+			addStructure(new LOTRWorldGenGondorFortWall.Right(false), 37, -11, 1, true);
+			addStructure(new LOTRWorldGenGondorFortWall.Left(false), 37, 11, 1, true);
+			addStructure(getVillageWatchtower(), 33, -23, 3, true);
+			addStructure(getVillageWatchtower(), 33, 23, 3, true);
+			addStructure(new LOTRWorldGenGondorFortWallCorner(false), -30, -30, 3);
+			addStructure(new LOTRWorldGenGondorFortWallCorner(false), -30, 30, 2);
+			addStructure(new LOTRWorldGenGondorFortWallCorner(false), 30, 30, 1);
+			addStructure(new LOTRWorldGenGondorFortWallCorner(false), 30, -30, 0);
+			addStructure(new LOTRWorldGenGondorStables(false), -24, 2, 0);
+			addStructure(new LOTRWorldGenGondorStables(false), -24, -2, 2);
+			addStructure(new LOTRWorldGenGondorSmithy(false), 24, 1, 0);
+			addStructure(new LOTRWorldGenGondorSmithy(false), 24, -1, 2);
+			addStructure(new LOTRWorldGenGondorStoneHouse(false), -3, -25, 1);
+			addStructure(new LOTRWorldGenGondorStoneHouse(false), 3, -25, 3);
+			addStructure(new LOTRWorldGenGondorVillageFarm.Crops(false), -18, -21, 1);
+			addStructure(new LOTRWorldGenGondorVillageFarm.Crops(false), 18, -21, 3);
+			addStructure(new LOTRWorldGenGondorWell(false), -12, 27, 1);
+			addStructure(new LOTRWorldGenGondorWell(false), 12, 27, 3);
 		}
 
 		public void setupTown(Random random) {
 			int l;
 			int wallX;
 			boolean outerTavern = random.nextBoolean();
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -263,12 +263,11 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 					spawner.setBlockEnemySpawnRange(60);
 				}
 			}, 0, 0, 0);
-			for (int i1 : new int[] { -40, 40 }) {
-				int[] arrn = { -40, 40 };
+			for (int i1 : new int[]{-40, 40}) {
+				int[] arrn = {-40, 40};
 				int n = arrn.length;
-				for (int i = 0; i < n; ++i) {
-					int k1 = arrn[i];
-					this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+				for (int k1 : arrn) {
+					addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 						@Override
 						public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -280,93 +279,93 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 					}, i1, k1, 0);
 				}
 			}
-			this.addStructure(new LOTRWorldGenGondorWell(false), 0, -4, 0, true);
+			addStructure(new LOTRWorldGenGondorWell(false), 0, -4, 0, true);
 			int stallPos = 12;
 			for (int k1 = -1; k1 <= 1; ++k1) {
 				int k2 = k1 * stallPos;
 				if (random.nextInt(3) != 0) {
-					this.addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), -stallPos + 3, k2, 1, true);
+					addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), -stallPos + 3, k2, 1, true);
 				}
 				if (random.nextInt(3) == 0) {
 					continue;
 				}
-				this.addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), stallPos - 3, k2, 3, true);
+				addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), stallPos - 3, k2, 3, true);
 			}
 			if (random.nextInt(3) != 0) {
-				this.addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), 0, stallPos - 3, 0, true);
+				addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), 0, stallPos - 3, 0, true);
 			}
 			if (random.nextInt(3) != 0) {
-				this.addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), 0, -stallPos + 3, 2, true);
+				addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), 0, -stallPos + 3, 2, true);
 			}
 			int flowerX = 12;
 			int flowerZ = 18;
-			for (int i1 : new int[] { -flowerX, flowerX }) {
-				this.addStructure(new LOTRWorldGenGondorTownGarden(false), i1, flowerZ, 0, true);
-				this.addStructure(new LOTRWorldGenGondorTownGarden(false), i1, -flowerZ, 2, true);
-				this.addStructure(new LOTRWorldGenGondorTownGarden(false), -flowerZ, i1, 1, true);
-				this.addStructure(new LOTRWorldGenGondorTownGarden(false), flowerZ, i1, 3, true);
+			for (int i1 : new int[]{-flowerX, flowerX}) {
+				addStructure(new LOTRWorldGenGondorTownGarden(false), i1, flowerZ, 0, true);
+				addStructure(new LOTRWorldGenGondorTownGarden(false), i1, -flowerZ, 2, true);
+				addStructure(new LOTRWorldGenGondorTownGarden(false), -flowerZ, i1, 1, true);
+				addStructure(new LOTRWorldGenGondorTownGarden(false), flowerZ, i1, 3, true);
 			}
 			int lampZ = 21;
-			for (int i1 : new int[] { -1, 1 }) {
+			for (int i1 : new int[]{-1, 1}) {
 				int lampX = i1 * 6;
-				this.addStructure(new LOTRWorldGenGondorLampPost(false), lampX, lampZ, 0, true);
-				this.addStructure(new LOTRWorldGenGondorLampPost(false), lampX, -lampZ, 2, true);
+				addStructure(new LOTRWorldGenGondorLampPost(false), lampX, lampZ, 0, true);
+				addStructure(new LOTRWorldGenGondorLampPost(false), lampX, -lampZ, 2, true);
 				if (i1 != -1) {
-					this.addStructure(new LOTRWorldGenGondorLampPost(false), -lampZ, lampX, 1, true);
+					addStructure(new LOTRWorldGenGondorLampPost(false), -lampZ, lampX, 1, true);
 				}
-				this.addStructure(new LOTRWorldGenGondorLampPost(false), lampZ, lampX, 3, true);
+				addStructure(new LOTRWorldGenGondorLampPost(false), lampZ, lampX, 3, true);
 			}
 			int houseX = 24;
 			for (int k1 = -1; k1 <= 1; ++k1) {
 				int houseZ = k1 * 12;
 				if (k1 == 1) {
-					this.addStructure(new LOTRWorldGenGondorStoneHouse(false), -houseX, houseZ, 1, true);
-					this.addStructure(new LOTRWorldGenGondorStoneHouse(false), houseX, houseZ, 3, true);
+					addStructure(new LOTRWorldGenGondorStoneHouse(false), -houseX, houseZ, 1, true);
+					addStructure(new LOTRWorldGenGondorStoneHouse(false), houseX, houseZ, 3, true);
 				}
 				if (k1 == 0) {
 					continue;
 				}
-				this.addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, houseX, 0, true);
-				this.addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, -houseX, 2, true);
+				addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, houseX, 0, true);
+				addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, -houseX, 2, true);
 			}
-			this.addStructure(new LOTRWorldGenGondorSmithy(false), 0, -26, 2, true);
-			this.addStructure(new LOTRWorldGenGondorObelisk(false), 0, 27, 0, true);
-			this.addStructure(new LOTRWorldGenGondorTavern(false), -houseX, -5, 1, true);
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), -47, -13, 2, true);
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), -47, 1, 0, true);
-			for (int i1 : new int[] { -43, -51 }) {
-				this.addStructure(new LOTRWorldGenGondorTownBench(false), i1, -9, 2, true);
-				this.addStructure(new LOTRWorldGenGondorTownBench(false), i1, -3, 0, true);
+			addStructure(new LOTRWorldGenGondorSmithy(false), 0, -26, 2, true);
+			addStructure(new LOTRWorldGenGondorObelisk(false), 0, 27, 0, true);
+			addStructure(new LOTRWorldGenGondorTavern(false), -houseX, -5, 1, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), -47, -13, 2, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), -47, 1, 0, true);
+			for (int i1 : new int[]{-43, -51}) {
+				addStructure(new LOTRWorldGenGondorTownBench(false), i1, -9, 2, true);
+				addStructure(new LOTRWorldGenGondorTownBench(false), i1, -3, 0, true);
 			}
-			this.addStructure(new LOTRWorldGenGondorBath(false), houseX + 2, -6, 3, true);
-			this.addStructure(new LOTRWorldGenGondorTownGarden(false), 51, -13, 2, true);
-			this.addStructure(new LOTRWorldGenGondorTownGarden(false), 51, 1, 0, true);
-			this.addStructure(new LOTRWorldGenGondorTownGarden(false), 52, -6, 3, true);
+			addStructure(new LOTRWorldGenGondorBath(false), houseX + 2, -6, 3, true);
+			addStructure(new LOTRWorldGenGondorTownGarden(false), 51, -13, 2, true);
+			addStructure(new LOTRWorldGenGondorTownGarden(false), 51, 1, 0, true);
+			addStructure(new LOTRWorldGenGondorTownGarden(false), 52, -6, 3, true);
 			int wellX = 22;
 			int wellZ = 31;
-			for (int i1 : new int[] { -wellX, wellX }) {
-				this.addStructure(new LOTRWorldGenGondorWell(false), i1, -wellZ, 2, true);
-				this.addStructure(new LOTRWorldGenGondorWell(false), i1, wellZ, 0, true);
-				this.addStructure(new LOTRWorldGenGondorWell(false), -wellZ, i1, 1, true);
-				this.addStructure(new LOTRWorldGenGondorWell(false), wellZ, i1, 3, true);
+			for (int i1 : new int[]{-wellX, wellX}) {
+				addStructure(new LOTRWorldGenGondorWell(false), i1, -wellZ, 2, true);
+				addStructure(new LOTRWorldGenGondorWell(false), i1, wellZ, 0, true);
+				addStructure(new LOTRWorldGenGondorWell(false), -wellZ, i1, 1, true);
+				addStructure(new LOTRWorldGenGondorWell(false), wellZ, i1, 3, true);
 			}
 			houseX = 54;
 			for (int k1 = -2; k1 <= 2; ++k1) {
 				int houseZ = k1 * 12;
-				if (k1 <= -2 || k1 >= 1) {
-					this.addStructure(new LOTRWorldGenGondorStoneHouse(false), -houseX, houseZ, 3, true);
-					this.addStructure(new LOTRWorldGenGondorStoneHouse(false), houseX, houseZ, 1, true);
+				if (k1 == -2 || k1 >= 1) {
+					addStructure(new LOTRWorldGenGondorStoneHouse(false), -houseX, houseZ, 3, true);
+					addStructure(new LOTRWorldGenGondorStoneHouse(false), houseX, houseZ, 1, true);
 				}
-				this.addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, houseX, 2, true);
-				this.addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, -houseX, 0, true);
+				addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, houseX, 2, true);
+				addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, -houseX, 0, true);
 			}
 			int treeX = 47;
 			int treeZ = 35;
-			for (int i1 : new int[] { -treeX, treeX }) {
-				this.addStructure(new LOTRWorldGenGondorTownTrees(false), i1, -treeZ, 0, true);
-				this.addStructure(new LOTRWorldGenGondorTownTrees(false), i1, treeZ, 2, true);
-				this.addStructure(new LOTRWorldGenGondorTownTrees(false), -treeZ, i1, 3, true);
-				this.addStructure(new LOTRWorldGenGondorTownTrees(false), treeZ, i1, 1, true);
+			for (int i1 : new int[]{-treeX, treeX}) {
+				addStructure(new LOTRWorldGenGondorTownTrees(false), i1, -treeZ, 0, true);
+				addStructure(new LOTRWorldGenGondorTownTrees(false), i1, treeZ, 2, true);
+				addStructure(new LOTRWorldGenGondorTownTrees(false), -treeZ, i1, 3, true);
+				addStructure(new LOTRWorldGenGondorTownTrees(false), treeZ, i1, 1, true);
 			}
 			houseX = 64;
 			int lampX = 59;
@@ -375,111 +374,111 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 				int houseZ = k1 * 12;
 				treepiece = IntMath.mod(k1, 2) == 1;
 				if (treepiece) {
-					this.addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), -houseX - 2, houseZ, 1, true);
-					this.addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), houseX + 2, houseZ, 3, true);
+					addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), -houseX - 2, houseZ, 1, true);
+					addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), houseX + 2, houseZ, 3, true);
 				} else {
-					this.addStructure(new LOTRWorldGenGondorStoneHouse(false), -houseX, houseZ, 1, true);
-					this.addStructure(new LOTRWorldGenGondorStoneHouse(false), houseX, houseZ, 3, true);
+					addStructure(new LOTRWorldGenGondorStoneHouse(false), -houseX, houseZ, 1, true);
+					addStructure(new LOTRWorldGenGondorStoneHouse(false), houseX, houseZ, 3, true);
 				}
 				if (treepiece) {
-					this.addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), houseZ, -houseX - 2, 2, true);
+					addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), houseZ, -houseX - 2, 2, true);
 				} else {
-					this.addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, -houseX, 2, true);
+					addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, -houseX, 2, true);
 				}
 				if (Math.abs(k1) >= 2 && (!outerTavern || k1 <= 2)) {
 					if (treepiece) {
-						this.addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), houseZ, houseX + 2, 0, true);
+						addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), houseZ, houseX + 2, 0, true);
 					} else {
-						this.addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, houseX, 0, true);
+						addStructure(new LOTRWorldGenGondorStoneHouse(false), houseZ, houseX, 0, true);
 					}
 				}
-				this.addStructure(new LOTRWorldGenGondorLampPost(false), -lampX, houseZ, 1, true);
-				this.addStructure(new LOTRWorldGenGondorLampPost(false), lampX, houseZ, 3, true);
-				this.addStructure(new LOTRWorldGenGondorLampPost(false), houseZ, lampX, 0, true);
-				this.addStructure(new LOTRWorldGenGondorLampPost(false), houseZ, -lampX, 2, true);
+				addStructure(new LOTRWorldGenGondorLampPost(false), -lampX, houseZ, 1, true);
+				addStructure(new LOTRWorldGenGondorLampPost(false), lampX, houseZ, 3, true);
+				addStructure(new LOTRWorldGenGondorLampPost(false), houseZ, lampX, 0, true);
+				addStructure(new LOTRWorldGenGondorLampPost(false), houseZ, -lampX, 2, true);
 			}
 			if (outerTavern) {
-				this.addStructure(new LOTRWorldGenGondorTavern(false), 44, houseX, 0, true);
+				addStructure(new LOTRWorldGenGondorTavern(false), 44, houseX, 0, true);
 			}
 			int gardenX = 42;
 			int gardenZ = 48;
-			this.addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), -gardenX, -gardenZ, 1, true);
-			this.addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), -gardenX, gardenZ, 1, true);
-			this.addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), gardenX, -gardenZ, 3, true);
-			this.addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), gardenX, gardenZ, 3, true);
+			addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), -gardenX, -gardenZ, 1, true);
+			addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), -gardenX, gardenZ, 1, true);
+			addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), gardenX, -gardenZ, 3, true);
+			addStructure(new LOTRWorldGenGondorVillageFarm.Tree(false), gardenX, gardenZ, 3, true);
 			int obeliskX = 62;
 			int obeliskZ = 66;
-			this.addStructure(new LOTRWorldGenGondorObelisk(false), -obeliskX, -obeliskZ, 1, true);
-			this.addStructure(new LOTRWorldGenGondorObelisk(false), -obeliskX, obeliskZ, 1, true);
-			this.addStructure(new LOTRWorldGenGondorObelisk(false), obeliskX, -obeliskZ, 3, true);
-			this.addStructure(new LOTRWorldGenGondorObelisk(false), obeliskX, obeliskZ, 3, true);
+			addStructure(new LOTRWorldGenGondorObelisk(false), -obeliskX, -obeliskZ, 1, true);
+			addStructure(new LOTRWorldGenGondorObelisk(false), -obeliskX, obeliskZ, 1, true);
+			addStructure(new LOTRWorldGenGondorObelisk(false), obeliskX, -obeliskZ, 3, true);
+			addStructure(new LOTRWorldGenGondorObelisk(false), obeliskX, obeliskZ, 3, true);
 			wellX = 64;
 			wellZ = 57;
-			this.addStructure(new LOTRWorldGenGondorWell(false), -wellX, -wellZ, 1, true);
-			this.addStructure(new LOTRWorldGenGondorWell(false), -wellX, wellZ, 1, true);
-			this.addStructure(new LOTRWorldGenGondorWell(false), wellX, -wellZ, 3, true);
-			this.addStructure(new LOTRWorldGenGondorWell(false), wellX, wellZ, 3, true);
-			this.addStructure(new LOTRWorldGenGondorWell(false), -wellZ, -wellX, 2, true);
-			this.addStructure(new LOTRWorldGenGondorWell(false), wellZ, -wellX, 2, true);
-			this.addStructure(new LOTRWorldGenGondorWell(false), -wellZ, wellX, 0, true);
-			this.addStructure(new LOTRWorldGenGondorWell(false), wellZ, wellX, 0, true);
+			addStructure(new LOTRWorldGenGondorWell(false), -wellX, -wellZ, 1, true);
+			addStructure(new LOTRWorldGenGondorWell(false), -wellX, wellZ, 1, true);
+			addStructure(new LOTRWorldGenGondorWell(false), wellX, -wellZ, 3, true);
+			addStructure(new LOTRWorldGenGondorWell(false), wellX, wellZ, 3, true);
+			addStructure(new LOTRWorldGenGondorWell(false), -wellZ, -wellX, 2, true);
+			addStructure(new LOTRWorldGenGondorWell(false), wellZ, -wellX, 2, true);
+			addStructure(new LOTRWorldGenGondorWell(false), -wellZ, wellX, 0, true);
+			addStructure(new LOTRWorldGenGondorWell(false), wellZ, wellX, 0, true);
 			treeX = 75;
 			treeZ = 61;
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), -treeX, -treeZ, 1, true);
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), -treeX, treeZ, 1, true);
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), treeX, -treeZ, 3, true);
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), treeX, treeZ, 3, true);
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), -treeZ, -treeX, 2, true);
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), treeZ, -treeX, 2, true);
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), -treeZ, treeX, 0, true);
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), treeZ, treeX, 0, true);
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), -14, 71, 1, true);
-			this.addStructure(new LOTRWorldGenGondorTownTrees(false), 14, 71, 3, true);
-			for (int k1 : new int[] { 67, 75 }) {
-				this.addStructure(new LOTRWorldGenGondorTownBench(false), -10, k1, 1, true);
-				this.addStructure(new LOTRWorldGenGondorTownBench(false), 10, k1, 3, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), -treeX, -treeZ, 1, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), -treeX, treeZ, 1, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), treeX, -treeZ, 3, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), treeX, treeZ, 3, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), -treeZ, -treeX, 2, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), treeZ, -treeX, 2, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), -treeZ, treeX, 0, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), treeZ, treeX, 0, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), -14, 71, 1, true);
+			addStructure(new LOTRWorldGenGondorTownTrees(false), 14, 71, 3, true);
+			for (int k1 : new int[]{67, 75}) {
+				addStructure(new LOTRWorldGenGondorTownBench(false), -10, k1, 1, true);
+				addStructure(new LOTRWorldGenGondorTownBench(false), 10, k1, 3, true);
 			}
-			this.addStructure(new LOTRWorldGenGondorGatehouse(false).setSignText(villageName), 0, 84, 2, true);
-			this.addStructure(new LOTRWorldGenGondorLampPost(false), -4, 73, 0, true);
-			this.addStructure(new LOTRWorldGenGondorLampPost(false), 4, 73, 0, true);
+			addStructure(new LOTRWorldGenGondorGatehouse(false).setSignText(villageName), 0, 84, 2, true);
+			addStructure(new LOTRWorldGenGondorLampPost(false), -4, 73, 0, true);
+			addStructure(new LOTRWorldGenGondorLampPost(false), 4, 73, 0, true);
 			int towerX = 78;
 			int towerZ = 74;
-			for (int i1 : new int[] { -towerX, towerX }) {
-				this.addStructure(getVillageWatchtower(), i1, -towerZ, 2, true);
-				this.addStructure(getVillageWatchtower(), i1, towerZ, 0, true);
+			for (int i1 : new int[]{-towerX, towerX}) {
+				addStructure(getVillageWatchtower(), i1, -towerZ, 2, true);
+				addStructure(getVillageWatchtower(), i1, towerZ, 0, true);
 			}
 			int wallZ = 82;
 			int wallEndX = 76;
 			for (l = 0; l <= 3; ++l) {
 				wallX = 12 + l * 16;
-				this.addStructure(LOTRWorldGenGondorTownWall.Left(false), -wallX, wallZ, 2, true);
-				this.addStructure(LOTRWorldGenGondorTownWall.Right(false), wallX, wallZ, 2, true);
+				addStructure(LOTRWorldGenGondorTownWall.Left(false), -wallX, wallZ, 2, true);
+				addStructure(LOTRWorldGenGondorTownWall.Right(false), wallX, wallZ, 2, true);
 			}
-			this.addStructure(LOTRWorldGenGondorTownWall.LeftEndShort(false), -wallEndX, wallZ, 2, true);
-			this.addStructure(LOTRWorldGenGondorTownWall.RightEndShort(false), wallEndX, wallZ, 2, true);
-			this.addStructure(LOTRWorldGenGondorTownWall.Centre(false), -wallZ, 0, 3, true);
-			this.addStructure(LOTRWorldGenGondorTownWall.Centre(false), wallZ, 0, 1, true);
-			this.addStructure(LOTRWorldGenGondorTownWall.Centre(false), 0, -wallZ, 0, true);
+			addStructure(LOTRWorldGenGondorTownWall.LeftEndShort(false), -wallEndX, wallZ, 2, true);
+			addStructure(LOTRWorldGenGondorTownWall.RightEndShort(false), wallEndX, wallZ, 2, true);
+			addStructure(LOTRWorldGenGondorTownWall.Centre(false), -wallZ, 0, 3, true);
+			addStructure(LOTRWorldGenGondorTownWall.Centre(false), wallZ, 0, 1, true);
+			addStructure(LOTRWorldGenGondorTownWall.Centre(false), 0, -wallZ, 0, true);
 			for (l = 0; l <= 3; ++l) {
 				wallX = 12 + l * 16;
-				this.addStructure(LOTRWorldGenGondorTownWall.Left(false), -wallZ, -wallX, 3, true);
-				this.addStructure(LOTRWorldGenGondorTownWall.Right(false), -wallZ, wallX, 3, true);
-				this.addStructure(LOTRWorldGenGondorTownWall.Left(false), wallZ, wallX, 1, true);
-				this.addStructure(LOTRWorldGenGondorTownWall.Right(false), wallZ, -wallX, 1, true);
-				this.addStructure(LOTRWorldGenGondorTownWall.Left(false), wallX, -wallZ, 0, true);
-				this.addStructure(LOTRWorldGenGondorTownWall.Right(false), -wallX, -wallZ, 0, true);
+				addStructure(LOTRWorldGenGondorTownWall.Left(false), -wallZ, -wallX, 3, true);
+				addStructure(LOTRWorldGenGondorTownWall.Right(false), -wallZ, wallX, 3, true);
+				addStructure(LOTRWorldGenGondorTownWall.Left(false), wallZ, wallX, 1, true);
+				addStructure(LOTRWorldGenGondorTownWall.Right(false), wallZ, -wallX, 1, true);
+				addStructure(LOTRWorldGenGondorTownWall.Left(false), wallX, -wallZ, 0, true);
+				addStructure(LOTRWorldGenGondorTownWall.Right(false), -wallX, -wallZ, 0, true);
 			}
-			this.addStructure(LOTRWorldGenGondorTownWall.LeftEnd(false), -wallZ, -wallEndX, 3, true);
-			this.addStructure(LOTRWorldGenGondorTownWall.RightEnd(false), -wallZ, wallEndX, 3, true);
-			this.addStructure(LOTRWorldGenGondorTownWall.LeftEnd(false), wallZ, wallEndX, 1, true);
-			this.addStructure(LOTRWorldGenGondorTownWall.RightEnd(false), wallZ, -wallEndX, 1, true);
-			this.addStructure(LOTRWorldGenGondorTownWall.LeftEndShort(false), wallEndX, -wallZ, 0, true);
-			this.addStructure(LOTRWorldGenGondorTownWall.RightEndShort(false), -wallEndX, -wallZ, 0, true);
+			addStructure(LOTRWorldGenGondorTownWall.LeftEnd(false), -wallZ, -wallEndX, 3, true);
+			addStructure(LOTRWorldGenGondorTownWall.RightEnd(false), -wallZ, wallEndX, 3, true);
+			addStructure(LOTRWorldGenGondorTownWall.LeftEnd(false), wallZ, wallEndX, 1, true);
+			addStructure(LOTRWorldGenGondorTownWall.RightEnd(false), wallZ, -wallEndX, 1, true);
+			addStructure(LOTRWorldGenGondorTownWall.LeftEndShort(false), wallEndX, -wallZ, 0, true);
+			addStructure(LOTRWorldGenGondorTownWall.RightEndShort(false), -wallEndX, -wallZ, 0, true);
 		}
 
 		public void setupVillage(Random random) {
-			this.addStructure(new LOTRWorldGenGondorWell(false), 0, -4, 0, true);
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenGondorWell(false), 0, -4, 0, true);
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -489,7 +488,7 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 					spawner.setBlockEnemySpawnRange(60);
 				}
 			}, 0, 0, 0);
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -499,22 +498,22 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 					spawner.setBlockEnemySpawnRange(60);
 				}
 			}, 0, 0, 0);
-			this.addStructure(new LOTRWorldGenGondorCottage(false), -21, 0, 1);
-			this.addStructure(new LOTRWorldGenGondorCottage(false), 0, -21, 2);
-			this.addStructure(new LOTRWorldGenGondorCottage(false), 21, 0, 3);
-			this.addStructure(new LOTRWorldGenGondorTavern(false), 0, 21, 0);
+			addStructure(new LOTRWorldGenGondorCottage(false), -21, 0, 1);
+			addStructure(new LOTRWorldGenGondorCottage(false), 0, -21, 2);
+			addStructure(new LOTRWorldGenGondorCottage(false), 21, 0, 3);
+			addStructure(new LOTRWorldGenGondorTavern(false), 0, 21, 0);
 			if (random.nextBoolean()) {
 				if (random.nextInt(3) == 0) {
-					this.addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), -9, -12, 1);
+					addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), -9, -12, 1);
 				}
 				if (random.nextInt(3) == 0) {
-					this.addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), 9, -12, 3);
+					addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), 9, -12, 3);
 				}
 				if (random.nextInt(3) == 0) {
-					this.addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), -9, 12, 1);
+					addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), -9, 12, 1);
 				}
 				if (random.nextInt(3) == 0) {
-					this.addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), 9, 12, 3);
+					addStructure(LOTRWorldGenGondorMarketStall.getRandomStall(random, false), 9, 12, 3);
 				}
 			}
 			int houses = 20;
@@ -542,7 +541,7 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 					l = 61;
 					i = Math.round(l * cos);
 					k = Math.round(l * sin);
-					this.addStructure(getRandomHouse(random), i, k, r);
+					addStructure(getRandomHouse(random), i, k, r);
 					continue;
 				}
 				if (random.nextInt(3) == 0) {
@@ -551,34 +550,34 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 				l = 65;
 				i = Math.round(l * cos);
 				k = Math.round(l * sin);
-				this.addStructure(new LOTRWorldGenHayBales(false), i, k, r);
+				addStructure(new LOTRWorldGenHayBales(false), i, k, r);
 			}
-			int signPos = Math.round(50.0f * MathHelper.cos((float) Math.toRadians(45.0)));
-			int signDisp = Math.round(7.0f * MathHelper.cos((float) Math.toRadians(45.0)));
-			this.addStructure(new LOTRWorldGenGondorVillageSign(false).setSignText(villageName), -signPos, -signPos + signDisp, 1);
-			this.addStructure(new LOTRWorldGenGondorVillageSign(false).setSignText(villageName), signPos, -signPos + signDisp, 3);
-			this.addStructure(new LOTRWorldGenGondorVillageSign(false).setSignText(villageName), -signPos, signPos - signDisp, 1);
-			this.addStructure(new LOTRWorldGenGondorVillageSign(false).setSignText(villageName), signPos, signPos - signDisp, 3);
+			int signPos = Math.round(50.0f * MathHelper.cos(0.7853981633974483f));
+			int signDisp = Math.round(7.0f * MathHelper.cos(0.7853981633974483f));
+			addStructure(new LOTRWorldGenGondorVillageSign(false).setSignText(villageName), -signPos, -signPos + signDisp, 1);
+			addStructure(new LOTRWorldGenGondorVillageSign(false).setSignText(villageName), signPos, -signPos + signDisp, 3);
+			addStructure(new LOTRWorldGenGondorVillageSign(false).setSignText(villageName), -signPos, signPos - signDisp, 1);
+			addStructure(new LOTRWorldGenGondorVillageSign(false).setSignText(villageName), signPos, signPos - signDisp, 3);
 			int farmX = 38;
 			int farmZ = 17;
 			int farmSize = 6;
 			if (random.nextBoolean()) {
-				this.addStructure(getRandomFarm(random), -farmX + farmSize, -farmZ, 1);
+				addStructure(getRandomFarm(random), -farmX + farmSize, -farmZ, 1);
 			}
 			if (random.nextBoolean()) {
-				this.addStructure(getRandomFarm(random), -farmZ + farmSize, -farmX, 1);
+				addStructure(getRandomFarm(random), -farmZ + farmSize, -farmX, 1);
 			}
 			if (random.nextBoolean()) {
-				this.addStructure(getRandomFarm(random), farmX - farmSize, -farmZ, 3);
+				addStructure(getRandomFarm(random), farmX - farmSize, -farmZ, 3);
 			}
 			if (random.nextBoolean()) {
-				this.addStructure(getRandomFarm(random), farmZ - farmSize, -farmX, 3);
+				addStructure(getRandomFarm(random), farmZ - farmSize, -farmX, 3);
 			}
 			if (random.nextBoolean()) {
-				this.addStructure(getRandomFarm(random), -farmX + farmSize, farmZ, 1);
+				addStructure(getRandomFarm(random), -farmX + farmSize, farmZ, 1);
 			}
 			if (random.nextBoolean()) {
-				this.addStructure(getRandomFarm(random), farmX - farmSize, farmZ, 3);
+				addStructure(getRandomFarm(random), farmX - farmSize, farmZ, 3);
 			}
 		}
 
@@ -591,7 +590,7 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 	}
 
 	public enum VillageType {
-		VILLAGE, TOWN, FORT;
+		VILLAGE, TOWN, FORT
 
 	}
 

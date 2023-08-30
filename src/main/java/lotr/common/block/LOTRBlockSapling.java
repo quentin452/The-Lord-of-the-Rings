@@ -49,14 +49,16 @@ public class LOTRBlockSapling extends LOTRBlockSaplingBase {
 			int[] partyTree;
 			int[] boughTree;
 			if (world.getBlock(i, j - 1, k) == LOTRMod.quenditeGrass) {
-				block0: for (i1 = -4; i1 <= 4; ++i1) {
+				block0:
+				for (i1 = -4; i1 <= 4; ++i1) {
 					for (k1 = -4; k1 <= 4; ++k1) {
 						boolean canGenerate = true;
-						block2: for (int i2 = -2; i2 <= 2; ++i2) {
+						block2:
+						for (int i2 = -2; i2 <= 2; ++i2) {
 							for (int k2 = -2; k2 <= 2; ++k2) {
 								int i3 = i + i1 + i2;
 								int k3 = k + k1 + k2;
-								if (this.isSameSapling(world, i3, j, k3, meta) && world.getBlock(i3, j - 1, k3) == LOTRMod.quenditeGrass) {
+								if (isSameSapling(world, i3, j, k3, 1) && world.getBlock(i3, j - 1, k3) == LOTRMod.quenditeGrass) {
 									continue;
 								}
 								canGenerate = false;
@@ -75,14 +77,14 @@ public class LOTRBlockSapling extends LOTRBlockSaplingBase {
 					}
 				}
 			}
-			if (treeGen == null && (partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta)) != null) {
+			if (treeGen == null && (partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, 1)) != null) {
 				treeGen = LOTRTreeType.MALLORN_PARTY.create(true, random);
 				trunkPos = 1;
 				trunkNeg = 1;
 				xOffset = partyTree[0];
 				zOffset = partyTree[1];
 			}
-			if (treeGen == null && (boughTree = LOTRBlockSaplingBase.findCrossShape(world, i, j, k, this, meta)) != null) {
+			if (treeGen == null && (boughTree = LOTRBlockSaplingBase.findCrossShape(world, i, j, k, this, 1)) != null) {
 				treeGen = LOTRTreeType.MALLORN_BOUGHS.create(true, random);
 				trunkPos = 1;
 				trunkNeg = 1;
@@ -99,7 +101,7 @@ public class LOTRBlockSapling extends LOTRBlockSaplingBase {
 			}
 		}
 		if (meta == 2) {
-			int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta);
+			int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, 2);
 			if (partyTree != null) {
 				treeGen = LOTRTreeType.MIRK_OAK_LARGE.create(true, random);
 				trunkPos = 1;
@@ -116,7 +118,7 @@ public class LOTRBlockSapling extends LOTRBlockSaplingBase {
 			}
 		}
 		if (meta == 3) {
-			int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta);
+			int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, 3);
 			if (partyTree != null) {
 				treeGen = LOTRTreeType.RED_OAK_LARGE.create(true, random);
 				trunkPos = 1;

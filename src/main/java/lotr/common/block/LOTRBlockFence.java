@@ -34,7 +34,7 @@ public class LOTRBlockFence extends BlockFence {
 		return i;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return plankBlock.getIcon(i, j);
@@ -48,22 +48,21 @@ public class LOTRBlockFence extends BlockFence {
 		return super.getRenderType();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
-		ArrayList plankTypes = new ArrayList();
+		List plankTypes = new ArrayList();
 		plankBlock.getSubBlocks(Item.getItemFromBlock(plankBlock), plankBlock.getCreativeTabToDisplayOn(), plankTypes);
 		for (Object plankType : plankTypes) {
-			Object obj = plankType;
-			if (!(obj instanceof ItemStack)) {
+			if (!(plankType instanceof ItemStack)) {
 				continue;
 			}
-			int meta = ((ItemStack) obj).getItemDamage();
+			int meta = ((ItemStack) plankType).getItemDamage();
 			list.add(new ItemStack(this, 1, meta));
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

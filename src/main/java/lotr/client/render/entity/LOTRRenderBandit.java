@@ -1,7 +1,7 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelHuman;
-import lotr.common.entity.npc.LOTREntityBandit;
+import lotr.common.entity.LOTRRandomSkinEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
@@ -15,6 +15,6 @@ public class LOTRRenderBandit extends LOTRRenderBiped {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		return banditSkins.getRandomSkin((LOTREntityBandit) entity);
+		return banditSkins.getRandomSkin((LOTRRandomSkinEntity) entity);
 	}
 }

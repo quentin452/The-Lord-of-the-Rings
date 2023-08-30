@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityRohirrimMarshal extends LOTREntityRohirrimWarrior implements LOTRUnitTradeable {
 	public LOTREntityRohirrimMarshal(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.ROHAN;
 	}
 

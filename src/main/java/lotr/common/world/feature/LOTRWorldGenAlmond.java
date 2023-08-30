@@ -52,7 +52,7 @@ public class LOTRWorldGenAlmond extends WorldGenAbstractTree {
 			}
 			boolean canGrow = true;
 			Block below = world.getBlock(i, j - 1, k);
-			if (!below.canSustainPlant((IBlockAccess) world, i, j - 1, k, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
+			if (!below.canSustainPlant(world, i, j - 1, k, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 				canGrow = false;
 			}
 			if (canGrow) {

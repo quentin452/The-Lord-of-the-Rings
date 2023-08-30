@@ -12,7 +12,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class LOTRItemRedBook extends Item {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public static IIcon questOfferIcon;
 
 	public LOTRItemRedBook() {
@@ -21,7 +21,7 @@ public class LOTRItemRedBook extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
 		LOTRPlayerData playerData = LOTRLevelData.getData(entityplayer);
 		int activeQuests = playerData.getActiveMiniQuests().size();
@@ -38,7 +38,7 @@ public class LOTRItemRedBook extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconregister) {
 		super.registerIcons(iconregister);
 		questOfferIcon = iconregister.registerIcon("lotr:questOffer");

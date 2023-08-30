@@ -52,6 +52,6 @@ public class LOTRPacketFellowshipToggle extends LOTRPacketFellowshipDo {
 	}
 
 	public enum ToggleFunction {
-		PVP, HIRED_FF, MAP_SHOW;
+		PVP, HIRED_FF, MAP_SHOW
 	}
 }

@@ -9,7 +9,7 @@ import net.minecraft.util.Facing;
 import net.minecraft.world.*;
 
 public class LOTRBlockGlass extends BlockGlass {
-	public boolean thirdParam = false;
+	public boolean thirdParam;
 
 	public LOTRBlockGlass() {
 		super(Material.glass, false);
@@ -23,13 +23,13 @@ public class LOTRBlockGlass extends BlockGlass {
 		return true;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		blockIcon = iconregister.registerIcon(getTextureName());
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean shouldSideBeRendered(IBlockAccess world, int i, int j, int k, int side) {
 		Block block = world.getBlock(i, j, k);
@@ -39,6 +39,6 @@ public class LOTRBlockGlass extends BlockGlass {
 		if (block == this) {
 			return false;
 		}
-		return !thirdParam && block == this ? false : super.shouldSideBeRendered(world, i, j, k, side);
+		return super.shouldSideBeRendered(world, i, j, k, side);
 	}
 }

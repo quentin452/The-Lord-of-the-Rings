@@ -64,12 +64,12 @@ public class LOTRWorldGenTauredainHouseStilts extends LOTRWorldGenTauredainHouse
 					}
 				}
 				if (i12 == -3 && k2 == 1) {
-					setBlockAndMetadata(world, i12, 4, k1, plankStairBlock, 1);
-					setBlockAndMetadata(world, i12, 5, k1, fenceBlock, fenceMeta);
+					setBlockAndMetadata(world, -3, 4, k1, plankStairBlock, 1);
+					setBlockAndMetadata(world, -3, 5, k1, fenceBlock, fenceMeta);
 				}
 				if (i12 == 3 && k2 == 1) {
-					setBlockAndMetadata(world, i12, 4, k1, plankStairBlock, 0);
-					setBlockAndMetadata(world, i12, 5, k1, fenceBlock, fenceMeta);
+					setBlockAndMetadata(world, 3, 4, k1, plankStairBlock, 0);
+					setBlockAndMetadata(world, 3, 5, k1, fenceBlock, fenceMeta);
 				}
 				if (k1 != 3 || i2 != 1) {
 					continue;
@@ -78,7 +78,7 @@ public class LOTRWorldGenTauredainHouseStilts extends LOTRWorldGenTauredainHouse
 				setBlockAndMetadata(world, i12, 5, k1, fenceBlock, fenceMeta);
 			}
 		}
-		int[] i13 = { 3, 6 };
+		int[] i13 = {3, 6};
 		k1 = i13.length;
 		for (i2 = 0; i2 < k1; ++i2) {
 			int j1 = i13[i2];
@@ -138,16 +138,16 @@ public class LOTRWorldGenTauredainHouseStilts extends LOTRWorldGenTauredainHouse
 		setBlockAndMetadata(world, 0, 6, 2, Blocks.torch, 4);
 		setBlockAndMetadata(world, 2, 6, 0, Blocks.torch, 1);
 		setBlockAndMetadata(world, -2, 4, -2, woodBlock, woodMeta);
-		this.placeChest(world, random, -2, 5, -2, 3, LOTRChestContents.TAUREDAIN_HOUSE);
+		placeChest(world, random, -2, 5, -2, 3, LOTRChestContents.TAUREDAIN_HOUSE);
 		setBlockAndMetadata(world, 2, 4, -2, woodBlock, woodMeta);
-		this.placeBarrel(world, random, 2, 5, -2, 3, LOTRFoods.TAUREDAIN_DRINK);
-		for (int i14 : new int[] { -2, 2 }) {
+		placeBarrel(world, random, 2, 5, -2, 3, LOTRFoods.TAUREDAIN_DRINK);
+		for (int i14 : new int[]{-2, 2}) {
 			setBlockAndMetadata(world, i14, 4, 1, bedBlock, 0);
 			setBlockAndMetadata(world, i14, 4, 2, bedBlock, 8);
 		}
 		setBlockAndMetadata(world, -1, 4, 2, LOTRMod.tauredainTable, 0);
 		setBlockAndMetadata(world, 0, 4, 2, woodBlock, woodMeta);
-		this.placeMug(world, random, 0, 5, 2, 0, LOTRFoods.TAUREDAIN_DRINK);
+		placeMug(world, random, 0, 5, 2, 0, LOTRFoods.TAUREDAIN_DRINK);
 		setBlockAndMetadata(world, 1, 4, 2, Blocks.crafting_table, 0);
 		placeTauredainTorch(world, -1, 5, -5);
 		placeTauredainTorch(world, 1, 5, -5);

@@ -10,7 +10,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRWorldGenHolly extends WorldGenAbstractTree {
-	public int extraTrunkWidth = 0;
+	public int extraTrunkWidth;
 	public Block woodBlock = LOTRMod.wood2;
 	public int woodMeta = 2;
 	public Block leafBlock = LOTRMod.leaves2;
@@ -57,7 +57,7 @@ public class LOTRWorldGenHolly extends WorldGenAbstractTree {
 			for (i1 = i; i1 <= i + extraTrunkWidth && flag1; ++i1) {
 				for (k1 = k; k1 <= k + extraTrunkWidth && flag1; ++k1) {
 					Block block = world.getBlock(i1, j - 1, k1);
-					if (block.canSustainPlant((IBlockAccess) world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) LOTRMod.sapling2)) {
+					if (block.canSustainPlant(world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) LOTRMod.sapling2)) {
 						continue;
 					}
 					flag1 = false;

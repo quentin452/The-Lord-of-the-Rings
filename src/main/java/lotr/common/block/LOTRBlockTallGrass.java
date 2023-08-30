@@ -14,20 +14,20 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.*;
 
 public class LOTRBlockTallGrass extends LOTRBlockGrass {
-	public static String[] grassNames = { "short", "flower", "wheat", "thistle", "nettle", "fernsprout" };
-	public static boolean[] grassOverlay = { false, true, true, true, false, false };
-	@SideOnly(value = Side.CLIENT)
+	public static String[] grassNames = {"short", "flower", "wheat", "thistle", "nettle", "fernsprout"};
+	public static boolean[] grassOverlay = {false, true, true, true, false, false};
+	@SideOnly(Side.CLIENT)
 	public IIcon[] grassIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] overlayIcons;
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int colorMultiplier(IBlockAccess world, int i, int j, int k) {
 		return world.getBiomeGenForCoords(i, k).getBiomeGrassColor(i, j, k);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getBlockColor() {
 		return Blocks.tallgrass.getBlockColor();
@@ -43,7 +43,7 @@ public class LOTRBlockTallGrass extends LOTRBlockGrass {
 		return super.getDrops(world, i, j, k, meta, fortune);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j >= grassNames.length) {
@@ -55,13 +55,13 @@ public class LOTRBlockTallGrass extends LOTRBlockGrass {
 		return grassIcons[j];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getRenderColor(int meta) {
 		return getBlockColor();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int j = 0; j < grassNames.length; ++j) {
@@ -74,17 +74,14 @@ public class LOTRBlockTallGrass extends LOTRBlockGrass {
 		int meta = world.getBlockMetadata(i, j, k);
 		if (meta == 3 && entity.isSprinting() || meta == 4 && entity instanceof EntityPlayer) {
 			EntityLivingBase living;
-			boolean bootsLegs = false;
-			if (entity instanceof EntityLivingBase && (living = (EntityLivingBase) entity).getEquipmentInSlot(1) != null && living.getEquipmentInSlot(2) != null) {
-				bootsLegs = true;
-			}
+			boolean bootsLegs = entity instanceof EntityLivingBase && (living = (EntityLivingBase) entity).getEquipmentInSlot(1) != null && living.getEquipmentInSlot(2) != null;
 			if (!bootsLegs) {
 				entity.attackEntityFrom(LOTRDamage.plantHurt, 0.25f);
 			}
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		grassIcons = new IIcon[grassNames.length];

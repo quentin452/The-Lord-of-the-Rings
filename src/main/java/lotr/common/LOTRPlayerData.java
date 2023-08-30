@@ -1,12 +1,11 @@
 package lotr.common;
 
-import java.io.IOException;
 import java.util.*;
 
+import net.minecraft.command.ICommandSender;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 
 import cpw.mods.fml.common.FMLLog;
@@ -38,30 +37,30 @@ public class LOTRPlayerData {
 	public static int PLEDGE_KILL_COOLDOWN_MAX = 24000;
 	public static int ticksUntilFT_max = 200;
 	public UUID playerUUID;
-	public boolean needsSave = false;
-	public int pdTick = 0;
-	public Map<LOTRFaction, Float> alignments = new HashMap<>();
-	public Map<LOTRFaction, LOTRFactionData> factionDataMap = new HashMap<>();
+	public boolean needsSave;
+	public int pdTick;
+	public Map<LOTRFaction, Float> alignments = new EnumMap<>(LOTRFaction.class);
+	public Map<LOTRFaction, LOTRFactionData> factionDataMap = new EnumMap<>(LOTRFaction.class);
 	public LOTRFaction viewingFaction;
-	public Map<LOTRDimension.DimensionRegion, LOTRFaction> prevRegionFactions = new HashMap<>();
-	public boolean hideAlignment = false;
-	public Set<LOTRFaction> takenAlignmentRewards = new HashSet<>();
+	public Map<LOTRDimension.DimensionRegion, LOTRFaction> prevRegionFactions = new EnumMap<>(LOTRDimension.DimensionRegion.class);
+	public boolean hideAlignment;
+	public Collection<LOTRFaction> takenAlignmentRewards = EnumSet.noneOf(LOTRFaction.class);
 	public LOTRFaction pledgeFaction;
-	public int pledgeKillCooldown = 0;
+	public int pledgeKillCooldown;
 	public int pledgeBreakCooldown;
 	public int pledgeBreakCooldownStart;
-	public LOTRFaction brokenPledgeFaction = null;
-	public boolean hasPre35Alignments = false;
-	public boolean chosenUnwantedAlignments = false;
-	public boolean hideOnMap = false;
-	public boolean adminHideMap = false;
+	public LOTRFaction brokenPledgeFaction;
+	public boolean hasPre35Alignments;
+	public boolean chosenUnwantedAlignments;
+	public boolean hideOnMap;
+	public boolean adminHideMap;
 	public boolean showWaypoints = true;
 	public boolean showCustomWaypoints = true;
 	public boolean showHiddenSharedWaypoints = true;
 	public boolean conquestKills = true;
 	public List<LOTRAchievement> achievements = new ArrayList<>();
 	public LOTRShields shield;
-	public boolean friendlyFire = false;
+	public boolean friendlyFire;
 	public boolean hiredDeathMessages = true;
 	public ChunkCoordinates deathPoint;
 	public int deathDim;
@@ -71,34 +70,34 @@ public class LOTRPlayerData {
 	public int completedMiniquestCount;
 	public int completedBountyQuests;
 	public UUID trackingMiniQuestID;
-	public List<LOTRFaction> bountiesPlaced = new ArrayList<>();
+	public Collection<LOTRFaction> bountiesPlaced = new ArrayList<>();
 	public LOTRWaypoint lastWaypoint;
 	public LOTRBiome lastBiome;
-	public Map<LOTRGuiMessageTypes, Boolean> sentMessageTypes = new HashMap<>();
+	public Map<LOTRGuiMessageTypes, Boolean> sentMessageTypes = new EnumMap<>(LOTRGuiMessageTypes.class);
 	public LOTRTitle.PlayerTitle playerTitle;
-	public boolean femRankOverride = false;
+	public boolean femRankOverride;
 	public int ftSinceTick;
 	public LOTRAbstractWaypoint targetFTWaypoint;
 	public int ticksUntilFT;
 	public UUID uuidToMount;
 	public int uuidToMountTime;
 	public long lastOnlineTime = -1L;
-	public Set<LOTRWaypoint.Region> unlockedFTRegions = new HashSet<>();
+	public Collection<LOTRWaypoint.Region> unlockedFTRegions = EnumSet.noneOf(LOTRWaypoint.Region.class);
 	public List<LOTRCustomWaypoint> customWaypoints = new ArrayList<>();
 	public List<LOTRCustomWaypoint> customWaypointsShared = new ArrayList<>();
-	public Set<CWPSharedKey> cwpSharedUnlocked = new HashSet<>();
-	public Set<CWPSharedKey> cwpSharedHidden = new HashSet<>();
-	public Map<LOTRWaypoint, Integer> wpUseCounts = new HashMap<>();
+	public Collection<CWPSharedKey> cwpSharedUnlocked = new HashSet<>();
+	public Collection<CWPSharedKey> cwpSharedHidden = new HashSet<>();
+	public Map<LOTRWaypoint, Integer> wpUseCounts = new EnumMap<>(LOTRWaypoint.class);
 	public Map<Integer, Integer> cwpUseCounts = new HashMap<>();
 	public Map<CWPSharedKey, Integer> cwpSharedUseCounts = new HashMap<>();
 	public int nextCwpID = 20000;
 	public List<UUID> fellowshipIDs = new ArrayList<>();
 	public List<LOTRFellowshipClient> fellowshipsClient = new ArrayList<>();
-	public List<LOTRFellowshipInvite> fellowshipInvites = new ArrayList<>();
+	public Collection<LOTRFellowshipInvite> fellowshipInvites = new ArrayList<>();
 	public List<LOTRFellowshipClient> fellowshipInvitesClient = new ArrayList<>();
 	public UUID chatBoundFellowshipID;
-	public boolean structuresBanned = false;
-	public boolean teleportedME = false;
+	public boolean structuresBanned;
+	public boolean teleportedME;
 	public LOTRPlayerQuestData questData = new LOTRPlayerQuestData(this);
 	public int siegeActiveTime;
 
@@ -123,16 +122,16 @@ public class LOTRPlayerData {
 			if (fs.isDisbanded()) {
 				rejectFellowshipInvite(fs);
 				if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-					LOTRPacketFellowshipAcceptInviteResult resultPacket = new LOTRPacketFellowshipAcceptInviteResult(fs, LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.DISBANDED);
-					LOTRPacketHandler.networkWrapper.sendTo((IMessage) resultPacket, (EntityPlayerMP) entityplayer);
+					IMessage resultPacket = new LOTRPacketFellowshipAcceptInviteResult(fs, LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.DISBANDED);
+					LOTRPacketHandler.networkWrapper.sendTo(resultPacket, (EntityPlayerMP) entityplayer);
 				}
 			} else {
 				int limit = LOTRConfig.fellowshipMaxSize;
 				if (respectSizeLimit && limit >= 0 && fs.getPlayerCount() >= limit) {
 					rejectFellowshipInvite(fs);
 					if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-						LOTRPacketFellowshipAcceptInviteResult resultPacket = new LOTRPacketFellowshipAcceptInviteResult(fs, LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.TOO_LARGE);
-						LOTRPacketHandler.networkWrapper.sendTo((IMessage) resultPacket, (EntityPlayerMP) entityplayer);
+						IMessage resultPacket = new LOTRPacketFellowshipAcceptInviteResult(fs, LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.TOO_LARGE);
+						LOTRPacketHandler.networkWrapper.sendTo(resultPacket, (EntityPlayerMP) entityplayer);
 					}
 				} else {
 					fs.addMember(playerUUID);
@@ -141,8 +140,8 @@ public class LOTRPlayerData {
 					sendFellowshipInviteRemovePacket(fs);
 					if (entityplayer != null && !entityplayer.worldObj.isRemote) {
 						EntityPlayer inviter;
-						LOTRPacketFellowshipAcceptInviteResult resultPacket = new LOTRPacketFellowshipAcceptInviteResult(fs, LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.JOINED);
-						LOTRPacketHandler.networkWrapper.sendTo((IMessage) resultPacket, (EntityPlayerMP) entityplayer);
+						IMessage resultPacket = new LOTRPacketFellowshipAcceptInviteResult(fs, LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.JOINED);
+						LOTRPacketHandler.networkWrapper.sendTo(resultPacket, (EntityPlayerMP) entityplayer);
 						UUID inviterID = existingInvite.inviterID;
 						if (inviterID == null) {
 							inviterID = fs.getOwner();
@@ -196,15 +195,15 @@ public class LOTRPlayerData {
 		}
 	}
 
-	public LOTRAlignmentBonusMap addAlignment(EntityPlayer entityplayer, LOTRAlignmentValues.AlignmentBonus source, LOTRFaction faction, double posX, double posY, double posZ) {
-		return this.addAlignment(entityplayer, source, faction, null, posX, posY, posZ);
+	public void addAlignment(EntityPlayer entityplayer, LOTRAlignmentValues.AlignmentBonus source, LOTRFaction faction, double posX, double posY, double posZ) {
+		addAlignment(entityplayer, source, faction, null, posX, posY, posZ);
 	}
 
 	public LOTRAlignmentBonusMap addAlignment(EntityPlayer entityplayer, LOTRAlignmentValues.AlignmentBonus source, LOTRFaction faction, Entity entity) {
-		return this.addAlignment(entityplayer, source, faction, null, entity);
+		return addAlignment(entityplayer, source, faction, null, entity);
 	}
 
-	public LOTRAlignmentBonusMap addAlignment(EntityPlayer entityplayer, LOTRAlignmentValues.AlignmentBonus source, LOTRFaction faction, List<LOTRFaction> forcedBonusFactions, double posX, double posY, double posZ) {
+	public LOTRAlignmentBonusMap addAlignment(EntityPlayer entityplayer, LOTRAlignmentValues.AlignmentBonus source, LOTRFaction faction, Collection<LOTRFaction> forcedBonusFactions, double posX, double posY, double posZ) {
 		float bonus = source.bonus;
 		LOTRAlignmentBonusMap factionBonusMap = new LOTRAlignmentBonusMap();
 		float prevMainAlignment = getAlignment(faction);
@@ -225,11 +224,11 @@ public class LOTRPlayerData {
 							factionBonus *= 0.5f;
 						}
 						factionBonus = checkBonusForPledgeEnemyLimit(bonusFaction, factionBonus);
-						setAlignment(bonusFaction, alignment += factionBonus);
-						factionBonusMap.put(bonusFaction, Float.valueOf(factionBonus));
+						setAlignment(bonusFaction, alignment + factionBonus);
+						factionBonusMap.put(bonusFaction, factionBonus);
 					}
 				}
-				if (bonusFaction != getPledgeFaction()) {
+				if (bonusFaction != pledgeFaction) {
 					continue;
 				}
 				float conq = bonus;
@@ -252,8 +251,8 @@ public class LOTRPlayerData {
 				float factionPenalty = -Math.abs(bonus);
 				factionPenalty *= mplier;
 				factionPenalty = LOTRAlignmentValues.AlignmentBonus.scalePenalty(factionPenalty, alignment);
-				setAlignment(penaltyFaction, alignment += factionPenalty);
-				factionBonusMap.put(penaltyFaction, Float.valueOf(factionPenalty));
+				setAlignment(penaltyFaction, alignment + factionPenalty);
+				factionBonusMap.put(penaltyFaction, factionPenalty);
 			}
 		} else if (faction.isPlayableAlignmentFaction()) {
 			float alignment = getAlignment(faction);
@@ -262,8 +261,8 @@ public class LOTRPlayerData {
 				factionBonus *= 0.5f;
 			}
 			factionBonus = checkBonusForPledgeEnemyLimit(faction, factionBonus);
-			setAlignment(faction, alignment += factionBonus);
-			factionBonusMap.put(faction, Float.valueOf(factionBonus));
+			setAlignment(faction, alignment + factionBonus);
+			factionBonusMap.put(faction, factionBonus);
 		}
 		if (!factionBonusMap.isEmpty() || conquestBonus != 0.0f) {
 			sendAlignmentBonusPacket(source, faction, prevMainAlignment, factionBonusMap, conquestBonus, posX, posY, posZ);
@@ -271,13 +270,13 @@ public class LOTRPlayerData {
 		return factionBonusMap;
 	}
 
-	public LOTRAlignmentBonusMap addAlignment(EntityPlayer entityplayer, LOTRAlignmentValues.AlignmentBonus source, LOTRFaction faction, List<LOTRFaction> forcedBonusFactions, Entity entity) {
-		return this.addAlignment(entityplayer, source, faction, forcedBonusFactions, entity.posX, entity.boundingBox.minY + entity.height * 0.7, entity.posZ);
+	public LOTRAlignmentBonusMap addAlignment(EntityPlayer entityplayer, LOTRAlignmentValues.AlignmentBonus source, LOTRFaction faction, Collection<LOTRFaction> forcedBonusFactions, Entity entity) {
+		return addAlignment(entityplayer, source, faction, forcedBonusFactions, entity.posX, entity.boundingBox.minY + entity.height * 0.7, entity.posZ);
 	}
 
 	public void addAlignmentFromCommand(LOTRFaction faction, float add) {
 		float alignment = getAlignment(faction);
-		setAlignment(faction, alignment += add);
+		setAlignment(faction, alignment + add);
 	}
 
 	public void addCompletedBountyQuest() {
@@ -291,7 +290,7 @@ public class LOTRPlayerData {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
 			LOTRPacketCreateCWPClient packet = waypoint.getClientPacket();
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 			LOTRCustomWaypointLogger.logCreate(entityplayer, waypoint);
 		}
 		LOTRCustomWaypoint shareCopy = waypoint.createCopyOfShared(playerUUID);
@@ -412,11 +411,11 @@ public class LOTRPlayerData {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
 			LOTRPacketCreateCWPClient packet = waypoint.getClientPacketShared();
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
-	public int addSharedCustomWaypointsFrom(UUID onlyOneFellowshipID, List<UUID> checkSpecificPlayers) {
+	public void addSharedCustomWaypointsFrom(UUID onlyOneFellowshipID, Iterable<UUID> checkSpecificPlayers) {
 		List<UUID> checkFellowshipIDs;
 		if (onlyOneFellowshipID != null) {
 			checkFellowshipIDs = new ArrayList<>();
@@ -424,7 +423,7 @@ public class LOTRPlayerData {
 		} else {
 			checkFellowshipIDs = fellowshipIDs;
 		}
-		ArrayList<UUID> checkFellowPlayerIDs = new ArrayList<>();
+		Collection<UUID> checkFellowPlayerIDs = new ArrayList<>();
 		if (checkSpecificPlayers != null) {
 			for (UUID player : checkSpecificPlayers) {
 				if (player.equals(playerUUID)) {
@@ -449,7 +448,7 @@ public class LOTRPlayerData {
 		}
 		for (UUID player : checkFellowPlayerIDs) {
 			LOTRPlayerData pd = LOTRLevelData.getData(player);
-			List<LOTRCustomWaypoint> cwps = pd.getCustomWaypoints();
+			List<LOTRCustomWaypoint> cwps = pd.customWaypoints;
 			for (LOTRCustomWaypoint waypoint : cwps) {
 				boolean inSharedFellowship = false;
 				for (UUID fsID : checkFellowshipIDs) {
@@ -465,7 +464,6 @@ public class LOTRPlayerData {
 				addOrUpdateSharedCustomWaypoint(waypoint.createCopyOfShared(player));
 			}
 		}
-		return checkFellowPlayerIDs.size();
 	}
 
 	public void addSharedCustomWaypointsFromAllFellowships() {
@@ -477,11 +475,11 @@ public class LOTRPlayerData {
 	}
 
 	public boolean anyMatchingFellowshipNames(String name, boolean client) {
-		name = StringUtils.strip(name).toLowerCase();
+		name = StringUtils.strip(name).toLowerCase(Locale.ROOT);
 		if (client) {
 			for (LOTRFellowshipClient fs : fellowshipsClient) {
 				String otherName = fs.getName();
-				if (!name.equals(otherName = StringUtils.strip(otherName).toLowerCase())) {
+				if (!name.equals(StringUtils.strip(otherName).toLowerCase(Locale.ROOT))) {
 					continue;
 				}
 				return true;
@@ -493,7 +491,7 @@ public class LOTRPlayerData {
 					continue;
 				}
 				String otherName = fs.getName();
-				if (!name.equals(otherName = StringUtils.strip(otherName).toLowerCase())) {
+				if (!name.equals(StringUtils.strip(otherName).toLowerCase(Locale.ROOT))) {
 					continue;
 				}
 				return true;
@@ -587,8 +585,8 @@ public class LOTRPlayerData {
 		return bonus;
 	}
 
-	public void checkCustomWaypointsSharedBy(List<UUID> checkSpecificPlayers) {
-		ArrayList<LOTRCustomWaypoint> removes = new ArrayList<>();
+	public void checkCustomWaypointsSharedBy(Collection<UUID> checkSpecificPlayers) {
+		Collection<LOTRCustomWaypoint> removes = new ArrayList<>();
 		for (LOTRCustomWaypoint waypoint : customWaypointsShared) {
 			LOTRCustomWaypoint wpOriginal;
 			UUID waypointSharingPlayer = waypoint.getSharingPlayerID();
@@ -612,9 +610,9 @@ public class LOTRPlayerData {
 		}
 	}
 
-	public void chooseUnwantedAlignments(EntityPlayerMP entityplayer, Set<LOTRFaction> setZeroFacs) {
+	public void chooseUnwantedAlignments(ICommandSender entityplayer, Iterable<LOTRFaction> setZeroFacs) {
 		if (LOTRConfig.alignmentDrain && hasPre35Alignments && !chosenUnwantedAlignments) {
-			HashSet<LOTRFaction> validSelections = new HashSet<>();
+			Collection<LOTRFaction> validSelections = EnumSet.noneOf(LOTRFaction.class);
 			for (LOTRFaction fac : setZeroFacs) {
 				boolean valid = false;
 				if (getAlignment(fac) > 0.0f) {
@@ -650,8 +648,8 @@ public class LOTRPlayerData {
 			LOTRMod.proxy.setTrackedQuest(quest);
 			EntityPlayer entityplayer = getPlayer();
 			if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-				LOTRPacketMiniquestRemove packet = new LOTRPacketMiniquestRemove(quest, false, true);
-				LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+				IMessage packet = new LOTRPacketMiniquestRemove(quest, false, true);
+				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 			}
 		} else {
 			FMLLog.warning("Warning: Attempted to remove a miniquest which does not belong to the player data");
@@ -676,7 +674,7 @@ public class LOTRPlayerData {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
 			LOTRPacketShareCWPClient packet = waypoint.getClientAddFellowshipPacket(fsID);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 		LOTRCustomWaypoint shareCopy = waypoint.createCopyOfShared(playerUUID);
 		for (UUID player : fs.getAllPlayerUUIDs()) {
@@ -699,7 +697,7 @@ public class LOTRPlayerData {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
 			LOTRPacketShareCWPClient packet = waypoint.getClientRemoveFellowshipPacket(fsID);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 		LOTRCustomWaypoint shareCopy = waypoint.createCopyOfShared(playerUUID);
 		for (UUID player : fs.getAllPlayerUUIDs()) {
@@ -718,7 +716,7 @@ public class LOTRPlayerData {
 
 	public void disbandFellowship(LOTRFellowship fs, String disbanderUsername) {
 		if (fs.isOwner(playerUUID)) {
-			ArrayList<UUID> memberUUIDs = new ArrayList<>(fs.getMemberUUIDs());
+			Iterable<UUID> memberUUIDs = new ArrayList<>(fs.getMemberUUIDs());
 			fs.setDisbandedAndRemoveAllMembers();
 			removeFellowship(fs);
 			for (UUID memberID : memberUUIDs) {
@@ -773,7 +771,7 @@ public class LOTRPlayerData {
 			int startZ = MathHelper.floor_double(entityplayer.posZ);
 			double range = 256.0;
 			List<EntityLiving> entities = world.getEntitiesWithinAABB(EntityLiving.class, entityplayer.boundingBox.expand(range, range, range));
-			HashSet<EntityLiving> entitiesToTransport = new HashSet<>();
+			Collection<EntityLiving> entitiesToTransport = new HashSet<>();
 			for (EntityLiving entity : entities) {
 				EntityTameable pet;
 				if (entity instanceof LOTREntityNPC) {
@@ -797,7 +795,7 @@ public class LOTRPlayerData {
 				}
 				entitiesToTransport.add(entity);
 			}
-			HashSet<EntityLiving> removes = new HashSet<>();
+			Collection<EntityLiving> removes = new HashSet<>();
 			for (EntityLiving entity : entitiesToTransport) {
 				Entity rider = entity.riddenByEntity;
 				if (rider == null || !entitiesToTransport.contains(rider)) {
@@ -815,7 +813,7 @@ public class LOTRPlayerData {
 			entityplayer.setPositionAndUpdate(i + 0.5, j, k + 0.5);
 			entityplayer.fallDistance = 0.0f;
 			if (playerMount instanceof EntityLiving) {
-				playerMount = this.fastTravelEntity(world, (EntityLiving) playerMount, i, j, k);
+				playerMount = fastTravelEntity(world, (EntityLiving) playerMount, i, j, k);
 			}
 			if (playerMount != null) {
 				setUUIDToMount(playerMount.getUniqueID());
@@ -823,11 +821,11 @@ public class LOTRPlayerData {
 			for (EntityLiving entity : entitiesToTransport) {
 				Entity mount = entity.ridingEntity;
 				entity.mountEntity(null);
-				entity = this.fastTravelEntity(world, entity, i, j, k);
+				entity = fastTravelEntity(world, entity, i, j, k);
 				if (!(mount instanceof EntityLiving)) {
 					continue;
 				}
-				mount = this.fastTravelEntity(world, (EntityLiving) mount, i, j, k);
+				mount = fastTravelEntity(world, (EntityLiving) mount, i, j, k);
 				entity.mountEntity(mount);
 			}
 			sendFTPacket(entityplayer, waypoint, startX, startZ);
@@ -838,7 +836,7 @@ public class LOTRPlayerData {
 				markDirty();
 			}
 			if (waypoint instanceof LOTRCustomWaypoint) {
-				LOTRCustomWaypointLogger.logTravel((EntityPlayer) entityplayer, (LOTRCustomWaypoint) waypoint);
+				LOTRCustomWaypointLogger.logTravel(entityplayer, (LOTRCustomWaypoint) waypoint);
 			}
 		}
 	}
@@ -868,8 +866,8 @@ public class LOTRPlayerData {
 	}
 
 	public List<LOTRAbstractWaypoint> getAllAvailableWaypoints() {
-		ArrayList<LOTRAbstractWaypoint> waypoints = new ArrayList<>(LOTRWaypoint.listAllWaypoints());
-		waypoints.addAll(getCustomWaypoints());
+		List<LOTRAbstractWaypoint> waypoints = new ArrayList<>(LOTRWaypoint.listAllWaypoints());
+		waypoints.addAll(customWaypoints);
 		waypoints.addAll(customWaypointsShared);
 		return waypoints;
 	}
@@ -953,7 +951,7 @@ public class LOTRPlayerData {
 	}
 
 	public List<LOTRAchievement> getEarnedAchievements(LOTRDimension dimension) {
-		ArrayList<LOTRAchievement> earnedAchievements = new ArrayList<>();
+		List<LOTRAchievement> earnedAchievements = new ArrayList<>();
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null) {
 			for (LOTRAchievement achievement : achievements) {
@@ -984,7 +982,7 @@ public class LOTRPlayerData {
 	}
 
 	public List<LOTRFaction> getFactionsPreventingPledgeTo(LOTRFaction fac) {
-		ArrayList<LOTRFaction> enemies = new ArrayList<>();
+		List<LOTRFaction> enemies = new ArrayList<>();
 		for (LOTRFaction otherFac : LOTRFaction.values()) {
 			if (!otherFac.isPlayableAlignmentFaction() || !doesFactionPreventPledge(fac, otherFac) || getAlignment(otherFac) <= 0.0f) {
 				continue;
@@ -1010,7 +1008,7 @@ public class LOTRPlayerData {
 	}
 
 	public List<LOTRFellowship> getFellowships() {
-		ArrayList<LOTRFellowship> fellowships = new ArrayList<>();
+		List<LOTRFellowship> fellowships = new ArrayList<>();
 		for (UUID fsID : fellowshipIDs) {
 			LOTRFellowship fs = LOTRFellowshipData.getActiveFellowship(fsID);
 			if (fs == null) {
@@ -1056,7 +1054,7 @@ public class LOTRPlayerData {
 	}
 
 	public LOTRMiniQuest getMiniQuestForID(UUID id, boolean completed) {
-		ArrayList<LOTRMiniQuest> threadSafe = completed ? new ArrayList<>(miniQuestsCompleted) : new ArrayList<>(miniQuests);
+		Iterable<LOTRMiniQuest> threadSafe = completed ? new ArrayList<>(miniQuestsCompleted) : new ArrayList<>(miniQuests);
 		for (LOTRMiniQuest quest : threadSafe) {
 			if (!quest.questUUID.equals(id)) {
 				continue;
@@ -1087,13 +1085,7 @@ public class LOTRPlayerData {
 	}
 
 	public List<LOTRMiniQuest> getMiniQuestsForFaction(LOTRFaction f, boolean activeOnly) {
-		MiniQuestSelector.Faction sel = new MiniQuestSelector.Faction(new Supplier<LOTRFaction>() {
-
-			@Override
-			public LOTRFaction get() {
-				return f;
-			}
-		});
+		MiniQuestSelector.Faction sel = new MiniQuestSelector.Faction(() -> f);
 		if (activeOnly) {
 			sel.setActiveOnly();
 		}
@@ -1116,7 +1108,7 @@ public class LOTRPlayerData {
 	}
 
 	public EntityPlayer getPlayer() {
-		World[] searchWorlds = LOTRMod.proxy.isClient() ? new World[] { LOTRMod.proxy.getClientWorld() } : MinecraftServer.getServer().worldServers;
+		World[] searchWorlds = LOTRMod.proxy.isClient() ? new World[]{LOTRMod.proxy.getClientWorld()} : MinecraftServer.getServer().worldServers;
 		for (World world : searchWorlds) {
 			EntityPlayer entityplayer = world.func_152378_a(playerUUID);
 			if (entityplayer == null) {
@@ -1156,12 +1148,7 @@ public class LOTRPlayerData {
 	}
 
 	public LOTRFaction getRegionLastViewedFaction(LOTRDimension.DimensionRegion region) {
-		LOTRFaction fac = prevRegionFactions.get(region);
-		if (fac == null) {
-			fac = region.factionList.get(0);
-			prevRegionFactions.put(region, fac);
-		}
-		return fac;
+		return prevRegionFactions.computeIfAbsent(region, r -> r.factionList.get(0));
 	}
 
 	public LOTRCustomWaypoint getSharedCustomWaypointByID(UUID owner, int id) {
@@ -1217,7 +1204,7 @@ public class LOTRPlayerData {
 		double time = baseMin;
 		double added = (baseMax - baseMin) * Math.pow(0.9, useCount);
 		time += added;
-		int seconds = (int) Math.round(time *= Math.max(1.0, dist * 1.2E-5));
+		int seconds = (int) Math.round(time * Math.max(1.0, dist * 1.2E-5));
 		seconds = Math.max(seconds, 0);
 		return seconds * 20;
 	}
@@ -1246,8 +1233,8 @@ public class LOTRPlayerData {
 		getFactionData(bonusFac).addConquest(Math.abs(conq));
 		if (conq != 0.0f) {
 			LOTRAlignmentValues.AlignmentBonus source = new LOTRAlignmentValues.AlignmentBonus(0.0f, title);
-			LOTRPacketAlignmentBonus packet = new LOTRPacketAlignmentBonus(bonusFac, getAlignment(bonusFac), new LOTRAlignmentBonusMap(), conq, posX, posY, posZ, source);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketAlignmentBonus(bonusFac, getAlignment(bonusFac), new LOTRAlignmentBonusMap(), conq, posX, posY, posZ, source);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
@@ -1262,9 +1249,9 @@ public class LOTRPlayerData {
 	}
 
 	public boolean hasActiveOrCompleteMQType(Class<? extends LOTRMiniQuest> type) {
-		List<LOTRMiniQuest> quests = getMiniQuests();
-		List<LOTRMiniQuest> questsComplete = getMiniQuestsCompleted();
-		ArrayList<LOTRMiniQuest> allQuests = new ArrayList<>();
+		List<LOTRMiniQuest> quests = miniQuests;
+		List<LOTRMiniQuest> questsComplete = miniQuestsCompleted;
+		Collection<LOTRMiniQuest> allQuests = new ArrayList<>();
 		for (LOTRMiniQuest q : quests) {
 			if (!q.isActive()) {
 				continue;
@@ -1316,7 +1303,7 @@ public class LOTRPlayerData {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
 			LOTRPacketCWPSharedHideClient packet = waypoint.getClientSharedHidePacket(hide);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
@@ -1386,7 +1373,7 @@ public class LOTRPlayerData {
 	}
 
 	public List<String> listAllFellowshipNames() {
-		ArrayList<String> list = new ArrayList<>();
+		List<String> list = new ArrayList<>();
 		for (UUID fsID : fellowshipIDs) {
 			LOTRFellowship fs = LOTRFellowshipData.getActiveFellowship(fsID);
 			if (fs == null || !fs.containsPlayer(playerUUID)) {
@@ -1398,7 +1385,7 @@ public class LOTRPlayerData {
 	}
 
 	public List<String> listAllLeadingFellowshipNames() {
-		ArrayList<String> list = new ArrayList<>();
+		List<String> list = new ArrayList<>();
 		for (UUID fsID : fellowshipIDs) {
 			LOTRFellowship fs = LOTRFellowshipData.getActiveFellowship(fsID);
 			if (fs == null || !fs.isOwner(playerUUID)) {
@@ -1633,9 +1620,6 @@ public class LOTRPlayerData {
 		for (int i = 0; i < cwpSharedUnlockedTags.tagCount(); ++i) {
 			NBTTagCompound nbt = cwpSharedUnlockedTags.getCompoundTagAt(i);
 			UUID sharingPlayer = UUID.fromString(nbt.getString("SharingPlayer"));
-			if (sharingPlayer == null) {
-				continue;
-			}
 			int ID = nbt.getInteger("CustomID");
 			CWPSharedKey key = CWPSharedKey.keyFor(sharingPlayer, ID);
 			cwpSharedUnlocked.add(key);
@@ -1645,9 +1629,6 @@ public class LOTRPlayerData {
 		for (int i = 0; i < cwpSharedHiddenTags.tagCount(); ++i) {
 			NBTTagCompound nbt = cwpSharedHiddenTags.getCompoundTagAt(i);
 			UUID sharingPlayer = UUID.fromString(nbt.getString("SharingPlayer"));
-			if (sharingPlayer == null) {
-				continue;
-			}
 			int ID = nbt.getInteger("CustomID");
 			CWPSharedKey key = CWPSharedKey.keyFor(sharingPlayer, ID);
 			cwpSharedHidden.add(key);
@@ -1677,9 +1658,6 @@ public class LOTRPlayerData {
 		for (int i = 0; i < cwpSharedCooldownTags.tagCount(); ++i) {
 			NBTTagCompound nbt = cwpSharedCooldownTags.getCompoundTagAt(i);
 			UUID sharingPlayer = UUID.fromString(nbt.getString("SharingPlayer"));
-			if (sharingPlayer == null) {
-				continue;
-			}
 			int ID = nbt.getInteger("CustomID");
 			CWPSharedKey key = CWPSharedKey.keyFor(sharingPlayer, ID);
 			int count = nbt.getInteger("Count");
@@ -1694,9 +1672,6 @@ public class LOTRPlayerData {
 		for (int i = 0; i < fellowshipTags.tagCount(); ++i) {
 			NBTTagCompound nbt = fellowshipTags.getCompoundTagAt(i);
 			UUID fsID2 = UUID.fromString(nbt.getString("ID"));
-			if (fsID2 == null) {
-				continue;
-			}
 			fellowshipIDs.add(fsID2);
 		}
 		fellowshipInvites.clear();
@@ -1704,9 +1679,6 @@ public class LOTRPlayerData {
 		for (int i = 0; i < fellowshipInviteTags.tagCount(); ++i) {
 			NBTTagCompound nbt = fellowshipInviteTags.getCompoundTagAt(i);
 			UUID fsID3 = UUID.fromString(nbt.getString("ID"));
-			if (fsID3 == null) {
-				continue;
-			}
 			UUID inviterID = null;
 			if (nbt.hasKey("InviterID")) {
 				inviterID = UUID.fromString(nbt.getString("InviterID"));
@@ -1714,6 +1686,7 @@ public class LOTRPlayerData {
 			fellowshipInvites.add(new LOTRFellowshipInvite(fsID3, inviterID));
 		}
 		chatBoundFellowshipID = null;
+		//noinspection ConstantValue
 		if (playerData.hasKey("ChatBoundFellowship") && (fsID = UUID.fromString(playerData.getString("ChatBoundFellowship"))) != null) {
 			chatBoundFellowshipID = fsID;
 		}
@@ -1730,8 +1703,8 @@ public class LOTRPlayerData {
 			markDirty();
 			EntityPlayer entityplayer = getPlayer();
 			if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-				LOTRPacketWaypointRegion packet = new LOTRPacketWaypointRegion(region, false);
-				LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+				IMessage packet = new LOTRPacketWaypointRegion(region, false);
+				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 			}
 		}
 	}
@@ -1750,7 +1723,7 @@ public class LOTRPlayerData {
 		if (pledgeKillCooldown > 24000) {
 			revokePledgeFaction(entityplayer, false);
 		} else if (pledgeFaction != null) {
-			ChatComponentTranslation msg = new ChatComponentTranslation("chat.lotr.pledgeKillWarn", pledgeFaction.factionName());
+			IChatComponent msg = new ChatComponentTranslation("chat.lotr.pledgeKillWarn", pledgeFaction.factionName());
 			entityplayer.addChatMessage(msg);
 		}
 	}
@@ -1769,13 +1742,13 @@ public class LOTRPlayerData {
 			runAchievementChecks(entityplayer, world);
 		}
 		if (LOTRMod.playerDetailsCache.getPlayerDetails(playerUUID).isReceivedFromApi() && playerTitle != null && !playerTitle.getTitle().canPlayerUse(entityplayer)) {
-			ChatComponentTranslation msg = new ChatComponentTranslation("chat.lotr.loseTitle", playerTitle.getFullTitleComponent(entityplayer));
+			IChatComponent msg = new ChatComponentTranslation("chat.lotr.loseTitle", playerTitle.getFullTitleComponent(entityplayer));
 			entityplayer.addChatMessage(msg);
 			setPlayerTitle(null);
 		}
 		if (pledgeKillCooldown > 0) {
 			--pledgeKillCooldown;
-			if (pledgeKillCooldown == 0 || LOTRPlayerData.isTimerAutosaveTick()) {
+			if (pledgeKillCooldown == 0 || isTimerAutosaveTick()) {
 				markDirty();
 			}
 		}
@@ -1791,14 +1764,14 @@ public class LOTRPlayerData {
 		}
 		if (!bountiesPlaced.isEmpty()) {
 			for (LOTRFaction fac : bountiesPlaced) {
-				ChatComponentTranslation msg = new ChatComponentTranslation("chat.lotr.bountyPlaced", fac.factionName());
+				IChatComponent msg = new ChatComponentTranslation("chat.lotr.bountyPlaced", fac.factionName());
 				msg.getChatStyle().setColor(EnumChatFormatting.YELLOW);
 				entityplayer.addChatMessage(msg);
 			}
 			bountiesPlaced.clear();
 			markDirty();
 		}
-		this.setTimeSinceFT(ftSinceTick + 1);
+		setTimeSinceFT(ftSinceTick + 1);
 		if (targetFTWaypoint != null) {
 			if (entityplayer.isPlayerSleeping()) {
 				entityplayer.addChatMessage(new ChatComponentTranslation("lotr.fastTravel.inBed"));
@@ -1948,7 +1921,7 @@ public class LOTRPlayerData {
 			EntityPlayer entityplayer = getPlayer();
 			if (entityplayer != null && !entityplayer.worldObj.isRemote) {
 				LOTRPacketDeleteCWPClient packet = waypoint.getClientDeletePacket();
-				LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 				LOTRCustomWaypointLogger.logDelete(entityplayer, waypoint);
 			}
 			LOTRCustomWaypoint shareCopy = waypoint.createCopyOfShared(playerUUID);
@@ -1984,8 +1957,8 @@ public class LOTRPlayerData {
 			markDirty();
 			EntityPlayer entityplayer = getPlayer();
 			if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-				LOTRPacketMiniquestRemove packet = new LOTRPacketMiniquestRemove(quest, quest.isCompleted(), false);
-				LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+				IMessage packet = new LOTRPacketMiniquestRemove(quest, quest.isCompleted(), false);
+				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 			}
 		} else {
 			FMLLog.warning("Warning: Attempted to remove a miniquest which does not belong to the player data");
@@ -2013,7 +1986,7 @@ public class LOTRPlayerData {
 			EntityPlayer entityplayer = getPlayer();
 			if (entityplayer != null && !entityplayer.worldObj.isRemote) {
 				LOTRPacketDeleteCWPClient packet = waypoint.getClientDeletePacketShared();
-				LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 			}
 		} else {
 			FMLLog.warning("LOTR: Warning! Tried to remove a shared custom waypoint that does not exist!");
@@ -2026,7 +1999,7 @@ public class LOTRPlayerData {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
 			LOTRPacketRenameCWPClient packet = waypoint.getClientRenamePacket();
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 			LOTRCustomWaypointLogger.logRename(entityplayer, waypoint);
 		}
 		LOTRCustomWaypoint shareCopy = waypoint.createCopyOfShared(playerUUID);
@@ -2059,7 +2032,7 @@ public class LOTRPlayerData {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
 			LOTRPacketRenameCWPClient packet = waypoint.getClientRenamePacketShared();
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
@@ -2073,7 +2046,7 @@ public class LOTRPlayerData {
 		int cdTicks = 36000;
 		setPledgeFaction(null);
 		setBrokenPledgeFaction(wasPledge);
-		setPledgeBreakCooldown(cdTicks += Math.round(cd * 150.0f * 60.0f * 20.0f));
+		setPledgeBreakCooldown(cdTicks + Math.round(cd * 150.0f * 60.0f * 20.0f));
 		World world = entityplayer.worldObj;
 		if (!world.isRemote) {
 			ChatComponentTranslation msg;
@@ -2081,12 +2054,12 @@ public class LOTRPlayerData {
 			LOTRFactionRank rankBelow = wasPledge.getRankBelow(rank);
 			LOTRFactionRank rankBelow2 = wasPledge.getRankBelow(rankBelow);
 			float newAlign = rankBelow2.alignment;
-			float alignPenalty = (newAlign = Math.max(newAlign, pledgeLvl / 2.0f)) - prevAlign;
+			float alignPenalty = Math.max(newAlign, pledgeLvl / 2.0f) - prevAlign;
 			if (alignPenalty < 0.0f) {
 				LOTRAlignmentValues.AlignmentBonus penalty = LOTRAlignmentValues.createPledgePenalty(alignPenalty);
-				double alignX = 0.0;
-				double alignY = 0.0;
-				double alignZ = 0.0;
+				double alignX;
+				double alignY;
+				double alignZ;
 				double lookRange = 2.0;
 				Vec3 posEye = Vec3.createVectorHelper(entityplayer.posX, entityplayer.boundingBox.minY + entityplayer.getEyeHeight(), entityplayer.posZ);
 				Vec3 look = entityplayer.getLook(1.0f);
@@ -2101,7 +2074,7 @@ public class LOTRPlayerData {
 					alignY = posSight.yCoord;
 					alignZ = posSight.zCoord;
 				}
-				this.addAlignment(entityplayer, penalty, wasPledge, alignX, alignY, alignZ);
+				addAlignment(entityplayer, penalty, wasPledge, alignX, alignY, alignZ);
 			}
 			world.playSoundAtEntity(entityplayer, "lotr:event.unpledge", 1.0f, 1.0f);
 			if (intentional) {
@@ -2117,7 +2090,6 @@ public class LOTRPlayerData {
 	public void runAchievementChecks(EntityPlayer entityplayer, World world) {
 		LOTRMaterial fullMaterial;
 		int i = MathHelper.floor_double(entityplayer.posX);
-		MathHelper.floor_double(entityplayer.boundingBox.minY);
 		int k = MathHelper.floor_double(entityplayer.posZ);
 		BiomeGenBase biome = world.getBiomeGenForCoords(i, k);
 		if (biome instanceof LOTRBiome) {
@@ -2148,7 +2120,7 @@ public class LOTRPlayerData {
 		if (entityplayer.inventory.hasItem(LOTRMod.pouch)) {
 			addAchievement(LOTRAchievement.getPouch);
 		}
-		HashSet<Block> tables = new HashSet<>();
+		Collection<Block> tables = new HashSet<>();
 		int crossbowBolts = 0;
 		for (ItemStack item : entityplayer.inventory.mainInventory) {
 			Block block;
@@ -2288,7 +2260,7 @@ public class LOTRPlayerData {
 
 	public void runAlignmentDraining(EntityPlayerMP entityplayer) {
 		if (LOTRConfig.alignmentDrain && pdTick % 1000 == 0) {
-			ArrayList<LOTRFaction> drainFactions = new ArrayList<>();
+			Collection<LOTRFaction> drainFactions = new ArrayList<>();
 			List<LOTRFaction> allFacs = LOTRFaction.getPlayableAlignmentFactions();
 			for (LOTRFaction fac1 : allFacs) {
 				for (LOTRFaction fac2 : allFacs) {
@@ -2314,10 +2286,10 @@ public class LOTRPlayerData {
 					float align = getAlignment(fac);
 					float alignLoss = 5.0f;
 					alignLoss = Math.min(alignLoss, align - 0.0f);
-					setAlignment(fac, align -= alignLoss);
+					setAlignment(fac, align - alignLoss);
 				}
 				sendMessageIfNotReceived(LOTRGuiMessageTypes.ALIGN_DRAIN);
-				LOTRPacketAlignDrain packet = new LOTRPacketAlignDrain(drainFactions.size());
+				IMessage packet = new LOTRPacketAlignDrain(drainFactions.size());
 				LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 			}
 		}
@@ -2545,8 +2517,8 @@ public class LOTRPlayerData {
 	}
 
 	public List<LOTRMiniQuest> selectMiniQuests(MiniQuestSelector selector) {
-		ArrayList<LOTRMiniQuest> ret = new ArrayList<>();
-		ArrayList<LOTRMiniQuest> threadSafe = new ArrayList<>(miniQuests);
+		List<LOTRMiniQuest> ret = new ArrayList<>();
+		Iterable<LOTRMiniQuest> threadSafe = new ArrayList<>(miniQuests);
 		for (LOTRMiniQuest quest : threadSafe) {
 			if (!selector.include(quest)) {
 				continue;
@@ -2558,104 +2530,100 @@ public class LOTRPlayerData {
 
 	public void send35AlignmentChoice(EntityPlayerMP entityplayer, World world) {
 		if (LOTRConfig.alignmentDrain && hasPre35Alignments && !chosenUnwantedAlignments) {
-			LOTRPacketAlignmentChoiceOffer pkt = new LOTRPacketAlignmentChoiceOffer();
+			IMessage pkt = new LOTRPacketAlignmentChoiceOffer();
 			LOTRPacketHandler.networkWrapper.sendTo(pkt, entityplayer);
 		}
 	}
 
 	public void sendAchievementPacket(EntityPlayerMP entityplayer, LOTRAchievement achievement, boolean display) {
-		LOTRPacketAchievement packet = new LOTRPacketAchievement(achievement, display);
+		IMessage packet = new LOTRPacketAchievement(achievement, display);
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 
 	public void sendAchievementRemovePacket(EntityPlayerMP entityplayer, LOTRAchievement achievement) {
-		LOTRPacketAchievementRemove packet = new LOTRPacketAchievementRemove(achievement);
+		IMessage packet = new LOTRPacketAchievementRemove(achievement);
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 
 	public void sendAlignmentBonusPacket(LOTRAlignmentValues.AlignmentBonus source, LOTRFaction faction, float prevMainAlignment, LOTRAlignmentBonusMap factionMap, float conqBonus, double posX, double posY, double posZ) {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null) {
-			LOTRPacketAlignmentBonus packet = new LOTRPacketAlignmentBonus(faction, prevMainAlignment, factionMap, conqBonus, posX, posY, posZ, source);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketAlignmentBonus(faction, prevMainAlignment, factionMap, conqBonus, posX, posY, posZ, source);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
 	public void sendFellowshipInvitePacket(LOTRFellowship fs) {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			LOTRPacketFellowship packet = new LOTRPacketFellowship(this, fs, true);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketFellowship(this, fs, true);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
 	public void sendFellowshipInviteRemovePacket(LOTRFellowship fs) {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			LOTRPacketFellowshipRemove packet = new LOTRPacketFellowshipRemove(fs, true);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketFellowshipRemove(fs, true);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
 	public void sendFellowshipPacket(LOTRFellowship fs) {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			LOTRPacketFellowship packet = new LOTRPacketFellowship(this, fs, false);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketFellowship(this, fs, false);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
 	public void sendFellowshipRemovePacket(LOTRFellowship fs) {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			LOTRPacketFellowshipRemove packet = new LOTRPacketFellowshipRemove(fs, false);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketFellowshipRemove(fs, false);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
 	public void sendFTBouncePacket(EntityPlayerMP entityplayer) {
-		LOTRPacketFTBounceClient packet = new LOTRPacketFTBounceClient();
+		IMessage packet = new LOTRPacketFTBounceClient();
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 
 	public void sendFTPacket(EntityPlayerMP entityplayer, LOTRAbstractWaypoint waypoint, int startX, int startZ) {
-		LOTRPacketFTScreen packet = new LOTRPacketFTScreen(waypoint, startX, startZ);
+		IMessage packet = new LOTRPacketFTScreen(waypoint, startX, startZ);
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 
 	public void sendMessageIfNotReceived(LOTRGuiMessageTypes message) {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			Boolean sent = sentMessageTypes.get(message);
-			if (sent == null) {
-				sent = false;
-				sentMessageTypes.put(message, sent);
-			}
-			if (!sent.booleanValue()) {
+			Boolean sent = sentMessageTypes.computeIfAbsent(message, k -> false);
+			if (!sent) {
 				sentMessageTypes.put(message, true);
 				markDirty();
-				LOTRPacketMessage packet = new LOTRPacketMessage(message);
-				LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+				IMessage packet = new LOTRPacketMessage(message);
+				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 			}
 		}
 	}
 
-	public void sendMiniQuestPacket(EntityPlayerMP entityplayer, LOTRMiniQuest quest, boolean completed) throws IOException {
+	public void sendMiniQuestPacket(EntityPlayerMP entityplayer, LOTRMiniQuest quest, boolean completed) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		quest.writeToNBT(nbt);
-		LOTRPacketMiniquest packet = new LOTRPacketMiniquest(nbt, completed);
+		IMessage packet = new LOTRPacketMiniquest(nbt, completed);
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 
 	public void sendOptionsPacket(int option, boolean flag) {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			LOTRPacketOptions packet = new LOTRPacketOptions(option, flag);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketOptions(option, flag);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
-	public void sendPlayerData(EntityPlayerMP entityplayer) throws IOException {
+	public void sendPlayerData(EntityPlayerMP entityplayer) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		save(nbt);
 		nbt.removeTag("Achievements");
@@ -2664,7 +2632,7 @@ public class LOTRPlayerData {
 		nbt.removeTag("CustomWaypoints");
 		nbt.removeTag("Fellowships");
 		nbt.removeTag("FellowshipInvites");
-		LOTRPacketLoginPlayerData packet = new LOTRPacketLoginPlayerData(nbt);
+		IMessage packet = new LOTRPacketLoginPlayerData(nbt);
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 		for (LOTRAchievement achievement : achievements) {
 			sendAchievementPacket(entityplayer, achievement, false);
@@ -2688,7 +2656,7 @@ public class LOTRPlayerData {
 			fs.doRetroactiveWaypointSharerCheckIfNeeded();
 			checkIfStillWaypointSharerForFellowship(fs);
 		}
-		HashSet<LOTRFellowshipInvite> staleFellowshipInvites = new HashSet<>();
+		Collection<LOTRFellowshipInvite> staleFellowshipInvites = new HashSet<>();
 		for (LOTRFellowshipInvite invite : fellowshipInvites) {
 			LOTRFellowship fs = LOTRFellowshipData.getFellowship(invite.fellowshipID);
 			if (fs != null) {
@@ -2844,8 +2812,8 @@ public class LOTRPlayerData {
 		markDirty();
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			LOTRPacketTitle packet = new LOTRPacketTitle(playerTitle);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketTitle(playerTitle);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 		for (UUID fsID : fellowshipIDs) {
 			LOTRFellowship fs = LOTRFellowshipData.getActiveFellowship(fsID);
@@ -2861,7 +2829,7 @@ public class LOTRPlayerData {
 		EntityPlayer entityplayer;
 		int preCD = pledgeBreakCooldown;
 		LOTRFaction preBroken = brokenPledgeFaction;
-		pledgeBreakCooldown = i = Math.max(0, i);
+		pledgeBreakCooldown = Math.max(0, i);
 		bigChange = (pledgeBreakCooldown == 0 || preCD == 0) && pledgeBreakCooldown != preCD;
 		if (pledgeBreakCooldown > pledgeBreakCooldownStart) {
 			setPledgeBreakCooldownStart(pledgeBreakCooldown);
@@ -2872,16 +2840,16 @@ public class LOTRPlayerData {
 			setBrokenPledgeFaction(null);
 			bigChange = true;
 		}
-		if (bigChange || LOTRPlayerData.isTimerAutosaveTick()) {
+		if (bigChange || isTimerAutosaveTick()) {
 			markDirty();
 		}
 		if ((bigChange || pledgeBreakCooldown % 5 == 0) && (entityplayer = getPlayer()) != null && !entityplayer.worldObj.isRemote) {
-			LOTRPacketBrokenPledge packet = new LOTRPacketBrokenPledge(pledgeBreakCooldown, pledgeBreakCooldownStart, brokenPledgeFaction);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketBrokenPledge(pledgeBreakCooldown, pledgeBreakCooldownStart, brokenPledgeFaction);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 		if (pledgeBreakCooldown == 0 && preCD != pledgeBreakCooldown && (entityplayer = getPlayer()) != null && !entityplayer.worldObj.isRemote) {
 			String brokenName = preBroken == null ? StatCollector.translateToLocal("lotr.gui.factions.pledgeUnknown") : preBroken.factionName();
-			ChatComponentTranslation msg = new ChatComponentTranslation("chat.lotr.pledgeBreakCooldown", brokenName);
+			IChatComponent msg = new ChatComponentTranslation("chat.lotr.pledgeBreakCooldown", brokenName);
 			entityplayer.addChatMessage(msg);
 		}
 	}
@@ -2906,8 +2874,8 @@ public class LOTRPlayerData {
 				World world = entityplayer.worldObj;
 				world.playSoundAtEntity(entityplayer, "lotr:event.pledge", 1.0f, 1.0f);
 			}
-			LOTRPacketPledge packet = new LOTRPacketPledge(fac);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketPledge(fac);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
@@ -2972,26 +2940,26 @@ public class LOTRPlayerData {
 	}
 
 	public void setTimeSinceFT(int i) {
-		this.setTimeSinceFT(i, false);
+		setTimeSinceFT(i, false);
 	}
 
 	public void setTimeSinceFT(int i, boolean forceUpdate) {
 		boolean bigChange;
 		EntityPlayer entityplayer;
 		int preTick = ftSinceTick;
-		ftSinceTick = i = Math.max(0, i);
-		bigChange = (ftSinceTick == 0 || preTick == 0) && ftSinceTick != preTick || preTick < 0 && ftSinceTick >= 0;
-		if (bigChange || LOTRPlayerData.isTimerAutosaveTick() || forceUpdate) {
+		ftSinceTick = Math.max(0, i);
+		bigChange = (ftSinceTick == 0 || preTick == 0) && ftSinceTick != preTick || preTick < 0;
+		if (bigChange || isTimerAutosaveTick() || forceUpdate) {
 			markDirty();
 		}
 		if ((bigChange || ftSinceTick % 5 == 0 || forceUpdate) && (entityplayer = getPlayer()) != null && !entityplayer.worldObj.isRemote) {
-			LOTRPacketFTTimer packet = new LOTRPacketFTTimer(ftSinceTick);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketFTTimer(ftSinceTick);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
 	public void setTimeSinceFTWithUpdate(int i) {
-		this.setTimeSinceFT(i, true);
+		setTimeSinceFT(i, true);
 	}
 
 	public void setTrackingMiniQuest(LOTRMiniQuest quest) {
@@ -3003,8 +2971,8 @@ public class LOTRPlayerData {
 		markDirty();
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			LOTRPacketMiniquestTrackClient packet = new LOTRPacketMiniquestTrackClient(trackingMiniQuestID);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketMiniquestTrackClient(trackingMiniQuestID);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
@@ -3020,8 +2988,8 @@ public class LOTRPlayerData {
 			markDirty();
 			EntityPlayer entityplayer = getPlayer();
 			if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-				LOTRPacketUpdateViewingFaction packet = new LOTRPacketUpdateViewingFaction(viewingFaction);
-				LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+				IMessage packet = new LOTRPacketUpdateViewingFaction(viewingFaction);
+				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 			}
 		}
 	}
@@ -3043,8 +3011,8 @@ public class LOTRPlayerData {
 		markDirty();
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			LOTRPacketWaypointUseCount packet = new LOTRPacketWaypointUseCount(wp, count);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketWaypointUseCount(wp, count);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
@@ -3078,8 +3046,8 @@ public class LOTRPlayerData {
 			markDirty();
 			EntityPlayer entityplayer = getPlayer();
 			if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-				LOTRPacketWaypointRegion packet = new LOTRPacketWaypointRegion(region, true);
-				LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+				IMessage packet = new LOTRPacketWaypointRegion(region, true);
+				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 			}
 		}
 	}
@@ -3096,13 +3064,13 @@ public class LOTRPlayerData {
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
 			LOTRPacketCWPSharedUnlockClient packet = waypoint.getClientSharedUnlockPacket();
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
 	public void unlockSharedCustomWaypoints(EntityPlayer entityplayer) {
 		if (pdTick % 20 == 0 && entityplayer.dimension == LOTRDimension.MIDDLE_EARTH.dimensionID) {
-			ArrayList<LOTRCustomWaypoint> unlockWaypoints = new ArrayList<>();
+			Collection<LOTRCustomWaypoint> unlockWaypoints = new ArrayList<>();
 			for (LOTRCustomWaypoint waypoint : customWaypointsShared) {
 				if (!waypoint.isShared() || waypoint.isSharedUnlocked() || !waypoint.canUnlockShared(entityplayer)) {
 					continue;
@@ -3130,12 +3098,12 @@ public class LOTRPlayerData {
 			markDirty();
 			NBTTagCompound nbt = new NBTTagCompound();
 			factionData.save(nbt);
-			LOTRPacketFactionData packet = new LOTRPacketFactionData(faction, nbt);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketFactionData(faction, nbt);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 
-	public void updateFastTravelClockFromLastOnlineTime(EntityPlayerMP player, World world) {
+	public void updateFastTravelClockFromLastOnlineTime(ICommandSender player, World world) {
 		int ftClockIncrease;
 		int diff;
 		if (lastOnlineTime <= 0L) {
@@ -3144,7 +3112,7 @@ public class LOTRPlayerData {
 		MinecraftServer server = MinecraftServer.getServer();
 		if (!server.isSinglePlayer() && (ftClockIncrease = (int) ((diff = (int) (getCurrentOnlineTime() - lastOnlineTime)) * 0.1)) > 0) {
 			setTimeSinceFTWithUpdate(ftSinceTick + ftClockIncrease);
-			ChatComponentTranslation msg = new ChatComponentTranslation("chat.lotr.ft.offlineTick", LOTRLevelData.getHMSTime_Ticks(diff), LOTRLevelData.getHMSTime_Ticks(ftClockIncrease));
+			IChatComponent msg = new ChatComponentTranslation("chat.lotr.ft.offlineTick", LOTRLevelData.getHMSTime_Ticks(diff), LOTRLevelData.getHMSTime_Ticks(ftClockIncrease));
 			player.addChatMessage(msg);
 		}
 	}
@@ -3171,12 +3139,7 @@ public class LOTRPlayerData {
 		markDirty();
 		EntityPlayer entityplayer = getPlayer();
 		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			try {
-				sendMiniQuestPacket((EntityPlayerMP) entityplayer, quest, false);
-			} catch (IOException e) {
-				FMLLog.severe("Error sending miniquest packet to player " + entityplayer.getCommandSenderName());
-				e.printStackTrace();
-			}
+			sendMiniQuestPacket((EntityPlayerMP) entityplayer, quest, false);
 		}
 	}
 

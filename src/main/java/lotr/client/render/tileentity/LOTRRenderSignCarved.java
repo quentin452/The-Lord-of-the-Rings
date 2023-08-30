@@ -31,10 +31,10 @@ public class LOTRRenderSignCarved extends TileEntitySpecialRenderer implements I
 		}
 		int width = cachedBlockAtlasImage.getWidth();
 		int height = cachedBlockAtlasImage.getHeight();
-		int u0 = (int) Math.round((double) icon.getMinU() * (double) width);
-		int u1 = (int) Math.round((double) icon.getMaxU() * (double) width);
-		int v0 = (int) Math.round((double) icon.getMinV() * (double) height);
-		int v1 = (int) Math.round((double) icon.getMaxV() * (double) height);
+		int u0 = (int) Math.round((double) icon.getMinU() * width);
+		int u1 = (int) Math.round((double) icon.getMaxU() * width);
+		int v0 = (int) Math.round((double) icon.getMinV() * height);
+		int v1 = (int) Math.round((double) icon.getMaxV() * height);
 		int totalR = 0;
 		int totalG = 0;
 		int totalB = 0;
@@ -44,7 +44,7 @@ public class LOTRRenderSignCarved extends TileEntitySpecialRenderer implements I
 				int rgb = cachedBlockAtlasImage.getRGB(x, y);
 				int r = rgb >> 16 & 0xFF;
 				int g = rgb >> 8 & 0xFF;
-				int b = rgb >> 0 & 0xFF;
+				int b = rgb & 0xFF;
 				totalR += r;
 				totalG += g;
 				totalB += b;
@@ -54,7 +54,7 @@ public class LOTRRenderSignCarved extends TileEntitySpecialRenderer implements I
 		int avgR = totalR / count & 0xFF;
 		int avgG = totalG / count & 0xFF;
 		int avgB = totalB / count & 0xFF;
-		int avgColor = 0xFF000000 | avgR << 16 | avgG << 8 | avgB << 0;
+		int avgColor = 0xFF000000 | avgR << 16 | avgG << 8 | avgB;
 		iconAverageColors.put(icon, avgColor);
 		return avgColor;
 	}
@@ -65,9 +65,9 @@ public class LOTRRenderSignCarved extends TileEntitySpecialRenderer implements I
 		float h = hsb[0];
 		float s = hsb[1];
 		float b = hsb[2];
-		b = b > 0.6f ? (b -= 0.6f) : (b += 0.4f);
+		b = b > 0.6f ? b - 0.6f : b + 0.4f;
 		b = MathHelper.clamp_float(b, 0.0f, 1.0f);
-		return Color.HSBtoRGB(h, s *= 0.5f, b);
+		return Color.HSBtoRGB(h, s * 0.5f, b);
 	}
 
 	public int getContrastingColor(IIcon icon) {

@@ -39,7 +39,7 @@ public enum LOTRMusicRegion {
 	}
 
 	public static LOTRMusicRegion forName(String s) {
-		for (LOTRMusicRegion r : LOTRMusicRegion.values()) {
+		for (LOTRMusicRegion r : values()) {
 			if (!s.equalsIgnoreCase(r.regionName)) {
 				continue;
 			}

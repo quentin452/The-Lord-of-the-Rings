@@ -8,13 +8,13 @@ import net.minecraft.block.BlockTorch;
 import net.minecraft.world.World;
 
 public abstract class LOTRBlockTorch extends BlockTorch {
-	public LOTRBlockTorch() {
+	protected LOTRBlockTorch() {
 		setCreativeTab(LOTRCreativeTabs.tabDeco);
 	}
 
 	public abstract TorchParticle createTorchParticle(Random var1);
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		int meta = world.getBlockMetadata(i, j, k);
@@ -26,26 +26,26 @@ public abstract class LOTRBlockTorch extends BlockTorch {
 		TorchParticle particle = createTorchParticle(random);
 		if (particle != null) {
 			switch (meta) {
-			case 1:
-				particle.spawn(d - particleX, d1 + particleY, d2);
-				break;
-			case 2:
-				particle.spawn(d + particleX, d1 + particleY, d2);
-				break;
-			case 3:
-				particle.spawn(d, d1 + particleY, d2 - particleX);
-				break;
-			case 4:
-				particle.spawn(d, d1 + particleY, d2 + particleX);
-				break;
-			default:
-				particle.spawn(d, d1, d2);
-				break;
+				case 1:
+					particle.spawn(d - particleX, d1 + particleY, d2);
+					break;
+				case 2:
+					particle.spawn(d + particleX, d1 + particleY, d2);
+					break;
+				case 3:
+					particle.spawn(d, d1 + particleY, d2 - particleX);
+					break;
+				case 4:
+					particle.spawn(d, d1 + particleY, d2 + particleX);
+					break;
+				default:
+					particle.spawn(d, d1, d2);
+					break;
 			}
 		}
 	}
 
-	public class TorchParticle {
+	public static class TorchParticle {
 		public String name;
 		public double posX;
 		public double posY;

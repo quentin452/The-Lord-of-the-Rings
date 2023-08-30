@@ -17,7 +17,7 @@ public class LOTREnchantmentMeleeReach extends LOTREnchantment {
 	public boolean canApply(ItemStack itemstack, boolean considering) {
 		if (super.canApply(itemstack, considering)) {
 			float reach = LOTRWeaponStats.getMeleeReachFactor(itemstack);
-			return (reach *= reachFactor) <= LOTRWeaponStats.MAX_MODIFIABLE_REACH;
+			return reach * reachFactor <= LOTRWeaponStats.MAX_MODIFIABLE_REACH;
 		}
 		return false;
 	}

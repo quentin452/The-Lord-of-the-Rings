@@ -15,13 +15,13 @@ public class LOTRBiomeGenMinhiriath extends LOTRBiomeGenEriador {
 	public LOTRBiomeGenMinhiriath(int i, boolean major) {
 		super(i, major);
 		clearBiomeVariants();
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE);
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE_BARREN);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_SPRUCE);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK_SPRUCE);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE_BARREN);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_SPRUCE);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK_SPRUCE);
 		decorator.grassPerChunk = 5;
 		decorator.doubleGrassPerChunk = 3;
 		decorator.addTree(LOTRTreeType.OAK_DEAD, 1000);

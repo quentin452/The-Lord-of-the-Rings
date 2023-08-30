@@ -24,7 +24,7 @@ public class LOTRWorldGenBreeBarn extends LOTRWorldGenBreeStructure {
 		int j2;
 		int step;
 		int k12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 8);
+		setOriginAndRotation(world, i, j, k, rotation, 8);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i12 = -6; i12 <= 6; ++i12) {
@@ -52,7 +52,7 @@ public class LOTRWorldGenBreeBarn extends LOTRWorldGenBreeStructure {
 			}
 		}
 		for (i12 = -1; i12 <= 1; ++i12) {
-			for (int k131 : new int[] { -8, 8 }) {
+			for (int k131 : new int[]{-8, 8}) {
 				for (int j13 = 1; j13 <= 3; ++j13) {
 					setAir(world, i12, j13, k131);
 				}
@@ -81,7 +81,7 @@ public class LOTRWorldGenBreeBarn extends LOTRWorldGenBreeStructure {
 		associateBlockMetaAlias("LEAF", Blocks.leaves, 4);
 		generateStrScan(world, random, 0, 0, 0);
 		for (i1 = -1; i1 <= 1; ++i1) {
-			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = 0 - step, k13 = -8 - step); ++step) {
+			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = -step, k13 = -8 - step); ++step) {
 				setBlockAndMetadata(world, i1, j1, k13, Blocks.grass, 0);
 				setGrassToDirt(world, i1, j1 - 1, k13);
 				j2 = j1 - 1;
@@ -93,7 +93,7 @@ public class LOTRWorldGenBreeBarn extends LOTRWorldGenBreeStructure {
 			}
 		}
 		for (i1 = -1; i1 <= 1; ++i1) {
-			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = 0 - step, k13 = 8 + step); ++step) {
+			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = -step, k13 = 8 + step); ++step) {
 				setBlockAndMetadata(world, i1, j1, k13, Blocks.grass, 0);
 				setGrassToDirt(world, i1, j1 - 1, k13);
 				j2 = j1 - 1;
@@ -104,14 +104,14 @@ public class LOTRWorldGenBreeBarn extends LOTRWorldGenBreeStructure {
 				}
 			}
 		}
-		this.placeChest(world, random, -4, 1, -6, 4, LOTRChestContents.BREE_HOUSE, 1 + random.nextInt(2));
-		this.placeChest(world, random, -4, 1, -5, 4, LOTRChestContents.BREE_HOUSE, 1 + random.nextInt(2));
-		this.placeChest(world, random, 4, 1, 5, 5, LOTRChestContents.BREE_HOUSE, 1 + random.nextInt(2));
-		this.placeChest(world, random, 4, 1, 6, 5, LOTRChestContents.BREE_HOUSE, 1 + random.nextInt(2));
-		this.placeChest(world, random, -4, 0, -1, 4, LOTRChestContents.BREE_TREASURE);
-		this.placeChest(world, random, 4, 5, -5, 5, LOTRChestContents.BREE_HOUSE, 1 + random.nextInt(2));
-		this.placeChest(world, random, -4, 5, 0, 4, LOTRChestContents.BREE_TREASURE, 1 + random.nextInt(2));
-		this.placeChest(world, random, -4, 5, 6, 4, LOTRChestContents.BREE_TREASURE);
+		placeChest(world, random, -4, 1, -6, 4, LOTRChestContents.BREE_HOUSE, 1 + random.nextInt(2));
+		placeChest(world, random, -4, 1, -5, 4, LOTRChestContents.BREE_HOUSE, 1 + random.nextInt(2));
+		placeChest(world, random, 4, 1, 5, 5, LOTRChestContents.BREE_HOUSE, 1 + random.nextInt(2));
+		placeChest(world, random, 4, 1, 6, 5, LOTRChestContents.BREE_HOUSE, 1 + random.nextInt(2));
+		placeChest(world, random, -4, 0, -1, 4, LOTRChestContents.BREE_TREASURE);
+		placeChest(world, random, 4, 5, -5, 5, LOTRChestContents.BREE_HOUSE, 1 + random.nextInt(2));
+		placeChest(world, random, -4, 5, 0, 4, LOTRChestContents.BREE_TREASURE, 1 + random.nextInt(2));
+		placeChest(world, random, -4, 5, 6, 4, LOTRChestContents.BREE_TREASURE);
 		LOTREntityBreeFarmer farmer = new LOTREntityBreeFarmer(world);
 		spawnNPCAndSetHome(farmer, world, 0, 1, 0, 16);
 		spawnAnimal(world, random, -3, 1, -2);
@@ -124,7 +124,7 @@ public class LOTRWorldGenBreeBarn extends LOTRWorldGenBreeStructure {
 	public void spawnAnimal(World world, Random random, int i, int j, int k) {
 		int animals = 2;
 		for (int l = 0; l < animals; ++l) {
-			EntityAnimal animal = LOTRWorldGenBreeBarn.getRandomAnimal(world, random);
+			EntityAnimal animal = getRandomAnimal(world, random);
 			spawnNPCAndSetHome(animal, world, i, j, k, 0);
 			animal.detachHome();
 		}
@@ -133,16 +133,16 @@ public class LOTRWorldGenBreeBarn extends LOTRWorldGenBreeStructure {
 	public static EntityAnimal getRandomAnimal(World world, Random random) {
 		int animal = random.nextInt(4);
 		switch (animal) {
-		case 0:
-			return new EntityCow(world);
-		case 1:
-			return new EntityPig(world);
-		case 2:
-			return new EntitySheep(world);
-		case 3:
-			return new EntityChicken(world);
-		default:
-			break;
+			case 0:
+				return new EntityCow(world);
+			case 1:
+				return new EntityPig(world);
+			case 2:
+				return new EntitySheep(world);
+			case 3:
+				return new EntityChicken(world);
+			default:
+				break;
 		}
 		return null;
 	}

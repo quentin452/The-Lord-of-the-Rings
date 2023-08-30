@@ -17,19 +17,19 @@ public class LOTRBlockStainedGlass extends LOTRBlockGlass {
 		return i;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return glassIcons[j % glassIcons.length];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getRenderBlockPass() {
 		return 1;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < glassIcons.length; ++i) {
@@ -37,7 +37,7 @@ public class LOTRBlockStainedGlass extends LOTRBlockGlass {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		for (int i = 0; i < glassIcons.length; ++i) {

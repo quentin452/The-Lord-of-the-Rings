@@ -17,7 +17,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.*;
 
 public class LOTRBlockHobbitOven extends BlockContainer {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] ovenIcons;
 
 	public LOTRBlockHobbitOven() {
@@ -29,7 +29,7 @@ public class LOTRBlockHobbitOven extends BlockContainer {
 
 	@Override
 	public void breakBlock(World world, int i, int j, int k, Block block, int meta) {
-		LOTRTileEntityHobbitOven oven = (LOTRTileEntityHobbitOven) world.getTileEntity(i, j, k);
+		IInventory oven = (IInventory) world.getTileEntity(i, j, k);
 		if (oven != null) {
 			LOTRMod.dropContainerItems(oven, world, i, j, k);
 			world.func_147453_f(i, j, k, block);
@@ -47,17 +47,17 @@ public class LOTRBlockHobbitOven extends BlockContainer {
 		return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(i, j, k));
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(IBlockAccess world, int i, int j, int k, int side) {
 		if (side == 1 || side == 0) {
 			return ovenIcons[1];
 		}
 		int meta = world.getBlockMetadata(i, j, k) & 7;
-		return side != meta ? ovenIcons[0] : LOTRBlockHobbitOven.isOvenActive(world, i, j, k) ? ovenIcons[3] : ovenIcons[2];
+		return side != meta ? ovenIcons[0] : isOvenActive(world, i, j, k) ? ovenIcons[3] : ovenIcons[2];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return i == 1 || i == 0 ? ovenIcons[1] : i == 3 ? ovenIcons[2] : ovenIcons[0];
@@ -65,7 +65,7 @@ public class LOTRBlockHobbitOven extends BlockContainer {
 
 	@Override
 	public int getLightValue(IBlockAccess world, int i, int j, int k) {
-		return LOTRBlockHobbitOven.isOvenActive(world, i, j, k) ? 13 : 0;
+		return isOvenActive(world, i, j, k) ? 13 : 0;
 	}
 
 	@Override
@@ -107,10 +107,10 @@ public class LOTRBlockHobbitOven extends BlockContainer {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
-		if (LOTRBlockHobbitOven.isOvenActive(world, i, j, k)) {
+		if (isOvenActive(world, i, j, k)) {
 			int meta = world.getBlockMetadata(i, j, k) & 7;
 			float f = i + 0.5f;
 			float f1 = j + 0.0f + random.nextFloat() * 6.0f / 16.0f;
@@ -118,29 +118,29 @@ public class LOTRBlockHobbitOven extends BlockContainer {
 			float f3 = 0.52f;
 			float f4 = random.nextFloat() * 0.6f - 0.3f;
 			switch (meta) {
-			case 4:
-				world.spawnParticle("smoke", f - f3, f1, f2 + f4, 0.0, 0.0, 0.0);
-				world.spawnParticle("flame", f - f3, f1, f2 + f4, 0.0, 0.0, 0.0);
-				break;
-			case 5:
-				world.spawnParticle("smoke", f + f3, f1, f2 + f4, 0.0, 0.0, 0.0);
-				world.spawnParticle("flame", f + f3, f1, f2 + f4, 0.0, 0.0, 0.0);
-				break;
-			case 2:
-				world.spawnParticle("smoke", f + f4, f1, f2 - f3, 0.0, 0.0, 0.0);
-				world.spawnParticle("flame", f + f4, f1, f2 - f3, 0.0, 0.0, 0.0);
-				break;
-			case 3:
-				world.spawnParticle("smoke", f + f4, f1, f2 + f3, 0.0, 0.0, 0.0);
-				world.spawnParticle("flame", f + f4, f1, f2 + f3, 0.0, 0.0, 0.0);
-				break;
-			default:
-				break;
+				case 4:
+					world.spawnParticle("smoke", f - f3, f1, f2 + f4, 0.0, 0.0, 0.0);
+					world.spawnParticle("flame", f - f3, f1, f2 + f4, 0.0, 0.0, 0.0);
+					break;
+				case 5:
+					world.spawnParticle("smoke", f + f3, f1, f2 + f4, 0.0, 0.0, 0.0);
+					world.spawnParticle("flame", f + f3, f1, f2 + f4, 0.0, 0.0, 0.0);
+					break;
+				case 2:
+					world.spawnParticle("smoke", f + f4, f1, f2 - f3, 0.0, 0.0, 0.0);
+					world.spawnParticle("flame", f + f4, f1, f2 - f3, 0.0, 0.0, 0.0);
+					break;
+				case 3:
+					world.spawnParticle("smoke", f + f4, f1, f2 + f3, 0.0, 0.0, 0.0);
+					world.spawnParticle("flame", f + f4, f1, f2 + f3, 0.0, 0.0, 0.0);
+					break;
+				default:
+					break;
 			}
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		ovenIcons = new IIcon[4];

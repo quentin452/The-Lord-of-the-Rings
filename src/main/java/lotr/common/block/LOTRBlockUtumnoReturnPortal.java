@@ -46,13 +46,13 @@ public class LOTRBlockUtumnoReturnPortal extends BlockContainer {
 		return new LOTRTileEntityUtumnoReturnPortal();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return Blocks.portal.getIcon(i, j);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public Item getItem(World world, int i, int j, int k) {
 		return Item.getItemById(0);
@@ -80,7 +80,7 @@ public class LOTRBlockUtumnoReturnPortal extends BlockContainer {
 		return 0;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

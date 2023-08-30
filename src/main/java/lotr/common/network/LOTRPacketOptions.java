@@ -37,23 +37,23 @@ public class LOTRPacketOptions implements IMessage {
 				int option = packet.option;
 				boolean enable = packet.enable;
 				switch (option) {
-				case 0:
-					LOTRLevelData.getData(entityplayer).setFriendlyFire(enable);
-					break;
-				case 1:
-					LOTRLevelData.getData(entityplayer).setEnableHiredDeathMessages(enable);
-					break;
-				case 3:
-					LOTRLevelData.getData(entityplayer).setHideMapLocation(enable);
-					break;
-				case 4:
-					LOTRLevelData.getData(entityplayer).setFemRankOverride(enable);
-					break;
-				case 5:
-					LOTRLevelData.getData(entityplayer).setEnableConquestKills(enable);
-					break;
-				default:
-					break;
+					case 0:
+						LOTRLevelData.getData(entityplayer).setFriendlyFire(enable);
+						break;
+					case 1:
+						LOTRLevelData.getData(entityplayer).setEnableHiredDeathMessages(enable);
+						break;
+					case 3:
+						LOTRLevelData.getData(entityplayer).setHideMapLocation(enable);
+						break;
+					case 4:
+						LOTRLevelData.getData(entityplayer).setFemRankOverride(enable);
+						break;
+					case 5:
+						LOTRLevelData.getData(entityplayer).setEnableConquestKills(enable);
+						break;
+					default:
+						break;
 				}
 			}
 			return null;

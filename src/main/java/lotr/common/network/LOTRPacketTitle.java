@@ -44,11 +44,7 @@ public class LOTRPacketTitle implements IMessage {
 			EntityPlayer entityplayer = LOTRMod.proxy.getClientPlayer();
 			LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
 			LOTRTitle.PlayerTitle title = packet.playerTitle;
-			if (title == null) {
-				pd.setPlayerTitle(null);
-			} else {
-				pd.setPlayerTitle(title);
-			}
+			pd.setPlayerTitle(title);
 			return null;
 		}
 	}

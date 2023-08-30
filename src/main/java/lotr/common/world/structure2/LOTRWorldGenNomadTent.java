@@ -15,7 +15,7 @@ public class LOTRWorldGenNomadTent extends LOTRWorldGenNomadStructure {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 7);
+		setOriginAndRotation(world, i, j, k, rotation, 7);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -63,7 +63,7 @@ public class LOTRWorldGenNomadTent extends LOTRWorldGenNomadStructure {
 		setBlockAndMetadata(world, -3, 1, 2, bedBlock, 3);
 		setBlockAndMetadata(world, -4, 1, 2, bedBlock, 11);
 		placeWeaponRack(world, 0, 3, 5, 6, getRandomNomadWeapon(random));
-		this.placeChest(world, random, 0, 1, 5, LOTRMod.chestBasket, 2, LOTRChestContents.NOMAD_TENT);
+		placeChest(world, random, 0, 1, 5, LOTRMod.chestBasket, 2, LOTRChestContents.NOMAD_TENT);
 		int nomads = 1 + random.nextInt(2);
 		for (int l = 0; l < nomads; ++l) {
 			LOTREntityNomad nomad = new LOTREntityNomad(world);

@@ -16,7 +16,8 @@ public class LOTRWorldGenReeds extends WorldGenerator {
 
 	@Override
 	public boolean generate(World world, Random random, int i, int j, int k) {
-		block0: for (int l = 0; l < 16; ++l) {
+		block0:
+		for (int l = 0; l < 16; ++l) {
 			int i1 = i + random.nextInt(8) - random.nextInt(8);
 			int j1 = j + random.nextInt(4) - random.nextInt(4);
 			int k1 = k + random.nextInt(8) - random.nextInt(8);

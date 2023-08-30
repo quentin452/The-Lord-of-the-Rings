@@ -21,14 +21,14 @@ public class LOTRRenderLion extends RenderLiving {
 	@Override
 	public void doRender(Entity entity, double d, double d1, double d2, float f, float f1) {
 		LOTREntityLionBase lion = (LOTREntityLionBase) entity;
-		mainModel = LOTRRenderLion.isTicket(lion) ? lionModelOld : lionModel;
+		mainModel = isTicket(lion) ? lionModelOld : lionModel;
 		super.doRender(entity, d, d1, d2, f, f1);
 	}
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
 		LOTREntityLionBase lion = (LOTREntityLionBase) entity;
-		if (LOTRRenderLion.isTicket(lion)) {
+		if (isTicket(lion)) {
 			return textureTicket;
 		}
 		return lion instanceof LOTREntityLioness ? textureLioness : textureLion;

@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
-	public static Class[] stalls = { Lumber.class, Mason.class, Fish.class, Baker.class, Goldsmith.class, Farmer.class, Blacksmith.class, Brewer.class, Miner.class, Florist.class, Butcher.class };
+	public static Class[] stalls = {Lumber.class, Mason.class, Fish.class, Baker.class, Goldsmith.class, Farmer.class, Blacksmith.class, Brewer.class, Miner.class, Florist.class, Butcher.class};
 
 	public LOTRWorldGenSouthronBazaar(boolean flag) {
 		super(flag);
@@ -18,7 +18,7 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 10);
+		setOriginAndRotation(world, i, j, k, rotation, 10);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -70,13 +70,13 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 		associateBlockAlias("FENCE_GATE", fenceGateBlock);
 		associateBlockMetaAlias("BEAM", woodBeamBlock, woodBeamMeta);
 		generateStrScan(world, random, 0, 0, 0);
-		placeArmorStand(world, -4, 1, -2, 0, new ItemStack[] { new ItemStack(LOTRMod.helmetNearHaradWarlord), null, null, null });
+		placeArmorStand(world, -4, 1, -2, 0, new ItemStack[]{new ItemStack(LOTRMod.helmetNearHaradWarlord), null, null, null});
 		placeAnimalJar(world, -3, 1, -7, LOTRMod.butterflyJar, 0, new LOTREntityButterfly(world));
 		placeAnimalJar(world, 11, 1, -1, LOTRMod.birdCageWood, 0, null);
 		placeAnimalJar(world, 3, 1, 7, LOTRMod.birdCage, 0, new LOTREntityBird(world));
 		placeAnimalJar(world, -9, 3, 0, LOTRMod.birdCageWood, 0, new LOTREntityBird(world));
 		placeAnimalJar(world, 4, 3, 3, LOTRMod.birdCageWood, 0, new LOTREntityBird(world));
-		ArrayList<Class> stallClasses = new ArrayList<>(Arrays.asList(getStallClasses()));
+		List<Class> stallClasses = new ArrayList<>(Arrays.asList(getStallClasses()));
 		while (stallClasses.size() > 6) {
 			stallClasses.remove(random.nextInt(stallClasses.size()));
 		}
@@ -110,7 +110,7 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 0, 1, 1, Blocks.furnace, 2);
 			setBlockAndMetadata(world, -1, 1, 1, LOTRMod.planks2, 2);
 			setBlockAndMetadata(world, 1, 1, 1, LOTRMod.planks2, 2);
@@ -130,9 +130,9 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, -1, 1, 1, Blocks.anvil, 3);
-			placeArmorStand(world, 1, 1, 1, 0, new ItemStack[] { new ItemStack(LOTRMod.helmetNearHarad), new ItemStack(LOTRMod.bodyNearHarad), null, null });
+			placeArmorStand(world, 1, 1, 1, 0, new ItemStack[]{new ItemStack(LOTRMod.helmetNearHarad), new ItemStack(LOTRMod.bodyNearHarad), null, null});
 			placeWeaponRack(world, -2, 2, 0, 1, new LOTRWorldGenSouthronBazaar(false).getRandomHaradWeapon(random));
 			placeWeaponRack(world, 2, 2, 0, 3, new LOTRWorldGenSouthronBazaar(false).getRandomHaradWeapon(random));
 			LOTREntityNearHaradBlacksmith trader = new LOTREntityNearHaradBlacksmith(world);
@@ -148,13 +148,13 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, -1, 1, 1, LOTRMod.stairsCedar, 6);
 			setBlockAndMetadata(world, -1, 2, 1, LOTRMod.barrel, 2);
 			setBlockAndMetadata(world, 1, 1, 1, LOTRMod.stairsCedar, 6);
 			setBlockAndMetadata(world, 1, 2, 1, LOTRMod.barrel, 2);
-			this.placeMug(world, random, -2, 2, 0, 1, LOTRFoods.SOUTHRON_DRINK);
-			this.placeMug(world, random, 2, 2, 0, 1, LOTRFoods.SOUTHRON_DRINK);
+			placeMug(world, random, -2, 2, 0, 1, LOTRFoods.SOUTHRON_DRINK);
+			placeMug(world, random, 2, 2, 0, 1, LOTRFoods.SOUTHRON_DRINK);
 			LOTREntitySouthronBrewer trader = new LOTREntitySouthronBrewer(world);
 			spawnNPCAndSetHome(trader, world, 0, 1, 0, 4);
 			return true;
@@ -168,7 +168,7 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 0, 1, 1, Blocks.furnace, 2);
 			placeKebabStand(world, random, 0, 2, 1, LOTRMod.kebabStand, 3);
 			placePlate_item(world, random, -2, 2, 0, LOTRMod.ceramicPlateBlock, new ItemStack(LOTRMod.muttonRaw, 1 + random.nextInt(3), 0), true);
@@ -186,7 +186,7 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, -1, 1, 1, Blocks.cauldron, 3);
 			setBlockAndMetadata(world, 1, 1, 1, Blocks.hay_block, 0);
 			setBlockAndMetadata(world, -1, 1, -1, Blocks.hay_block, 0);
@@ -205,7 +205,7 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 1, 1, 1, Blocks.cauldron, 3);
 			setBlockAndMetadata(world, -1, 1, -1, Blocks.sponge, 0);
 			placePlate_item(world, random, -2, 2, 0, LOTRMod.ceramicPlateBlock, new ItemStack(Items.fish, 1 + random.nextInt(3), 0), true);
@@ -223,7 +223,7 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			placeFlowerPot(world, -2, 2, 0, getRandomFlower(world, random));
 			placeFlowerPot(world, 2, 2, 0, getRandomFlower(world, random));
 			setBlockAndMetadata(world, -1, 0, 1, Blocks.grass, 0);
@@ -246,7 +246,7 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, -1, 1, -1, LOTRMod.goldBars, 0);
 			setBlockAndMetadata(world, 1, 1, -1, LOTRMod.goldBars, 0);
 			setBlockAndMetadata(world, -1, 1, 1, LOTRMod.goldBars, 0);
@@ -266,7 +266,7 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, -1, 1, 1, LOTRMod.wood4, 10);
 			setBlockAndMetadata(world, 1, 1, 1, LOTRMod.wood4, 2);
 			setBlockAndMetadata(world, 1, 2, 1, LOTRMod.wood4, 2);
@@ -285,7 +285,7 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, -1, 1, 1, LOTRMod.brick, 15);
 			setBlockAndMetadata(world, -1, 2, 1, LOTRMod.slabSingle4, 0);
 			setBlockAndMetadata(world, 1, 1, 1, LOTRMod.brick3, 13);
@@ -303,7 +303,7 @@ public class LOTRWorldGenSouthronBazaar extends LOTRWorldGenSouthronStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, -1, 1, 1, LOTRMod.oreTin, 0);
 			setBlockAndMetadata(world, -1, 2, 1, LOTRMod.oreCopper, 0);
 			setBlockAndMetadata(world, 1, 1, 1, LOTRMod.oreCopper, 0);

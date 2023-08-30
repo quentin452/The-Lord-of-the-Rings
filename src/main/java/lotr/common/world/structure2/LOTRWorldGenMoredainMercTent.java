@@ -31,7 +31,7 @@ public class LOTRWorldGenMoredainMercTent extends LOTRWorldGenStructureBase2 {
 		int j1;
 		int k1;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 4);
+		setOriginAndRotation(world, i, j, k, rotation, 4);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -2; i1 <= 2; ++i1) {
@@ -49,21 +49,21 @@ public class LOTRWorldGenMoredainMercTent extends LOTRWorldGenStructureBase2 {
 				for (j1 = 0; (j1 >= 0 || !isOpaque(world, i1, j1, k1)) && getY(j1) >= 0; --j1) {
 					int randomGround = random.nextInt(3);
 					switch (randomGround) {
-					case 0:
-						if (j1 == 0) {
-							setBiomeTop(world, i1, j1, k1);
-						} else {
-							setBiomeFiller(world, i1, j1, k1);
-						}
-						break;
-					case 1:
-						setBlockAndMetadata(world, i1, j1, k1, Blocks.gravel, 0);
-						break;
-					case 2:
-						setBlockAndMetadata(world, i1, j1, k1, Blocks.sandstone, 0);
-						break;
-					default:
-						break;
+						case 0:
+							if (j1 == 0) {
+								setBiomeTop(world, i1, 0, k1);
+							} else {
+								setBiomeFiller(world, i1, j1, k1);
+							}
+							break;
+						case 1:
+							setBlockAndMetadata(world, i1, j1, k1, Blocks.gravel, 0);
+							break;
+						case 2:
+							setBlockAndMetadata(world, i1, j1, k1, Blocks.sandstone, 0);
+							break;
+						default:
+							break;
 					}
 					setGrassToDirt(world, i1, j1 - 1, k1);
 				}
@@ -76,7 +76,7 @@ public class LOTRWorldGenMoredainMercTent extends LOTRWorldGenStructureBase2 {
 			boolean tent2 = IntMath.mod(k12, 2) == 0;
 			Block block = tent2 ? tent2Block : tentBlock;
 			int meta = tent2 ? tent2Meta : tentMeta;
-			for (int i12 : new int[] { -2, 2 }) {
+			for (int i12 : new int[]{-2, 2}) {
 				for (int j12 = 1; j12 <= 2; ++j12) {
 					setBlockAndMetadata(world, i12, j12, k12, block, meta);
 				}
@@ -99,13 +99,13 @@ public class LOTRWorldGenMoredainMercTent extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, -1, 2, 3, Blocks.torch, 2);
 		setBlockAndMetadata(world, 1, 2, 3, Blocks.torch, 1);
 		if (random.nextBoolean()) {
-			this.placeChest(world, random, -1, 1, 0, 4, chestContents);
+			placeChest(world, random, -1, 1, 0, 4, chestContents);
 			setBlockAndMetadata(world, -1, 1, -1, Blocks.crafting_table, 0);
 			setGrassToDirt(world, -1, 0, -1);
 			setBlockAndMetadata(world, -1, 1, 1, tableBlock, 0);
 			setGrassToDirt(world, -1, 0, 1);
 		} else {
-			this.placeChest(world, random, 1, 1, 0, 5, chestContents);
+			placeChest(world, random, 1, 1, 0, 5, chestContents);
 			setBlockAndMetadata(world, 1, 1, -1, Blocks.crafting_table, 0);
 			setGrassToDirt(world, 1, 0, -1);
 			setBlockAndMetadata(world, 1, 1, 1, tableBlock, 0);
@@ -122,20 +122,20 @@ public class LOTRWorldGenMoredainMercTent extends LOTRWorldGenStructureBase2 {
 		fenceMeta = 2;
 		int randomWool = random.nextInt(3);
 		switch (randomWool) {
-		case 0:
-			tentBlock = Blocks.wool;
-			tentMeta = 14;
-			break;
-		case 1:
-			tentBlock = Blocks.wool;
-			tentMeta = 12;
-			break;
-		case 2:
-			tentBlock = Blocks.wool;
-			tentMeta = 1;
-			break;
-		default:
-			break;
+			case 0:
+				tentBlock = Blocks.wool;
+				tentMeta = 14;
+				break;
+			case 1:
+				tentBlock = Blocks.wool;
+				tentMeta = 12;
+				break;
+			case 2:
+				tentBlock = Blocks.wool;
+				tentMeta = 1;
+				break;
+			default:
+				break;
 		}
 		tent2Block = Blocks.wool;
 		tent2Meta = 15;

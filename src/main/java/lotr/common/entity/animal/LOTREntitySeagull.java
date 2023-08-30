@@ -17,11 +17,6 @@ public class LOTREntitySeagull extends LOTREntityBird {
 	}
 
 	@Override
-	public void applyEntityAttributes() {
-		super.applyEntityAttributes();
-	}
-
-	@Override
 	public boolean canBirdSpawnHere() {
 		if (LOTRAmbientSpawnChecks.canSpawn(this, 8, 4, 40, 4, Material.leaves, Material.sand)) {
 			double range = 16.0;
@@ -68,7 +63,7 @@ public class LOTREntitySeagull extends LOTREntityBird {
 	@Override
 	public IEntityLivingData onSpawnWithEgg(IEntityLivingData data) {
 		data = super.onSpawnWithEgg(data);
-		this.setBirdType(LOTREntityBird.BirdType.COMMON);
+		setBirdType(LOTREntityBird.BirdType.COMMON);
 		return data;
 	}
 }

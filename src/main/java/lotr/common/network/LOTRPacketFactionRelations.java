@@ -19,7 +19,7 @@ public class LOTRPacketFactionRelations implements IMessage {
 		packetType = Type.forID(typeID);
 		if (packetType == Type.FULL_MAP) {
 			fullMap = new HashMap<>();
-			byte fac1ID = 0;
+			byte fac1ID;
 			while ((fac1ID = data.readByte()) >= 0) {
 				byte fac2ID = data.readByte();
 				byte relID = data.readByte();
@@ -108,7 +108,7 @@ public class LOTRPacketFactionRelations implements IMessage {
 		FULL_MAP, RESET, ONE_ENTRY;
 
 		public static Type forID(int id) {
-			for (Type t : Type.values()) {
+			for (Type t : values()) {
 				if (t.ordinal() != id) {
 					continue;
 				}

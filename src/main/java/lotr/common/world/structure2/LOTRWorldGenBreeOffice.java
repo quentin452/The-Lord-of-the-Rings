@@ -19,7 +19,7 @@ public class LOTRWorldGenBreeOffice extends LOTRWorldGenBreeStructure {
 		int j1;
 		int i1;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 8);
+		setOriginAndRotation(world, i, j, k, rotation, 8);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -9; i1 <= 9; ++i1) {
@@ -89,23 +89,23 @@ public class LOTRWorldGenBreeOffice extends LOTRWorldGenBreeStructure {
 		setBlockAndMetadata(world, 1, 2, 1, doorBlock, 9);
 		setBlockAndMetadata(world, 2, 1, 1, doorBlock, 3);
 		setBlockAndMetadata(world, 2, 2, 1, doorBlock, 8);
-		this.placeChest(world, random, -4, 1, -2, 3, LOTRChestContents.BREE_HOUSE);
-		this.placeChest(world, random, 6, 1, 0, 5, LOTRChestContents.BREE_HOUSE);
-		this.placeChest(world, random, 1, 1, 2, 2, LOTRChestContents.BREE_OFFICE_ITEMS);
-		this.placeChest(world, random, 2, 1, 2, 2, LOTRChestContents.BREE_OFFICE_ITEMS);
+		placeChest(world, random, -4, 1, -2, 3, LOTRChestContents.BREE_HOUSE);
+		placeChest(world, random, 6, 1, 0, 5, LOTRChestContents.BREE_HOUSE);
+		placeChest(world, random, 1, 1, 2, 2, LOTRChestContents.BREE_OFFICE_ITEMS);
+		placeChest(world, random, 2, 1, 2, 2, LOTRChestContents.BREE_OFFICE_ITEMS);
 		if (random.nextInt(3) == 0) {
-			this.placeChest(world, random, 0, 9, -3, 3, LOTRChestContents.BREE_OFFICE_ITEMS);
+			placeChest(world, random, 0, 9, -3, 3, LOTRChestContents.BREE_OFFICE_ITEMS);
 		}
 		if (random.nextInt(3) == 0) {
-			this.placeChest(world, random, 6, 9, 0, 5, LOTRChestContents.BREE_OFFICE_ITEMS);
+			placeChest(world, random, 6, 9, 0, 5, LOTRChestContents.BREE_OFFICE_ITEMS);
 		}
 		if (random.nextInt(3) == 0) {
-			this.placeChest(world, random, 5, 9, 1, 2, LOTRChestContents.BREE_OFFICE_ITEMS);
+			placeChest(world, random, 5, 9, 1, 2, LOTRChestContents.BREE_OFFICE_ITEMS);
 		}
-		this.placeMug(world, random, -5, 2, -2, 0, LOTRFoods.BREE_DRINK);
-		this.placeBarrel(world, random, -6, 2, -2, 3, LOTRFoods.BREE_DRINK);
-		this.placeMug(world, random, 6, 6, 1, 3, LOTRFoods.BREE_DRINK);
-		this.placeMug(world, random, 6, 6, 2, 3, LOTRFoods.BREE_DRINK);
+		placeMug(world, random, -5, 2, -2, 0, LOTRFoods.BREE_DRINK);
+		placeBarrel(world, random, -6, 2, -2, 3, LOTRFoods.BREE_DRINK);
+		placeMug(world, random, 6, 6, 1, 3, LOTRFoods.BREE_DRINK);
+		placeMug(world, random, 6, 6, 2, 3, LOTRFoods.BREE_DRINK);
 		placePlate(world, random, -4, 2, 2, LOTRMod.ceramicPlateBlock, LOTRFoods.BREE);
 		placePlate(world, random, -5, 2, 2, LOTRMod.plateBlock, LOTRFoods.BREE);
 		placePlate(world, random, 0, 6, -4, LOTRMod.ceramicPlateBlock, LOTRFoods.BREE);
@@ -128,9 +128,9 @@ public class LOTRWorldGenBreeOffice extends LOTRWorldGenBreeStructure {
 		spawnNPCAndSetHome(sherriff, world, 0, 4, 0, 12);
 		String[] sherriffNameParts = sherriff.getNPCName().split(" ");
 		if (sherriffNameParts.length < 2) {
-			sherriffNameParts = new String[] { sherriffNameParts[0], "" };
+			sherriffNameParts = new String[]{sherriffNameParts[0], ""};
 		}
-		placeSign(world, 0, 3, -8, Blocks.wall_sign, 2, new String[] { "Sherriff", sherriffNameParts[0], sherriffNameParts[1], "" });
+		placeSign(world, 0, 3, -8, Blocks.wall_sign, 2, new String[]{"Sherriff", sherriffNameParts[0], sherriffNameParts[1], ""});
 		return true;
 	}
 }

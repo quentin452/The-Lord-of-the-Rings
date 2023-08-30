@@ -9,7 +9,7 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRBufferedImageIcon extends TextureAtlasSprite {
-	public static Set<String> loadedResources = new HashSet<>();
+	public static Collection<String> loadedResources = new HashSet<>();
 	public String iconName;
 	public BufferedImage imageRGB;
 

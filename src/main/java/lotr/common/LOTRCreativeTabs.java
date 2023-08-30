@@ -27,28 +27,28 @@ public class LOTRCreativeTabs extends CreativeTabs {
 		return theIcon;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public Item getTabIconItem() {
 		return theIcon.getItem();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public String getTranslatedTabLabel() {
 		return StatCollector.translateToLocal("lotr.creativetab." + getTabLabel());
 	}
 
 	public static void setupIcons() {
-		LOTRCreativeTabs.tabBlock.theIcon = new ItemStack(LOTRMod.brick, 1, 11);
-		LOTRCreativeTabs.tabUtil.theIcon = new ItemStack(LOTRMod.dwarvenForge);
-		LOTRCreativeTabs.tabDeco.theIcon = new ItemStack(LOTRMod.simbelmyne);
-		LOTRCreativeTabs.tabFood.theIcon = new ItemStack(LOTRMod.lembas);
-		LOTRCreativeTabs.tabMaterials.theIcon = new ItemStack(LOTRMod.mithril);
-		LOTRCreativeTabs.tabMisc.theIcon = new ItemStack(LOTRMod.hobbitPipe);
-		LOTRCreativeTabs.tabTools.theIcon = new ItemStack(LOTRMod.pickaxeOrc);
-		LOTRCreativeTabs.tabCombat.theIcon = new ItemStack(LOTRMod.helmetGondor);
-		LOTRCreativeTabs.tabStory.theIcon = new ItemStack(LOTRMod.anduril);
-		LOTRCreativeTabs.tabSpawn.theIcon = new ItemStack(LOTRMod.spawnEgg, 1, 55);
+		tabBlock.theIcon = new ItemStack(LOTRMod.brick, 1, 11);
+		tabUtil.theIcon = new ItemStack(LOTRMod.dwarvenForge);
+		tabDeco.theIcon = new ItemStack(LOTRMod.simbelmyne);
+		tabFood.theIcon = new ItemStack(LOTRMod.lembas);
+		tabMaterials.theIcon = new ItemStack(LOTRMod.mithril);
+		tabMisc.theIcon = new ItemStack(LOTRMod.hobbitPipe);
+		tabTools.theIcon = new ItemStack(LOTRMod.pickaxeOrc);
+		tabCombat.theIcon = new ItemStack(LOTRMod.helmetGondor);
+		tabStory.theIcon = new ItemStack(LOTRMod.anduril);
+		tabSpawn.theIcon = new ItemStack(LOTRMod.spawnEgg, 1, 55);
 	}
 }

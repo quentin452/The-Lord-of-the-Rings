@@ -9,7 +9,7 @@ import io.gitlab.dwarfyassassin.lotrucp.core.patches.*;
 
 public class UCPCoreSetup implements IFMLCallHook {
 	@Override
-	public Void call() throws Exception {
+	public Void call() {
 		UCPCoreMod.log = LogManager.getLogger("LOTR-UCP");
 		UCPCoreMod.registerPatcher(new FMLPatcher());
 		UCPCoreMod.registerPatcher(new BotaniaPatcher());

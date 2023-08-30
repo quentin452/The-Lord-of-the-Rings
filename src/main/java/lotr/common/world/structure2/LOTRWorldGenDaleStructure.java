@@ -40,7 +40,7 @@ public abstract class LOTRWorldGenDaleStructure extends LOTRWorldGenStructureBas
 	public Block plateBlock;
 	public Block trapdoorBlock;
 
-	public LOTRWorldGenDaleStructure(boolean flag) {
+	protected LOTRWorldGenDaleStructure(boolean flag) {
 		super(flag);
 	}
 
@@ -59,89 +59,89 @@ public abstract class LOTRWorldGenDaleStructure extends LOTRWorldGenStructureBas
 		floorMeta = 0;
 		int randomWood = random.nextInt(3);
 		switch (randomWood) {
-		case 0:
-			plankBlock = Blocks.planks;
-			plankMeta = 1;
-			plankSlabBlock = Blocks.wooden_slab;
-			plankSlabMeta = 1;
-			plankStairBlock = Blocks.spruce_stairs;
-			fenceBlock = Blocks.fence;
-			fenceMeta = 0;
-			fenceGateBlock = Blocks.fence_gate;
-			woodBlock = Blocks.log;
-			woodMeta = 0;
-			woodBeamBlock = LOTRMod.woodBeamV1;
-			woodBeamMeta = 0;
-			doorBlock = LOTRMod.doorSpruce;
-			trapdoorBlock = LOTRMod.trapdoorSpruce;
-			break;
-		case 1:
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 4;
-			plankSlabBlock = LOTRMod.woodSlabSingle3;
-			plankSlabMeta = 4;
-			plankStairBlock = LOTRMod.stairsPine;
-			fenceBlock = LOTRMod.fence2;
-			fenceMeta = 4;
-			fenceGateBlock = LOTRMod.fenceGatePine;
-			woodBlock = LOTRMod.wood5;
-			woodMeta = 0;
-			woodBeamBlock = LOTRMod.woodBeam5;
-			woodBeamMeta = 0;
-			doorBlock = LOTRMod.doorPine;
-			trapdoorBlock = LOTRMod.trapdoorPine;
-			break;
-		case 2:
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 3;
-			plankSlabBlock = LOTRMod.woodSlabSingle3;
-			plankSlabMeta = 3;
-			plankStairBlock = LOTRMod.stairsFir;
-			fenceBlock = LOTRMod.fence2;
-			fenceMeta = 3;
-			fenceGateBlock = LOTRMod.fenceGateFir;
-			woodBlock = LOTRMod.wood4;
-			woodMeta = 3;
-			woodBeamBlock = LOTRMod.woodBeam4;
-			woodBeamMeta = 3;
-			doorBlock = LOTRMod.doorFir;
-			trapdoorBlock = LOTRMod.trapdoorFir;
-			break;
-		default:
-			break;
+			case 0:
+				plankBlock = Blocks.planks;
+				plankMeta = 1;
+				plankSlabBlock = Blocks.wooden_slab;
+				plankSlabMeta = 1;
+				plankStairBlock = Blocks.spruce_stairs;
+				fenceBlock = Blocks.fence;
+				fenceMeta = 0;
+				fenceGateBlock = Blocks.fence_gate;
+				woodBlock = Blocks.log;
+				woodMeta = 0;
+				woodBeamBlock = LOTRMod.woodBeamV1;
+				woodBeamMeta = 0;
+				doorBlock = LOTRMod.doorSpruce;
+				trapdoorBlock = LOTRMod.trapdoorSpruce;
+				break;
+			case 1:
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 4;
+				plankSlabBlock = LOTRMod.woodSlabSingle3;
+				plankSlabMeta = 4;
+				plankStairBlock = LOTRMod.stairsPine;
+				fenceBlock = LOTRMod.fence2;
+				fenceMeta = 4;
+				fenceGateBlock = LOTRMod.fenceGatePine;
+				woodBlock = LOTRMod.wood5;
+				woodMeta = 0;
+				woodBeamBlock = LOTRMod.woodBeam5;
+				woodBeamMeta = 0;
+				doorBlock = LOTRMod.doorPine;
+				trapdoorBlock = LOTRMod.trapdoorPine;
+				break;
+			case 2:
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 3;
+				plankSlabBlock = LOTRMod.woodSlabSingle3;
+				plankSlabMeta = 3;
+				plankStairBlock = LOTRMod.stairsFir;
+				fenceBlock = LOTRMod.fence2;
+				fenceMeta = 3;
+				fenceGateBlock = LOTRMod.fenceGateFir;
+				woodBlock = LOTRMod.wood4;
+				woodMeta = 3;
+				woodBeamBlock = LOTRMod.woodBeam4;
+				woodBeamMeta = 3;
+				doorBlock = LOTRMod.doorFir;
+				trapdoorBlock = LOTRMod.trapdoorFir;
+				break;
+			default:
+				break;
 		}
 		int randomClay = random.nextInt(4);
 		switch (randomClay) {
-		case 0:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 1;
-			roofSlabBlock = LOTRMod.slabClayTileDyedSingle;
-			roofSlabMeta = 1;
-			roofStairBlock = LOTRMod.stairsClayTileDyedOrange;
-			break;
-		case 1:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 14;
-			roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
-			roofSlabMeta = 6;
-			roofStairBlock = LOTRMod.stairsClayTileDyedRed;
-			break;
-		case 2:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 12;
-			roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
-			roofSlabMeta = 4;
-			roofStairBlock = LOTRMod.stairsClayTileDyedBrown;
-			break;
-		case 3:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 11;
-			roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
-			roofSlabMeta = 3;
-			roofStairBlock = LOTRMod.stairsClayTileDyedBlue;
-			break;
-		default:
-			break;
+			case 0:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 1;
+				roofSlabBlock = LOTRMod.slabClayTileDyedSingle;
+				roofSlabMeta = 1;
+				roofStairBlock = LOTRMod.stairsClayTileDyedOrange;
+				break;
+			case 1:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 14;
+				roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
+				roofSlabMeta = 6;
+				roofStairBlock = LOTRMod.stairsClayTileDyedRed;
+				break;
+			case 2:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 12;
+				roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
+				roofSlabMeta = 4;
+				roofStairBlock = LOTRMod.stairsClayTileDyedBrown;
+				break;
+			case 3:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 11;
+				roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
+				roofSlabMeta = 3;
+				roofStairBlock = LOTRMod.stairsClayTileDyedBlue;
+				break;
+			default:
+				break;
 		}
 		barsBlock = random.nextInt(3) == 0 ? Blocks.iron_bars : LOTRMod.bronzeBars;
 		plateBlock = random.nextBoolean() ? random.nextBoolean() ? LOTRMod.plateBlock : LOTRMod.ceramicPlateBlock : LOTRMod.woodPlateBlock;

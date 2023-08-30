@@ -89,14 +89,14 @@ public class LOTRVillageGenRohan extends LOTRVillageGen {
 			if (random.nextInt(4) == 0) {
 				int i = random.nextInt(3);
 				switch (i) {
-				case 0:
-					return new LOTRWorldGenRohanSmithy(false);
-				case 1:
-					return new LOTRWorldGenRohanStables(false);
-				case 2:
-					return new LOTRWorldGenRohanBarn(false);
-				default:
-					break;
+					case 0:
+						return new LOTRWorldGenRohanSmithy(false);
+					case 1:
+						return new LOTRWorldGenRohanStables(false);
+					case 2:
+						return new LOTRWorldGenRohanBarn(false);
+					default:
+						break;
 				}
 			}
 			return new LOTRWorldGenRohanHouse(false);
@@ -118,8 +118,8 @@ public class LOTRVillageGenRohan extends LOTRVillageGen {
 			int l;
 			int l2;
 			int wallZ;
-			this.addStructure(new LOTRWorldGenRohanFortress(false), 0, -13, 0, true);
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenRohanFortress(false), 0, -13, 0, true);
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -129,50 +129,50 @@ public class LOTRVillageGenRohan extends LOTRVillageGen {
 					spawner.setBlockEnemySpawnRange(60);
 				}
 			}, 0, 0, 0);
-			this.addStructure(new LOTRWorldGenRohanGatehouse(false), 0, -53, 0, true);
+			addStructure(new LOTRWorldGenRohanGatehouse(false), 0, -53, 0, true);
 			int towerX = 46;
-			for (int i1 : new int[] { -towerX, towerX }) {
-				this.addStructure(new LOTRWorldGenRohanWatchtower(false), i1, -towerX, 0, true);
-				this.addStructure(new LOTRWorldGenRohanWatchtower(false), i1, towerX, 2, true);
+			for (int i1 : new int[]{-towerX, towerX}) {
+				addStructure(new LOTRWorldGenRohanWatchtower(false), i1, -towerX, 0, true);
+				addStructure(new LOTRWorldGenRohanWatchtower(false), i1, towerX, 2, true);
 			}
-			for (int i1 : new int[] { -35, 35 }) {
-				this.addStructure(new LOTRWorldGenRohanStables(false), i1, -14, 0, true);
+			for (int i1 : new int[]{-35, 35}) {
+				addStructure(new LOTRWorldGenRohanStables(false), i1, -14, 0, true);
 			}
 			int farmZ = -20;
 			for (l = 0; l <= 1; ++l) {
 				farmX = 30 - l * 12;
-				this.addStructure(new LOTRWorldGenRohanVillageFarm(false), -farmX, farmZ, 2);
-				this.addStructure(new LOTRWorldGenRohanVillageFarm(false), farmX, farmZ, 2);
+				addStructure(new LOTRWorldGenRohanVillageFarm(false), -farmX, farmZ, 2);
+				addStructure(new LOTRWorldGenRohanVillageFarm(false), farmX, farmZ, 2);
 			}
 			farmZ = 26;
 			for (l = -2; l <= 2; ++l) {
 				farmX = l * 12;
-				this.addStructure(new LOTRWorldGenRohanVillageFarm(false), -farmX, farmZ, 0);
-				this.addStructure(new LOTRWorldGenRohanVillageFarm(false), farmX, farmZ, 0);
+				addStructure(new LOTRWorldGenRohanVillageFarm(false), -farmX, farmZ, 0);
+				addStructure(new LOTRWorldGenRohanVillageFarm(false), farmX, farmZ, 0);
 			}
-			for (int i1 : new int[] { -51, 51 }) {
-				for (int k1 : new int[] { -51, 51 }) {
-					this.addStructure(new LOTRWorldGenRohanFortCorner(false), i1, k1, 0, true);
+			for (int i1 : new int[]{-51, 51}) {
+				for (int k1 : new int[]{-51, 51}) {
+					addStructure(new LOTRWorldGenRohanFortCorner(false), i1, k1, 0, true);
 				}
 			}
 			for (l2 = 0; l2 <= 4; ++l2) {
 				wallX = 13 + l2 * 8;
 				wallZ = -51;
-				this.addStructure(new LOTRWorldGenRohanFortWall(false, -3, 4), -wallX, wallZ, 0, true);
-				this.addStructure(new LOTRWorldGenRohanFortWall(false, -4, 3), wallX, wallZ, 0, true);
+				addStructure(new LOTRWorldGenRohanFortWall(false, -3, 4), -wallX, wallZ, 0, true);
+				addStructure(new LOTRWorldGenRohanFortWall(false, -4, 3), wallX, wallZ, 0, true);
 			}
 			for (l2 = -5; l2 <= 5; ++l2) {
 				wallX = l2 * 9;
 				wallZ = 51;
-				this.addStructure(new LOTRWorldGenRohanFortWall(false), wallX, wallZ, 2, true);
-				this.addStructure(new LOTRWorldGenRohanFortWall(false), -wallZ, wallX, 3, true);
-				this.addStructure(new LOTRWorldGenRohanFortWall(false), wallZ, wallX, 1, true);
+				addStructure(new LOTRWorldGenRohanFortWall(false), wallX, wallZ, 2, true);
+				addStructure(new LOTRWorldGenRohanFortWall(false), -wallZ, wallX, 3, true);
+				addStructure(new LOTRWorldGenRohanFortWall(false), wallZ, wallX, 1, true);
 			}
 		}
 
 		public void setupVillage(Random random) {
-			this.addStructure(new LOTRWorldGenMeadHall(false), 0, 2, 0, true);
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenMeadHall(false), 0, 2, 0, true);
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -182,7 +182,7 @@ public class LOTRVillageGenRohan extends LOTRVillageGen {
 					spawner.setBlockEnemySpawnRange(60);
 				}
 			}, 0, 0, 0);
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -220,7 +220,7 @@ public class LOTRVillageGenRohan extends LOTRVillageGen {
 					l = 57;
 					i = Math.round(l * cos);
 					k = Math.round(l * sin);
-					this.addStructure(getRandomHouse(random), i, k, r);
+					addStructure(getRandomHouse(random), i, k, r);
 					continue;
 				}
 				if (random.nextInt(3) == 0) {
@@ -229,19 +229,19 @@ public class LOTRVillageGenRohan extends LOTRVillageGen {
 				l = 61;
 				i = Math.round(l * cos);
 				k = Math.round(l * sin);
-				this.addStructure(new LOTRWorldGenHayBales(false), i, k, r);
+				addStructure(new LOTRWorldGenHayBales(false), i, k, r);
 			}
 			int farmX = 25;
 			for (int k = -1; k <= 1; ++k) {
 				int farmZ = k * 14;
-				this.addStructure(getRandomFarm(random), -farmX, farmZ, 1);
-				this.addStructure(getRandomFarm(random), farmX, farmZ, 3);
+				addStructure(getRandomFarm(random), -farmX, farmZ, 1);
+				addStructure(getRandomFarm(random), farmX, farmZ, 3);
 			}
 			int gardenX = 14;
 			for (int k = 0; k <= 2; ++k) {
 				int gardenZ = 24 + k * 8;
-				this.addStructure(new LOTRWorldGenRohanVillageGarden(false), -gardenX, gardenZ, 3);
-				this.addStructure(new LOTRWorldGenRohanVillageGarden(false), gardenX, gardenZ, 1);
+				addStructure(new LOTRWorldGenRohanVillageGarden(false), -gardenX, gardenZ, 3);
+				addStructure(new LOTRWorldGenRohanVillageGarden(false), gardenX, gardenZ, 1);
 			}
 			int gardenZ = 41;
 			for (int i = -1; i <= 1; ++i) {
@@ -249,21 +249,21 @@ public class LOTRVillageGenRohan extends LOTRVillageGen {
 				if (i == 0) {
 					continue;
 				}
-				this.addStructure(new LOTRWorldGenRohanVillageGarden(false), gardenX, gardenZ, 0);
+				addStructure(new LOTRWorldGenRohanVillageGarden(false), gardenX, gardenZ, 0);
 			}
-			this.addStructure(new LOTRWorldGenRohanWell(false), 0, -23, 2, true);
-			this.addStructure(new LOTRWorldGenRohanVillageSign(false).setSignText(villageName), 0, -11, 0, true);
+			addStructure(new LOTRWorldGenRohanWell(false), 0, -23, 2, true);
+			addStructure(new LOTRWorldGenRohanVillageSign(false).setSignText(villageName), 0, -11, 0, true);
 			if (random.nextBoolean()) {
 				int marketX = 8;
 				for (int k = 0; k <= 1; ++k) {
 					int marketZ = 25 + k * 10;
 					if (random.nextBoolean()) {
-						this.addStructure(LOTRWorldGenRohanMarketStall.getRandomStall(random, false), -marketX, -marketZ, 1);
+						addStructure(LOTRWorldGenRohanMarketStall.getRandomStall(random, false), -marketX, -marketZ, 1);
 					}
 					if (!random.nextBoolean()) {
 						continue;
 					}
-					this.addStructure(LOTRWorldGenRohanMarketStall.getRandomStall(random, false), marketX, -marketZ, 3);
+					addStructure(LOTRWorldGenRohanMarketStall.getRandomStall(random, false), marketX, -marketZ, 3);
 				}
 			}
 			if (palisade) {
@@ -277,10 +277,10 @@ public class LOTRVillageGenRohan extends LOTRVillageGen {
 						if (Math.abs(i) <= 9 && k < 0 || (dSq = i * i + k * k) < rSq || dSq >= rSqMax) {
 							continue;
 						}
-						this.addStructure(new LOTRWorldGenRohanVillagePalisade(false), i, k, 0);
+						addStructure(new LOTRWorldGenRohanVillagePalisade(false), i, k, 0);
 					}
 				}
-				this.addStructure(new LOTRWorldGenRohanGatehouse(false), 0, -rPalisade - 2, 0);
+				addStructure(new LOTRWorldGenRohanGatehouse(false), 0, -rPalisade - 2, 0);
 			}
 		}
 
@@ -294,7 +294,7 @@ public class LOTRVillageGenRohan extends LOTRVillageGen {
 	}
 
 	public enum VillageType {
-		VILLAGE, FORT;
+		VILLAGE, FORT
 
 	}
 

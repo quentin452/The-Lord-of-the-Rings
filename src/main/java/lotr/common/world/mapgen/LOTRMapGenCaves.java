@@ -49,7 +49,7 @@ public class LOTRMapGenCaves extends MapGenBase {
 				break;
 			}
 		}
-		dig = LOTRMapGenCaves.isTerrainBlock(block, biome) || block.getMaterial().isLiquid();
+		dig = isTerrainBlock(block, biome) || block.getMaterial().isLiquid();
 		if (belowVillageOrRoad) {
 			dig = false;
 		}
@@ -129,7 +129,7 @@ public class LOTRMapGenCaves extends MapGenBase {
 			par6 += MathHelper.cos(angle) * var33;
 			par8 += var34;
 			par10 += MathHelper.sin(angle) * var33;
-			par14 = var28 ? (par14 *= 0.92f) : (par14 *= 0.7f);
+			par14 = var28 ? par14 * 0.92f : par14 * 0.7f;
 			par14 += var24 * 0.1f;
 			angle += var23 * 0.1f;
 			var24 *= 0.9f;
@@ -169,7 +169,7 @@ public class LOTRMapGenCaves extends MapGenBase {
 						for (int var43 = var56; !anyWater && var43 < var40; ++var43) {
 							for (int var44 = var38 + 1; !anyWater && var44 >= var57 - 1; --var44) {
 								var45 = (var42 * 16 + var43) * 256 + var44;
-								if (var44 < 0 || var44 >= 256) {
+								if (var44 >= 256) {
 									continue;
 								}
 								if (blockArray[var45] == Blocks.flowing_water || blockArray[var45] == Blocks.water) {

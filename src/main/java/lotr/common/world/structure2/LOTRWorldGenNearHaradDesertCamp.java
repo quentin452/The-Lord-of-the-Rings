@@ -18,7 +18,7 @@ public class LOTRWorldGenNearHaradDesertCamp extends LOTRWorldGenStructureBase2 
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		int highestHeight = 0;
 		for (int i1 = -1; i1 <= 1; ++i1) {
 			for (int k1 = -1; k1 <= 1; ++k1) {
@@ -33,11 +33,11 @@ public class LOTRWorldGenNearHaradDesertCamp extends LOTRWorldGenStructureBase2 
 				highestHeight = j1;
 			}
 		}
-		boolean flag = false;
+		boolean flag;
 		int x = -2 + random.nextInt(5);
 		int z = 4 + random.nextInt(4);
 		int y = getTopBlock(world, x, z);
-		flag = new LOTRWorldGenNearHaradTent(notifyChanges).generateWithSetRotation(world, random, getX(x, z), getY(y), getZ(x, z), getRotationMode()) || flag;
+		flag = new LOTRWorldGenNearHaradTent(notifyChanges).generateWithSetRotation(world, random, getX(x, z), getY(y), getZ(x, z), getRotationMode());
 		x = -2 + random.nextInt(5);
 		z = -4 - random.nextInt(4);
 		y = getTopBlock(world, x, z);

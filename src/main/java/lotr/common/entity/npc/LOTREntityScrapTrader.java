@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import lotr.common.*;
 import lotr.common.entity.ai.*;
-import lotr.common.fac.LOTRFaction;
 import lotr.common.item.LOTRItemLeatherHat;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
@@ -33,7 +32,7 @@ public class LOTREntityScrapTrader extends LOTREntityMan implements LOTRTravelli
 		tasks.addTask(5, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 5.0f, 0.05f));
 		tasks.addTask(6, new EntityAIWatchClosest(this, EntityLiving.class, 8.0f, 0.02f));
 		tasks.addTask(7, new EntityAILookIdle(this));
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -88,11 +87,6 @@ public class LOTREntityScrapTrader extends LOTREntityMan implements LOTRTravelli
 	}
 
 	@Override
-	public float getAlignmentBonus() {
-		return 0.0f;
-	}
-
-	@Override
 	public LOTRTradeEntries getBuyPool() {
 		return LOTRTradeEntries.SCRAP_TRADER_BUY;
 	}
@@ -100,11 +94,6 @@ public class LOTREntityScrapTrader extends LOTREntityMan implements LOTRTravelli
 	@Override
 	public String getDepartureSpeech() {
 		return "misc/scrapTrader/departure";
-	}
-
-	@Override
-	public LOTRFaction getFaction() {
-		return LOTRFaction.UNALIGNED;
 	}
 
 	public float getFadeoutProgress(float f) {
@@ -197,7 +186,7 @@ public class LOTREntityScrapTrader extends LOTREntityMan implements LOTRTravelli
 		int weapon = rand.nextInt(2);
 		if (weapon == 0) {
 			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerIron));
-		} else if (weapon == 1) {
+		} else {
 			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerBronze));
 		}
 		npcItemsInv.setIdleItem(new ItemStack(LOTRMod.shireHeather));
@@ -235,17 +224,17 @@ public class LOTREntityScrapTrader extends LOTREntityMan implements LOTRTravelli
 	public void setupNPCName() {
 		int i = rand.nextInt(3);
 		switch (i) {
-		case 0:
-			familyInfo.setName(LOTRNames.getDunlendingName(rand, familyInfo.isMale()));
-			break;
-		case 1:
-			familyInfo.setName(LOTRNames.getRohirricName(rand, familyInfo.isMale()));
-			break;
-		case 2:
-			familyInfo.setName(LOTRNames.getGondorName(rand, familyInfo.isMale()));
-			break;
-		default:
-			break;
+			case 0:
+				familyInfo.setName(LOTRNames.getDunlendingName(rand, familyInfo.isMale()));
+				break;
+			case 1:
+				familyInfo.setName(LOTRNames.getRohirricName(rand, familyInfo.isMale()));
+				break;
+			case 2:
+				familyInfo.setName(LOTRNames.getGondorName(rand, familyInfo.isMale()));
+				break;
+			default:
+				break;
 		}
 	}
 

@@ -5,6 +5,7 @@ import com.google.common.base.Charsets;
 import cpw.mods.fml.common.network.simpleimpl.*;
 import io.netty.buffer.ByteBuf;
 import lotr.common.*;
+import lotr.common.world.map.LOTRAbstractWaypoint;
 import lotr.common.world.map.LOTRCustomWaypoint;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -15,7 +16,7 @@ public class LOTRPacketRenameCWP implements IMessage {
 	public LOTRPacketRenameCWP() {
 	}
 
-	public LOTRPacketRenameCWP(LOTRCustomWaypoint wp, String s) {
+	public LOTRPacketRenameCWP(LOTRAbstractWaypoint wp, String s) {
 		wpID = wp.getID();
 		name = s;
 	}

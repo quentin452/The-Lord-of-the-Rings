@@ -20,20 +20,20 @@ public class LOTRGenLayerMapRiverZoom extends LOTRGenLayer {
 		int[] ints = LOTRIntCache.get(world).getIntArray(i2 * k2);
 		for (int k3 = 0; k3 < zSizeZoom - 3; ++k3) {
 			for (int i3 = 0; i3 < xSizeZoom - 3; ++i3) {
-				initChunkSeed(i3 + i1 + 1 << 1, k3 + k1 + 1 << 1);
+				initChunkSeed((long) i3 + i1 + 1 << 1, (long) k3 + k1 + 1 << 1);
 				for (int i4 = 0; i4 <= 1; ++i4) {
 					for (int k4 = 0; k4 <= 1; ++k4) {
 						int int00 = rivers[i3 + 1 + (k3 + 1) * xSizeZoom];
 						int opp = int00 == 0 ? 2 : 0;
 						boolean replaceCorner = false;
 						if (i4 == 0 && k4 == 0) {
-							replaceCorner = rivers[i3 + 0 + (k3 + 0) * xSizeZoom] == opp && rivers[i3 + 1 + (k3 + 0) * xSizeZoom] == opp && rivers[i3 + 0 + (k3 + 1) * xSizeZoom] == opp;
+							replaceCorner = rivers[i3 + (k3) * xSizeZoom] == opp && rivers[i3 + 1 + (k3) * xSizeZoom] == opp && rivers[i3 + (k3 + 1) * xSizeZoom] == opp;
 						}
 						if (i4 == 1 && k4 == 0) {
-							replaceCorner = rivers[i3 + 1 + (k3 + 0) * xSizeZoom] == opp && rivers[i3 + 2 + (k3 + 0) * xSizeZoom] == opp && rivers[i3 + 2 + (k3 + 1) * xSizeZoom] == opp;
+							replaceCorner = rivers[i3 + 1 + (k3) * xSizeZoom] == opp && rivers[i3 + 2 + (k3) * xSizeZoom] == opp && rivers[i3 + 2 + (k3 + 1) * xSizeZoom] == opp;
 						}
 						if (i4 == 0 && k4 == 1) {
-							replaceCorner = rivers[i3 + 0 + (k3 + 1) * xSizeZoom] == opp && rivers[i3 + 0 + (k3 + 2) * xSizeZoom] == opp && rivers[i3 + 1 + (k3 + 2) * xSizeZoom] == opp;
+							replaceCorner = rivers[i3 + (k3 + 1) * xSizeZoom] == opp && rivers[i3 + (k3 + 2) * xSizeZoom] == opp && rivers[i3 + 1 + (k3 + 2) * xSizeZoom] == opp;
 						}
 						if (i4 == 1 && k4 == 1) {
 							replaceCorner = rivers[i3 + 2 + (k3 + 1) * xSizeZoom] == opp && rivers[i3 + 1 + (k3 + 2) * xSizeZoom] == opp && rivers[i3 + 2 + (k3 + 2) * xSizeZoom] == opp;

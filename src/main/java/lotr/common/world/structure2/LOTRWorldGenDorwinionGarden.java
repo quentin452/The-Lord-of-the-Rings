@@ -15,7 +15,7 @@ public class LOTRWorldGenDorwinionGarden extends LOTRWorldGenStructureBase2 {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 7);
+		setOriginAndRotation(world, i, j, k, rotation, 7);
 		if (restrictions) {
 			int minHeight = 0;
 			int maxHeight = 0;

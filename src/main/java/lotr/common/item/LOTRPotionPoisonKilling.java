@@ -14,7 +14,7 @@ public class LOTRPotionPoisonKilling extends Potion {
 		setIconIndex(0, 0);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean hasStatusIcon() {
 		return false;
@@ -23,7 +23,7 @@ public class LOTRPotionPoisonKilling extends Potion {
 	@Override
 	public boolean isReady(int tick, int level) {
 		int freq = 5 >> level;
-		return freq > 0 ? tick % freq == 0 : true;
+		return freq == 0 || tick % freq == 0;
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class LOTRPotionPoisonKilling extends Potion {
 		entity.attackEntityFrom(LOTRDamage.poisonDrink, 1.0f);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void renderInventoryEffect(int x, int y, PotionEffect effect, Minecraft mc) {
 		LOTRMod.proxy.renderCustomPotionEffect(x, y, effect, mc);

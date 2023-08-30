@@ -12,7 +12,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityMan extends LOTREntityNPC {
-	public LOTREntityMan(World world) {
+	protected LOTREntityMan(World world) {
 		super(world);
 	}
 

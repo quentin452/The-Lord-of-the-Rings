@@ -77,34 +77,34 @@ public class LOTREntityAngmarOrc extends LOTREntityOrc {
 		data = super.onSpawnWithEgg(data);
 		int i = rand.nextInt(10);
 		switch (i) {
-		case 0:
-		case 1:
-		case 2:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordAngmar));
-			break;
-		case 3:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeAngmar));
-			break;
-		case 4:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerAngmar));
-			break;
-		case 5:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerAngmarPoisoned));
-			break;
-		case 6:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.hammerAngmar));
-			break;
-		case 7:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pickaxeAngmar));
-			break;
-		case 8:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.axeAngmar));
-			break;
-		case 9:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.polearmAngmar));
-			break;
-		default:
-			break;
+			case 0:
+			case 1:
+			case 2:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordAngmar));
+				break;
+			case 3:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeAngmar));
+				break;
+			case 4:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerAngmar));
+				break;
+			case 5:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerAngmarPoisoned));
+				break;
+			case 6:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.hammerAngmar));
+				break;
+			case 7:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pickaxeAngmar));
+				break;
+			case 8:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.axeAngmar));
+				break;
+			case 9:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.polearmAngmar));
+				break;
+			default:
+				break;
 		}
 		if (rand.nextInt(6) == 0) {
 			npcItemsInv.setSpearBackup(npcItemsInv.getMeleeWeapon());

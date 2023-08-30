@@ -19,7 +19,7 @@ public class LOTRWorldGenSouthronFortCorner extends LOTRWorldGenSouthronStructur
 		int j1;
 		boolean beam;
 		int j12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		for (int i1 = -4; i1 <= 1; ++i1) {
 			int i2 = Math.abs(i1);
@@ -51,9 +51,6 @@ public class LOTRWorldGenSouthronFortCorner extends LOTRWorldGenSouthronStructur
 						setGrassToDirt(world, i1, j1 - 1, k3);
 					}
 				}
-			}
-			if (i1 > 1) {
-				continue;
 			}
 			int k3 = k1 - 1;
 			setBlockAndMetadata(world, i1, 2, k3, brickStairBlock, 2);
@@ -92,9 +89,6 @@ public class LOTRWorldGenSouthronFortCorner extends LOTRWorldGenSouthronStructur
 						setGrassToDirt(world, i3, j1 - 1, k1);
 					}
 				}
-			}
-			if (k1 < 0) {
-				continue;
 			}
 			int i3 = i1 + 1;
 			setBlockAndMetadata(world, i3, 2, k1, brickStairBlock, 0);

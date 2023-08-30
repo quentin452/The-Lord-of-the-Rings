@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
-	public static Class[] stalls = { Brewer.class, Fish.class, Butcher.class, Baker.class, Lumber.class, Miner.class, Mason.class, Hunter.class, Blacksmith.class, Farmer.class };
+	public static Class[] stalls = {Brewer.class, Fish.class, Butcher.class, Baker.class, Lumber.class, Miner.class, Mason.class, Hunter.class, Blacksmith.class, Farmer.class};
 
 	public LOTRWorldGenHarnedorMarket(boolean flag) {
 		super(flag);
@@ -25,7 +25,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 		int j1;
 		int k12;
 		int i12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 8);
+		setOriginAndRotation(world, i, j, k, rotation, 8);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -86,14 +86,14 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 		spawnItemFrame(world, 2, 2, -3, 3, getHarnedorFramedItem(random));
 		spawnItemFrame(world, -2, 2, 3, 1, getHarnedorFramedItem(random));
 		placeWeaponRack(world, -3, 2, 1, 6, getRandomHarnedorWeapon(random));
-		placeArmorStand(world, 2, 1, -2, 2, new ItemStack[] { new ItemStack(LOTRMod.helmetHarnedor), null, null, null });
+		placeArmorStand(world, 2, 1, -2, 2, new ItemStack[]{new ItemStack(LOTRMod.helmetHarnedor), null, null, null});
 		placeFlowerPot(world, -2, 2, 2, getRandomFlower(world, random));
 		placeAnimalJar(world, 2, 1, 1, LOTRMod.butterflyJar, 0, new LOTREntityButterfly(world));
 		placeAnimalJar(world, -3, 1, -1, LOTRMod.birdCageWood, 0, new LOTREntityBird(world));
 		placeAnimalJar(world, -2, 3, -2, LOTRMod.birdCage, 0, new LOTREntityBird(world));
 		placeAnimalJar(world, 6, 3, 1, LOTRMod.birdCage, 0, new LOTREntityBird(world));
-		this.placeSkull(world, random, 2, 4, -5);
-		ArrayList<Class> stallClasses = new ArrayList<>(Arrays.asList(stalls));
+		placeSkull(world, random, 2, 4, -5);
+		List<Class> stallClasses = new ArrayList<>(Arrays.asList(stalls));
 		while (stallClasses.size() > 4) {
 			stallClasses.remove(random.nextInt(stallClasses.size()));
 		}
@@ -111,7 +111,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 		}
 		for (i1 = -1; i1 <= 1; ++i1) {
 			int j12;
-			for (int step = 0; step < 12 && !isOpaque(world, i1, j12 = 0 - step, k12 = -9 - step); ++step) {
+			for (int step = 0; step < 12 && !isOpaque(world, i1, j12 = -step, k12 = -9 - step); ++step) {
 				setBlockAndMetadata(world, i1, j12, k12, plank2StairBlock, 2);
 				setGrassToDirt(world, i1, j12 - 1, k12);
 				j2 = j12 - 1;
@@ -124,7 +124,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 		}
 		for (i1 = -1; i1 <= 1; ++i1) {
 			int j13;
-			for (int step = 0; step < 12 && !isOpaque(world, i1, j13 = 0 - step, k12 = 9 + step); ++step) {
+			for (int step = 0; step < 12 && !isOpaque(world, i1, j13 = -step, k12 = 9 + step); ++step) {
 				setBlockAndMetadata(world, i1, j13, k12, plank2StairBlock, 3);
 				setGrassToDirt(world, i1, j13 - 1, k12);
 				j2 = j13 - 1;
@@ -137,7 +137,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 		}
 		for (k1 = -1; k1 <= 1; ++k1) {
 			int j14;
-			for (int step = 0; step < 12 && !isOpaque(world, i12 = -9 - step, j14 = 0 - step, k1); ++step) {
+			for (int step = 0; step < 12 && !isOpaque(world, i12 = -9 - step, j14 = -step, k1); ++step) {
 				setBlockAndMetadata(world, i12, j14, k1, plank2StairBlock, 1);
 				setGrassToDirt(world, i12, j14 - 1, k1);
 				j2 = j14 - 1;
@@ -150,7 +150,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 		}
 		for (k1 = -1; k1 <= 1; ++k1) {
 			int j15;
-			for (int step = 0; step < 12 && !isOpaque(world, i12 = 9 + step, j15 = 0 - step, k1); ++step) {
+			for (int step = 0; step < 12 && !isOpaque(world, i12 = 9 + step, j15 = -step, k1); ++step) {
 				setBlockAndMetadata(world, i12, j15, k1, plank2StairBlock, 0);
 				setGrassToDirt(world, i12, j15 - 1, k1);
 				j2 = j15 - 1;
@@ -171,7 +171,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			placeFlowerPot(world, 2, 2, 0, getRandomFlower(world, random));
 			placePlate_item(world, random, 2, 2, 0, LOTRMod.woodPlateBlock, new ItemStack(LOTRMod.oliveBread, 1 + random.nextInt(3), 0), true);
 			placePlate_item(world, random, 0, 2, 2, LOTRMod.ceramicPlateBlock, new ItemStack(Items.bread, 1 + random.nextInt(3), 0), true);
@@ -192,12 +192,12 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			placeWeaponRack(world, 3, 2, 0, 2, new LOTRWorldGenHarnedorMarket(false).getRandomHarnedorWeapon(random));
 			placeWeaponRack(world, 0, 2, 4, 3, new LOTRWorldGenHarnedorMarket(false).getRandomHarnedorWeapon(random));
 			placeFlowerPot(world, 0, 2, 2, getRandomFlower(world, random));
 			setBlockAndMetadata(world, 3, 1, 3, Blocks.anvil, 1);
-			placeArmorStand(world, 4, 1, 2, 0, new ItemStack[] { new ItemStack(LOTRMod.helmetHarnedor), new ItemStack(LOTRMod.bodyHarnedor), null, null });
+			placeArmorStand(world, 4, 1, 2, 0, new ItemStack[]{new ItemStack(LOTRMod.helmetHarnedor), new ItemStack(LOTRMod.bodyHarnedor), null, null});
 			placeArmorStand(world, 2, 1, 4, 1, null);
 			LOTREntityHarnedorBlacksmith trader = new LOTREntityHarnedorBlacksmith(world);
 			spawnNPCAndSetHome(trader, world, 2, 1, 2, 4);
@@ -212,9 +212,9 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
-			this.placeMug(world, random, 3, 2, 0, 0, LOTRFoods.HARNEDOR_DRINK);
-			this.placeMug(world, random, 0, 2, 2, 1, LOTRFoods.HARNEDOR_DRINK);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
+			placeMug(world, random, 3, 2, 0, 0, LOTRFoods.HARNEDOR_DRINK);
+			placeMug(world, random, 0, 2, 2, 1, LOTRFoods.HARNEDOR_DRINK);
 			setBlockAndMetadata(world, 0, 2, 4, LOTRMod.barrel, 4);
 			setBlockAndMetadata(world, 3, 1, 3, LOTRMod.woodSlabSingle4, 15);
 			setBlockAndMetadata(world, 3, 2, 3, LOTRMod.barrel, 2);
@@ -231,7 +231,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			placePlate_item(world, random, 2, 2, 0, LOTRMod.ceramicPlateBlock, new ItemStack(LOTRMod.camelRaw, 1 + random.nextInt(3), 0), true);
 			placePlate_item(world, random, 0, 2, 2, LOTRMod.woodPlateBlock, new ItemStack(LOTRMod.kebab, 1 + random.nextInt(3), 0), true);
 			placePlate_item(world, random, 0, 2, 4, LOTRMod.woodPlateBlock, new ItemStack(LOTRMod.kebab, 1 + random.nextInt(3), 0), true);
@@ -253,7 +253,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 2, 1, 4, Blocks.hay_block, 0);
 			setBlockAndMetadata(world, 3, 1, 3, Blocks.hay_block, 0);
 			setBlockAndMetadata(world, 3, 1, 2, LOTRMod.berryBush, 9);
@@ -267,7 +267,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 		}
 
 		public ItemStack getRandomFarmFood(Random random) {
-			ItemStack[] items = { new ItemStack(LOTRMod.orange), new ItemStack(LOTRMod.lemon), new ItemStack(LOTRMod.lime), new ItemStack(Items.carrot), new ItemStack(Items.potato), new ItemStack(LOTRMod.lettuce), new ItemStack(LOTRMod.turnip) };
+			ItemStack[] items = {new ItemStack(LOTRMod.orange), new ItemStack(LOTRMod.lemon), new ItemStack(LOTRMod.lime), new ItemStack(Items.carrot), new ItemStack(Items.potato), new ItemStack(LOTRMod.lettuce), new ItemStack(LOTRMod.turnip)};
 			ItemStack ret = items[random.nextInt(items.length)].copy();
 			ret.stackSize = 1 + random.nextInt(3);
 			return ret;
@@ -281,7 +281,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			placePlate_item(world, random, 2, 2, 0, LOTRMod.ceramicPlateBlock, new ItemStack(Items.fish, 1 + random.nextInt(3), 1), true);
 			placePlate_item(world, random, 0, 2, 3, LOTRMod.woodPlateBlock, new ItemStack(Items.fish, 1 + random.nextInt(3), 0), true);
 			placeFlowerPot(world, 0, 2, 4, getRandomFlower(world, random));
@@ -302,7 +302,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			placePlate_item(world, random, 2, 2, 0, LOTRMod.woodPlateBlock, new ItemStack(LOTRMod.camelRaw, 1 + random.nextInt(3), 0), true);
 			placePlate_item(world, random, 0, 2, 3, LOTRMod.woodPlateBlock, new ItemStack(LOTRMod.rabbitRaw, 1 + random.nextInt(3), 0), true);
 			setBlockAndMetadata(world, 3, 1, 3, LOTRMod.woodSlabSingle4, 15);
@@ -322,7 +322,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			placeFlowerPot(world, 2, 2, 0, new ItemStack(LOTRMod.sapling4, 1, 2));
 			placeFlowerPot(world, 0, 2, 2, new ItemStack(LOTRMod.sapling8, 1, 3));
 			placeFlowerPot(world, 0, 2, 4, new ItemStack(LOTRMod.sapling7, 1, 3));
@@ -345,7 +345,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			placeFlowerPot(world, 2, 2, 0, getRandomFlower(world, random));
 			placeWeaponRack(world, 0, 2, 3, 3, new ItemStack(LOTRMod.pickaxeBronze));
 			setBlockAndMetadata(world, 4, 1, 2, Blocks.sandstone, 0);
@@ -366,7 +366,7 @@ public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			placeWeaponRack(world, 2, 2, 0, 2, new ItemStack(LOTRMod.pickaxeBronze));
 			placeWeaponRack(world, 0, 2, 3, 3, new ItemStack(LOTRMod.shovelBronze));
 			setBlockAndMetadata(world, 4, 1, 2, LOTRMod.oreCopper, 0);

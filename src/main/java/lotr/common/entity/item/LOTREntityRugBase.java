@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public abstract class LOTREntityRugBase extends Entity implements LOTRBannerProtectable {
 	public int timeSinceLastGrowl = getTimeUntilGrowl();
 
-	public LOTREntityRugBase(World world) {
+	protected LOTREntityRugBase(World world) {
 		super(world);
 	}
 

@@ -45,9 +45,6 @@ public class LOTRCommandPledgeCooldown extends CommandBase {
 				entityplayer = CommandBase.getPlayer(sender, args[1]);
 			} else {
 				entityplayer = CommandBase.getCommandSenderAsPlayer(sender);
-				if (entityplayer == null) {
-					throw new PlayerNotFoundException();
-				}
 			}
 			LOTRLevelData.getData(entityplayer).setPledgeBreakCooldown(cd);
 			CommandBase.func_152373_a(sender, this, "commands.lotr.pledgeCooldown.set", entityplayer.getCommandSenderName(), cd, LOTRLevelData.getHMSTime_Ticks(cd));

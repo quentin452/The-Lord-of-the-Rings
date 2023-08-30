@@ -36,12 +36,12 @@ public class LOTRPacketBuyUnit implements IMessage {
 	@Override
 	public void toBytes(ByteBuf data) {
 		data.writeByte(tradeIndex);
-		if (!StringUtils.isNullOrEmpty(squadron)) {
+		if (StringUtils.isNullOrEmpty(squadron)) {
+			data.writeInt(-1);
+		} else {
 			byte[] squadronBytes = squadron.getBytes(Charsets.UTF_8);
 			data.writeInt(squadronBytes.length);
 			data.writeBytes(squadronBytes);
-		} else {
-			data.writeInt(-1);
 		}
 	}
 

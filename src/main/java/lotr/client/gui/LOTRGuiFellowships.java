@@ -1,23 +1,29 @@
 package lotr.client.gui;
 
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
 import com.google.common.math.IntMath;
 import com.mojang.authlib.GameProfile;
-
-import lotr.common.*;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRPlayerData;
+import lotr.common.LOTRTitle;
 import lotr.common.fellowship.LOTRFellowshipClient;
 import lotr.common.network.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiPlayerInfo;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.apache.commons.lang3.StringUtils;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
+import java.util.*;
 
 public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 	public static ResourceLocation iconsTextures = new ResourceLocation("lotr:gui/fellowships.png");
@@ -63,7 +69,7 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 	public LOTRGuiButtonFsOption buttonMapShow;
 	public GuiButton buttonOp;
 	public GuiButton buttonDeop;
-	public List<LOTRGuiButtonFsOption> orderedFsOptionButtons = new ArrayList<>();
+	public Collection<LOTRGuiButtonFsOption> orderedFsOptionButtons = new ArrayList<>();
 	public GuiTextField textFieldName;
 	public GuiTextField textFieldPlayer;
 	public GuiTextField textFieldRename;
@@ -89,8 +95,21 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 		scrollPaneInvites = new LOTRGuiScrollPane(scrollWidgetWidth, scrollWidgetHeight);
 	}
 
+	public static boolean isPlayerOnline(GameProfile player) {
+		EntityClientPlayerMP mcPlayer = Minecraft.getMinecraft().thePlayer;
+		List list = mcPlayer.sendQueue.playerInfoList;
+		for (Object obj : list) {
+			GuiPlayerInfo info = (GuiPlayerInfo) obj;
+			if (!info.name.equalsIgnoreCase(player.getName())) {
+				continue;
+			}
+			return true;
+		}
+		return false;
+	}
+
 	public void acceptInvitation(LOTRFellowshipClient invite) {
-		LOTRPacketFellowshipRespondInvite packet = new LOTRPacketFellowshipRespondInvite(invite, true);
+		IMessage packet = new LOTRPacketFellowshipRespondInvite(invite, true);
 		LOTRPacketHandler.networkWrapper.sendToServer(packet);
 	}
 
@@ -103,7 +122,7 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 				String name = textFieldName.getText();
 				if (checkValidFellowshipName(name) == null) {
 					name = StringUtils.trim(name);
-					LOTRPacketFellowshipCreate packet = new LOTRPacketFellowshipCreate(name);
+					IMessage packet = new LOTRPacketFellowshipCreate(name);
 					LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				}
 				page = Page.LIST;
@@ -113,39 +132,39 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 				String name = textFieldPlayer.getText();
 				if (checkValidPlayerName(name) == null) {
 					name = StringUtils.trim(name);
-					LOTRPacketFellowshipInvitePlayer packet = new LOTRPacketFellowshipInvitePlayer(viewingFellowship, name);
+					IMessage packet = new LOTRPacketFellowshipInvitePlayer(viewingFellowship, name);
 					LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				}
 				page = Page.FELLOWSHIP;
 			} else if (button == buttonDisband) {
 				page = Page.DISBAND;
 			} else if (button == buttonDisbandThis) {
-				LOTRPacketFellowshipDisband packet = new LOTRPacketFellowshipDisband(viewingFellowship);
+				IMessage packet = new LOTRPacketFellowshipDisband(viewingFellowship);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				page = Page.LIST;
 			} else if (button == buttonLeave) {
 				page = Page.LEAVE;
 			} else if (button == buttonLeaveThis) {
-				LOTRPacketFellowshipLeave packet = new LOTRPacketFellowshipLeave(viewingFellowship);
+				IMessage packet = new LOTRPacketFellowshipLeave(viewingFellowship);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				page = Page.LIST;
 			} else if (button == buttonSetIcon) {
-				LOTRPacketFellowshipSetIcon packet = new LOTRPacketFellowshipSetIcon(viewingFellowship);
+				IMessage packet = new LOTRPacketFellowshipSetIcon(viewingFellowship);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 			} else if (button == buttonRemove) {
-				LOTRPacketFellowshipDoPlayer packet = new LOTRPacketFellowshipDoPlayer(viewingFellowship, removingPlayer, LOTRPacketFellowshipDoPlayer.PlayerFunction.REMOVE);
+				IMessage packet = new LOTRPacketFellowshipDoPlayer(viewingFellowship, removingPlayer, LOTRPacketFellowshipDoPlayer.PlayerFunction.REMOVE);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				page = Page.FELLOWSHIP;
 			} else if (button == buttonOp) {
-				LOTRPacketFellowshipDoPlayer packet = new LOTRPacketFellowshipDoPlayer(viewingFellowship, oppingPlayer, LOTRPacketFellowshipDoPlayer.PlayerFunction.OP);
+				IMessage packet = new LOTRPacketFellowshipDoPlayer(viewingFellowship, oppingPlayer, LOTRPacketFellowshipDoPlayer.PlayerFunction.OP);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				page = Page.FELLOWSHIP;
 			} else if (button == buttonDeop) {
-				LOTRPacketFellowshipDoPlayer packet = new LOTRPacketFellowshipDoPlayer(viewingFellowship, deoppingPlayer, LOTRPacketFellowshipDoPlayer.PlayerFunction.DEOP);
+				IMessage packet = new LOTRPacketFellowshipDoPlayer(viewingFellowship, deoppingPlayer, LOTRPacketFellowshipDoPlayer.PlayerFunction.DEOP);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				page = Page.FELLOWSHIP;
 			} else if (button == buttonTransfer) {
-				LOTRPacketFellowshipDoPlayer packet = new LOTRPacketFellowshipDoPlayer(viewingFellowship, transferringPlayer, LOTRPacketFellowshipDoPlayer.PlayerFunction.TRANSFER);
+				IMessage packet = new LOTRPacketFellowshipDoPlayer(viewingFellowship, transferringPlayer, LOTRPacketFellowshipDoPlayer.PlayerFunction.TRANSFER);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				page = Page.FELLOWSHIP;
 			} else if (button == buttonRename) {
@@ -154,7 +173,7 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 				String name = textFieldRename.getText();
 				if (checkValidFellowshipName(name) == null) {
 					name = StringUtils.trim(name);
-					LOTRPacketFellowshipRename packet = new LOTRPacketFellowshipRename(viewingFellowship, name);
+					IMessage packet = new LOTRPacketFellowshipRename(viewingFellowship, name);
 					LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				}
 				page = Page.FELLOWSHIP;
@@ -163,13 +182,13 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 			} else if (button == buttonInvites) {
 				page = Page.INVITATIONS;
 			} else if (button == buttonPVP) {
-				LOTRPacketFellowshipToggle packet = new LOTRPacketFellowshipToggle(viewingFellowship, LOTRPacketFellowshipToggle.ToggleFunction.PVP);
+				IMessage packet = new LOTRPacketFellowshipToggle(viewingFellowship, LOTRPacketFellowshipToggle.ToggleFunction.PVP);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 			} else if (button == buttonHiredFF) {
-				LOTRPacketFellowshipToggle packet = new LOTRPacketFellowshipToggle(viewingFellowship, LOTRPacketFellowshipToggle.ToggleFunction.HIRED_FF);
+				IMessage packet = new LOTRPacketFellowshipToggle(viewingFellowship, LOTRPacketFellowshipToggle.ToggleFunction.HIRED_FF);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 			} else if (button == buttonMapShow) {
-				LOTRPacketFellowshipToggle packet = new LOTRPacketFellowshipToggle(viewingFellowship, LOTRPacketFellowshipToggle.ToggleFunction.MAP_SHOW);
+				IMessage packet = new LOTRPacketFellowshipToggle(viewingFellowship, LOTRPacketFellowshipToggle.ToggleFunction.MAP_SHOW);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 			} else {
 				super.actionPerformed(button);
@@ -178,7 +197,7 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 	}
 
 	public void alignOptionButtons() {
-		ArrayList<GuiButton> activeOptionButtons = new ArrayList<>();
+		Collection<GuiButton> activeOptionButtons = new ArrayList<>();
 		for (GuiButton button : orderedFsOptionButtons) {
 			if (!button.visible) {
 				continue;
@@ -201,9 +220,8 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 			}
 			int x = midX - allWidth / 2;
 			for (GuiButton activeOptionButton : activeOptionButtons) {
-				GuiButton button = activeOptionButton;
-				button.xPosition = x;
-				x += button.width;
+				activeOptionButton.xPosition = x;
+				x += activeOptionButton.width;
 				x += gap;
 			}
 		}
@@ -241,7 +259,7 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 		int i = 0;
 		List<GameProfile> allPlayers = fs.getAllPlayerProfiles();
 		for (GameProfile player : allPlayers) {
-			if (!LOTRGuiFellowships.isPlayerOnline(player)) {
+			if (!isPlayerOnline(player)) {
 				continue;
 			}
 			++i;
@@ -262,7 +280,7 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 	}
 
 	public void drawFellowshipEntry(LOTRFellowshipClient fs, int x, int y, int mouseX, int mouseY, boolean isInvite) {
-		this.drawFellowshipEntry(fs, x, y, mouseX, mouseY, isInvite, xSize);
+		drawFellowshipEntry(fs, x, y, mouseX, mouseY, isInvite, xSize);
 	}
 
 	public void drawFellowshipEntry(LOTRFellowshipClient fs, int x, int y, int mouseX, int mouseY, boolean isInvite, int selectWidth) {
@@ -286,7 +304,7 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 			fsName = fsName + ellipsis;
 		}
 		GameProfile owner = fs.getOwnerProfile();
-		boolean ownerOnline = LOTRGuiFellowships.isPlayerOnline(owner);
+		boolean ownerOnline = isPlayerOnline(owner);
 		fontRendererObj.drawString(fsName, x + 15, y, 16777215);
 		fontRendererObj.drawString(owner.getName(), x + 130, y, ownerOnline ? 16777215 : isMouseOver ? 12303291 : 7829367);
 		if (isInvite) {
@@ -301,11 +319,11 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 			}
 			mc.getTextureManager().bindTexture(iconsTextures);
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-			this.drawTexturedModalRect(iconAcceptX, y, 16, 16 + (accept ? 0 : iconWidth), iconWidth, iconWidth);
-			this.drawTexturedModalRect(iconRejectX, y, 8, 16 + (reject ? 0 : iconWidth), iconWidth, iconWidth);
+			drawTexturedModalRect(iconAcceptX, y, 16, 16 + (accept ? 0 : iconWidth), iconWidth, iconWidth);
+			drawTexturedModalRect(iconRejectX, y, 8, 16 + (reject ? 0 : iconWidth), iconWidth, iconWidth);
 		} else {
 			String memberCount = String.valueOf(fs.getPlayerCount());
-			String onlineMemberCount = String.valueOf(countOnlineMembers(fs)) + " | ";
+			String onlineMemberCount = countOnlineMembers(fs) + " | ";
 			fontRendererObj.drawString(memberCount, x + xSize - fontRendererObj.getStringWidth(memberCount), y, isMouseOver ? 12303291 : 7829367);
 			fontRendererObj.drawString(onlineMemberCount, x + xSize - fontRendererObj.getStringWidth(memberCount) - fontRendererObj.getStringWidth(onlineMemberCount), y, 16777215);
 		}
@@ -350,17 +368,17 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 		if (titleName != null) {
 			fontRendererObj.drawString(titleName, x, y, 16777215);
 		}
-		fontRendererObj.drawString(playerUsername, x + titleOffset, y, LOTRGuiFellowships.isPlayerOnline(player) ? 16777215 : isMouseOver ? 12303291 : 7829367);
+		fontRendererObj.drawString(playerUsername, x + titleOffset, y, isPlayerOnline(player) ? 16777215 : isMouseOver ? 12303291 : 7829367);
 		boolean isOwner = viewingFellowship.getOwnerUuid().equals(playerUuid);
 		boolean isAdmin = viewingFellowship.isAdmin(playerUuid);
 		if (isOwner) {
 			mc.getTextureManager().bindTexture(iconsTextures);
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-			this.drawTexturedModalRect(x + titleOffset + fontRendererObj.getStringWidth(playerUsername + " "), y, 0, 0, 8, 8);
+			drawTexturedModalRect(x + titleOffset + fontRendererObj.getStringWidth(playerUsername + " "), y, 0, 0, 8, 8);
 		} else if (isAdmin) {
 			mc.getTextureManager().bindTexture(iconsTextures);
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-			this.drawTexturedModalRect(x + titleOffset + fontRendererObj.getStringWidth(playerUsername + " "), y, 8, 0, 8, 8);
+			drawTexturedModalRect(x + titleOffset + fontRendererObj.getStringWidth(playerUsername + " "), y, 8, 0, 8, 8);
 		}
 		boolean owned = viewingFellowship.isOwned();
 		boolean adminned = viewingFellowship.isAdminned();
@@ -384,432 +402,318 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 			}
 			mc.getTextureManager().bindTexture(iconsTextures);
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-			this.drawTexturedModalRect(iconRemoveX, y, 8, 16 + (remove ? 0 : iconWidth), iconWidth, iconWidth);
+			drawTexturedModalRect(iconRemoveX, y, 8, 16 + (remove ? 0 : iconWidth), iconWidth, iconWidth);
 			if (owned) {
 				if (isAdmin) {
-					this.drawTexturedModalRect(iconOpDeopX, y, 32, 16 + (opDeop ? 0 : iconWidth), iconWidth, iconWidth);
+					drawTexturedModalRect(iconOpDeopX, y, 32, 16 + (opDeop ? 0 : iconWidth), iconWidth, iconWidth);
 				} else {
-					this.drawTexturedModalRect(iconOpDeopX, y, 24, 16 + (opDeop ? 0 : iconWidth), iconWidth, iconWidth);
+					drawTexturedModalRect(iconOpDeopX, y, 24, 16 + (opDeop ? 0 : iconWidth), iconWidth, iconWidth);
 				}
-				this.drawTexturedModalRect(iconTransferX, y, 0, 16 + (transfer ? 0 : iconWidth), iconWidth, iconWidth);
+				drawTexturedModalRect(iconTransferX, y, 0, 16 + (transfer ? 0 : iconWidth), iconWidth, iconWidth);
 			}
 		}
 	}
 
 	@Override
 	public void drawScreen(int i, int j, float f) {
-		block41: {
-			String s;
-			block53: {
-				block52: {
-					String checkValidRename;
-					block51: {
-						block50: {
-							block49: {
-								block48: {
-									block47: {
-										block46: {
-											block44: {
-												String checkValidPlayer;
-												block45: {
-													block43: {
-														block42: {
-															String checkValidName;
-															block40: {
-																boolean canInvite;
-																LOTRPlayerData playerData = LOTRLevelData.getData(mc.thePlayer);
-																boolean viewingOwned = viewingFellowship != null && viewingFellowship.isOwned();
-																boolean viewingAdminned = viewingFellowship != null && viewingFellowship.isAdminned();
-																mouseOverFellowship = null;
-																mouseOverPlayer = null;
-																mouseOverPlayerRemove = false;
-																mouseOverPlayerOp = false;
-																mouseOverPlayerDeop = false;
-																mouseOverPlayerTransfer = false;
-																if (page != Page.REMOVE) {
-																	removingPlayer = null;
-																}
-																if (page != Page.OP) {
-																	oppingPlayer = null;
-																}
-																if (page != Page.DEOP) {
-																	deoppingPlayer = null;
-																}
-																if (page != Page.TRANSFER) {
-																	transferringPlayer = null;
-																}
-																mouseOverInviteAccept = false;
-																mouseOverInviteReject = false;
-																if (page != Page.ACCEPT_INVITE_RESULT) {
-																	acceptInviteResult = null;
-																	acceptInviteResultFellowshipName = null;
-																}
-																boolean creationEnabled = LOTRConfig.isFellowshipCreationEnabled(mc.theWorld);
-																boolean canPlayerCreateNew = playerData.canCreateFellowships(true);
-																buttonCreate.visible = page == Page.LIST;
-																buttonCreate.enabled = buttonCreate.visible && creationEnabled && canPlayerCreateNew;
-																buttonCreateThis.visible = page == Page.CREATE;
-																checkValidName = checkValidFellowshipName(textFieldName.getText());
-																buttonCreateThis.enabled = buttonCreateThis.visible && checkValidName == null;
-																buttonInvitePlayer.enabled = page == Page.FELLOWSHIP && (viewingOwned || viewingAdminned);
-																buttonInvitePlayer.visible = buttonInvitePlayer.enabled;
-																buttonInviteThis.visible = canInvite = page == Page.INVITE && !isFellowshipMaxSize(viewingFellowship);
-																checkValidPlayer = "";
-																if (canInvite) {
-																	checkValidPlayer = checkValidPlayerName(textFieldPlayer.getText());
-																	buttonInviteThis.enabled = buttonInviteThis.visible && checkValidPlayer == null;
-																}
-																buttonDisband.enabled = page == Page.FELLOWSHIP && viewingOwned;
-																buttonDisband.visible = buttonDisband.enabled;
-																buttonDisbandThis.enabled = page == Page.DISBAND;
-																buttonDisbandThis.visible = buttonDisbandThis.enabled;
-																buttonLeave.enabled = page == Page.FELLOWSHIP && !viewingOwned;
-																buttonLeave.visible = buttonLeave.enabled;
-																buttonLeaveThis.enabled = page == Page.LEAVE;
-																buttonLeaveThis.visible = buttonLeaveThis.enabled;
-																buttonSetIcon.enabled = page == Page.FELLOWSHIP && (viewingOwned || viewingAdminned);
-																buttonSetIcon.visible = buttonSetIcon.enabled;
-																buttonRemove.enabled = page == Page.REMOVE;
-																buttonRemove.visible = buttonRemove.enabled;
-																buttonTransfer.enabled = page == Page.TRANSFER;
-																buttonTransfer.visible = buttonTransfer.enabled;
-																buttonRename.enabled = page == Page.FELLOWSHIP && viewingOwned;
-																buttonRename.visible = buttonRename.enabled;
-																buttonRenameThis.visible = page == Page.RENAME;
-																checkValidRename = checkValidFellowshipName(textFieldRename.getText());
-																buttonRenameThis.enabled = buttonRenameThis.visible && checkValidRename == null;
-																buttonBack.enabled = page != Page.LIST;
-																buttonBack.visible = buttonBack.enabled;
-																buttonInvites.enabled = page == Page.LIST;
-																buttonInvites.visible = buttonInvites.enabled;
-																buttonPVP.enabled = page == Page.FELLOWSHIP && (viewingOwned || viewingAdminned);
-																buttonPVP.visible = buttonPVP.enabled;
-																if (buttonPVP.enabled) {
-																	buttonPVP.setIconUV(64, viewingFellowship.getPreventPVP() ? 80 : 48);
-																}
-																buttonHiredFF.enabled = page == Page.FELLOWSHIP && (viewingOwned || viewingAdminned);
-																buttonHiredFF.visible = buttonHiredFF.enabled;
-																if (buttonHiredFF.enabled) {
-																	buttonHiredFF.setIconUV(80, viewingFellowship.getPreventHiredFriendlyFire() ? 80 : 48);
-																}
-																buttonMapShow.enabled = page == Page.FELLOWSHIP && viewingOwned;
-																buttonMapShow.visible = buttonMapShow.enabled;
-																if (buttonMapShow.enabled) {
-																	buttonMapShow.setIconUV(96, viewingFellowship.getShowMapLocations() ? 48 : 80);
-																}
-																buttonOp.enabled = page == Page.OP;
-																buttonOp.visible = buttonOp.enabled;
-																buttonDeop.enabled = page == Page.DEOP;
-																buttonDeop.visible = buttonDeop.enabled;
-																alignOptionButtons();
-																setupScrollBars(i, j);
-																drawDefaultBackground();
-																GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-																super.drawScreen(i, j, f);
-																s = StatCollector.translateToLocal("lotr.gui.fellowships.title");
-																this.drawCenteredString(s, guiLeft + xSize / 2, guiTop - 30, 16777215);
-																if (page != Page.LIST) {
-																	break block40;
-																}
-																int x = guiLeft;
-																int y = scrollPaneLeading.paneY0;
-																s = StatCollector.translateToLocal("lotr.gui.fellowships.leading");
-																this.drawCenteredString(s, guiLeft + xSize / 2, y, 16777215);
-																y += fontRendererObj.FONT_HEIGHT + 10;
-																List<LOTRFellowshipClient> sortedLeading = sortFellowshipsForDisplay(allFellowshipsLeading);
-																int[] leadingMinMax = scrollPaneLeading.getMinMaxIndices(sortedLeading, displayedFellowshipsLeading);
-																for (int index = leadingMinMax[0]; index <= leadingMinMax[1]; ++index) {
-																	LOTRFellowshipClient fs = sortedLeading.get(index);
-																	this.drawFellowshipEntry(fs, x, y, i, j, false);
-																	y += fontRendererObj.FONT_HEIGHT + 5;
-																}
-																y = scrollPaneOther.paneY0;
-																s = StatCollector.translateToLocal("lotr.gui.fellowships.member");
-																this.drawCenteredString(s, guiLeft + xSize / 2, y, 16777215);
-																y += fontRendererObj.FONT_HEIGHT + 10;
-																List<LOTRFellowshipClient> sortedOther = sortFellowshipsForDisplay(allFellowshipsOther);
-																int[] otherMinMax = scrollPaneOther.getMinMaxIndices(sortedOther, displayedFellowshipsOther);
-																for (int index = otherMinMax[0]; index <= otherMinMax[1]; ++index) {
-																	LOTRFellowshipClient fs = sortedOther.get(index);
-																	this.drawFellowshipEntry(fs, x, y, i, j, false);
-																	y += fontRendererObj.FONT_HEIGHT + 5;
-																}
-																String invites = String.valueOf(playerData.getClientFellowshipInvites().size());
-																int invitesX = buttonInvites.xPosition - 2 - fontRendererObj.getStringWidth(invites);
-																int invitesY = buttonInvites.yPosition + buttonInvites.height / 2 - fontRendererObj.FONT_HEIGHT / 2;
-																fontRendererObj.drawString(invites, invitesX, invitesY, 16777215);
-																if (buttonInvites.func_146115_a()) {
-																	renderIconTooltip(i, j, StatCollector.translateToLocal("lotr.gui.fellowships.invitesTooltip"));
-																}
-																if (buttonCreate.func_146115_a()) {
-																	if (!creationEnabled) {
-																		s = StatCollector.translateToLocal("lotr.gui.fellowships.creationDisabled");
-																		this.drawCenteredString(s, guiLeft + xSize / 2, buttonCreate.yPosition + buttonCreate.height + 4, 16777215);
-																	} else if (!canPlayerCreateNew) {
-																		s = StatCollector.translateToLocal("lotr.gui.fellowships.createLimit");
-																		this.drawCenteredString(s, guiLeft + xSize / 2, buttonCreate.yPosition + buttonCreate.height + 4, 16777215);
-																	}
-																}
-																if (scrollPaneLeading.hasScrollBar) {
-																	scrollPaneLeading.drawScrollBar();
-																}
-																if (!scrollPaneOther.hasScrollBar) {
-																	break block41;
-																}
-																scrollPaneOther.drawScrollBar();
-																break block41;
-															}
-															if (page != Page.CREATE) {
-																break block42;
-															}
-															s = StatCollector.translateToLocal("lotr.gui.fellowships.createName");
-															this.drawCenteredString(s, guiLeft + xSize / 2, textFieldName.yPosition - 4 - fontRendererObj.FONT_HEIGHT, 16777215);
-															textFieldName.drawTextBox();
-															if (checkValidName == null) {
-																break block41;
-															}
-															this.drawCenteredString(checkValidName, guiLeft + xSize / 2, textFieldName.yPosition + textFieldName.height + fontRendererObj.FONT_HEIGHT, 16711680);
-															break block41;
-														}
-														if (page != Page.FELLOWSHIP) {
-															break block43;
-														}
-														int x = guiLeft;
-														int y = guiTop + 10;
-														s = StatCollector.translateToLocalFormatted("lotr.gui.fellowships.nameAndPlayers", viewingFellowship.getName(), viewingFellowship.getPlayerCount());
-														this.drawCenteredString(s, guiLeft + xSize / 2, y, 16777215);
-														y += fontRendererObj.FONT_HEIGHT;
-														y += 5;
-														if (viewingFellowship.getIcon() != null) {
-															drawFellowshipIcon(viewingFellowship, guiLeft + xSize / 2 - 8, y, 1.0f);
-														}
-														boolean preventPVP = viewingFellowship.getPreventPVP();
-														boolean preventHiredFF = viewingFellowship.getPreventHiredFriendlyFire();
-														boolean mapShow = viewingFellowship.getShowMapLocations();
-														int iconPVPX = guiLeft + xSize - 36;
-														int iconHFFX = guiLeft + xSize - 16;
-														int iconMapX = guiLeft + xSize - 56;
-														int iconY = y;
-														int iconSize = 16;
-														mc.getTextureManager().bindTexture(iconsTextures);
-														GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-														this.drawTexturedModalRect(iconPVPX, iconY, 64, preventPVP ? 80 : 48, iconSize, iconSize);
-														this.drawTexturedModalRect(iconHFFX, iconY, 80, preventHiredFF ? 80 : 48, iconSize, iconSize);
-														this.drawTexturedModalRect(iconMapX, iconY, 96, mapShow ? 48 : 80, iconSize, iconSize);
-														if (i >= iconPVPX && i < iconPVPX + iconSize && j >= iconY && j < iconY + iconSize) {
-															renderIconTooltip(i, j, StatCollector.translateToLocal(preventPVP ? "lotr.gui.fellowships.pvp.prevent" : "lotr.gui.fellowships.pvp.allow"));
-														}
-														if (i >= iconHFFX && i < iconHFFX + iconSize && j >= iconY && j < iconY + iconSize) {
-															renderIconTooltip(i, j, StatCollector.translateToLocal(preventHiredFF ? "lotr.gui.fellowships.hiredFF.prevent" : "lotr.gui.fellowships.hiredFF.allow"));
-														}
-														if (i >= iconMapX && i < iconMapX + iconSize && j >= iconY && j < iconY + iconSize) {
-															renderIconTooltip(i, j, StatCollector.translateToLocal(mapShow ? "lotr.gui.fellowships.mapShow.on" : "lotr.gui.fellowships.mapShow.off"));
-														}
-														y += iconSize;
-														y += 10;
-														int titleOffset = 0;
-														for (UUID playerUuid : viewingFellowship.getAllPlayerUuids()) {
-															LOTRTitle.PlayerTitle title = viewingFellowship.getTitleFor(playerUuid);
-															if (title == null) {
-																continue;
-															}
-															String titleName = title.getFormattedTitle(mc.thePlayer);
-															int thisTitleWidth = fontRendererObj.getStringWidth(titleName + " ");
-															titleOffset = Math.max(titleOffset, thisTitleWidth);
-														}
-														drawPlayerEntry(viewingFellowship.getOwnerProfile(), x, y, titleOffset, i, j);
-														y += fontRendererObj.FONT_HEIGHT + 10;
-														List<GameProfile> membersSorted = sortMembersForDisplay(viewingFellowship);
-														int[] membersMinMax = scrollPaneMembers.getMinMaxIndices(membersSorted, displayedMembers);
-														for (int index = membersMinMax[0]; index <= membersMinMax[1]; ++index) {
-															GameProfile member = membersSorted.get(index);
-															drawPlayerEntry(member, x, y, titleOffset, i, j);
-															y += fontRendererObj.FONT_HEIGHT + 5;
-														}
-														for (Object bObj : buttonList) {
-															GuiButton button = (GuiButton) bObj;
-															if (!(button instanceof LOTRGuiButtonFsOption) || !button.visible || !button.func_146115_a()) {
-																continue;
-															}
-															s = button.displayString;
-															this.drawCenteredString(s, guiLeft + xSize / 2, button.yPosition + button.height + 4, 16777215);
-														}
-														if (!scrollPaneMembers.hasScrollBar) {
-															break block41;
-														}
-														scrollPaneMembers.drawScrollBar();
-														break block41;
-													}
-													if (page != Page.INVITE) {
-														break block44;
-													}
-													if (!isFellowshipMaxSize(viewingFellowship)) {
-														break block45;
-													}
-													int x = guiLeft + xSize / 2;
-													int y = guiTop + 30;
-													s = StatCollector.translateToLocalFormatted("lotr.gui.fellowships.invite.maxSize", viewingFellowship.getName(), LOTRConfig.getFellowshipMaxSize(mc.theWorld));
-													List<String> lines = fontRendererObj.listFormattedStringToWidth(s, xSize);
-													for (String line : lines) {
-														this.drawCenteredString(line, x, y, 16777215);
-														y += fontRendererObj.FONT_HEIGHT;
-													}
-													break block41;
-												}
-												s = StatCollector.translateToLocalFormatted("lotr.gui.fellowships.inviteName", viewingFellowship.getName());
-												this.drawCenteredString(s, guiLeft + xSize / 2, textFieldPlayer.yPosition - 4 - fontRendererObj.FONT_HEIGHT, 16777215);
-												textFieldPlayer.drawTextBox();
-												if (checkValidPlayer == null) {
-													break block41;
-												}
-												this.drawCenteredString(checkValidPlayer, guiLeft + xSize / 2, textFieldPlayer.yPosition + textFieldPlayer.height + fontRendererObj.FONT_HEIGHT, 16711680);
-												break block41;
-											}
-											if (page != Page.DISBAND) {
-												break block46;
-											}
-											int x = guiLeft + xSize / 2;
-											int y = guiTop + 30;
-											s = StatCollector.translateToLocalFormatted("lotr.gui.fellowships.disbandCheck1", viewingFellowship.getName());
-											this.drawCenteredString(s, x, y, 16777215);
-											s = StatCollector.translateToLocal("lotr.gui.fellowships.disbandCheck2");
-											this.drawCenteredString(s, x, y += fontRendererObj.FONT_HEIGHT, 16777215);
-											s = StatCollector.translateToLocal("lotr.gui.fellowships.disbandCheck3");
-											this.drawCenteredString(s, x, y += fontRendererObj.FONT_HEIGHT * 2, 16777215);
-											y += fontRendererObj.FONT_HEIGHT;
-											break block41;
-										}
-										if (page != Page.LEAVE) {
-											break block47;
-										}
-										int x = guiLeft + xSize / 2;
-										int y = guiTop + 30;
-										s = StatCollector.translateToLocalFormatted("lotr.gui.fellowships.leaveCheck1", viewingFellowship.getName());
-										this.drawCenteredString(s, x, y, 16777215);
-										s = StatCollector.translateToLocal("lotr.gui.fellowships.leaveCheck2");
-										this.drawCenteredString(s, x, y += fontRendererObj.FONT_HEIGHT, 16777215);
-										y += fontRendererObj.FONT_HEIGHT * 2;
-										break block41;
-									}
-									if (page != Page.REMOVE) {
-										break block48;
-									}
-									int x = guiLeft + xSize / 2;
-									int y = guiTop + 30;
-									s = StatCollector.translateToLocalFormatted("lotr.gui.fellowships.removeCheck", viewingFellowship.getName(), viewingFellowship.getUsernameFor(removingPlayer));
-									List<String> lines = fontRendererObj.listFormattedStringToWidth(s, xSize);
-									for (String line : lines) {
-										this.drawCenteredString(line, x, y, 16777215);
-										y += fontRendererObj.FONT_HEIGHT;
-									}
-									break block41;
-								}
-								if (page != Page.OP) {
-									break block49;
-								}
-								int x = guiLeft + xSize / 2;
-								int y = guiTop + 30;
-								s = StatCollector.translateToLocalFormatted("lotr.gui.fellowships.opCheck1", viewingFellowship.getName(), viewingFellowship.getUsernameFor(oppingPlayer));
-								List<String> lines = fontRendererObj.listFormattedStringToWidth(s, xSize);
-								for (String line : lines) {
-									this.drawCenteredString(line, x, y, 16777215);
-									y += fontRendererObj.FONT_HEIGHT;
-								}
-								y += fontRendererObj.FONT_HEIGHT;
-								s = StatCollector.translateToLocalFormatted("lotr.gui.fellowships.opCheck2", viewingFellowship.getName(), viewingFellowship.getUsernameFor(oppingPlayer));
-								lines = fontRendererObj.listFormattedStringToWidth(s, xSize);
-								for (String line : lines) {
-									this.drawCenteredString(line, x, y, 16777215);
-									y += fontRendererObj.FONT_HEIGHT;
-								}
-								break block41;
-							}
-							if (page != Page.DEOP) {
-								break block50;
-							}
-							int x = guiLeft + xSize / 2;
-							int y = guiTop + 30;
-							s = StatCollector.translateToLocalFormatted("lotr.gui.fellowships.deopCheck", viewingFellowship.getName(), viewingFellowship.getUsernameFor(deoppingPlayer));
-							List<String> lines = fontRendererObj.listFormattedStringToWidth(s, xSize);
-							for (String line : lines) {
-								this.drawCenteredString(line, x, y, 16777215);
-								y += fontRendererObj.FONT_HEIGHT;
-							}
-							break block41;
-						}
-						if (page != Page.TRANSFER) {
-							break block51;
-						}
-						int x = guiLeft + xSize / 2;
-						int y = guiTop + 30;
-						s = StatCollector.translateToLocalFormatted("lotr.gui.fellowships.transferCheck1", viewingFellowship.getName(), viewingFellowship.getUsernameFor(transferringPlayer));
-						List<String> lines = fontRendererObj.listFormattedStringToWidth(s, xSize);
-						for (String line : lines) {
-							this.drawCenteredString(line, x, y, 16777215);
-							y += fontRendererObj.FONT_HEIGHT;
-						}
-						s = StatCollector.translateToLocal("lotr.gui.fellowships.transferCheck2");
-						this.drawCenteredString(s, x, y += fontRendererObj.FONT_HEIGHT, 16777215);
-						y += fontRendererObj.FONT_HEIGHT;
-						break block41;
-					}
-					if (page != Page.RENAME) {
-						break block52;
-					}
-					s = StatCollector.translateToLocalFormatted("lotr.gui.fellowships.renameName", viewingFellowship.getName());
-					this.drawCenteredString(s, guiLeft + xSize / 2, textFieldRename.yPosition - 4 - fontRendererObj.FONT_HEIGHT, 16777215);
-					textFieldRename.drawTextBox();
-					if (checkValidRename == null) {
-						break block41;
-					}
-					this.drawCenteredString(checkValidRename, guiLeft + xSize / 2, textFieldRename.yPosition + textFieldRename.height + fontRendererObj.FONT_HEIGHT, 16711680);
-					break block41;
-				}
-				if (page != Page.INVITATIONS) {
-					break block53;
-				}
-				int x = guiLeft;
-				int y = guiTop + 10;
-				s = StatCollector.translateToLocal("lotr.gui.fellowships.invites");
-				this.drawCenteredString(s, guiLeft + xSize / 2, y, 16777215);
-				y += fontRendererObj.FONT_HEIGHT + 10;
-				if (allFellowshipInvites.isEmpty()) {
-					s = StatCollector.translateToLocal("lotr.gui.fellowships.invitesNone");
-					this.drawCenteredString(s, guiLeft + xSize / 2, y += fontRendererObj.FONT_HEIGHT, 16777215);
-				} else {
-					int[] invitesMinMax = scrollPaneInvites.getMinMaxIndices(allFellowshipInvites, displayedInvites);
-					for (int index = invitesMinMax[0]; index <= invitesMinMax[1]; ++index) {
-						LOTRFellowshipClient fs = allFellowshipInvites.get(index);
-						this.drawFellowshipEntry(fs, x, y, i, j, true);
-						y += fontRendererObj.FONT_HEIGHT + 5;
-					}
-				}
-				if (!scrollPaneInvites.hasScrollBar) {
-					break block41;
-				}
-				scrollPaneInvites.drawScrollBar();
-				break block41;
+		LOTRPlayerData playerData = LOTRLevelData.getData(mc.thePlayer);
+		boolean viewingOwned = (viewingFellowship != null && viewingFellowship.isOwned());
+		boolean viewingAdminned = (viewingFellowship != null && viewingFellowship.isAdminned());
+		mouseOverFellowship = null;
+		mouseOverPlayer = null;
+		mouseOverPlayerRemove = false;
+		mouseOverPlayerOp = false;
+		mouseOverPlayerDeop = false;
+		mouseOverPlayerTransfer = false;
+		if (page != Page.REMOVE) removingPlayer = null;
+		if (page != Page.OP) oppingPlayer = null;
+		if (page != Page.DEOP) deoppingPlayer = null;
+		if (page != Page.TRANSFER) transferringPlayer = null;
+		mouseOverInviteAccept = false;
+		mouseOverInviteReject = false;
+		if (page != Page.ACCEPT_INVITE_RESULT) {
+			acceptInviteResult = null;
+			acceptInviteResultFellowshipName = null;
+		}
+		boolean creationEnabled = LOTRConfig.isFellowshipCreationEnabled(mc.theWorld);
+		boolean canPlayerCreateNew = playerData.canCreateFellowships(true);
+		buttonCreate.visible = (page == Page.LIST);
+		buttonCreate.enabled = (buttonCreate.visible && creationEnabled && canPlayerCreateNew);
+		buttonCreateThis.visible = (page == Page.CREATE);
+		String checkValidName = checkValidFellowshipName(textFieldName.getText());
+		buttonCreateThis.enabled = (buttonCreateThis.visible && checkValidName == null);
+		buttonInvitePlayer.visible = buttonInvitePlayer.enabled = (page == Page.FELLOWSHIP && (viewingOwned || viewingAdminned));
+		boolean canInvite = (page == Page.INVITE && !isFellowshipMaxSize(viewingFellowship));
+		buttonInviteThis.visible = canInvite;
+		String checkValidPlayer = "";
+		if (canInvite) {
+			checkValidPlayer = checkValidPlayerName(textFieldPlayer.getText());
+			buttonInviteThis.enabled = (buttonInviteThis.visible && checkValidPlayer == null);
+		}
+		buttonDisband.visible = buttonDisband.enabled = (page == Page.FELLOWSHIP && viewingOwned);
+		buttonDisbandThis.visible = buttonDisbandThis.enabled = (page == Page.DISBAND);
+		buttonLeave.visible = buttonLeave.enabled = (page == Page.FELLOWSHIP && !viewingOwned);
+		buttonLeaveThis.visible = buttonLeaveThis.enabled = (page == Page.LEAVE);
+		buttonSetIcon.visible = buttonSetIcon.enabled = (page == Page.FELLOWSHIP && (viewingOwned || viewingAdminned));
+		buttonRemove.visible = buttonRemove.enabled = (page == Page.REMOVE);
+		buttonTransfer.visible = buttonTransfer.enabled = (page == Page.TRANSFER);
+		buttonRename.visible = buttonRename.enabled = (page == Page.FELLOWSHIP && viewingOwned);
+		buttonRenameThis.visible = (page == Page.RENAME);
+		String checkValidRename = checkValidFellowshipName(textFieldRename.getText());
+		buttonRenameThis.enabled = (buttonRenameThis.visible && checkValidRename == null);
+		buttonBack.visible = buttonBack.enabled = (page != Page.LIST);
+		buttonInvites.visible = buttonInvites.enabled = (page == Page.LIST);
+		buttonPVP.visible = buttonPVP.enabled = (page == Page.FELLOWSHIP && (viewingOwned || viewingAdminned));
+		if (buttonPVP.enabled) buttonPVP.setIconUV(64, viewingFellowship.getPreventPVP() ? 80 : 48);
+		buttonHiredFF.visible = buttonHiredFF.enabled = (page == Page.FELLOWSHIP && (viewingOwned || viewingAdminned));
+		if (buttonHiredFF.enabled)
+			buttonHiredFF.setIconUV(80, viewingFellowship.getPreventHiredFriendlyFire() ? 80 : 48);
+		buttonMapShow.visible = buttonMapShow.enabled = (page == Page.FELLOWSHIP && viewingOwned);
+		if (buttonMapShow.enabled)
+			buttonMapShow.setIconUV(96, viewingFellowship.getShowMapLocations() ? 48 : 80);
+		buttonOp.visible = buttonOp.enabled = (page == Page.OP);
+		buttonDeop.visible = buttonDeop.enabled = (page == Page.DEOP);
+		alignOptionButtons();
+		setupScrollBars(i, j);
+		drawDefaultBackground();
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		super.drawScreen(i, j, f);
+		StringBuilder s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.title"));
+		drawCenteredString(s.toString(), guiLeft + xSize / 2, guiTop - 30, 16777215);
+		if (page == Page.LIST) {
+			int x = guiLeft;
+			int y = scrollPaneLeading.paneY0;
+			s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.leading"));
+			drawCenteredString(s.toString(), guiLeft + xSize / 2, y, 16777215);
+			y += fontRendererObj.FONT_HEIGHT + 10;
+			List<LOTRFellowshipClient> sortedLeading = sortFellowshipsForDisplay(allFellowshipsLeading);
+			int[] leadingMinMax = scrollPaneLeading.getMinMaxIndices(sortedLeading, displayedFellowshipsLeading);
+			for (int index = leadingMinMax[0]; index <= leadingMinMax[1]; index++) {
+				LOTRFellowshipClient fs = sortedLeading.get(index);
+				drawFellowshipEntry(fs, x, y, i, j, false);
+				y += fontRendererObj.FONT_HEIGHT + 5;
 			}
-			if (page == Page.ACCEPT_INVITE_RESULT) {
+			y = scrollPaneOther.paneY0;
+			s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.member"));
+			drawCenteredString(s.toString(), guiLeft + xSize / 2, y, 16777215);
+			y += fontRendererObj.FONT_HEIGHT + 10;
+			List<LOTRFellowshipClient> sortedOther = sortFellowshipsForDisplay(allFellowshipsOther);
+			int[] otherMinMax = scrollPaneOther.getMinMaxIndices(sortedOther, displayedFellowshipsOther);
+			for (int k = otherMinMax[0]; k <= otherMinMax[1]; k++) {
+				LOTRFellowshipClient fs = sortedOther.get(k);
+				drawFellowshipEntry(fs, x, y, i, j, false);
+				y += fontRendererObj.FONT_HEIGHT + 5;
+			}
+			String invites = String.valueOf(playerData.getClientFellowshipInvites().size());
+			int invitesX = buttonInvites.xPosition - 2 - fontRendererObj.getStringWidth(invites);
+			int invitesY = buttonInvites.yPosition + buttonInvites.height / 2 - fontRendererObj.FONT_HEIGHT / 2;
+			fontRendererObj.drawString(invites, invitesX, invitesY, 16777215);
+			if (buttonInvites.func_146115_a())
+				renderIconTooltip(i, j, StatCollector.translateToLocal("lotr.gui.fellowships.invitesTooltip"));
+			if (buttonCreate.func_146115_a()) if (!creationEnabled) {
+				s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.creationDisabled"));
+				drawCenteredString(s.toString(), guiLeft + xSize / 2, buttonCreate.yPosition + buttonCreate.height + 4, 16777215);
+			} else if (!canPlayerCreateNew) {
+				s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.createLimit"));
+				drawCenteredString(s.toString(), guiLeft + xSize / 2, buttonCreate.yPosition + buttonCreate.height + 4, 16777215);
+			}
+			if (scrollPaneLeading.hasScrollBar) scrollPaneLeading.drawScrollBar();
+			if (scrollPaneOther.hasScrollBar) scrollPaneOther.drawScrollBar();
+		} else if (page == Page.CREATE) {
+			s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.createName"));
+			drawCenteredString(s.toString(), guiLeft + xSize / 2, textFieldName.yPosition - 4 - fontRendererObj.FONT_HEIGHT, 16777215);
+			textFieldName.drawTextBox();
+			if (checkValidName != null)
+				drawCenteredString(checkValidName, guiLeft + xSize / 2, textFieldName.yPosition + textFieldName.height + fontRendererObj.FONT_HEIGHT, 16711680);
+		} else if (page == Page.FELLOWSHIP) {
+			int x = guiLeft;
+			int y = guiTop + 10;
+			s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.nameAndPlayers", viewingFellowship.getName(), viewingFellowship.getPlayerCount()));
+			drawCenteredString(s.toString(), guiLeft + xSize / 2, y, 16777215);
+			y += fontRendererObj.FONT_HEIGHT;
+			y += 5;
+			if (viewingFellowship.getIcon() != null)
+				drawFellowshipIcon(viewingFellowship, guiLeft + xSize / 2 - 8, y, 1.0F);
+			boolean preventPVP = viewingFellowship.getPreventPVP();
+			boolean preventHiredFF = viewingFellowship.getPreventHiredFriendlyFire();
+			boolean mapShow = viewingFellowship.getShowMapLocations();
+			int iconPVPX = guiLeft + xSize - 36;
+			int iconHFFX = guiLeft + xSize - 16;
+			int iconMapX = guiLeft + xSize - 56;
+			int iconY = y;
+			int iconSize = 16;
+			mc.getTextureManager().bindTexture(iconsTextures);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+			drawTexturedModalRect(iconPVPX, iconY, 64, preventPVP ? 80 : 48, iconSize, iconSize);
+			drawTexturedModalRect(iconHFFX, iconY, 80, preventHiredFF ? 80 : 48, iconSize, iconSize);
+			drawTexturedModalRect(iconMapX, iconY, 96, mapShow ? 48 : 80, iconSize, iconSize);
+			if (i >= iconPVPX && i < iconPVPX + iconSize && j >= iconY && j < iconY + iconSize)
+				renderIconTooltip(i, j, StatCollector.translateToLocal(preventPVP ? "lotr.gui.fellowships.pvp.prevent" : "lotr.gui.fellowships.pvp.allow"));
+			if (i >= iconHFFX && i < iconHFFX + iconSize && j >= iconY && j < iconY + iconSize)
+				renderIconTooltip(i, j, StatCollector.translateToLocal(preventHiredFF ? "lotr.gui.fellowships.hiredFF.prevent" : "lotr.gui.fellowships.hiredFF.allow"));
+			if (i >= iconMapX && i < iconMapX + iconSize && j >= iconY && j < iconY + iconSize)
+				renderIconTooltip(i, j, StatCollector.translateToLocal(mapShow ? "lotr.gui.fellowships.mapShow.on" : "lotr.gui.fellowships.mapShow.off"));
+			y += iconSize;
+			y += 10;
+			int titleOffset = 0;
+			for (UUID playerUuid : viewingFellowship.getAllPlayerUuids()) {
+				LOTRTitle.PlayerTitle title = viewingFellowship.getTitleFor(playerUuid);
+				if (title != null) {
+					String titleName = title.getFormattedTitle(mc.thePlayer);
+					int thisTitleWidth = fontRendererObj.getStringWidth(titleName + " ");
+					titleOffset = Math.max(titleOffset, thisTitleWidth);
+				}
+			}
+			drawPlayerEntry(viewingFellowship.getOwnerProfile(), x, y, titleOffset, i, j);
+			y += fontRendererObj.FONT_HEIGHT + 10;
+			List<GameProfile> membersSorted = sortMembersForDisplay(viewingFellowship);
+			int[] membersMinMax = scrollPaneMembers.getMinMaxIndices(membersSorted, displayedMembers);
+			for (int index = membersMinMax[0]; index <= membersMinMax[1]; index++) {
+				GameProfile member = membersSorted.get(index);
+				drawPlayerEntry(member, x, y, titleOffset, i, j);
+				y += fontRendererObj.FONT_HEIGHT + 5;
+			}
+			for (Object bObj : buttonList) {
+				GuiButton button = (GuiButton) bObj;
+				if (button instanceof LOTRGuiButtonFsOption && button.visible && button.func_146115_a()) {
+					s = new StringBuilder(button.displayString);
+					drawCenteredString(s.toString(), guiLeft + xSize / 2, button.yPosition + button.height + 4, 16777215);
+				}
+			}
+			if (scrollPaneMembers.hasScrollBar) scrollPaneMembers.drawScrollBar();
+		} else if (page == Page.INVITE) {
+			if (isFellowshipMaxSize(viewingFellowship)) {
 				int x = guiLeft + xSize / 2;
 				int y = guiTop + 30;
-				if (acceptInviteResult == null) {
-					int waitingDots = IntMath.mod(tickCounter / 10, 3);
-					s = "";
-					for (int l = 0; l < waitingDots; ++l) {
-						s = s + ".";
-					}
-					this.drawCenteredString(s, guiLeft + xSize / 2, y, 16777215);
-				} else if (acceptInviteResult == LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.JOINED) {
-					s = "Joining... (you shouldn't be able to see this message)";
-					this.drawCenteredString(s, guiLeft + xSize / 2, y, 16777215);
+				s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.invite.maxSize", viewingFellowship.getName(), LOTRConfig.getFellowshipMaxSize(mc.theWorld)));
+				List<String> lines = fontRendererObj.listFormattedStringToWidth(s.toString(), xSize);
+				for (String line : lines) {
+					drawCenteredString(line, x, y, 16777215);
+					y += fontRendererObj.FONT_HEIGHT;
+				}
+			} else {
+				s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.inviteName", viewingFellowship.getName()));
+				drawCenteredString(s.toString(), guiLeft + xSize / 2, textFieldPlayer.yPosition - 4 - fontRendererObj.FONT_HEIGHT, 16777215);
+				textFieldPlayer.drawTextBox();
+				if (checkValidPlayer != null)
+					drawCenteredString(checkValidPlayer, guiLeft + xSize / 2, textFieldPlayer.yPosition + textFieldPlayer.height + fontRendererObj.FONT_HEIGHT, 16711680);
+			}
+		} else if (page == Page.DISBAND) {
+			int x = guiLeft + xSize / 2;
+			int y = guiTop + 30;
+			s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.disbandCheck1", viewingFellowship.getName()));
+			drawCenteredString(s.toString(), x, y, 16777215);
+			y += fontRendererObj.FONT_HEIGHT;
+			s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.disbandCheck2"));
+			drawCenteredString(s.toString(), x, y, 16777215);
+			y += fontRendererObj.FONT_HEIGHT * 2;
+			s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.disbandCheck3"));
+			drawCenteredString(s.toString(), x, y, 16777215);
+		} else if (page == Page.LEAVE) {
+			int x = guiLeft + xSize / 2;
+			int y = guiTop + 30;
+			s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.leaveCheck1", viewingFellowship.getName()));
+			drawCenteredString(s.toString(), x, y, 16777215);
+			y += fontRendererObj.FONT_HEIGHT;
+			s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.leaveCheck2"));
+			drawCenteredString(s.toString(), x, y, 16777215);
+		} else if (page == Page.REMOVE) {
+			int x = guiLeft + xSize / 2;
+			int y = guiTop + 30;
+			s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.removeCheck", viewingFellowship.getName(), viewingFellowship.getUsernameFor(removingPlayer)));
+			List<String> lines = fontRendererObj.listFormattedStringToWidth(s.toString(), xSize);
+			for (String line : lines) {
+				drawCenteredString(line, x, y, 16777215);
+				y += fontRendererObj.FONT_HEIGHT;
+			}
+		} else if (page == Page.OP) {
+			int x = guiLeft + xSize / 2;
+			int y = guiTop + 30;
+			s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.opCheck1", viewingFellowship.getName(), viewingFellowship.getUsernameFor(oppingPlayer)));
+			List<String> lines = fontRendererObj.listFormattedStringToWidth(s.toString(), xSize);
+			for (String line : lines) {
+				drawCenteredString(line, x, y, 16777215);
+				y += fontRendererObj.FONT_HEIGHT;
+			}
+			y += fontRendererObj.FONT_HEIGHT;
+			s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.opCheck2", viewingFellowship.getName(), viewingFellowship.getUsernameFor(oppingPlayer)));
+			lines = fontRendererObj.listFormattedStringToWidth(s.toString(), xSize);
+			for (String line : lines) {
+				drawCenteredString(line, x, y, 16777215);
+				y += fontRendererObj.FONT_HEIGHT;
+			}
+		} else if (page == Page.DEOP) {
+			int x = guiLeft + xSize / 2;
+			int y = guiTop + 30;
+			s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.deopCheck", viewingFellowship.getName(), viewingFellowship.getUsernameFor(deoppingPlayer)));
+			List<String> lines = fontRendererObj.listFormattedStringToWidth(s.toString(), xSize);
+			for (String line : lines) {
+				drawCenteredString(line, x, y, 16777215);
+				y += fontRendererObj.FONT_HEIGHT;
+			}
+		} else if (page == Page.TRANSFER) {
+			int x = guiLeft + xSize / 2;
+			int y = guiTop + 30;
+			s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.transferCheck1", viewingFellowship.getName(), viewingFellowship.getUsernameFor(transferringPlayer)));
+			List<String> lines = fontRendererObj.listFormattedStringToWidth(s.toString(), xSize);
+			for (String line : lines) {
+				drawCenteredString(line, x, y, 16777215);
+				y += fontRendererObj.FONT_HEIGHT;
+			}
+			y += fontRendererObj.FONT_HEIGHT;
+			s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.transferCheck2"));
+			drawCenteredString(s.toString(), x, y, 16777215);
+		} else if (page == Page.RENAME) {
+			s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.renameName", viewingFellowship.getName()));
+			drawCenteredString(s.toString(), guiLeft + xSize / 2, textFieldRename.yPosition - 4 - fontRendererObj.FONT_HEIGHT, 16777215);
+			textFieldRename.drawTextBox();
+			if (checkValidRename != null)
+				drawCenteredString(checkValidRename, guiLeft + xSize / 2, textFieldRename.yPosition + textFieldRename.height + fontRendererObj.FONT_HEIGHT, 16711680);
+		} else if (page == Page.INVITATIONS) {
+			int x = guiLeft;
+			int y = guiTop + 10;
+			s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.invites"));
+			drawCenteredString(s.toString(), guiLeft + xSize / 2, y, 16777215);
+			y += fontRendererObj.FONT_HEIGHT + 10;
+			if (allFellowshipInvites.isEmpty()) {
+				y += fontRendererObj.FONT_HEIGHT;
+				s = new StringBuilder(StatCollector.translateToLocal("lotr.gui.fellowships.invitesNone"));
+				drawCenteredString(s.toString(), guiLeft + xSize / 2, y, 16777215);
+			} else {
+				int[] invitesMinMax = scrollPaneInvites.getMinMaxIndices(allFellowshipInvites, displayedInvites);
+				for (int index = invitesMinMax[0]; index <= invitesMinMax[1]; index++) {
+					LOTRFellowshipClient fs = allFellowshipInvites.get(index);
+					drawFellowshipEntry(fs, x, y, i, j, true);
+					y += fontRendererObj.FONT_HEIGHT + 5;
+				}
+			}
+			if (scrollPaneInvites.hasScrollBar) scrollPaneInvites.drawScrollBar();
+		} else if (page == Page.ACCEPT_INVITE_RESULT) {
+			int x = guiLeft + xSize / 2;
+			int y = guiTop + 30;
+			if (acceptInviteResult == null) {
+				int waitingDots = IntMath.mod(tickCounter / 10, 3);
+				s = new StringBuilder();
+				for (int l = 0; l < waitingDots; l++)
+					s.append(".");
+				drawCenteredString(s.toString(), guiLeft + xSize / 2, y, 16777215);
+			} else if (acceptInviteResult == LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.JOINED) {
+				s = new StringBuilder("Joining... (you shouldn't be able to see this message)");
+				drawCenteredString(s.toString(), guiLeft + xSize / 2, y, 16777215);
+			} else {
+				if (acceptInviteResult == LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.DISBANDED) {
+					s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.invited.disbanded", acceptInviteResultFellowshipName));
+				} else if (acceptInviteResult == LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.TOO_LARGE) {
+					s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.invited.maxSize", acceptInviteResultFellowshipName, LOTRConfig.getFellowshipMaxSize(mc.theWorld)));
+				} else if (acceptInviteResult == LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.NONEXISTENT) {
+					s = new StringBuilder(StatCollector.translateToLocalFormatted("lotr.gui.fellowships.invited.notFound"));
 				} else {
-					s = acceptInviteResult == LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.DISBANDED ? StatCollector.translateToLocalFormatted("lotr.gui.fellowships.invited.disbanded", acceptInviteResultFellowshipName) : acceptInviteResult == LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.TOO_LARGE ? StatCollector.translateToLocalFormatted("lotr.gui.fellowships.invited.maxSize", acceptInviteResultFellowshipName, LOTRConfig.getFellowshipMaxSize(mc.theWorld)) : acceptInviteResult == LOTRPacketFellowshipAcceptInviteResult.AcceptInviteResult.NONEXISTENT ? StatCollector.translateToLocalFormatted("lotr.gui.fellowships.invited.notFound") : "If you can see this message, something has gone wrong!";
-					List<String> lines = fontRendererObj.listFormattedStringToWidth(s, xSize);
-					for (String line : lines) {
-						this.drawCenteredString(line, x, y, 16777215);
-						y += fontRendererObj.FONT_HEIGHT;
-					}
+					s = new StringBuilder("If you can see this message, something has gone wrong!");
+				}
+				List<String> lines = fontRendererObj.listFormattedStringToWidth(s.toString(), xSize);
+				for (String line : lines) {
+					drawCenteredString(line, x, y, 16777215);
+					y += fontRendererObj.FONT_HEIGHT;
 				}
 			}
 		}
@@ -925,7 +829,9 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 		if (page == Page.RENAME && textFieldRename.textboxKeyTyped(c, i)) {
 			return;
 		}
-		if (page != Page.LIST) {
+		if (page == Page.LIST) {
+			super.keyTyped(c, i);
+		} else {
 			if (i == 1 || i == mc.gameSettings.keyBindInventory.getKeyCode()) {
 				if (page == Page.INVITE || page == Page.DISBAND || page == Page.LEAVE || page == Page.REMOVE || page == Page.OP || page == Page.DEOP || page == Page.TRANSFER || page == Page.RENAME) {
 					page = Page.FELLOWSHIP;
@@ -937,8 +843,6 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 					page = Page.LIST;
 				}
 			}
-		} else {
-			super.keyTyped(c, i);
 		}
 	}
 
@@ -995,7 +899,7 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 	public void refreshFellowshipList() {
 		allFellowshipsLeading.clear();
 		allFellowshipsOther.clear();
-		ArrayList<LOTRFellowshipClient> fellowships = new ArrayList<>(LOTRLevelData.getData(mc.thePlayer).getClientFellowships());
+		Iterable<LOTRFellowshipClient> fellowships = new ArrayList<>(LOTRLevelData.getData(mc.thePlayer).getClientFellowships());
 		for (LOTRFellowshipClient fs : fellowships) {
 			if (fs.isOwned()) {
 				allFellowshipsLeading.add(fs);
@@ -1008,7 +912,7 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 	}
 
 	public void rejectInvitation(LOTRFellowshipClient invite) {
-		LOTRPacketFellowshipRespondInvite packet = new LOTRPacketFellowshipRespondInvite(invite, false);
+		IMessage packet = new LOTRPacketFellowshipRespondInvite(invite, false);
 		LOTRPacketHandler.networkWrapper.sendToServer(packet);
 	}
 
@@ -1079,55 +983,22 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 	}
 
 	public List<LOTRFellowshipClient> sortFellowshipsForDisplay(List<LOTRFellowshipClient> list) {
-		ArrayList<LOTRFellowshipClient> sorted = new ArrayList<>(list);
-		Collections.sort(sorted, new Comparator<LOTRFellowshipClient>() {
-
-			@Override
-			public int compare(LOTRFellowshipClient fs1, LOTRFellowshipClient fs2) {
-				int count2;
-				int count1 = fs1.getPlayerCount();
-				count2 = fs2.getPlayerCount();
-				if (count1 == count2) {
-					return fs1.getName().toLowerCase().compareTo(fs2.getName().toLowerCase());
-				}
-				return -Integer.compare(count1, count2);
+		List<LOTRFellowshipClient> sorted = new ArrayList<>(list);
+		sorted.sort((fs1, fs2) -> {
+			int count2;
+			int count1 = fs1.getPlayerCount();
+			count2 = fs2.getPlayerCount();
+			if (count1 == count2) {
+				return fs1.getName().toLowerCase(Locale.ROOT).compareTo(fs2.getName().toLowerCase(Locale.ROOT));
 			}
+			return -Integer.compare(count1, count2);
 		});
 		return sorted;
 	}
 
 	public List<GameProfile> sortMembersForDisplay(LOTRFellowshipClient fs) {
-		ArrayList<GameProfile> members = new ArrayList<>(fs.getMemberProfiles());
-		Collections.sort(members, new Comparator<GameProfile>() {
-
-			@Override
-			public int compare(GameProfile player1, GameProfile player2) {
-				boolean online2;
-				boolean admin1 = fs.isAdmin(player1.getId());
-				boolean admin2 = fs.isAdmin(player2.getId());
-				boolean online1 = LOTRGuiFellowships.isPlayerOnline(player1);
-				online2 = LOTRGuiFellowships.isPlayerOnline(player2);
-				if (online1 == online2) {
-					if (admin1 == admin2) {
-						return player1.getName().toLowerCase().compareTo(player2.getName().toLowerCase());
-					}
-					if (admin1 && !admin2) {
-						return -1;
-					}
-					if (!admin1 && admin2) {
-						return 1;
-					}
-				} else {
-					if (online1 && !online2) {
-						return -1;
-					}
-					if (!online1 && online2) {
-						return 1;
-					}
-				}
-				return 0;
-			}
-		});
+		List<GameProfile> members = new ArrayList<>(fs.getMemberProfiles());
+		members.sort(Comparator.comparing(LOTRGuiFellowships::isPlayerOnline).reversed().thenComparing(player -> fs.isAdmin(player.getId())).reversed().thenComparing(player -> player.getName().toLowerCase(Locale.ROOT)));
 		return members;
 	}
 
@@ -1150,21 +1021,8 @@ public class LOTRGuiFellowships extends LOTRGuiMenuBase {
 		}
 	}
 
-	public static boolean isPlayerOnline(GameProfile player) {
-		EntityClientPlayerMP mcPlayer = Minecraft.getMinecraft().thePlayer;
-		List list = mcPlayer.sendQueue.playerInfoList;
-		for (Object obj : list) {
-			GuiPlayerInfo info = (GuiPlayerInfo) obj;
-			if (!info.name.equalsIgnoreCase(player.getName())) {
-				continue;
-			}
-			return true;
-		}
-		return false;
-	}
-
 	public enum Page {
-		LIST, CREATE, FELLOWSHIP, INVITE, DISBAND, LEAVE, REMOVE, OP, DEOP, TRANSFER, RENAME, INVITATIONS, ACCEPT_INVITE_RESULT;
+		LIST, CREATE, FELLOWSHIP, INVITE, DISBAND, LEAVE, REMOVE, OP, DEOP, TRANSFER, RENAME, INVITATIONS, ACCEPT_INVITE_RESULT
 
 	}
 

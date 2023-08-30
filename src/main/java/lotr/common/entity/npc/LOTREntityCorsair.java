@@ -12,13 +12,13 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class LOTREntityCorsair extends LOTREntityUmbarian {
-	public static ItemStack[] weaponsCorsair = { new ItemStack(LOTRMod.swordCorsair), new ItemStack(LOTRMod.swordCorsair), new ItemStack(LOTRMod.daggerCorsair), new ItemStack(LOTRMod.daggerCorsairPoisoned), new ItemStack(LOTRMod.spearCorsair), new ItemStack(LOTRMod.spearCorsair), new ItemStack(LOTRMod.battleaxeCorsair), new ItemStack(LOTRMod.battleaxeCorsair) };
+	public static ItemStack[] weaponsCorsair = {new ItemStack(LOTRMod.swordCorsair), new ItemStack(LOTRMod.swordCorsair), new ItemStack(LOTRMod.daggerCorsair), new ItemStack(LOTRMod.daggerCorsairPoisoned), new ItemStack(LOTRMod.spearCorsair), new ItemStack(LOTRMod.spearCorsair), new ItemStack(LOTRMod.battleaxeCorsair), new ItemStack(LOTRMod.battleaxeCorsair)};
 	public EntityAIBase rangedAttackAI = createHaradrimRangedAttackAI();
 	public EntityAIBase meleeAttackAI;
 
 	public LOTREntityCorsair(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		spawnRidingHorse = false;
 		npcShield = LOTRShields.ALIGNMENT_CORSAIR;
 	}

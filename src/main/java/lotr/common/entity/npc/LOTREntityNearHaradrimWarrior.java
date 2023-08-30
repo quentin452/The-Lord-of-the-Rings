@@ -8,13 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTREntityNearHaradrimWarrior extends LOTREntityNearHaradrim {
-	public static ItemStack[] weaponsIron = { new ItemStack(LOTRMod.scimitarNearHarad), new ItemStack(LOTRMod.scimitarNearHarad), new ItemStack(LOTRMod.scimitarNearHarad), new ItemStack(LOTRMod.daggerNearHarad), new ItemStack(LOTRMod.daggerNearHaradPoisoned), new ItemStack(LOTRMod.poleaxeNearHarad), new ItemStack(LOTRMod.poleaxeNearHarad), new ItemStack(LOTRMod.maceNearHarad), new ItemStack(LOTRMod.pikeNearHarad) };
-	public static ItemStack[] weaponsBronze = { new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.daggerHaradPoisoned), new ItemStack(LOTRMod.pikeHarad) };
-	public static int[] turbanColors = { 1643539, 6309443, 7014914, 7809314, 5978155 };
+	public static ItemStack[] weaponsIron = {new ItemStack(LOTRMod.scimitarNearHarad), new ItemStack(LOTRMod.scimitarNearHarad), new ItemStack(LOTRMod.scimitarNearHarad), new ItemStack(LOTRMod.daggerNearHarad), new ItemStack(LOTRMod.daggerNearHaradPoisoned), new ItemStack(LOTRMod.poleaxeNearHarad), new ItemStack(LOTRMod.poleaxeNearHarad), new ItemStack(LOTRMod.maceNearHarad), new ItemStack(LOTRMod.pikeNearHarad)};
+	public static ItemStack[] weaponsBronze = {new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.daggerHaradPoisoned), new ItemStack(LOTRMod.pikeHarad)};
+	public static int[] turbanColors = {1643539, 6309443, 7014914, 7809314, 5978155};
 
 	public LOTREntityNearHaradrimWarrior(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		spawnRidingHorse = false;
 		npcShield = LOTRShields.ALIGNMENT_NEAR_HARAD;
 	}

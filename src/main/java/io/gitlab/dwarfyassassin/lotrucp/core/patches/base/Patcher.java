@@ -8,7 +8,7 @@ public abstract class Patcher {
 	public Map<String, ConsumerImplBecauseNoLambdas<ClassNode>> classes = new HashMap<>();
 	public String patcherName;
 
-	public Patcher(String name) {
+	protected Patcher(String name) {
 		patcherName = name;
 	}
 
@@ -42,7 +42,7 @@ public abstract class Patcher {
 	}
 
 	public enum LoadingPhase {
-		CORE_MOD_LOADING, FORGE_MOD_LOADING;
+		CORE_MOD_LOADING, FORGE_MOD_LOADING
 
 	}
 

@@ -1,16 +1,14 @@
 package lotr.client.render.entity;
 
+import lotr.common.entity.LOTRRandomSkinEntity;
 import lotr.common.entity.npc.LOTREntityDwarf;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderWickedDwarf extends LOTRRenderDwarf {
 	public static LOTRRandomSkins wickedSkinsMale;
-	public static ResourceLocation apronTexture;
-
-	static {
-		apronTexture = new ResourceLocation("lotr:mob/dwarf/wicked_apron.png");
-	}
+	public static ResourceLocation apronTexture = new ResourceLocation("lotr:mob/dwarf/wicked_apron.png");
 
 	public LOTRRenderWickedDwarf() {
 		wickedSkinsMale = LOTRRandomSkins.loadSkinsList("lotr:mob/dwarf/wicked_male");
@@ -18,7 +16,7 @@ public class LOTRRenderWickedDwarf extends LOTRRenderDwarf {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityDwarf dwarf = (LOTREntityDwarf) entity;
+		LOTRRandomSkinEntity dwarf = (LOTRRandomSkinEntity) entity;
 		return wickedSkinsMale.getRandomSkin(dwarf);
 	}
 

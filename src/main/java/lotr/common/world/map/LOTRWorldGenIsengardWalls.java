@@ -32,7 +32,8 @@ public class LOTRWorldGenIsengardWalls extends LOTRWorldGenStructureBase2 {
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		if (isPosInWall(i + 8, k + 8) < wallThick * 3.0) {
 			for (int i1 = i; i1 <= i + 15; ++i1) {
-				block1: for (int k1 = k; k1 <= k + 15; ++k1) {
+				block1:
+				for (int k1 = k; k1 <= k + 15; ++k1) {
 					double circleDist = isPosInWall(i1, k1);
 					if (circleDist >= 0.03) {
 						continue;
@@ -110,7 +111,7 @@ public class LOTRWorldGenIsengardWalls extends LOTRWorldGenStructureBase2 {
 		int dx = i - centreX;
 		int dz = k - centreZ;
 		int distSq = dx * dx + dz * dz;
-		return Math.abs((double) distSq / (double) radiusSq - 1.0);
+		return Math.abs((double) distSq / radiusSq - 1.0);
 	}
 
 	public boolean isTorchAt(int i, int k) {

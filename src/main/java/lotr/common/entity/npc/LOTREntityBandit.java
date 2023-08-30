@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class LOTREntityBandit extends LOTREntityMan implements IBandit {
 	public static int MAX_THEFTS = 3;
-	public static ItemStack[] weapons = { new ItemStack(LOTRMod.daggerBronze), new ItemStack(LOTRMod.daggerIron) };
+	public static ItemStack[] weapons = {new ItemStack(LOTRMod.daggerBronze), new ItemStack(LOTRMod.daggerIron)};
 	public LOTRInventoryNPC banditInventory = new LOTRInventoryNPC("BanditInventory", this, MAX_THEFTS);
 
 	public LOTREntityBandit(World world) {
@@ -34,7 +34,7 @@ public class LOTREntityBandit extends LOTREntityMan implements IBandit {
 		tasks.addTask(6, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 5.0f, 0.05f));
 		tasks.addTask(7, new EntityAIWatchClosest(this, EntityLiving.class, 8.0f, 0.02f));
 		tasks.addTask(8, new EntityAILookIdle(this));
-		this.addTargetTasks(true, LOTREntityAINearestAttackableTargetBandit.class);
+		addTargetTasks(true, LOTREntityAINearestAttackableTargetBandit.class);
 	}
 
 	@Override

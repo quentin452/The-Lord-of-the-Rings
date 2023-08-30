@@ -20,11 +20,7 @@ public class LOTRAttackTiming {
 	public static int prevAttackTime;
 	public static int fullAttackTime;
 	public static ItemStack attackItem;
-	public static int lastCheckTick;
-
-	static {
-		lastCheckTick = -1;
-	}
+	public static int lastCheckTick = -1;
 
 	public static void doAttackTiming() {
 		int currentTick = LOTRTickHandlerClient.clientTick;
@@ -33,20 +29,21 @@ public class LOTRAttackTiming {
 		} else if (lastCheckTick == currentTick) {
 			return;
 		}
-		if (LOTRAttackTiming.mc.thePlayer == null) {
-			LOTRAttackTiming.reset();
+		if (mc.thePlayer == null) {
+			reset();
 		} else {
-			KeyBinding attackKey = LOTRAttackTiming.mc.gameSettings.keyBindAttack;
+			KeyBinding attackKey = mc.gameSettings.keyBindAttack;
 			boolean pressed = attackKey.isPressed();
 			if (pressed) {
 				KeyBinding.onTick(attackKey.getKeyCode());
 			}
-			if (pressed && LOTRAttackTiming.mc.objectMouseOver != null && LOTRAttackTiming.mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && LOTRAttackTiming.mc.objectMouseOver.entityHit instanceof EntityLivingBase) {
+			if (pressed && mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && mc.objectMouseOver.entityHit instanceof EntityLivingBase) {
 				if (attackTime > 0) {
+					//noinspection StatementWithEmptyBody
 					while (attackKey.isPressed()) {
 					}
 				} else {
-					ItemStack itemstack = LOTRAttackTiming.mc.thePlayer.getHeldItem();
+					ItemStack itemstack = mc.thePlayer.getHeldItem();
 					attackTime = fullAttackTime = LOTRWeaponStats.getAttackTimePlayer(itemstack);
 					attackItem = itemstack;
 				}
@@ -58,7 +55,7 @@ public class LOTRAttackTiming {
 	public static void renderAttackMeter(ScaledResolution resolution, float partialTicks) {
 		if (fullAttackTime > 0) {
 			float attackTimeF = prevAttackTime + (attackTime - prevAttackTime) * partialTicks;
-			float meterAmount = 1.0f - (attackTimeF /= fullAttackTime);
+			float meterAmount = 1.0f - attackTimeF / fullAttackTime;
 			int minX = resolution.getScaledWidth() / 2 + 120;
 			int maxX = resolution.getScaledWidth() - 20;
 			int maxY = resolution.getScaledHeight() - 10;
@@ -98,7 +95,7 @@ public class LOTRAttackTiming {
 				GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 				int iconX = (minX + maxX) / 2 - 8;
 				int iconY = (minY + maxY) / 2 - 8;
-				itemRenderer.renderItemAndEffectIntoGUI(LOTRAttackTiming.mc.fontRenderer, mc.getTextureManager(), attackItem, iconX, iconY);
+				itemRenderer.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), attackItem, iconX, iconY);
 				RenderHelper.disableStandardItemLighting();
 			}
 		}
@@ -116,7 +113,7 @@ public class LOTRAttackTiming {
 		if (attackTime > 0) {
 			--attackTime;
 		} else {
-			LOTRAttackTiming.reset();
+			reset();
 		}
 	}
 }

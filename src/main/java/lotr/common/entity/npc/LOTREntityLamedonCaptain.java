@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityLamedonCaptain extends LOTREntityLamedonSoldier implements LOTRUnitTradeable {
 	public LOTREntityLamedonCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

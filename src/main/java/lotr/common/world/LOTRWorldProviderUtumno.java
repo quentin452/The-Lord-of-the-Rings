@@ -3,6 +3,7 @@ package lotr.common.world;
 import java.awt.Color;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.relauncher.*;
 import lotr.common.LOTRDimension;
 import lotr.common.network.*;
@@ -55,7 +56,7 @@ public class LOTRWorldProviderUtumno extends LOTRWorldProvider {
 		return LOTRDimension.MIDDLE_EARTH.dimensionID;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public double getVoidFogYFactor() {
 		return 1.0;
@@ -66,8 +67,8 @@ public class LOTRWorldProviderUtumno extends LOTRWorldProvider {
 		double y = viewer.prevPosY + (viewer.posY - viewer.prevPosY) * tick;
 		LOTRUtumnoLevel level = LOTRUtumnoLevel.forY((int) y);
 		if (level == LOTRUtumnoLevel.FIRE) {
-			int min = level.getLowestCorridorFloor();
-			int max = level.getHighestCorridorRoof();
+			int min = LOTRUtumnoLevel.FIRE.getLowestCorridorFloor();
+			int max = LOTRUtumnoLevel.FIRE.getHighestCorridorRoof();
 			max = (int) (max - (max - min) * 0.3);
 			double yFactor = (y - min) / (max - min);
 			yFactor = MathHelper.clamp_double(yFactor, 0.0, 1.0);
@@ -76,7 +77,7 @@ public class LOTRWorldProviderUtumno extends LOTRWorldProvider {
 			float[] hsb = Color.RGBtoHSB(clr.getRed(), clr.getGreen(), clr.getBlue(), null);
 			float br = hsb[2];
 			if (br > 0.0) {
-				hsb[2] = br = (float) (br + (1.0f - br) * yFactor);
+				hsb[2] = (float) (br + (1.0f - br) * yFactor);
 			}
 			rgb = new Color(Color.HSBtoRGB(hsb[0], hsb[1], hsb[2])).getRGBComponents(null);
 		}
@@ -95,7 +96,7 @@ public class LOTRWorldProviderUtumno extends LOTRWorldProvider {
 	public static void doEvaporateFX(World world, int i, int j, int k) {
 		if (!world.isRemote) {
 			world.playSoundEffect(i + 0.5f, j + 0.5f, k + 0.5f, "random.fizz", 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f);
-			LOTRPacketBlockFX pkt = new LOTRPacketBlockFX(LOTRPacketBlockFX.Type.UTUMNO_EVAPORATE, i, j, k);
+			IMessage pkt = new LOTRPacketBlockFX(LOTRPacketBlockFX.Type.UTUMNO_EVAPORATE, i, j, k);
 			LOTRPacketHandler.networkWrapper.sendToAllAround(pkt, new NetworkRegistry.TargetPoint(world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 32.0));
 		}
 	}

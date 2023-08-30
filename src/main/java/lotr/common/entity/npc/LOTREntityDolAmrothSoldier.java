@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTREntityDolAmrothSoldier extends LOTREntityGondorLevyman {
-	public static ItemStack[] manAtArmsWeapons = { new ItemStack(LOTRMod.swordDolAmroth), new ItemStack(LOTRMod.swordDolAmroth), new ItemStack(LOTRMod.swordGondor), new ItemStack(Items.iron_sword) };
+	public static ItemStack[] manAtArmsWeapons = {new ItemStack(LOTRMod.swordDolAmroth), new ItemStack(LOTRMod.swordDolAmroth), new ItemStack(LOTRMod.swordGondor), new ItemStack(Items.iron_sword)};
 
 	public LOTREntityDolAmrothSoldier(World world) {
 		super(world);
@@ -48,17 +48,17 @@ public class LOTREntityDolAmrothSoldier extends LOTREntityGondorLevyman {
 		} else {
 			i = rand.nextInt(3);
 			switch (i) {
-			case 0:
-				setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetDolAmroth));
-				break;
-			case 1:
-				setCurrentItemOrArmor(4, new ItemStack(Items.iron_helmet));
-				break;
-			case 2:
-				setCurrentItemOrArmor(4, new ItemStack(Items.leather_helmet));
-				break;
-			default:
-				break;
+				case 0:
+					setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetDolAmroth));
+					break;
+				case 1:
+					setCurrentItemOrArmor(4, new ItemStack(Items.iron_helmet));
+					break;
+				case 2:
+					setCurrentItemOrArmor(4, new ItemStack(Items.leather_helmet));
+					break;
+				default:
+					break;
 			}
 		}
 		return data;

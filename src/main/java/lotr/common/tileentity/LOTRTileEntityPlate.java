@@ -24,7 +24,7 @@ public class LOTRTileEntityPlate extends TileEntity {
 		return foodItem;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
 		AxisAlignedBB bb = super.getRenderBoundingBox();

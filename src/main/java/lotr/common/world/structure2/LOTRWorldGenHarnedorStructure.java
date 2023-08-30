@@ -31,17 +31,17 @@ public abstract class LOTRWorldGenHarnedorStructure extends LOTRWorldGenStructur
 	public Block bedBlock;
 	public Block trapdoorBlock;
 
-	public LOTRWorldGenHarnedorStructure(boolean flag) {
+	protected LOTRWorldGenHarnedorStructure(boolean flag) {
 		super(flag);
 	}
 
 	public ItemStack getHarnedorFramedItem(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.helmetHarnedor), new ItemStack(LOTRMod.bodyHarnedor), new ItemStack(LOTRMod.legsHarnedor), new ItemStack(LOTRMod.bootsHarnedor), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.spearHarad), new ItemStack(LOTRMod.pikeHarad), new ItemStack(LOTRMod.nearHaradBow), new ItemStack(Items.arrow), new ItemStack(Items.skull), new ItemStack(Items.bone), new ItemStack(LOTRMod.gobletGold), new ItemStack(LOTRMod.gobletSilver), new ItemStack(LOTRMod.mug), new ItemStack(LOTRMod.ceramicMug), new ItemStack(LOTRMod.goldRing), new ItemStack(LOTRMod.silverRing), new ItemStack(LOTRMod.doubleFlower, 1, 2), new ItemStack(LOTRMod.doubleFlower, 1, 3) };
+		ItemStack[] items = {new ItemStack(LOTRMod.helmetHarnedor), new ItemStack(LOTRMod.bodyHarnedor), new ItemStack(LOTRMod.legsHarnedor), new ItemStack(LOTRMod.bootsHarnedor), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.spearHarad), new ItemStack(LOTRMod.pikeHarad), new ItemStack(LOTRMod.nearHaradBow), new ItemStack(Items.arrow), new ItemStack(Items.skull), new ItemStack(Items.bone), new ItemStack(LOTRMod.gobletGold), new ItemStack(LOTRMod.gobletSilver), new ItemStack(LOTRMod.mug), new ItemStack(LOTRMod.ceramicMug), new ItemStack(LOTRMod.goldRing), new ItemStack(LOTRMod.silverRing), new ItemStack(LOTRMod.doubleFlower, 1, 2), new ItemStack(LOTRMod.doubleFlower, 1, 3)};
 		return items[random.nextInt(items.length)].copy();
 	}
 
 	public ItemStack getRandomHarnedorWeapon(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.spearHarad), new ItemStack(LOTRMod.pikeHarad) };
+		ItemStack[] items = {new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.spearHarad), new ItemStack(LOTRMod.pikeHarad)};
 		return items[random.nextInt(items.length)].copy();
 	}
 
@@ -66,20 +66,20 @@ public abstract class LOTRWorldGenHarnedorStructure extends LOTRWorldGenStructur
 		trapdoorBlock = LOTRMod.trapdoorCedar;
 		int randomWool = random.nextInt(3);
 		switch (randomWool) {
-		case 0:
-			roofBlock = Blocks.wool;
-			roofMeta = 1;
-			break;
-		case 1:
-			roofBlock = Blocks.wool;
-			roofMeta = 12;
-			break;
-		case 2:
-			roofBlock = Blocks.wool;
-			roofMeta = 14;
-			break;
-		default:
-			break;
+			case 0:
+				roofBlock = Blocks.wool;
+				roofMeta = 1;
+				break;
+			case 1:
+				roofBlock = Blocks.wool;
+				roofMeta = 12;
+				break;
+			case 2:
+				roofBlock = Blocks.wool;
+				roofMeta = 14;
+				break;
+			default:
+				break;
 		}
 		int randomFloorWood = random.nextInt(2);
 		if (randomFloorWood == 0) {
@@ -88,7 +88,7 @@ public abstract class LOTRWorldGenHarnedorStructure extends LOTRWorldGenStructur
 			plank2SlabBlock = LOTRMod.woodSlabSingle4;
 			plank2SlabMeta = 3;
 			plank2StairBlock = LOTRMod.stairsOlive;
-		} else if (randomFloorWood == 1) {
+		} else {
 			plank2Block = LOTRMod.planks3;
 			plank2Meta = 0;
 			plank2SlabBlock = LOTRMod.woodSlabSingle5;

@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class LOTREntityGulfHaradWarrior extends LOTREntityGulfHaradrim {
 	public LOTREntityGulfHaradWarrior(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		spawnRidingHorse = rand.nextInt(10) == 0;
 		npcShield = LOTRShields.ALIGNMENT_GULF;
 	}
@@ -39,27 +39,27 @@ public class LOTREntityGulfHaradWarrior extends LOTREntityGulfHaradrim {
 	@Override
 	public IEntityLivingData onSpawnWithEgg(IEntityLivingData data) {
 		data = super.onSpawnWithEgg(data);
-		if (rand.nextInt(3) != 0) {
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordGulfHarad));
-		} else {
+		if (rand.nextInt(3) == 0) {
 			int i = rand.nextInt(5);
 			switch (i) {
-			case 0:
-			case 1:
-				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordHarad));
-				break;
-			case 2:
-				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerHarad));
-				break;
-			case 3:
-				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerHaradPoisoned));
-				break;
-			case 4:
-				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pikeHarad));
-				break;
-			default:
-				break;
+				case 0:
+				case 1:
+					npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordHarad));
+					break;
+				case 2:
+					npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerHarad));
+					break;
+				case 3:
+					npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerHaradPoisoned));
+					break;
+				case 4:
+					npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pikeHarad));
+					break;
+				default:
+					break;
 			}
+		} else {
+			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordGulfHarad));
 		}
 		if (rand.nextInt(5) == 0) {
 			npcItemsInv.setSpearBackup(npcItemsInv.getMeleeWeapon());

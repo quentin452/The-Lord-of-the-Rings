@@ -66,28 +66,28 @@ public class LOTREntityCrocodile extends EntityMob {
 	public void dropFewItems(boolean flag, int i) {
 		super.dropFewItems(flag, i);
 		int count = rand.nextInt(3) + rand.nextInt(i + 1);
-		block7: for (int j = 0; j < count; ++j) {
+		for (int j = 0; j < count; ++j) {
 			int drop = rand.nextInt(5);
 			switch (drop) {
-			case 0: {
-				dropItem(Items.bone, 1);
-				continue block7;
-			}
-			case 1: {
-				dropItem(Items.fish, 1);
-				continue block7;
-			}
-			case 2: {
-				dropItem(Items.leather, 1);
-				continue block7;
-			}
-			case 3: {
-				dropItem(LOTRMod.zebraRaw, 1);
-				continue block7;
-			}
-			case 4: {
-				dropItem(LOTRMod.gemsbokHide, 1);
-			}
+				case 0: {
+					dropItem(Items.bone, 1);
+					continue;
+				}
+				case 1: {
+					dropItem(Items.fish, 1);
+					continue;
+				}
+				case 2: {
+					dropItem(Items.leather, 1);
+					continue;
+				}
+				case 3: {
+					dropItem(LOTRMod.zebraRaw, 1);
+					continue;
+				}
+				case 4: {
+					dropItem(LOTRMod.gemsbokHide, 1);
+				}
 			}
 		}
 	}
@@ -100,11 +100,11 @@ public class LOTREntityCrocodile extends EntityMob {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		List nearbyCrocodiles = worldObj.getEntitiesWithinAABB(this.getClass(), boundingBox.expand(24.0, 12.0, 24.0));
+		List nearbyCrocodiles = worldObj.getEntitiesWithinAABB(getClass(), boundingBox.expand(24.0, 12.0, 24.0));
 		if (nearbyCrocodiles.size() > 3) {
 			return false;
 		}
-		if (worldObj.checkNoEntityCollision(boundingBox) && isValidLightLevel() && worldObj.getCollidingBoundingBoxes(this, boundingBox).size() == 0) {
+		if (worldObj.checkNoEntityCollision(boundingBox) && isValidLightLevel() && worldObj.getCollidingBoundingBoxes(this, boundingBox).isEmpty()) {
 			for (int i = -8; i <= 8; ++i) {
 				for (int j = -8; j <= 8; ++j) {
 					for (int k = -8; k <= 8; ++k) {

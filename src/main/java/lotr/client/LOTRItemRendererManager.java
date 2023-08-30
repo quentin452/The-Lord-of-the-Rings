@@ -18,11 +18,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class LOTRItemRendererManager implements IResourceManagerReloadListener {
 	public static LOTRItemRendererManager INSTANCE;
-	public static List<LOTRRenderLargeItem> largeItemRenderers;
-
-	static {
-		largeItemRenderers = new ArrayList<>();
-	}
+	public static List<LOTRRenderLargeItem> largeItemRenderers = new ArrayList<>();
 
 	@Override
 	public void onResourceManagerReload(IResourceManager resourceManager) {
@@ -64,13 +60,11 @@ public class LOTRItemRendererManager implements IResourceManagerReloadListener {
 		MinecraftForgeClient.registerItemRenderer(LOTRMod.conquestHorn, new LOTRRenderBlownItem());
 		MinecraftForgeClient.registerItemRenderer(LOTRMod.banner, new LOTRRenderBannerItem());
 		MinecraftForgeClient.registerItemRenderer(LOTRMod.orcSkullStaff, new LOTRRenderSkullStaff());
-		Iterator iterator = Item.itemRegistry.iterator();
-		while (iterator.hasNext()) {
-			Item item = (Item) iterator.next();
-			if (!(item instanceof LOTRItemAnimalJar)) {
-				continue;
+		for (Object o : Item.itemRegistry) {
+			Item item = (Item) o;
+			if (item instanceof LOTRItemAnimalJar) {
+				MinecraftForgeClient.registerItemRenderer(item, new LOTRRenderAnimalJar());
 			}
-			MinecraftForgeClient.registerItemRenderer(item, new LOTRRenderAnimalJar());
 		}
 	}
 

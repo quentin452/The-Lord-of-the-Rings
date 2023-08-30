@@ -1,19 +1,21 @@
 package lotr.common.world.mapgen.tpyr;
 
-import java.util.*;
-
 import lotr.common.world.structure2.LOTRWorldGenTauredainPyramid;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.structure.*;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
+import net.minecraft.world.gen.structure.StructureComponent;
+
+import java.util.Random;
 
 public class LOTRComponentTauredainPyramid extends StructureComponent {
 	public static LOTRWorldGenTauredainPyramid pyramidGen = new LOTRWorldGenTauredainPyramid(false);
-	public static Random pyramidRand;
+	public static Random pyramidRand = new Random();
+
 	static {
-		LOTRComponentTauredainPyramid.pyramidGen.restrictions = false;
-		pyramidRand = new Random();
+		pyramidGen.restrictions = false;
 	}
+
 	public int posX;
 	public int posY = -1;
 	public int posZ;
@@ -45,10 +47,6 @@ public class LOTRComponentTauredainPyramid extends StructureComponent {
 		pyramidRand.setSeed(pyramidSeed);
 		pyramidGen.generateWithSetRotation(world, pyramidRand, posX, posY, posZ, direction);
 		return true;
-	}
-
-	@Override
-	public void buildComponent(StructureComponent component, List list, Random random) {
 	}
 
 	@Override

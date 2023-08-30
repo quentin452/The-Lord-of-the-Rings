@@ -67,7 +67,7 @@ public class LOTREntityAIRangedAttack extends EntityAIBase {
 		repathDelay = canSee ? ++repathDelay : 0;
 		if (distanceSq <= attackRangeSq) {
 			if (theOwner.getDistanceSqToEntity(attackTarget) < 25.0) {
-				Vec3 vec = LOTREntityAIRangedAttack.findPositionAwayFrom(theOwner, attackTarget, 8, 16);
+				Vec3 vec = findPositionAwayFrom(theOwner, attackTarget, 8, 16);
 				if (vec != null) {
 					theOwner.getNavigator().tryMoveToXYZ(vec.xCoord, vec.yCoord, vec.zCoord, moveSpeedFlee);
 				}

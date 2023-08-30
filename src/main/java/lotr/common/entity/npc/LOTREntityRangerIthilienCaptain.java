@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityRangerIthilienCaptain extends LOTREntityRangerIthilien implements LOTRUnitTradeable {
 	public LOTREntityRangerIthilienCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

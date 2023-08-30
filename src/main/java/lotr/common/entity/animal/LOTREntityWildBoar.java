@@ -28,11 +28,6 @@ public class LOTREntityWildBoar extends LOTREntityHorse {
 	}
 
 	@Override
-	public double clampChildJump(double jump) {
-		return MathHelper.clamp_double(jump, 0.3, 1.0);
-	}
-
-	@Override
 	public double clampChildSpeed(double speed) {
 		return MathHelper.clamp_double(speed, 0.08, 0.29);
 	}
@@ -115,7 +110,7 @@ public class LOTREntityWildBoar extends LOTREntityHorse {
 		double clampedSpeed;
 		super.readEntityFromNBT(nbt);
 		boolean doBoarNerf = true;
-		if (doBoarNerf && (clampedSpeed = clampChildSpeed(speed = getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue())) < speed) {
+		if ((clampedSpeed = clampChildSpeed(speed = getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue())) < speed) {
 			System.out.println("Reducing boar movement speed from " + speed);
 			speed = clampedSpeed;
 			getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(speed);

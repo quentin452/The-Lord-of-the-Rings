@@ -18,16 +18,16 @@ public enum LOTREnchantmentType {
 			ItemArmor itemarmor = (ItemArmor) item;
 			int armorType = itemarmor.armorType;
 			switch (armorType) {
-			case 0:
-				return this == ARMOR_HEAD;
-			case 1:
-				return this == ARMOR_BODY;
-			case 2:
-				return this == ARMOR_LEGS;
-			case 3:
-				return this == ARMOR_FEET;
-			default:
-				break;
+				case 0:
+					return this == ARMOR_HEAD;
+				case 1:
+					return this == ARMOR_BODY;
+				case 2:
+					return this == ARMOR_LEGS;
+				case 3:
+					return this == ARMOR_FEET;
+				default:
+					break;
 			}
 		}
 		if (this == MELEE && LOTRWeaponStats.isMeleeWeapon(itemstack) && !(item instanceof LOTRItemCommandSword)) {
@@ -39,7 +39,7 @@ public enum LOTREnchantmentType {
 		if (this == RANGED && LOTRWeaponStats.isRangedWeapon(itemstack)) {
 			return true;
 		}
-		if (this == RANGED_LAUNCHER && (item instanceof ItemBow || item instanceof LOTRItemCrossbow || item instanceof LOTRItemBlowgun)) {
+		if (this == RANGED_LAUNCHER && (item instanceof ItemBow || item instanceof LOTRItemBlowgun)) {
 			return true;
 		}
 		if (this == THROWING_AXE && item instanceof LOTRItemThrowingAxe) {

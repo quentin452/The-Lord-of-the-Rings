@@ -37,9 +37,9 @@ public class LOTRRenderHorse extends RenderHorse {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityHorse horse = (LOTREntityHorse) entity;
+		LOTRNPCMount horse = (LOTRNPCMount) entity;
 		ResourceLocation horseSkin = super.getEntityTexture(entity);
-		return LOTRRenderHorse.getLayeredMountTexture(horse, horseSkin);
+		return getLayeredMountTexture(horse, horseSkin);
 	}
 
 	public static ResourceLocation getLayeredMountTexture(LOTRNPCMount mount, ResourceLocation mountSkin) {

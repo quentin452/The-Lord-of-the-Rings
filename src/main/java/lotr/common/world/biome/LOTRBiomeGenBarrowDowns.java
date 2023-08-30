@@ -43,8 +43,8 @@ public class LOTRBiomeGenBarrowDowns extends LOTRBiome {
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer6);
 		npcSpawnList.conquestGainRate = 0.2f;
 		variantChance = 0.2f;
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
 		decorator.willowPerChunk = 1;
 		decorator.grassPerChunk = 6;
 		decorator.doubleGrassPerChunk = 6;
@@ -81,11 +81,6 @@ public class LOTRBiomeGenBarrowDowns extends LOTRBiome {
 
 	@Override
 	public float getChanceToSpawnAnimals() {
-		return 0.1f;
-	}
-
-	@Override
-	public float getTreeIncreaseChance() {
 		return 0.1f;
 	}
 

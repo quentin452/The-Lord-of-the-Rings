@@ -34,7 +34,7 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 		int k14;
 		int step;
 		int j12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 1);
+		setOriginAndRotation(world, i, j, k, rotation, 1);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -98,7 +98,7 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 				}
 			}
 		}
-		for (int k151 : new int[] { 0, 14 }) {
+		for (int k151 : new int[]{0, 14}) {
 			for (i14 = -4; i14 <= 8; ++i14) {
 				if (IntMath.mod(i14, 4) != 0 || i14 == 0) {
 					continue;
@@ -107,7 +107,7 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i14, 3, k151, LOTRMod.glassPane, 0);
 			}
 		}
-		for (int i1321 : new int[] { -7, 11 }) {
+		for (int i1321 : new int[]{-7, 11}) {
 			for (k122 = 3; k122 <= 11; ++k122) {
 				if (IntMath.mod(k122, 4) != 3 || i1321 == -7 && k122 == 7) {
 					continue;
@@ -122,9 +122,10 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 0, 0, 14, plankBlock, plankMeta);
 		setBlockAndMetadata(world, 0, 1, 14, doorBlock, 3);
 		setBlockAndMetadata(world, 0, 2, 14, doorBlock, 8);
-		int[] i15 = { -1, 15 };
+		int[] i15 = {-1, 15};
 		k13 = i15.length;
-		block13: for (beam = 0; beam < k13; ++beam) {
+		block13:
+		for (beam = 0; beam < k13; ++beam) {
 			int j14;
 			i14 = 0;
 			k15 = i15[beam];
@@ -225,7 +226,7 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 				}
 			}
 		}
-		for (int k151 : new int[] { -1, 15 }) {
+		for (int k151 : new int[]{-1, 15}) {
 			for (i14 = -4; i14 <= 8; ++i14) {
 				if (IntMath.mod(i14, 4) != 0) {
 					continue;
@@ -233,7 +234,7 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i14, 7, k151, LOTRMod.glassPane, 0);
 			}
 		}
-		int[] i16 = { -8, 12 };
+		int[] i16 = {-8, 12};
 		k13 = i16.length;
 		for (beam = 0; beam < k13; ++beam) {
 			i132 = i16[beam];
@@ -253,7 +254,7 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 				if (i17 > -7 + step2 && i17 < 11 - step2) {
 					continue;
 				}
-				setBlockAndMetadata(world, i17, 8 + step2, 0 + step2, roofStairBlock, 2);
+				setBlockAndMetadata(world, i17, 8 + step2, step2, roofStairBlock, 2);
 				setBlockAndMetadata(world, i17, 8 + step2, 14 - step2, roofStairBlock, 3);
 			}
 			setBlockAndMetadata(world, -7 + step2, 8 + step2, -1 + step2, roofStairBlock, 1);
@@ -299,7 +300,7 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 			setBlockAndMetadata(world, i18, 9, 12, roofStairBlock, 6);
 			setBlockAndMetadata(world, i18, 8, 13, roofStairBlock, 6);
 		}
-		for (int i1321 : new int[] { -8, 12 }) {
+		for (int i1321 : new int[]{-8, 12}) {
 			for (k122 = 2; k122 <= 12; ++k122) {
 				setBlockAndMetadata(world, i1321, 9, k122, woodBeamBlock, woodBeamMeta | 8);
 			}
@@ -314,7 +315,7 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 			for (k13 = 6; k13 <= 8; ++k13) {
 				for (j1 = 0; j1 <= 13; ++j1) {
 					if (i19 == 4 && k13 == 7) {
-						setAir(world, i19, j1, k13);
+						setAir(world, 4, j1, 7);
 						continue;
 					}
 					setBlockAndMetadata(world, i19, j1, k13, brickBlock, brickMeta);
@@ -343,13 +344,13 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 0, 4, 11, LOTRMod.chandelier, 1);
 		setBlockAndMetadata(world, 8, 4, 3, LOTRMod.chandelier, 1);
 		setBlockAndMetadata(world, 8, 4, 11, LOTRMod.chandelier, 1);
-		for (int k151 : new int[] { 1, 2 }) {
+		for (int k151 : new int[]{1, 2}) {
 			setBlockAndMetadata(world, -4, 1, k151, plankBlock, plankMeta);
 			placeMugOrPlate(world, random, -4, 2, k151);
 			setBlockAndMetadata(world, -6, 1, k151, plankStairBlock, 0);
 			setBlockAndMetadata(world, -2, 1, k151, plankStairBlock, 1);
 		}
-		int[] i19 = { 1, 2, 12, 13 };
+		int[] i19 = {1, 2, 12, 13};
 		k13 = i19.length;
 		for (j1 = 0; j1 < k13; ++j1) {
 			k15 = i19[j1];
@@ -375,7 +376,7 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 			setBlockAndMetadata(world, 10, 1, k14, plankStairBlock, 1);
 		}
 		for (i12 = 7; i12 <= 8; ++i12) {
-			int[] k16 = { 3, 4, 10, 11 };
+			int[] k16 = {3, 4, 10, 11};
 			j1 = k16.length;
 			for (k15 = 0; k15 < j1; ++k15) {
 				k122 = k16[k15];
@@ -401,23 +402,23 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 			setBlockAndMetadata(world, -2, 4, k14, woodBeamBlock, woodBeamMeta | 8);
 		}
 		setBlockAndMetadata(world, -4, 1, 5, fenceGateBlock, 0);
-		this.placeBarrel(world, random, -6, 2, 5, 3, LOTRFoods.GONDOR_DRINK);
-		this.placeMug(world, random, -5, 2, 5, 2, LOTRFoods.GONDOR_DRINK);
-		this.placeMug(world, random, -3, 2, 5, 2, LOTRFoods.GONDOR_DRINK);
+		placeBarrel(world, random, -6, 2, 5, 3, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, -5, 2, 5, 2, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, -3, 2, 5, 2, LOTRFoods.GONDOR_DRINK);
 		setBlockAndMetadata(world, -4, 1, 9, fenceGateBlock, 2);
-		this.placeBarrel(world, random, -6, 2, 9, 2, LOTRFoods.GONDOR_DRINK);
-		this.placeMug(world, random, -5, 2, 9, 0, LOTRFoods.GONDOR_DRINK);
-		this.placeMug(world, random, -3, 2, 9, 0, LOTRFoods.GONDOR_DRINK);
-		this.placeBarrel(world, random, -2, 2, 8, 5, LOTRFoods.GONDOR_DRINK);
-		this.placeMug(world, random, -2, 2, 6, 1, LOTRFoods.GONDOR_DRINK);
+		placeBarrel(world, random, -6, 2, 9, 2, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, -5, 2, 9, 0, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, -3, 2, 9, 0, LOTRFoods.GONDOR_DRINK);
+		placeBarrel(world, random, -2, 2, 8, 5, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, -2, 2, 6, 1, LOTRFoods.GONDOR_DRINK);
 		setBlockAndMetadata(world, -6, 1, 6, plankStairBlock, 4);
 		placePlateWithCertainty(world, random, -6, 2, 6, plateBlock, LOTRFoods.GONDOR);
 		setBlockAndMetadata(world, -6, 1, 7, Blocks.furnace, 4);
 		setBlockAndMetadata(world, -6, 1, 8, Blocks.cauldron, 3);
-		this.placeChest(world, random, -3, 0, 8, 5, LOTRChestContents.GONDOR_HOUSE);
+		placeChest(world, random, -3, 0, 8, 5, LOTRChestContents.GONDOR_HOUSE);
 		for (k14 = 6; k14 <= 8; ++k14) {
 			setBlockAndMetadata(world, -6, 3, k14, plankStairBlock, 4);
-			this.placeBarrel(world, random, -6, 4, k14, 4, LOTRFoods.GONDOR_DRINK);
+			placeBarrel(world, random, -6, 4, k14, 4, LOTRFoods.GONDOR_DRINK);
 		}
 		setBlockAndMetadata(world, -4, 4, 7, LOTRMod.chandelier, 1);
 		for (step = 0; step <= 2; ++step) {
@@ -519,10 +520,10 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 			if (i2 == 1) {
 				setBlockAndMetadata(world, i12, 6, 2, plankStairBlock, 2);
 				setBlockAndMetadata(world, i12, 6, 0, plankBlock, plankMeta);
-				this.placeMug(world, random, i12, 7, 0, 2, LOTRFoods.GONDOR_DRINK);
+				placeMug(world, random, i12, 7, 0, 2, LOTRFoods.GONDOR_DRINK);
 				setBlockAndMetadata(world, i12, 6, 12, plankStairBlock, 3);
 				setBlockAndMetadata(world, i12, 6, 14, plankBlock, plankMeta);
-				this.placeMug(world, random, i12, 7, 14, 0, LOTRFoods.GONDOR_DRINK);
+				placeMug(world, random, i12, 7, 14, 0, LOTRFoods.GONDOR_DRINK);
 			}
 			for (k17 = 1; k17 <= 3; ++k17) {
 				setBlockAndMetadata(world, i12, 10, k17, wallBlock, wallMeta);
@@ -583,10 +584,10 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 			if (k2 == 2) {
 				setBlockAndMetadata(world, -5, 6, k14, plankStairBlock, 1);
 				setBlockAndMetadata(world, -7, 6, k14, plankBlock, plankMeta);
-				this.placeMug(world, random, -7, 7, k14, 3, LOTRFoods.GONDOR_DRINK);
+				placeMug(world, random, -7, 7, k14, 3, LOTRFoods.GONDOR_DRINK);
 				setBlockAndMetadata(world, 9, 6, k14, plankStairBlock, 0);
 				setBlockAndMetadata(world, 11, 6, k14, plankBlock, plankMeta);
-				this.placeMug(world, random, 11, 7, k14, 1, LOTRFoods.GONDOR_DRINK);
+				placeMug(world, random, 11, 7, k14, 1, LOTRFoods.GONDOR_DRINK);
 			}
 			for (i1 = -7; i1 <= -4; ++i1) {
 				setBlockAndMetadata(world, i1, 10, k14, wallBlock, wallMeta);
@@ -640,9 +641,9 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 7, 6, 12, bedBlock, 10);
 		setBlockAndMetadata(world, 7, 6, 14, Blocks.chest, 4);
 		setBlockAndMetadata(world, 9, 6, 14, plankBlock, plankMeta);
-		this.placeMug(world, random, 9, 7, 14, 0, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, 9, 7, 14, 0, LOTRFoods.GONDOR_DRINK);
 		setBlockAndMetadata(world, 10, 6, 13, plankBlock, plankMeta);
-		this.placeMug(world, random, 10, 7, 13, 1, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, 10, 7, 13, 1, LOTRFoods.GONDOR_DRINK);
 		for (i12 = 7; i12 <= 8; ++i12) {
 			for (k13 = 3; k13 <= 4; ++k13) {
 				if (i12 == 7 && k13 == 4) {
@@ -686,9 +687,9 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 7, 6, 2, bedBlock, 8);
 		setBlockAndMetadata(world, 7, 6, 0, Blocks.chest, 4);
 		setBlockAndMetadata(world, 9, 6, 0, plankBlock, plankMeta);
-		this.placeMug(world, random, 9, 7, 0, 2, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, 9, 7, 0, 2, LOTRFoods.GONDOR_DRINK);
 		setBlockAndMetadata(world, 10, 6, 1, plankBlock, plankMeta);
-		this.placeMug(world, random, 10, 7, 1, 1, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, 10, 7, 1, 1, LOTRFoods.GONDOR_DRINK);
 		for (i12 = -4; i12 <= -3; ++i12) {
 			for (k13 = 3; k13 <= 4; ++k13) {
 				if (i12 == -3 && k13 == 4) {
@@ -732,11 +733,11 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, -3, 6, 2, bedBlock, 8);
 		setBlockAndMetadata(world, -3, 6, 0, Blocks.chest, 5);
 		setBlockAndMetadata(world, -5, 6, 0, plankBlock, plankMeta);
-		this.placeMug(world, random, -5, 7, 0, 2, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, -5, 7, 0, 2, LOTRFoods.GONDOR_DRINK);
 		setBlockAndMetadata(world, -6, 6, 1, plankBlock, plankMeta);
-		this.placeMug(world, random, -6, 7, 1, 3, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, -6, 7, 1, 3, LOTRFoods.GONDOR_DRINK);
 		for (i12 = -3; i12 <= 7; ++i12) {
-			for (int k1221 : new int[] { 5, 9 }) {
+			for (int k1221 : new int[]{5, 9}) {
 				setBlockAndMetadata(world, i12, 11, k1221, roofSlabBlock, roofSlabMeta | 8);
 			}
 		}
@@ -755,7 +756,7 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 
 	public void placeMugOrPlate(World world, Random random, int i, int j, int k) {
 		if (random.nextBoolean()) {
-			this.placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.GONDOR_DRINK);
+			placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.GONDOR_DRINK);
 		} else {
 			placePlate(world, random, i, j, k, plateBlock, LOTRFoods.GONDOR);
 		}
@@ -766,7 +767,7 @@ public class LOTRWorldGenGondorTavern extends LOTRWorldGenGondorStructure {
 		super.setupRandomBlocks(random);
 		bedBlock = Blocks.bed;
 		tavernName = LOTRNames.getGondorTavernName(random);
-		tavernNameSign = new String[] { "", tavernName[0], tavernName[1], "" };
+		tavernNameSign = new String[]{"", tavernName[0], tavernName[1], ""};
 		tavernNameNPC = tavernName[0] + " " + tavernName[1];
 	}
 }

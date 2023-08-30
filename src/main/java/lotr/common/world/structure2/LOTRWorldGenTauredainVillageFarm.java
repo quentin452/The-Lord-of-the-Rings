@@ -27,41 +27,41 @@ public class LOTRWorldGenTauredainVillageFarm extends LOTRWorldGenTauredainHouse
 		}
 		int randomCrop = random.nextInt(8);
 		switch (randomCrop) {
-		case 0:
-		case 1:
-			cropBlock = Blocks.potatoes;
-			cropMeta = 7;
-			seedItem = Items.potato;
-			melon = false;
-			break;
-		case 2:
-		case 3:
-			cropBlock = LOTRMod.cornStalk;
-			cropMeta = 0;
-			seedItem = Item.getItemFromBlock(LOTRMod.cornStalk);
-			melon = false;
-			break;
-		case 4:
-			cropBlock = Blocks.wheat;
-			cropMeta = 7;
-			seedItem = Items.wheat_seeds;
-			melon = false;
-			break;
-		case 5:
-			cropBlock = Blocks.carrots;
-			cropMeta = 7;
-			seedItem = Items.carrot;
-			melon = false;
-			break;
-		case 6:
-		case 7:
-			cropBlock = Blocks.melon_stem;
-			cropMeta = 7;
-			seedItem = Items.melon_seeds;
-			melon = true;
-			break;
-		default:
-			break;
+			case 0:
+			case 1:
+				cropBlock = Blocks.potatoes;
+				cropMeta = 7;
+				seedItem = Items.potato;
+				melon = false;
+				break;
+			case 2:
+			case 3:
+				cropBlock = LOTRMod.cornStalk;
+				cropMeta = 0;
+				seedItem = Item.getItemFromBlock(LOTRMod.cornStalk);
+				melon = false;
+				break;
+			case 4:
+				cropBlock = Blocks.wheat;
+				cropMeta = 7;
+				seedItem = Items.wheat_seeds;
+				melon = false;
+				break;
+			case 5:
+				cropBlock = Blocks.carrots;
+				cropMeta = 7;
+				seedItem = Items.carrot;
+				melon = false;
+				break;
+			case 6:
+			case 7:
+				cropBlock = Blocks.melon_stem;
+				cropMeta = 7;
+				seedItem = Items.melon_seeds;
+				melon = true;
+				break;
+			default:
+				break;
 		}
 		for (i1 = -4; i1 <= 4; ++i1) {
 			for (int k1 = -3; k1 <= 3; ++k1) {
@@ -86,7 +86,7 @@ public class LOTRWorldGenTauredainVillageFarm extends LOTRWorldGenTauredainHouse
 				setBlockAndMetadata(world, i1, 1, 0, Blocks.water, 0);
 				setAir(world, i1, 2, 0);
 			}
-			for (int k1 : new int[] { -1, 1 }) {
+			for (int k1 : new int[]{-1, 1}) {
 				for (int i12 = -3; i12 <= 3; ++i12) {
 					if (i12 == 0) {
 						continue;

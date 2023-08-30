@@ -18,14 +18,14 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class LOTRItemPouch extends Item {
-	public static String[] pouchTypes = { "small", "medium", "large" };
-	@SideOnly(value = Side.CLIENT)
+	public static String[] pouchTypes = {"small", "medium", "large"};
+	@SideOnly(Side.CLIENT)
 	public IIcon[] pouchIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] pouchIconsOpen;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] overlayIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] overlayIconsOpen;
 
 	public LOTRItemPouch() {
@@ -36,11 +36,11 @@ public class LOTRItemPouch extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-		int slots = LOTRItemPouch.getCapacity(itemstack);
+		int slots = getCapacity(itemstack);
 		int slotsFull = 0;
-		LOTRInventoryPouch pouchInv = new LOTRInventoryPouch(itemstack);
+		IInventory pouchInv = new LOTRInventoryPouch(itemstack);
 		for (int i = 0; i < pouchInv.getSizeInventory(); ++i) {
 			ItemStack slotItem = pouchInv.getStackInSlot(i);
 			if (slotItem == null) {
@@ -49,16 +49,16 @@ public class LOTRItemPouch extends Item {
 			++slotsFull;
 		}
 		list.add(StatCollector.translateToLocalFormatted("item.lotr.pouch.slots", slotsFull, slots));
-		if (LOTRItemPouch.isPouchDyed(itemstack)) {
+		if (isPouchDyed(itemstack)) {
 			list.add(StatCollector.translateToLocal("item.lotr.pouch.dyed"));
 		}
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack itemstack, int pass) {
 		if (pass == 0) {
-			return LOTRItemPouch.getPouchColor(itemstack);
+			return getPouchColor(itemstack);
 		}
 		return 16777215;
 	}
@@ -88,7 +88,7 @@ public class LOTRItemPouch extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < pouchTypes.length; ++i) {
 			list.add(new ItemStack(item, 1, i));
@@ -97,7 +97,7 @@ public class LOTRItemPouch extends Item {
 
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
-		return super.getUnlocalizedName() + "." + itemstack.getItemDamage();
+		return getUnlocalizedName() + "." + itemstack.getItemDamage();
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class LOTRItemPouch extends Item {
 
 	@Override
 	public boolean onItemUseFirst(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int side, float hitX, float hitY, float hitZ) {
-		IInventory chest = LOTRItemPouch.getChestInvAt(entityplayer, world, i, j, k);
+		IInventory chest = getChestInvAt(entityplayer, world, i, j, k);
 		if (chest != null) {
 			LOTRMod.proxy.usePouchOnChest(entityplayer, world, i, j, k, side, itemstack, entityplayer.inventory.currentItem);
 			return true;
@@ -119,7 +119,7 @@ public class LOTRItemPouch extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconregister) {
 		pouchIcons = new IIcon[pouchTypes.length];
 		pouchIconsOpen = new IIcon[pouchTypes.length];
@@ -134,13 +134,13 @@ public class LOTRItemPouch extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public boolean requiresMultipleRenderPasses() {
 		return true;
 	}
 
 	public static int getCapacity(ItemStack itemstack) {
-		return LOTRItemPouch.getCapacityForMeta(itemstack.getItemDamage());
+		return getCapacityForMeta(itemstack.getItemDamage());
 	}
 
 	public static int getCapacityForMeta(int i) {
@@ -171,11 +171,11 @@ public class LOTRItemPouch extends Item {
 	}
 
 	public static int getMaxPouchCapacity() {
-		return LOTRItemPouch.getCapacityForMeta(pouchTypes.length - 1);
+		return getCapacityForMeta(pouchTypes.length - 1);
 	}
 
 	public static int getPouchColor(ItemStack itemstack) {
-		int dye = LOTRItemPouch.getSavedDyeColor(itemstack);
+		int dye = getSavedDyeColor(itemstack);
 		if (dye != -1) {
 			return dye;
 		}
@@ -205,7 +205,7 @@ public class LOTRItemPouch extends Item {
 	}
 
 	public static boolean isPouchDyed(ItemStack itemstack) {
-		return LOTRItemPouch.getSavedDyeColor(itemstack) != -1;
+		return getSavedDyeColor(itemstack) != -1;
 	}
 
 	public static void removePouchDye(ItemStack itemstack) {
@@ -216,8 +216,8 @@ public class LOTRItemPouch extends Item {
 
 	public static boolean restockPouches(EntityPlayer player) {
 		InventoryPlayer inv = player.inventory;
-		List<Integer> pouchSlots = new ArrayList<>();
-		List<Integer> itemSlots = new ArrayList<>();
+		Collection<Integer> pouchSlots = new ArrayList<>();
+		Collection<Integer> itemSlots = new ArrayList<>();
 		for (int i = 0; i < inv.mainInventory.length; i++) {
 			ItemStack itemstack = inv.getStackInSlot(i);
 			if (itemstack != null) {
@@ -257,7 +257,7 @@ public class LOTRItemPouch extends Item {
 
 	public static boolean tryAddItemToPouch(ItemStack pouch, ItemStack itemstack, boolean requireMatchInPouch) {
 		if (itemstack != null && itemstack.stackSize > 0) {
-			LOTRInventoryPouch pouchInv = new LOTRInventoryPouch(pouch);
+			IInventory pouchInv = new LOTRInventoryPouch(pouch);
 			for (int i = 0; i < pouchInv.getSizeInventory() && itemstack.stackSize > 0; ++i) {
 				int difference;
 				ItemStack itemInSlot = pouchInv.getStackInSlot(i);

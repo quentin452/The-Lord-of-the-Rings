@@ -66,7 +66,7 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 		int i13;
 		int k12;
 		if (restrictions && usingPlayer == null) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			int xzRange = 5;
 			int yRange = 4;
 			for (i12 = -xzRange; i12 <= xzRange; ++i12) {
@@ -80,7 +80,7 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 				}
 			}
 		} else {
-			this.setOriginAndRotation(world, i, j, k, rotation, 8);
+			setOriginAndRotation(world, i, j, k, rotation, 8);
 		}
 		setupRandomBlocks(random);
 		if (restrictions) {
@@ -107,7 +107,7 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 						if (j1 != 1) {
 							continue;
 						}
-						setBlockAndMetadata(world, i1, j1 - 1, k15, stoneBlock, stoneMeta);
+						setBlockAndMetadata(world, i1, 0, k15, stoneBlock, stoneMeta);
 					}
 				}
 			}
@@ -122,8 +122,8 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 					if (isOpaque(world, i1, j15, k1)) {
 						continue;
 					}
-					Block block = null;
-					int meta = -1;
+					Block block;
+					int meta;
 					if (j15 >= top - 4) {
 						if (isOpaque(world, i1, j15 + 1, k1)) {
 							block = fillerBlock;
@@ -146,7 +146,7 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 		}
 		for (j13 = 1; j13 <= 3; ++j13) {
 			int i22 = 5 - j13;
-			if (j13 >= 3) {
+			if (j13 == 3) {
 				--i22;
 			}
 			for (i12 = -i22; i12 <= i22; ++i12) {
@@ -164,16 +164,16 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 				int i3 = Math.min(i2, k2);
 				int k3 = Math.max(i2, k2);
 				int diff = k3 - 8;
-				for (int limit : new int[] { 4, 7, 9 }) {
+				for (int limit : new int[]{4, 7, 9}) {
 					if (i3 < limit) {
 						continue;
 					}
 					diff += i3 - limit;
 				}
-				int j16 = top = 0 - (i3 + diff) / 2;
+				int j16 = top = -(i3 + diff) / 2;
 				while (!isOpaque(world, i1, j16, k1) && getY(j16) >= 0) {
-					Block block = null;
-					int meta = -1;
+					Block block;
+					int meta;
 					if (j16 >= top - 4) {
 						if (isOpaque(world, i1, j16 + 1, k1)) {
 							block = fillerBlock;
@@ -199,7 +199,7 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 				for (j12 = -4; j12 <= 4; ++j12) {
 					if (Math.abs(i1) == 6 || Math.abs(k1) == 6) {
 						if (j12 == 2) {
-							setBlockAndMetadata(world, i1, j12, k1, plankBlock, plankMeta);
+							setBlockAndMetadata(world, i1, 2, k1, plankBlock, plankMeta);
 							continue;
 						}
 						setBlockAndMetadata(world, i1, j12, k1, brick2Block, brick2Meta);
@@ -260,7 +260,7 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 					setBlockAndMetadata(world, i13, 1, k12, plankSlabBlock, plankSlabMeta | 8);
 				}
 				if (random.nextInt(3) == 0) {
-					this.placeMug(world, random, i13, 2, k12, random.nextInt(4), drinkFoods);
+					placeMug(world, random, i13, 2, k12, random.nextInt(4), drinkFoods);
 					continue;
 				}
 				placePlate(world, random, i13, 2, k12, plateBlock, plateFoods);
@@ -321,7 +321,7 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 				if (random.nextBoolean()) {
 					placePlateWithCertainty(world, random, -2, -2, k12, plateBlock, plateFoods);
 				} else {
-					this.placeMug(world, random, -2, -2, k12, 1, drinkFoods);
+					placeMug(world, random, -2, -2, k12, 1, drinkFoods);
 				}
 			} else {
 				setBlockAndMetadata(world, -2, -3, k12, plankBlock, plankMeta);
@@ -331,7 +331,7 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 		for (i1 = -4; i1 <= -3; ++i1) {
 			setBlockAndMetadata(world, i1, -3, -5, plankBlock, plankMeta);
 			setBlockAndMetadata(world, i1, -2, -6, plankBlock, plankMeta);
-			this.placeBarrel(world, random, i1, -2, -5, 3, drinkFoods);
+			placeBarrel(world, random, i1, -2, -5, 3, drinkFoods);
 			setBlockAndMetadata(world, i1, -1, -5, brickStairBlock, 7);
 			setBlockAndMetadata(world, i1, -3, 5, Blocks.furnace, 2);
 			setBlockAndMetadata(world, i1, -2, 6, plankBlock, plankMeta);
@@ -340,7 +340,7 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 		for (k12 = -4; k12 <= -3; ++k12) {
 			setBlockAndMetadata(world, -5, -3, k12, plankBlock, plankMeta);
 			setBlockAndMetadata(world, -6, -2, k12, plankBlock, plankMeta);
-			this.placeChest(world, random, -5, -2, k12, 4, larderContents);
+			placeChest(world, random, -5, -2, k12, 4, larderContents);
 			setBlockAndMetadata(world, -5, -1, k12, brickStairBlock, 4);
 		}
 		setBlockAndMetadata(world, -2, -3, 2, Blocks.cauldron, 3);
@@ -370,7 +370,7 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 			}
 			setBlockAndMetadata(world, i1, -3, -3, LOTRMod.dwarvenBed, 2);
 			setBlockAndMetadata(world, i1, -3, -4, LOTRMod.dwarvenBed, 10);
-			this.placeChest(world, random, i1, -2, -5, 3, personalContents, MathHelper.getRandomIntegerInRange(random, 2, 4));
+			placeChest(world, random, i1, -2, -5, 3, personalContents, MathHelper.getRandomIntegerInRange(random, 2, 4));
 		}
 		for (k12 = -4; k12 <= -3; ++k12) {
 			setBlockAndMetadata(world, 5, -3, k12, plankBlock, plankMeta);
@@ -380,7 +380,7 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 		for (k12 = -2; k12 <= 2; ++k12) {
 			if (k12 == 0) {
 				ItemStack item = getRandomWeaponItem(random);
-				placeWeaponRack(world, 2, -2, k12, 5, item);
+				placeWeaponRack(world, 2, -2, 0, 5, item);
 				continue;
 			}
 			if (IntMath.mod(k12, 2) != 0) {
@@ -410,12 +410,12 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 	}
 
 	public ItemStack getRandomOtherItem(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.helmetDwarven), new ItemStack(LOTRMod.bodyDwarven), new ItemStack(LOTRMod.legsDwarven), new ItemStack(LOTRMod.bootsDwarven), new ItemStack(LOTRMod.helmetDale), new ItemStack(LOTRMod.bodyDale), new ItemStack(LOTRMod.legsDale), new ItemStack(LOTRMod.bootsDale), new ItemStack(LOTRMod.dwarfSteel), new ItemStack(LOTRMod.bronze), new ItemStack(Items.iron_ingot), new ItemStack(LOTRMod.silver), new ItemStack(LOTRMod.silverNugget), new ItemStack(Items.gold_ingot), new ItemStack(Items.gold_nugget) };
+		ItemStack[] items = {new ItemStack(LOTRMod.helmetDwarven), new ItemStack(LOTRMod.bodyDwarven), new ItemStack(LOTRMod.legsDwarven), new ItemStack(LOTRMod.bootsDwarven), new ItemStack(LOTRMod.helmetDale), new ItemStack(LOTRMod.bodyDale), new ItemStack(LOTRMod.legsDale), new ItemStack(LOTRMod.bootsDale), new ItemStack(LOTRMod.dwarfSteel), new ItemStack(LOTRMod.bronze), new ItemStack(Items.iron_ingot), new ItemStack(LOTRMod.silver), new ItemStack(LOTRMod.silverNugget), new ItemStack(Items.gold_ingot), new ItemStack(Items.gold_nugget)};
 		return items[random.nextInt(items.length)].copy();
 	}
 
 	public ItemStack getRandomWeaponItem(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.swordDwarven), new ItemStack(LOTRMod.daggerDwarven), new ItemStack(LOTRMod.hammerDwarven), new ItemStack(LOTRMod.battleaxeDwarven), new ItemStack(LOTRMod.pickaxeDwarven), new ItemStack(LOTRMod.mattockDwarven), new ItemStack(LOTRMod.throwingAxeDwarven), new ItemStack(LOTRMod.pikeDwarven), new ItemStack(LOTRMod.swordDale), new ItemStack(LOTRMod.daggerDale), new ItemStack(LOTRMod.pikeDale), new ItemStack(LOTRMod.spearDale), new ItemStack(LOTRMod.battleaxeDale) };
+		ItemStack[] items = {new ItemStack(LOTRMod.swordDwarven), new ItemStack(LOTRMod.daggerDwarven), new ItemStack(LOTRMod.hammerDwarven), new ItemStack(LOTRMod.battleaxeDwarven), new ItemStack(LOTRMod.pickaxeDwarven), new ItemStack(LOTRMod.mattockDwarven), new ItemStack(LOTRMod.throwingAxeDwarven), new ItemStack(LOTRMod.pikeDwarven), new ItemStack(LOTRMod.swordDale), new ItemStack(LOTRMod.daggerDale), new ItemStack(LOTRMod.pikeDale), new ItemStack(LOTRMod.spearDale), new ItemStack(LOTRMod.battleaxeDale)};
 		return items[random.nextInt(items.length)].copy();
 	}
 
@@ -440,51 +440,51 @@ public class LOTRWorldGenDwarfHouse extends LOTRWorldGenStructureBase2 {
 		barsBlock = LOTRMod.dwarfBars;
 		int randomWood = random.nextInt(4);
 		switch (randomWood) {
-		case 0:
-			plankBlock = Blocks.planks;
-			plankMeta = 1;
-			plankSlabBlock = Blocks.wooden_slab;
-			plankSlabMeta = 1;
-			plankStairBlock = Blocks.spruce_stairs;
-			break;
-		case 1:
-			plankBlock = LOTRMod.planks;
-			plankMeta = 13;
-			plankSlabBlock = LOTRMod.woodSlabSingle2;
-			plankSlabMeta = 5;
-			plankStairBlock = LOTRMod.stairsLarch;
-			break;
-		case 2:
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 4;
-			plankSlabBlock = LOTRMod.woodSlabSingle3;
-			plankSlabMeta = 4;
-			plankStairBlock = LOTRMod.stairsPine;
-			break;
-		case 3:
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 3;
-			plankSlabBlock = LOTRMod.woodSlabSingle3;
-			plankSlabMeta = 3;
-			plankStairBlock = LOTRMod.stairsFir;
-			break;
-		default:
-			break;
+			case 0:
+				plankBlock = Blocks.planks;
+				plankMeta = 1;
+				plankSlabBlock = Blocks.wooden_slab;
+				plankSlabMeta = 1;
+				plankStairBlock = Blocks.spruce_stairs;
+				break;
+			case 1:
+				plankBlock = LOTRMod.planks;
+				plankMeta = 13;
+				plankSlabBlock = LOTRMod.woodSlabSingle2;
+				plankSlabMeta = 5;
+				plankStairBlock = LOTRMod.stairsLarch;
+				break;
+			case 2:
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 4;
+				plankSlabBlock = LOTRMod.woodSlabSingle3;
+				plankSlabMeta = 4;
+				plankStairBlock = LOTRMod.stairsPine;
+				break;
+			case 3:
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 3;
+				plankSlabBlock = LOTRMod.woodSlabSingle3;
+				plankSlabMeta = 3;
+				plankStairBlock = LOTRMod.stairsFir;
+				break;
+			default:
+				break;
 		}
 		carpetBlock = Blocks.carpet;
 		int randomCarpet = random.nextInt(3);
 		switch (randomCarpet) {
-		case 0:
-			carpetMeta = 7;
-			break;
-		case 1:
-			carpetMeta = 12;
-			break;
-		case 2:
-			carpetMeta = 15;
-			break;
-		default:
-			break;
+			case 0:
+				carpetMeta = 7;
+				break;
+			case 1:
+				carpetMeta = 12;
+				break;
+			case 2:
+				carpetMeta = 15;
+				break;
+			default:
+				break;
 		}
 		plateBlock = random.nextBoolean() ? LOTRMod.ceramicPlateBlock : LOTRMod.woodPlateBlock;
 		larderContents = LOTRChestContents.DWARF_HOUSE_LARDER;

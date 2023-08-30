@@ -8,11 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTREntityNomadWarrior extends LOTREntityNomad {
-	public static ItemStack[] weaponsBronze = { new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.daggerHaradPoisoned), new ItemStack(LOTRMod.pikeHarad) };
+	public static ItemStack[] weaponsBronze = {new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.daggerHaradPoisoned), new ItemStack(LOTRMod.pikeHarad)};
 
 	public LOTREntityNomadWarrior(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		spawnRidingHorse = rand.nextInt(8) == 0;
 		npcShield = null;
 	}

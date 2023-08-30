@@ -30,7 +30,7 @@ public interface LOTRAbstractWaypoint {
 
 	boolean isHidden();
 
-	public enum WaypointLockState {
+	enum WaypointLockState {
 		STANDARD_LOCKED(0, 200), STANDARD_UNLOCKED(4, 200), STANDARD_UNLOCKED_CONQUEST(8, 200), CUSTOM_LOCKED(0, 204), CUSTOM_UNLOCKED(4, 204), SHARED_CUSTOM_LOCKED(0, 208), SHARED_CUSTOM_UNLOCKED(4, 208);
 
 		public int iconU;

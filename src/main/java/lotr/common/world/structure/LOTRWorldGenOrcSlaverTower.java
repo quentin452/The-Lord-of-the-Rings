@@ -30,21 +30,21 @@ public class LOTRWorldGenOrcSlaverTower extends LOTRWorldGenStructureBase {
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			++k;
-			break;
-		}
-		case 1: {
-			--i;
-			break;
-		}
-		case 2: {
-			--k;
-			break;
-		}
-		case 3: {
-			++i;
-		}
+			case 0: {
+				++k;
+				break;
+			}
+			case 1: {
+				--i;
+				break;
+			}
+			case 2: {
+				--k;
+				break;
+			}
+			case 3: {
+				++i;
+			}
 		}
 		if (restrictions) {
 			for (i1 = i - 3; i1 <= i + 3; ++i1) {

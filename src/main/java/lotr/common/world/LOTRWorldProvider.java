@@ -22,11 +22,11 @@ import net.minecraftforge.common.ForgeModContainer;
 
 public abstract class LOTRWorldProvider extends WorldProvider {
 	public static int MOON_PHASES = 8;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IRenderHandler lotrSkyRenderer;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IRenderHandler lotrCloudRenderer;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IRenderHandler lotrWeatherRenderer;
 
 	@Override
@@ -48,8 +48,6 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 		if (biome instanceof LOTRBiomeGenOcean) {
 			return LOTRBiomeGenOcean.isFrozen(i, k) && canFreeze_ignoreTemp(i, j, k, isBlockUpdate);
 		}
-		if (biome instanceof LOTRBiome) {
-		}
 		return worldObj.canBlockFreezeBody(i, j, k, isBlockUpdate);
 	}
 
@@ -59,10 +57,7 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 			if (!isBlockUpdate) {
 				return true;
 			}
-			boolean surroundWater = true;
-			if (surroundWater && worldObj.getBlock(i - 1, j, k).getMaterial() != Material.water) {
-				surroundWater = false;
-			}
+			boolean surroundWater = worldObj.getBlock(i - 1, j, k).getMaterial() == Material.water;
 			if (surroundWater && worldObj.getBlock(i + 1, j, k).getMaterial() != Material.water) {
 				surroundWater = false;
 			}
@@ -72,16 +67,9 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 			if (surroundWater && worldObj.getBlock(i, j, k + 1).getMaterial() != Material.water) {
 				surroundWater = false;
 			}
-			if (!surroundWater) {
-				return true;
-			}
+			return !surroundWater;
 		}
 		return false;
-	}
-
-	@Override
-	public boolean canRespawnHere() {
-		return true;
 	}
 
 	public boolean canSnow_ignoreTemp(int i, int j, int k, boolean checkLight) {
@@ -108,7 +96,7 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public boolean doesXZShowFog(int i, int k) {
 		BiomeGenBase biome = worldObj.getBiomeGenForCoords(i, k);
 		if (biome instanceof LOTRBiome) {
@@ -118,7 +106,7 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public Vec3 drawClouds(float f) {
 		Minecraft mc = Minecraft.getMinecraft();
 		int i = (int) mc.renderViewEntity.posX;
@@ -172,13 +160,13 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public float getCloudHeight() {
 		return 192.0f;
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IRenderHandler getCloudRenderer() {
 		if (!LOTRModChecker.hasShaders() && LOTRConfig.cloudRange > 0) {
 			if (lotrCloudRenderer == null) {
@@ -200,7 +188,7 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public Vec3 getFogColor(float f, float f1) {
 		Minecraft mc = Minecraft.getMinecraft();
 		int i = (int) mc.renderViewEntity.posX;
@@ -239,7 +227,7 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 
 	@Override
 	public int getMoonPhase(long time) {
-		return LOTRWorldProvider.getLOTRMoonPhase();
+		return getLOTRMoonPhase();
 	}
 
 	@Override
@@ -248,7 +236,7 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IRenderHandler getSkyRenderer() {
 		if (!LOTRModChecker.hasShaders() && LOTRConfig.enableLOTRSky) {
 			if (lotrSkyRenderer == null) {
@@ -260,7 +248,7 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IRenderHandler getWeatherRenderer() {
 		if (lotrWeatherRenderer == null) {
 			lotrWeatherRenderer = new LOTRWeatherRenderer();
@@ -292,8 +280,8 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 		int l = 0;
 		for (int i1 = -distance; i1 <= distance; ++i1) {
 			for (int k1 = -distance; k1 <= distance; ++k1) {
-				float thisFogStart = 0.0f;
-				float thisFogEnd = 0.0f;
+				float thisFogStart;
+				float thisFogEnd;
 				boolean foggy = doesXZShowFog(i + i1, k + k1);
 				if (foggy) {
 					thisFogStart = farPlane * 0.05f;
@@ -311,7 +299,7 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 				++l;
 			}
 		}
-		return new float[] { fogStart /= l, fogEnd /= l };
+		return new float[]{fogStart / l, fogEnd / l};
 	}
 
 	@Override
@@ -340,6 +328,6 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 
 	public static boolean isLunarEclipse() {
 		int day = LOTRDate.ShireReckoning.currentDay;
-		return LOTRWorldProvider.getLOTRMoonPhase() == 0 && IntMath.mod(day / MOON_PHASES, 4) == 3;
+		return getLOTRMoonPhase() == 0 && IntMath.mod(day / MOON_PHASES, 4) == 3;
 	}
 }

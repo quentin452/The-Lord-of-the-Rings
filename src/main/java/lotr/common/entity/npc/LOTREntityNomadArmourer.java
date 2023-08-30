@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityNomadArmourer extends LOTREntityNomad implements LOTRTradeable.Smith {
 	public LOTREntityNomadArmourer(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

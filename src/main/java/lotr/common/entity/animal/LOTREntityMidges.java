@@ -207,11 +207,11 @@ public class LOTREntityMidges extends EntityLiving implements LOTRAmbientCreatur
 		public int maxMidgeTick = 80;
 
 		public Midge() {
-			midge_posX = -1.0f + LOTREntityMidges.this.rand.nextFloat() * 2.0f;
-			midge_initialPosY = midge_posY = LOTREntityMidges.this.rand.nextFloat() * 2.0f;
-			midge_posZ = -1.0f + LOTREntityMidges.this.rand.nextFloat() * 2.0f;
-			midge_rotation = LOTREntityMidges.this.rand.nextFloat() * 360.0f;
-			midgeTick = LOTREntityMidges.this.rand.nextInt(maxMidgeTick);
+			midge_posX = -1.0f + rand.nextFloat() * 2.0f;
+			midge_initialPosY = midge_posY = rand.nextFloat() * 2.0f;
+			midge_posZ = -1.0f + rand.nextFloat() * 2.0f;
+			midge_rotation = rand.nextFloat() * 360.0f;
+			midgeTick = rand.nextInt(maxMidgeTick);
 		}
 
 		public void update() {

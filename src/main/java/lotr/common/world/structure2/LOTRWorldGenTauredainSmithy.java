@@ -17,7 +17,7 @@ public class LOTRWorldGenTauredainSmithy extends LOTRWorldGenTauredainHouse {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -52,15 +52,15 @@ public class LOTRWorldGenTauredainSmithy extends LOTRWorldGenTauredainHouse {
 				}
 				if (i2 <= 2 && k1 == 6) {
 					for (j1 = -4; j1 <= -1; ++j1) {
-						setAir(world, i1, j1, k1);
+						setAir(world, i1, j1, 6);
 					}
 				}
-				if (i2 <= 5 && k2 <= 5) {
+				if (k2 <= 5) {
 					for (j1 = 1; j1 <= 8; ++j1) {
 						setAir(world, i1, j1, k1);
 					}
 				}
-				if (i2 > 3 || k1 < 1 || k1 > 7) {
+				if (i2 > 3 || k1 < 1) {
 					continue;
 				}
 				for (j1 = 1; j1 <= 8; ++j1) {
@@ -93,13 +93,13 @@ public class LOTRWorldGenTauredainSmithy extends LOTRWorldGenTauredainHouse {
 		generateStrScan(world, random, 0, 0, 0);
 		setBlockAndMetadata(world, 0, 5, 5, bedBlock, 1);
 		setBlockAndMetadata(world, 1, 5, 5, bedBlock, 9);
-		this.placeChest(world, random, 2, 5, 4, LOTRMod.chestBasket, 5, LOTRChestContents.TAUREDAIN_HOUSE);
+		placeChest(world, random, 2, 5, 4, LOTRMod.chestBasket, 5, LOTRChestContents.TAUREDAIN_HOUSE);
 		placeTauredainFlowerPot(world, 2, 6, 5, random);
 		placePlateWithCertainty(world, random, 2, 6, 3, LOTRMod.woodPlateBlock, LOTRFoods.TAUREDAIN);
 		placeTauredainTorch(world, -4, 2, -4);
 		placeTauredainTorch(world, 4, 2, -4);
 		placeWeaponRack(world, -3, -2, 2, 5, getRandomTaurethrimWeapon(random));
-		placeArmorStand(world, 3, -3, 2, 1, new ItemStack[] { null, new ItemStack(LOTRMod.bodyTauredain), null, null });
+		placeArmorStand(world, 3, -3, 2, 1, new ItemStack[]{null, new ItemStack(LOTRMod.bodyTauredain), null, null});
 		LOTREntityTauredainSmith smith = new LOTREntityTauredainSmith(world);
 		spawnNPCAndSetHome(smith, world, 0, -3, 3, 12);
 		return true;
@@ -111,7 +111,7 @@ public class LOTRWorldGenTauredainSmithy extends LOTRWorldGenTauredainHouse {
 	}
 
 	public ItemStack getRandomTaurethrimWeapon(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.swordTauredain), new ItemStack(LOTRMod.daggerTauredain), new ItemStack(LOTRMod.spearTauredain), new ItemStack(LOTRMod.pikeTauredain), new ItemStack(LOTRMod.hammerTauredain), new ItemStack(LOTRMod.battleaxeTauredain) };
+		ItemStack[] items = {new ItemStack(LOTRMod.swordTauredain), new ItemStack(LOTRMod.daggerTauredain), new ItemStack(LOTRMod.spearTauredain), new ItemStack(LOTRMod.pikeTauredain), new ItemStack(LOTRMod.hammerTauredain), new ItemStack(LOTRMod.battleaxeTauredain)};
 		return items[random.nextInt(items.length)].copy();
 	}
 }

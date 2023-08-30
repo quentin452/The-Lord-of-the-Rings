@@ -8,7 +8,7 @@ import lotr.common.LOTRBannerProtection;
 
 public class LOTRBannerWhitelistEntry {
 	public GameProfile profile;
-	public Set<LOTRBannerProtection.Permission> perms = new HashSet<>();
+	public Set<LOTRBannerProtection.Permission> perms = EnumSet.noneOf(LOTRBannerProtection.Permission.class);
 
 	public LOTRBannerWhitelistEntry(GameProfile p) {
 		profile = p;
@@ -30,11 +30,11 @@ public class LOTRBannerWhitelistEntry {
 	}
 
 	public void decodePermBitFlags(int i) {
-		setPermissions(LOTRBannerWhitelistEntry.static_decodePermBitFlags(i));
+		setPermissions(static_decodePermBitFlags(i));
 	}
 
 	public int encodePermBitFlags() {
-		return LOTRBannerWhitelistEntry.static_encodePermBitFlags(perms);
+		return static_encodePermBitFlags(perms);
 	}
 
 	public boolean isPermissionEnabled(LOTRBannerProtection.Permission p) {
@@ -55,7 +55,7 @@ public class LOTRBannerWhitelistEntry {
 		return this;
 	}
 
-	public void setPermissions(List<LOTRBannerProtection.Permission> perms) {
+	public void setPermissions(Iterable<LOTRBannerProtection.Permission> perms) {
 		clearPermissions();
 		for (LOTRBannerProtection.Permission p : perms) {
 			addPermission(p);
@@ -63,7 +63,7 @@ public class LOTRBannerWhitelistEntry {
 	}
 
 	public static List<LOTRBannerProtection.Permission> static_decodePermBitFlags(int i) {
-		ArrayList<LOTRBannerProtection.Permission> decoded = new ArrayList<>();
+		List<LOTRBannerProtection.Permission> decoded = new ArrayList<>();
 		for (LOTRBannerProtection.Permission p : LOTRBannerProtection.Permission.values()) {
 			if ((i & p.bitFlag) == 0) {
 				continue;
@@ -73,7 +73,7 @@ public class LOTRBannerWhitelistEntry {
 		return decoded;
 	}
 
-	public static int static_encodePermBitFlags(Collection<LOTRBannerProtection.Permission> permList) {
+	public static int static_encodePermBitFlags(Iterable<LOTRBannerProtection.Permission> permList) {
 		int i = 0;
 		for (LOTRBannerProtection.Permission p : permList) {
 			i |= p.bitFlag;

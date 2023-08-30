@@ -5,14 +5,13 @@ import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
 import lotr.common.entity.animal.LOTREntityHorse;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTREntitySwanKnight extends LOTREntityDolAmrothSoldier {
 	public LOTREntitySwanKnight(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		spawnRidingHorse = rand.nextInt(4) == 0;
 		npcShield = LOTRShields.ALIGNMENT_DOL_AMROTH;
 	}
@@ -38,24 +37,8 @@ public class LOTREntitySwanKnight extends LOTREntityDolAmrothSoldier {
 	}
 
 	@Override
-	public float getAlignmentBonus() {
-		return 2.0f;
-	}
-
-	@Override
 	public LOTRAchievement getKillAchievement() {
 		return LOTRAchievement.killSwanKnight;
-	}
-
-	@Override
-	public String getSpeechBank(EntityPlayer entityplayer) {
-		if (isFriendly(entityplayer)) {
-			if (hiredNPCInfo.getHiringPlayer() == entityplayer) {
-				return "gondor/swanKnight/hired";
-			}
-			return "gondor/swanKnight/friendly";
-		}
-		return "gondor/swanKnight/hostile";
 	}
 
 	@Override

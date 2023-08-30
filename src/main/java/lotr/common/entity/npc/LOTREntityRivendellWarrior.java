@@ -23,11 +23,6 @@ public class LOTREntityRivendellWarrior extends LOTREntityRivendellElf {
 	}
 
 	@Override
-	public EntityAIBase createElfMeleeAttackAI() {
-		return new LOTREntityAIAttackOnCollide(this, 1.5, false);
-	}
-
-	@Override
 	public EntityAIBase createElfRangedAttackAI() {
 		return new LOTREntityAIRangedAttack(this, 1.25, 25, 40, 24.0f);
 	}

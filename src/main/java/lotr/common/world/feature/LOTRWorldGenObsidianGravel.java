@@ -6,15 +6,16 @@ import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class LOTRWorldGenObsidianGravel extends WorldGenerator {
 	public Block genBlock = LOTRMod.obsidianGravel;
-	public int genMeta = 0;
+	public int genMeta;
 
-	public boolean canReplace(World world, int i, int j, int k) {
+	public boolean canReplace(IBlockAccess world, int i, int j, int k) {
 		Block block = world.getBlock(i, j, k);
 		BiomeGenBase biome = world.getBiomeGenForCoords(i, k);
 		return block == biome.topBlock || block == biome.fillerBlock || block == Blocks.stone || block.isReplaceable(world, i, j, k);
@@ -39,7 +40,7 @@ public class LOTRWorldGenObsidianGravel extends WorldGenerator {
 		double yMin = j + random.nextInt(3) - 2;
 		double yMax = j + random.nextInt(3) - 2;
 		for (int l = 0; l <= numBlocks; ++l) {
-			float lerp = (float) l / (float) numBlocks;
+			float lerp = (float) l / numBlocks;
 			double xLerp = xMin + (xMax - xMin) * lerp;
 			double yLerp = yMin + (yMax - yMin) * lerp;
 			double zLerp = zMin + (zMax - zMin) * lerp;

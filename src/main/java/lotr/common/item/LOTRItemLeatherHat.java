@@ -14,11 +14,11 @@ import net.minecraft.util.*;
 public class LOTRItemLeatherHat extends LOTRItemArmor {
 	public static int HAT_LEATHER = 6834742;
 	public static int HAT_SHIRRIFF_CHIEF = 2301981;
-	public static int HAT_BLACK = 0;
+	public static int HAT_BLACK;
 	public static int FEATHER_WHITE = 16777215;
 	public static int FEATHER_SHIRRIFF_CHIEF = 3381529;
 	public static int FEATHER_BREE_CAPTAIN = 40960;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon featherIcon;
 
 	public LOTRItemLeatherHat() {
@@ -27,12 +27,12 @@ public class LOTRItemLeatherHat extends LOTRItemArmor {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-		if (LOTRItemLeatherHat.isHatDyed(itemstack)) {
+		if (isHatDyed(itemstack)) {
 			list.add(StatCollector.translateToLocal("item.lotr.hat.dyed"));
 		}
-		if (LOTRItemLeatherHat.hasFeather(itemstack)) {
+		if (hasFeather(itemstack)) {
 			list.add(StatCollector.translateToLocal("item.lotr.hat.feathered"));
 		}
 	}
@@ -43,32 +43,32 @@ public class LOTRItemLeatherHat extends LOTRItemArmor {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack itemstack, int pass) {
-		if (pass == 1 && LOTRItemLeatherHat.hasFeather(itemstack)) {
-			return LOTRItemLeatherHat.getFeatherColor(itemstack);
+		if (pass == 1 && hasFeather(itemstack)) {
+			return getFeatherColor(itemstack);
 		}
-		return LOTRItemLeatherHat.getHatColor(itemstack);
+		return getHatColor(itemstack);
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(ItemStack itemstack, int pass) {
-		if (pass == 1 && LOTRItemLeatherHat.hasFeather(itemstack)) {
+		if (pass == 1 && hasFeather(itemstack)) {
 			return featherIcon;
 		}
 		return itemIcon;
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconregister) {
 		super.registerIcons(iconregister);
 		featherIcon = iconregister.registerIcon(getIconString() + "_feather");
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public boolean requiresMultipleRenderPasses() {
 		return true;
 	}
@@ -82,7 +82,7 @@ public class LOTRItemLeatherHat extends LOTRItemArmor {
 	}
 
 	public static int getHatColor(ItemStack itemstack) {
-		int dye = LOTRItemLeatherHat.getSavedDyeColor(itemstack);
+		int dye = getSavedDyeColor(itemstack);
 		if (dye != -1) {
 			return dye;
 		}
@@ -97,23 +97,23 @@ public class LOTRItemLeatherHat extends LOTRItemArmor {
 	}
 
 	public static boolean hasFeather(ItemStack itemstack) {
-		return LOTRItemLeatherHat.getFeatherColor(itemstack) != -1;
+		return getFeatherColor(itemstack) != -1;
 	}
 
 	public static boolean isFeatherDyed(ItemStack itemstack) {
-		return LOTRItemLeatherHat.hasFeather(itemstack) && LOTRItemLeatherHat.getFeatherColor(itemstack) != 16777215;
+		return hasFeather(itemstack) && getFeatherColor(itemstack) != 16777215;
 	}
 
 	public static boolean isHatDyed(ItemStack itemstack) {
-		return LOTRItemLeatherHat.getSavedDyeColor(itemstack) != -1;
+		return getSavedDyeColor(itemstack) != -1;
 	}
 
 	public static void removeHatAndFeatherDye(ItemStack itemstack) {
 		if (itemstack.getTagCompound() != null) {
 			itemstack.getTagCompound().removeTag("HatColor");
 		}
-		if (LOTRItemLeatherHat.hasFeather(itemstack) && LOTRItemLeatherHat.isFeatherDyed(itemstack)) {
-			LOTRItemLeatherHat.setFeatherColor(itemstack, 16777215);
+		if (hasFeather(itemstack) && isFeatherDyed(itemstack)) {
+			setFeatherColor(itemstack, 16777215);
 		}
 	}
 

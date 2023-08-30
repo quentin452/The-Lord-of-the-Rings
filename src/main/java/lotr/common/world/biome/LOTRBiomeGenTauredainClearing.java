@@ -38,7 +38,7 @@ public class LOTRBiomeGenTauredainClearing extends LOTRBiomeGenFarHaradJungle {
 		npcSpawnList.conquestGainRate = 0.5f;
 		clearBiomeVariants();
 		variantChance = 0.1f;
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
 		decorator.setTreeCluster(16, 40);
 		decorator.treesPerChunk = 0;
 		decorator.vinesPerChunk = 0;
@@ -51,18 +51,8 @@ public class LOTRBiomeGenTauredainClearing extends LOTRBiomeGenFarHaradJungle {
 	}
 
 	@Override
-	public float getChanceToSpawnAnimals() {
-		return 0.25f;
-	}
-
-	@Override
 	public LOTRRoadType getRoadBlock() {
 		return LOTRRoadType.TAUREDAIN;
-	}
-
-	@Override
-	public float getTreeIncreaseChance() {
-		return 0.1f;
 	}
 
 	@Override

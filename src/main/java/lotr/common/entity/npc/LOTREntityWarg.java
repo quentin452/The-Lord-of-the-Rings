@@ -16,11 +16,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 
+import java.util.Locale;
+
 public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements IInvBasic {
 	public int eatingTick;
 	public AnimalChest wargInventory;
 
-	public LOTREntityWarg(World world) {
+	protected LOTREntityWarg(World world) {
 		super(world);
 		setSize(1.5f, 1.7f);
 		getNavigator().setAvoidsWater(true);
@@ -34,7 +36,7 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 		tasks.addTask(6, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 8.0f, 0.02f));
 		tasks.addTask(7, new EntityAIWatchClosest(this, EntityLiving.class, 12.0f, 0.02f));
 		tasks.addTask(8, new EntityAILookIdle(this));
-		int target = this.addTargetTasks(true);
+		int target = addTargetTasks(true);
 		if (!(this instanceof LOTREntityWargBombardier)) {
 			targetTasks.addTask(target + 1, new LOTREntityAINearestAttackableTargetBasic(this, LOTREntityRabbit.class, 500, false));
 			targetTasks.addTask(target + 1, new LOTREntityAINearestAttackableTargetBasic(this, LOTREntityDeer.class, 1000, false));
@@ -94,7 +96,7 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 		}
 		if (flag) {
 			int rugChance = 50 - i * 8;
-			if (rand.nextInt(rugChance = Math.max(rugChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(rugChance, 1)) == 0) {
 				entityDropItem(new ItemStack(LOTRMod.wargskinRug, 1, getWargType().wargID), 0.0f);
 			}
 		}
@@ -206,7 +208,7 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 			boolean hasRequiredAlignment = LOTRLevelData.getData(entityplayer).getAlignment(getFaction()) >= 50.0f;
 			boolean notifyNotEnoughAlignment = false;
 			ItemStack itemstack = entityplayer.inventory.getCurrentItem();
-			if (!notifyNotEnoughAlignment && isNPCTamed() && entityplayer.isSneaking()) {
+			if (isNPCTamed() && entityplayer.isSneaking()) {
 				if (hasRequiredAlignment) {
 					openGUI(entityplayer);
 					return true;
@@ -240,7 +242,7 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 				}
 				if (hasRequiredAlignment) {
 					entityplayer.mountEntity(this);
-					this.setAttackTarget(null);
+					setAttackTarget(null);
 					getNavigator().clearPathEntity();
 					return true;
 				}
@@ -365,7 +367,6 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 				}
 				wargInventory.setInventorySlotContents(slot, itemstack.copy());
 			}
-			prevInv = null;
 		}
 		wargInventory.func_110134_a(this);
 		checkWargInventory();
@@ -415,11 +416,11 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 		}
 
 		public String textureName() {
-			return name().toLowerCase();
+			return name().toLowerCase(Locale.ROOT);
 		}
 
 		public static WargType forID(int ID) {
-			for (WargType w : WargType.values()) {
+			for (WargType w : values()) {
 				if (w.wargID != ID) {
 					continue;
 				}
@@ -429,9 +430,9 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 		}
 
 		public static String[] wargTypeNames() {
-			String[] names = new String[WargType.values().length];
+			String[] names = new String[values().length];
 			for (int i = 0; i < names.length; ++i) {
-				names[i] = WargType.values()[i].textureName();
+				names[i] = values()[i].textureName();
 			}
 			return names;
 		}

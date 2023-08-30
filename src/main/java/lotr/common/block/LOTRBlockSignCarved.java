@@ -19,13 +19,13 @@ public class LOTRBlockSignCarved extends BlockSign {
 		setHardness(0.5f);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return LOTRCommonIcons.iconEmptyBlock;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public Item getItem(World world, int i, int j, int k) {
 		if (this == LOTRMod.signCarvedIthildin) {

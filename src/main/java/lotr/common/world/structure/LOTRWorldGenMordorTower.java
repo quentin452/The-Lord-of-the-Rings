@@ -32,21 +32,21 @@ public class LOTRWorldGenMordorTower extends LOTRWorldGenStructureBase {
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			k += 7;
-			break;
-		}
-		case 1: {
-			i -= 7;
-			break;
-		}
-		case 2: {
-			k -= 7;
-			break;
-		}
-		case 3: {
-			i += 7;
-		}
+			case 0: {
+				k += 7;
+				break;
+			}
+			case 1: {
+				i -= 7;
+				break;
+			}
+			case 2: {
+				k -= 7;
+				break;
+			}
+			case 3: {
+				i += 7;
+			}
 		}
 		int sections = 2 + random.nextInt(3);
 		int equipmentSection = 1 + random.nextInt(sections);
@@ -108,45 +108,45 @@ public class LOTRWorldGenMordorTower extends LOTRWorldGenStructureBase {
 		trader.setHomeArea(i, j + (sections + 1) * 8, k, 24);
 		world.spawnEntityInWorld(trader);
 		switch (rotation) {
-		case 0: {
-			for (i1 = i - 1; i1 <= i + 1; ++i1) {
-				setBlockAndNotifyAdequately(world, i1, j, k - 6, LOTRMod.slabDouble, 0);
-				for (j12 = j + 1; j12 <= j + 4; ++j12) {
-					setBlockAndNotifyAdequately(world, i1, j12, k - 6, LOTRMod.gateOrc, 3);
+			case 0: {
+				for (i1 = i - 1; i1 <= i + 1; ++i1) {
+					setBlockAndNotifyAdequately(world, i1, j, k - 6, LOTRMod.slabDouble, 0);
+					for (j12 = j + 1; j12 <= j + 4; ++j12) {
+						setBlockAndNotifyAdequately(world, i1, j12, k - 6, LOTRMod.gateOrc, 3);
+					}
 				}
+				placeWallBanner(world, i, j + 7, k - 6, 2, LOTRItemBanner.BannerType.MORDOR);
+				break;
 			}
-			placeWallBanner(world, i, j + 7, k - 6, 2, LOTRItemBanner.BannerType.MORDOR);
-			break;
-		}
-		case 1: {
-			for (k12 = k - 1; k12 <= k + 1; ++k12) {
-				setBlockAndNotifyAdequately(world, i + 6, j, k12, LOTRMod.slabDouble, 0);
-				for (j12 = j + 1; j12 <= j + 4; ++j12) {
-					setBlockAndNotifyAdequately(world, i + 6, j12, k12, LOTRMod.gateOrc, 4);
+			case 1: {
+				for (k12 = k - 1; k12 <= k + 1; ++k12) {
+					setBlockAndNotifyAdequately(world, i + 6, j, k12, LOTRMod.slabDouble, 0);
+					for (j12 = j + 1; j12 <= j + 4; ++j12) {
+						setBlockAndNotifyAdequately(world, i + 6, j12, k12, LOTRMod.gateOrc, 4);
+					}
 				}
+				placeWallBanner(world, i + 6, j + 7, k, 3, LOTRItemBanner.BannerType.MORDOR);
+				break;
 			}
-			placeWallBanner(world, i + 6, j + 7, k, 3, LOTRItemBanner.BannerType.MORDOR);
-			break;
-		}
-		case 2: {
-			for (i1 = i - 1; i1 <= i + 1; ++i1) {
-				setBlockAndNotifyAdequately(world, i1, j, k + 6, LOTRMod.slabDouble, 0);
-				for (j12 = j + 1; j12 <= j + 4; ++j12) {
-					setBlockAndNotifyAdequately(world, i1, j12, k + 6, LOTRMod.gateOrc, 2);
+			case 2: {
+				for (i1 = i - 1; i1 <= i + 1; ++i1) {
+					setBlockAndNotifyAdequately(world, i1, j, k + 6, LOTRMod.slabDouble, 0);
+					for (j12 = j + 1; j12 <= j + 4; ++j12) {
+						setBlockAndNotifyAdequately(world, i1, j12, k + 6, LOTRMod.gateOrc, 2);
+					}
 				}
+				placeWallBanner(world, i, j + 7, k + 6, 0, LOTRItemBanner.BannerType.MORDOR);
+				break;
 			}
-			placeWallBanner(world, i, j + 7, k + 6, 0, LOTRItemBanner.BannerType.MORDOR);
-			break;
-		}
-		case 3: {
-			for (k12 = k - 1; k12 <= k + 1; ++k12) {
-				setBlockAndNotifyAdequately(world, i - 6, j, k12, LOTRMod.slabDouble, 0);
-				for (j12 = j + 1; j12 <= j + 4; ++j12) {
-					setBlockAndNotifyAdequately(world, i - 6, j12, k12, LOTRMod.gateOrc, 5);
+			case 3: {
+				for (k12 = k - 1; k12 <= k + 1; ++k12) {
+					setBlockAndNotifyAdequately(world, i - 6, j, k12, LOTRMod.slabDouble, 0);
+					for (j12 = j + 1; j12 <= j + 4; ++j12) {
+						setBlockAndNotifyAdequately(world, i - 6, j12, k12, LOTRMod.gateOrc, 5);
+					}
 				}
+				placeWallBanner(world, i - 6, j + 7, k, 1, LOTRItemBanner.BannerType.MORDOR);
 			}
-			placeWallBanner(world, i - 6, j + 7, k, 1, LOTRItemBanner.BannerType.MORDOR);
-		}
 		}
 		LOTREntityNPCRespawner respawner = new LOTREntityNPCRespawner(world);
 		respawner.setSpawnClass(LOTREntityMordorOrc.class);
@@ -162,8 +162,8 @@ public class LOTRWorldGenMordorTower extends LOTRWorldGenStructureBase {
 		for (j1 = section == 0 ? j : (j += section * 8) + 1; j1 <= (isTop ? j + 10 : j + 8); ++j1) {
 			int i12;
 			int k1;
-			Block fillBlock = Blocks.air;
-			int fillMeta = 0;
+			Block fillBlock;
+			int fillMeta;
 			if (j1 == j) {
 				fillBlock = LOTRMod.slabDouble;
 				fillMeta = 0;
@@ -269,38 +269,38 @@ public class LOTRWorldGenMordorTower extends LOTRWorldGenStructureBase {
 		if (isEquipmentSection) {
 			int l = random.nextInt(4);
 			switch (l) {
-			case 0: {
-				for (int i15 = i - 1; i15 <= i + 1; ++i15) {
-					setBlockAndNotifyAdequately(world, i15, j + 1, k - 5, LOTRMod.orcBomb, 0);
-					setBlockAndNotifyAdequately(world, i15, j + 1, k + 5, LOTRMod.slabSingle, 9);
-					this.placeBarrel(world, random, i15, j + 2, k + 5, 2, LOTRFoods.ORC_DRINK);
+				case 0: {
+					for (int i15 = i - 1; i15 <= i + 1; ++i15) {
+						setBlockAndNotifyAdequately(world, i15, j + 1, k - 5, LOTRMod.orcBomb, 0);
+						setBlockAndNotifyAdequately(world, i15, j + 1, k + 5, LOTRMod.slabSingle, 9);
+						placeBarrel(world, random, i15, j + 2, k + 5, 2, LOTRFoods.ORC_DRINK);
+					}
+					break;
 				}
-				break;
-			}
-			case 1: {
-				for (int k1 = k - 1; k1 <= k + 1; ++k1) {
-					setBlockAndNotifyAdequately(world, i + 5, j + 1, k1, LOTRMod.orcBomb, 0);
-					setBlockAndNotifyAdequately(world, i - 5, j + 1, k1, LOTRMod.slabSingle, 9);
-					this.placeBarrel(world, random, i - 5, j + 2, k1, 5, LOTRFoods.ORC_DRINK);
+				case 1: {
+					for (int k1 = k - 1; k1 <= k + 1; ++k1) {
+						setBlockAndNotifyAdequately(world, i + 5, j + 1, k1, LOTRMod.orcBomb, 0);
+						setBlockAndNotifyAdequately(world, i - 5, j + 1, k1, LOTRMod.slabSingle, 9);
+						placeBarrel(world, random, i - 5, j + 2, k1, 5, LOTRFoods.ORC_DRINK);
+					}
+					break;
 				}
-				break;
-			}
-			case 2: {
-				for (int i16 = i - 1; i16 <= i + 1; ++i16) {
-					setBlockAndNotifyAdequately(world, i16, j + 1, k + 5, LOTRMod.orcBomb, 0);
-					setBlockAndNotifyAdequately(world, i16, j + 1, k - 5, LOTRMod.slabSingle, 9);
-					this.placeBarrel(world, random, i16, j + 2, k - 5, 3, LOTRFoods.ORC_DRINK);
+				case 2: {
+					for (int i16 = i - 1; i16 <= i + 1; ++i16) {
+						setBlockAndNotifyAdequately(world, i16, j + 1, k + 5, LOTRMod.orcBomb, 0);
+						setBlockAndNotifyAdequately(world, i16, j + 1, k - 5, LOTRMod.slabSingle, 9);
+						placeBarrel(world, random, i16, j + 2, k - 5, 3, LOTRFoods.ORC_DRINK);
+					}
+					break;
 				}
-				break;
-			}
-			case 3: {
-				for (int k1 = k - 1; k1 <= k + 1; ++k1) {
-					setBlockAndNotifyAdequately(world, i - 5, j + 1, k1, LOTRMod.orcBomb, 0);
-					setBlockAndNotifyAdequately(world, i + 5, j + 1, k1, LOTRMod.slabSingle, 9);
-					this.placeBarrel(world, random, i + 5, j + 2, k1, 4, LOTRFoods.ORC_DRINK);
+				case 3: {
+					for (int k1 = k - 1; k1 <= k + 1; ++k1) {
+						setBlockAndNotifyAdequately(world, i - 5, j + 1, k1, LOTRMod.orcBomb, 0);
+						setBlockAndNotifyAdequately(world, i + 5, j + 1, k1, LOTRMod.slabSingle, 9);
+						placeBarrel(world, random, i + 5, j + 2, k1, 4, LOTRFoods.ORC_DRINK);
+					}
+					break;
 				}
-				break;
-			}
 			}
 		}
 		if (isTop) {

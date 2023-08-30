@@ -9,8 +9,8 @@ import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 
 public class LOTRBlockRhunFlower extends LOTRBlockFlower {
-	public static String[] flowerNames = { "chrysBlue", "chrysOrange", "chrysPink", "chrysYellow", "chrysWhite" };
-	@SideOnly(value = Side.CLIENT)
+	public static String[] flowerNames = {"chrysBlue", "chrysOrange", "chrysPink", "chrysYellow", "chrysWhite"};
+	@SideOnly(Side.CLIENT)
 	public IIcon[] flowerIcons;
 
 	@Override
@@ -18,7 +18,7 @@ public class LOTRBlockRhunFlower extends LOTRBlockFlower {
 		return i;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j >= flowerNames.length) {
@@ -27,7 +27,7 @@ public class LOTRBlockRhunFlower extends LOTRBlockFlower {
 		return flowerIcons[j];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < flowerNames.length; ++i) {
@@ -35,7 +35,7 @@ public class LOTRBlockRhunFlower extends LOTRBlockFlower {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		flowerIcons = new IIcon[flowerNames.length];

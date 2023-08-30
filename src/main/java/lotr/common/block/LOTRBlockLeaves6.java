@@ -12,7 +12,7 @@ public class LOTRBlockLeaves6 extends LOTRBlockLeavesBase {
 	}
 
 	@Override
-	public void addSpecialLeafDrops(ArrayList drops, World world, int i, int j, int k, int meta, int fortune) {
+	public void addSpecialLeafDrops(List drops, World world, int i, int j, int k, int meta, int fortune) {
 		if ((meta & 3) == 3 && world.rand.nextInt(calcFortuneModifiedDropChance(10, fortune)) == 0) {
 			drops.add(new ItemStack(LOTRMod.olive));
 		}

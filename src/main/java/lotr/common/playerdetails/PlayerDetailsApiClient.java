@@ -34,16 +34,17 @@ public class PlayerDetailsApiClient {
 			}
 
 			public void executeRequest(int attemptNumber) {
-				block6: {
+				block6:
+				{
 					try {
-						URL url = new URL(PlayerDetailsApiClient.API_URL.replace("{playerId}", playerId.toString()));
+						URL url = new URL(API_URL.replace("{playerId}", playerId.toString()));
 						LOGGER.debug("Making call to fetch playerdetails at {} (attempt #{})", url, attemptNumber);
 						try {
 							HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 							int statusCode = connection.getResponseCode();
 							LOGGER.debug("Got response with status {} from playerdetails API (playerId = {})", statusCode, playerId);
 							if (statusCode == 200) {
-								PlayerDetailsApiClient.this.parseSuccessResponseWithCallback(playerId, callback, connection);
+								parseSuccessResponseWithCallback(playerId, callback, connection);
 								break block6;
 							}
 							int statusFamily = statusCode / 100;
@@ -72,12 +73,13 @@ public class PlayerDetailsApiClient {
 		thread.start();
 	}
 
+	@SuppressWarnings("MalformedFormatString")
 	public PlayerDetails parsePlayerDetailsFromResponse(UUID playerId, JsonObject json) {
 		UUID responsePlayerId = UUID.fromString(json.get("uuid").getAsString());
 		if (!responsePlayerId.equals(playerId)) {
 			throw new IllegalArgumentException(String.format("Player ID in response ({}) did not match requested ID ({})", responsePlayerId, playerId));
 		}
-		ArrayList<String> groups = new ArrayList<>();
+		List<String> groups = new ArrayList<>();
 		if (json.has("groups")) {
 			for (JsonElement elem : json.get("groups").getAsJsonArray()) {
 				groups.add(elem.getAsString());

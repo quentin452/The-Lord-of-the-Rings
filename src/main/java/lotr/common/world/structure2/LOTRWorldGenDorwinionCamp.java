@@ -12,7 +12,7 @@ public class LOTRWorldGenDorwinionCamp extends LOTRWorldGenDorwinionTent {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		LOTRWorldGenDorwinionCaptainTent captainTent = new LOTRWorldGenDorwinionCaptainTent(notifyChanges);
 		captainTent.restrictions = true;
@@ -27,14 +27,14 @@ public class LOTRWorldGenDorwinionCamp extends LOTRWorldGenDorwinionTent {
 		int xMax = 12;
 		int zMin = -5;
 		int zMax = 5;
-		for (int k2 : new int[] { -9, 0, 9 }) {
-			tryGenerateTent(world, random, new int[] { -xMax, -xMin }, new int[] { k2 + zMin, k2 + zMax }, 3);
-			tryGenerateTent(world, random, new int[] { xMin, xMax }, new int[] { k2 + zMin, k2 + zMax }, 1);
+		for (int k2 : new int[]{-9, 0, 9}) {
+			tryGenerateTent(world, random, new int[]{-xMax, -xMin}, new int[]{k2 + zMin, k2 + zMax}, 3);
+			tryGenerateTent(world, random, new int[]{xMin, xMax}, new int[]{k2 + zMin, k2 + zMax}, 1);
 		}
 		return true;
 	}
 
-	public boolean tryGenerateTent(World world, Random random, int[] i, int[] k, int r) {
+	public void tryGenerateTent(World world, Random random, int[] i, int[] k, int r) {
 		LOTRWorldGenDorwinionTent tent = new LOTRWorldGenDorwinionTent(notifyChanges);
 		tent.restrictions = true;
 		int attempts = 1;
@@ -45,8 +45,7 @@ public class LOTRWorldGenDorwinionCamp extends LOTRWorldGenDorwinionTent {
 			if (!tent.generateWithSetRotation(world, random, getX(i1, k1), getY(j1), getZ(i1, k1), (getRotationMode() + r) % 4)) {
 				continue;
 			}
-			return true;
+			return;
 		}
-		return false;
 	}
 }

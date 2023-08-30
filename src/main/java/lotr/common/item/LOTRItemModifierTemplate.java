@@ -17,11 +17,11 @@ public class LOTRItemModifierTemplate extends Item {
 		setCreativeTab(LOTRCreativeTabs.tabMaterials);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
 		super.addInformation(itemstack, entityplayer, list, flag);
-		LOTREnchantment mod = LOTRItemModifierTemplate.getModifier(itemstack);
+		LOTREnchantment mod = getModifier(itemstack);
 		if (mod != null) {
 			String desc = mod.getNamedFormattedDescription(itemstack);
 			list.add(desc);
@@ -31,14 +31,14 @@ public class LOTRItemModifierTemplate extends Item {
 	@Override
 	public String getItemStackDisplayName(ItemStack itemstack) {
 		String s = super.getItemStackDisplayName(itemstack);
-		LOTREnchantment mod = LOTRItemModifierTemplate.getModifier(itemstack);
+		LOTREnchantment mod = getModifier(itemstack);
 		if (mod != null) {
 			s = String.format(s, mod.getDisplayName());
 		}
 		return s;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (LOTREnchantment ench : LOTREnchantment.allEnchantments) {
@@ -46,7 +46,7 @@ public class LOTRItemModifierTemplate extends Item {
 				continue;
 			}
 			ItemStack itemstack = new ItemStack(this);
-			LOTRItemModifierTemplate.setModifier(itemstack, ench);
+			setModifier(itemstack, ench);
 			list.add(itemstack);
 		}
 	}
@@ -61,7 +61,7 @@ public class LOTRItemModifierTemplate extends Item {
 	}
 
 	public static ItemStack getRandomCommonTemplate(Random random) {
-		ArrayList<LOTREnchantmentHelper.WeightedRandomEnchant> applicable = new ArrayList<>();
+		Collection<LOTREnchantmentHelper.WeightedRandomEnchant> applicable = new ArrayList<>();
 		for (LOTREnchantment ench : LOTREnchantment.allEnchantments) {
 			if (!ench.hasTemplateItem()) {
 				continue;
@@ -73,7 +73,7 @@ public class LOTRItemModifierTemplate extends Item {
 		LOTREnchantmentHelper.WeightedRandomEnchant chosenWre = (LOTREnchantmentHelper.WeightedRandomEnchant) WeightedRandom.getRandomItem(random, applicable);
 		LOTREnchantment chosenEnch = chosenWre.theEnchant;
 		ItemStack itemstack = new ItemStack(LOTRMod.modTemplate);
-		LOTRItemModifierTemplate.setModifier(itemstack, chosenEnch);
+		setModifier(itemstack, chosenEnch);
 		return itemstack;
 	}
 

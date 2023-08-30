@@ -34,7 +34,7 @@ public class LOTREntityEnt extends LOTREntityTree {
 		tasks.addTask(3, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 8.0f, 0.02f));
 		tasks.addTask(4, new EntityAIWatchClosest(this, EntityLiving.class, 10.0f, 0.02f));
 		tasks.addTask(5, new EntityAILookIdle(this));
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 	}
 
 	@Override

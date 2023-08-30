@@ -50,11 +50,6 @@ public class LOTREntityPortal extends Entity {
 	}
 
 	@Override
-	public boolean canBePushed() {
-		return false;
-	}
-
-	@Override
 	public boolean canTriggerWalking() {
 		return false;
 	}
@@ -82,7 +77,7 @@ public class LOTREntityPortal extends Entity {
 		return dataWatcher.getWatchableObjectShort(10);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
 		if (b == 16) {

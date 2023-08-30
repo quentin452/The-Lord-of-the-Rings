@@ -12,9 +12,9 @@ import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 
 public class LOTRBlockOrcPlating extends Block {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] blockIcons;
-	public String[] blockNames = { "iron", "rust" };
+	public String[] blockNames = {"iron", "rust"};
 
 	public LOTRBlockOrcPlating() {
 		super(Material.iron);
@@ -30,7 +30,7 @@ public class LOTRBlockOrcPlating extends Block {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int i, int j) {
 		if (j >= blockNames.length) {
 			j = 0;
@@ -44,7 +44,7 @@ public class LOTRBlockOrcPlating extends Block {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < blockNames.length; ++i) {
 			list.add(new ItemStack(item, 1, i));
@@ -52,7 +52,7 @@ public class LOTRBlockOrcPlating extends Block {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconregister) {
 		blockIcons = new IIcon[blockNames.length];
 		for (int i = 0; i < blockNames.length; ++i) {

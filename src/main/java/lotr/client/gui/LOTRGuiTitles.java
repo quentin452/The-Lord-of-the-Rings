@@ -3,6 +3,7 @@ package lotr.client.gui;
 import java.awt.Color;
 import java.util.*;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -21,11 +22,11 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 	public EnumChatFormatting selectedColor = EnumChatFormatting.WHITE;
 	public int colorBoxWidth = 8;
 	public int colorBoxGap = 4;
-	public Map<EnumChatFormatting, Pair<Integer, Integer>> displayedColorBoxes = new HashMap<>();
+	public Map<EnumChatFormatting, Pair<Integer, Integer>> displayedColorBoxes = new EnumMap<>(EnumChatFormatting.class);
 	public GuiButton selectButton;
 	public GuiButton removeButton;
-	public float currentScroll = 0.0f;
-	public boolean isScrolling = false;
+	public float currentScroll;
+	public boolean isScrolling;
 	public boolean wasMouseDown;
 	public int scrollBarWidth = 11;
 	public int scrollBarHeight = 144;
@@ -38,10 +39,10 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 	public void actionPerformed(GuiButton button) {
 		if (button.enabled) {
 			if (button == selectButton && (currentTitle == null || selectedTitle != currentTitle.getTitle() || selectedColor != currentTitle.getColor())) {
-				LOTRPacketSelectTitle packet = new LOTRPacketSelectTitle(new LOTRTitle.PlayerTitle(selectedTitle, selectedColor));
+				IMessage packet = new LOTRPacketSelectTitle(new LOTRTitle.PlayerTitle(selectedTitle, selectedColor));
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 			} else if (button == removeButton) {
-				LOTRPacketSelectTitle packet = new LOTRPacketSelectTitle(null);
+				IMessage packet = new LOTRPacketSelectTitle(null);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 			} else {
 				super.actionPerformed(button);
@@ -55,11 +56,11 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		setupScrollBar(i, j);
 		String s = StatCollector.translateToLocal("lotr.gui.titles.title");
-		this.drawCenteredString(s, guiLeft + xSize / 2, guiTop - 30, 16777215);
+		drawCenteredString(s, guiLeft + xSize / 2, guiTop - 30, 16777215);
 		String titleName = currentTitle == null ? StatCollector.translateToLocal("lotr.gui.titles.currentTitle.none") : currentTitle.getTitle().getDisplayName(mc.thePlayer);
 		EnumChatFormatting currentColor = currentTitle == null ? EnumChatFormatting.WHITE : currentTitle.getColor();
 		titleName = currentColor + titleName + EnumChatFormatting.RESET;
-		this.drawCenteredString(StatCollector.translateToLocalFormatted("lotr.gui.titles.currentTitle", titleName), guiLeft + xSize / 2, guiTop, 16777215);
+		drawCenteredString(StatCollector.translateToLocalFormatted("lotr.gui.titles.currentTitle", titleName), guiLeft + xSize / 2, guiTop, 16777215);
 		displayedTitleInfo.clear();
 		int titleX = guiLeft + xSize / 2;
 		int titleY = guiTop + 30;
@@ -67,7 +68,7 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 		drawVerticalLine(titleX - 70, titleY - 1, titleY + yIncrement * 12, -1711276033);
 		drawVerticalLine(titleX + 70 - 1, titleY - 1, titleY + yIncrement * 12, -1711276033);
 		int size = displayedTitles.size();
-		int min = 0 + Math.round(currentScroll * (size - 12));
+		int min = Math.round(currentScroll * (size - 12));
 		int max = 11 + Math.round(currentScroll * (size - 12));
 		min = Math.max(min, 0);
 		max = Math.min(max, size - 1);
@@ -97,14 +98,14 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 				displayedTitleInfo.put(title, Pair.of(mouseOver, Pair.of(titleX, titleY)));
 			}
 			int textColor = title != null ? title.canPlayerUse(mc.thePlayer) ? mouseOver ? 16777120 : 16777215 : mouseOver ? 12303291 : 7829367 : 7829367;
-			this.drawCenteredString(name, titleX, titleY, textColor);
+			drawCenteredString(name, titleX, titleY, textColor);
 			titleY += yIncrement;
 		}
 		displayedColorBoxes.clear();
 		if (selectedTitle != null) {
 			String title = selectedColor + selectedTitle.getDisplayName(mc.thePlayer);
-			this.drawCenteredString(title, guiLeft + xSize / 2, guiTop + 185, 16777215);
-			ArrayList<EnumChatFormatting> colorCodes = new ArrayList<>();
+			drawCenteredString(title, guiLeft + xSize / 2, guiTop + 185, 16777215);
+			Collection<EnumChatFormatting> colorCodes = new ArrayList<>();
 			for (EnumChatFormatting ecf : EnumChatFormatting.values()) {
 				if (!ecf.isColor()) {
 					continue;
@@ -119,7 +120,7 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 				GL11.glColor4f(rgb[0], rgb[1], rgb[2], 1.0f);
 				boolean mouseOver = i >= colorX && i < colorX + colorBoxWidth && j >= colorY && j < colorY + colorBoxWidth;
 				GL11.glDisable(3553);
-				this.drawTexturedModalRect(colorX, colorY + (mouseOver ? -1 : 0), 0, 0, colorBoxWidth, colorBoxWidth);
+				drawTexturedModalRect(colorX, colorY + (mouseOver ? -1 : 0), 0, 0, colorBoxWidth, colorBoxWidth);
 				GL11.glEnable(3553);
 				GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 				displayedColorBoxes.put(code, Pair.of(colorX, colorY));
@@ -142,8 +143,6 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 		for (Map.Entry<LOTRTitle, Pair<Boolean, Pair<Integer, Integer>>> entry : displayedTitleInfo.entrySet()) {
 			LOTRTitle title = entry.getKey();
 			String desc = title.getDescription(mc.thePlayer);
-			titleX = (Integer) ((Pair) entry.getValue().getRight()).getLeft();
-			titleY = (Integer) ((Pair) entry.getValue().getRight()).getRight();
 			boolean mouseOver = entry.getValue().getLeft();
 			if (!mouseOver) {
 				continue;
@@ -166,7 +165,7 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 		if (i != 0) {
 			i = Integer.signum(i);
 			int j = displayedTitles.size() - 12;
-			currentScroll -= (float) i / (float) j;
+			currentScroll -= (float) i / j;
 			currentScroll = MathHelper.clamp_float(currentScroll, 0.0f, 1.0f);
 		}
 	}
@@ -198,8 +197,8 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 			if (!displayedColorBoxes.isEmpty()) {
 				for (Map.Entry<EnumChatFormatting, Pair<Integer, Integer>> entry : displayedColorBoxes.entrySet()) {
 					EnumChatFormatting color = entry.getKey();
-					int colorX = (Integer) ((Pair) entry.getValue()).getLeft();
-					int colorY = (Integer) ((Pair) entry.getValue()).getRight();
+					int colorX = (Integer) ((Pair<?, ?>) entry.getValue()).getLeft();
+					int colorY = (Integer) ((Pair<?, ?>) entry.getValue()).getRight();
 					if (i >= colorX && i < colorX + colorBoxWidth && j >= colorY && j < colorY + colorBoxWidth) {
 						selectedColor = color;
 						break;
@@ -224,7 +223,7 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 		}
 		wasMouseDown = isMouseDown;
 		if (isScrolling) {
-			currentScroll = (j - j1 - scrollWidgetHeight / 2.0f) / ((float) (j2 - j1) - (float) scrollWidgetHeight);
+			currentScroll = (j - j1 - scrollWidgetHeight / 2.0f) / ((float) (j2 - j1) - scrollWidgetHeight);
 			currentScroll = MathHelper.clamp_float(currentScroll, 0.0f, 1.0f);
 		}
 	}
@@ -234,8 +233,8 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 		super.updateScreen();
 		currentTitle = LOTRLevelData.getData(mc.thePlayer).getPlayerTitle();
 		displayedTitles.clear();
-		ArrayList<LOTRTitle> availableTitles = new ArrayList<>();
-		ArrayList<LOTRTitle> unavailableTitles = new ArrayList<>();
+		List<LOTRTitle> availableTitles = new ArrayList<>();
+		List<LOTRTitle> unavailableTitles = new ArrayList<>();
 		for (LOTRTitle title : LOTRTitle.allTitles) {
 			if (title.canPlayerUse(mc.thePlayer)) {
 				availableTitles.add(title);
@@ -247,8 +246,8 @@ public class LOTRGuiTitles extends LOTRGuiMenuBase {
 			unavailableTitles.add(title);
 		}
 		Comparator<LOTRTitle> sorter = LOTRTitle.createTitleSorter(mc.thePlayer);
-		Collections.sort(availableTitles, sorter);
-		Collections.sort(unavailableTitles, sorter);
+		availableTitles.sort(sorter);
+		unavailableTitles.sort(sorter);
 		displayedTitles.addAll(availableTitles);
 		displayedTitles.add(null);
 		displayedTitles.addAll(unavailableTitles);

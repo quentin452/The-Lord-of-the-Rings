@@ -15,9 +15,9 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class LOTRItemSword extends ItemSword {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon glowingIcon;
-	public boolean isElvenBlade = false;
+	public boolean isElvenBlade;
 	public float lotrWeaponDamage;
 
 	public LOTRItemSword(Item.ToolMaterial material) {
@@ -59,7 +59,7 @@ public class LOTRItemSword extends ItemSword {
 		return super.onItemRightClick(itemstack, world, entityplayer);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerIcons(IIconRegister iconregister) {
 		super.registerIcons(iconregister);

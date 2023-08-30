@@ -1,7 +1,7 @@
 package lotr.common.world.structure2;
 
 public abstract class LOTRWorldGenEasterlingStructureTown extends LOTRWorldGenEasterlingStructure {
-	public LOTRWorldGenEasterlingStructureTown(boolean flag) {
+	protected LOTRWorldGenEasterlingStructureTown(boolean flag) {
 		super(flag);
 	}
 

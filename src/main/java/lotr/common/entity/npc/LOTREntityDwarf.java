@@ -40,7 +40,7 @@ public class LOTREntityDwarf extends LOTREntityNPC {
 		tasks.addTask(12, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 5.0f, 0.02f));
 		tasks.addTask(13, new EntityAIWatchClosest(this, EntityLiving.class, 8.0f, 0.02f));
 		tasks.addTask(14, new EntityAILookIdle(this));
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		familyInfo.marriageEntityClass = LOTREntityDwarf.class;
 		familyInfo.marriageRing = LOTRMod.dwarvenRing;
 		familyInfo.marriageAlignmentRequired = 200.0f;
@@ -96,28 +96,28 @@ public class LOTREntityDwarf extends LOTREntityNPC {
 		}
 		if (flag) {
 			int rareDropChance = 20 - i * 4;
-			if (rand.nextInt(rareDropChance = Math.max(rareDropChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(rareDropChance, 1)) == 0) {
 				int randDrop = rand.nextInt(4);
 				switch (randDrop) {
-				case 0: {
-					entityDropItem(new ItemStack(Items.iron_ingot), 0.0f);
-					break;
-				}
-				case 1: {
-					entityDropItem(new ItemStack(getDwarfSteelDrop()), 0.0f);
-					break;
-				}
-				case 2: {
-					entityDropItem(new ItemStack(Items.gold_nugget, 1 + rand.nextInt(3)), 0.0f);
-					break;
-				}
-				case 3: {
-					entityDropItem(new ItemStack(LOTRMod.silverNugget, 1 + rand.nextInt(3)), 0.0f);
-				}
+					case 0: {
+						entityDropItem(new ItemStack(Items.iron_ingot), 0.0f);
+						break;
+					}
+					case 1: {
+						entityDropItem(new ItemStack(getDwarfSteelDrop()), 0.0f);
+						break;
+					}
+					case 2: {
+						entityDropItem(new ItemStack(Items.gold_nugget, 1 + rand.nextInt(3)), 0.0f);
+						break;
+					}
+					case 3: {
+						entityDropItem(new ItemStack(LOTRMod.silverNugget, 1 + rand.nextInt(3)), 0.0f);
+					}
 				}
 			}
 			int mithrilBookChance = 40 - i * 5;
-			if (rand.nextInt(mithrilBookChance = Math.max(mithrilBookChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(mithrilBookChance, 1)) == 0) {
 				entityDropItem(new ItemStack(LOTRMod.mithrilBook), 0.0f);
 			}
 		}
@@ -241,7 +241,7 @@ public class LOTREntityDwarf extends LOTREntityNPC {
 	public IEntityLivingData initCreatureForHire(IEntityLivingData data) {
 		data = super.initCreatureForHire(data);
 		data = onSpawnWithEgg(data);
-		if (this.getClass() == familyInfo.marriageEntityClass && rand.nextInt(3) == 0) {
+		if (getClass() == familyInfo.marriageEntityClass && rand.nextInt(3) == 0) {
 			familyInfo.setMale(false);
 			setupNPCName();
 		}
@@ -258,7 +258,7 @@ public class LOTREntityDwarf extends LOTREntityNPC {
 
 	@Override
 	public void onArtificalSpawn() {
-		if (this.getClass() == familyInfo.marriageEntityClass) {
+		if (getClass() == familyInfo.marriageEntityClass) {
 			if (rand.nextInt(3) == 0) {
 				familyInfo.setMale(false);
 				setupNPCName();

@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityDaleCaptain extends LOTREntityDaleSoldier implements LOTRUnitTradeable {
 	public LOTREntityDaleCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.DALE;
 	}
 

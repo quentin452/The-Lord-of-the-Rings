@@ -22,7 +22,7 @@ public class LOTRWorldGenGulfFarm extends LOTRWorldGenGulfStructure {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -90,24 +90,24 @@ public class LOTRWorldGenGulfFarm extends LOTRWorldGenGulfStructure {
 		} else {
 			randomCrop = random.nextInt(4);
 			switch (randomCrop) {
-			case 0:
-				crop1Block = Blocks.carrots;
-				seed1 = Items.carrot;
-				break;
-			case 1:
-				crop1Block = Blocks.potatoes;
-				seed1 = Items.potato;
-				break;
-			case 2:
-				crop1Block = LOTRMod.lettuceCrop;
-				seed1 = LOTRMod.lettuce;
-				break;
-			case 3:
-				crop1Block = LOTRMod.turnipCrop;
-				seed1 = LOTRMod.turnip;
-				break;
-			default:
-				break;
+				case 0:
+					crop1Block = Blocks.carrots;
+					seed1 = Items.carrot;
+					break;
+				case 1:
+					crop1Block = Blocks.potatoes;
+					seed1 = Items.potato;
+					break;
+				case 2:
+					crop1Block = LOTRMod.lettuceCrop;
+					seed1 = LOTRMod.lettuce;
+					break;
+				case 3:
+					crop1Block = LOTRMod.turnipCrop;
+					seed1 = LOTRMod.turnip;
+					break;
+				default:
+					break;
 			}
 		}
 		if (random.nextBoolean()) {
@@ -116,24 +116,24 @@ public class LOTRWorldGenGulfFarm extends LOTRWorldGenGulfStructure {
 		} else {
 			randomCrop = random.nextInt(4);
 			switch (randomCrop) {
-			case 0:
-				crop2Block = Blocks.carrots;
-				seed2 = Items.carrot;
-				break;
-			case 1:
-				crop2Block = Blocks.potatoes;
-				seed2 = Items.potato;
-				break;
-			case 2:
-				crop2Block = LOTRMod.lettuceCrop;
-				seed2 = LOTRMod.lettuce;
-				break;
-			case 3:
-				crop2Block = LOTRMod.turnipCrop;
-				seed2 = LOTRMod.turnip;
-				break;
-			default:
-				break;
+				case 0:
+					crop2Block = Blocks.carrots;
+					seed2 = Items.carrot;
+					break;
+				case 1:
+					crop2Block = Blocks.potatoes;
+					seed2 = Items.potato;
+					break;
+				case 2:
+					crop2Block = LOTRMod.lettuceCrop;
+					seed2 = LOTRMod.lettuce;
+					break;
+				case 3:
+					crop2Block = LOTRMod.turnipCrop;
+					seed2 = LOTRMod.turnip;
+					break;
+				default:
+					break;
 			}
 		}
 	}

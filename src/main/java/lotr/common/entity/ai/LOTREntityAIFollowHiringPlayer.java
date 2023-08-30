@@ -60,7 +60,7 @@ public class LOTREntityAIFollowHiringPlayer extends EntityAIBase {
 			return false;
 		}
 		if (isBannerBearer) {
-			ArrayList<EntityLiving> alliesToFollow = new ArrayList<>();
+			Collection<EntityLiving> alliesToFollow = new ArrayList<>();
 			List nearbyEntities = theNPC.worldObj.getEntitiesWithinAABB(EntityLiving.class, theNPC.boundingBox.expand(16.0, 16.0, 16.0));
 			for (Object nearbyEntitie : nearbyEntities) {
 				EntityLiving entity = (EntityLiving) nearbyEntitie;

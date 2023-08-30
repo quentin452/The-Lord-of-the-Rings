@@ -5,6 +5,7 @@ import java.util.Random;
 import lotr.common.world.feature.LOTRTreeType;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
@@ -21,7 +22,7 @@ public class LOTRVanillaSaplings {
 		int xOffset = 0;
 		int zOffset = 0;
 		if (meta == 0) {
-			partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, block, meta);
+			partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, block, 0);
 			if (partyTree != null) {
 				treeGen = LOTRTreeType.OAK_PARTY.create(true, random);
 				trunkPos = 1;
@@ -40,7 +41,7 @@ public class LOTRVanillaSaplings {
 		if (meta == 1) {
 			for (int i12 = 0; i12 >= -1; --i12) {
 				for (k1 = 0; k1 >= -1; --k1) {
-					if (!LOTRVanillaSaplings.isSameSapling(world, i + i12, j, k + k1, meta) || !LOTRVanillaSaplings.isSameSapling(world, i + i12 + 1, j, k + k1, meta) || !LOTRVanillaSaplings.isSameSapling(world, i + i12, j, k + k1 + 1, meta) || !LOTRVanillaSaplings.isSameSapling(world, i + i12 + 1, j, k + k1 + 1, meta)) {
+					if (!isSameSapling(world, i + i12, j, k + k1, 1) || !isSameSapling(world, i + i12 + 1, j, k + k1, 1) || !isSameSapling(world, i + i12, j, k + k1 + 1, 1) || !isSameSapling(world, i + i12 + 1, j, k + k1 + 1, 1)) {
 						continue;
 					}
 					treeGen = random.nextBoolean() ? LOTRTreeType.SPRUCE_MEGA.create(true, random) : LOTRTreeType.SPRUCE_MEGA_THIN.create(true, random);
@@ -63,7 +64,7 @@ public class LOTRVanillaSaplings {
 			}
 		}
 		if (meta == 2) {
-			partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, block, meta);
+			partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, block, 2);
 			if (partyTree != null) {
 				treeGen = LOTRTreeType.BIRCH_PARTY.create(true, random);
 				trunkPos = 1;
@@ -82,7 +83,7 @@ public class LOTRVanillaSaplings {
 		if (meta == 3) {
 			for (int i13 = 0; i13 >= -1; --i13) {
 				for (k1 = 0; k1 >= -1; --k1) {
-					if (!LOTRVanillaSaplings.isSameSapling(world, i + i13, j, k + k1, meta) || !LOTRVanillaSaplings.isSameSapling(world, i + i13 + 1, j, k + k1, meta) || !LOTRVanillaSaplings.isSameSapling(world, i + i13, j, k + k1 + 1, meta) || !LOTRVanillaSaplings.isSameSapling(world, i + i13 + 1, j, k + k1 + 1, meta)) {
+					if (!isSameSapling(world, i + i13, j, k + k1, 3) || !isSameSapling(world, i + i13 + 1, j, k + k1, 3) || !isSameSapling(world, i + i13, j, k + k1 + 1, 3) || !isSameSapling(world, i + i13 + 1, j, k + k1 + 1, 3)) {
 						continue;
 					}
 					treeGen = LOTRTreeType.JUNGLE_LARGE.create(true, random);
@@ -108,7 +109,7 @@ public class LOTRVanillaSaplings {
 			treeGen = LOTRTreeType.ACACIA.create(true, random);
 		}
 		if (meta == 5) {
-			partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, block, meta);
+			partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, block, 5);
 			if (partyTree != null) {
 				treeGen = LOTRTreeType.DARK_OAK_PARTY.create(true, random);
 				trunkPos = 1;
@@ -119,7 +120,7 @@ public class LOTRVanillaSaplings {
 			if (treeGen == null) {
 				for (int i14 = 0; i14 >= -1; --i14) {
 					for (int k12 = 0; k12 >= -1; --k12) {
-						if (!LOTRVanillaSaplings.isSameSapling(world, i + i14, j, k + k12, meta) || !LOTRVanillaSaplings.isSameSapling(world, i + i14 + 1, j, k + k12, meta) || !LOTRVanillaSaplings.isSameSapling(world, i + i14, j, k + k12 + 1, meta) || !LOTRVanillaSaplings.isSameSapling(world, i + i14 + 1, j, k + k12 + 1, meta)) {
+						if (!isSameSapling(world, i + i14, j, k + k12, 5) || !isSameSapling(world, i + i14 + 1, j, k + k12, 5) || !isSameSapling(world, i + i14, j, k + k12 + 1, 5) || !isSameSapling(world, i + i14 + 1, j, k + k12 + 1, 5)) {
 							continue;
 						}
 						treeGen = LOTRTreeType.DARK_OAK.create(true, random);
@@ -152,7 +153,7 @@ public class LOTRVanillaSaplings {
 		}
 	}
 
-	public static boolean isSameSapling(World world, int i, int j, int k, int meta) {
+	public static boolean isSameSapling(IBlockAccess world, int i, int j, int k, int meta) {
 		return LOTRBlockSaplingBase.isSameSapling(world, i, j, k, Blocks.sapling, meta);
 	}
 }

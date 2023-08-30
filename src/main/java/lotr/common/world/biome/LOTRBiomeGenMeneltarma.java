@@ -38,7 +38,7 @@ public class LOTRBiomeGenMeneltarma extends LOTRBiomeGenOcean {
 		decorator.addTree(LOTRTreeType.BIRCH_LARGE, 400);
 		decorator.addTree(LOTRTreeType.BEECH, 200);
 		decorator.addTree(LOTRTreeType.BEECH_LARGE, 400);
-		ArrayList flowerDupes = new ArrayList();
+		Collection flowerDupes = new ArrayList();
 		for (int l = 0; l < 10; ++l) {
 			flowers.clear();
 			registerPlainsFlowers();

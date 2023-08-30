@@ -49,11 +49,6 @@ public class LOTREntityBreeHobbit extends LOTREntityHobbit implements IPickpocke
 	}
 
 	@Override
-	public float getAlignmentBonus() {
-		return 1.0f;
-	}
-
-	@Override
 	public float getBlockPathWeight(int i, int j, int k) {
 		float f = 0.0f;
 		BiomeGenBase biome = worldObj.getBiomeGenForCoords(i, k);

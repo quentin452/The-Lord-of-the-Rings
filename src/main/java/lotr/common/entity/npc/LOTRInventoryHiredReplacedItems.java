@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class LOTRInventoryHiredReplacedItems extends LOTRInventoryNPC {
-	public static int HELMET = 0;
+	public static int HELMET;
 	public static int BODY = 1;
 	public static int LEGS = 2;
 	public static int BOOTS = 3;
@@ -13,7 +13,7 @@ public class LOTRInventoryHiredReplacedItems extends LOTRInventoryNPC {
 	public static int BOMB = 5;
 	public static int RANGED = 6;
 	public boolean[] hasReplacedEquipment = new boolean[7];
-	public boolean replacedMeleeWeapons = false;
+	public boolean replacedMeleeWeapons;
 
 	public LOTRInventoryHiredReplacedItems(LOTREntityNPC npc) {
 		super("HiredReplacedItems", npc, 7);
@@ -33,50 +33,47 @@ public class LOTRInventoryHiredReplacedItems extends LOTRInventoryNPC {
 
 	public void equipReplacement(int i, ItemStack itemstack) {
 		switch (i) {
-		case 4: {
-			boolean idleMelee = false;
-			if (ItemStack.areItemStacksEqual(theNPC.npcItemsInv.getMeleeWeapon(), theNPC.npcItemsInv.getIdleItem())) {
-				idleMelee = true;
+			case 4: {
+				boolean idleMelee = ItemStack.areItemStacksEqual(theNPC.npcItemsInv.getMeleeWeapon(), theNPC.npcItemsInv.getIdleItem());
+				theNPC.npcItemsInv.setMeleeWeapon(itemstack);
+				if (!replacedMeleeWeapons) {
+					theNPC.npcItemsInv.setReplacedIdleItem(theNPC.npcItemsInv.getIdleItem());
+					theNPC.npcItemsInv.setReplacedMeleeWeaponMounted(theNPC.npcItemsInv.getMeleeWeaponMounted());
+					theNPC.npcItemsInv.setReplacedIdleItemMounted(theNPC.npcItemsInv.getIdleItemMounted());
+					replacedMeleeWeapons = true;
+				}
+				theNPC.npcItemsInv.setMeleeWeaponMounted(itemstack);
+				if (idleMelee) {
+					theNPC.npcItemsInv.setIdleItem(itemstack);
+					theNPC.npcItemsInv.setIdleItemMounted(itemstack);
+				}
+				updateHeldItem();
+				break;
 			}
-			theNPC.npcItemsInv.setMeleeWeapon(itemstack);
-			if (!replacedMeleeWeapons) {
-				theNPC.npcItemsInv.setReplacedIdleItem(theNPC.npcItemsInv.getIdleItem());
-				theNPC.npcItemsInv.setReplacedMeleeWeaponMounted(theNPC.npcItemsInv.getMeleeWeaponMounted());
-				theNPC.npcItemsInv.setReplacedIdleItemMounted(theNPC.npcItemsInv.getIdleItemMounted());
-				replacedMeleeWeapons = true;
-			}
-			theNPC.npcItemsInv.setMeleeWeaponMounted(itemstack);
-			if (idleMelee) {
-				theNPC.npcItemsInv.setIdleItem(itemstack);
-				theNPC.npcItemsInv.setIdleItemMounted(itemstack);
-			}
-			updateHeldItem();
-			break;
-		}
-		case 6:
-			theNPC.npcItemsInv.setRangedWeapon(itemstack);
-			updateHeldItem();
-			break;
-		case 5:
-			theNPC.npcItemsInv.setBomb(itemstack);
-			updateHeldItem();
-			break;
-		default:
-			theNPC.setCurrentItemOrArmor(getNPCArmorSlot(i), itemstack);
-			break;
+			case 6:
+				theNPC.npcItemsInv.setRangedWeapon(itemstack);
+				updateHeldItem();
+				break;
+			case 5:
+				theNPC.npcItemsInv.setBomb(itemstack);
+				updateHeldItem();
+				break;
+			default:
+				theNPC.setCurrentItemOrArmor(getNPCArmorSlot(i), itemstack);
+				break;
 		}
 	}
 
 	public ItemStack getEquippedReplacement(int i) {
 		switch (i) {
-		case 4:
-			return theNPC.npcItemsInv.getMeleeWeapon();
-		case 6:
-			return theNPC.npcItemsInv.getRangedWeapon();
-		case 5:
-			return theNPC.npcItemsInv.getBomb();
-		default:
-			break;
+			case 4:
+				return theNPC.npcItemsInv.getMeleeWeapon();
+			case 6:
+				return theNPC.npcItemsInv.getRangedWeapon();
+			case 5:
+				return theNPC.npcItemsInv.getBomb();
+			default:
+				break;
 		}
 		return theNPC.getEquipmentInSlot(getNPCArmorSlot(i));
 	}

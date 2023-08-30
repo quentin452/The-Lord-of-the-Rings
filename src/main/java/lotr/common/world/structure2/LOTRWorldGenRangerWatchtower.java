@@ -41,7 +41,7 @@ public class LOTRWorldGenRangerWatchtower extends LOTRWorldGenStructureBase2 {
 		int k1;
 		int randomWood;
 		int i12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		if (restrictions) {
 			for (int i13 = -4; i13 <= 4; ++i13) {
 				for (int k12 = -4; k12 <= 4; ++k12) {
@@ -56,48 +56,48 @@ public class LOTRWorldGenRangerWatchtower extends LOTRWorldGenStructureBase2 {
 		}
 		randomWood = random.nextInt(4);
 		switch (randomWood) {
-		case 0:
-			woodBlock = Blocks.log;
-			woodMeta = 0;
-			plankBlock = Blocks.planks;
-			plankMeta = 0;
-			fenceBlock = Blocks.fence;
-			fenceMeta = 0;
-			stairBlock = Blocks.oak_stairs;
-			trapdoorBlock = Blocks.trapdoor;
-			break;
-		case 1:
-			woodBlock = Blocks.log;
-			woodMeta = 1;
-			plankBlock = Blocks.planks;
-			plankMeta = 1;
-			fenceBlock = Blocks.fence;
-			fenceMeta = 0;
-			stairBlock = Blocks.spruce_stairs;
-			trapdoorBlock = LOTRMod.trapdoorSpruce;
-			break;
-		case 2:
-			woodBlock = LOTRMod.wood2;
-			woodMeta = 1;
-			plankBlock = LOTRMod.planks;
-			plankMeta = 9;
-			fenceBlock = LOTRMod.fence;
-			fenceMeta = 9;
-			stairBlock = LOTRMod.stairsBeech;
-			trapdoorBlock = LOTRMod.trapdoorBeech;
-			break;
-		case 3:
-			woodBlock = LOTRMod.wood3;
-			woodMeta = 0;
-			plankBlock = LOTRMod.planks;
-			plankMeta = 12;
-			fenceBlock = LOTRMod.fence;
-			fenceMeta = 12;
-			stairBlock = LOTRMod.stairsMaple;
-			trapdoorBlock = LOTRMod.trapdoorMaple;
-			break;
-		default:
-			break;
+			case 0:
+				woodBlock = Blocks.log;
+				woodMeta = 0;
+				plankBlock = Blocks.planks;
+				plankMeta = 0;
+				fenceBlock = Blocks.fence;
+				fenceMeta = 0;
+				stairBlock = Blocks.oak_stairs;
+				trapdoorBlock = Blocks.trapdoor;
+				break;
+			case 1:
+				woodBlock = Blocks.log;
+				woodMeta = 1;
+				plankBlock = Blocks.planks;
+				plankMeta = 1;
+				fenceBlock = Blocks.fence;
+				fenceMeta = 0;
+				stairBlock = Blocks.spruce_stairs;
+				trapdoorBlock = LOTRMod.trapdoorSpruce;
+				break;
+			case 2:
+				woodBlock = LOTRMod.wood2;
+				woodMeta = 1;
+				plankBlock = LOTRMod.planks;
+				plankMeta = 9;
+				fenceBlock = LOTRMod.fence;
+				fenceMeta = 9;
+				stairBlock = LOTRMod.stairsBeech;
+				trapdoorBlock = LOTRMod.trapdoorBeech;
+				break;
+			case 3:
+				woodBlock = LOTRMod.wood3;
+				woodMeta = 0;
+				plankBlock = LOTRMod.planks;
+				plankMeta = 12;
+				fenceBlock = LOTRMod.fence;
+				fenceMeta = 12;
+				stairBlock = LOTRMod.stairsMaple;
+				trapdoorBlock = LOTRMod.trapdoorMaple;
+				break;
+			default:
+				break;
 		}
 		generateSupportPillar(world, -3, 4, -3);
 		generateSupportPillar(world, -3, 4, 3);
@@ -152,7 +152,7 @@ public class LOTRWorldGenRangerWatchtower extends LOTRWorldGenStructureBase2 {
 					continue;
 				}
 				setBlockAndMetadata(world, i12, 15, k1, plankBlock, plankMeta);
-				if ((i2 >= 2 || k2 != 2) && (i2 != 2 || k2 >= 2)) {
+				if ((i2 >= 2 || k2 != 2) && i2 != 2) {
 					continue;
 				}
 				setBlockAndMetadata(world, i12, 16, k1, fenceBlock, fenceMeta);
@@ -172,7 +172,7 @@ public class LOTRWorldGenRangerWatchtower extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, 0, 17, 2, Blocks.torch, 5);
 		setBlockAndMetadata(world, -2, 17, 0, Blocks.torch, 5);
 		setBlockAndMetadata(world, 2, 17, 0, Blocks.torch, 5);
-		this.placeChest(world, random, 0, 16, 1, 0, LOTRChestContents.RANGER_TENT);
+		placeChest(world, random, 0, 16, 1, 0, LOTRChestContents.RANGER_TENT);
 		setBlockAndMetadata(world, 0, 11, 1, LOTRMod.rangerTable, 0);
 		for (j1 = 17; j1 <= 18; ++j1) {
 			setBlockAndMetadata(world, -2, j1, -2, fenceBlock, fenceMeta);

@@ -17,13 +17,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 
 public class LOTRTileEntityBarrel extends TileEntity implements ISidedInventory {
-	public static int EMPTY = 0;
+	public static int EMPTY;
 	public static int BREWING = 1;
 	public static int FULL = 2;
 	public static int brewTime = 12000;
 	public static int brewAnimTime = 32;
-	public static int[] INGREDIENT_SLOTS = { 0, 1, 2, 3, 4, 5 };
-	public static int[] BUCKET_SLOTS = { 6, 7, 8 };
+	public static int[] INGREDIENT_SLOTS = {0, 1, 2, 3, 4, 5};
+	public static int[] BUCKET_SLOTS = {6, 7, 8};
 	public static int BARREL_SLOT = 9;
 	public ItemStack[] inventory = new ItemStack[10];
 	public int barrelMode;
@@ -122,8 +122,8 @@ public class LOTRTileEntityBarrel extends TileEntity implements ISidedInventory 
 	}
 
 	public float getBrewAnimationProgressScaledF(int i, float f) {
-		float f1 = (float) brewingAnimPrev * (float) i / 32.0f;
-		float f2 = (float) brewingAnim * (float) i / 32.0f;
+		float f1 = (float) brewingAnimPrev * i / 32.0f;
+		float f2 = (float) brewingAnim * i / 32.0f;
 		return f1 + (f2 - f1) * f;
 	}
 
@@ -229,7 +229,7 @@ public class LOTRTileEntityBarrel extends TileEntity implements ISidedInventory 
 
 	@Override
 	public boolean hasCustomInventoryName() {
-		return specialBarrelName != null && specialBarrelName.length() > 0;
+		return specialBarrelName != null && !specialBarrelName.isEmpty();
 	}
 
 	@Override
@@ -312,7 +312,16 @@ public class LOTRTileEntityBarrel extends TileEntity implements ISidedInventory 
 	@Override
 	public void updateEntity() {
 		boolean needUpdate = false;
-		if (!worldObj.isRemote) {
+		if (worldObj.isRemote) {
+			brewingAnimPrev = brewingAnim++;
+			if (barrelMode == 1) {
+				if (brewingAnim >= 32) {
+					brewingAnimPrev = brewingAnim = 0;
+				}
+			} else {
+				brewingAnimPrev = brewingAnim = 0;
+			}
+		} else {
 			if (barrelMode == 1) {
 				if (inventory[9] != null) {
 					++brewingTime;
@@ -333,15 +342,6 @@ public class LOTRTileEntityBarrel extends TileEntity implements ISidedInventory 
 			}
 			if (barrelMode == 2 && inventory[9] == null) {
 				barrelMode = 0;
-			}
-		} else {
-			brewingAnimPrev = brewingAnim++;
-			if (barrelMode == 1) {
-				if (brewingAnim >= 32) {
-					brewingAnimPrev = brewingAnim = 0;
-				}
-			} else {
-				brewingAnimPrev = brewingAnim = 0;
 			}
 		}
 		if (needUpdate) {

@@ -18,7 +18,7 @@ public class LOTRBlockFenceGate extends BlockFenceGate {
 		setStepSound(soundTypeWood);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return plankBlock.getIcon(i, plankMeta);

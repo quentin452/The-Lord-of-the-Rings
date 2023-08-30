@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.lwjgl.opengl.GL11;
 
 import lotr.common.LOTRSquadrons;
@@ -9,7 +10,7 @@ import net.minecraft.client.gui.*;
 import net.minecraft.util.*;
 
 public class LOTRGuiHiredWarrior extends LOTRGuiHiredNPC {
-	public static String[] pageTitles = { "overview", "options" };
+	public static String[] pageTitles = {"overview", "options"};
 	public static int XP_COLOR = 16733440;
 	public GuiButton buttonLeft;
 	public GuiButton buttonRight;
@@ -19,7 +20,7 @@ public class LOTRGuiHiredWarrior extends LOTRGuiHiredNPC {
 	public LOTRGuiSlider sliderGuardRange;
 	public GuiTextField squadronNameField;
 	public boolean updatePage;
-	public boolean sendSquadronUpdate = false;
+	public boolean sendSquadronUpdate;
 
 	public LOTRGuiHiredWarrior(LOTREntityNPC npc) {
 		super(npc);
@@ -46,7 +47,7 @@ public class LOTRGuiHiredWarrior extends LOTRGuiHiredNPC {
 				buttonList.clear();
 				updatePage = true;
 			} else {
-				this.sendActionPacket(button.id);
+				sendActionPacket(button.id);
 			}
 		}
 	}
@@ -146,7 +147,7 @@ public class LOTRGuiHiredWarrior extends LOTRGuiHiredNPC {
 		super.onGuiClosed();
 		if (sendSquadronUpdate) {
 			String squadron = theNPC.hiredNPCInfo.getSquadron();
-			LOTRPacketNPCSquadron packet = new LOTRPacketNPCSquadron(theNPC, squadron);
+			IMessage packet = new LOTRPacketNPCSquadron(theNPC, squadron);
 			LOTRPacketHandler.networkWrapper.sendToServer(packet);
 		}
 	}
@@ -166,7 +167,7 @@ public class LOTRGuiHiredWarrior extends LOTRGuiHiredNPC {
 			if (sliderGuardRange.dragging) {
 				int i = sliderGuardRange.getSliderValue();
 				theNPC.hiredNPCInfo.setGuardRange(i);
-				this.sendActionPacket(sliderGuardRange.id, i);
+				sendActionPacket(sliderGuardRange.id, i);
 			}
 			squadronNameField.updateCursorCounter();
 		}

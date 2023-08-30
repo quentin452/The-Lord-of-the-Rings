@@ -103,14 +103,14 @@ public class LOTRRandomSkins implements IResourceManagerReloadListener {
 	}
 
 	public static LOTRRandomSkins getCombinatorialSkins(String path, String... layers) {
-		String combinedPath = path;
+		StringBuilder combinedPath = new StringBuilder(path);
 		for (String s : layers) {
-			combinedPath = combinedPath + "_" + s;
+			combinedPath.append("_").append(s);
 		}
-		LOTRRandomSkins skins = allRandomSkins.get(combinedPath);
+		LOTRRandomSkins skins = allRandomSkins.get(combinedPath.toString());
 		if (skins == null) {
 			skins = new LOTRRandomSkinsCombinatorial(path, layers);
-			allRandomSkins.put(combinedPath, skins);
+			allRandomSkins.put(combinedPath.toString(), skins);
 		}
 		return skins;
 	}
@@ -147,10 +147,11 @@ public class LOTRRandomSkins implements IResourceManagerReloadListener {
 
 		@Override
 		public void loadAllRandomSkins() {
-			skins = new ArrayList();
-			ArrayList<BufferedImage> layeredImages = new ArrayList<>();
-			ArrayList<BufferedImage> tempLayered = new ArrayList<>();
-			block2: for (String layer : skinLayers) {
+			skins = new ArrayList<>();
+			Collection<BufferedImage> layeredImages = new ArrayList<>();
+			Collection<BufferedImage> tempLayered = new ArrayList<>();
+			block2:
+			for (String layer : skinLayers) {
 				String layerPath = skinPath + "/" + layer;
 				LOTRRandomSkins layerSkins = new LOTRRandomSkins(layerPath, false);
 				tempLayered.clear();

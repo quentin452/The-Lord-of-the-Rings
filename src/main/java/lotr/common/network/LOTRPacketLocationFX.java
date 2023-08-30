@@ -55,7 +55,7 @@ public class LOTRPacketLocationFX implements IMessage {
 	}
 
 	public enum Type {
-		SWORD_COMMAND;
+		SWORD_COMMAND
 
 	}
 

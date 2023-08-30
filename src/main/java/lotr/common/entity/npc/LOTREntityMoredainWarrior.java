@@ -8,9 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTREntityMoredainWarrior extends LOTREntityMoredain {
-	public static ItemStack[] weaponsMoredain = { new ItemStack(LOTRMod.battleaxeMoredain), new ItemStack(LOTRMod.battleaxeMoredain), new ItemStack(LOTRMod.daggerMoredain), new ItemStack(LOTRMod.daggerMoredainPoisoned), new ItemStack(LOTRMod.clubMoredain), new ItemStack(LOTRMod.clubMoredain), new ItemStack(LOTRMod.spearMoredain), new ItemStack(LOTRMod.spearMoredain), new ItemStack(LOTRMod.swordMoredain), new ItemStack(LOTRMod.swordMoredain) };
-	public static ItemStack[] weaponsIron = { new ItemStack(LOTRMod.scimitarNearHarad), new ItemStack(LOTRMod.daggerNearHarad), new ItemStack(LOTRMod.poleaxeNearHarad), new ItemStack(LOTRMod.maceNearHarad), new ItemStack(LOTRMod.spearNearHarad) };
-	public static ItemStack[] weaponsBronze = { new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.spearHarad) };
+	public static ItemStack[] weaponsMoredain = {new ItemStack(LOTRMod.battleaxeMoredain), new ItemStack(LOTRMod.battleaxeMoredain), new ItemStack(LOTRMod.daggerMoredain), new ItemStack(LOTRMod.daggerMoredainPoisoned), new ItemStack(LOTRMod.clubMoredain), new ItemStack(LOTRMod.clubMoredain), new ItemStack(LOTRMod.spearMoredain), new ItemStack(LOTRMod.spearMoredain), new ItemStack(LOTRMod.swordMoredain), new ItemStack(LOTRMod.swordMoredain)};
+	public static ItemStack[] weaponsIron = {new ItemStack(LOTRMod.scimitarNearHarad), new ItemStack(LOTRMod.daggerNearHarad), new ItemStack(LOTRMod.poleaxeNearHarad), new ItemStack(LOTRMod.maceNearHarad), new ItemStack(LOTRMod.spearNearHarad)};
+	public static ItemStack[] weaponsBronze = {new ItemStack(LOTRMod.swordHarad), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.spearHarad)};
 
 	public LOTREntityMoredainWarrior(World world) {
 		super(world);

@@ -25,7 +25,7 @@ public abstract class LOTREntityElf extends LOTREntityNPC {
 	public float bowAmount;
 	public float prevBowAmount;
 
-	public LOTREntityElf(World world) {
+	protected LOTREntityElf(World world) {
 		super(world);
 		setSize(0.6f, 1.8f);
 		getNavigator().setAvoidsWater(true);
@@ -41,7 +41,7 @@ public abstract class LOTREntityElf extends LOTREntityNPC {
 		tasks.addTask(7, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 5.0f, 0.02f));
 		tasks.addTask(8, new EntityAIWatchClosest(this, EntityLiving.class, 8.0f, 0.02f));
 		tasks.addTask(9, new EntityAILookIdle(this));
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public abstract class LOTREntityElf extends LOTREntityNPC {
 	public void dropElfItems(boolean flag, int i) {
 		if (flag) {
 			int dropChance = 40 - i * 8;
-			if (rand.nextInt(dropChance = Math.max(dropChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(dropChance, 1)) == 0) {
 				dropItem(LOTRMod.lembas, 1);
 			}
 		}
@@ -189,6 +189,7 @@ public abstract class LOTREntityElf extends LOTREntityNPC {
 		}
 	}
 
+	@SuppressWarnings("Convert2Lambda")
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
@@ -222,16 +223,26 @@ public abstract class LOTREntityElf extends LOTREntityNPC {
 				soloSpinSpeed = 0.0f;
 			}
 		}
-		if (!worldObj.isRemote) {
+		if (worldObj.isRemote) {
+			prevBowAmount = bowAmount;
+			int tick = getBowingTick();
+			if (tick <= 0 && bowAmount > 0.0f) {
+				bowAmount -= 0.2f;
+				bowAmount = Math.max(bowAmount, 0.0f);
+			} else if (tick > 0 && bowAmount < 1.0f) {
+				bowAmount += 0.2f;
+				bowAmount = Math.min(bowAmount, 1.0f);
+			}
+		} else {
 			double range = 8.0;
 			double rangeSq = range * range;
-			EntityPlayer bowingPlayer = null;
+			EntityPlayer bowingPlayer;
 			List players = worldObj.selectEntitiesWithinAABB(EntityPlayer.class, boundingBox.expand(range, range, range), new IEntitySelector() {
 
 				@Override
 				public boolean isEntityApplicable(Entity entity) {
 					EntityPlayer entityplayer = (EntityPlayer) entity;
-					if (entityplayer.isEntityAlive() && LOTREntityElf.this.isFriendly(entityplayer) && LOTREntityElf.this.getDistanceSqToEntity(entityplayer) <= rangeSq) {
+					if (entityplayer.isEntityAlive() && isFriendly(entityplayer) && getDistanceSqToEntity(entityplayer) <= rangeSq) {
 						return LOTRMod.playerDetailsCache.getPlayerDetails(entityplayer).hasExclusiveGroup(ExclusiveGroup.BOWING_ELVES);
 					}
 					return false;
@@ -252,18 +263,8 @@ public abstract class LOTREntityElf extends LOTREntityNPC {
 					getNavigator().clearPathEntity();
 					bowingPlayer = (EntityPlayer) players.get(0);
 					float bowLook = (float) Math.toDegrees(Math.atan2(bowingPlayer.posZ - posZ, bowingPlayer.posX - posX));
-					rotationYaw = rotationYawHead = bowLook -= 90.0f;
+					rotationYaw = rotationYawHead = bowLook - 90.0f;
 				}
-			}
-		} else {
-			prevBowAmount = bowAmount;
-			int tick = getBowingTick();
-			if (tick <= 0 && bowAmount > 0.0f) {
-				bowAmount -= 0.2f;
-				bowAmount = Math.max(bowAmount, 0.0f);
-			} else if (tick > 0 && bowAmount < 1.0f) {
-				bowAmount += 0.2f;
-				bowAmount = Math.min(bowAmount, 1.0f);
 			}
 		}
 	}

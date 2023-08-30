@@ -16,7 +16,7 @@ public class LOTREntityHobbitOrcharder extends LOTREntityHobbit implements LOTRT
 		super(world);
 		LOTREntityUtils.removeAITask(this, EntityAIPanic.class);
 		tasks.addTask(2, new LOTREntityAIAttackOnCollide(this, 1.2, false));
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		isNPCPersistent = false;
 	}
 
@@ -63,17 +63,17 @@ public class LOTREntityHobbitOrcharder extends LOTREntityHobbit implements LOTRT
 		setCurrentItemOrArmor(4, hat);
 		int i = rand.nextInt(3);
 		switch (i) {
-		case 0:
-			npcItemsInv.setMeleeWeapon(new ItemStack(Items.iron_axe));
-			break;
-		case 1:
-			npcItemsInv.setMeleeWeapon(new ItemStack(Items.stone_axe));
-			break;
-		case 2:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.axeBronze));
-			break;
-		default:
-			break;
+			case 0:
+				npcItemsInv.setMeleeWeapon(new ItemStack(Items.iron_axe));
+				break;
+			case 1:
+				npcItemsInv.setMeleeWeapon(new ItemStack(Items.stone_axe));
+				break;
+			case 2:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.axeBronze));
+				break;
+			default:
+				break;
 		}
 		npcItemsInv.setIdleItem(npcItemsInv.getMeleeWeapon());
 		return data;

@@ -14,11 +14,6 @@ public class LOTREntityLamedonArcher extends LOTREntityLamedonSoldier {
 	}
 
 	@Override
-	public void applyEntityAttributes() {
-		super.applyEntityAttributes();
-	}
-
-	@Override
 	public EntityAIBase createGondorAttackAI() {
 		return new LOTREntityAIRangedAttack(this, 1.25, 30, 50, 16.0f);
 	}

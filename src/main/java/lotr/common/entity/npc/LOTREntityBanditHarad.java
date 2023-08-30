@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTREntityBanditHarad extends LOTREntityBandit {
-	public static ItemStack[] weapons = { new ItemStack(LOTRMod.daggerBronze), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.daggerNearHarad), new ItemStack(LOTRMod.daggerNearHaradPoisoned), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.daggerHaradPoisoned) };
-	public static int[] robeColors = { 3354412, 5984843, 5968655, 3619908, 9007463, 3228720 };
+	public static ItemStack[] weapons = {new ItemStack(LOTRMod.daggerBronze), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.daggerNearHarad), new ItemStack(LOTRMod.daggerNearHaradPoisoned), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.daggerHaradPoisoned)};
+	public static int[] robeColors = {3354412, 5984843, 5968655, 3619908, 9007463, 3228720};
 
 	public LOTREntityBanditHarad(World world) {
 		super(world);

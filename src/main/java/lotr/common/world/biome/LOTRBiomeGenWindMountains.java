@@ -18,9 +18,9 @@ public class LOTRBiomeGenWindMountains extends LOTRBiome {
 		spawnableCreatureList.clear();
 		npcSpawnList.clear();
 		addBiomeVariantSet(LOTRBiomeVariant.SET_MOUNTAINS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.3f);
 		decorator.biomeGemFactor = 1.0f;
 		decorator.flowersPerChunk = 1;
 		decorator.doubleFlowersPerChunk = 0;

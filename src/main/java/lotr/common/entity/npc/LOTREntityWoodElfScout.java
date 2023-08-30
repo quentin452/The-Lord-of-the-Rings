@@ -57,7 +57,7 @@ public class LOTREntityWoodElfScout extends LOTREntityWoodElf {
 		return "woodElf/warrior/hostile";
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
 		if (b == 15) {

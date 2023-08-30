@@ -1,7 +1,6 @@
 package lotr.common.entity.animal;
 
 import lotr.common.LOTRMod;
-import lotr.common.entity.LOTREntities;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -76,11 +75,6 @@ public class LOTREntityZebra extends LOTREntityHorse {
 	public String getLivingSound() {
 		super.getLivingSound();
 		return "lotr:zebra.say";
-	}
-
-	@Override
-	public ItemStack getPickedResult(MovingObjectPosition target) {
-		return new ItemStack(LOTRMod.spawnEgg, 1, LOTREntities.getEntityID(this));
 	}
 
 	@Override

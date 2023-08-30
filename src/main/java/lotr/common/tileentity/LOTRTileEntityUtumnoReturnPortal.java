@@ -2,6 +2,7 @@ package lotr.common.tileentity;
 
 import java.util.List;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.relauncher.*;
 import lotr.common.*;
 import lotr.common.fac.LOTRFaction;
@@ -16,10 +17,10 @@ import net.minecraft.util.AxisAlignedBB;
 
 public class LOTRTileEntityUtumnoReturnPortal extends TileEntity {
 	public static int PORTAL_TOP = 250;
-	public int beamCheck = 0;
+	public int beamCheck;
 	public int ticksExisted;
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
 		return INFINITE_EXTENT_AABB;
@@ -63,7 +64,7 @@ public class LOTRTileEntityUtumnoReturnPortal extends TileEntity {
 				LOTRMod.proxy.setInUtumnoReturnPortal(entityplayer);
 				if (entityplayer instanceof EntityPlayerMP) {
 					EntityPlayerMP entityplayermp = (EntityPlayerMP) entityplayer;
-					LOTRPacketUtumnoReturn packet = new LOTRPacketUtumnoReturn(entityplayer.posX, entityplayer.posZ);
+					IMessage packet = new LOTRPacketUtumnoReturn(entityplayer.posX, entityplayer.posZ);
 					LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayermp);
 					entityplayermp.playerNetServerHandler.sendPacket(new S12PacketEntityVelocity(entityplayer));
 				}

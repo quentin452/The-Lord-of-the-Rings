@@ -13,7 +13,7 @@ public class LOTRBlockGoblet extends LOTRBlockMug {
 	}
 
 	public static class Copper extends LOTRBlockGoblet {
-		@SideOnly(value = Side.CLIENT)
+		@SideOnly(Side.CLIENT)
 		@Override
 		public IIcon getIcon(int i, int j) {
 			return LOTRMod.blockOreStorage.getIcon(i, 0);
@@ -21,7 +21,7 @@ public class LOTRBlockGoblet extends LOTRBlockMug {
 	}
 
 	public static class Gold extends LOTRBlockGoblet {
-		@SideOnly(value = Side.CLIENT)
+		@SideOnly(Side.CLIENT)
 		@Override
 		public IIcon getIcon(int i, int j) {
 			return Blocks.gold_block.getIcon(i, 0);
@@ -29,7 +29,7 @@ public class LOTRBlockGoblet extends LOTRBlockMug {
 	}
 
 	public static class Silver extends LOTRBlockGoblet {
-		@SideOnly(value = Side.CLIENT)
+		@SideOnly(Side.CLIENT)
 		@Override
 		public IIcon getIcon(int i, int j) {
 			return LOTRMod.blockOreStorage.getIcon(i, 3);
@@ -41,7 +41,7 @@ public class LOTRBlockGoblet extends LOTRBlockMug {
 			setStepSound(Block.soundTypeWood);
 		}
 
-		@SideOnly(value = Side.CLIENT)
+		@SideOnly(Side.CLIENT)
 		@Override
 		public IIcon getIcon(int i, int j) {
 			return Blocks.planks.getIcon(i, 0);

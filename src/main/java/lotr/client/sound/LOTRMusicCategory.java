@@ -12,7 +12,7 @@ public enum LOTRMusicCategory {
 	}
 
 	public static LOTRMusicCategory forName(String s) {
-		for (LOTRMusicCategory cat : LOTRMusicCategory.values()) {
+		for (LOTRMusicCategory cat : values()) {
 			if (!s.equalsIgnoreCase(cat.categoryName)) {
 				continue;
 			}

@@ -74,10 +74,10 @@ public class LOTRModelSwanChestplate extends LOTRModelBiped {
 			motion *= 1.5f;
 			motionPhase *= 2.0f;
 		}
-		float wingAngleBase = (float) Math.toRadians(10.0);
+		float wingAngleBase = 0.17453292519943295f;
 		wingAngleBase += MathHelper.sin(f2 * 0.02f) * 0.01f;
 		wingAngleBase += MathHelper.sin(motionPhase * 0.2f) * 0.03f * motion;
-		float wingYaw = (float) Math.toRadians(50.0);
+		float wingYaw = 0.8726646259971648f;
 		wingYaw += MathHelper.sin(f2 * 0.03f) * 0.05f;
 		wingYaw += MathHelper.sin(motionPhase * 0.25f) * 0.12f * motion;
 		for (int i = 0; i < wingsRight.length; ++i) {

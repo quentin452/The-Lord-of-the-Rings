@@ -18,6 +18,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityScorpion extends EntityMob implements LOTRMobSpawnerCondition {
+	@SuppressWarnings("Convert2Lambda")
 	public static IEntitySelector noWraiths = new IEntitySelector() {
 
 		@Override
@@ -27,9 +28,9 @@ public abstract class LOTREntityScorpion extends EntityMob implements LOTRMobSpa
 	};
 	public float scorpionWidth = -1.0f;
 	public float scorpionHeight;
-	public boolean spawningFromSpawner = false;
+	public boolean spawningFromSpawner;
 
-	public LOTREntityScorpion(World world) {
+	protected LOTREntityScorpion(World world) {
 		super(world);
 		setSize(1.2f, 0.9f);
 		getNavigator().setAvoidsWater(true);

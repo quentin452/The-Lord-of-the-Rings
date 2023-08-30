@@ -85,7 +85,7 @@ public class LOTRWorldGenMoredainHutHunter extends LOTRWorldGenMoredainHut {
 		setBlockAndMetadata(world, 1, 3, -3, thatchSlabBlock, thatchSlabMeta);
 		setBlockAndMetadata(world, -1, 1, 0, LOTRMod.strawBed, 0);
 		setBlockAndMetadata(world, -1, 1, 1, LOTRMod.strawBed, 8);
-		this.placeChest(world, random, 1, 1, 1, LOTRMod.chestBasket, 2, LOTRChestContents.MOREDAIN_HUT);
+		placeChest(world, random, 1, 1, 1, LOTRMod.chestBasket, 2, LOTRChestContents.MOREDAIN_HUT);
 		setBlockAndMetadata(world, 0, 3, 1, Blocks.torch, 4);
 		setBlockAndMetadata(world, 0, 3, -1, Blocks.torch, 3);
 		LOTREntityMoredainWarrior moredain = new LOTREntityMoredainWarrior(world);

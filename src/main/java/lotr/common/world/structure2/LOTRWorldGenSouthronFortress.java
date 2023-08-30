@@ -25,7 +25,7 @@ public class LOTRWorldGenSouthronFortress extends LOTRWorldGenSouthronStructure 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 15);
+		setOriginAndRotation(world, i, j, k, rotation, 15);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -59,13 +59,13 @@ public class LOTRWorldGenSouthronFortress extends LOTRWorldGenSouthronStructure 
 					}
 					continue;
 				}
-				if (i2 >= 15 && i2 <= 21 && k2 >= 9 && k2 <= 15) {
+				if (i2 >= 15 && k2 >= 9) {
 					for (j1 = 1; j1 <= 9; ++j1) {
 						setAir(world, i1, j1, k1);
 					}
 					continue;
 				}
-				if (i2 > 2 || k1 > -10 || k1 < -15) {
+				if (i2 > 2 || k1 > -10) {
 					continue;
 				}
 				for (j1 = 1; j1 <= 12; ++j1) {
@@ -108,7 +108,7 @@ public class LOTRWorldGenSouthronFortress extends LOTRWorldGenSouthronStructure 
 		generateStrScan(world, random, 0, 0, 0);
 		placeWallBanner(world, -5, 8, -13, bannerType, 2);
 		placeWallBanner(world, 5, 8, -13, bannerType, 2);
-		for (int k1 : new int[] { 4, 6, 8 }) {
+		for (int k1 : new int[]{4, 6, 8}) {
 			setBlockAndMetadata(world, -6, 1, k1, bedBlock, 1);
 			setBlockAndMetadata(world, -5, 1, k1, bedBlock, 9);
 			setBlockAndMetadata(world, -12, 1, k1, bedBlock, 3);
@@ -130,9 +130,9 @@ public class LOTRWorldGenSouthronFortress extends LOTRWorldGenSouthronStructure 
 		placeWeaponRack(world, -13, 2, -1, 5, getRandomHaradWeapon(random));
 		placeWeaponRack(world, -15, 2, -1, 7, getRandomHaradWeapon(random));
 		placeWeaponRack(world, -14, 2, 0, 4, getRandomHaradWeapon(random));
-		this.placeBarrel(world, random, 3, 2, 4, 5, LOTRFoods.SOUTHRON_DRINK);
-		this.placeMug(world, random, 3, 2, 5, 1, LOTRFoods.SOUTHRON_DRINK);
-		this.placeChest(world, random, -1, 1, 8, LOTRMod.chestBasket, 4, LOTRChestContents.NEAR_HARAD_TOWER);
+		placeBarrel(world, random, 3, 2, 4, 5, LOTRFoods.SOUTHRON_DRINK);
+		placeMug(world, random, 3, 2, 5, 1, LOTRFoods.SOUTHRON_DRINK);
+		placeChest(world, random, -1, 1, 8, LOTRMod.chestBasket, 4, LOTRChestContents.NEAR_HARAD_TOWER);
 		setBlockAndMetadata(world, -5, 1, 1, LOTRMod.commandTable, 0);
 		int warriors = 5 + random.nextInt(5);
 		for (int l = 0; l < warriors; ++l) {

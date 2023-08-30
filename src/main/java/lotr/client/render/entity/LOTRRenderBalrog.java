@@ -1,5 +1,6 @@
 package lotr.client.render.entity;
 
+import lotr.common.entity.LOTRRandomSkinEntity;
 import org.lwjgl.opengl.GL11;
 
 import lotr.client.model.LOTRModelBalrog;
@@ -13,10 +14,8 @@ import net.minecraft.util.*;
 public class LOTRRenderBalrog extends RenderLiving {
 	public static LOTRRandomSkins balrogSkins;
 	public static LOTRRandomSkins balrogSkinsBright;
-	public static ResourceLocation fireTexture;
-	static {
-		fireTexture = new ResourceLocation("lotr:mob/balrog/fire.png");
-	}
+	public static ResourceLocation fireTexture = new ResourceLocation("lotr:mob/balrog/fire.png");
+
 	public LOTRModelBalrog balrogModel;
 	public LOTRModelBalrog balrogModelBright;
 
@@ -38,12 +37,12 @@ public class LOTRRenderBalrog extends RenderLiving {
 		ItemStack heldItem = balrog.getHeldItem();
 		fireModel.heldItemRight = heldItem == null ? 0 : 2;
 		balrogModel.heldItemRight = fireModel.heldItemRight;
-		super.doRender(balrog, d, d1, d2, f, f1);
+		doRender(balrog, d, d1, d2, f, f1);
 	}
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		return balrogSkins.getRandomSkin((LOTREntityBalrog) entity);
+		return balrogSkins.getRandomSkin((LOTRRandomSkinEntity) entity);
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class LOTRRenderBalrog extends RenderLiving {
 		GL11.glScalef(scale, scale, scale);
 		if (balrog.isBalrogCharging()) {
 			float lean = balrog.getInterpolatedChargeLean(f);
-			GL11.glRotatef(lean *= 35.0f, 1.0f, 0.0f, 0.0f);
+			GL11.glRotatef(lean * 35.0f, 1.0f, 0.0f, 0.0f);
 		}
 	}
 
@@ -84,7 +83,7 @@ public class LOTRRenderBalrog extends RenderLiving {
 		int light = 15728880;
 		int lx = light % 65536;
 		int ly = light / 65536;
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lx / 1.0f, ly / 1.0f);
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lx, ly);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
@@ -94,49 +93,49 @@ public class LOTRRenderBalrog extends RenderLiving {
 		LOTREntityBalrog balrog = (LOTREntityBalrog) entity;
 		if (balrog.isWreathedInFlame()) {
 			switch (pass) {
-			case 1: {
-				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0f, 240.0f);
-				GL11.glMatrixMode(5890);
-				GL11.glLoadIdentity();
-				float f1 = balrog.ticksExisted + f;
-				float f2 = f1 * 0.01f;
-				float f3 = f1 * 0.01f;
-				GL11.glTranslatef(f2, f3, 0.0f);
-				GL11.glMatrixMode(5888);
-				GL11.glAlphaFunc(516, 0.01f);
-				GL11.glEnable(3042);
-				GL11.glBlendFunc(1, 1);
-				float alpha = balrog.isBalrogCharging() ? 0.6f + MathHelper.sin(f1 * 0.1f) * 0.15f : 0.3f + MathHelper.sin(f1 * 0.05f) * 0.15f;
-				GL11.glColor4f(alpha, alpha, alpha, 1.0f);
-				GL11.glDisable(2896);
-				GL11.glDepthMask(false);
-				setRenderPassModel(fireModel);
-				bindTexture(fireTexture);
-				return 1;
-			}
-			case 2:
-				GL11.glMatrixMode(5890);
-				GL11.glLoadIdentity();
-				GL11.glMatrixMode(5888);
-				GL11.glAlphaFunc(516, 0.1f);
-				GL11.glDisable(3042);
-				GL11.glEnable(2896);
-				GL11.glDepthMask(true);
-				GL11.glDisable(2896);
-				setupFullBright();
-				setRenderPassModel(balrogModelBright);
-				bindTexture(balrogSkinsBright.getRandomSkin(balrog));
-				GL11.glEnable(3042);
-				GL11.glBlendFunc(770, 771);
-				GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-				return 1;
-			case 3:
-				GL11.glEnable(2896);
-				GL11.glDisable(3042);
-				GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-				break;
-			default:
-				break;
+				case 1: {
+					OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0f, 240.0f);
+					GL11.glMatrixMode(5890);
+					GL11.glLoadIdentity();
+					float f1 = balrog.ticksExisted + f;
+					float f2 = f1 * 0.01f;
+					float f3 = f1 * 0.01f;
+					GL11.glTranslatef(f2, f3, 0.0f);
+					GL11.glMatrixMode(5888);
+					GL11.glAlphaFunc(516, 0.01f);
+					GL11.glEnable(3042);
+					GL11.glBlendFunc(1, 1);
+					float alpha = balrog.isBalrogCharging() ? 0.6f + MathHelper.sin(f1 * 0.1f) * 0.15f : 0.3f + MathHelper.sin(f1 * 0.05f) * 0.15f;
+					GL11.glColor4f(alpha, alpha, alpha, 1.0f);
+					GL11.glDisable(2896);
+					GL11.glDepthMask(false);
+					setRenderPassModel(fireModel);
+					bindTexture(fireTexture);
+					return 1;
+				}
+				case 2:
+					GL11.glMatrixMode(5890);
+					GL11.glLoadIdentity();
+					GL11.glMatrixMode(5888);
+					GL11.glAlphaFunc(516, 0.1f);
+					GL11.glDisable(3042);
+					GL11.glEnable(2896);
+					GL11.glDepthMask(true);
+					GL11.glDisable(2896);
+					setupFullBright();
+					setRenderPassModel(balrogModelBright);
+					bindTexture(balrogSkinsBright.getRandomSkin(balrog));
+					GL11.glEnable(3042);
+					GL11.glBlendFunc(770, 771);
+					GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+					return 1;
+				case 3:
+					GL11.glEnable(2896);
+					GL11.glDisable(3042);
+					GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+					break;
+				default:
+					break;
 			}
 		}
 		return -1;

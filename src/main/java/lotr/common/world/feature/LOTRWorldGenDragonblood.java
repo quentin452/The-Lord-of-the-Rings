@@ -8,6 +8,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRWorldGenDragonblood extends WorldGenAbstractTree {
@@ -15,9 +16,9 @@ public class LOTRWorldGenDragonblood extends WorldGenAbstractTree {
 	public int maxHeight;
 	public int trunkWidth;
 	public Block woodBlock = LOTRMod.wood9;
-	public int woodMeta = 0;
+	public int woodMeta;
 	public Block leafBlock = LOTRMod.leaves9;
-	public int leafMeta = 0;
+	public int leafMeta;
 
 	public LOTRWorldGenDragonblood(boolean flag, int i, int j, int k) {
 		super(flag);
@@ -54,7 +55,7 @@ public class LOTRWorldGenDragonblood extends WorldGenAbstractTree {
 			for (i1 = i - trunkWidth; i1 <= i + trunkWidth && flag; ++i1) {
 				for (k1 = k - trunkWidth; k1 <= k + trunkWidth && flag; ++k1) {
 					Block block = world.getBlock(i1, j - 1, k1);
-					boolean isSoil = block.canSustainPlant(world, i1, j - 1, k1, ForgeDirection.UP, (BlockSapling) Blocks.sapling);
+					boolean isSoil = block.canSustainPlant(world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling);
 					if (isSoil) {
 						continue;
 					}
@@ -82,8 +83,7 @@ public class LOTRWorldGenDragonblood extends WorldGenAbstractTree {
 					float angle = (float) Math.toRadians(deg += (40 + random.nextInt(30)) / trunkWidth);
 					float cos = MathHelper.cos(angle);
 					float sin = MathHelper.sin(angle);
-					float angleY = random.nextFloat() * (float) Math.toRadians(40.0);
-					MathHelper.cos(angleY);
+					float angleY = random.nextFloat() * 0.6981317007977318f;
 					float sinY = MathHelper.sin(angleY);
 					int length = 3 + random.nextInt(6);
 					int i14 = i;
@@ -117,18 +117,14 @@ public class LOTRWorldGenDragonblood extends WorldGenAbstractTree {
 					if (Math.abs(i2) == Math.abs(k2)) {
 						continue;
 					}
-					int rootX = i1;
 					int rootY = j + random.nextInt(2 + trunkWidth);
-					int rootZ = k15;
 					int roots = 0;
-					while (world.getBlock(rootX, rootY, k15).isReplaceable(world, rootX, rootY, rootZ)) {
-						setBlockAndNotifyAdequately(world, rootX, rootY, rootZ, woodBlock, woodMeta | 0xC);
-						world.getBlock(rootX, rootY - 1, rootZ).onPlantGrow(world, rootX, rootY - 1, rootZ, rootX, rootY, rootZ);
+					while (world.getBlock(i1, rootY, k15).isReplaceable(world, i1, rootY, k15)) {
+						setBlockAndNotifyAdequately(world, i1, rootY, k15, woodBlock, woodMeta | 0xC);
+						world.getBlock(i1, rootY - 1, k15).onPlantGrow(world, i1, rootY - 1, k15, i1, rootY, k15);
 						--rootY;
 						roots++;
-						if (roots <= 4 + random.nextInt(3)) {
-							continue;
-						}
+						random.nextInt(3);
 					}
 				}
 			}
@@ -154,7 +150,7 @@ public class LOTRWorldGenDragonblood extends WorldGenAbstractTree {
 					int dist = i2 * i2 + (k2 = Math.abs(k1 - k)) * k2;
 					grow = dist < leafRangeSq;
 					if (i2 == leafRange - 1 || k2 == leafRange - 1) {
-						grow &= random.nextInt(4) > 0;
+						grow = grow && random.nextInt(4) > 0;
 					}
 					if (!grow) {
 						continue;
@@ -177,7 +173,7 @@ public class LOTRWorldGenDragonblood extends WorldGenAbstractTree {
 					int i2 = Math.abs(i1 - i);
 					int k2 = Math.abs(k1 - k);
 					int j2 = j1 - j;
-					if ((i2 != 0 || k2 != 0) && (i2 != k2 || i2 != j2) && (i2 != 0 && k2 != 0 || i2 == k2 || i2 != j2 + 1 && k2 != j2 + 1) || !(block = world.getBlock(i1, j1, k1)).isReplaceable(world, i1, j1, k1) && !block.isLeaves(world, i1, j1, k1)) {
+					if ((i2 != 0 || k2 != 0) && (i2 != k2 || i2 != j2) && (i2 != 0 && k2 != 0 || i2 != j2 + 1 && k2 != j2 + 1) || !(block = world.getBlock(i1, j1, k1)).isReplaceable(world, i1, j1, k1) && !block.isLeaves(world, i1, j1, k1)) {
 						continue;
 					}
 					setBlockAndNotifyAdequately(world, i1, j1, k1, woodBlock, woodMeta | 0xC);

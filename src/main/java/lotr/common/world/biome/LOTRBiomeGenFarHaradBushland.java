@@ -16,15 +16,15 @@ public class LOTRBiomeGenFarHaradBushland extends LOTRBiomeGenFarHarad {
 
 	public LOTRBiomeGenFarHaradBushland(int i, boolean major) {
 		super(i, major);
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE);
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE_BARREN);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.SHRUBLAND_OAK);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE_BARREN);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
+		addBiomeVariant(LOTRBiomeVariant.SHRUBLAND_OAK);
 		decorator.treesPerChunk = 0;
 		decorator.setTreeCluster(3, 3);
 		decorator.logsPerChunk = 1;

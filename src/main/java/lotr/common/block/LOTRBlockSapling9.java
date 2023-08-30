@@ -23,7 +23,7 @@ public class LOTRBlockSapling9 extends LOTRBlockSaplingBase {
 		int zOffset = 0;
 		if (meta == 0) {
 			int[] tree3x3;
-			int[] tree5x5 = LOTRBlockSaplingBase.findSaplingSquare(world, i, j, k, this, meta, -2, 2, -4, 4);
+			int[] tree5x5 = LOTRBlockSaplingBase.findSaplingSquare(world, i, j, k, this, 0, -2, 2, -4, 4);
 			if (tree5x5 != null) {
 				treeGen = LOTRTreeType.DRAGONBLOOD_HUGE.create(true, random);
 				trunkNeg = 2;
@@ -31,7 +31,7 @@ public class LOTRBlockSapling9 extends LOTRBlockSaplingBase {
 				xOffset = tree5x5[0];
 				zOffset = tree5x5[1];
 			}
-			if (treeGen == null && (tree3x3 = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta)) != null) {
+			if (treeGen == null && (tree3x3 = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, 0)) != null) {
 				treeGen = LOTRTreeType.DRAGONBLOOD_LARGE.create(true, random);
 				trunkNeg = 1;
 				trunkPos = 1;

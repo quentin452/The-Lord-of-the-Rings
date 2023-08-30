@@ -20,17 +20,17 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class LOTRItemMug extends Item {
-	public static String[] strengthNames = { "weak", "light", "moderate", "strong", "potent" };
-	public static float[] strengths = { 0.25f, 0.5f, 1.0f, 2.0f, 3.0f };
-	public static float[] foodStrengths = { 0.5f, 0.75f, 1.0f, 1.25f, 1.5f };
+	public static String[] strengthNames = {"weak", "light", "moderate", "strong", "potent"};
+	public static float[] strengths = {0.25f, 0.5f, 1.0f, 2.0f, 3.0f};
+	public static float[] foodStrengths = {0.5f, 0.75f, 1.0f, 1.25f, 1.5f};
 	public static int vesselMeta = 100;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public static IIcon barrelGui_emptyBucketSlotIcon;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public static IIcon barrelGui_emptyMugSlotIcon;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] drinkIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon liquidIcon;
 	public boolean isFullMug;
 	public boolean isFoodDrink;
@@ -38,7 +38,7 @@ public class LOTRItemMug extends Item {
 	public float alcoholicity;
 	public int foodHealAmount;
 	public float foodSaturationAmount;
-	public List<PotionEffect> potionEffects = new ArrayList<>();
+	public Collection<PotionEffect> potionEffects = new ArrayList<>();
 	public int damageAmount;
 	public boolean curesEffects;
 
@@ -65,19 +65,19 @@ public class LOTRItemMug extends Item {
 		this(true, false, true, alc);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
 		if (isBrewable) {
-			float strength = LOTRItemMug.getStrength(itemstack);
-			list.add(LOTRItemMug.getStrengthSubtitle(itemstack));
+			float strength = getStrength(itemstack);
+			list.add(getStrengthSubtitle(itemstack));
 			if (alcoholicity > 0.0f) {
 				EnumChatFormatting c;
 				float f = alcoholicity * strength * 10.0f;
 				c = f < 2.0f ? EnumChatFormatting.GREEN : f < 5.0f ? EnumChatFormatting.YELLOW : f < 10.0f ? EnumChatFormatting.GOLD : f < 20.0f ? EnumChatFormatting.RED : EnumChatFormatting.DARK_RED;
-				list.add(c + StatCollector.translateToLocal("item.lotr.drink.alcoholicity") + ": " + String.format("%.2f", Float.valueOf(f)) + "%");
+				list.add(c + StatCollector.translateToLocal("item.lotr.drink.alcoholicity") + ": " + String.format("%.2f", f) + "%");
 			}
-			LOTRItemMug.addPotionEffectsToTooltip(itemstack, entityplayer, list, flag, convertPotionEffectsForStrength(strength));
+			addPotionEffectsToTooltip(itemstack, entityplayer, list, flag, convertPotionEffectsForStrength(strength));
 		}
 	}
 
@@ -87,7 +87,7 @@ public class LOTRItemMug extends Item {
 	}
 
 	public void applyToNPC(LOTREntityNPC npc, ItemStack itemstack) {
-		float strength = LOTRItemMug.getStrength(itemstack);
+		float strength = getStrength(itemstack);
 		npc.heal(foodHealAmount * strength);
 		List<PotionEffect> effects = convertPotionEffectsForStrength(strength);
 		for (PotionEffect effect : effects) {
@@ -109,7 +109,7 @@ public class LOTRItemMug extends Item {
 	}
 
 	public List<PotionEffect> convertPotionEffectsForStrength(float strength) {
-		ArrayList<PotionEffect> list = new ArrayList<>();
+		List<PotionEffect> list = new ArrayList<>();
 		for (PotionEffect base : potionEffects) {
 			PotionEffect modified = new PotionEffect(base.getPotionID(), (int) (base.getDuration() * strength));
 			list.add(modified);
@@ -133,7 +133,7 @@ public class LOTRItemMug extends Item {
 			if (i == -1) {
 				return liquidIcon;
 			}
-			int vessel = LOTRItemMug.getVessel(i).id;
+			int vessel = getVessel(i).id;
 			return drinkIcons[vessel];
 		}
 		return super.getIconFromDamage(i);
@@ -144,7 +144,7 @@ public class LOTRItemMug extends Item {
 		if (LOTRMod.isAprilFools() && isFullMug) {
 			return "Hooch";
 		}
-		if (itemstack.getItem() == LOTRMod.mugWater && LOTRItemMug.getVessel(itemstack) == Vessel.BOTTLE) {
+		if (itemstack.getItem() == LOTRMod.mugWater && getVessel(itemstack) == Vessel.BOTTLE) {
 			return "\u00c2\u00a7cMY DUDE YOU DONE MESSED UP";
 		}
 		return super.getItemStackDisplayName(itemstack);
@@ -160,11 +160,11 @@ public class LOTRItemMug extends Item {
 		return 32;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		if (isFullMug) {
-			Vessel[] vesselTypes = { Vessel.MUG };
+			Vessel[] vesselTypes = {Vessel.MUG};
 			if (tab == null || tab.hasSearchBar()) {
 				vesselTypes = Vessel.values();
 			}
@@ -172,8 +172,8 @@ public class LOTRItemMug extends Item {
 				if (isBrewable) {
 					for (int str = 0; str < strengths.length; ++str) {
 						ItemStack drink = new ItemStack(item);
-						LOTRItemMug.setStrengthMeta(drink, str);
-						LOTRItemMug.setVessel(drink, v, true);
+						setStrengthMeta(drink, str);
+						setVessel(drink, v, true);
 						if (drink.getItem() != item) {
 							continue;
 						}
@@ -182,7 +182,7 @@ public class LOTRItemMug extends Item {
 					continue;
 				}
 				ItemStack drink = new ItemStack(item);
-				LOTRItemMug.setVessel(drink, v, true);
+				setVessel(drink, v, true);
 				if (drink.getItem() != item) {
 					continue;
 				}
@@ -195,9 +195,9 @@ public class LOTRItemMug extends Item {
 
 	@Override
 	public ItemStack onEaten(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		Vessel vessel = LOTRItemMug.getVessel(itemstack);
-		float strength = LOTRItemMug.getStrength(itemstack);
-		float foodStrength = LOTRItemMug.getFoodStrength(itemstack);
+		Vessel vessel = getVessel(itemstack);
+		float strength = getStrength(itemstack);
+		float foodStrength = getFoodStrength(itemstack);
 		if (entityplayer.canEat(false)) {
 			entityplayer.getFoodStats().addStats(Math.round(foodHealAmount * foodStrength), foodSaturationAmount * foodStrength);
 		}
@@ -214,7 +214,7 @@ public class LOTRItemMug extends Item {
 				entityplayer.addPotionEffect(new PotionEffect(Potion.confusion.id, durationTicks));
 				LOTRLevelData.getData(entityplayer).addAchievement(LOTRAchievement.getDrunk);
 				int toleranceAdd = Math.round(duration / 20.0f);
-				LOTRLevelData.getData(entityplayer).setAlcoholTolerance(tolerance += toleranceAdd);
+				LOTRLevelData.getData(entityplayer).setAlcoholTolerance(tolerance + toleranceAdd);
 			}
 		}
 		if (!world.isRemote && shouldApplyPotionEffects(itemstack, entityplayer)) {
@@ -262,7 +262,7 @@ public class LOTRItemMug extends Item {
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		if (!isFullMug) {
 			ItemStack filled = new ItemStack(LOTRMod.mugWater);
-			LOTRItemMug.setVessel(filled, getEmptyVesselType(), true);
+			setVessel(filled, getEmptyVesselType(), true);
 			MovingObjectPosition m = getMovingObjectPositionFromPlayer(world, entityplayer, true);
 			if (m == null) {
 				return itemstack;
@@ -296,7 +296,7 @@ public class LOTRItemMug extends Item {
 
 	@Override
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int side, float f, float f1, float f2) {
-		return LOTRItemMug.tryPlaceMug(itemstack, entityplayer, world, i, j, k, side);
+		return tryPlaceMug(itemstack, entityplayer, world, i, j, k, side);
 	}
 
 	@Override
@@ -334,7 +334,7 @@ public class LOTRItemMug extends Item {
 		return true;
 	}
 
-	public static void addPotionEffectsToTooltip(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag, List itemEffects) {
+	public static void addPotionEffectsToTooltip(ItemStack itemstack, EntityPlayer entityplayer, Collection list, boolean flag, Collection itemEffects) {
 		if (!itemEffects.isEmpty()) {
 			ItemStack potionEquivalent = new ItemStack(Items.potionitem);
 			potionEquivalent.setItemDamage(69);
@@ -347,7 +347,7 @@ public class LOTRItemMug extends Item {
 			}
 			potionEquivalent.setTagCompound(new NBTTagCompound());
 			potionEquivalent.getTagCompound().setTag("CustomPotionEffects", effectsData);
-			ArrayList effectTooltips = new ArrayList();
+			List effectTooltips = new ArrayList();
 			potionEquivalent.getItem().addInformation(potionEquivalent, entityplayer, effectTooltips, flag);
 			list.addAll(effectTooltips);
 		}
@@ -362,7 +362,7 @@ public class LOTRItemMug extends Item {
 			if (item == Items.potionitem && itemstack.getItemDamage() == 0) {
 				ItemStack water = itemstack.copy();
 				water.func_150996_a(LOTRMod.mugWater);
-				LOTRItemMug.setVessel(water, Vessel.BOTTLE, false);
+				setVessel(water, Vessel.BOTTLE, false);
 				return water;
 			}
 		}
@@ -372,14 +372,14 @@ public class LOTRItemMug extends Item {
 	public static float getFoodStrength(ItemStack itemstack) {
 		Item item = itemstack.getItem();
 		if (item instanceof LOTRItemMug && ((LOTRItemMug) item).isBrewable) {
-			int i = LOTRItemMug.getStrengthMeta(itemstack);
+			int i = getStrengthMeta(itemstack);
 			return foodStrengths[i];
 		}
 		return 1.0f;
 	}
 
 	public static ItemStack getRealDrink(ItemStack itemstack) {
-		if (itemstack != null && itemstack.getItem() == LOTRMod.mugWater && LOTRItemMug.getVessel(itemstack) == Vessel.BOTTLE) {
+		if (itemstack != null && itemstack.getItem() == LOTRMod.mugWater && getVessel(itemstack) == Vessel.BOTTLE) {
 			ItemStack water = itemstack.copy();
 			water.func_150996_a(Items.potionitem);
 			water.setItemDamage(0);
@@ -391,7 +391,7 @@ public class LOTRItemMug extends Item {
 	public static float getStrength(ItemStack itemstack) {
 		Item item = itemstack.getItem();
 		if (item instanceof LOTRItemMug && ((LOTRItemMug) item).isBrewable) {
-			int i = LOTRItemMug.getStrengthMeta(itemstack);
+			int i = getStrengthMeta(itemstack);
 			return strengths[i];
 		}
 		return 1.0f;
@@ -406,13 +406,13 @@ public class LOTRItemMug extends Item {
 	}
 
 	public static int getStrengthMeta(ItemStack itemstack) {
-		return LOTRItemMug.getStrengthMeta(itemstack.getItemDamage());
+		return getStrengthMeta(itemstack.getItemDamage());
 	}
 
 	public static String getStrengthSubtitle(ItemStack itemstack) {
 		Item item;
 		if (itemstack != null && (item = itemstack.getItem()) instanceof LOTRItemMug && ((LOTRItemMug) item).isBrewable) {
-			int i = LOTRItemMug.getStrengthMeta(itemstack);
+			int i = getStrengthMeta(itemstack);
 			return StatCollector.translateToLocal("item.lotr.drink." + strengthNames[i]);
 		}
 		return null;
@@ -428,7 +428,7 @@ public class LOTRItemMug extends Item {
 		if (item instanceof LOTRItemMug) {
 			LOTRItemMug itemMug = (LOTRItemMug) item;
 			if (itemMug.isFullMug) {
-				return LOTRItemMug.getVessel(itemstack.getItemDamage());
+				return getVessel(itemstack.getItemDamage());
 			}
 			return itemMug.getEmptyVesselType();
 		}
@@ -444,9 +444,7 @@ public class LOTRItemMug extends Item {
 			if (item instanceof LOTRItemMug) {
 				return !((LOTRItemMug) item).isFullMug;
 			}
-			if (item == Items.glass_bottle) {
-				return true;
-			}
+			return item == Items.glass_bottle;
 		}
 		return false;
 	}
@@ -457,17 +455,15 @@ public class LOTRItemMug extends Item {
 			if (item instanceof LOTRItemMug) {
 				return ((LOTRItemMug) item).isFullMug;
 			}
-			if (item == Items.potionitem && itemstack.getItemDamage() == 0) {
-				return true;
-			}
+			return item == Items.potionitem && itemstack.getItemDamage() == 0;
 		}
 		return false;
 	}
 
 	public static void setStrengthMeta(ItemStack itemstack, int i) {
-		Vessel v = LOTRItemMug.getVessel(itemstack);
+		Vessel v = getVessel(itemstack);
 		itemstack.setItemDamage(i);
-		LOTRItemMug.setVessel(itemstack, v, true);
+		setVessel(itemstack, v, true);
 	}
 
 	public static void setVessel(ItemStack itemstack, Vessel v, boolean correctItem) {
@@ -476,7 +472,7 @@ public class LOTRItemMug extends Item {
 			itemstack.setItemDamage(0);
 		}
 		int i = itemstack.getItemDamage();
-		itemstack.setItemDamage(v.id * vesselMeta + (i %= vesselMeta));
+		itemstack.setItemDamage(v.id * vesselMeta + i % vesselMeta);
 		if (correctItem && itemstack.getItem() == LOTRMod.mugWater && v == Vessel.BOTTLE) {
 			itemstack.func_150996_a(Items.potionitem);
 			itemstack.setItemDamage(0);
@@ -484,7 +480,7 @@ public class LOTRItemMug extends Item {
 	}
 
 	public static boolean tryPlaceMug(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int side) {
-		Vessel vessel = LOTRItemMug.getVessel(itemstack);
+		Vessel vessel = getVessel(itemstack);
 		if (vessel == null || !vessel.canPlace) {
 			return false;
 		}
@@ -609,7 +605,7 @@ public class LOTRItemMug extends Item {
 		}
 
 		public static Vessel forMeta(int i) {
-			for (Vessel v : Vessel.values()) {
+			for (Vessel v : values()) {
 				if (v.id != i) {
 					continue;
 				}

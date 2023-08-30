@@ -15,7 +15,7 @@ public class LOTREntityAINPCMarry extends EntityAIBase {
 	public LOTREntityNPC theNPC;
 	public World theWorld;
 	public LOTREntityNPC theSpouse;
-	public int marryDelay = 0;
+	public int marryDelay;
 	public double moveSpeed;
 
 	public LOTREntityAINPCMarry(LOTREntityNPC npc, double d) {

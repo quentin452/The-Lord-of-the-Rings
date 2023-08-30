@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class LOTRWorldGenElfLordHouse extends LOTRWorldGenStructureBase {
@@ -163,7 +164,7 @@ public class LOTRWorldGenElfLordHouse extends LOTRWorldGenStructureBase {
 				}
 				--j1;
 				--i1;
-			} else if (l1 == 23) {
+			} else {
 				for (i2 = i1; i2 >= i1 - 2; --i2) {
 					for (j2 = j1 + 1; j2 <= j1 + 3; ++j2) {
 						for (k22 = k1; k22 >= k1 - 2; --k22) {
@@ -221,21 +222,21 @@ public class LOTRWorldGenElfLordHouse extends LOTRWorldGenStructureBase {
 				}
 				int meta = 0;
 				switch (direction) {
-				case 0: {
-					meta = 2;
-					break;
-				}
-				case 1: {
-					meta = 1;
-					break;
-				}
-				case 2: {
-					meta = 3;
-					break;
-				}
-				case 3: {
-					meta = 0;
-				}
+					case 0: {
+						meta = 2;
+						break;
+					}
+					case 1: {
+						meta = 1;
+						break;
+					}
+					case 2: {
+						meta = 3;
+						break;
+					}
+					case 3: {
+						meta = 0;
+					}
 				}
 				if (upsideDown) {
 					meta |= 4;
@@ -270,7 +271,8 @@ public class LOTRWorldGenElfLordHouse extends LOTRWorldGenStructureBase {
 			int totalGrass = 0;
 			int numGrass = 0;
 			for (int i12 = i - 5; i12 <= i + 5; ++i12) {
-				block4: for (int k14 = k - 5; k14 <= k + 5; ++k14) {
+				block4:
+				for (int k14 = k - 5; k14 <= k + 5; ++k14) {
 					if (Math.abs(i12 - i) <= 2 && Math.abs(k14 - k) <= 2) {
 						continue;
 					}
@@ -518,7 +520,7 @@ public class LOTRWorldGenElfLordHouse extends LOTRWorldGenStructureBase {
 		return true;
 	}
 
-	public boolean isMallornPlanks(World world, int i, int j, int k) {
+	public boolean isMallornPlanks(IBlockAccess world, int i, int j, int k) {
 		return world.getBlock(i, j, k) == LOTRMod.planks && world.getBlockMetadata(i, j, k) == 1;
 	}
 

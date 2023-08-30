@@ -9,9 +9,9 @@ public class LOTRBiomeGenIthilienWasteland extends LOTRBiomeGenIthilien {
 		spawnableCreatureList.clear();
 		clearBiomeVariants();
 		variantChance = 0.7f;
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.SCRUBLAND);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.SCRUBLAND);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
 		decorator.logsPerChunk = 2;
 		decorator.flowersPerChunk = 1;
 		decorator.grassPerChunk = 10;

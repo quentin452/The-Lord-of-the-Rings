@@ -14,7 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
-public class LOTRBlockFlowerPot extends BlockFlowerPot implements ITileEntityProvider {
+public class LOTRBlockFlowerPot extends BlockFlowerPot {
 	@Override
 	public TileEntity createNewTileEntity(World world, int i) {
 		return new LOTRTileEntityFlowerPot();
@@ -25,13 +25,13 @@ public class LOTRBlockFlowerPot extends BlockFlowerPot implements ITileEntityPro
 		ItemStack itemstack;
 		ArrayList<ItemStack> drops = new ArrayList<>();
 		drops.add(new ItemStack(Items.flower_pot));
-		if ((meta & 8) == 0 && (itemstack = LOTRBlockFlowerPot.getPlant(world, i, j, k)) != null && (LOTRTileEntityFlowerPot) world.getTileEntity(i, j, k) != null) {
+		if ((meta & 8) == 0 && (itemstack = getPlant(world, i, j, k)) != null && world.getTileEntity(i, j, k) != null) {
 			drops.add(itemstack);
 		}
 		return drops;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return Blocks.flower_pot.getIcon(i, j);
@@ -39,7 +39,7 @@ public class LOTRBlockFlowerPot extends BlockFlowerPot implements ITileEntityPro
 
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int i, int j, int k) {
-		return LOTRBlockFlowerPot.getPlant(world, i, j, k);
+		return getPlant(world, i, j, k);
 	}
 
 	@Override
@@ -60,21 +60,21 @@ public class LOTRBlockFlowerPot extends BlockFlowerPot implements ITileEntityPro
 		super.onBlockHarvested(world, i, j, k, meta, entityplayer);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
-		if (LOTRBlockFlowerPot.getPlant(world, i, j, k) != null && LOTRBlockFlowerPot.getPlant(world, i, j, k).getItem() == Item.getItemFromBlock(LOTRMod.pipeweedPlant)) {
+		if (getPlant(world, i, j, k) != null && getPlant(world, i, j, k).getItem() == Item.getItemFromBlock(LOTRMod.pipeweedPlant)) {
 			double d = i + 0.2 + random.nextFloat() * 0.6f;
 			double d1 = j + 0.625 + random.nextFloat() * 0.1875f;
 			double d2 = k + 0.2 + random.nextFloat() * 0.6f;
 			world.spawnParticle("smoke", d, d1, d2, 0.0, 0.0, 0.0);
 		}
-		if (LOTRBlockFlowerPot.getPlant(world, i, j, k) != null && LOTRBlockFlowerPot.getPlant(world, i, j, k).getItem() == Item.getItemFromBlock(LOTRMod.corruptMallorn)) {
+		if (getPlant(world, i, j, k) != null && getPlant(world, i, j, k).getItem() == Item.getItemFromBlock(LOTRMod.corruptMallorn)) {
 			LOTRMod.corruptMallorn.randomDisplayTick(world, i, j, k, random);
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

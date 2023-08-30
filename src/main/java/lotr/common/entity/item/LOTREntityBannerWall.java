@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class LOTREntityBannerWall extends EntityHanging {
 	public NBTTagCompound protectData;
-	public boolean updatedClientBB = false;
+	public boolean updatedClientBB;
 
 	public LOTREntityBannerWall(World world) {
 		super(world);
@@ -63,7 +63,7 @@ public class LOTREntityBannerWall extends EntityHanging {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getBrightnessForRender(float f) {
 		int i;
 		int k;
@@ -104,10 +104,7 @@ public class LOTREntityBannerWall extends EntityHanging {
 	@Override
 	public void onBroken(Entity entity) {
 		worldObj.playSoundAtEntity(this, Blocks.planks.stepSound.getBreakSound(), (Blocks.planks.stepSound.getVolume() + 1.0f) / 2.0f, Blocks.planks.stepSound.getPitch() * 0.8f);
-		boolean flag = true;
-		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.isCreativeMode) {
-			flag = false;
-		}
+		boolean flag = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
 		if (flag) {
 			entityDropItem(getBannerItem(), 0.0f);
 		}

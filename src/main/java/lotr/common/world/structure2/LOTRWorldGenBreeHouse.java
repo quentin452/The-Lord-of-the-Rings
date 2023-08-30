@@ -25,7 +25,7 @@ public class LOTRWorldGenBreeHouse extends LOTRWorldGenBreeStructure {
 		int j12;
 		int i13;
 		int k12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 9);
+		setOriginAndRotation(world, i, j, k, rotation, 9);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i13 = -7; i13 <= 8; ++i13) {
@@ -97,20 +97,20 @@ public class LOTRWorldGenBreeHouse extends LOTRWorldGenBreeStructure {
 			for (int step = 0; step < 12 && !isOpaque(world, i1, j1 = -1 - step, k1 = 6 + step); ++step) {
 				randPath = random.nextInt(4);
 				switch (randPath) {
-				case 0:
-					setBlockAndMetadata(world, i1, j1, k1, Blocks.grass, 0);
-					break;
-				case 1:
-					setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 1);
-					break;
-				case 2:
-					setBlockAndMetadata(world, i1, j1, k1, LOTRMod.dirtPath, 0);
-					break;
-				case 3:
-					setBlockAndMetadata(world, i1, j1, k1, Blocks.cobblestone, 0);
-					break;
-				default:
-					break;
+					case 0:
+						setBlockAndMetadata(world, i1, j1, k1, Blocks.grass, 0);
+						break;
+					case 1:
+						setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 1);
+						break;
+					case 2:
+						setBlockAndMetadata(world, i1, j1, k1, LOTRMod.dirtPath, 0);
+						break;
+					case 3:
+						setBlockAndMetadata(world, i1, j1, k1, Blocks.cobblestone, 0);
+						break;
+					default:
+						break;
 				}
 				setGrassToDirt(world, i1, j1 - 1, k1);
 				j2 = j1 - 1;
@@ -121,23 +121,23 @@ public class LOTRWorldGenBreeHouse extends LOTRWorldGenBreeStructure {
 				}
 			}
 		}
-		for (int step = 0; step < 12 && !isOpaque(world, i12 = -5, j1 = 0 - step, k1 = -5 - step); ++step) {
+		for (int step = 0; step < 12 && !isOpaque(world, i12 = -5, j1 = -step, k1 = -5 - step); ++step) {
 			randPath = random.nextInt(4);
 			switch (randPath) {
-			case 0:
-				setBlockAndMetadata(world, i12, j1, k1, Blocks.grass, 0);
-				break;
-			case 1:
-				setBlockAndMetadata(world, i12, j1, k1, Blocks.dirt, 1);
-				break;
-			case 2:
-				setBlockAndMetadata(world, i12, j1, k1, LOTRMod.dirtPath, 0);
-				break;
-			case 3:
-				setBlockAndMetadata(world, i12, j1, k1, Blocks.cobblestone, 0);
-				break;
-			default:
-				break;
+				case 0:
+					setBlockAndMetadata(world, i12, j1, k1, Blocks.grass, 0);
+					break;
+				case 1:
+					setBlockAndMetadata(world, i12, j1, k1, Blocks.dirt, 1);
+					break;
+				case 2:
+					setBlockAndMetadata(world, i12, j1, k1, LOTRMod.dirtPath, 0);
+					break;
+				case 3:
+					setBlockAndMetadata(world, i12, j1, k1, Blocks.cobblestone, 0);
+					break;
+				default:
+					break;
 			}
 			setGrassToDirt(world, i12, j1 - 1, k1);
 			j2 = j1 - 1;
@@ -150,7 +150,7 @@ public class LOTRWorldGenBreeHouse extends LOTRWorldGenBreeStructure {
 		for (i1 = -6; i1 <= -3; ++i1) {
 			for (int k13 = -3; k13 <= 1; ++k13) {
 				j1 = 1;
-				if (getBlock(world, i1, j1 - 1, k13) != Blocks.grass || random.nextInt(4) != 0) {
+				if (getBlock(world, i1, 0, k13) != Blocks.grass || random.nextInt(4) != 0) {
 					continue;
 				}
 				plantFlower(world, random, i1, j1, k13);
@@ -162,9 +162,9 @@ public class LOTRWorldGenBreeHouse extends LOTRWorldGenBreeStructure {
 		placeRandomFlowerPot(world, random, 2, 5, 1);
 		plantFlower(world, random, 0, 2, 3);
 		plantFlower(world, random, 8, 6, -1);
-		this.placeChest(world, random, -1, 1, 1, 4, LOTRChestContents.BREE_HOUSE);
-		this.placeChest(world, random, 1, 5, 1, 2, LOTRChestContents.BREE_HOUSE);
-		this.placeMug(world, random, 3, 2, -2, 3, LOTRFoods.BREE_DRINK);
+		placeChest(world, random, -1, 1, 1, 4, LOTRChestContents.BREE_HOUSE);
+		placeChest(world, random, 1, 5, 1, 2, LOTRChestContents.BREE_HOUSE);
+		placeMug(world, random, 3, 2, -2, 3, LOTRFoods.BREE_DRINK);
 		placePlateWithCertainty(world, random, 3, 2, -3, LOTRMod.plateBlock, LOTRFoods.BREE);
 		setBlockAndMetadata(world, 0, 5, 0, bedBlock, 3);
 		setBlockAndMetadata(world, -1, 5, 0, bedBlock, 11);
@@ -180,7 +180,7 @@ public class LOTRWorldGenBreeHouse extends LOTRWorldGenBreeStructure {
 		woman.familyInfo.setMale(false);
 		woman.familyInfo.setName(breeNames[1]);
 		spawnNPCAndSetHome(woman, world, 0, 1, 0, 16);
-		placeSign(world, 2, 2, -8, Blocks.standing_sign, 9, new String[] { "", breeNames[2], breeNames[3], "" });
+		placeSign(world, 2, 2, -8, Blocks.standing_sign, 9, new String[]{"", breeNames[2], breeNames[3], ""});
 		return true;
 	}
 }

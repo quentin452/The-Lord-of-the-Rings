@@ -4,6 +4,7 @@ import java.util.Random;
 
 import lotr.common.LOTRMod;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
@@ -41,7 +42,7 @@ public class LOTRWorldGenLogs extends WorldGenerator {
 		return true;
 	}
 
-	public boolean isSuitablePositionForLog(World world, int i, int j, int k) {
+	public boolean isSuitablePositionForLog(IBlockAccess world, int i, int j, int k) {
 		if (!world.getBlock(i, j - 1, k).canSustainPlant(world, i, j - 1, k, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 			return false;
 		}

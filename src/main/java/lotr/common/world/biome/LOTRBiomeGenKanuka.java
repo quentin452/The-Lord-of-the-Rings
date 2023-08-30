@@ -23,9 +23,9 @@ public class LOTRBiomeGenKanuka extends LOTRBiomeGenFarHarad {
 		spawnableLOTRAmbientList.clear();
 		spawnableLOTRAmbientList.add(new BiomeGenBase.SpawnListEntry(LOTREntityBird.class, 10, 4, 4));
 		spawnableLOTRAmbientList.add(new BiomeGenBase.SpawnListEntry(LOTREntityButterfly.class, 10, 4, 4));
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
 		enablePodzol = false;
 		decorator.treesPerChunk = 0;
 		decorator.setTreeCluster(8, 3);

@@ -42,7 +42,7 @@ public class LOTRItemThrowingAxe extends Item {
 
 	public float getRangedDamageMultiplier(ItemStack itemstack, Entity shooter, Entity hit) {
 		float damage = axeMaterial.getDamageVsEntity() + 4.0f;
-		damage = shooter instanceof EntityLivingBase && hit instanceof EntityLivingBase ? (damage += EnchantmentHelper.getEnchantmentModifierLiving((EntityLivingBase) shooter, (EntityLivingBase) hit)) : (damage += EnchantmentHelper.func_152377_a(itemstack, EnumCreatureAttribute.UNDEFINED));
+		damage = shooter instanceof EntityLivingBase && hit instanceof EntityLivingBase ? damage + EnchantmentHelper.getEnchantmentModifierLiving((EntityLivingBase) shooter, (EntityLivingBase) hit) : damage + EnchantmentHelper.func_152377_a(itemstack, EnumCreatureAttribute.UNDEFINED);
 		return damage * 0.5f;
 	}
 

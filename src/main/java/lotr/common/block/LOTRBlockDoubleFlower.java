@@ -15,10 +15,10 @@ import net.minecraft.util.*;
 import net.minecraft.world.*;
 
 public class LOTRBlockDoubleFlower extends BlockDoublePlant {
-	public static String[] flowerNames = { "blackIris", "yellowIris", "pink", "red" };
-	@SideOnly(value = Side.CLIENT)
+	public static String[] flowerNames = {"blackIris", "yellowIris", "pink", "red"};
+	@SideOnly(Side.CLIENT)
 	public IIcon[] doublePlantBottomIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] doublePlantTopIcons;
 
 	public LOTRBlockDoubleFlower() {
@@ -31,7 +31,7 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 			return super.canBlockStay(world, i, j, k);
 		}
 		int l = world.getBlockMetadata(i, j, k);
-		return LOTRBlockDoubleFlower.isTop(l) ? world.getBlock(i, j - 1, k) == this : world.getBlock(i, j + 1, k) == this && super.canBlockStay(world, i, j, k);
+		return isTop(l) ? world.getBlock(i, j - 1, k) == this : world.getBlock(i, j + 1, k) == this && super.canBlockStay(world, i, j, k);
 	}
 
 	@Override
@@ -43,8 +43,8 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 	public void checkAndDropBlock(World world, int i, int j, int k) {
 		if (!canBlockStay(world, i, j, k)) {
 			int l = world.getBlockMetadata(i, j, k);
-			if (!LOTRBlockDoubleFlower.isTop(l)) {
-				this.dropBlockAsItem(world, i, j, k, l, 0);
+			if (!isTop(l)) {
+				dropBlockAsItem(world, i, j, k, l, 0);
 				if (world.getBlock(i, j + 1, k) == this) {
 					world.setBlock(i, j + 1, k, Blocks.air, 0, 2);
 				}
@@ -53,7 +53,7 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int colorMultiplier(IBlockAccess world, int i, int j, int k) {
 		return 16777215;
@@ -61,7 +61,7 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 
 	@Override
 	public int damageDropped(int i) {
-		return LOTRBlockDoubleFlower.isTop(i) ? 0 : i & 7;
+		return isTop(i) ? 0 : i & 7;
 	}
 
 	@Override
@@ -70,23 +70,18 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 	}
 
 	@Override
-	public boolean func_149852_a(World world, Random random, int i, int j, int k) {
-		return true;
-	}
-
-	@Override
 	public void func_149853_b(World world, Random random, int i, int j, int k) {
 		int meta = func_149885_e(world, i, j, k);
-		this.dropBlockAsItem(world, i, j, k, new ItemStack(this, 1, meta));
+		dropBlockAsItem(world, i, j, k, new ItemStack(this, 1, meta));
 	}
 
 	@Override
 	public int func_149885_e(IBlockAccess world, int i, int j, int k) {
 		int l = world.getBlockMetadata(i, j, k);
-		return !LOTRBlockDoubleFlower.isTop(l) ? l & 7 : world.getBlockMetadata(i, j - 1, k) & 7;
+		return !isTop(l) ? l & 7 : world.getBlockMetadata(i, j - 1, k) & 7;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon func_149888_a(boolean isTop, int i) {
 		if (isTop) {
@@ -104,13 +99,13 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 	@Override
 	public int getDamageValue(World world, int i, int j, int k) {
 		int l = world.getBlockMetadata(i, j, k);
-		return LOTRBlockDoubleFlower.isTop(l) ? LOTRBlockDoubleFlower.getFlowerMeta(world.getBlockMetadata(i, j - 1, k)) : LOTRBlockDoubleFlower.getFlowerMeta(l);
+		return isTop(l) ? getFlowerMeta(world.getBlockMetadata(i, j - 1, k)) : getFlowerMeta(l);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
-		if (LOTRBlockDoubleFlower.isTop(j)) {
+		if (isTop(j)) {
 			return doublePlantBottomIcons[1];
 		}
 		int k = j & 7;
@@ -122,7 +117,7 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 
 	@Override
 	public Item getItemDropped(int i, Random random, int j) {
-		if (LOTRBlockDoubleFlower.isTop(i)) {
+		if (isTop(i)) {
 			return null;
 		}
 		return Item.getItemFromBlock(this);
@@ -133,7 +128,7 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 		return LOTRMod.proxy.getDoublePlantRenderID();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < doublePlantBottomIcons.length; ++i) {
@@ -143,12 +138,12 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 
 	@Override
 	public void onBlockHarvested(World world, int i, int j, int k, int meta, EntityPlayer entityplayer) {
-		if (LOTRBlockDoubleFlower.isTop(meta)) {
+		if (isTop(meta)) {
 			if (world.getBlock(i, j - 1, k) == this) {
-				if (!entityplayer.capabilities.isCreativeMode) {
-					world.func_147480_a(i, j - 1, k, true);
-				} else {
+				if (entityplayer.capabilities.isCreativeMode) {
 					world.setBlockToAir(i, j - 1, k);
+				} else {
+					world.func_147480_a(i, j - 1, k, true);
 				}
 			}
 		} else if (entityplayer.capabilities.isCreativeMode && world.getBlock(i, j + 1, k) == this) {
@@ -163,7 +158,7 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 		world.setBlock(i, j + 1, k, this, 8 | l, 2);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		doublePlantBottomIcons = new IIcon[flowerNames.length];
@@ -172,11 +167,6 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 			doublePlantBottomIcons[i] = iconregister.registerIcon(getTextureName() + "_" + flowerNames[i] + "_bottom");
 			doublePlantTopIcons[i] = iconregister.registerIcon(getTextureName() + "_" + flowerNames[i] + "_top");
 		}
-	}
-
-	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess world, int i, int j, int k) {
-		setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 	}
 
 	public static int getFlowerMeta(int i) {

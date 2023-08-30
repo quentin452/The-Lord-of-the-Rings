@@ -4,7 +4,6 @@ import org.lwjgl.opengl.GL11;
 
 import lotr.client.LOTRTickHandlerClient;
 import lotr.common.tileentity.LOTRTileEntityGulduril;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -39,7 +38,7 @@ public class LOTRRenderGuldurilGlow extends TileEntitySpecialRenderer {
 		v3.texturePositionY = vMin;
 		Tessellator tess = Tessellator.instance;
 		tess.startDrawingQuads();
-		for (PositionTextureVertex v : new PositionTextureVertex[] { v0, v1, v2, v3 }) {
+		for (PositionTextureVertex v : new PositionTextureVertex[]{v0, v1, v2, v3}) {
 			tess.addVertexWithUV(v.vector3D.xCoord, v.vector3D.yCoord, v.vector3D.zCoord, v.texturePositionX, v.texturePositionY);
 		}
 		tess.draw();
@@ -114,7 +113,6 @@ public class LOTRRenderGuldurilGlow extends TileEntitySpecialRenderer {
 	public void renderInvGlow() {
 		GL11.glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
 		GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
-		Minecraft.getMinecraft();
 		renderGlowAt(0.0, 0.0, 0.0, LOTRTickHandlerClient.clientTick, LOTRTickHandlerClient.renderTick, null);
 		GL11.glEnable(32826);
 	}

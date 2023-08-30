@@ -130,7 +130,7 @@ public class LOTREntityStoneTroll extends Entity implements LOTRBannerProtectabl
 		return dataWatcher.getWatchableObjectByte(16);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
 		if (b == 16) {

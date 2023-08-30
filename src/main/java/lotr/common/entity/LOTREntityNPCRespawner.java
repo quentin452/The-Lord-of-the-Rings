@@ -35,9 +35,9 @@ public class LOTREntityNPCRespawner extends Entity {
 	public int spawnVerticalMin = -2;
 	public int spawnVerticalMax = 2;
 	public int homeRange = -1;
-	public boolean setHomePosFromSpawn = false;
-	public int mountSetting = 0;
-	public int blockEnemySpawns = 0;
+	public boolean setHomePosFromSpawn;
+	public int mountSetting;
+	public int blockEnemySpawns;
 
 	public LOTREntityNPCRespawner(World world) {
 		super(world);
@@ -86,7 +86,7 @@ public class LOTREntityNPCRespawner extends Entity {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void handleHealthUpdate(byte b) {
 		if (b == 16) {
 			for (int l = 0; l < 16; ++l) {
@@ -108,8 +108,8 @@ public class LOTREntityNPCRespawner extends Entity {
 	public boolean interactFirst(EntityPlayer entityplayer) {
 		if (entityplayer.capabilities.isCreativeMode) {
 			if (!worldObj.isRemote) {
-				LOTRPacketNPCRespawner packet = new LOTRPacketNPCRespawner(this);
-				LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+				IMessage packet = new LOTRPacketNPCRespawner(this);
+				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 			}
 			return true;
 		}
@@ -117,7 +117,7 @@ public class LOTREntityNPCRespawner extends Entity {
 	}
 
 	public boolean isEnemySpawnBlocked(LOTREntityNPC npc) {
-		return this.isEnemySpawnBlocked(npc.getFaction());
+		return isEnemySpawnBlocked(npc.getFaction());
 	}
 
 	public boolean isEnemySpawnBlocked(LOTRFaction spawnFaction) {
@@ -144,6 +144,7 @@ public class LOTREntityNPCRespawner extends Entity {
 		setDead();
 	}
 
+	@SuppressWarnings("Convert2Lambda")
 	@Override
 	public void onUpdate() {
 		int maxX;
@@ -263,7 +264,7 @@ public class LOTREntityNPCRespawner extends Entity {
 	}
 
 	public void setBlockEnemySpawnRange(int i) {
-		blockEnemySpawns = i = Math.min(i, 64);
+		blockEnemySpawns = Math.min(i, 64);
 	}
 
 	public void setCheckRanges(int xz, int y, int y1, int l) {
@@ -300,8 +301,7 @@ public class LOTREntityNPCRespawner extends Entity {
 
 	public void setSpawnIntervalMinutes(int m) {
 		int s = m * 60;
-		int t = s * 20;
-		setSpawnInterval(t);
+		spawnInterval = s * 20;
 	}
 
 	public void setSpawnRanges(int xz, int y, int y1, int h) {
@@ -369,7 +369,7 @@ public class LOTREntityNPCRespawner extends Entity {
 	}
 
 	public static boolean isSpawnBlocked(LOTREntityNPC npc) {
-		return LOTREntityNPCRespawner.isSpawnBlocked(npc, npc.getFaction());
+		return isSpawnBlocked(npc, npc.getFaction());
 	}
 
 }

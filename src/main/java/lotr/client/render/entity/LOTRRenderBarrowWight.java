@@ -1,5 +1,6 @@
 package lotr.client.render.entity;
 
+import lotr.common.entity.LOTRRandomSkinEntity;
 import org.lwjgl.opengl.GL11;
 
 import lotr.client.LOTRTickHandlerClient;
@@ -34,7 +35,7 @@ public class LOTRRenderBarrowWight extends LOTRRenderBiped {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityBarrowWight wight = (LOTREntityBarrowWight) entity;
+		LOTRRandomSkinEntity wight = (LOTRRandomSkinEntity) entity;
 		return wightSkins.getRandomSkin(wight);
 	}
 
@@ -47,7 +48,7 @@ public class LOTRRenderBarrowWight extends LOTRRenderBiped {
 			float death = (entity.deathTime + f - 1.0f) / 20.0f;
 			death = Math.max(0.0f, death);
 			death = Math.min(1.0f, death);
-			float scale = 1.0f + death * 1.0f;
+			float scale = 1.0f + death;
 			GL11.glScalef(scale, scale, scale);
 			GL11.glEnable(3042);
 			GL11.glBlendFunc(770, 771);

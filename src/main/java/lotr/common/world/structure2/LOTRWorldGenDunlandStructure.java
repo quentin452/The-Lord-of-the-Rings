@@ -31,17 +31,17 @@ public abstract class LOTRWorldGenDunlandStructure extends LOTRWorldGenStructure
 	public int barsMeta;
 	public Block bedBlock;
 
-	public LOTRWorldGenDunlandStructure(boolean flag) {
+	protected LOTRWorldGenDunlandStructure(boolean flag) {
 		super(flag);
 	}
 
 	public ItemStack getRandomDunlandWeapon(Random random) {
-		ItemStack[] items = { new ItemStack(Items.iron_sword), new ItemStack(LOTRMod.spearIron), new ItemStack(LOTRMod.daggerIron), new ItemStack(Items.stone_sword), new ItemStack(LOTRMod.spearStone), new ItemStack(LOTRMod.dunlendingClub), new ItemStack(LOTRMod.dunlendingTrident) };
+		ItemStack[] items = {new ItemStack(Items.iron_sword), new ItemStack(LOTRMod.spearIron), new ItemStack(LOTRMod.daggerIron), new ItemStack(Items.stone_sword), new ItemStack(LOTRMod.spearStone), new ItemStack(LOTRMod.dunlendingClub), new ItemStack(LOTRMod.dunlendingTrident)};
 		return items[random.nextInt(items.length)].copy();
 	}
 
 	public void placeDunlandItemFrame(World world, Random random, int i, int j, int k, int direction) {
-		ItemStack[] items = { new ItemStack(Items.bone), new ItemStack(LOTRMod.fur), new ItemStack(Items.flint), new ItemStack(Items.iron_sword), new ItemStack(Items.stone_sword), new ItemStack(LOTRMod.spearIron), new ItemStack(LOTRMod.spearStone), new ItemStack(Items.bow), new ItemStack(Items.arrow), new ItemStack(LOTRMod.mug), new ItemStack(LOTRMod.skullCup) };
+		ItemStack[] items = {new ItemStack(Items.bone), new ItemStack(LOTRMod.fur), new ItemStack(Items.flint), new ItemStack(Items.iron_sword), new ItemStack(Items.stone_sword), new ItemStack(LOTRMod.spearIron), new ItemStack(LOTRMod.spearStone), new ItemStack(Items.bow), new ItemStack(Items.arrow), new ItemStack(LOTRMod.mug), new ItemStack(LOTRMod.skullCup)};
 		ItemStack item = items[random.nextInt(items.length)].copy();
 		spawnItemFrame(world, i, j, k, direction, item);
 	}
@@ -50,28 +50,28 @@ public abstract class LOTRWorldGenDunlandStructure extends LOTRWorldGenStructure
 	public void setupRandomBlocks(Random random) {
 		int randomFloor = random.nextInt(5);
 		switch (randomFloor) {
-		case 0:
-			floorBlock = Blocks.cobblestone;
-			floorMeta = 0;
-			break;
-		case 1:
-			floorBlock = Blocks.hardened_clay;
-			floorMeta = 0;
-			break;
-		case 2:
-			floorBlock = Blocks.stained_hardened_clay;
-			floorMeta = 7;
-			break;
-		case 3:
-			floorBlock = Blocks.stained_hardened_clay;
-			floorMeta = 12;
-			break;
-		case 4:
-			floorBlock = Blocks.stained_hardened_clay;
-			floorMeta = 15;
-			break;
-		default:
-			break;
+			case 0:
+				floorBlock = Blocks.cobblestone;
+				floorMeta = 0;
+				break;
+			case 1:
+				floorBlock = Blocks.hardened_clay;
+				floorMeta = 0;
+				break;
+			case 2:
+				floorBlock = Blocks.stained_hardened_clay;
+				floorMeta = 7;
+				break;
+			case 3:
+				floorBlock = Blocks.stained_hardened_clay;
+				floorMeta = 12;
+				break;
+			case 4:
+				floorBlock = Blocks.stained_hardened_clay;
+				floorMeta = 15;
+				break;
+			default:
+				break;
 		}
 		if (random.nextBoolean()) {
 			woodBlock = Blocks.log;
@@ -99,7 +99,7 @@ public abstract class LOTRWorldGenDunlandStructure extends LOTRWorldGenStructure
 				fenceMeta = 0;
 				fenceGateBlock = Blocks.fence_gate;
 				doorBlock = Blocks.wooden_door;
-			} else if (randomWood == 1) {
+			} else {
 				woodBlock = LOTRMod.wood5;
 				woodMeta = 0;
 				plankBlock = LOTRMod.planks2;

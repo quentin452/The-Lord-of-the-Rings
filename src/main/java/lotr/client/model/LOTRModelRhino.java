@@ -36,11 +36,11 @@ public class LOTRModelRhino extends ModelBase {
 		neck.addBox(-7.0f, -4.0f, -7.0f, 14, 13, 8, f);
 		horn1 = new ModelRenderer(this, 36, 0);
 		horn1.addBox(-1.0f, -14.0f, -20.0f, 2, 8, 2, f);
-		horn1.rotateAngleX = (float) Math.toRadians(15.0);
+		horn1.rotateAngleX = 0.2617993877991494f;
 		head.addChild(horn1);
 		horn2 = new ModelRenderer(this, 44, 0);
 		horn2.addBox(-1.0f, -3.0f, -17.0f, 2, 4, 2, f);
-		horn2.rotateAngleX = (float) Math.toRadians(-10.0);
+		horn2.rotateAngleX = -0.17453292519943295f;
 		head.addChild(horn2);
 		body = new ModelRenderer(this, 0, 26);
 		body.setRotationPoint(0.0f, 5.0f, 0.0f);
@@ -103,7 +103,7 @@ public class LOTRModelRhino extends ModelBase {
 
 	@Override
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-		head.rotateAngleX = (float) Math.toRadians(12.0);
+		head.rotateAngleX = 0.20943951023931956f;
 		head.rotateAngleY = 0.0f;
 		head.rotateAngleX += MathHelper.cos(f * 0.2f) * 0.3f * f1;
 		head.rotateAngleX += (float) Math.toRadians(f4);
@@ -111,7 +111,7 @@ public class LOTRModelRhino extends ModelBase {
 		neck.rotateAngleX = head.rotateAngleX;
 		neck.rotateAngleY = head.rotateAngleY;
 		neck.rotateAngleZ = head.rotateAngleZ;
-		tail.rotateAngleX = (float) Math.toRadians(40.0);
+		tail.rotateAngleX = 0.6981317007977318f;
 		tail.rotateAngleX += MathHelper.cos(f * 0.3f) * 0.5f * f1;
 		leg1.rotateAngleX = MathHelper.cos(f * 0.4f) * 1.0f * f1;
 		leg2.rotateAngleX = MathHelper.cos(f * 0.4f + 3.1415927f) * 1.0f * f1;

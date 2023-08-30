@@ -15,7 +15,7 @@ public class LOTRWorldGenSouthronVillageFence extends LOTRWorldGenSouthronStruct
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		for (int i1 = -leftExtent; i1 <= rightExtent; ++i1) {
 			int k1 = 0;

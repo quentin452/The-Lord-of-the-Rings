@@ -25,7 +25,7 @@ public class LOTRMapGenDwarvenMine extends MapGenStructure {
 		}
 		int i1 = i * 16 + 8;
 		int k1 = k * 16 + 8;
-		LOTRMapGenDwarvenMine.setupSpawnBiomes();
+		setupSpawnBiomes();
 		if (worldObj.getWorldChunkManager().areBiomesViable(i1, k1, 0, spawnBiomes) ? rand.nextInt(spawnChance) == 0 : worldObj.getWorldChunkManager().areBiomesViable(i1, k1, 0, spawnBiomesRuined) && rand.nextInt(spawnChanceRuined) == 0) {
 			return cache.markResult(i, k, LocationInfo.RANDOM_GEN_HERE).isPresent();
 		}

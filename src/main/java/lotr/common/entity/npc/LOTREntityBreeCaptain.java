@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class LOTREntityBreeCaptain extends LOTREntityBreeGuard implements LOTRUnitTradeable {
 	public LOTREntityBreeCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

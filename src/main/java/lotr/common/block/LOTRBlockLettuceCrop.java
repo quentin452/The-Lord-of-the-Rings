@@ -10,7 +10,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.EnumPlantType;
 
 public class LOTRBlockLettuceCrop extends BlockCrops {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] lettuceIcons;
 
 	@Override
@@ -23,7 +23,7 @@ public class LOTRBlockLettuceCrop extends BlockCrops {
 		return LOTRMod.lettuce;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j < 7) {
@@ -45,7 +45,7 @@ public class LOTRBlockLettuceCrop extends BlockCrops {
 		return 1;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		lettuceIcons = new IIcon[4];

@@ -1,5 +1,6 @@
 package lotr.common.enchant;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.LOTRDamage;
 import lotr.common.item.*;
 import lotr.common.network.*;
@@ -11,10 +12,10 @@ import net.minecraft.util.StatCollector;
 
 public class LOTREnchantmentWeaponSpecial extends LOTREnchantment {
 	public boolean compatibleBane = true;
-	public boolean compatibleOtherSpecial = false;
+	public boolean compatibleOtherSpecial;
 
 	public LOTREnchantmentWeaponSpecial(String s) {
-		super(s, new LOTREnchantmentType[] { LOTREnchantmentType.MELEE, LOTREnchantmentType.THROWING_AXE, LOTREnchantmentType.RANGED_LAUNCHER });
+		super(s, new LOTREnchantmentType[]{LOTREnchantmentType.MELEE, LOTREnchantmentType.THROWING_AXE, LOTREnchantmentType.RANGED_LAUNCHER});
 		setValueModifier(3.0f);
 		setBypassAnvilLimit();
 	}
@@ -65,7 +66,7 @@ public class LOTREnchantmentWeaponSpecial extends LOTREnchantment {
 		}
 		int duration = 5;
 		entity.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, duration * 20, 1));
-		LOTRPacketWeaponFX packet = new LOTRPacketWeaponFX(LOTRPacketWeaponFX.Type.CHILLING, entity);
+		IMessage packet = new LOTRPacketWeaponFX(LOTRPacketWeaponFX.Type.CHILLING, entity);
 		LOTRPacketHandler.networkWrapper.sendToAllAround(packet, LOTRPacketHandler.nearEntity(entity, 64.0));
 	}
 

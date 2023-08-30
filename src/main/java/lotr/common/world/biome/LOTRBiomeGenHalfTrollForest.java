@@ -45,12 +45,12 @@ public class LOTRBiomeGenHalfTrollForest extends LOTRBiomeGenFarHarad {
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer6);
 		clearBiomeVariants();
 		variantChance = 0.7f;
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.CLEARING);
-		this.addBiomeVariant(LOTRBiomeVariant.WASTELAND);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
+		addBiomeVariant(LOTRBiomeVariant.CLEARING);
+		addBiomeVariant(LOTRBiomeVariant.WASTELAND);
 		decorator.treesPerChunk = 3;
 		decorator.vinesPerChunk = 4;
 		decorator.logsPerChunk = 2;

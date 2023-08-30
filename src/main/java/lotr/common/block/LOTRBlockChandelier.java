@@ -14,9 +14,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRBlockChandelier extends Block {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] chandelierIcons;
-	public String[] chandelierNames = { "bronze", "iron", "silver", "gold", "mithril", "mallornSilver", "woodElven", "orc", "dwarven", "uruk", "highElven", "blueDwarven", "morgul", "mallornBlue", "mallornGold", "mallornGreen" };
+	public String[] chandelierNames = {"bronze", "iron", "silver", "gold", "mithril", "mallornSilver", "woodElven", "orc", "dwarven", "uruk", "highElven", "blueDwarven", "morgul", "mallornBlue", "mallornGold", "mallornGreen"};
 
 	public LOTRBlockChandelier() {
 		super(Material.circuits);
@@ -72,7 +72,7 @@ public class LOTRBlockChandelier extends Block {
 		return 1;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < chandelierNames.length; ++i) {
@@ -88,12 +88,12 @@ public class LOTRBlockChandelier extends Block {
 	@Override
 	public void onNeighborBlockChange(World world, int i, int j, int k, Block block) {
 		if (!canBlockStay(world, i, j, k)) {
-			this.dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
+			dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
 			world.setBlockToAir(i, j, k);
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		int meta = world.getBlockMetadata(i, j, k);
@@ -106,7 +106,7 @@ public class LOTRBlockChandelier extends Block {
 		spawnChandelierParticles(world, i + d1, j + d2, k + d, random, meta);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		chandelierIcons = new IIcon[chandelierNames.length];
@@ -122,55 +122,55 @@ public class LOTRBlockChandelier extends Block {
 
 	public void spawnChandelierParticles(World world, double d, double d1, double d2, Random random, int meta) {
 		switch (meta) {
-		case 5:
-		case 13:
-		case 14:
-		case 15: {
-			LOTRBlockTorch torchBlock = null;
-			switch (meta) {
 			case 5:
-				torchBlock = (LOTRBlockTorch) LOTRMod.mallornTorchSilver;
-				break;
 			case 13:
-				torchBlock = (LOTRBlockTorch) LOTRMod.mallornTorchBlue;
-				break;
 			case 14:
-				torchBlock = (LOTRBlockTorch) LOTRMod.mallornTorchGold;
+			case 15: {
+				LOTRBlockTorch torchBlock = null;
+				switch (meta) {
+					case 5:
+						torchBlock = (LOTRBlockTorch) LOTRMod.mallornTorchSilver;
+						break;
+					case 13:
+						torchBlock = (LOTRBlockTorch) LOTRMod.mallornTorchBlue;
+						break;
+					case 14:
+						torchBlock = (LOTRBlockTorch) LOTRMod.mallornTorchGold;
+						break;
+					case 15:
+						torchBlock = (LOTRBlockTorch) LOTRMod.mallornTorchGreen;
+						break;
+					default:
+						break;
+				}
+				LOTRBlockTorch.TorchParticle particle = torchBlock.createTorchParticle(random);
+				if (particle != null) {
+					particle.spawn(d, d1, d2);
+				}
 				break;
-			case 15:
-				torchBlock = (LOTRBlockTorch) LOTRMod.mallornTorchGreen;
+			}
+			case 6: {
+				String s = "leafRed_" + (10 + random.nextInt(20));
+				double d3 = -0.005 + random.nextFloat() * 0.01f;
+				double d4 = -0.005 + random.nextFloat() * 0.01f;
+				double d5 = -0.005 + random.nextFloat() * 0.01f;
+				LOTRMod.proxy.spawnParticle(s, d, d1, d2, d3, d4, d5);
 				break;
+			}
+			case 10:
+				LOTRMod.proxy.spawnParticle("elvenGlow", d, d1, d2, 0.0, 0.0, 0.0);
+				break;
+			case 12: {
+				double d3 = -0.05 + random.nextFloat() * 0.1;
+				double d4 = 0.1 + random.nextFloat() * 0.1;
+				double d5 = -0.05 + random.nextFloat() * 0.1;
+				LOTRMod.proxy.spawnParticle("morgulPortal", d, d1, d2, d3, d4, d5);
+				break;
+			}
 			default:
+				world.spawnParticle("smoke", d, d1, d2, 0.0, 0.0, 0.0);
+				world.spawnParticle("flame", d, d1, d2, 0.0, 0.0, 0.0);
 				break;
-			}
-			LOTRBlockTorch.TorchParticle particle = torchBlock.createTorchParticle(random);
-			if (particle != null) {
-				particle.spawn(d, d1, d2);
-			}
-			break;
-		}
-		case 6: {
-			String s = "leafRed_" + (10 + random.nextInt(20));
-			double d3 = -0.005 + random.nextFloat() * 0.01f;
-			double d4 = -0.005 + random.nextFloat() * 0.01f;
-			double d5 = -0.005 + random.nextFloat() * 0.01f;
-			LOTRMod.proxy.spawnParticle(s, d, d1, d2, d3, d4, d5);
-			break;
-		}
-		case 10:
-			LOTRMod.proxy.spawnParticle("elvenGlow", d, d1, d2, 0.0, 0.0, 0.0);
-			break;
-		case 12: {
-			double d3 = -0.05 + random.nextFloat() * 0.1;
-			double d4 = 0.1 + random.nextFloat() * 0.1;
-			double d5 = -0.05 + random.nextFloat() * 0.1;
-			LOTRMod.proxy.spawnParticle("morgulPortal", d, d1, d2, d3, d4, d5);
-			break;
-		}
-		default:
-			world.spawnParticle("smoke", d, d1, d2, 0.0, 0.0, 0.0);
-			world.spawnParticle("flame", d, d1, d2, 0.0, 0.0, 0.0);
-			break;
 		}
 	}
 }

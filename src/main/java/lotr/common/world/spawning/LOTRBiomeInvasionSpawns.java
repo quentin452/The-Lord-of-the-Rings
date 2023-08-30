@@ -7,8 +7,8 @@ import lotr.common.world.biome.LOTRBiome;
 
 public class LOTRBiomeInvasionSpawns {
 	public LOTRBiome theBiome;
-	public Map<LOTREventSpawner.EventChance, List<LOTRInvasions>> invasionsByChance = new HashMap<>();
-	public List<LOTRInvasions> registeredInvasions = new ArrayList<>();
+	public Map<LOTREventSpawner.EventChance, List<LOTRInvasions>> invasionsByChance = new EnumMap<>(LOTREventSpawner.EventChance.class);
+	public Collection<LOTRInvasions> registeredInvasions = new ArrayList<>();
 
 	public LOTRBiomeInvasionSpawns(LOTRBiome biome) {
 		theBiome = biome;

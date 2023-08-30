@@ -65,8 +65,7 @@ public class LOTRWorldGenMallorn extends WorldGenAbstractTree {
 						float angle = (float) Math.toRadians(deg += 50 + random.nextInt(70));
 						float cos = MathHelper.cos(angle);
 						float sin = MathHelper.sin(angle);
-						float angleY = random.nextFloat() * (float) Math.toRadians(50.0);
-						MathHelper.cos(angleY);
+						float angleY = random.nextFloat() * 0.8726646259971648f;
 						float sinY = MathHelper.sin(angleY);
 						int length = 4 + random.nextInt(6);
 						int i1 = i;
@@ -101,18 +100,14 @@ public class LOTRWorldGenMallorn extends WorldGenAbstractTree {
 						if (Math.abs(i2) == Math.abs(k2)) {
 							continue;
 						}
-						int rootX = i1;
 						int rootY = j + random.nextInt(2);
-						int rootZ = k1;
 						int roots = 0;
-						while (world.getBlock(rootX, rootY, k1).isReplaceable(world, rootX, rootY, rootZ)) {
-							setBlockAndNotifyAdequately(world, rootX, rootY, rootZ, woodBlock, woodMeta | 0xC);
-							world.getBlock(rootX, rootY - 1, rootZ).onPlantGrow(world, rootX, rootY - 1, rootZ, rootX, rootY, rootZ);
+						while (world.getBlock(i1, rootY, k1).isReplaceable(world, i1, rootY, k1)) {
+							setBlockAndNotifyAdequately(world, i1, rootY, k1, woodBlock, woodMeta | 0xC);
+							world.getBlock(i1, rootY - 1, k1).onPlantGrow(world, i1, rootY - 1, k1, i1, rootY, k1);
 							--rootY;
 							roots++;
-							if (roots <= 4 + random.nextInt(3)) {
-								continue;
-							}
+							random.nextInt(3);
 						}
 					}
 				}
@@ -126,7 +121,7 @@ public class LOTRWorldGenMallorn extends WorldGenAbstractTree {
 		int leafStart = j - 1;
 		int leafTop = j + 2;
 		int maxRange = 3 + random.nextInt(2);
-		int[] ranges = { -2, 0, -1, -2 };
+		int[] ranges = {-2, 0, -1, -2};
 		for (int j1 = leafStart; j1 <= leafTop; ++j1) {
 			int leafRange = maxRange + ranges[j1 - leafStart];
 			int leafRangeSq = leafRange * leafRange;
@@ -141,7 +136,7 @@ public class LOTRWorldGenMallorn extends WorldGenAbstractTree {
 					int dCh = i2 + j2 + k2;
 					grow = dSq < leafRangeSq && dCh <= 4;
 					if (i2 == leafRange - 1 || k2 == leafRange - 1) {
-						grow &= random.nextInt(4) != 0;
+						grow = grow && random.nextInt(4) != 0;
 					}
 					if (!grow || !(block = world.getBlock(i1, j1, k1)).isReplaceable(world, i1, j1, k1) && !block.isLeaves(world, i1, j1, k1)) {
 						continue;

@@ -1,11 +1,7 @@
 package lotr.common.block;
 
-import java.util.Random;
-
 import cpw.mods.fml.relauncher.*;
 import net.minecraft.block.BlockOldLeaf;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.world.*;
 
 public class LOTRBlockLeavesVanilla1 extends LOTRBlockLeavesBase {
@@ -15,7 +11,7 @@ public class LOTRBlockLeavesVanilla1 extends LOTRBlockLeavesBase {
 		setSeasonal(true, false, true, false);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int colorMultiplier(IBlockAccess world, int i, int j, int k) {
 		int meta = world.getBlockMetadata(i, j, k) & 3;
@@ -30,12 +26,7 @@ public class LOTRBlockLeavesVanilla1 extends LOTRBlockLeavesBase {
 		return BlockOldLeaf.field_150131_O;
 	}
 
-	@Override
-	public Item getItemDropped(int i, Random random, int j) {
-		return Item.getItemFromBlock(Blocks.sapling);
-	}
-
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getRenderColor(int i) {
 		int meta = i & 3;

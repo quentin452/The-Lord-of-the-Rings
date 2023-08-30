@@ -3,10 +3,10 @@ package lotr.common.world.feature;
 import java.util.Random;
 
 import lotr.common.LOTRMod;
-import lotr.common.block.LOTRBlockSaplingBase;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRWorldGenLarch extends WorldGenAbstractTree {
@@ -41,7 +41,7 @@ public class LOTRWorldGenLarch extends WorldGenAbstractTree {
 				return false;
 			}
 			Block soil = world.getBlock(i, j - 1, k);
-			boolean isSoil = soil.canSustainPlant(world, i, j - 1, k, ForgeDirection.UP, (LOTRBlockSaplingBase) LOTRMod.sapling3);
+			boolean isSoil = soil.canSustainPlant(world, i, j - 1, k, ForgeDirection.UP, (IPlantable) LOTRMod.sapling3);
 			if (isSoil && j < 256 - height - 1) {
 				int j1;
 				soil.onPlantGrow(world, i, j - 1, k, i, j, k);

@@ -28,7 +28,7 @@ public class LOTRModelUnsmeltery extends ModelBase {
 		ModelRenderer panelRight = new ModelRenderer(this, 56, 0);
 		panelRight.setRotationPoint(0.0f, -11.0f, 0.0f);
 		panelRight.addBox(-1.0f, -2.0f, -1.0f, 1, 3, 3);
-		panelRight.rotateAngleX = (float) Math.toRadians(45.0);
+		panelRight.rotateAngleX = 0.7853981633974483f;
 		standRight.addChild(panelRight);
 		standLeft = new ModelRenderer(this, 56, 6);
 		standLeft.setRotationPoint(7.0f, 23.0f, 0.0f);
@@ -38,13 +38,13 @@ public class LOTRModelUnsmeltery extends ModelBase {
 		panelLeft.setRotationPoint(0.0f, -11.0f, 0.0f);
 		panelLeft.mirror = true;
 		panelLeft.addBox(0.0f, -2.0f, -1.0f, 1, 3, 3);
-		panelLeft.rotateAngleX = (float) Math.toRadians(45.0);
+		panelLeft.rotateAngleX = 0.7853981633974483f;
 		standLeft.addChild(panelLeft);
 	}
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-		body.rotateAngleX = f * (float) Math.toRadians(20.0);
+		body.rotateAngleX = f * 0.3490658503988659f;
 		base.render(f5);
 		body.render(f5);
 		standRight.render(f5);

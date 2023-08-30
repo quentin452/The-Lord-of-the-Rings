@@ -16,7 +16,8 @@ public class LOTRRecipesPoisonDrinks implements IRecipe {
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
 		EntityPlayer craftingPlayer;
 		ItemStack result;
-		block12: {
+		block12:
+		{
 			ItemStack drink = null;
 			ItemStack poison = null;
 			for (int i = 0; i < inv.getSizeInventory(); ++i) {

@@ -37,7 +37,7 @@ public class LOTRCommandTime extends CommandBase {
 		if (args.length >= 2) {
 			if ("set".equals(args[0])) {
 				long time;
-				time = "day".equals(args[1]) ? Math.round(LOTRTime.DAY_LENGTH * 0.03) : "night".equals(args[1]) ? Math.round(LOTRTime.DAY_LENGTH * 0.6) : (long) CommandBase.parseIntWithMin(sender, args[1], 0);
+				time = "day".equals(args[1]) ? Math.round(LOTRTime.DAY_LENGTH * 0.03) : "night".equals(args[1]) ? Math.round(LOTRTime.DAY_LENGTH * 0.6) : CommandBase.parseIntWithMin(sender, args[1], 0);
 				LOTRTime.setWorldTime(time);
 				CommandBase.func_152373_a(sender, this, "commands.lotr.time.set", time);
 				return;

@@ -2,7 +2,9 @@ package lotr.common.world.map;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.text.*;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.google.common.io.Files;
@@ -14,11 +16,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.DimensionManager;
 
 public class LOTRCustomWaypointLogger {
-	public static Charset CHARSET = Charset.forName("UTF-8");
-	public static DateFormat DATE_FORMAT = new SimpleDateFormat("YYYY-MM");
-	public static DateFormat MONTH_DATE_FORMAT = new SimpleDateFormat("MM-dd");
-	public static DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
+	public static Charset CHARSET = StandardCharsets.UTF_8;
+	public static DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MM-dd", Locale.ROOT);
+	public static DateTimeFormatter MONTH_DATE_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss", Locale.ROOT);
+	public static DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ROOT);
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static void log(String function, EntityPlayer entityplayer, LOTRCustomWaypoint cwp) {
 		if (!LOTRConfig.cwpLog) {
 			return;
@@ -26,8 +29,21 @@ public class LOTRCustomWaypointLogger {
 		try {
 			File logFile;
 			File dupeLogDir;
-			Date date = Calendar.getInstance().getTime();
-			StringBuilder logLine = new StringBuilder().append(String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", MONTH_DATE_FORMAT.format(date), TIME_FORMAT.format(date), function, entityplayer.getCommandSenderName(), entityplayer.getPersistentID(), cwp.getCodeName(), cwp.getXCoord(), cwp.getYCoordSaved(), cwp.getZCoord(), cwp.isShared(), cwp.isShared() ? cwp.getSharingPlayerName() : "N/A", cwp.isShared() ? cwp.getSharingPlayerID() : "N/A"));
+			LocalDateTime now = LocalDateTime.now();
+			StringBuilder logLine = new StringBuilder()
+					.append(String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+							now.format(DATE_FORMAT),
+							now.format(MONTH_DATE_FORMAT),
+							function,
+							entityplayer.getCommandSenderName(),
+							entityplayer.getPersistentID(),
+							cwp.getCodeName(),
+							cwp.getXCoord(),
+							cwp.getYCoordSaved(),
+							cwp.getZCoord(),
+							cwp.isShared(),
+							cwp.isShared() ? cwp.getSharingPlayerName() : "N/A",
+							cwp.isShared() ? cwp.getSharingPlayerID() : "N/A"));
 			if (cwp.isShared()) {
 				List<UUID> fsIDs = cwp.getSharedFellowshipIDs();
 				for (UUID id : fsIDs) {
@@ -42,7 +58,7 @@ public class LOTRCustomWaypointLogger {
 			if (!(dupeLogDir = new File(DimensionManager.getCurrentSaveRootDirectory(), "lotr_cwp_logs")).exists()) {
 				dupeLogDir.mkdirs();
 			}
-			if (!(logFile = new File(dupeLogDir, DATE_FORMAT.format(date) + ".csv")).exists()) {
+			if (!(logFile = new File(dupeLogDir, now.format(DATE_FORMAT) + ".csv")).exists()) {
 				Files.append("date,time,function,username,UUID,wp_name,x,y,z,shared,sharer_name,sharer_UUID,common_fellowships" + System.lineSeparator(), logFile, CHARSET);
 			}
 			Files.append(logLine.append(System.lineSeparator()).toString(), logFile, CHARSET);
@@ -53,18 +69,18 @@ public class LOTRCustomWaypointLogger {
 	}
 
 	public static void logCreate(EntityPlayer entityplayer, LOTRCustomWaypoint cwp) {
-		LOTRCustomWaypointLogger.log("CREATE", entityplayer, cwp);
+		log("CREATE", entityplayer, cwp);
 	}
 
 	public static void logDelete(EntityPlayer entityplayer, LOTRCustomWaypoint cwp) {
-		LOTRCustomWaypointLogger.log("DELETE", entityplayer, cwp);
+		log("DELETE", entityplayer, cwp);
 	}
 
 	public static void logRename(EntityPlayer entityplayer, LOTRCustomWaypoint cwp) {
-		LOTRCustomWaypointLogger.log("RENAME", entityplayer, cwp);
+		log("RENAME", entityplayer, cwp);
 	}
 
 	public static void logTravel(EntityPlayer entityplayer, LOTRCustomWaypoint cwp) {
-		LOTRCustomWaypointLogger.log("TRAVEL", entityplayer, cwp);
+		log("TRAVEL", entityplayer, cwp);
 	}
 }

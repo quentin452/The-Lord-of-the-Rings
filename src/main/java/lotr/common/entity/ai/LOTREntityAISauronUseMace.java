@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class LOTREntityAISauronUseMace extends EntityAIBase {
 	public LOTREntitySauron theSauron;
-	public int attackTick = 0;
+	public int attackTick;
 	public World theWorld;
 
 	public LOTREntityAISauronUseMace(LOTREntitySauron sauron) {
@@ -73,7 +73,7 @@ public class LOTREntityAISauronUseMace extends EntityAIBase {
 	@Override
 	public void updateTask() {
 		attackTick = Math.max(attackTick - 1, 0);
-		if (attackTick <= 0) {
+		if (attackTick == 0) {
 			attackTick = 40;
 			LOTRItemSauronMace.useSauronMace(theSauron.getEquipmentInSlot(0), theWorld, theSauron);
 			theSauron.setIsUsingMace(false);

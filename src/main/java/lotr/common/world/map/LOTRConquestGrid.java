@@ -6,6 +6,7 @@ import java.util.*;
 import com.google.common.math.IntMath;
 
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.*;
 import lotr.common.fac.*;
 import lotr.common.network.*;
@@ -24,8 +25,8 @@ public class LOTRConquestGrid {
 	public static Map<GridCoordPair, LOTRConquestZone> zoneMap = new HashMap<>();
 	public static LOTRConquestZone dummyZone = new LOTRConquestZone(-999, -999).setDummyZone();
 	public static boolean needsLoad = true;
-	public static Set<GridCoordPair> dirtyZones = new HashSet<>();
-	public static float MIN_CONQUEST = 0.0f;
+	public static Collection<GridCoordPair> dirtyZones = new HashSet<>();
+	public static float MIN_CONQUEST;
 	public static float MAX_CONQUEST_SET = 100000.0f;
 	public static Map<GridCoordPair, List<LOTRFaction>> cachedZoneFactions = new HashMap<>();
 
@@ -62,7 +63,7 @@ public class LOTRConquestGrid {
 				LOTRFaction pledgeFac;
 				EntityPlayerMP player = (EntityPlayerMP) obj;
 				LOTRPlayerData pd = LOTRLevelData.getData(player);
-				if (player.getDistanceSqToEntity(originPlayer) > 40000.0 || LOTRConquestGrid.getZoneByEntityCoords(player) != zone) {
+				if (player.getDistanceSqToEntity(originPlayer) > 40000.0 || getZoneByEntityCoords(player) != zone) {
 					continue;
 				}
 				boolean playerApplicable;
@@ -70,7 +71,7 @@ public class LOTRConquestGrid {
 				if (!playerApplicable) {
 					continue;
 				}
-				LOTRPacketConquestNotification pkt = new LOTRPacketConquestNotification(faction, newConq, isCleansing);
+				IMessage pkt = new LOTRPacketConquestNotification(faction, newConq, isCleansing);
 				LOTRPacketHandler.networkWrapper.sendTo(pkt, player);
 			}
 		}
@@ -96,7 +97,7 @@ public class LOTRConquestGrid {
 					float frac = 1.0f - dist / 3.5f;
 					float conqGainHere = frac * conqGain;
 					float conqCleanseHere = frac * conqCleanse;
-					LOTRConquestZone zone = LOTRConquestGrid.getZoneByGridCoords(zoneX, zoneZ);
+					LOTRConquestZone zone = getZoneByGridCoords(zoneX, zoneZ);
 					if (zone.isDummyZone) {
 						continue;
 					}
@@ -108,7 +109,7 @@ public class LOTRConquestGrid {
 							centralConqBonus = newEnemyConq - enemyConq;
 						}
 						if (killingPlayer != null) {
-							LOTRConquestGrid.checkNotifyConquest(zone, killingPlayer, enemyFaction, newEnemyConq, enemyConq, true);
+							checkNotifyConquest(zone, killingPlayer, enemyFaction, newEnemyConq, enemyConq, true);
 						}
 						doneEnemyCleansing = true;
 					}
@@ -124,7 +125,7 @@ public class LOTRConquestGrid {
 					if (killingPlayer == null) {
 						continue;
 					}
-					LOTRConquestGrid.checkNotifyConquest(zone, killingPlayer, pledgeFaction, newZoneConq, prevZoneConq, false);
+					checkNotifyConquest(zone, killingPlayer, pledgeFaction, newZoneConq, prevZoneConq, false);
 				}
 			}
 			return centralConqBonus;
@@ -132,6 +133,7 @@ public class LOTRConquestGrid {
 		return 0.0f;
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static File getConquestDir() {
 		File dir = new File(LOTRLevelData.getOrCreateLOTRDir(), "conquest_zones");
 		if (!dir.exists()) {
@@ -150,9 +152,9 @@ public class LOTRConquestGrid {
 		if (cachedFacs == null) {
 			Object biome;
 			cachedFacs = new ArrayList<>();
-			ArrayList includedBiomes = new ArrayList();
-			int[] mapMin = LOTRConquestGrid.getMinCoordsOnMap(zone);
-			int[] mapMax = LOTRConquestGrid.getMaxCoordsOnMap(zone);
+			Collection includedBiomes = new ArrayList();
+			int[] mapMin = getMinCoordsOnMap(zone);
+			int[] mapMax = getMaxCoordsOnMap(zone);
 			int mapXMin = mapMin[0];
 			int mapXMax = mapMax[0];
 			int mapZMin = mapMin[1];
@@ -166,10 +168,9 @@ public class LOTRConquestGrid {
 					includedBiomes.add(biome);
 				}
 			}
-			block2: for (LOTRFaction fac : LOTRFaction.getPlayableAlignmentFactions()) {
-				Iterator<LOTRBiome> biome1 = includedBiomes.iterator();
-				while (biome1.hasNext()) {
-					LOTRBiome biome2 = biome1.next();
+			block2:
+			for (LOTRFaction fac : LOTRFaction.getPlayableAlignmentFactions()) {
+				for (LOTRBiome biome2 : (Iterable<LOTRBiome>) includedBiomes) {
 					if (!biome2.npcSpawnList.isFactionPresent(world, fac)) {
 						continue;
 					}
@@ -202,28 +203,28 @@ public class LOTRConquestGrid {
 	}
 
 	public static int[] getMaxCoordsOnMap(LOTRConquestZone zone) {
-		return new int[] { LOTRConquestGrid.gridToMapCoord(zone.gridX + 1), LOTRConquestGrid.gridToMapCoord(zone.gridZ + 1) };
+		return new int[]{gridToMapCoord(zone.gridX + 1), gridToMapCoord(zone.gridZ + 1)};
 	}
 
 	public static int[] getMinCoordsOnMap(LOTRConquestZone zone) {
-		return new int[] { LOTRConquestGrid.gridToMapCoord(zone.gridX), LOTRConquestGrid.gridToMapCoord(zone.gridZ) };
+		return new int[]{gridToMapCoord(zone.gridX), gridToMapCoord(zone.gridZ)};
 	}
 
 	public static LOTRConquestZone getZoneByEntityCoords(Entity entity) {
 		int i = MathHelper.floor_double(entity.posX);
 		int k = MathHelper.floor_double(entity.posZ);
-		return LOTRConquestGrid.getZoneByWorldCoords(i, k);
+		return getZoneByWorldCoords(i, k);
 	}
 
 	public static LOTRConquestZone getZoneByGridCoords(int i, int k) {
-		if (i < 0 || i >= MathHelper.ceiling_float_int((float) LOTRGenLayerWorld.imageWidth / (float) MAP_GRID_SCALE) || k < 0 || k >= MathHelper.ceiling_float_int((float) LOTRGenLayerWorld.imageHeight / (float) MAP_GRID_SCALE)) {
+		if (i < 0 || i >= MathHelper.ceiling_float_int((float) LOTRGenLayerWorld.imageWidth / MAP_GRID_SCALE) || k < 0 || k >= MathHelper.ceiling_float_int((float) LOTRGenLayerWorld.imageHeight / MAP_GRID_SCALE)) {
 			return dummyZone;
 		}
 		GridCoordPair key = new GridCoordPair(i, k);
 		LOTRConquestZone zone = zoneMap.get(key);
 		if (zone == null) {
-			File zoneDat = LOTRConquestGrid.getZoneDat(key);
-			zone = LOTRConquestGrid.loadZoneFromFile(zoneDat);
+			File zoneDat = getZoneDat(key);
+			zone = loadZoneFromFile(zoneDat);
 			if (zone == null) {
 				zone = new LOTRConquestZone(i, k);
 			}
@@ -233,18 +234,18 @@ public class LOTRConquestGrid {
 	}
 
 	public static LOTRConquestZone getZoneByWorldCoords(int i, int k) {
-		int x = LOTRConquestGrid.worldToGridX(i);
-		int z = LOTRConquestGrid.worldToGridZ(k);
-		return LOTRConquestGrid.getZoneByGridCoords(x, z);
+		int x = worldToGridX(i);
+		int z = worldToGridZ(k);
+		return getZoneByGridCoords(x, z);
 	}
 
 	public static File getZoneDat(GridCoordPair key) {
-		return new File(LOTRConquestGrid.getConquestDir(), key.gridX + "." + key.gridZ + ".dat");
+		return new File(getConquestDir(), key.gridX + "." + key.gridZ + ".dat");
 	}
 
 	public static File getZoneDat(LOTRConquestZone zone) {
 		GridCoordPair key = GridCoordPair.forZone(zone);
-		return LOTRConquestGrid.getZoneDat(key);
+		return getZoneDat(key);
 	}
 
 	public static int gridToMapCoord(int i) {
@@ -255,11 +256,11 @@ public class LOTRConquestGrid {
 		try {
 			zoneMap.clear();
 			dirtyZones.clear();
-			File dir = LOTRConquestGrid.getConquestDir();
+			File dir = getConquestDir();
 			if (dir.exists()) {
 				for (File zoneDat : dir.listFiles()) {
 					LOTRConquestZone zone;
-					if (zoneDat.isDirectory() || !zoneDat.getName().endsWith(".dat") || (zone = LOTRConquestGrid.loadZoneFromFile(zoneDat)) == null) {
+					if (zoneDat.isDirectory() || !zoneDat.getName().endsWith(".dat") || (zone = loadZoneFromFile(zoneDat)) == null) {
 						continue;
 					}
 					GridCoordPair key = GridCoordPair.forZone(zone);
@@ -301,25 +302,25 @@ public class LOTRConquestGrid {
 
 	public static float onConquestKill(EntityPlayer entityplayer, LOTRFaction pledgeFaction, LOTRFaction enemyFaction, float alignBonus) {
 		World world = entityplayer.worldObj;
-		if (!world.isRemote && LOTRConquestGrid.conquestEnabled(world) && LOTRLevelData.getData(entityplayer).getEnableConquestKills() && entityplayer.dimension == LOTRDimension.MIDDLE_EARTH.dimensionID) {
-			LOTRConquestZone centralZone = LOTRConquestGrid.getZoneByEntityCoords(entityplayer);
+		if (!world.isRemote && conquestEnabled(world) && LOTRLevelData.getData(entityplayer).getEnableConquestKills() && entityplayer.dimension == LOTRDimension.MIDDLE_EARTH.dimensionID) {
+			LOTRConquestZone centralZone = getZoneByEntityCoords(entityplayer);
 			float conqAmount = alignBonus * LOTRLevelData.getConquestRate();
-			float conqGain = conqAmount * LOTRConquestGrid.getConquestGainRate(entityplayer);
-			float conqCleanse = conqAmount * LOTRConquestGrid.getConquestGainRate(entityplayer);
-			return LOTRConquestGrid.doRadialConquest(world, centralZone, entityplayer, pledgeFaction, enemyFaction, conqGain, conqCleanse);
+			float conqGain = conqAmount * getConquestGainRate(entityplayer);
+			float conqCleanse = conqAmount * getConquestGainRate(entityplayer);
+			return doRadialConquest(world, centralZone, entityplayer, pledgeFaction, enemyFaction, conqGain, conqCleanse);
 		}
 		return 0.0f;
 	}
 
 	public static void saveChangedZones() {
 		try {
-			HashSet<GridCoordPair> removes = new HashSet<>();
+			Collection<GridCoordPair> removes = new HashSet<>();
 			for (GridCoordPair key : dirtyZones) {
 				LOTRConquestZone zone = zoneMap.get(key);
 				if (zone == null) {
 					continue;
 				}
-				LOTRConquestGrid.saveZoneToFile(zone);
+				saveZoneToFile(zone);
 				if (!zone.isEmpty()) {
 					continue;
 				}
@@ -335,8 +336,9 @@ public class LOTRConquestGrid {
 		}
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static void saveZoneToFile(LOTRConquestZone zone) {
-		File zoneDat = LOTRConquestGrid.getZoneDat(zone);
+		File zoneDat = getZoneDat(zone);
 		try {
 			if (zone.isEmpty()) {
 				zoneDat.delete();
@@ -352,7 +354,7 @@ public class LOTRConquestGrid {
 	}
 
 	public static void sendConquestGridTo(EntityPlayerMP entityplayer, LOTRFaction fac) {
-		LOTRPacketConquestGrid pkt = new LOTRPacketConquestGrid(fac, zoneMap.values(), entityplayer.worldObj);
+		IMessage pkt = new LOTRPacketConquestGrid(fac, zoneMap.values(), entityplayer.worldObj);
 		LOTRPacketHandler.networkWrapper.sendTo(pkt, entityplayer);
 		LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
 		if (fac == pd.getPledgeFaction()) {
@@ -362,7 +364,7 @@ public class LOTRConquestGrid {
 
 	public static void updateZones(World world) {
 		MinecraftServer srv;
-		if (LOTRConquestGrid.conquestEnabled(world) && (srv = MinecraftServer.getServer()) != null) {
+		if (conquestEnabled(world) && (srv = MinecraftServer.getServer()) != null) {
 			int tick = srv.getTickCounter();
 			int interval = 6000;
 			for (LOTRConquestZone zone : zoneMap.values()) {
@@ -376,21 +378,21 @@ public class LOTRConquestGrid {
 
 	public static int worldToGridX(int i) {
 		int mapX = i >> 7;
-		return (mapX += 810) >> 3;
+		return mapX + 810 >> 3;
 	}
 
 	public static int worldToGridZ(int k) {
 		int mapZ = k >> 7;
-		return (mapZ += 730) >> 3;
+		return mapZ + 730 >> 3;
 	}
 
 	public enum ConquestEffective {
-		EFFECTIVE, ALLY_BOOST, NO_EFFECT;
+		EFFECTIVE, ALLY_BOOST, NO_EFFECT
 
 	}
 
 	public enum ConquestViewable {
-		UNPLEDGED, CAN_VIEW, NEED_RANK;
+		UNPLEDGED, CAN_VIEW, NEED_RANK
 
 	}
 

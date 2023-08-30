@@ -59,7 +59,7 @@ public class LOTRBlockMorgulFlower extends LOTRBlockFlower {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		if (random.nextInt(4) == 0) {

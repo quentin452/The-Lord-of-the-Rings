@@ -17,9 +17,9 @@ import net.minecraft.world.World;
 public class LOTRItemDaleCracker extends Item {
 	public static int emptyMeta = 4096;
 	public static int CUSTOM_CAPACITY = 3;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] crackerIcons;
-	public String[] crackerNames = { "red", "blue", "green", "silver", "gold" };
+	public String[] crackerNames = {"red", "blue", "green", "silver", "gold"};
 
 	public LOTRItemDaleCracker() {
 		setMaxStackSize(1);
@@ -28,11 +28,11 @@ public class LOTRItemDaleCracker extends Item {
 		setCreativeTab(LOTRCreativeTabs.tabMisc);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-		if (!LOTRItemDaleCracker.isEmpty(itemstack)) {
-			String name = LOTRItemDaleCracker.getSealingPlayerName(itemstack);
+		if (!isEmpty(itemstack)) {
+			String name = getSealingPlayerName(itemstack);
 			if (name == null) {
 				name = StatCollector.translateToLocal("item.lotr.cracker.sealedByDale");
 			}
@@ -40,10 +40,10 @@ public class LOTRItemDaleCracker extends Item {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIconFromDamage(int i) {
-		i = LOTRItemDaleCracker.getBaseCrackerMetadata(i);
+		i = getBaseCrackerMetadata(i);
 		if (i >= crackerIcons.length) {
 			i = 0;
 		}
@@ -52,7 +52,7 @@ public class LOTRItemDaleCracker extends Item {
 
 	@Override
 	public String getItemStackDisplayName(ItemStack itemstack) {
-		if (LOTRItemDaleCracker.isEmpty(itemstack)) {
+		if (isEmpty(itemstack)) {
 			String name = super.getItemStackDisplayName(itemstack);
 			return StatCollector.translateToLocalFormatted("item.lotr.cracker.empty", name);
 		}
@@ -69,18 +69,18 @@ public class LOTRItemDaleCracker extends Item {
 		return 40;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < crackerNames.length; ++i) {
 			list.add(new ItemStack(item, 1, i));
-			list.add(LOTRItemDaleCracker.setEmpty(new ItemStack(item, 1, i), true));
+			list.add(setEmpty(new ItemStack(item, 1, i), true));
 		}
 	}
 
 	@Override
 	public ItemStack onEaten(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		if (!LOTRItemDaleCracker.isEmpty(itemstack)) {
+		if (!isEmpty(itemstack)) {
 			if (!entityplayer.capabilities.isCreativeMode) {
 				--itemstack.stackSize;
 				if (itemstack.stackSize <= 0) {
@@ -89,8 +89,8 @@ public class LOTRItemDaleCracker extends Item {
 			}
 			world.playSoundAtEntity(entityplayer, "fireworks.blast", 1.0f, 0.9f + world.rand.nextFloat() * 0.1f);
 			if (!world.isRemote) {
-				IInventory crackerItems = null;
-				IInventory customItems = LOTRItemDaleCracker.loadCustomCrackerContents(itemstack);
+				IInventory crackerItems;
+				IInventory customItems = loadCustomCrackerContents(itemstack);
 				if (customItems != null) {
 					crackerItems = customItems;
 				} else {
@@ -120,15 +120,15 @@ public class LOTRItemDaleCracker extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		if (!LOTRItemDaleCracker.isEmpty(itemstack)) {
-			entityplayer.setItemInUse(itemstack, getMaxItemUseDuration(itemstack));
-		} else {
+		if (isEmpty(itemstack)) {
 			entityplayer.openGui(LOTRMod.instance, 48, world, 0, 0, 0);
+		} else {
+			entityplayer.setItemInUse(itemstack, getMaxItemUseDuration(itemstack));
 		}
 		return itemstack;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerIcons(IIconRegister iconregister) {
 		crackerIcons = new IIcon[crackerNames.length];
@@ -156,7 +156,7 @@ public class LOTRItemDaleCracker extends Item {
 		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("CustomCracker")) {
 			NBTTagCompound invData = itemstack.getTagCompound().getCompoundTag("CustomCracker");
 			int size = invData.getInteger("Size");
-			InventoryBasic inv = new InventoryBasic("cracker", false, size);
+			IInventory inv = new InventoryBasic("cracker", false, size);
 			NBTTagList items = invData.getTagList("Items", 10);
 			for (int i = 0; i < items.tagCount(); ++i) {
 				NBTTagCompound itemData = items.getCompoundTagAt(i);
@@ -199,7 +199,7 @@ public class LOTRItemDaleCracker extends Item {
 
 	public static ItemStack setEmpty(ItemStack itemstack, boolean flag) {
 		int i = itemstack.getItemDamage();
-		i = flag ? (i |= emptyMeta) : (i &= ~emptyMeta);
+		i = flag ? i | emptyMeta : i & ~emptyMeta;
 		itemstack.setItemDamage(i);
 		return itemstack;
 	}

@@ -40,8 +40,4 @@ public class LOTRBiomeGenAngmarMountains extends LOTRBiomeGenAngmar {
 		}
 	}
 
-	@Override
-	public boolean getEnableRiver() {
-		return false;
-	}
 }

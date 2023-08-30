@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class LOTREntityRangerNorthCaptain extends LOTREntityRangerNorth implements LOTRUnitTradeable {
 	public LOTREntityRangerNorthCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		spawnRidingHorse = false;
 	}
 

@@ -2,6 +2,7 @@ package lotr.common.tileentity;
 
 import java.util.Arrays;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.network.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,9 +16,9 @@ public abstract class LOTRTileEntitySign extends TileEntity {
 	public int lineBeingEdited = -1;
 	public boolean editable = true;
 	public EntityPlayer editingPlayer;
-	public boolean isFakeGuiSign = false;
+	public boolean isFakeGuiSign;
 
-	public LOTRTileEntitySign() {
+	protected LOTRTileEntitySign() {
 		Arrays.fill(signText, "");
 	}
 
@@ -45,8 +46,8 @@ public abstract class LOTRTileEntitySign extends TileEntity {
 	}
 
 	public void openEditGUI(EntityPlayerMP entityplayer) {
-		setEditingPlayer(entityplayer);
-		LOTRPacketOpenSignEditor packet = new LOTRPacketOpenSignEditor(this);
+		editingPlayer = entityplayer;
+		IMessage packet = new LOTRPacketOpenSignEditor(this);
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 

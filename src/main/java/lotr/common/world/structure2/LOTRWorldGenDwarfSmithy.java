@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 public class LOTRWorldGenDwarfSmithy extends LOTRWorldGenStructureBase2 {
 	public Block baseBrickBlock = Blocks.stonebrick;
-	public int baseBrickMeta = 0;
+	public int baseBrickMeta;
 	public Block brickBlock = LOTRMod.brick;
 	public int brickMeta = 6;
 	public Block brickSlabBlock = LOTRMod.slabSingle;
@@ -24,7 +24,7 @@ public class LOTRWorldGenDwarfSmithy extends LOTRWorldGenStructureBase2 {
 	public Block carvedBrickBlock = LOTRMod.brick2;
 	public int carvedBrickMeta = 12;
 	public Block pillarBlock = LOTRMod.pillar;
-	public int pillarMeta = 0;
+	public int pillarMeta;
 	public Block plankBlock;
 	public int plankMeta;
 	public Block gateBlock;
@@ -47,7 +47,7 @@ public class LOTRWorldGenDwarfSmithy extends LOTRWorldGenStructureBase2 {
 		int j1;
 		int k12;
 		int i2;
-		this.setOriginAndRotation(world, i, j, k, rotation, 5);
+		setOriginAndRotation(world, i, j, k, rotation, 5);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -135,7 +135,7 @@ public class LOTRWorldGenDwarfSmithy extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, 2, 4, -3, brickStairBlock, 0);
 		for (i1 = -1; i1 <= 1; ++i1) {
 			for (k1 = 2; k1 <= 4; ++k1) {
-				i2 = Math.abs(i1 - 0);
+				i2 = Math.abs(i1);
 				k2 = Math.abs(k1 - 3);
 				if (i2 == 1 && k2 == 1) {
 					setBlockAndMetadata(world, i1, 5, k1, brickSlabBlock, brickSlabMeta);
@@ -165,19 +165,19 @@ public class LOTRWorldGenDwarfSmithy extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, -2, 2, -3, Blocks.torch, 2);
 		setBlockAndMetadata(world, 2, 2, -3, Blocks.torch, 1);
 		setBlockAndMetadata(world, 0, 1, -1, Blocks.anvil, 1);
-		for (int i13 : new int[] { -3, 3 }) {
+		for (int i13 : new int[]{-3, 3}) {
 			setBlockAndMetadata(world, i13, 1, -1, Blocks.anvil, 0);
 			setBlockAndMetadata(world, i13, 1, 0, tableBlock, 0);
 			setBlockAndMetadata(world, i13, 1, 2, Blocks.crafting_table, 0);
 		}
 		setBlockAndMetadata(world, -3, 1, -2, LOTRMod.unsmeltery, 4);
 		setBlockAndMetadata(world, 3, 1, -2, LOTRMod.unsmeltery, 5);
-		this.placeChest(world, random, -3, 1, 1, 4, getChestContents());
-		this.placeChest(world, random, 3, 1, 1, 5, getChestContents());
+		placeChest(world, random, -3, 1, 1, 4, getChestContents());
+		placeChest(world, random, 3, 1, 1, 5, getChestContents());
 		placeDwarfForge(world, random, 0, 1, 2, 2);
 		placeDwarfForge(world, random, -1, 1, 3, 5);
 		placeDwarfForge(world, random, 1, 1, 3, 4);
-		for (int i13 : new int[] { -1, 1 }) {
+		for (int i13 : new int[]{-1, 1}) {
 			setBlockAndMetadata(world, i13, 1, 2, brickBlock, brickMeta);
 			setBlockAndMetadata(world, i13, 2, 2, carvedBrickBlock, carvedBrickMeta);
 			setBlockAndMetadata(world, i13, 3, 2, brickStairBlock, 2);
@@ -220,28 +220,28 @@ public class LOTRWorldGenDwarfSmithy extends LOTRWorldGenStructureBase2 {
 	public void setupRandomBlocks(Random random) {
 		int randomWood = random.nextInt(4);
 		switch (randomWood) {
-		case 0:
-			plankBlock = Blocks.planks;
-			plankMeta = 1;
-			gateBlock = Blocks.fence_gate;
-			break;
-		case 1:
-			plankBlock = LOTRMod.planks;
-			plankMeta = 13;
-			gateBlock = LOTRMod.fenceGateLarch;
-			break;
-		case 2:
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 4;
-			gateBlock = LOTRMod.fenceGatePine;
-			break;
-		case 3:
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 3;
-			gateBlock = LOTRMod.fenceGateFir;
-			break;
-		default:
-			break;
+			case 0:
+				plankBlock = Blocks.planks;
+				plankMeta = 1;
+				gateBlock = Blocks.fence_gate;
+				break;
+			case 1:
+				plankBlock = LOTRMod.planks;
+				plankMeta = 13;
+				gateBlock = LOTRMod.fenceGateLarch;
+				break;
+			case 2:
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 4;
+				gateBlock = LOTRMod.fenceGatePine;
+				break;
+			case 3:
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 3;
+				gateBlock = LOTRMod.fenceGateFir;
+				break;
+			default:
+				break;
 		}
 	}
 }

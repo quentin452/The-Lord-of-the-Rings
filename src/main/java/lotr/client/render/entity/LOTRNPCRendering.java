@@ -62,7 +62,7 @@ public class LOTRNPCRendering {
 			double d3 = npc.lastTickPosX + (npc.posX - npc.lastTickPosX) * f;
 			double d4 = npc.lastTickPosY + (npc.posY - npc.lastTickPosY) * f;
 			double d5 = npc.lastTickPosZ + (npc.posZ - npc.lastTickPosZ) * f;
-			LOTRNPCRendering.renderSpeech(npc, timedSpeech.getSpeech(), timedSpeech.getAge(), d3 - d0, d4 - d1, d5 - d2);
+			renderSpeech(npc, timedSpeech.getSpeech(), timedSpeech.getAge(), d3 - d0, d4 - d1, d5 - d2);
 		}
 		GL11.glAlphaFunc(516, 0.1f);
 		RenderHelper.disableStandardItemLighting();
@@ -166,7 +166,7 @@ public class LOTRNPCRendering {
 			return;
 		}
 		if (entity instanceof LOTREntityNPC && LOTRSpeechClient.hasSpeech((LOTREntityNPC) entity)) {
-			d1 += LOTRNPCRendering.calcSpeechDisplacement((LOTREntityNPC) entity);
+			d1 += calcSpeechDisplacement((LOTREntityNPC) entity);
 		}
 		Minecraft mc = Minecraft.getMinecraft();
 		TextureManager textureManager = mc.getTextureManager();
@@ -263,9 +263,9 @@ public class LOTRNPCRendering {
 			return;
 		}
 		if (entity instanceof LOTREntityNPC && LOTRSpeechClient.hasSpeech((LOTREntityNPC) entity)) {
-			d1 += LOTRNPCRendering.calcSpeechDisplacement((LOTREntityNPC) entity);
+			d1 += calcSpeechDisplacement((LOTREntityNPC) entity);
 		}
-		LOTRNPCRendering.renderHealthBar(entity, d, d1, d2, new int[] { 5888860, 12006707 }, new int[] { 6079225, 12006707 });
+		renderHealthBar(entity, d, d1, d2, new int[]{5888860, 12006707}, new int[]{6079225, 12006707});
 	}
 
 	public static void renderQuestBook(LOTREntityNPC npc, double d, double d1, double d2) {
@@ -296,7 +296,7 @@ public class LOTRNPCRendering {
 				GL11.glDisable(2896);
 				GL11.glTranslatef((float) d, (float) d1 + npc.height + 1.3f, (float) d2);
 				float scale = 1.0f;
-				GL11.glRotatef(rotation *= 6.0f, 0.0f, 1.0f, 0.0f);
+				GL11.glRotatef(rotation * 6.0f, 0.0f, 1.0f, 0.0f);
 				GL11.glTranslatef(-0.5f * scale, -0.5f * scale, 0.03125f * scale);
 				GL11.glScalef(scale, scale, scale);
 				textureManager.bindTexture(TextureMap.locationItemsTexture);
@@ -392,7 +392,6 @@ public class LOTRNPCRendering {
 		Minecraft mc = Minecraft.getMinecraft();
 		WorldClient world = mc.theWorld;
 		world.theProfiler.startSection("renderNPCSpeech");
-		mc.getTextureManager();
 		RenderManager renderManager = RenderManager.instance;
 		FontRenderer fr = mc.fontRenderer;
 		double distance = RendererLivingEntity.NAME_TAG_RANGE;

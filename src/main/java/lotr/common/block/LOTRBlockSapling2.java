@@ -23,70 +23,70 @@ public class LOTRBlockSapling2 extends LOTRBlockSaplingBase {
 		int xOffset = 0;
 		int zOffset = 0;
 		switch (meta) {
-		case 0: {
-			int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta);
-			if (partyTree != null) {
-				treeGen = LOTRTreeType.LEBETHRON_PARTY.create(true, random);
-				trunkPos = 1;
-				trunkNeg = 1;
-				xOffset = partyTree[0];
-				zOffset = partyTree[1];
-			}
-			if (treeGen == null) {
-				treeGen = random.nextInt(10) == 0 ? LOTRTreeType.LEBETHRON_LARGE.create(true, random) : LOTRTreeType.LEBETHRON.create(true, random);
-				trunkPos = 0;
-				trunkNeg = 0;
-				xOffset = 0;
-				zOffset = 0;
-			}
-			break;
-		}
-		case 1: {
-			int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta);
-			if (partyTree != null) {
-				treeGen = LOTRTreeType.BEECH_PARTY.create(true, random);
-				trunkPos = 1;
-				trunkNeg = 1;
-				xOffset = partyTree[0];
-				zOffset = partyTree[1];
-			}
-			if (treeGen == null) {
-				treeGen = random.nextInt(10) == 0 ? LOTRTreeType.BEECH_LARGE.create(true, random) : LOTRTreeType.BEECH.create(true, random);
-				trunkPos = 0;
-				trunkNeg = 0;
-				xOffset = 0;
-				zOffset = 0;
-			}
-			break;
-		}
-		case 2:
-			for (int i12 = 0; i12 >= -1; --i12) {
-				for (k1 = 0; k1 >= -1; --k1) {
-					if (!this.isSameSapling(world, i + i12, j, k + k1, meta) || !this.isSameSapling(world, i + i12 + 1, j, k + k1, meta) || !this.isSameSapling(world, i + i12, j, k + k1 + 1, meta) || !this.isSameSapling(world, i + i12 + 1, j, k + k1 + 1, meta)) {
-						continue;
-					}
-					treeGen = LOTRTreeType.HOLLY_LARGE.create(true, random);
-					trunkNeg = 0;
+			case 0: {
+				int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta);
+				if (partyTree != null) {
+					treeGen = LOTRTreeType.LEBETHRON_PARTY.create(true, random);
 					trunkPos = 1;
-					xOffset = i12;
-					zOffset = k1;
-					break;
+					trunkNeg = 1;
+					xOffset = partyTree[0];
+					zOffset = partyTree[1];
 				}
-				if (treeGen != null) {
-					break;
+				if (treeGen == null) {
+					treeGen = random.nextInt(10) == 0 ? LOTRTreeType.LEBETHRON_LARGE.create(true, random) : LOTRTreeType.LEBETHRON.create(true, random);
+					trunkPos = 0;
+					trunkNeg = 0;
+					xOffset = 0;
+					zOffset = 0;
 				}
+				break;
 			}
-			if (treeGen == null) {
-				xOffset = 0;
-				zOffset = 0;
-				treeGen = LOTRTreeType.HOLLY.create(true, random);
+			case 1: {
+				int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta);
+				if (partyTree != null) {
+					treeGen = LOTRTreeType.BEECH_PARTY.create(true, random);
+					trunkPos = 1;
+					trunkNeg = 1;
+					xOffset = partyTree[0];
+					zOffset = partyTree[1];
+				}
+				if (treeGen == null) {
+					treeGen = random.nextInt(10) == 0 ? LOTRTreeType.BEECH_LARGE.create(true, random) : LOTRTreeType.BEECH.create(true, random);
+					trunkPos = 0;
+					trunkNeg = 0;
+					xOffset = 0;
+					zOffset = 0;
+				}
+				break;
 			}
-			break;
-		case 3:
-			treeGen = LOTRTreeType.BANANA.create(true, random);
-			break;
-		default:
-			break;
+			case 2:
+				for (int i12 = 0; i12 >= -1; --i12) {
+					for (k1 = 0; k1 >= -1; --k1) {
+						if (!isSameSapling(world, i + i12, j, k + k1, meta) || !isSameSapling(world, i + i12 + 1, j, k + k1, meta) || !isSameSapling(world, i + i12, j, k + k1 + 1, meta) || !isSameSapling(world, i + i12 + 1, j, k + k1 + 1, meta)) {
+							continue;
+						}
+						treeGen = LOTRTreeType.HOLLY_LARGE.create(true, random);
+						trunkNeg = 0;
+						trunkPos = 1;
+						xOffset = i12;
+						zOffset = k1;
+						break;
+					}
+					if (treeGen != null) {
+						break;
+					}
+				}
+				if (treeGen == null) {
+					xOffset = 0;
+					zOffset = 0;
+					treeGen = LOTRTreeType.HOLLY.create(true, random);
+				}
+				break;
+			case 3:
+				treeGen = LOTRTreeType.BANANA.create(true, random);
+				break;
+			default:
+				break;
 		}
 		for (i1 = -trunkNeg; i1 <= trunkPos; ++i1) {
 			for (k1 = -trunkNeg; k1 <= trunkPos; ++k1) {

@@ -9,9 +9,9 @@ import net.minecraft.tileentity.TileEntityFurnace;
 
 public class LOTRContainerUnsmeltery extends Container {
 	public LOTRTileEntityUnsmeltery theUnsmeltery;
-	public int currentSmeltTime = 0;
-	public int forgeSmeltTime = 0;
-	public int currentItemFuelValue = 0;
+	public int currentSmeltTime;
+	public int forgeSmeltTime;
+	public int currentItemFuelValue;
 
 	public LOTRContainerUnsmeltery(InventoryPlayer inv, LOTRTileEntityUnsmeltery unsmeltery) {
 		int i;
@@ -75,7 +75,7 @@ public class LOTRContainerUnsmeltery extends Container {
 					return null;
 				}
 				slot.onSlotChange(itemstack1, itemstack);
-			} else if (i != 1 && i != 0 ? theUnsmeltery.canBeUnsmelted(itemstack1) ? !mergeItemStack(itemstack1, 0, 1, false) : TileEntityFurnace.isItemFuel(itemstack1) ? !mergeItemStack(itemstack1, 1, 2, false) : i >= 3 && i < 30 ? !mergeItemStack(itemstack1, 30, 39, false) : i >= 30 && i < 39 && !mergeItemStack(itemstack1, 3, 30, false) : !mergeItemStack(itemstack1, 3, 39, false)) {
+			} else if (i != 1 && i != 0 ? theUnsmeltery.canBeUnsmelted(itemstack1) ? !mergeItemStack(itemstack1, 0, 1, false) : TileEntityFurnace.isItemFuel(itemstack1) ? !mergeItemStack(itemstack1, 1, 2, false) : i < 30 ? !mergeItemStack(itemstack1, 30, 39, false) : i < 39 && !mergeItemStack(itemstack1, 3, 30, false) : !mergeItemStack(itemstack1, 3, 39, false)) {
 				return null;
 			}
 			if (itemstack1.stackSize == 0) {
@@ -91,7 +91,7 @@ public class LOTRContainerUnsmeltery extends Container {
 		return itemstack;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void updateProgressBar(int i, int j) {
 		if (i == 0) {

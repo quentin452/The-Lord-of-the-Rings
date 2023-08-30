@@ -38,7 +38,7 @@ public class LOTRModelElk extends ModelBase {
 		body.addBox(-6.0f, -4.0f, -21.0f, 12, 11, 26, f);
 		ModelRenderer tail = new ModelRenderer(this, 0, 54);
 		tail.addBox(-1.0f, -5.0f, 2.0f, 2, 2, 8, f);
-		tail.rotateAngleX = (float) Math.toRadians(-60.0);
+		tail.rotateAngleX = -1.0471975511965976f;
 		body.addChild(tail);
 		leg1 = new ModelRenderer(this, 42, 37);
 		leg1.setRotationPoint(-4.0f, 3.0f, 8.0f);
@@ -70,16 +70,16 @@ public class LOTRModelElk extends ModelBase {
 		nose.addBox(-1.0f, -14.5f, -9.0f, 2, 2, 1, f);
 		antlersRight_1 = new ModelRenderer(this, 0, 0);
 		antlersRight_1.addBox(10.0f, -19.0f, 2.5f, 1, 12, 1, f);
-		antlersRight_1.rotateAngleZ = (float) Math.toRadians(-65.0);
+		antlersRight_1.rotateAngleZ = -1.1344640137963142f;
 		antlersRight_2 = new ModelRenderer(this, 4, 0);
 		antlersRight_2.addBox(-3.0f, -23.6f, 2.5f, 1, 8, 1, f);
-		antlersRight_2.rotateAngleZ = (float) Math.toRadians(-15.0);
+		antlersRight_2.rotateAngleZ = -0.2617993877991494f;
 		antlersRight_3 = new ModelRenderer(this, 8, 0);
 		antlersRight_3.addBox(-8.0f, -36.0f, 2.5f, 1, 16, 1, f);
-		antlersRight_3.rotateAngleZ = (float) Math.toRadians(-15.0);
+		antlersRight_3.rotateAngleZ = -0.2617993877991494f;
 		antlersRight_4 = new ModelRenderer(this, 12, 0);
 		antlersRight_4.addBox(7.5f, -35.0f, 2.5f, 1, 10, 1, f);
-		antlersRight_4.rotateAngleZ = (float) Math.toRadians(-50.0);
+		antlersRight_4.rotateAngleZ = -0.8726646259971648f;
 		head.addChild(antlersRight_1);
 		head.addChild(antlersRight_2);
 		head.addChild(antlersRight_3);
@@ -87,19 +87,19 @@ public class LOTRModelElk extends ModelBase {
 		antlersLeft_1 = new ModelRenderer(this, 0, 0);
 		antlersLeft_1.mirror = true;
 		antlersLeft_1.addBox(-11.0f, -19.0f, 2.5f, 1, 12, 1, f);
-		antlersLeft_1.rotateAngleZ = (float) Math.toRadians(65.0);
+		antlersLeft_1.rotateAngleZ = 1.1344640137963142f;
 		antlersLeft_2 = new ModelRenderer(this, 4, 0);
 		antlersLeft_2.mirror = true;
 		antlersLeft_2.addBox(2.0f, -23.6f, 2.5f, 1, 8, 1, f);
-		antlersLeft_2.rotateAngleZ = (float) Math.toRadians(15.0);
+		antlersLeft_2.rotateAngleZ = 0.2617993877991494f;
 		antlersLeft_3 = new ModelRenderer(this, 8, 0);
 		antlersLeft_3.mirror = true;
 		antlersLeft_3.addBox(7.0f, -36.0f, 2.5f, 1, 16, 1, f);
-		antlersLeft_3.rotateAngleZ = (float) Math.toRadians(15.0);
+		antlersLeft_3.rotateAngleZ = 0.2617993877991494f;
 		antlersLeft_4 = new ModelRenderer(this, 12, 0);
 		antlersLeft_4.mirror = true;
 		antlersLeft_4.addBox(-8.5f, -35.0f, 2.5f, 1, 10, 1, f);
-		antlersLeft_4.rotateAngleZ = (float) Math.toRadians(50.0);
+		antlersLeft_4.rotateAngleZ = 0.8726646259971648f;
 		head.addChild(antlersLeft_1);
 		head.addChild(antlersLeft_2);
 		head.addChild(antlersLeft_3);
@@ -147,7 +147,7 @@ public class LOTRModelElk extends ModelBase {
 		float antiRearAmount = 1.0f - rearAmount;
 		head.rotationPointY = 4.0f;
 		head.rotationPointZ = -10.0f;
-		head.rotateAngleX = (float) Math.toRadians(20.0);
+		head.rotateAngleX = 0.3490658503988659f;
 		head.rotateAngleY = 0.0f;
 		head.rotationPointY = rearAmount * -6.0f + antiRearAmount * head.rotationPointY;
 		head.rotationPointZ = rearAmount * -1.0f + antiRearAmount * head.rotationPointZ;
@@ -174,7 +174,7 @@ public class LOTRModelElk extends ModelBase {
 		leg3.rotationPointZ = leg4.rotationPointZ;
 		leg1.rotateAngleX = f18 + legRotation * antiRearAmount;
 		leg2.rotateAngleX = f18 + -legRotation * antiRearAmount;
-		leg3.rotateAngleX = (f17 + -f19) * rearAmount + -legRotation * 0.8f * antiRearAmount;
+		leg3.rotateAngleX = (f17 - f19) * rearAmount + -legRotation * 0.8f * antiRearAmount;
 		leg4.rotateAngleX = (f17 + f19) * rearAmount + legRotation * 0.8f * antiRearAmount;
 	}
 }

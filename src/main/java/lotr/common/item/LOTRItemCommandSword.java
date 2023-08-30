@@ -21,6 +21,7 @@ public class LOTRItemCommandSword extends LOTRItemSword implements LOTRSquadrons
 		lotrWeaponDamage = 1.0f;
 	}
 
+	@SuppressWarnings("Convert2Lambda")
 	public void command(EntityPlayer entityplayer, World world, ItemStack itemstack, MovingObjectPosition hitTarget) {
 		entityplayer.setRevengeTarget(null);
 		List spreadTargets = new ArrayList();
@@ -54,8 +55,8 @@ public class LOTRItemCommandSword extends LOTRItemSword implements LOTRSquadrons
 				}
 			}
 			if (!validTargets.isEmpty()) {
-				LOTREntityAINearestAttackableTargetBasic.TargetSorter sorter = new LOTREntityAINearestAttackableTargetBasic.TargetSorter(npc);
-				Collections.sort(validTargets, sorter);
+				Comparator<Entity> sorter = new LOTREntityAINearestAttackableTargetBasic.TargetSorter(npc);
+				validTargets.sort(sorter);
 				EntityLivingBase target = validTargets.get(0);
 				npc.hiredNPCInfo.commandSwordAttack(target);
 				npc.hiredNPCInfo.wasAttackCommanded = true;
@@ -64,10 +65,10 @@ public class LOTRItemCommandSword extends LOTRItemSword implements LOTRSquadrons
 			}
 			npc.hiredNPCInfo.commandSwordCancel();
 		}
-		if (anyAttackCommanded && hitTarget != null) {
+		if (anyAttackCommanded) {
 			Vec3 vec = hitTarget.hitVec;
-			LOTRPacketLocationFX packet = new LOTRPacketLocationFX(LOTRPacketLocationFX.Type.SWORD_COMMAND, vec.xCoord, vec.yCoord, vec.zCoord);
-			LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+			IMessage packet = new LOTRPacketLocationFX(LOTRPacketLocationFX.Type.SWORD_COMMAND, vec.xCoord, vec.yCoord, vec.zCoord);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		}
 	}
 

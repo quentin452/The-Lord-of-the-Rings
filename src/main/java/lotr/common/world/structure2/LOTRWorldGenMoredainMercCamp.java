@@ -27,6 +27,7 @@ public class LOTRWorldGenMoredainMercCamp extends LOTRWorldGenCampBase {
 				int k1;
 				int i1;
 				float ang;
+				//noinspection StatementWithEmptyBody
 				for (int att = 0; att < 8 && !generateSubstructureWithRestrictionFlag(new LOTRWorldGenMoredainMercDummy(notifyChanges), world, random, i1 = (int) ((r = MathHelper.getRandomIntegerInRange(random, 8, 15)) * MathHelper.cos(ang = random.nextFloat() * 3.1415927f * 2.0f)), getTopBlock(world, i1, k1 = (int) (r * MathHelper.sin(ang))), k1, random.nextInt(4), true); ++att) {
 				}
 			}
@@ -46,7 +47,7 @@ public class LOTRWorldGenMoredainMercCamp extends LOTRWorldGenCampBase {
 		respawner.setSpawnClass(LOTREntityMoredainMercenary.class);
 		respawner.setCheckRanges(24, -12, 12, 10);
 		respawner.setSpawnRanges(8, -4, 4, 16);
-		this.placeNPCRespawner(respawner, world, i, j, k);
+		placeNPCRespawner(respawner, world, i, j, k);
 		int mercs = 2 + random.nextInt(5);
 		for (int l = 0; l < mercs; ++l) {
 			LOTREntityMoredainMercenary merc = new LOTREntityMoredainMercenary(world);

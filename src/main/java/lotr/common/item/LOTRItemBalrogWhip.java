@@ -20,7 +20,7 @@ public class LOTRItemBalrogWhip extends LOTRItemSword {
 	}
 
 	public void checkIncompatibleModifiers(ItemStack itemstack) {
-		for (LOTREnchantment ench : new LOTREnchantment[] { LOTREnchantment.fire, LOTREnchantment.chill }) {
+		for (LOTREnchantment ench : new LOTREnchantment[]{LOTREnchantment.fire, LOTREnchantment.chill}) {
 			if (!LOTREnchantmentHelper.hasEnchant(itemstack, ench)) {
 				continue;
 			}
@@ -69,7 +69,7 @@ public class LOTRItemBalrogWhip extends LOTRItemSword {
 		Vec3 sight = position.addVector(look.xCoord * range, look.yCoord * range, look.zCoord * range);
 		float sightWidth = 1.0f;
 		List list = world.getEntitiesWithinAABBExcludingEntity(user, user.boundingBox.addCoord(look.xCoord * range, look.yCoord * range, look.zCoord * range).expand(sightWidth, sightWidth, sightWidth));
-		ArrayList<EntityLivingBase> whipTargets = new ArrayList<>();
+		Collection<EntityLivingBase> whipTargets = new ArrayList<>();
 		for (Object element : list) {
 			EntityLivingBase entity;
 			Entity obj = (Entity) element;

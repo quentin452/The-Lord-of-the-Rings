@@ -20,7 +20,7 @@ public class LOTRWorldGenGondorTurret extends LOTRWorldGenStructureBase2 {
 		int j12;
 		int k1;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 3);
+		setOriginAndRotation(world, i, j, k, rotation, 3);
 		if (restrictions) {
 			for (i1 = -2; i1 <= 2; ++i1) {
 				for (k1 = -2; k1 <= 2; ++k1) {
@@ -95,7 +95,7 @@ public class LOTRWorldGenGondorTurret extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, 0, 2, -1, LOTRMod.doorLebethron, 8);
 		setBlockAndMetadata(world, 0, 5, 0, Blocks.trapdoor, 0);
 		setBlockAndMetadata(world, 0, 5, 1, LOTRMod.slabSingle, 2);
-		this.placeChest(world, random, 1, 5, 1, LOTRMod.chestLebethron, 2, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES);
+		placeChest(world, random, 1, 5, 1, LOTRMod.chestLebethron, 2, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES);
 		for (i1 = -2; i1 <= 2; ++i1) {
 			for (k1 = -2; k1 <= 2; ++k1) {
 				if (Math.abs(i1) != 2 && Math.abs(k1) != 2) {

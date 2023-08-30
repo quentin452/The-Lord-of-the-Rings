@@ -7,7 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public class LOTRWorldGenBreeHedgePart extends LOTRWorldGenBreeStructure {
-	public boolean grassOnly = false;
+	public boolean grassOnly;
 
 	public LOTRWorldGenBreeHedgePart(boolean flag) {
 		super(flag);
@@ -18,7 +18,7 @@ public class LOTRWorldGenBreeHedgePart extends LOTRWorldGenBreeStructure {
 		int i1;
 		int j1;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		if (restrictions && (!isSurface(world, i1 = 0, j1 = getTopBlock(world, i1, k1 = 0) - 1, k1) || grassOnly && getBlock(world, i1, j1, k1) != Blocks.grass)) {
 			return false;
@@ -43,20 +43,17 @@ public class LOTRWorldGenBreeHedgePart extends LOTRWorldGenBreeStructure {
 			}
 			int randLeaf = random.nextInt(4);
 			switch (randLeaf) {
-			case 0:
-				setBlockAndMetadata(world, 0, j1, 0, Blocks.leaves, 4);
-				continue;
-			case 1:
-				setBlockAndMetadata(world, 0, j1, 0, LOTRMod.leaves2, 5);
-				continue;
-			case 2:
-				setBlockAndMetadata(world, 0, j1, 0, LOTRMod.leaves4, 4);
-				continue;
-			default:
-				break;
-			}
-			if (randLeaf != 3) {
-				continue;
+				case 0:
+					setBlockAndMetadata(world, 0, j1, 0, Blocks.leaves, 4);
+					continue;
+				case 1:
+					setBlockAndMetadata(world, 0, j1, 0, LOTRMod.leaves2, 5);
+					continue;
+				case 2:
+					setBlockAndMetadata(world, 0, j1, 0, LOTRMod.leaves4, 4);
+					continue;
+				default:
+					break;
 			}
 			setBlockAndMetadata(world, 0, j1, 0, LOTRMod.leaves7, 4);
 		}

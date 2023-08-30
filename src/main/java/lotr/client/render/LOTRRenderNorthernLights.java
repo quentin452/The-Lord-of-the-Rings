@@ -25,10 +25,10 @@ public class LOTRRenderNorthernLights {
 	public static float minNorthTonight;
 	public static int rainingTick;
 	public static int rainingTickPrev;
-	public static boolean atUtumno;
-	public static int utumnoChange;
-	public static Random rand;
-	public static Random dateRand;
+	public static boolean atUtumno = false;
+	public static int utumnoChange = 0;
+	public static Random rand = new Random();
+	public static Random dateRand= new Random();
 	public static float[] colorTopCurrent;
 	public static float[] colorMidCurrent;
 	public static float[] colorBottomCurrent;
@@ -39,21 +39,10 @@ public class LOTRRenderNorthernLights {
 	public static int colorChangeTick;
 	public static int timeUntilColorChange;
 	public static int utumnoCheckTime;
-	public static AuroraCycle wave0;
-	public static List<AuroraCycle> waveOscillations;
-	public static List<AuroraCycle> glowOscillations;
-	public static AuroraCycle glow0;
-
-	static {
-		atUtumno = false;
-		utumnoChange = 0;
-		rand = new Random();
-		dateRand = new Random();
-		wave0 = new AuroraCycle(4.0f, 0.01f, 0.9f);
-		waveOscillations = new ArrayList<>();
-		glowOscillations = new ArrayList<>();
-		glow0 = new AuroraCycle(20.0f, 0.02f, 0.6f);
-	}
+	public static AuroraCycle wave0= new AuroraCycle(4.0f, 0.01f, 0.9f);
+	public static List<AuroraCycle> waveOscillations = new ArrayList<>();
+	public static List<AuroraCycle> glowOscillations= new ArrayList<>();
+	public static AuroraCycle glow0= new AuroraCycle(20.0f, 0.02f, 0.6f);
 
 	public static Color[] generateColorSet() {
 		float h1 = MathHelper.randomFloatClamp(rand, 0.22f, 0.48f);
@@ -74,7 +63,7 @@ public class LOTRRenderNorthernLights {
 		Color topColor = new Color(Color.HSBtoRGB(h1, 1.0f, 1.0f));
 		Color midColor = new Color(Color.HSBtoRGB(h2, 1.0f, 1.0f));
 		Color bottomColor = new Color(Color.HSBtoRGB(h3, 1.0f, 1.0f));
-		return new Color[] { topColor, midColor, bottomColor };
+		return new Color[]{topColor, midColor, bottomColor};
 	}
 
 	public static float getNorthernness(EntityLivingBase entity) {
@@ -128,7 +117,7 @@ public class LOTRRenderNorthernLights {
 			return;
 		}
 		nlBrightness *= tonight;
-		float northernness = LOTRRenderNorthernLights.getNorthernness(mc.renderViewEntity);
+		float northernness = getNorthernness(mc.renderViewEntity);
 		if (northernness <= 0.0f) {
 			return;
 		}
@@ -146,7 +135,7 @@ public class LOTRRenderNorthernLights {
 		GL11.glPushMatrix();
 		GL11.glLoadIdentity();
 		float fov = LOTRReflectionClient.getFOVModifier(mc.entityRenderer, tick, true);
-		Project.gluPerspective(fov, (float) mc.displayWidth / (float) mc.displayHeight, 0.05f, nlScale * 5.0f);
+		Project.gluPerspective(fov, (float) mc.displayWidth / mc.displayHeight, 0.05f, nlScale * 5.0f);
 		GL11.glMatrixMode(5888);
 		GL11.glPushMatrix();
 		GL11.glTranslatef(0.0f, nlHeight, -nlDistance);
@@ -161,9 +150,9 @@ public class LOTRRenderNorthernLights {
 		GL11.glShadeModel(7425);
 		GL11.glDisable(2884);
 		world.theProfiler.startSection("sheet");
-		LOTRRenderNorthernLights.renderSheet(mc, world, nlScale * -0.5f, (nlBrightness *= 0.3f + (1.0f - world.getRainStrength(tick)) * 0.7f) * 0.8f, nlScale * 1.0f, nlScale * 0.25f, 0.25502f, tick);
-		LOTRRenderNorthernLights.renderSheet(mc, world, 0.0f, nlBrightness * 1.0f, nlScale * 1.5f, nlScale * 0.3f, 0.15696f, tick);
-		LOTRRenderNorthernLights.renderSheet(mc, world, nlScale * 0.5f, nlBrightness * 0.8f, nlScale * 1.0f, nlScale * 0.25f, 0.67596f, tick);
+		renderSheet(mc, world, nlScale * -0.5f, (nlBrightness *= 0.3f + (1.0f - world.getRainStrength(tick)) * 0.7f) * 0.8f, nlScale, nlScale * 0.25f, 0.25502f, tick);
+		renderSheet(mc, world, 0.0f, nlBrightness, nlScale * 1.5f, nlScale * 0.3f, 0.15696f, tick);
+		renderSheet(mc, world, nlScale * 0.5f, nlBrightness * 0.8f, nlScale, nlScale * 0.25f, 0.67596f, tick);
 		world.theProfiler.endSection();
 		GL11.glEnable(2884);
 		GL11.glShadeModel(7424);
@@ -190,7 +179,7 @@ public class LOTRRenderNorthernLights {
 		float g3 = colorBottomCurrent[1];
 		float b3 = colorBottomCurrent[2];
 		if (colorChangeTime > 0) {
-			float t = (float) colorChangeTick / (float) colorChangeTime;
+			float t = (float) colorChangeTick / colorChangeTime;
 			t = 1.0f - t;
 			r1 = colorTopCurrent[0] + (colorTopNext[0] - colorTopCurrent[0]) * t;
 			g1 = colorTopCurrent[1] + (colorTopNext[1] - colorTopCurrent[1]) * t;
@@ -218,8 +207,8 @@ public class LOTRRenderNorthernLights {
 			strips = 80;
 		}
 		for (int l = 0; l < strips; ++l) {
-			float t = (float) l / (float) strips;
-			float t1 = (float) (l + 1) / (float) strips;
+			float t = (float) l / strips;
+			float t1 = (float) (l + 1) / strips;
 			float a1_here = a1;
 			float a2_here = a2;
 			float a3_here = a3;
@@ -231,18 +220,17 @@ public class LOTRRenderNorthernLights {
 				a2_here *= fade;
 				a3_here *= fade;
 			}
-			float randomFade = 0.5f + LOTRRenderNorthernLights.glowEquation(mc, t, fullTick, tick) * 0.5f;
+			float randomFade = 0.5f + glowEquation(mc, t, fullTick, tick) * 0.5f;
 			double x0 = -halfWidth + halfWidth * 2.0 * t;
 			double x1 = x0 + halfWidth * 2.0 / strips;
 			double yMin = -halfHeight;
 			double yMid = -halfHeight * 0.4;
-			double yMax = halfHeight;
 			double z0 = nlDistance;
 			double z1 = nlDistance;
 			double extra = halfHeight * 0.15;
 			tess.setColorRGBA_F(r3, g3, b3, 0.0f);
-			tess.addVertex(x0, yMin - extra, z0 += LOTRRenderNorthernLights.waveEquation(mc, t, fullTick, tick) * (halfWidth * 0.15));
-			tess.addVertex(x1, yMin - extra, z1 += LOTRRenderNorthernLights.waveEquation(mc, t1, fullTick, tick) * (halfWidth * 0.15));
+			tess.addVertex(x0, yMin - extra, z0 += waveEquation(mc, t, fullTick, tick) * (halfWidth * 0.15));
+			tess.addVertex(x1, yMin - extra, z1 += waveEquation(mc, t1, fullTick, tick) * (halfWidth * 0.15));
 			tess.setColorRGBA_F(r3, g3, b3, a3_here *= randomFade);
 			tess.addVertex(x1, yMin, z1);
 			tess.addVertex(x0, yMin, z0);
@@ -255,9 +243,9 @@ public class LOTRRenderNorthernLights {
 			tess.setColorRGBA_F(r2, g2, b2, a2_here);
 			tess.addVertex(x0, yMid, z0);
 			tess.addVertex(x1, yMid, z1);
-			tess.setColorRGBA_F(r1, g1, b1, a1_here *= randomFade);
-			tess.addVertex(x1, yMax, z1);
-			tess.addVertex(x0, yMax, z0);
+			tess.setColorRGBA_F(r1, g1, b1, a1_here * randomFade);
+			tess.addVertex(x1, halfHeight, z1);
+			tess.addVertex(x0, halfHeight, z0);
 		}
 		world.theProfiler.endSection();
 		world.theProfiler.startSection("draw");
@@ -279,7 +267,7 @@ public class LOTRRenderNorthernLights {
 		if (effectiveDay != currentNightNum) {
 			currentNightNum = effectiveDay;
 			dateRand.setSeed(currentNightNum * 35920558925051L + currentNightNum + 83025820626792L);
-			LOTRDate.ShireReckoning.Month month = LOTRDate.ShireReckoning.getShireDate(LOTRRenderNorthernLights.currentNightNum).month;
+			LOTRDate.ShireReckoning.Month month = LOTRDate.ShireReckoning.getShireDate(currentNightNum).month;
 			boolean isYule = month == LOTRDate.ShireReckoning.Month.YULE_1 || month == LOTRDate.ShireReckoning.Month.YULE_2;
 			maxNorthTonight = -35000.0f;
 			minNorthTonight = MathHelper.randomFloatClamp(dateRand, -20000.0f, -15000.0f);
@@ -298,7 +286,7 @@ public class LOTRRenderNorthernLights {
 			brightnessTonight = isYule || dateRand.nextFloat() < appearChance ? MathHelper.randomFloatClamp(dateRand, 0.4f, 1.0f) : 0.0f;
 		}
 		rainingTickPrev = rainingTick;
-		boolean raining = LOTRRenderNorthernLights.isRainLayerAt(viewer);
+		boolean raining = isRainLayerAt(viewer);
 		if (raining) {
 			if (rainingTick < 80) {
 				++rainingTick;
@@ -307,7 +295,7 @@ public class LOTRRenderNorthernLights {
 			--rainingTick;
 		}
 		if (colorTopCurrent == null) {
-			Color[] cs = LOTRRenderNorthernLights.generateColorSet();
+			Color[] cs = generateColorSet();
 			colorTopCurrent = cs[0].getColorComponents(null);
 			colorMidCurrent = cs[1].getColorComponents(null);
 			colorBottomCurrent = cs[2].getColorComponents(null);
@@ -315,7 +303,7 @@ public class LOTRRenderNorthernLights {
 		if (timeUntilColorChange > 0) {
 			--timeUntilColorChange;
 		} else if (rand.nextInt(1200) == 0) {
-			Color[] cs = LOTRRenderNorthernLights.generateColorSet();
+			Color[] cs = generateColorSet();
 			colorTopNext = cs[0].getColorComponents(null);
 			colorMidNext = cs[1].getColorComponents(null);
 			colorBottomNext = cs[2].getColorComponents(null);
@@ -339,9 +327,9 @@ public class LOTRRenderNorthernLights {
 			if (LOTRFixedStructures.UTUMNO_ENTRANCE.distanceSqTo(viewer) <= range * range) {
 				atUtumno = true;
 				timeUntilColorChange = 0;
-				colorTopNext = new float[] { 1.0f, 0.4f, 0.0f };
-				colorMidNext = new float[] { 1.0f, 0.0f, 0.0f };
-				colorBottomNext = new float[] { 1.0f, 0.0f, 0.3f };
+				colorTopNext = new float[]{1.0f, 0.4f, 0.0f};
+				colorMidNext = new float[]{1.0f, 0.0f, 0.0f};
+				colorBottomNext = new float[]{1.0f, 0.0f, 0.3f};
 				colorChangeTick = colorChangeTime = MathHelper.getRandomIntegerInRange(rand, 100, 200);
 			} else {
 				atUtumno = false;
@@ -364,7 +352,7 @@ public class LOTRRenderNorthernLights {
 			waveOscillations.add(cycle);
 		}
 		if (!waveOscillations.isEmpty()) {
-			HashSet<AuroraCycle> removes = new HashSet<>();
+			Collection<AuroraCycle> removes = new HashSet<>();
 			for (AuroraCycle c : waveOscillations) {
 				c.update();
 				if (c.age > 0) {
@@ -391,7 +379,7 @@ public class LOTRRenderNorthernLights {
 			glowOscillations.add(cycle);
 		}
 		if (!glowOscillations.isEmpty()) {
-			HashSet<AuroraCycle> removes = new HashSet<>();
+			Collection<AuroraCycle> removes = new HashSet<>();
 			for (AuroraCycle c : glowOscillations) {
 				c.update();
 				if (c.age > 0) {
@@ -433,7 +421,7 @@ public class LOTRRenderNorthernLights {
 		public void update() {
 			if (age >= 0) {
 				--age;
-				float a = (float) (maxAge - age) / (float) maxAge;
+				float a = (float) (maxAge - age) / maxAge;
 				ampModifier = Math.min(a, 1.0f - a);
 			}
 		}

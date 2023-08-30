@@ -50,11 +50,11 @@ public class LOTRBiomeGenLothlorien extends LOTRBiome {
 		spawnableLOTRAmbientList.add(new BiomeGenBase.SpawnListEntry(LOTREntityRabbit.class, 6, 4, 4));
 		spawnableLOTRAmbientList.add(new BiomeGenBase.SpawnListEntry(LOTREntitySwan.class, 15, 4, 8));
 		variantChance = 0.7f;
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT, 2.0f);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.CLEARING, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT, 2.0f);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
+		addBiomeVariant(LOTRBiomeVariant.CLEARING, 0.5f);
 		decorator.addOre(new WorldGenMinable(LOTRMod.oreQuendite, 6), 6.0f, 0, 48);
 		enablePodzol = false;
 		decorator.treesPerChunk = 3;

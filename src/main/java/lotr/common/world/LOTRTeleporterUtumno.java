@@ -22,7 +22,8 @@ public class LOTRTeleporterUtumno extends Teleporter {
 		int k;
 		int j;
 		int i;
-		block4: {
+		block4:
+		{
 			i = 0;
 			j = 256;
 			k = 0;

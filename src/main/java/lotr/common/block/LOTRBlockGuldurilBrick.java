@@ -37,18 +37,18 @@ public class LOTRBlockGuldurilBrick extends Block {
 	@Override
 	public ArrayList getDrops(World world, int i, int j, int k, int metadata, int fortune) {
 		ArrayList<ItemStack> drops = new ArrayList<>();
-		ItemStack drop = LOTRBlockGuldurilBrick.blockForGuldurilMeta(metadata);
+		ItemStack drop = blockForGuldurilMeta(metadata);
 		if (drop != null) {
 			drops.add(drop);
 		}
 		return drops;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		Item item;
-		ItemStack itemstack = LOTRBlockGuldurilBrick.blockForGuldurilMeta(j);
+		ItemStack itemstack = blockForGuldurilMeta(j);
 		if (itemstack != null && (item = itemstack.getItem()) instanceof ItemBlock) {
 			Block block = ((ItemBlock) item).field_150939_a;
 			int meta = itemstack.getItemDamage();
@@ -67,7 +67,7 @@ public class LOTRBlockGuldurilBrick extends Block {
 		return LOTRMod.proxy.getGuldurilRenderID();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i <= 9; ++i) {
@@ -80,35 +80,35 @@ public class LOTRBlockGuldurilBrick extends Block {
 		return true;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}
 
 	public static ItemStack blockForGuldurilMeta(int i) {
 		switch (i) {
-		case 0:
-			return new ItemStack(LOTRMod.brick, 1, 0);
-		case 1:
-			return new ItemStack(LOTRMod.brick, 1, 7);
-		case 2:
-			return new ItemStack(LOTRMod.brick2, 1, 0);
-		case 3:
-			return new ItemStack(LOTRMod.brick2, 1, 1);
-		case 4:
-			return new ItemStack(LOTRMod.brick2, 1, 8);
-		case 5:
-			return new ItemStack(LOTRMod.brick2, 1, 9);
-		case 6:
-			return new ItemStack(LOTRMod.brick, 1, 1);
-		case 7:
-			return new ItemStack(LOTRMod.brick, 1, 2);
-		case 8:
-			return new ItemStack(LOTRMod.brick, 1, 3);
-		case 9:
-			return new ItemStack(LOTRMod.brick2, 1, 11);
-		default:
-			break;
+			case 0:
+				return new ItemStack(LOTRMod.brick, 1, 0);
+			case 1:
+				return new ItemStack(LOTRMod.brick, 1, 7);
+			case 2:
+				return new ItemStack(LOTRMod.brick2, 1, 0);
+			case 3:
+				return new ItemStack(LOTRMod.brick2, 1, 1);
+			case 4:
+				return new ItemStack(LOTRMod.brick2, 1, 8);
+			case 5:
+				return new ItemStack(LOTRMod.brick2, 1, 9);
+			case 6:
+				return new ItemStack(LOTRMod.brick, 1, 1);
+			case 7:
+				return new ItemStack(LOTRMod.brick, 1, 2);
+			case 8:
+				return new ItemStack(LOTRMod.brick, 1, 3);
+			case 9:
+				return new ItemStack(LOTRMod.brick2, 1, 11);
+			default:
+				break;
 		}
 		return null;
 	}

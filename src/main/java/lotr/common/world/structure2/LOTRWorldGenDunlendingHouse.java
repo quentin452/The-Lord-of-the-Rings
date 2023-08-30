@@ -16,7 +16,7 @@ public class LOTRWorldGenDunlendingHouse extends LOTRWorldGenDunlandStructure {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -42,8 +42,6 @@ public class LOTRWorldGenDunlendingHouse extends LOTRWorldGenDunlandStructure {
 		}
 		for (int i1 = -4; i1 <= 4; ++i1) {
 			for (int k1 = -6; k1 <= 5; ++k1) {
-				Math.abs(i1);
-				Math.abs(k1);
 				if (k1 >= -5) {
 					j1 = -1;
 					while (!isOpaque(world, i1, j1, k1) && getY(j1) >= 0) {
@@ -75,12 +73,12 @@ public class LOTRWorldGenDunlendingHouse extends LOTRWorldGenDunlandStructure {
 		generateStrScan(world, random, 0, 1, 0);
 		setBlockAndMetadata(world, 0, 1, 3, bedBlock, 0);
 		setBlockAndMetadata(world, 0, 1, 4, bedBlock, 8);
-		this.placeChest(world, random, -2, 1, 4, LOTRMod.chestBasket, 2, LOTRChestContents.DUNLENDING_HOUSE);
-		this.placeChest(world, random, 2, 1, 4, LOTRMod.chestBasket, 2, LOTRChestContents.DUNLENDING_HOUSE);
-		this.placeBarrel(world, random, -3, 2, -3, 4, LOTRFoods.DUNLENDING_DRINK);
+		placeChest(world, random, -2, 1, 4, LOTRMod.chestBasket, 2, LOTRChestContents.DUNLENDING_HOUSE);
+		placeChest(world, random, 2, 1, 4, LOTRMod.chestBasket, 2, LOTRChestContents.DUNLENDING_HOUSE);
+		placeBarrel(world, random, -3, 2, -3, 4, LOTRFoods.DUNLENDING_DRINK);
 		placePlate(world, random, -3, 2, -2, LOTRMod.woodPlateBlock, LOTRFoods.DUNLENDING);
 		placePlate(world, random, -3, 2, -1, LOTRMod.woodPlateBlock, LOTRFoods.DUNLENDING);
-		this.placeMug(world, random, 3, 2, -3, 1, LOTRFoods.DUNLENDING_DRINK);
+		placeMug(world, random, 3, 2, -3, 1, LOTRFoods.DUNLENDING_DRINK);
 		placePlate(world, random, 3, 2, -2, LOTRMod.woodPlateBlock, LOTRFoods.DUNLENDING);
 		placePlate(world, random, 3, 2, -1, LOTRMod.woodPlateBlock, LOTRFoods.DUNLENDING);
 		placeFlowerPot(world, -3, 2, 1, getRandomFlower(world, random));

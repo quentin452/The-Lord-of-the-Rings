@@ -27,7 +27,7 @@ public class LOTRBlockUtumnoBrickEntrance extends Block {
 		return drops;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return LOTRMod.utumnoBrick.getIcon(i, 2);
@@ -38,7 +38,7 @@ public class LOTRBlockUtumnoBrickEntrance extends Block {
 		return new ItemStack(LOTRMod.utumnoBrick, 1, 2);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister register) {
 	}

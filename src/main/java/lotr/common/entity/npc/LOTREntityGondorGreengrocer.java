@@ -26,17 +26,17 @@ public class LOTREntityGondorGreengrocer extends LOTREntityGondorMarketTrader {
 		data = super.onSpawnWithEgg(data);
 		int i = rand.nextInt(3);
 		switch (i) {
-		case 0:
-			npcItemsInv.setIdleItem(new ItemStack(Items.apple));
-			break;
-		case 1:
-			npcItemsInv.setIdleItem(new ItemStack(LOTRMod.appleGreen));
-			break;
-		case 2:
-			npcItemsInv.setIdleItem(new ItemStack(LOTRMod.pear));
-			break;
-		default:
-			break;
+			case 0:
+				npcItemsInv.setIdleItem(new ItemStack(Items.apple));
+				break;
+			case 1:
+				npcItemsInv.setIdleItem(new ItemStack(LOTRMod.appleGreen));
+				break;
+			case 2:
+				npcItemsInv.setIdleItem(new ItemStack(LOTRMod.pear));
+				break;
+			default:
+				break;
 		}
 		return data;
 	}

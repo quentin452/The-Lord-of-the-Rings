@@ -51,7 +51,7 @@ public abstract class LOTRWorldGenGulfStructure extends LOTRWorldGenStructureBas
 	public int boneWallMeta;
 	public Block bedBlock;
 
-	public LOTRWorldGenGulfStructure(boolean flag) {
+	protected LOTRWorldGenGulfStructure(boolean flag) {
 		super(flag);
 	}
 
@@ -60,7 +60,7 @@ public abstract class LOTRWorldGenGulfStructure extends LOTRWorldGenStructureBas
 	}
 
 	public ItemStack getRandomGulfWeapon(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.swordGulfHarad), new ItemStack(LOTRMod.swordGulfHarad), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.spearHarad), new ItemStack(LOTRMod.pikeHarad) };
+		ItemStack[] items = {new ItemStack(LOTRMod.swordGulfHarad), new ItemStack(LOTRMod.swordGulfHarad), new ItemStack(LOTRMod.daggerHarad), new ItemStack(LOTRMod.spearHarad), new ItemStack(LOTRMod.pikeHarad)};
 		return items[random.nextInt(items.length)].copy();
 	}
 
@@ -119,35 +119,35 @@ public abstract class LOTRWorldGenGulfStructure extends LOTRWorldGenStructureBas
 		}
 		int randomWood2 = random.nextInt(3);
 		switch (randomWood2) {
-		case 0:
-			plank2Block = Blocks.planks;
-			plank2Meta = 4;
-			plank2SlabBlock = Blocks.wooden_slab;
-			plank2SlabMeta = 4;
-			plank2StairBlock = Blocks.acacia_stairs;
-			beam2Block = LOTRMod.woodBeamV2;
-			beam2Meta = 0;
-			break;
-		case 1:
-			plank2Block = LOTRMod.planks;
-			plank2Meta = 14;
-			plank2SlabBlock = LOTRMod.woodSlabSingle2;
-			plank2SlabMeta = 6;
-			plank2StairBlock = LOTRMod.stairsDatePalm;
-			beam2Block = LOTRMod.woodBeam4;
-			beam2Meta = 2;
-			break;
-		case 2:
-			plank2Block = LOTRMod.planks3;
-			plank2Meta = 4;
-			plank2SlabBlock = LOTRMod.woodSlabSingle5;
-			plank2SlabMeta = 4;
-			plank2StairBlock = LOTRMod.stairsDragon;
-			beam2Block = LOTRMod.woodBeam9;
-			beam2Meta = 0;
-			break;
-		default:
-			break;
+			case 0:
+				plank2Block = Blocks.planks;
+				plank2Meta = 4;
+				plank2SlabBlock = Blocks.wooden_slab;
+				plank2SlabMeta = 4;
+				plank2StairBlock = Blocks.acacia_stairs;
+				beam2Block = LOTRMod.woodBeamV2;
+				beam2Meta = 0;
+				break;
+			case 1:
+				plank2Block = LOTRMod.planks;
+				plank2Meta = 14;
+				plank2SlabBlock = LOTRMod.woodSlabSingle2;
+				plank2SlabMeta = 6;
+				plank2StairBlock = LOTRMod.stairsDatePalm;
+				beam2Block = LOTRMod.woodBeam4;
+				beam2Meta = 2;
+				break;
+			case 2:
+				plank2Block = LOTRMod.planks3;
+				plank2Meta = 4;
+				plank2SlabBlock = LOTRMod.woodSlabSingle5;
+				plank2SlabMeta = 4;
+				plank2StairBlock = LOTRMod.stairsDragon;
+				beam2Block = LOTRMod.woodBeam9;
+				beam2Meta = 0;
+				break;
+			default:
+				break;
 		}
 		roofBlock = LOTRMod.thatch;
 		roofMeta = 1;

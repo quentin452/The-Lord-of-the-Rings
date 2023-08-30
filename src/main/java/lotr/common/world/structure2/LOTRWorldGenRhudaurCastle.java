@@ -28,7 +28,7 @@ public class LOTRWorldGenRhudaurCastle extends LOTRWorldGenStructureBase2 {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int chestY;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		int width = MathHelper.getRandomIntegerInRange(random, 6, 15);
 		int height = MathHelper.getRandomIntegerInRange(random, 3, 8);

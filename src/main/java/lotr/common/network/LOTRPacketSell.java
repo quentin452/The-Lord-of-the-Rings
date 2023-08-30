@@ -30,7 +30,7 @@ public class LOTRPacketSell implements IMessage {
 				LOTRContainerTrade tradeContainer = (LOTRContainerTrade) container;
 				LOTREntityNPC trader = tradeContainer.theTraderNPC;
 				IInventory invSellOffer = tradeContainer.tradeInvSellOffer;
-				HashMap<LOTRTradeEntry, Integer> tradesUsed = new HashMap<>();
+				Map<LOTRTradeEntry, Integer> tradesUsed = new HashMap<>();
 				int totalCoins = 0;
 				for (int i = 0; i < invSellOffer.getSizeInventory(); ++i) {
 					LOTRTradeSellResult sellResult;
@@ -48,12 +48,7 @@ public class LOTRPacketSell implements IMessage {
 					}
 					totalCoins += value;
 					if (trade != null) {
-						Integer prevValue = tradesUsed.get(trade);
-						if (prevValue == null) {
-							tradesUsed.put(trade, value);
-						} else {
-							tradesUsed.put(trade, prevValue + value);
-						}
+						tradesUsed.merge(trade, value, Integer::sum);
 					}
 					itemstack.stackSize -= itemsSold;
 					if (itemstack.stackSize > 0) {

@@ -18,7 +18,7 @@ public class LOTRRenderSpear extends Render {
 	public static ModelBase boarModel = new LOTRModelBoar();
 
 	static {
-		LOTRRenderSpear.boarModel.isChild = false;
+		boarModel.isChild = false;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class LOTRRenderSpear extends Render {
 			if (customRenderer != null) {
 				customRenderer.renderItem(IItemRenderer.ItemRenderType.EQUIPPED, itemstack, new Object[2]);
 			} else {
-				FMLLog.severe("Error rendering spear: no custom renderer for " + itemstack.toString());
+				FMLLog.severe("Error rendering spear: no custom renderer for " + itemstack);
 			}
 		}
 		GL11.glDisable(32826);

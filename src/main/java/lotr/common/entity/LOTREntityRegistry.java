@@ -1,6 +1,8 @@
 package lotr.common.entity;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
 
 import org.apache.commons.io.input.BOMInputStream;
@@ -28,9 +30,41 @@ public class LOTREntityRegistry {
 		try {
 			File file = event.getModConfigurationDirectory();
 			File config = new File(file, "LOTR_EntityRegistry.txt");
-			if (!config.exists()) {
+			if (config.exists()) {
+				BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(new BOMInputStream(Files.newInputStream(config.toPath())), StandardCharsets.UTF_8));
+				String s;
+				while ((s = bufferedreader.readLine()) != null) {
+					int j;
+					int i;
+					boolean targetEnemies;
+					int k;
+					String name;
+					String line = s;
+					if (!s.isEmpty() && s.charAt(0) == '#') {
+						continue;
+					}
+					LOTRFaction faction;
+					if (!s.startsWith("name=") || (s = s.substring("name=".length())).toLowerCase(Locale.ROOT).startsWith("lotr".toLowerCase(Locale.ROOT)) || (i = s.indexOf(",faction=")) < 0 || (j = s.indexOf(",targetEnemies=")) < 0 || (k = s.indexOf(",bonus=")) < 0 || (name = s.substring(0, i)).isEmpty() || (faction = LOTRFaction.forName(s.substring(i + ",faction=".length(), j))) == null) {
+						continue;
+					}
+					String targetEnemiesString = s.substring(j + ",targetEnemies=".length(), k);
+					if ("true".equals(targetEnemiesString)) {
+						targetEnemies = true;
+					} else {
+						if (!"false".equals(targetEnemiesString)) {
+							continue;
+						}
+						targetEnemies = false;
+					}
+					String bonusString = s.substring(k + ",bonus=".length());
+					int bonus = Integer.parseInt(bonusString);
+					registeredNPCs.put(name, new RegistryInfo(name, faction, targetEnemies, bonus));
+					FMLLog.info("Successfully registered entity " + name + " with the LOTR alignment system as " + line);
+				}
+				bufferedreader.close();
+			} else {
 				if (config.createNewFile()) {
-					PrintStream writer = new PrintStream(new FileOutputStream(config));
+					PrintStream writer = new PrintStream(Files.newOutputStream(config.toPath()), true, StandardCharsets.UTF_8.name());
 					writer.println("#Lines starting with '#' will be ignored");
 					writer.println("#");
 					writer.println("#Use this file to register entities with the LOTR alignment system.");
@@ -56,38 +90,6 @@ public class LOTREntityRegistry {
 					writer.println("#");
 					writer.close();
 				}
-			} else {
-				BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(new BOMInputStream(new FileInputStream(config))));
-				String s = "";
-				while ((s = bufferedreader.readLine()) != null) {
-					int j;
-					int i;
-					boolean targetEnemies;
-					int k;
-					String name;
-					String line = s;
-					if (s.startsWith("#")) {
-						continue;
-					}
-					LOTRFaction faction = null;
-					if (!s.startsWith("name=") || (s = s.substring("name=".length())).toLowerCase().startsWith("lotr".toLowerCase()) || (i = s.indexOf(",faction=")) < 0 || (j = s.indexOf(",targetEnemies=")) < 0 || (k = s.indexOf(",bonus=")) < 0 || (name = s.substring(0, i)).length() == 0 || (faction = LOTRFaction.forName(s.substring(i + ",faction=".length(), j))) == null) {
-						continue;
-					}
-					String targetEnemiesString = s.substring(j + ",targetEnemies=".length(), k);
-					if ("true".equals(targetEnemiesString)) {
-						targetEnemies = true;
-					} else {
-						if (!"false".equals(targetEnemiesString)) {
-							continue;
-						}
-						targetEnemies = false;
-					}
-					String bonusString = s.substring(k + ",bonus=".length());
-					int bonus = Integer.parseInt(bonusString);
-					registeredNPCs.put(name, new RegistryInfo(name, faction, targetEnemies, bonus));
-					FMLLog.info("Successfully registered entity " + name + " with the LOTR alignment system as " + line);
-				}
-				bufferedreader.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

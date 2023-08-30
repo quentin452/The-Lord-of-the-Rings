@@ -37,12 +37,12 @@ public class LOTRBiomeGenNearHarad extends LOTRBiome {
 		arrspawnListContainer[1] = LOTRBiomeSpawnList.entry(LOTRSpawnList.NOMAD_WARRIORS, 15).setSpawnChance(10000);
 		npcSpawnList.newFactionList(100).add(arrspawnListContainer);
 		variantChance = 0.8f;
-		this.addBiomeVariant(LOTRBiomeVariant.DUNES, 0.5f);
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.BOULDERS_RED);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.SCRUBLAND_SAND);
+		addBiomeVariant(LOTRBiomeVariant.DUNES, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.BOULDERS_RED);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
+		addBiomeVariant(LOTRBiomeVariant.SCRUBLAND_SAND);
 		decorator.addOre(new WorldGenMinable(Blocks.lapis_ore, 6), 1.0f, 0, 48);
 		decorator.grassPerChunk = 0;
 		decorator.doubleGrassPerChunk = 0;

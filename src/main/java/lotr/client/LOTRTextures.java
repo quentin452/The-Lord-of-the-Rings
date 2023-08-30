@@ -32,9 +32,9 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 	public static ResourceLocation missingTexture = mc.getTextureManager().getDynamicTextureLocation("lotr.missingSkin", TextureUtil.missingTexture);
 	public static ResourceLocation mapTexture;
 	public static ResourceLocation sepiaMapTexture;
-	public static ResourceLocation overlayTexture;
-	public static ResourceLocation mapTerrain;
-	public static ResourceLocation osrsTexture;
+	public static ResourceLocation overlayTexture = new ResourceLocation("lotr:map/mapOverlay.png");
+	public static ResourceLocation mapTerrain = new ResourceLocation("lotr:map/terrain.png");
+	public static ResourceLocation osrsTexture = new ResourceLocation("lotr:map/osrs.png");
 	public static int OSRS_WATER = 6453158;
 	public static int OSRS_GRASS = 5468426;
 	public static int OSRS_BEACH = 9279778;
@@ -48,33 +48,19 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 	public static int OSRS_WILD = 3290677;
 	public static int OSRS_PATH = 6575407;
 	public static int OSRS_KINGDOM_COLOR = 16755200;
-	public static ResourceLocation particleTextures;
-	public static ResourceLocation newWaterParticles;
-	public static int newWaterU;
-	public static int newWaterV;
-	public static int newWaterWidth;
-	public static int newWaterHeight;
-	public static Map<ResourceLocation, ResourceLocation> eyesTextures;
-	public static Map<ResourceLocation, Integer> averagedPageColors;
-
-	static {
-		overlayTexture = new ResourceLocation("lotr:map/mapOverlay.png");
-		mapTerrain = new ResourceLocation("lotr:map/terrain.png");
-		osrsTexture = new ResourceLocation("lotr:map/osrs.png");
-		particleTextures = new ResourceLocation("textures/particle/particles.png");
-		newWaterParticles = new ResourceLocation("lotr:misc/waterParticles.png");
-		newWaterU = 0;
-		newWaterV = 8;
-		newWaterWidth = 64;
-		newWaterHeight = 8;
-		eyesTextures = new HashMap<>();
-		averagedPageColors = new HashMap<>();
-	}
+	public static ResourceLocation particleTextures = new ResourceLocation("textures/particle/particles.png");
+	public static ResourceLocation newWaterParticles = new ResourceLocation("lotr:misc/waterParticles.png");
+	public static int newWaterU = 0;
+	public static int newWaterV = 8;
+	public static int newWaterWidth = 64;
+	public static int newWaterHeight = 8;
+	public static Map<ResourceLocation, ResourceLocation> eyesTextures = new HashMap<>();
+	public static Map<ResourceLocation, Integer> averagedPageColors = new HashMap<>();
 
 	@Override
 	public void onResourceManagerReload(IResourceManager resourceManager) {
-		LOTRTextures.loadMapTextures();
-		LOTRTextures.replaceWaterParticles();
+		loadMapTextures();
+		replaceWaterParticles();
 		eyesTextures.clear();
 		averagedPageColors.clear();
 	}
@@ -83,11 +69,11 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 	public void preTextureStitch(TextureStitchEvent.Pre event) {
 		TextureMap map = event.map;
 		if (map.getTextureType() == 0) {
-			LOTRCommonIcons.iconEmptyBlock = LOTRTextures.generateIconEmpty(map);
+			LOTRCommonIcons.iconEmptyBlock = generateIconEmpty(map);
 			LOTRCommonIcons.iconStoneSnow = map.registerIcon("stone_snow");
 		}
 		if (map.getTextureType() == 1) {
-			LOTRCommonIcons.iconEmptyItem = LOTRTextures.generateIconEmpty(map);
+			LOTRCommonIcons.iconEmptyItem = generateIconEmpty(map);
 			LOTRCommonIcons.iconMeleeWeapon = map.registerIcon("lotr:slotMelee");
 			LOTRCommonIcons.iconBomb = map.registerIcon("lotr:slotBomb");
 		}
@@ -95,7 +81,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 
 	public static int computeAverageFactionPageColor(ResourceLocation texture, int u0, int v0, int u1, int v1) {
 		if (!averagedPageColors.containsKey(texture)) {
-			int avgColor = 0;
+			int avgColor;
 			try {
 				BufferedImage pageImage = ImageIO.read(mc.getResourceManager().getResource(texture).getInputStream());
 				long totalR = 0L;
@@ -139,13 +125,13 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 			if (LOTRConfig.osrsMap) {
 				Integer biomeID = LOTRDimension.MIDDLE_EARTH.colorsToBiomeIDs.get(color);
 				if (biomeID == null) {
-					color = LOTRTextures.getMapOceanColor(true);
+					color = getMapOceanColor(true);
 				} else {
 					LOTRBiome biome = LOTRDimension.MIDDLE_EARTH.biomeList[biomeID];
 					color = biome.heightBaseParameter < 0.0f ? 6453158 : biome.heightBaseParameter > 0.8f ? 14736861 : biome.heightBaseParameter > 0.4f ? 6575407 : biome instanceof LOTRBiomeGenMordor ? 3290677 : biome.decorator.treesPerChunk > 1 ? 2775058 : biome.temperature < 0.3f ? biome.temperature < 0.2f ? 14215139 : 9470587 : biome.rainfall < 0.2f ? 13548147 : 5468426;
 				}
 			} else {
-				color = LOTRTextures.getSepia(color);
+				color = getSepia(color);
 			}
 			colors[i] = color;
 		}
@@ -183,7 +169,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 							}
 						}
 						if (water > 0) {
-							float ratio = (float) water / (float) total;
+							float ratio = (float) water / total;
 							rgb = LOTRColorUtil.lerpColors_I(5468426, 9279778, ratio * 2.0f);
 						}
 					} else if (rgb == 14736861) {
@@ -205,7 +191,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 							}
 						}
 						if (edge > 0) {
-							float ratio = (float) edge / (float) total;
+							float ratio = (float) edge / total;
 							rgb = LOTRColorUtil.lerpColors_I(14736861, 9005125, ratio * 1.5f);
 						}
 					}
@@ -213,14 +199,14 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 				}
 			}
 		}
-		LOTRTextures.mc.renderEngine.loadTexture(resourceLocation, new DynamicTexture(newMapImage));
+		mc.renderEngine.loadTexture(resourceLocation, new DynamicTexture(newMapImage));
 		return resourceLocation;
 	}
 
 	public static void drawMap(EntityPlayer entityplayer, boolean sepia, double x0, double x1, double y0, double y1, double z, double minU, double maxU, double minV, double maxV, float alpha) {
 		boolean meneltarma;
 		Tessellator tessellator = Tessellator.instance;
-		mc.getTextureManager().bindTexture(LOTRTextures.getMapTexture(entityplayer, sepia));
+		mc.getTextureManager().bindTexture(getMapTexture(entityplayer, sepia));
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, alpha);
 		tessellator.startDrawingQuads();
 		tessellator.addVertexWithUV(x0, y1, z, minU, maxV);
@@ -239,7 +225,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 			double mtMaxV = (mtY + mtW) / LOTRGenLayerWorld.imageHeight;
 			if (minU <= mtMaxU && maxU >= mtMinU && minV <= mtMaxV && maxV >= mtMinV) {
 				GL11.glDisable(3553);
-				int oceanColor = LOTRTextures.getMapOceanColor(sepia);
+				int oceanColor = getMapOceanColor(sepia);
 				mtMinU = Math.max(mtMinU, minU);
 				mtMaxU = Math.min(mtMaxU, maxU);
 				mtMinV = Math.max(mtMinV, minV);
@@ -263,7 +249,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 	}
 
 	public static void drawMap(EntityPlayer entityplayer, double x0, double x1, double y0, double y1, double z, double minU, double maxU, double minV, double maxV) {
-		LOTRTextures.drawMap(entityplayer, LOTRConfig.enableSepiaMap, x0, x1, y0, y1, z, minU, maxU, minV, maxV, 1.0f);
+		drawMap(entityplayer, LOTRConfig.enableSepiaMap, x0, x1, y0, y1, z, minU, maxU, minV, maxV, 1.0f);
 	}
 
 	public static void drawMapCompassBottomLeft(double x, double y, double z, double scale) {
@@ -271,10 +257,8 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 		mc.getTextureManager().bindTexture(LOTRGuiMap.mapIconsTexture);
 		int width = 32;
 		int height = 32;
-		double x0 = x;
 		double x1 = x + width * scale;
 		double y0 = y - height * scale;
-		double y1 = y;
 		int texU = 224;
 		int texV = 200;
 		float u0 = texU / 256.0f;
@@ -283,10 +267,10 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 		float v1 = (texV + height) / 256.0f;
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads();
-		tessellator.addVertexWithUV(x0, y1, z, u0, v1);
-		tessellator.addVertexWithUV(x1, y1, z, u1, v1);
+		tessellator.addVertexWithUV(x, y, z, u0, v1);
+		tessellator.addVertexWithUV(x1, y, z, u1, v1);
 		tessellator.addVertexWithUV(x1, y0, z, u1, v0);
-		tessellator.addVertexWithUV(x0, y0, z, u0, v0);
+		tessellator.addVertexWithUV(x, y0, z, u0, v0);
 		tessellator.draw();
 	}
 
@@ -328,7 +312,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 			for (int j = 0; j < iconImage.getHeight(); ++j) {
 				int rgb = 0;
 				int alpha = 0;
-				iconImage.setRGB(i, j, rgb |= alpha);
+				iconImage.setRGB(i, j, 0);
 			}
 		}
 		LOTRBufferedImageIcon icon = new LOTRBufferedImageIcon(iconName, iconImage);
@@ -356,7 +340,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 						}
 					}
 				}
-				eyes = LOTRTextures.mc.renderEngine.getDynamicTextureLocation(skin.toString() + "_eyes_" + eyeWidth + "_" + eyeHeight, new DynamicTexture(eyesImage));
+				eyes = mc.renderEngine.getDynamicTextureLocation(skin.toString() + "_eyes_" + eyeWidth + "_" + eyeHeight, new DynamicTexture(eyesImage));
 			} catch (IOException e) {
 				LOTRLog.logger.error("Failed to generate eyes skin");
 				e.printStackTrace();
@@ -373,7 +357,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 		}
 		int ocean = LOTRBiome.ocean.color;
 		if (sepia) {
-			ocean = LOTRTextures.getSepia(ocean);
+			ocean = getSepia(ocean);
 		}
 		return ocean;
 	}
@@ -396,7 +380,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 		newG = Math.min(Math.max(0.0f, newG), 1.0f);
 		newB = Math.min(Math.max(0.0f, newB), 1.0f);
 		int sepia = new Color(newR, newG, newB).getRGB();
-		return sepia |= alpha << 24;
+		return sepia | alpha << 24;
 	}
 
 	public static void load() {
@@ -416,7 +400,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 		mapTexture = new ResourceLocation("lotr:map/map.png");
 		try {
 			BufferedImage mapImage = ImageIO.read(mc.getResourceManager().getResource(mapTexture).getInputStream());
-			sepiaMapTexture = LOTRTextures.convertToSepia(mapImage, new ResourceLocation("lotr:map_sepia"));
+			sepiaMapTexture = convertToSepia(mapImage, new ResourceLocation("lotr:map_sepia"));
 		} catch (IOException e) {
 			FMLLog.severe("Failed to generate LOTR sepia map");
 			e.printStackTrace();
@@ -434,7 +418,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 			particles.setRGB(newWaterU, newWaterV, newWaterWidth, newWaterHeight, rgb, 0, newWaterWidth);
 			TextureManager textureManager = mc.getTextureManager();
 			textureManager.bindTexture(particleTextures);
-			AbstractTexture texture = (AbstractTexture) textureManager.getTexture(particleTextures);
+			ITextureObject texture = textureManager.getTexture(particleTextures);
 			TextureUtil.uploadTextureImageAllocate(texture.getGlTextureId(), particles, false, false);
 		} catch (IOException e) {
 			FMLLog.severe("Failed to replace rain particles");

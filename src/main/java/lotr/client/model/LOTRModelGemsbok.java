@@ -100,7 +100,7 @@ public class LOTRModelGemsbok extends ModelBase {
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		head.rotateAngleX = (float) Math.toRadians(f4) + 0.4014257f;
 		head.rotateAngleY = (float) Math.toRadians(f3);
-		neck.rotateAngleX = (float) Math.toRadians(-61.0);
+		neck.rotateAngleX = -1.064650843716541f;
 		neck.rotateAngleY = head.rotateAngleY * 0.7f;
 		rightHorn.rotateAngleX = head.rotateAngleX;
 		rightHorn.rotateAngleY = head.rotateAngleY;
@@ -114,6 +114,6 @@ public class LOTRModelGemsbok extends ModelBase {
 		leg2.rotateAngleX = MathHelper.cos(f * 0.6662f + 3.1415927f) * 1.4f * f1;
 		leg3.rotateAngleX = MathHelper.cos(f * 0.6662f + 3.1415927f) * 1.4f * f1;
 		leg4.rotateAngleX = MathHelper.cos(f * 0.6662f) * 1.4f * f1;
-		tail.rotateAngleX = (float) Math.toRadians(17.0);
+		tail.rotateAngleX = 0.29670597283903605f;
 	}
 }

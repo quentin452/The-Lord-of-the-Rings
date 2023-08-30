@@ -180,8 +180,8 @@ public class LOTRTraderNPCInfo {
 	public void sendClientPacket(EntityPlayer entityplayer) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		writeToNBT(nbt);
-		LOTRPacketTraderInfo packet = new LOTRPacketTraderInfo(nbt);
-		LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+		IMessage packet = new LOTRPacketTraderInfo(nbt);
+		LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 	}
 
 	public void setAllTradesDelayed() {

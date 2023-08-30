@@ -15,7 +15,7 @@ public class LOTRWorldGenRuinedBeaconTower extends LOTRWorldGenStructureBase2 {
 		int k1;
 		int i1;
 		int height = 4 + random.nextInt(4);
-		this.setOriginAndRotation(world, i, j += height + 1, k, rotation, 3);
+		setOriginAndRotation(world, i, j + (height + 1), k, rotation, 3);
 		for (i1 = -2; i1 <= 2; ++i1) {
 			for (k1 = -2; k1 <= 2; ++k1) {
 				int i2 = Math.abs(i1);
@@ -41,8 +41,8 @@ public class LOTRWorldGenRuinedBeaconTower extends LOTRWorldGenStructureBase2 {
 			}
 		}
 		setBlockAndMetadata(world, 0, 1, 0, LOTRMod.rock, 1);
-		for (int i12 : new int[] { -2, 2 }) {
-			for (int k12 : new int[] { -2, 2 }) {
+		for (int i12 : new int[]{-2, 2}) {
+			for (int k12 : new int[]{-2, 2}) {
 				int pillarHeight = 1 + random.nextInt(5);
 				for (int j1 = 1; j1 <= pillarHeight; ++j1) {
 					setBlockAndMetadata(world, i12, j1, k12, LOTRMod.pillar, 6);

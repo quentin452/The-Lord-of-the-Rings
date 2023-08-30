@@ -6,7 +6,7 @@ import net.minecraft.world.WorldServer;
 
 public class LOTRPlayerQuestData {
 	public LOTRPlayerData playerData;
-	public boolean givenFirstPouches = false;
+	public boolean givenFirstPouches;
 
 	public LOTRPlayerQuestData(LOTRPlayerData pd) {
 		playerData = pd;
@@ -24,6 +24,7 @@ public class LOTRPlayerQuestData {
 		playerData.markDirty();
 	}
 
+	@SuppressWarnings("all")
 	public void onUpdate(EntityPlayerMP entityplayer, WorldServer world) {
 	}
 

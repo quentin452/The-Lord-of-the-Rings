@@ -11,14 +11,14 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 public abstract class LOTRWorldGenGondorVillageFarm extends LOTRWorldGenGondorStructure {
-	public LOTRWorldGenGondorVillageFarm(boolean flag) {
+	protected LOTRWorldGenGondorVillageFarm(boolean flag) {
 		super(flag);
 	}
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -204,7 +204,7 @@ public abstract class LOTRWorldGenGondorVillageFarm extends LOTRWorldGenGondorSt
 				}
 			}
 			for (int l = 0; l < 16; ++l) {
-				LOTRTreeType tree = Tree.getRandomTree(random);
+				LOTRTreeType tree = getRandomTree(random);
 				WorldGenAbstractTree treeGen = tree.create(notifyChanges, random);
 				if (treeGen == null) {
 					continue;

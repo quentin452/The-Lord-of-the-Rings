@@ -19,7 +19,7 @@ public class LOTRWorldGenHaradPyramid extends LOTRWorldGenStructureBase2 {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int pyramidRadius = 27;
-		this.setOriginAndRotation(world, i, j, k, rotation, usingPlayer != null ? pyramidRadius : 0);
+		setOriginAndRotation(world, i, j, k, rotation, usingPlayer != null ? pyramidRadius : 0);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (int i1 = -pyramidRadius; i1 <= pyramidRadius; ++i1) {
@@ -61,36 +61,36 @@ public class LOTRWorldGenHaradPyramid extends LOTRWorldGenStructureBase2 {
 		addBlockMetaAliasOption("ROOF", 2, LOTRMod.brick3, 13);
 		addBlockMetaAliasOption("ROOF", 2, LOTRMod.brick3, 14);
 		generateStrScan(world, random, 0, 0, 0);
-		this.placePyramidChest(world, random, -4, -6, 3, 2);
-		this.placePyramidChest(world, random, 0, -6, 3, 2);
-		this.placePyramidChest(world, random, 4, -6, 3, 2);
-		this.placePyramidChest(world, random, -5, -5, -7, 4);
-		this.placePyramidChest(world, random, -3, -5, -7, 5);
-		this.placePyramidChest(world, random, 3, -5, -7, 4);
-		this.placePyramidChest(world, random, 5, -5, -7, 5);
-		this.placePyramidChest(world, random, -4, -5, -5, 2);
-		this.placePyramidChest(world, random, 4, -5, -5, 2);
-		this.placeSpawnerChest(world, random, 0, -6, 15, LOTRMod.spawnerChestAncientHarad, 2, LOTREntityHaradPyramidWraith.class, LOTRChestContents.NEAR_HARAD_PYRAMID, 12);
+		placePyramidChest(world, random, -4, -6, 3, 2);
+		placePyramidChest(world, random, 0, -6, 3, 2);
+		placePyramidChest(world, random, 4, -6, 3, 2);
+		placePyramidChest(world, random, -5, -5, -7, 4);
+		placePyramidChest(world, random, -3, -5, -7, 5);
+		placePyramidChest(world, random, 3, -5, -7, 4);
+		placePyramidChest(world, random, 5, -5, -7, 5);
+		placePyramidChest(world, random, -4, -5, -5, 2);
+		placePyramidChest(world, random, 4, -5, -5, 2);
+		placeSpawnerChest(world, random, 0, -6, 15, LOTRMod.spawnerChestAncientHarad, 2, LOTREntityHaradPyramidWraith.class, LOTRChestContents.NEAR_HARAD_PYRAMID, 12);
 		placeMobSpawner(world, 0, -2, 15, LOTREntityDesertScorpion.class);
 		placeMobSpawner(world, -12, -2, -12, LOTREntityDesertScorpion.class);
 		placeMobSpawner(world, 12, -2, -12, LOTREntityDesertScorpion.class);
 		placeMobSpawner(world, 0, 8, 0, LOTREntityDesertScorpion.class);
-		this.placePyramidChest(world, random, -12, -1, -12, 2, true);
-		this.placePyramidChest(world, random, 12, -1, -12, 2, true);
-		this.placePyramidChest(world, random, 0, 9, 0, 2, true);
+		placePyramidChest(world, random, -12, -1, -12, 2, true);
+		placePyramidChest(world, random, 12, -1, -12, 2, true);
+		placePyramidChest(world, random, 0, 9, 0, 2, true);
 		return true;
 	}
 
 	public void placePyramidChest(World world, Random random, int i, int j, int k, int meta) {
-		this.placePyramidChest(world, random, i, j, k, meta, random.nextBoolean());
+		placePyramidChest(world, random, i, j, k, meta, random.nextBoolean());
 	}
 
 	public void placePyramidChest(World world, Random random, int i, int j, int k, int meta, boolean trap) {
 		int amount = MathHelper.getRandomIntegerInRange(random, 3, 5);
 		if (trap) {
-			this.placeSpawnerChest(world, random, i, j, k, LOTRMod.spawnerChestStone, meta, LOTREntityHaradPyramidWraith.class, LOTRChestContents.NEAR_HARAD_PYRAMID, amount);
+			placeSpawnerChest(world, random, i, j, k, LOTRMod.spawnerChestStone, meta, LOTREntityHaradPyramidWraith.class, LOTRChestContents.NEAR_HARAD_PYRAMID, amount);
 		} else {
-			this.placeChest(world, random, i, j, k, LOTRMod.chestStone, meta, LOTRChestContents.NEAR_HARAD_PYRAMID, amount);
+			placeChest(world, random, i, j, k, LOTRMod.chestStone, meta, LOTRChestContents.NEAR_HARAD_PYRAMID, amount);
 		}
 	}
 }

@@ -14,7 +14,7 @@ import net.minecraft.network.PacketBuffer;
 
 public class LOTRPacketUpdatePlayerLocations implements IMessage {
 	public static Map<UUID, byte[]> cachedProfileBytes = new HashMap<>();
-	public List<PlayerLocationInfo> playerLocations = new ArrayList<>();
+	public Collection<PlayerLocationInfo> playerLocations = new ArrayList<>();
 
 	public void addPlayerLocation(GameProfile profile, double x, double z) {
 		if (profile.isComplete()) {

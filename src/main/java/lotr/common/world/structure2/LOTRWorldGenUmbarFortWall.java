@@ -1,7 +1,7 @@
 package lotr.common.world.structure2;
 
 public abstract class LOTRWorldGenUmbarFortWall extends LOTRWorldGenSouthronFortWall {
-	public LOTRWorldGenUmbarFortWall(boolean flag) {
+	protected LOTRWorldGenUmbarFortWall(boolean flag) {
 		super(flag);
 	}
 

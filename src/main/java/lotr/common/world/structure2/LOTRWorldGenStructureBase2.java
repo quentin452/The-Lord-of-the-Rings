@@ -26,6 +26,7 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -35,8 +36,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	public boolean restrictions = true;
 	public boolean notifyChanges;
-	public EntityPlayer usingPlayer = null;
-	public boolean shouldFindSurface = false;
+	public EntityPlayer usingPlayer;
+	public boolean shouldFindSurface;
 	public LOTRVillageGen.AbstractInstance villageInstance;
 	public LOTRStructureTimelapse.ThreadTimelapse threadTimelapse;
 	public int originX;
@@ -48,7 +49,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	public Map<String, BlockAliasPool> scanAliases = new HashMap<>();
 	public Map<String, Float> scanAliasChances = new HashMap<>();
 
-	public LOTRWorldGenStructureBase2(boolean flag) {
+	protected LOTRWorldGenStructureBase2(boolean flag) {
 		super(flag);
 		notifyChanges = flag;
 	}
@@ -79,7 +80,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		scanAliasChances.remove(alias);
 	}
 
-	public void fillChest(World world, Random random, int i, int j, int k, LOTRChestContents contents, int amount) {
+	public void fillChest(IBlockAccess world, Random random, int i, int j, int k, LOTRChestContents contents, int amount) {
 		int i1 = i;
 		int k1 = k;
 		i = getX(i1, k1);
@@ -132,7 +133,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 				}
 				Block block = step.getBlock(aliasBlock);
 				int meta = step.getMeta(aliasMeta);
-				boolean inThisPass = false;
+				boolean inThisPass;
 				if (block.getMaterial().isOpaque() || block == Blocks.air) {
 					inThisPass = pass == 0;
 				} else {
@@ -147,7 +148,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 					}
 				}
 				if (step instanceof LOTRStructureScan.ScanStepSkull) {
-					this.placeSkull(world, random, i1, j1, k1);
+					placeSkull(world, random, i1, j1, k1);
 					continue;
 				}
 				setBlockAndMetadata(world, i1, j1, k1, block, meta);
@@ -171,8 +172,8 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		scanAliases.clear();
 	}
 
-	public boolean generateSubstructure(LOTRWorldGenStructureBase2 str, World world, Random random, int i, int j, int k, int r) {
-		return generateSubstructureWithRestrictionFlag(str, world, random, i, j, k, r, restrictions);
+	public void generateSubstructure(LOTRWorldGenStructureBase2 str, World world, Random random, int i, int j, int k, int r) {
+		generateSubstructureWithRestrictionFlag(str, world, random, i, j, k, r, restrictions);
 	}
 
 	public boolean generateSubstructureWithRestrictionFlag(LOTRWorldGenStructureBase2 str, World world, Random random, int i, int j, int k, int r, boolean isRestrict) {
@@ -186,13 +187,13 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		str.usingPlayer = usingPlayer;
 		str.villageInstance = villageInstance;
 		str.threadTimelapse = threadTimelapse;
-		str.setStructureBB(sbb);
-		return str.generateWithSetRotation(world, random, i, j, k, r %= 4);
+		str.sbb = sbb;
+		return str.generateWithSetRotation(world, random, i, j, k, r % 4);
 	}
 
 	public abstract boolean generateWithSetRotation(World var1, Random var2, int var3, int var4, int var5, int var6);
 
-	public BiomeGenBase getBiome(World world, int i, int k) {
+	public BiomeGenBase getBiome(IBlockAccess world, int i, int k) {
 		int i1 = i;
 		int k1 = k;
 		i = getX(i1, k1);
@@ -202,7 +203,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		return world.getBiomeGenForCoords(i, k);
 	}
 
-	public Block getBlock(World world, int i, int j, int k) {
+	public Block getBlock(IBlockAccess world, int i, int j, int k) {
 		int i1 = i;
 		int k1 = k;
 		i = getX(i1, k1);
@@ -213,7 +214,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		return world.getBlock(i, j, k);
 	}
 
-	public int getMeta(World world, int i, int j, int k) {
+	public int getMeta(IBlockAccess world, int i, int j, int k) {
 		int i1 = i;
 		int k1 = k;
 		i = getX(i1, k1);
@@ -239,7 +240,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		return new ItemStack(Blocks.red_flower, 0);
 	}
 
-	public ItemStack getRandomTallGrass(World world, Random random) {
+	public ItemStack getRandomTallGrass(IBlockAccess world, Random random) {
 		BiomeGenBase biome = getBiome(world, 0, 0);
 		if (biome instanceof LOTRBiome) {
 			LOTRBiome.GrassBlockAndMeta gbm = ((LOTRBiome) biome).getRandomGrass(random);
@@ -252,7 +253,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		return rotationMode;
 	}
 
-	public TileEntity getTileEntity(World world, int i, int j, int k) {
+	public TileEntity getTileEntity(IBlockAccess world, int i, int j, int k) {
 		int i1 = i;
 		int k1 = k;
 		i = getX(i1, k1);
@@ -275,18 +276,18 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 
 	public int getX(int x, int z) {
 		switch (rotationMode) {
-		case 0: {
-			return originX - x;
-		}
-		case 1: {
-			return originX - z;
-		}
-		case 2: {
-			return originX + x;
-		}
-		case 3: {
-			return originX + z;
-		}
+			case 0: {
+				return originX - x;
+			}
+			case 1: {
+				return originX - z;
+			}
+			case 2: {
+				return originX + x;
+			}
+			case 3: {
+				return originX + z;
+			}
 		}
 		return originX;
 	}
@@ -297,18 +298,18 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 
 	public int getZ(int x, int z) {
 		switch (rotationMode) {
-		case 0: {
-			return originZ + z;
-		}
-		case 1: {
-			return originZ - x;
-		}
-		case 2: {
-			return originZ - z;
-		}
-		case 3: {
-			return originZ + x;
-		}
+			case 0: {
+				return originZ + z;
+			}
+			case 1: {
+				return originZ - x;
+			}
+			case 2: {
+				return originZ - z;
+			}
+			case 3: {
+				return originZ + x;
+			}
 		}
 		return originZ;
 	}
@@ -317,23 +318,23 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		return sbb != null;
 	}
 
-	public boolean isAir(World world, int i, int j, int k) {
+	public boolean isAir(IBlockAccess world, int i, int j, int k) {
 		return getBlock(world, i, j, k).getMaterial() == Material.air;
 	}
 
 	public boolean isInSBB(int i, int j, int k) {
-		return sbb == null ? true : sbb.isVecInside(i, j, k);
+		return sbb == null || sbb.isVecInside(i, j, k);
 	}
 
-	public boolean isOpaque(World world, int i, int j, int k) {
+	public boolean isOpaque(IBlockAccess world, int i, int j, int k) {
 		return getBlock(world, i, j, k).isOpaqueCube();
 	}
 
-	public boolean isReplaceable(World world, int i, int j, int k) {
+	public boolean isReplaceable(IBlockAccess world, int i, int j, int k) {
 		return getBlock(world, i, j, k).isReplaceable(world, getX(i, k), getY(j), getZ(i, k));
 	}
 
-	public boolean isSideSolid(World world, int i, int j, int k, ForgeDirection side) {
+	public boolean isSideSolid(IBlockAccess world, int i, int j, int k, ForgeDirection side) {
 		return getBlock(world, i, j, k).isSideSolid(world, getX(i, k), getY(j), getZ(i, k), side);
 	}
 
@@ -342,7 +343,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		int k1 = k;
 		i = getX(i1, k1);
 		k = getZ(i1, k1);
-		if (LOTRWorldGenStructureBase2.isSurfaceStatic(world, i, j = getY(j), k)) {
+		if (isSurfaceStatic(world, i, j = getY(j), k)) {
 			return true;
 		}
 		return villageInstance != null && villageInstance.isVillageSpecificSurface(world, i, j, k);
@@ -392,7 +393,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		setBlockAndMetadata(world, i, j + 1, k, LOTRMod.armorStand, direction | 4);
 		TileEntity tileentity = getTileEntity(world, i, j, k);
 		if (tileentity instanceof LOTRTileEntityArmorStand) {
-			LOTRTileEntityArmorStand armorStand = (LOTRTileEntityArmorStand) tileentity;
+			IInventory armorStand = (IInventory) tileentity;
 			if (armor != null) {
 				for (int l = 0; l < armor.length; ++l) {
 					ItemStack armorPart = armor[l];
@@ -407,7 +408,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	}
 
 	public void placeBanner(World world, int i, int j, int k, LOTRItemBanner.BannerType bt, int direction) {
-		this.placeBanner(world, i, j, k, bt, direction, false, 0);
+		placeBanner(world, i, j, k, bt, direction, false, 0);
 	}
 
 	public void placeBanner(World world, int i, int j, int k, LOTRItemBanner.BannerType bt, int direction, boolean protection, int r) {
@@ -452,11 +453,11 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	}
 
 	public void placeBarrel(World world, Random random, int i, int j, int k, int meta, LOTRFoods foodList) {
-		this.placeBarrel(world, random, i, j, k, meta, foodList.getRandomBrewableDrink(random));
+		placeBarrel(world, random, i, j, k, meta, foodList.getRandomBrewableDrink(random));
 	}
 
 	public void placeChest(World world, Random random, int i, int j, int k, Block chest, int meta, LOTRChestContents contents) {
-		this.placeChest(world, random, i, j, k, chest, meta, contents, -1);
+		placeChest(world, random, i, j, k, chest, meta, contents, -1);
 	}
 
 	public void placeChest(World world, Random random, int i, int j, int k, Block chest, int meta, LOTRChestContents contents, int amount) {
@@ -465,11 +466,11 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	}
 
 	public void placeChest(World world, Random random, int i, int j, int k, int meta, LOTRChestContents contents) {
-		this.placeChest(world, random, i, j, k, meta, contents, -1);
+		placeChest(world, random, i, j, k, meta, contents, -1);
 	}
 
 	public void placeChest(World world, Random random, int i, int j, int k, int meta, LOTRChestContents contents, int amount) {
-		this.placeChest(world, random, i, j, k, Blocks.chest, meta, contents, amount);
+		placeChest(world, random, i, j, k, Blocks.chest, meta, contents, amount);
 	}
 
 	public void placeFlowerPot(World world, int i, int j, int k, ItemStack itemstack) {
@@ -506,7 +507,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		int i1 = getX(i, k);
 		int j1 = getY(j);
 		int k1 = getZ(i, k);
-		int xzFactorX = meta == 2 ? -1 : (xzFactorX = meta == 3 ? 1 : 0);
+		int xzFactorX = meta == 2 ? -1 : meta == 3 ? 1 : 0;
 		int xzFactorZ = meta == 4 ? 1 : meta == 5 ? -1 : 0;
 		for (int y = 0; y < doorSize.height; ++y) {
 			for (int xz = 0; xz < doorSize.width; ++xz) {
@@ -543,7 +544,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	}
 
 	public void placeMug(World world, Random random, int i, int j, int k, int meta, ItemStack drink, LOTRFoods foodList) {
-		this.placeMug(world, random, i, j, k, meta, drink, foodList.getPlaceableDrinkVessels());
+		placeMug(world, random, i, j, k, meta, drink, foodList.getPlaceableDrinkVessels());
 	}
 
 	public void placeMug(World world, Random random, int i, int j, int k, int meta, ItemStack drink, LOTRItemMug.Vessel[] vesselTypes) {
@@ -568,7 +569,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	}
 
 	public void placeMug(World world, Random random, int i, int j, int k, int meta, LOTRFoods foodList) {
-		this.placeMug(world, random, i, j, k, meta, foodList.getRandomPlaceableDrink(random), foodList);
+		placeMug(world, random, i, j, k, meta, foodList.getRandomPlaceableDrink(random), foodList);
 	}
 
 	public void placeNPCRespawner(LOTREntityNPCRespawner entity, World world, int i, int j, int k) {
@@ -634,23 +635,23 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		}
 		float f = rotation;
 		switch (rotationMode) {
-		case 0: {
-			f += 0.0f;
-			break;
+			case 0: {
+				f += 0.0f;
+				break;
+			}
+			case 1: {
+				f += 270.0f;
+				break;
+			}
+			case 2: {
+				f += 180.0f;
+				break;
+			}
+			case 3: {
+				f += 90.0f;
+			}
 		}
-		case 1: {
-			f += 270.0f;
-			break;
-		}
-		case 2: {
-			f += 180.0f;
-			break;
-		}
-		case 3: {
-			f += 90.0f;
-		}
-		}
-		rug.setLocationAndAngles(i + 0.5, j, k + 0.5, f %= 360.0f, 0.0f);
+		rug.setLocationAndAngles(i + 0.5, j, k + 0.5, f % 360.0f, 0.0f);
 		world.spawnEntityInWorld(rug);
 	}
 
@@ -659,9 +660,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		TileEntity te = getTileEntity(world, i, j, k);
 		if (te instanceof TileEntitySign) {
 			TileEntitySign sign = (TileEntitySign) te;
-			for (int l = 0; l < sign.signText.length; ++l) {
-				sign.signText[l] = text[l];
-			}
+			System.arraycopy(text, 0, sign.signText, 0, sign.signText.length);
 		}
 	}
 
@@ -671,20 +670,20 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		if (tileentity instanceof TileEntitySkull) {
 			TileEntitySkull skull = (TileEntitySkull) tileentity;
 			dir += rotationMode * 4;
-			skull.func_145903_a(dir %= 16);
+			skull.func_145903_a(dir % 16);
 		}
 	}
 
 	public void placeSkull(World world, Random random, int i, int j, int k) {
-		this.placeSkull(world, i, j, k, random.nextInt(16));
+		placeSkull(world, i, j, k, random.nextInt(16));
 	}
 
 	public void placeSpawnerChest(World world, int i, int j, int k, Block block, int meta, Class entityClass) {
-		this.placeSpawnerChest(world, null, i, j, k, block, meta, entityClass, null);
+		placeSpawnerChest(world, null, i, j, k, block, meta, entityClass, null);
 	}
 
 	public void placeSpawnerChest(World world, Random random, int i, int j, int k, Block block, int meta, Class entityClass, LOTRChestContents contents) {
-		this.placeSpawnerChest(world, random, i, j, k, block, meta, entityClass, contents, -1);
+		placeSpawnerChest(world, random, i, j, k, block, meta, entityClass, contents, -1);
 	}
 
 	public void placeSpawnerChest(World world, Random random, int i, int j, int k, Block block, int meta, Class entityClass, LOTRChestContents contents, int amount) {
@@ -735,7 +734,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		setBlockAndMetadata(world, i, j, k, Block.getBlockFromItem(itemstack.getItem()), itemstack.getItemDamage());
 	}
 
-	public void putInventoryInChest(World world, int i, int j, int k, IInventory inv) {
+	public void putInventoryInChest(IBlockAccess world, int i, int j, int k, IInventory inv) {
 		TileEntity tileentity = getTileEntity(world, i, j, k);
 		if (tileentity instanceof IInventory) {
 			IInventory blockInv = (IInventory) tileentity;
@@ -764,20 +763,17 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 			int j = meta & 4;
 			for (int l = 0; l < rotationMode; ++l) {
 				switch (i) {
-				case 2:
-					i = 1;
-					continue;
-				case 1:
-					i = 3;
-					continue;
-				case 3:
-					i = 0;
-					continue;
-				default:
-					break;
-				}
-				if (i != 0) {
-					continue;
+					case 2:
+						i = 1;
+						continue;
+					case 1:
+						i = 3;
+						continue;
+					case 3:
+						i = 0;
+						continue;
+					default:
+						break;
 				}
 				i = 2;
 			}
@@ -800,7 +796,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		}
 		if (block == Blocks.wall_sign || block instanceof BlockLadder || block instanceof BlockFurnace || block instanceof BlockChest || block instanceof LOTRBlockChest || block instanceof LOTRBlockBarrel || block instanceof LOTRBlockHobbitOven || block instanceof LOTRBlockForgeBase || block instanceof LOTRBlockKebabStand) {
 			if (meta == 0 && (block instanceof BlockFurnace || block instanceof BlockChest || block instanceof LOTRBlockChest || block instanceof LOTRBlockHobbitOven || block instanceof LOTRBlockForgeBase)) {
-				return meta;
+				return 0;
 			}
 			int i = meta;
 			for (int l = 0; l < rotationMode; ++l) {
@@ -813,7 +809,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		if (block == Blocks.standing_sign) {
 			int i = meta;
 			i += rotationMode * 4;
-			return i &= 0xF;
+			return i & 0xF;
 		}
 		if (block instanceof BlockBed) {
 			boolean flag;
@@ -837,17 +833,17 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 			int i = meta;
 			for (int l = 0; l < rotationMode; ++l) {
 				switch (i) {
-				case 4:
-					i = 1;
-					continue;
-				case 1:
-					i = 3;
-					continue;
-				case 3:
-					i = 2;
-					continue;
-				default:
-					break;
+					case 4:
+						i = 1;
+						continue;
+					case 1:
+						i = 3;
+						continue;
+					case 3:
+						i = 2;
+						continue;
+					default:
+						break;
 				}
 				if (i != 2) {
 					continue;
@@ -873,20 +869,17 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 			int k = meta & 8;
 			for (int l = 0; l < rotationMode; ++l) {
 				switch (i) {
-				case 0:
-					i = 3;
-					continue;
-				case 1:
-					i = 2;
-					continue;
-				case 2:
-					i = 0;
-					continue;
-				default:
-					break;
-				}
-				if (i != 3) {
-					continue;
+					case 0:
+						i = 3;
+						continue;
+					case 1:
+						i = 2;
+						continue;
+					case 2:
+						i = 0;
+						continue;
+					default:
+						break;
 				}
 				i = 1;
 			}
@@ -943,20 +936,17 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 			} else {
 				for (int l = 0; l < rotationMode; ++l) {
 					switch (i) {
-					case 4:
-						i = 1;
-						continue;
-					case 1:
-						i = 3;
-						continue;
-					case 3:
-						i = 2;
-						continue;
-					default:
-						break;
-					}
-					if (i != 2) {
-						continue;
+						case 4:
+							i = 1;
+							continue;
+						case 1:
+							i = 3;
+							continue;
+						case 3:
+							i = 2;
+							continue;
+						default:
+							break;
 					}
 					i = 4;
 				}
@@ -968,17 +958,17 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 			int j = meta & 8;
 			for (int l = 0; l < rotationMode; ++l) {
 				switch (i) {
-				case 4:
-					i = 1;
-					continue;
-				case 1:
-					i = 3;
-					continue;
-				case 3:
-					i = 2;
-					continue;
-				default:
-					break;
+					case 4:
+						i = 1;
+						continue;
+					case 1:
+						i = 3;
+						continue;
+					case 3:
+						i = 2;
+						continue;
+					default:
+						break;
 				}
 				if (i != 2) {
 					continue;
@@ -1027,8 +1017,8 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 			return;
 		}
 		meta = rotateMeta(block, meta);
-		super.setBlockAndNotifyAdequately(world, i, j, k, block, meta);
-		if (meta != 0 && (block instanceof BlockChest || block instanceof LOTRBlockChest || block instanceof LOTRBlockSpawnerChest || block instanceof BlockFurnace || block instanceof LOTRBlockHobbitOven || block instanceof LOTRBlockForgeBase)) {
+		setBlockAndNotifyAdequately(world, i, j, k, block, meta);
+		if (meta != 0 && (block instanceof BlockChest || block instanceof LOTRBlockChest || block instanceof BlockFurnace || block instanceof LOTRBlockHobbitOven || block instanceof LOTRBlockForgeBase)) {
 			world.setBlockMetadataWithNotify(i, j, k, meta, notifyChanges ? 3 : 2);
 		}
 		if (block != Blocks.air && threadTimelapse != null) {
@@ -1048,32 +1038,32 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	}
 
 	public void setOriginAndRotation(World world, int i, int j, int k, int rotation, int shift) {
-		this.setOriginAndRotation(world, i, j, k, rotation, shift, 0);
+		setOriginAndRotation(world, i, j, k, rotation, shift, 0);
 	}
 
 	public void setOriginAndRotation(World world, int i, int j, int k, int rotation, int shift, int shiftX) {
 		--j;
 		rotationMode = rotation;
-		switch (getRotationMode()) {
-		case 0: {
-			k += shift;
-			i += shiftX;
-			break;
-		}
-		case 1: {
-			i -= shift;
-			k += shiftX;
-			break;
-		}
-		case 2: {
-			k -= shift;
-			i -= shiftX;
-			break;
-		}
-		case 3: {
-			i += shift;
-			k -= shiftX;
-		}
+		switch (rotationMode) {
+			case 0: {
+				k += shift;
+				i += shiftX;
+				break;
+			}
+			case 1: {
+				i -= shift;
+				k += shiftX;
+				break;
+			}
+			case 2: {
+				k -= shift;
+				i -= shiftX;
+				break;
+			}
+			case 3: {
+				i += shift;
+				k -= shiftX;
+			}
 		}
 		originX = i;
 		originY = j;
@@ -1132,7 +1122,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		Block block = world.getBlock(i, j, k);
 		BiomeGenBase biome = world.getBiomeGenForCoords(i, k);
 		if (block instanceof BlockSlab && !block.isOpaqueCube()) {
-			return LOTRWorldGenStructureBase2.isSurfaceStatic(world, i, j - 1, k);
+			return isSurfaceStatic(world, i, j - 1, k);
 		}
 		Block above = world.getBlock(i, j + 1, k);
 		if (above.getMaterial().isLiquid()) {
@@ -1151,11 +1141,8 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	}
 
 	public static class BlockAliasPool {
-		public List<BlockMetaEntry> entries = new ArrayList<>();
+		public Collection<BlockMetaEntry> entries = new ArrayList<>();
 		public int totalWeight;
-
-		public BlockAliasPool() {
-		}
 
 		public void addEntry(int w, Block b, int m) {
 			entries.add(new BlockMetaEntry(w, b, m));

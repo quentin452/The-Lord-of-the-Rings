@@ -16,7 +16,7 @@ public class LOTRFactionRelations {
 	public static Map<FactionPair, Relation> defaultMap = new HashMap<>();
 	public static Map<FactionPair, Relation> overrideMap = new HashMap<>();
 	public static boolean needsLoad = true;
-	public static boolean needsSave = false;
+	public static boolean needsSave;
 
 	public static Relation getFromDefaultMap(FactionPair key) {
 		if (defaultMap.containsKey(key)) {
@@ -39,7 +39,7 @@ public class LOTRFactionRelations {
 		if (overrideMap.containsKey(key)) {
 			return overrideMap.get(key);
 		}
-		return LOTRFactionRelations.getFromDefaultMap(key);
+		return getFromDefaultMap(key);
 	}
 
 	public static File getRelationsFile() {
@@ -48,7 +48,7 @@ public class LOTRFactionRelations {
 
 	public static void load() {
 		try {
-			NBTTagCompound facData = LOTRLevelData.loadNBTFromFile(LOTRFactionRelations.getRelationsFile());
+			NBTTagCompound facData = LOTRLevelData.loadNBTFromFile(getRelationsFile());
 			overrideMap.clear();
 			NBTTagList relationTags = facData.getTagList("Overrides", 10);
 			for (int i = 0; i < relationTags.tagCount(); ++i) {
@@ -61,7 +61,7 @@ public class LOTRFactionRelations {
 				overrideMap.put(pair, rel);
 			}
 			needsLoad = false;
-			LOTRFactionRelations.save();
+			save();
 		} catch (Exception e) {
 			FMLLog.severe("Error loading LOTR faction relations");
 			e.printStackTrace();
@@ -77,22 +77,22 @@ public class LOTRFactionRelations {
 	}
 
 	public static void overrideRelations(LOTRFaction f1, LOTRFaction f2, Relation relation) {
-		LOTRFactionRelations.setRelations(f1, f2, relation, false);
+		setRelations(f1, f2, relation, false);
 	}
 
 	public static void resetAllRelations() {
 		boolean wasEmpty = overrideMap.isEmpty();
 		overrideMap.clear();
 		if (!wasEmpty) {
-			LOTRFactionRelations.markDirty();
+			markDirty();
 			LOTRPacketFactionRelations pkt = LOTRPacketFactionRelations.reset();
-			LOTRFactionRelations.sendPacketToAll(pkt);
+			sendPacketToAll(pkt);
 		}
 	}
 
 	public static void save() {
 		try {
-			File datFile = LOTRFactionRelations.getRelationsFile();
+			File datFile = getRelationsFile();
 			if (!datFile.exists()) {
 				LOTRLevelData.saveNBTToFile(datFile, new NBTTagCompound());
 			}
@@ -131,7 +131,7 @@ public class LOTRFactionRelations {
 	}
 
 	public static void setDefaultRelations(LOTRFaction f1, LOTRFaction f2, Relation relation) {
-		LOTRFactionRelations.setRelations(f1, f2, relation, true);
+		setRelations(f1, f2, relation, true);
 	}
 
 	public static void setRelations(LOTRFaction f1, LOTRFaction f2, Relation relation, boolean isDefault) {
@@ -152,15 +152,15 @@ public class LOTRFactionRelations {
 				defaultMap.put(key, relation);
 			}
 		} else {
-			Relation defaultRelation = LOTRFactionRelations.getFromDefaultMap(key);
+			Relation defaultRelation = getFromDefaultMap(key);
 			if (relation == defaultRelation) {
 				overrideMap.remove(key);
 			} else {
 				overrideMap.put(key, relation);
 			}
-			LOTRFactionRelations.markDirty();
+			markDirty();
 			LOTRPacketFactionRelations pkt = LOTRPacketFactionRelations.oneEntry(key, relation);
-			LOTRFactionRelations.sendPacketToAll(pkt);
+			sendPacketToAll(pkt);
 		}
 	}
 
@@ -180,9 +180,7 @@ public class LOTRFactionRelations {
 			}
 			if (obj instanceof FactionPair) {
 				FactionPair pair = (FactionPair) obj;
-				if (fac1 == pair.fac1 && fac2 == pair.fac2 || fac1 == pair.fac2 && fac2 == pair.fac1) {
-					return true;
-				}
+				return fac1 == pair.fac1 && fac2 == pair.fac2 || fac1 == pair.fac2 && fac2 == pair.fac1;
 			}
 			return false;
 		}
@@ -231,7 +229,7 @@ public class LOTRFactionRelations {
 		}
 
 		public static Relation forID(int id) {
-			for (Relation rel : Relation.values()) {
+			for (Relation rel : values()) {
 				if (rel.ordinal() != id) {
 					continue;
 				}
@@ -241,7 +239,7 @@ public class LOTRFactionRelations {
 		}
 
 		public static Relation forName(String name) {
-			for (Relation rel : Relation.values()) {
+			for (Relation rel : values()) {
 				if (!rel.codeName().equals(name)) {
 					continue;
 				}
@@ -251,8 +249,8 @@ public class LOTRFactionRelations {
 		}
 
 		public static List<String> listRelationNames() {
-			ArrayList<String> names = new ArrayList<>();
-			for (Relation rel : Relation.values()) {
+			List<String> names = new ArrayList<>();
+			for (Relation rel : values()) {
 				names.add(rel.codeName());
 			}
 			return names;

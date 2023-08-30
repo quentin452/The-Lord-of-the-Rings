@@ -54,11 +54,11 @@ public class LOTRPacketNPCSquadron implements IMessage {
 				LOTREntityNPC hiredNPC = (LOTREntityNPC) npc;
 				if (hiredNPC.hiredNPCInfo.isActive && hiredNPC.hiredNPCInfo.getHiringPlayer() == entityplayer) {
 					String squadron = packet.squadron;
-					if (!StringUtils.isNullOrEmpty(squadron)) {
+					if (StringUtils.isNullOrEmpty(squadron)) {
+						hiredNPC.hiredNPCInfo.setSquadron("");
+					} else {
 						squadron = LOTRSquadrons.checkAcceptableLength(squadron);
 						hiredNPC.hiredNPCInfo.setSquadron(squadron);
-					} else {
-						hiredNPC.hiredNPCInfo.setSquadron("");
 					}
 				}
 			}

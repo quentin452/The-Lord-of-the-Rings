@@ -65,7 +65,7 @@ public class LOTREntityAINPCAvoidEvilPlayer extends EntityAIBase {
 			return false;
 		}
 		entityPathEntity = entityPathNavigate.getPathToXYZ(fleePath.xCoord, fleePath.yCoord, fleePath.zCoord);
-		return entityPathEntity == null ? false : entityPathEntity.isDestinationSame(fleePath);
+		return entityPathEntity != null && entityPathEntity.isDestinationSame(fleePath);
 	}
 
 	@Override

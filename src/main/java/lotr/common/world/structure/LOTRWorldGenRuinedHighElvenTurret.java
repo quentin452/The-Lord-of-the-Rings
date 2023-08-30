@@ -14,15 +14,19 @@ public class LOTRWorldGenRuinedHighElvenTurret extends LOTRWorldGenStructureBase
 
 	@Override
 	public boolean generate(World world, Random random, int i, int j, int k) {
-		block47: {
+		block47:
+		{
 			int j1;
 			int j12;
 			int rotation;
 			int k1;
-			block49: {
+			block49:
+			{
 				int i1;
-				block48: {
-					block46: {
+				block48:
+				{
+					block46:
+					{
 						int j13;
 						int k12;
 						Block block;
@@ -35,21 +39,21 @@ public class LOTRWorldGenRuinedHighElvenTurret extends LOTRWorldGenStructureBase
 							rotation = usingPlayerRotation();
 						}
 						switch (rotation) {
-						case 0: {
-							k += 6;
-							break;
-						}
-						case 1: {
-							i -= 6;
-							break;
-						}
-						case 2: {
-							k -= 6;
-							break;
-						}
-						case 3: {
-							i += 6;
-						}
+							case 0: {
+								k += 6;
+								break;
+							}
+							case 1: {
+								i -= 6;
+								break;
+							}
+							case 2: {
+								k -= 6;
+								break;
+							}
+							case 3: {
+								i += 6;
+							}
 						}
 						for (i1 = i - 4; i1 <= i + 4; ++i1) {
 							for (k12 = k - 4; k12 <= k + 4; ++k12) {
@@ -107,6 +111,7 @@ public class LOTRWorldGenRuinedHighElvenTurret extends LOTRWorldGenStructureBase
 							for (k12 = k - 4; k12 <= k + 4; ++k12) {
 								for (j13 = j + 16; j13 <= j + 18; ++j13) {
 									if (j13 - j == 16 || Math.abs(i1 - i) == 4 || Math.abs(k12 - k) == 4) {
+										//noinspection BadOddness
 										if (j13 - j == 18 && (Math.abs(i1 - i) % 2 == 1 || Math.abs(k12 - k) % 2 == 1)) {
 											setBlockAndNotifyAdequately(world, i1, j13, k12, Blocks.air, 0);
 											continue;
@@ -226,17 +231,17 @@ public class LOTRWorldGenRuinedHighElvenTurret extends LOTRWorldGenStructureBase
 		}
 		int l = random.nextInt(3);
 		switch (l) {
-		case 0: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 2);
-			break;
-		}
-		case 1: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 3);
-			break;
-		}
-		case 2: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 4);
-		}
+			case 0: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 2);
+				break;
+			}
+			case 1: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 3);
+				break;
+			}
+			case 2: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 4);
+			}
 		}
 	}
 
@@ -257,17 +262,17 @@ public class LOTRWorldGenRuinedHighElvenTurret extends LOTRWorldGenStructureBase
 		}
 		int l = random.nextInt(3);
 		switch (l) {
-		case 0: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsHighElvenBrick, meta);
-			break;
-		}
-		case 1: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsHighElvenBrickMossy, meta);
-			break;
-		}
-		case 2: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsHighElvenBrickCracked, meta);
-		}
+			case 0: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsHighElvenBrick, meta);
+				break;
+			}
+			case 1: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsHighElvenBrickMossy, meta);
+				break;
+			}
+			case 2: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsHighElvenBrickCracked, meta);
+			}
 		}
 	}
 }

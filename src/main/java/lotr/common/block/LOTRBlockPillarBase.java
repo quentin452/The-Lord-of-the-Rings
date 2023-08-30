@@ -13,26 +13,26 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
 public abstract class LOTRBlockPillarBase extends Block {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] pillarFaceIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] pillarSideIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] pillarSideTopIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] pillarSideMiddleIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] pillarSideBottomIcons;
 	public String[] pillarNames;
 
-	public LOTRBlockPillarBase() {
+	protected LOTRBlockPillarBase() {
 		this(Material.rock);
 		setHardness(1.5f);
 		setResistance(10.0f);
 		setStepSound(Block.soundTypeStone);
 	}
 
-	public LOTRBlockPillarBase(Material material) {
+	protected LOTRBlockPillarBase(Material material) {
 		super(material);
 		setCreativeTab(LOTRCreativeTabs.tabBlock);
 	}
@@ -42,7 +42,7 @@ public abstract class LOTRBlockPillarBase extends Block {
 		return i;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(IBlockAccess world, int i, int j, int k, int side) {
 		boolean pillarAbove = isPillarAt(world, i, j + 1, k);
@@ -66,7 +66,7 @@ public abstract class LOTRBlockPillarBase extends Block {
 		return pillarSideIcons[meta];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j >= pillarNames.length) {
@@ -78,7 +78,7 @@ public abstract class LOTRBlockPillarBase extends Block {
 		return pillarSideIcons[j];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < pillarNames.length; ++i) {
@@ -91,7 +91,7 @@ public abstract class LOTRBlockPillarBase extends Block {
 		return block instanceof LOTRBlockPillarBase;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		pillarFaceIcons = new IIcon[pillarNames.length];

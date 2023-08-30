@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityPinnathGelinCaptain extends LOTREntityPinnathGelinSoldier implements LOTRUnitTradeable {
 	public LOTREntityPinnathGelinCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

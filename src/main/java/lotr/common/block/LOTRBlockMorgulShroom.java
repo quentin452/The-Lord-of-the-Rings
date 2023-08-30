@@ -15,7 +15,7 @@ public class LOTRBlockMorgulShroom extends LOTRBlockMordorPlant {
 		setCreativeTab(LOTRCreativeTabs.tabFood);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public String getItemIconName() {
 		return getTextureName();

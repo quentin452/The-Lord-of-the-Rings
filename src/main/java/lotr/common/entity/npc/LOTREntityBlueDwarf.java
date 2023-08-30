@@ -22,11 +22,6 @@ public class LOTREntityBlueDwarf extends LOTREntityDwarf {
 	}
 
 	@Override
-	public float getAlignmentBonus() {
-		return 1.0f;
-	}
-
-	@Override
 	public LOTRMiniQuestFactory getBountyHelpSpeechDir() {
 		return LOTRMiniQuestFactory.BLUE_MOUNTAINS;
 	}

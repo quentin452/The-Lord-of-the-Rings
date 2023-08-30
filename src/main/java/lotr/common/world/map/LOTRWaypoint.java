@@ -31,8 +31,8 @@ public enum LOTRWaypoint implements LOTRAbstractWaypoint {
 		faction = f;
 		imgX = x;
 		imgY = y;
-		xCoord = LOTRWaypoint.mapToWorldX(x);
-		zCoord = LOTRWaypoint.mapToWorldZ(y);
+		xCoord = mapToWorldX(x);
+		zCoord = mapToWorldZ(y);
 		isHidden = hide;
 	}
 
@@ -123,7 +123,7 @@ public enum LOTRWaypoint implements LOTRAbstractWaypoint {
 	public boolean isConquered(EntityPlayer entityplayer) {
 		LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
 		World world = entityplayer.worldObj;
-		LOTRConquestZone zone = LOTRConquestGrid.getZoneByWorldCoords(getXCoord(), getZCoord());
+		LOTRConquestZone zone = LOTRConquestGrid.getZoneByWorldCoords(xCoord, zCoord);
 		LOTRFaction pledgeFac = pd.getPledgeFaction();
 		return pledgeFac != null && zone.getConquestStrength(pledgeFac, world) >= 500.0f;
 	}
@@ -131,7 +131,7 @@ public enum LOTRWaypoint implements LOTRAbstractWaypoint {
 	public boolean isConquestUnlockable(EntityPlayer entityplayer) {
 		LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
 		World world = entityplayer.worldObj;
-		LOTRConquestZone zone = LOTRConquestGrid.getZoneByWorldCoords(getXCoord(), getZCoord());
+		LOTRConquestZone zone = LOTRConquestGrid.getZoneByWorldCoords(xCoord, zCoord);
 		LOTRFaction pledgeFac = pd.getPledgeFaction();
 		return pledgeFac != null && pledgeFac.isBadRelation(faction) && LOTRConquestGrid.getConquestEffectIn(world, zone, pledgeFac) == LOTRConquestGrid.ConquestEffective.EFFECTIVE;
 	}
@@ -146,9 +146,7 @@ public enum LOTRWaypoint implements LOTRAbstractWaypoint {
 	}
 
 	public static List<LOTRAbstractWaypoint> listAllWaypoints() {
-		ArrayList<LOTRAbstractWaypoint> list = new ArrayList<>();
-		list.addAll(Arrays.asList(LOTRWaypoint.values()));
-		return list;
+		return new ArrayList<>(Arrays.asList(values()));
 	}
 
 	public static int mapToWorldR(double r) {
@@ -184,7 +182,7 @@ public enum LOTRWaypoint implements LOTRAbstractWaypoint {
 	}
 
 	public static LOTRWaypoint waypointForName(String name) {
-		for (LOTRWaypoint wp : LOTRWaypoint.values()) {
+		for (LOTRWaypoint wp : values()) {
 			if (!wp.getCodeName().equals(name)) {
 				continue;
 			}
@@ -205,10 +203,10 @@ public enum LOTRWaypoint implements LOTRAbstractWaypoint {
 		return (int) Math.round(z / LOTRGenLayerWorld.scale - 0.5 + 730.0);
 	}
 
-	public static enum Region {
+	public enum Region {
 		OCEAN, MENELTARMA, SHIRE, OLD_FOREST, LINDON, BLUE_MOUNTAINS, ERIADOR, BREE_LAND, MIDGEWATER, LONE_LANDS, RIVENDELL_VALE, TROLLSHAWS, COLDFELLS, ETTENMOORS, ANGMAR, EREGION, DUNLAND, ENEDWAITH, NAN_CURUNIR, FORODWAITH, MISTY_MOUNTAINS, GREY_MOUNTAINS, VALES_OF_ANDUIN, WOODLAND_REALM, MIRKWOOD, WILDERLAND, DALE, IRON_HILLS, LOTHLORIEN, FANGORN, ROHAN, WHITE_MOUNTAINS, PUKEL, GONDOR, ITHILIEN, LEBENNIN, LOSSARNACH, LAMEDON, BLACKROOT_VALE, PINNATH_GELIN, DOR_EN_ERNIL, TOLFALAS, EMYN_MUIL, NINDALF, BROWN_LANDS, DAGORLAD, MORDOR, NURN, NAN_UNGOL, DORWINION, RHUN, RHUN_KHAGANATE, TOL_RHUNAER, RED_MOUNTAINS, HARONDOR, HARNEDOR, LOSTLADEN, UMBAR, SOUTHRON_COASTS, HARAD_DESERT, GULF_HARAD, HARAD_MOUNTAINS, FAR_HARAD, FAR_HARAD_JUNGLE, PERTOROGWAITH, PERTOROGWAITH_FOREST;
 
-		public List<LOTRWaypoint> waypoints = new ArrayList<>();
+		public Collection<LOTRWaypoint> waypoints = new ArrayList<>();
 	}
 
 }

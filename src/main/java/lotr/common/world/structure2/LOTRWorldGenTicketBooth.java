@@ -1,17 +1,17 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
 import lotr.common.entity.animal.LOTREntityLion;
 import lotr.common.world.map.LOTRFixedStructures;
 import net.minecraft.block.Block;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenTicketBooth extends LOTRWorldGenEasterlingStructureTown {
 	public LOTRWorldGenTicketBooth(boolean flag) {
@@ -42,7 +42,7 @@ public class LOTRWorldGenTicketBooth extends LOTRWorldGenEasterlingStructureTown
 		int i1;
 		int k1;
 		int i12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 3, 3);
+		setOriginAndRotation(world, i, j, k, rotation, 3, 3);
 		setupRandomBlocks(random);
 		int woolType = 14;
 		Block woodBlock = Blocks.planks;
@@ -145,7 +145,7 @@ public class LOTRWorldGenTicketBooth extends LOTRWorldGenEasterlingStructureTown
 		}
 		for (i1 = -2; i1 <= 4; ++i1) {
 			if (i1 == 3) {
-				setBlockAndMetadata(world, i1, 3, -3, woodBlock, woodMeta);
+				setBlockAndMetadata(world, 3, 3, -3, woodBlock, woodMeta);
 				continue;
 			}
 			setBlockAndMetadata(world, i1, 3, -3, stairBlock, 2);
@@ -189,7 +189,7 @@ public class LOTRWorldGenTicketBooth extends LOTRWorldGenEasterlingStructureTown
 			setBlockAndMetadata(world, 8, 2, k1, Blocks.torch, 1);
 		}
 		for (i1 = 1; i1 <= 6; ++i1) {
-			if (i1 <= 1 || i1 >= 6) {
+			if (i1 <= 1 || i1 == 6) {
 				setBlockAndMetadata(world, i1, 2, 14, Blocks.torch, 4);
 			}
 			if (i1 > 2 && i1 < 5) {
@@ -200,14 +200,14 @@ public class LOTRWorldGenTicketBooth extends LOTRWorldGenEasterlingStructureTown
 		setBlockAndMetadata(world, -2, 2, -3, Blocks.torch, 4);
 		setBlockAndMetadata(world, 2, 2, -3, Blocks.torch, 4);
 		setBlockAndMetadata(world, 4, 2, -3, Blocks.torch, 4);
-		placeSign(world, 3, 3, -4, Blocks.wall_sign, 2, new String[] { "---------------", "Now showing:", "The Lion King", "---------------" });
+		placeSign(world, 3, 3, -4, Blocks.wall_sign, 2, new String[]{"---------------", "Now showing:", "The Lion King", "---------------"});
 		LOTREntityLion lion = new LOTREntityLion(world);
 		lion.setCustomNameTag("Ticket Lion");
 		lion.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(1.0E8);
 		lion.setHealth(lion.getMaxHealth());
 		spawnNPCAndSetHome(lion, world, 0, 1, -1, 4);
 		setBlockAndMetadata(world, 0, 1, 2, Blocks.chest, 3);
-		TileEntityChest chest = (TileEntityChest) getTileEntity(world, 0, 1, 2);
+		IInventory chest = (IInventory) getTileEntity(world, 0, 1, 2);
 		if (chest != null) {
 			int lootAmount = 2 + random.nextInt(4);
 			for (int l = 0; l < lootAmount; ++l) {
@@ -215,47 +215,35 @@ public class LOTRWorldGenTicketBooth extends LOTRWorldGenEasterlingStructureTown
 			}
 		}
 		setBlockAndMetadata(world, 0, 2, 2, Blocks.trapdoor, 1);
-		placeSign(world, 3, 2, 13, Blocks.wall_sign, 2, new String[] { "", "Showings", "postponed", "" });
-		placeSign(world, 4, 2, 13, Blocks.wall_sign, 2, new String[] { "", "until further", "notice.", "" });
+		placeSign(world, 3, 2, 13, Blocks.wall_sign, 2, new String[]{"", "Showings", "postponed", ""});
+		placeSign(world, 4, 2, 13, Blocks.wall_sign, 2, new String[]{"", "until further", "notice.", ""});
 		return true;
 	}
 
 	public ItemStack getBasicLoot(Random random) {
 		int i = random.nextInt(11);
 		switch (i) {
-		default: {
-			return new ItemStack(Items.stick, 2 + random.nextInt(4));
+			case 1:
+				return new ItemStack(Items.paper, 1 + random.nextInt(3));
+			case 2:
+				return new ItemStack(Items.book, 1 + random.nextInt(2));
+			case 3:
+				return new ItemStack(Items.bread, 3 + random.nextInt(2));
+			case 4:
+				return new ItemStack(Items.compass);
+			case 5:
+				return new ItemStack(Items.gold_nugget, 2 + random.nextInt(6));
+			case 6:
+				return new ItemStack(Items.apple, 1 + random.nextInt(3));
+			case 7:
+				return new ItemStack(Items.string, 2 + random.nextInt(2));
+			case 8:
+				return new ItemStack(Items.bowl, 1 + random.nextInt(4));
+			case 9:
+				return new ItemStack(Items.cookie, 1 + random.nextInt(3));
+			default:
+				return new ItemStack(Items.stick, 2 + random.nextInt(4));
 		}
-		case 1: {
-			return new ItemStack(Items.paper, 1 + random.nextInt(3));
-		}
-		case 2: {
-			return new ItemStack(Items.book, 1 + random.nextInt(2));
-		}
-		case 3: {
-			return new ItemStack(Items.bread, 3 + random.nextInt(2));
-		}
-		case 4: {
-			return new ItemStack(Items.compass);
-		}
-		case 5: {
-			return new ItemStack(Items.gold_nugget, 2 + random.nextInt(6));
-		}
-		case 6: {
-			return new ItemStack(Items.apple, 1 + random.nextInt(3));
-		}
-		case 7: {
-			return new ItemStack(Items.string, 2 + random.nextInt(2));
-		}
-		case 8: {
-			return new ItemStack(Items.bowl, 1 + random.nextInt(4));
-		}
-		case 9: {
-			return new ItemStack(Items.cookie, 1 + random.nextInt(3));
-		}
-		case 10:
-		}
-		return new ItemStack(Items.coal, 1 + random.nextInt(2));
 	}
 
 	public static boolean generatesAt(World world, int i, int k) {

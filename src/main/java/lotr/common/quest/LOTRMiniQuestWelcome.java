@@ -29,7 +29,7 @@ public class LOTRMiniQuestWelcome extends LOTRMiniQuest {
 	public static int STAGE_TALK_FINAL = 14;
 	public static int STAGE_COMPLETE = 15;
 	public static int NUM_STAGES = 15;
-	public int stage = 0;
+	public int stage;
 	public boolean movedOn;
 
 	public LOTRMiniQuestWelcome(LOTRPlayerData pd) {
@@ -119,28 +119,28 @@ public class LOTRMiniQuestWelcome extends LOTRMiniQuest {
 	@Override
 	public String getQuestObjective() {
 		switch (stage) {
-		case 2:
-			return StatCollector.translateToLocal("lotr.miniquest.welcome.book");
-		case 5: {
-			KeyBinding keyMenu = LOTRKeyHandler.keyBindingMenu;
-			return StatCollector.translateToLocalFormatted("lotr.miniquest.welcome.map", GameSettings.getKeyDisplayString(keyMenu.getKeyCode()));
-		}
-		case 8: {
-			KeyBinding keyLeft = LOTRKeyHandler.keyBindingAlignmentCycleLeft;
-			KeyBinding keyRight = LOTRKeyHandler.keyBindingAlignmentCycleRight;
-			return StatCollector.translateToLocalFormatted("lotr.miniquest.welcome.align", GameSettings.getKeyDisplayString(keyLeft.getKeyCode()), GameSettings.getKeyDisplayString(keyRight.getKeyCode()));
-		}
-		case 9: {
-			KeyBinding keyUp = LOTRKeyHandler.keyBindingAlignmentGroupPrev;
-			KeyBinding keyDown = LOTRKeyHandler.keyBindingAlignmentGroupNext;
-			return StatCollector.translateToLocalFormatted("lotr.miniquest.welcome.alignRegions", GameSettings.getKeyDisplayString(keyUp.getKeyCode()), GameSettings.getKeyDisplayString(keyDown.getKeyCode()));
-		}
-		case 11: {
-			KeyBinding keyMenu = LOTRKeyHandler.keyBindingMenu;
-			return StatCollector.translateToLocalFormatted("lotr.miniquest.welcome.factions", GameSettings.getKeyDisplayString(keyMenu.getKeyCode()));
-		}
-		default:
-			break;
+			case 2:
+				return StatCollector.translateToLocal("lotr.miniquest.welcome.book");
+			case 5: {
+				KeyBinding keyMenu = LOTRKeyHandler.keyBindingMenu;
+				return StatCollector.translateToLocalFormatted("lotr.miniquest.welcome.map", GameSettings.getKeyDisplayString(keyMenu.getKeyCode()));
+			}
+			case 8: {
+				KeyBinding keyLeft = LOTRKeyHandler.keyBindingAlignmentCycleLeft;
+				KeyBinding keyRight = LOTRKeyHandler.keyBindingAlignmentCycleRight;
+				return StatCollector.translateToLocalFormatted("lotr.miniquest.welcome.align", GameSettings.getKeyDisplayString(keyLeft.getKeyCode()), GameSettings.getKeyDisplayString(keyRight.getKeyCode()));
+			}
+			case 9: {
+				KeyBinding keyUp = LOTRKeyHandler.keyBindingAlignmentGroupPrev;
+				KeyBinding keyDown = LOTRKeyHandler.keyBindingAlignmentGroupNext;
+				return StatCollector.translateToLocalFormatted("lotr.miniquest.welcome.alignRegions", GameSettings.getKeyDisplayString(keyUp.getKeyCode()), GameSettings.getKeyDisplayString(keyDown.getKeyCode()));
+			}
+			case 11: {
+				KeyBinding keyMenu = LOTRKeyHandler.keyBindingMenu;
+				return StatCollector.translateToLocalFormatted("lotr.miniquest.welcome.factions", GameSettings.getKeyDisplayString(keyMenu.getKeyCode()));
+			}
+			default:
+				break;
 		}
 		return StatCollector.translateToLocal("lotr.miniquest.welcome.speak");
 	}
@@ -194,113 +194,109 @@ public class LOTRMiniQuestWelcome extends LOTRMiniQuest {
 		updateGreyWanderer();
 		LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
 		switch (stage) {
-		case 1: {
-			ArrayList<ItemStack> dropItems = new ArrayList<>();
-			dropItems.add(new ItemStack(LOTRMod.redBook));
-			npc.dropItemList(dropItems);
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 4);
-			sendQuoteSpeech(entityplayer, npc, line);
-			quotesStages.add(line);
-			stage = 2;
-			updateQuest();
-			break;
-		}
-		case 2: {
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 4);
-			sendQuoteSpeech(entityplayer, npc, line);
-			break;
-		}
-		case 3: {
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 5);
-			sendQuoteSpeech(entityplayer, npc, line);
-			quotesStages.add(line);
-			stage = 4;
-			updateQuest();
-			break;
-		}
-		case 4: {
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 6);
-			sendQuoteSpeech(entityplayer, npc, line);
-			quotesStages.add(line);
-			stage = 5;
-			updateQuest();
-			break;
-		}
-		case 5: {
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 6);
-			sendQuoteSpeech(entityplayer, npc, line);
-			break;
-		}
-		case 6: {
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 7);
-			sendQuoteSpeech(entityplayer, npc, line);
-			quotesStages.add(line);
-			stage = 7;
-			updateQuest();
-			break;
-		}
-		case 7: {
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 8);
-			sendQuoteSpeech(entityplayer, npc, line);
-			quotesStages.add(line);
-			stage = 8;
-			updateQuest();
-			break;
-		}
-		case 8: {
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 8);
-			sendQuoteSpeech(entityplayer, npc, line);
-			break;
-		}
-		case 9: {
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 8);
-			sendQuoteSpeech(entityplayer, npc, line);
-			break;
-		}
-		case 10: {
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 9);
-			sendQuoteSpeech(entityplayer, npc, line);
-			quotesStages.add(line);
-			stage = 11;
-			updateQuest();
-			break;
-		}
-		case 11: {
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 9);
-			sendQuoteSpeech(entityplayer, npc, line);
-			break;
-		}
-		case 12: {
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 10);
-			sendQuoteSpeech(entityplayer, npc, line);
-			quotesStages.add(line);
-			stage = 13;
-			updateQuest();
-			break;
-		}
-		case 13: {
-			ArrayList<ItemStack> dropItems = new ArrayList<>();
-			if (!pd.getQuestData().getGivenFirstPouches()) {
-				dropItems.add(new ItemStack(LOTRMod.pouch, 1, 0));
-				dropItems.add(new ItemStack(LOTRMod.pouch, 1, 0));
-				dropItems.add(new ItemStack(LOTRMod.pouch, 1, 0));
-				pd.getQuestData().setGivenFirstPouches(true);
+			case 1: {
+				Collection<ItemStack> dropItems = new ArrayList<>();
+				dropItems.add(new ItemStack(LOTRMod.redBook));
+				npc.dropItemList(dropItems);
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 4);
+				sendQuoteSpeech(entityplayer, npc, line);
+				quotesStages.add(line);
+				stage = 2;
+				updateQuest();
+				break;
 			}
-			npc.dropItemList(dropItems);
-			String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 11);
-			sendQuoteSpeech(entityplayer, npc, line);
-			quotesStages.add(line);
-			stage = 14;
-			updateQuest();
-			break;
-		}
-		case 14:
-			stage = 15;
-			updateQuest();
-			complete(entityplayer, npc);
-			break;
-		default:
-			break;
+			case 2: {
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 4);
+				sendQuoteSpeech(entityplayer, npc, line);
+				break;
+			}
+			case 3: {
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 5);
+				sendQuoteSpeech(entityplayer, npc, line);
+				quotesStages.add(line);
+				stage = 4;
+				updateQuest();
+				break;
+			}
+			case 4: {
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 6);
+				sendQuoteSpeech(entityplayer, npc, line);
+				quotesStages.add(line);
+				stage = 5;
+				updateQuest();
+				break;
+			}
+			case 5: {
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 6);
+				sendQuoteSpeech(entityplayer, npc, line);
+				break;
+			}
+			case 6: {
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 7);
+				sendQuoteSpeech(entityplayer, npc, line);
+				quotesStages.add(line);
+				stage = 7;
+				updateQuest();
+				break;
+			}
+			case 7: {
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 8);
+				sendQuoteSpeech(entityplayer, npc, line);
+				quotesStages.add(line);
+				stage = 8;
+				updateQuest();
+				break;
+			}
+			case 8:
+			case 9: {
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 8);
+				sendQuoteSpeech(entityplayer, npc, line);
+				break;
+			}
+			case 10: {
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 9);
+				sendQuoteSpeech(entityplayer, npc, line);
+				quotesStages.add(line);
+				stage = 11;
+				updateQuest();
+				break;
+			}
+			case 11: {
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 9);
+				sendQuoteSpeech(entityplayer, npc, line);
+				break;
+			}
+			case 12: {
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 10);
+				sendQuoteSpeech(entityplayer, npc, line);
+				quotesStages.add(line);
+				stage = 13;
+				updateQuest();
+				break;
+			}
+			case 13: {
+				Collection<ItemStack> dropItems = new ArrayList<>();
+				if (!pd.getQuestData().getGivenFirstPouches()) {
+					dropItems.add(new ItemStack(LOTRMod.pouch, 1, 0));
+					dropItems.add(new ItemStack(LOTRMod.pouch, 1, 0));
+					dropItems.add(new ItemStack(LOTRMod.pouch, 1, 0));
+					pd.getQuestData().setGivenFirstPouches(true);
+				}
+				npc.dropItemList(dropItems);
+				String line = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 11);
+				sendQuoteSpeech(entityplayer, npc, line);
+				quotesStages.add(line);
+				stage = 14;
+				updateQuest();
+				break;
+			}
+			case 14:
+				stage = 15;
+				updateQuest();
+				complete(entityplayer, npc);
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -342,7 +338,7 @@ public class LOTRMiniQuestWelcome extends LOTRMiniQuest {
 	}
 
 	public static boolean[] forceMenu_Map_Factions(EntityPlayer entityplayer) {
-		boolean[] flags = { false, false };
+		boolean[] flags = {false, false};
 		LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
 		List<LOTRMiniQuest> activeQuests = pd.getActiveMiniQuests();
 		for (LOTRMiniQuest quest : activeQuests) {

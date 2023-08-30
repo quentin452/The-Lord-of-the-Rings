@@ -12,7 +12,7 @@ public class LOTRWorldGenGondorTownBench extends LOTRWorldGenGondorStructure {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (int i12 = -2; i12 <= 2; ++i12) {
@@ -39,7 +39,7 @@ public class LOTRWorldGenGondorTownBench extends LOTRWorldGenGondorStructure {
 		for (i1 = -1; i1 <= 1; ++i1) {
 			setBlockAndMetadata(world, i1, j1, k1, rockSlabBlock, rockSlabMeta | 8);
 		}
-		for (int i13 : new int[] { -2, 2 }) {
+		for (int i13 : new int[]{-2, 2}) {
 			setBlockAndMetadata(world, i13, j1, k1, rockSlabDoubleBlock, rockSlabDoubleMeta);
 			setGrassToDirt(world, i13, j1 - 1, k1);
 			layFoundation(world, i13, j1 - 1, k1);

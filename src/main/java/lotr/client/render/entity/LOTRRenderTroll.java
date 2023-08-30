@@ -1,5 +1,6 @@
 package lotr.client.render.entity;
 
+import lotr.common.entity.LOTRRandomSkinEntity;
 import org.lwjgl.opengl.GL11;
 
 import lotr.client.model.LOTRModelTroll;
@@ -10,16 +11,14 @@ import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.Locale;
+
 public class LOTRRenderTroll extends RenderLiving {
 	public static LOTRRandomSkins trollSkins;
-	public static ResourceLocation[] trollOutfits;
-	public static ResourceLocation weaponsTexture;
-	static {
-		trollOutfits = new ResourceLocation[] { new ResourceLocation("lotr:mob/troll/outfit_0.png"), new ResourceLocation("lotr:mob/troll/outfit_1.png"), new ResourceLocation("lotr:mob/troll/outfit_2.png") };
-		weaponsTexture = new ResourceLocation("lotr:mob/troll/weapons.png");
-	}
-	public LOTRModelTroll shirtModel = new LOTRModelTroll(1.0f, 0);
+	public static ResourceLocation[] trollOutfits  = new ResourceLocation[]{new ResourceLocation("lotr:mob/troll/outfit_0.png"), new ResourceLocation("lotr:mob/troll/outfit_1.png"), new ResourceLocation("lotr:mob/troll/outfit_2.png")};
+	public static ResourceLocation weaponsTexture  = new ResourceLocation("lotr:mob/troll/weapons.png");
 
+	public LOTRModelTroll shirtModel = new LOTRModelTroll(1.0f, 0);
 	public LOTRModelTroll trousersModel = new LOTRModelTroll(0.75f, 1);
 
 	public LOTRRenderTroll() {
@@ -46,16 +45,16 @@ public class LOTRRenderTroll extends RenderLiving {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		return trollSkins.getRandomSkin((LOTREntityTroll) entity);
+		return trollSkins.getRandomSkin((LOTRRandomSkinEntity) entity);
 	}
 
 	@Override
 	public void preRenderCallback(EntityLivingBase entity, float f) {
 		LOTREntityTroll troll = (LOTREntityTroll) entity;
 		scaleTroll(troll, false);
-		if (LOTRMod.isAprilFools() || "shrek".equals(troll.familyInfo.getName().toLowerCase())) {
+		if (LOTRMod.isAprilFools() || "shrek".equals(troll.familyInfo.getName().toLowerCase(Locale.ROOT))) {
 			GL11.glColor3f(0.0f, 1.0f, 0.0f);
-		} else if ("drek".equals(troll.familyInfo.getName().toLowerCase())) {
+		} else if ("drek".equals(troll.familyInfo.getName().toLowerCase(Locale.ROOT))) {
 			GL11.glColor3f(0.2f, 0.4f, 1.0f);
 		}
 	}
@@ -99,7 +98,6 @@ public class LOTRRenderTroll extends RenderLiving {
 			return 1;
 		}
 		if (pass == 1) {
-			trousersModel.onGround = trousersModel.onGround;
 			setRenderPassModel(trousersModel);
 			return 1;
 		}

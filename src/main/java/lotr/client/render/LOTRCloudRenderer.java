@@ -41,7 +41,7 @@ public class LOTRCloudRenderer extends IRenderHandler {
 			GL11.glPushMatrix();
 			GL11.glLoadIdentity();
 			float fov = LOTRReflectionClient.getFOVModifier(mc.entityRenderer, partialTicks, true);
-			Project.gluPerspective(fov, mc.displayWidth / mc.displayHeight, 0.05F, cloudRange);
+			Project.gluPerspective(fov, (float) mc.displayWidth / mc.displayHeight, 0.05F, cloudRange);
 			GL11.glMatrixMode(5888);
 			GL11.glPushMatrix();
 			GL11.glDisable(2884);
@@ -91,23 +91,20 @@ public class LOTRCloudRenderer extends IRenderHandler {
 				double cloudY = world.provider.getCloudHeight() - posY + 0.33000001311302185D + pass * 50.0F;
 				tessellator.startDrawingQuads();
 				tessellator.setColorRGBA_F(r, g, b, (0.8F - pass * 0.5F) * cloudOpacity.getValue(partialTicks));
-				int interval = cloudRange;
 				int i;
-				for (i = -cloudRange; i < cloudRange; i += interval) {
+				for (i = -cloudRange; i < cloudRange; i += cloudRange) {
 					int k;
-					for (k = -cloudRange; k < cloudRange; k += interval) {
-						int xMin = i + 0;
-						int xMax = i + interval;
-						int zMin = k + 0;
-						int zMax = k + interval;
-						double uMin = (xMin + cloudX) * invScaleD;
+					for (k = -cloudRange; k < cloudRange; k += cloudRange) {
+						int xMax = i + cloudRange;
+						int zMax = k + cloudRange;
+						double uMin = (i + cloudX) * invScaleD;
 						double uMax = (xMax + cloudX) * invScaleD;
-						double vMin = (zMin + cloudZ) * invScaleD;
+						double vMin = (k + cloudZ) * invScaleD;
 						double vMax = (zMax + cloudZ) * invScaleD;
-						tessellator.addVertexWithUV(xMin, cloudY, zMax, uMin, vMax);
+						tessellator.addVertexWithUV(i, cloudY, zMax, uMin, vMax);
 						tessellator.addVertexWithUV(xMax, cloudY, zMax, uMax, vMax);
-						tessellator.addVertexWithUV(xMax, cloudY, zMin, uMax, vMin);
-						tessellator.addVertexWithUV(xMin, cloudY, zMin, uMin, vMin);
+						tessellator.addVertexWithUV(xMax, cloudY, k, uMax, vMin);
+						tessellator.addVertexWithUV(i, cloudY, k, uMin, vMin);
 					}
 				}
 				tessellator.draw();
@@ -162,8 +159,8 @@ public class LOTRCloudRenderer extends IRenderHandler {
 		public float getCurrentDayValue(WorldClient world) {
 			int day = LOTRDate.ShireReckoning.currentDay;
 			long seed = day * baseSeed + day + 83025820626792L;
-			LOTRCloudRenderer.cloudRand.setSeed(seed);
-			return MathHelper.randomFloatClamp(LOTRCloudRenderer.cloudRand, minValue, maxValue);
+			cloudRand.setSeed(seed);
+			return MathHelper.randomFloatClamp(cloudRand, minValue, maxValue);
 		}
 
 		public float getValue(float f) {

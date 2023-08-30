@@ -19,13 +19,11 @@ public class LOTRSlotStackSize implements Comparable {
 			if (obj1.stackSize > stackSize) {
 				return -1;
 			}
-			if (obj1.stackSize == stackSize) {
-				if (obj1.slot < slot) {
-					return 1;
-				}
-				if (obj1.slot > slot) {
-					return -1;
-				}
+			if (obj1.slot < slot) {
+				return 1;
+			}
+			if (obj1.slot > slot) {
+				return -1;
 			}
 		}
 		return 0;

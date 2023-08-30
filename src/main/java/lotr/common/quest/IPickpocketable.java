@@ -11,7 +11,7 @@ public interface IPickpocketable {
 
 	ItemStack createPickpocketItem();
 
-	public static class Helper {
+	class Helper {
 		public static String getOwner(ItemStack itemstack) {
 			if (itemstack.hasTagCompound()) {
 				return itemstack.getTagCompound().getCompoundTag("LOTRPickpocket").getString("Owner");

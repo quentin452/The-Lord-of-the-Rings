@@ -37,7 +37,7 @@ public class LOTRWorldGenHobbitWindmill extends LOTRWorldGenStructureBase2 {
 		int j13;
 		int i2;
 		int fillMeta;
-		this.setOriginAndRotation(world, i, j, k, rotation, 5);
+		setOriginAndRotation(world, i, j, k, rotation, 5);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -4; i1 <= 4; ++i1) {
@@ -57,7 +57,6 @@ public class LOTRWorldGenHobbitWindmill extends LOTRWorldGenStructureBase2 {
 				if (i2 >= 3 && k2 > 3 || k2 >= 3 && i2 > 3) {
 					continue;
 				}
-				fillBlock = Blocks.air;
 				fillMeta = 0;
 				if (i2 == 3 && k2 == 3) {
 					fillBlock = plankBlock;
@@ -93,12 +92,8 @@ public class LOTRWorldGenHobbitWindmill extends LOTRWorldGenStructureBase2 {
 				if (i2 == 3 && k2 == 3) {
 					continue;
 				}
-				fillBlock = Blocks.air;
 				fillMeta = 0;
-				if (i2 == 3 && k2 == 3) {
-					fillBlock = plankBlock;
-					fillMeta = plankMeta;
-				} else if (i2 == 3 && k2 == 2 || i2 == 2 && k2 == 3) {
+				if (i2 == 3 && k2 == 2 || i2 == 2 && k2 == 3) {
 					fillBlock = woodBlock;
 					fillMeta = woodMeta;
 				} else if (i2 == 3 || k2 == 3) {
@@ -193,11 +188,11 @@ public class LOTRWorldGenHobbitWindmill extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, -2, 5, 1, plankBlock, plankMeta);
 		setBlockAndMetadata(world, -2, 5, 2, plankBlock, plankMeta);
 		setBlockAndMetadata(world, -2, 6, 1, LOTRWorldGenHobbitStructure.getRandomCakeBlock(random), 0);
-		this.placeBarrel(world, random, -2, 6, 2, 4, LOTRFoods.HOBBIT_DRINK);
+		placeBarrel(world, random, -2, 6, 2, 4, LOTRFoods.HOBBIT_DRINK);
 		setBlockAndMetadata(world, 2, 5, 1, LOTRMod.hobbitOven, 5);
 		setBlockAndMetadata(world, 2, 5, 2, LOTRMod.hobbitOven, 5);
-		this.placeChest(world, random, -2, 5, 0, 4, LOTRChestContents.HOBBIT_HOLE_STUDY);
-		this.placeChest(world, random, 2, 5, 0, 5, LOTRChestContents.HOBBIT_HOLE_LARDER);
+		placeChest(world, random, -2, 5, 0, 4, LOTRChestContents.HOBBIT_HOLE_STUDY);
+		placeChest(world, random, 2, 5, 0, 5, LOTRChestContents.HOBBIT_HOLE_LARDER);
 		if (random.nextInt(20) == 0 && (te = getTileEntity(world, 2, 5, 0)) instanceof IInventory) {
 			IInventory chest = (IInventory) te;
 			ItemStack hooch = new ItemStack(LOTRMod.mugLemonLiqueur);

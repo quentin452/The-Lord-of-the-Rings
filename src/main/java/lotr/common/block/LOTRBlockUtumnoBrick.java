@@ -15,13 +15,13 @@ import net.minecraft.world.*;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRBlockUtumnoBrick extends Block implements LOTRWorldProviderUtumno.UtumnoBlock {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] brickIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iceGlowingTop;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon fireTileSide;
-	public String[] brickNames = { "fire", "burning", "ice", "iceGlowing", "obsidian", "obsidianFire", "iceTile", "obsidianTile", "fireTile" };
+	public String[] brickNames = {"fire", "burning", "ice", "iceGlowing", "obsidian", "obsidianFire", "iceTile", "obsidianTile", "fireTile"};
 
 	public LOTRBlockUtumnoBrick() {
 		super(Material.rock);
@@ -37,7 +37,7 @@ public class LOTRBlockUtumnoBrick extends Block implements LOTRWorldProviderUtum
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		if (meta >= brickNames.length) {
 			meta = 0;
@@ -61,7 +61,7 @@ public class LOTRBlockUtumnoBrick extends Block implements LOTRWorldProviderUtum
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < brickNames.length; ++i) {
 			list.add(new ItemStack(item, 1, i));
@@ -83,7 +83,7 @@ public class LOTRBlockUtumnoBrick extends Block implements LOTRWorldProviderUtum
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconregister) {
 		brickIcons = new IIcon[brickNames.length];
 		for (int i = 0; i < brickNames.length; ++i) {

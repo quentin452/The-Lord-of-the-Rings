@@ -16,20 +16,20 @@ public class LOTRWorldGenRangerTent extends LOTRWorldGenTentBase {
 		super.setupRandomBlocks(random);
 		int randomWool = random.nextInt(3);
 		switch (randomWool) {
-		case 0:
-			tentBlock = Blocks.wool;
-			tentMeta = 13;
-			break;
-		case 1:
-			tentBlock = Blocks.wool;
-			tentMeta = 12;
-			break;
-		case 2:
-			tentBlock = Blocks.wool;
-			tentMeta = 7;
-			break;
-		default:
-			break;
+			case 0:
+				tentBlock = Blocks.wool;
+				tentMeta = 13;
+				break;
+			case 1:
+				tentBlock = Blocks.wool;
+				tentMeta = 12;
+				break;
+			case 2:
+				tentBlock = Blocks.wool;
+				tentMeta = 7;
+				break;
+			default:
+				break;
 		}
 		fenceBlock = Blocks.fence;
 		fenceMeta = 0;

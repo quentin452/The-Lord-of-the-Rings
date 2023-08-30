@@ -15,7 +15,7 @@ public class LOTRWorldGenBreeGate extends LOTRWorldGenBreeStructure {
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 1);
+		setOriginAndRotation(world, i, j, k, rotation, 1);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (int i1 = -4; i1 <= 4; ++i1) {
@@ -28,7 +28,7 @@ public class LOTRWorldGenBreeGate extends LOTRWorldGenBreeStructure {
 				}
 			}
 		}
-		for (int i1 : new int[] { -4, 4 }) {
+		for (int i1 : new int[]{-4, 4}) {
 			int k12 = 0;
 			for (int j12 = 4; (j12 >= 0 || !isOpaque(world, 0, j12, 0)) && getY(j12) >= 0; --j12) {
 				setBlockAndMetadata(world, i1, j12, k12, beamBlock, beamMeta);

@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 public abstract class LOTRWorldGenSouthronFortWall extends LOTRWorldGenSouthronStructure {
 	public boolean isLong;
 
-	public LOTRWorldGenSouthronFortWall(boolean flag) {
+	protected LOTRWorldGenSouthronFortWall(boolean flag) {
 		super(flag);
 	}
 
@@ -18,7 +18,7 @@ public abstract class LOTRWorldGenSouthronFortWall extends LOTRWorldGenSouthronS
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		int xMin = -1;
 		int xMax = 1;
@@ -44,6 +44,7 @@ public abstract class LOTRWorldGenSouthronFortWall extends LOTRWorldGenSouthronS
 					setBlockAndMetadata(world, i1, j12, k1, plankBlock, plankMeta);
 					setGrassToDirt(world, i1, j12 - 1, k1);
 				}
+				//noinspection BadOddness
 				if (i2 % 2 == 1) {
 					setBlockAndMetadata(world, i1, 5, k1, plankStairBlock, 2);
 				} else {

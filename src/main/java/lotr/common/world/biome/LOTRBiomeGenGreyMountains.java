@@ -39,10 +39,10 @@ public class LOTRBiomeGenGreyMountains extends LOTRBiome {
 		arrspawnListContainer5[0] = LOTRBiomeSpawnList.entry(LOTRSpawnList.DWARVES, 10);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer5);
 		addBiomeVariantSet(LOTRBiomeVariant.SET_MOUNTAINS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.2f);
 		decorator.biomeGemFactor = 1.0f;
 		decorator.flowersPerChunk = 0;
 		decorator.grassPerChunk = 0;

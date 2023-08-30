@@ -7,15 +7,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public class LOTRConquestZone {
-	public static List<LOTRFaction> allPlayableFacs = null;
+	public static List<LOTRFaction> allPlayableFacs;
 	public int gridX;
 	public int gridZ;
-	public boolean isDummyZone = false;
+	public boolean isDummyZone;
 	public float[] conquestStrengths;
 	public long lastChangeTime;
-	public long isEmptyKey = 0L;
+	public long isEmptyKey;
 	public boolean isLoaded = true;
-	public boolean clientSide = false;
+	public boolean clientSide;
 
 	public LOTRConquestZone(int i, int k) {
 		gridX = i;
@@ -27,8 +27,8 @@ public class LOTRConquestZone {
 	}
 
 	public void addConquestStrength(LOTRFaction fac, float add, World world) {
-		float str = this.getConquestStrength(fac, world);
-		setConquestStrength(fac, str += add, world);
+		float str = getConquestStrength(fac, world);
+		setConquestStrength(fac, str + add, world);
 	}
 
 	public float calcTimeStrReduction(long worldTime) {
@@ -37,7 +37,7 @@ public class LOTRConquestZone {
 		float graceCap = 3600.0f;
 		if (s > graceCap) {
 			float decayRate = 3600.0f;
-			return (s -= graceCap) / decayRate;
+			return (s - graceCap) / decayRate;
 		}
 		return 0.0f;
 	}
@@ -45,7 +45,7 @@ public class LOTRConquestZone {
 	public void checkForEmptiness(World world) {
 		boolean emptyCheck = true;
 		for (LOTRFaction fac : allPlayableFacs) {
-			float str = this.getConquestStrength(fac, world);
+			float str = getConquestStrength(fac, world);
 			if (str == 0.0f) {
 				continue;
 			}
@@ -74,7 +74,7 @@ public class LOTRConquestZone {
 	}
 
 	public float getConquestStrength(LOTRFaction fac, World world) {
-		return this.getConquestStrength(fac, world.getTotalWorldTime());
+		return getConquestStrength(fac, world.getTotalWorldTime());
 	}
 
 	public float getConquestStrengthRaw(LOTRFaction fac) {
@@ -120,7 +120,7 @@ public class LOTRConquestZone {
 		}
 		int index = allPlayableFacs.indexOf(fac);
 		conquestStrengths[index] = str;
-		isEmptyKey = str == 0.0f ? (isEmptyKey &= 1L << index ^ 0xFFFFFFFFFFFFFFFFL) : (isEmptyKey |= 1L << index);
+		isEmptyKey = str == 0.0f ? isEmptyKey & ~(1L << index) : isEmptyKey | 1L << index;
 		markDirty();
 	}
 
@@ -145,7 +145,7 @@ public class LOTRConquestZone {
 			if (otherFac == fac || conquestStrengths[i] <= 0.0f) {
 				continue;
 			}
-			float otherStr = this.getConquestStrength(otherFac, world);
+			float otherStr = getConquestStrength(otherFac, world);
 			setConquestStrengthRaw(otherFac, otherStr);
 		}
 	}
@@ -172,8 +172,9 @@ public class LOTRConquestZone {
 		LOTRConquestZone zone = new LOTRConquestZone(x, z);
 		zone.isLoaded = false;
 		zone.lastChangeTime = time;
-		block0: for (LOTRFaction fac : allPlayableFacs) {
-			ArrayList<String> nameAndAliases = new ArrayList<>();
+		block0:
+		for (LOTRFaction fac : allPlayableFacs) {
+			Collection<String> nameAndAliases = new ArrayList<>();
 			nameAndAliases.add(fac.codeName());
 			nameAndAliases.addAll(fac.listAliases());
 			for (String alias : nameAndAliases) {

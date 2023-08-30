@@ -17,7 +17,7 @@ public class LOTRBiomeGenMirkwoodCorrupted extends LOTRBiomeGenMirkwood {
 		spawnableLOTRAmbientList.add(new BiomeGenBase.SpawnListEntry(LOTREntityButterfly.class, 10, 4, 4));
 		spawnableLOTRAmbientList.add(new BiomeGenBase.SpawnListEntry(LOTREntityGorcrow.class, 6, 4, 4));
 		variantChance = 0.2f;
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
 		decorator.treesPerChunk = 8;
 		decorator.willowPerChunk = 1;
 		decorator.vinesPerChunk = 20;

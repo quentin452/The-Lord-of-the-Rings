@@ -69,7 +69,7 @@ public class LOTRRenderAnimalJar extends TileEntitySpecialRenderer implements II
 					double dx = entityPos.xCoord - viewerPos.xCoord;
 					double dz = entityPos.zCoord - viewerPos.zCoord;
 					float lookYaw = (float) Math.toDegrees(Math.atan2(dz, dx));
-					jarLiving.rotationYaw = jarLiving.prevRotationYaw = lookYaw += 90.0f;
+					jarLiving.rotationYaw = jarLiving.prevRotationYaw = lookYaw + 90.0f;
 				}
 				jarLiving.renderYawOffset = jarLiving.rotationYaw;
 				jarLiving.prevRenderYawOffset = jarLiving.prevRotationYaw;

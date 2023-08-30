@@ -61,13 +61,13 @@ public class LOTRBiomeGenDorwinion extends LOTRBiome {
 		vineyardSpawnList.newFactionList(100).add(arrspawnListContainer6);
 		variantChance = 0.3f;
 		addBiomeVariantSet(LOTRBiomeVariant.SET_NORMAL_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.VINEYARD, 8.0f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.5f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.5f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_OLIVE, 0.5f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_ALMOND, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.VINEYARD, 8.0f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_OLIVE, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_ALMOND, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.2f);
 		decorator.setTreeCluster(8, 20);
 		decorator.willowPerChunk = 1;
 		decorator.flowersPerChunk = 6;
@@ -224,11 +224,6 @@ public class LOTRBiomeGenDorwinion extends LOTRBiome {
 	@Override
 	public LOTRRoadType getRoadBlock() {
 		return LOTRRoadType.DORWINION;
-	}
-
-	@Override
-	public float getTreeIncreaseChance() {
-		return 0.1f;
 	}
 
 	@Override

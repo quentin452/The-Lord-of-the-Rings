@@ -18,11 +18,11 @@ public class LOTRBiomeGenRedMountains extends LOTRBiome {
 		super(i, major);
 		npcSpawnList.clear();
 		addBiomeVariantSet(LOTRBiomeVariant.SET_MOUNTAINS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.2f);
 		decorator.biomeOreFactor = 2.0f;
 		decorator.biomeGemFactor = 1.5f;
 		decorator.addSoil(new WorldGenMinable(LOTRMod.rock, 4, 60, Blocks.stone), 12.0f, 0, 96);

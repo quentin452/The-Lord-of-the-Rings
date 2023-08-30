@@ -34,7 +34,7 @@ public class LOTRWorldGenGondorWatchfort extends LOTRWorldGenGondorStructure {
 		int k13;
 		int j15;
 		int k14;
-		this.setOriginAndRotation(world, i, j, k, rotation, 9);
+		setOriginAndRotation(world, i, j, k, rotation, 9);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int x1 = -6;
@@ -90,7 +90,7 @@ public class LOTRWorldGenGondorWatchfort extends LOTRWorldGenGondorStructure {
 				}
 			}
 		}
-		int[] i19 = { 4, 9 };
+		int[] i19 = {4, 9};
 		k12 = i19.length;
 		for (j14 = 0; j14 < k12; ++j14) {
 			j15 = i19[j14];
@@ -145,11 +145,11 @@ public class LOTRWorldGenGondorWatchfort extends LOTRWorldGenGondorStructure {
 			placeRandomWall(world, random, -4, 17, k13);
 			placeRandomWall(world, random, 4, 17, k13);
 		}
-		int[] k16 = { -4, 4 };
+		int[] k16 = {-4, 4};
 		k12 = k16.length;
 		for (j14 = 0; j14 < k12; ++j14) {
 			i172 = k16[j14];
-			for (int k17 : new int[] { -4, 4 }) {
+			for (int k17 : new int[]{-4, 4}) {
 				for (int j16 = 17; j16 <= 19; ++j16) {
 					setBlockAndMetadata(world, i172, j16, k17, pillar2Block, pillar2Meta);
 				}
@@ -175,11 +175,11 @@ public class LOTRWorldGenGondorWatchfort extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i15, 21, k12, brick2SlabBlock, brick2SlabMeta);
 			}
 		}
-		int[] i110 = { -4, 4 };
+		int[] i110 = {-4, 4};
 		k12 = i110.length;
 		for (j14 = 0; j14 < k12; ++j14) {
 			i172 = i110[j14];
-			for (int k17 : new int[] { -4, 4 }) {
+			for (int k17 : new int[]{-4, 4}) {
 				setBlockAndMetadata(world, i172, 20, k17 - 1, brick2StairBlock, 6);
 				setBlockAndMetadata(world, i172, 20, k17 + 1, brick2StairBlock, 7);
 				for (int k2 = k17 - 1; k2 <= k17 + 1; ++k2) {
@@ -293,15 +293,15 @@ public class LOTRWorldGenGondorWatchfort extends LOTRWorldGenGondorStructure {
 			}
 		}
 		placeRandomSlab(world, random, -4, 2, -4, true);
-		this.placeBarrel(world, random, -4, 3, -4, 4, LOTRFoods.GONDOR_DRINK);
+		placeBarrel(world, random, -4, 3, -4, 4, LOTRFoods.GONDOR_DRINK);
 		placeRandomSlab(world, random, -4, 2, -3, true);
-		this.placeBarrel(world, random, -4, 3, -3, 4, LOTRFoods.GONDOR_DRINK);
-		this.placeChest(world, random, -4, 2, -2, LOTRMod.chestLebethron, 4, LOTRChestContents.GONDOR_FORTRESS_DRINKS);
+		placeBarrel(world, random, -4, 3, -3, 4, LOTRFoods.GONDOR_DRINK);
+		placeChest(world, random, -4, 2, -2, LOTRMod.chestLebethron, 4, LOTRChestContents.GONDOR_FORTRESS_DRINKS);
 		placeRandomSlab(world, random, 4, 2, -4, true);
-		this.placeBarrel(world, random, 4, 3, -4, 5, LOTRFoods.GONDOR_DRINK);
+		placeBarrel(world, random, 4, 3, -4, 5, LOTRFoods.GONDOR_DRINK);
 		placeRandomSlab(world, random, 4, 2, -3, true);
-		this.placeBarrel(world, random, 4, 3, -3, 5, LOTRFoods.GONDOR_DRINK);
-		this.placeChest(world, random, 4, 2, -2, LOTRMod.chestLebethron, 5, LOTRChestContents.GONDOR_FORTRESS_DRINKS);
+		placeBarrel(world, random, 4, 3, -3, 5, LOTRFoods.GONDOR_DRINK);
+		placeChest(world, random, 4, 2, -2, LOTRMod.chestLebethron, 5, LOTRChestContents.GONDOR_FORTRESS_DRINKS);
 		setBlockAndMetadata(world, -4, 2, 4, tableBlock, 0);
 		setBlockAndMetadata(world, 4, 2, 4, tableBlock, 0);
 		for (i12 = -1; i12 <= 1; ++i12) {
@@ -316,10 +316,10 @@ public class LOTRWorldGenGondorWatchfort extends LOTRWorldGenGondorStructure {
 			}
 			placeRandomStairs(world, random, i12, 6, 3, 2);
 		}
-		this.placeChest(world, random, 0, 2, 2, LOTRMod.chestLebethron, 3, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES);
+		placeChest(world, random, 0, 2, 2, LOTRMod.chestLebethron, 3, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES);
 		setAir(world, 0, 3, 2);
 		setBlockAndMetadata(world, 0, 7, -4, LOTRMod.commandTable, 0);
-		int[] i111 = { -3, 3 };
+		int[] i111 = {-3, 3};
 		step = i111.length;
 		for (k14 = 0; k14 < step; ++k14) {
 			i172 = i111[k14];
@@ -356,7 +356,7 @@ public class LOTRWorldGenGondorWatchfort extends LOTRWorldGenGondorStructure {
 			placeRandomBrick(world, random, i13, 13, 4);
 			placeRandomBrick(world, random, i13, 14, 4);
 		}
-		for (int i1721 : new int[] { -2, 2 }) {
+		for (int i1721 : new int[]{-2, 2}) {
 			placeRandomBrick(world, random, i1721, 12, 5);
 			placeRandomBrick(world, random, i1721, 13, 5);
 			setBlockAndMetadata(world, i1721, 14, 5, brick2WallBlock, brick2WallMeta);
@@ -395,10 +395,10 @@ public class LOTRWorldGenGondorWatchfort extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 1, 13, 11, Blocks.torch, 1);
 		setBlockAndMetadata(world, -1, 13, 23, Blocks.torch, 2);
 		setBlockAndMetadata(world, 1, 13, 23, Blocks.torch, 1);
-		this.placeBanner(world, -2, 14, 11, bannerType, 3);
-		this.placeBanner(world, 2, 14, 11, bannerType, 1);
-		this.placeBanner(world, -2, 14, 23, bannerType, 3);
-		this.placeBanner(world, 2, 14, 23, bannerType, 1);
+		placeBanner(world, -2, 14, 11, bannerType, 3);
+		placeBanner(world, 2, 14, 11, bannerType, 1);
+		placeBanner(world, -2, 14, 23, bannerType, 3);
+		placeBanner(world, 2, 14, 23, bannerType, 1);
 		for (j13 = 12; j13 <= 14; ++j13) {
 			placeRandomBrick(world, random, -2, j13, 17);
 			placeRandomBrick(world, random, 2, j13, 17);

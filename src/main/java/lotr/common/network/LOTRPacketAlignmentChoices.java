@@ -9,7 +9,7 @@ import lotr.common.fac.LOTRFaction;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 public class LOTRPacketAlignmentChoices implements IMessage {
-	public Set<LOTRFaction> setZeroFacs = new HashSet<>();
+	public Set<LOTRFaction> setZeroFacs = EnumSet.noneOf(LOTRFaction.class);
 
 	public LOTRPacketAlignmentChoices() {
 	}
@@ -20,7 +20,7 @@ public class LOTRPacketAlignmentChoices implements IMessage {
 
 	@Override
 	public void fromBytes(ByteBuf data) {
-		byte facID = 0;
+		byte facID;
 		while ((facID = data.readByte()) >= 0) {
 			LOTRFaction fac = LOTRFaction.forID(facID);
 			if (fac == null) {

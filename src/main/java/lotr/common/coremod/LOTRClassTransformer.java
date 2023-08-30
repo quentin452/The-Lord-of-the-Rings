@@ -1,14 +1,15 @@
 package lotr.common.coremod;
 
-import java.io.DataInputStream;
-import java.util.Iterator;
-
-import org.objectweb.asm.*;
-import org.objectweb.asm.tree.*;
-
 import lotr.compatibility.LOTRModChecker;
 import net.minecraft.launchwrapper.IClassTransformer;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTTagCompound;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.tree.*;
+
+import java.io.DataInputStream;
+import java.util.Iterator;
 
 public class LOTRClassTransformer implements IClassTransformer {
 	public static String cls_Block = "net/minecraft/block/Block";
@@ -34,9 +35,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 		String targetMethodNameObf = targetMethodName = "ApplyArmor";
 		String targetMethodSignObf = targetMethodSign = "(Lnet/minecraft/entity/EntityLivingBase;[Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/DamageSource;D)F";
 		if (isCauldron) {
-			targetMethodNameObf = "ApplyArmor";
 			targetMethodName = "ApplyArmor";
-			targetMethodSignObf = "(Lnet/minecraft/entity/EntityLivingBase;[Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/DamageSource;DZ)F";
 			targetMethodSign = "(Lnet/minecraft/entity/EntityLivingBase;[Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/DamageSource;DZ)F";
 		}
 		ClassNode classNode = new ClassNode();
@@ -44,31 +43,32 @@ public class LOTRClassTransformer implements IClassTransformer {
 		classReader.accept(classNode, 0);
 		for (MethodNode method : classNode.methods) {
 			AbstractInsnNode nodePrev;
-			if (!method.name.equals(targetMethodName) && !method.name.equals(targetMethodNameObf) || !method.desc.equals(targetMethodSign) && !method.desc.equals(targetMethodSignObf)) {
+			if (!method.name.equals(targetMethodName) || !method.desc.equals(targetMethodSign)) {
 				continue;
 			}
 			FieldInsnNode nodeFound = null;
-			block1: for (boolean armorObf : new boolean[] { false, true }) {
+			block1:
+			for (boolean armorObf : new boolean[]{false, true}) {
 				for (int dmgObf = 0; dmgObf < 3; ++dmgObf) {
 					String _armor = armorObf ? cls_ItemArmor_obf : cls_ItemArmor;
-					String _dmg = new String[] { "field_77879_b", "damageReduceAmount", "c" }[dmgObf];
+					String _dmg = new String[]{"field_77879_b", "damageReduceAmount", "c"}[dmgObf];
 					FieldInsnNode nodeDmg = new FieldInsnNode(180, _armor, _dmg, "I");
-					nodeFound = LOTRClassTransformer.findNodeInMethod(method, nodeDmg);
+					nodeFound = findNodeInMethod(method, nodeDmg);
 					if (nodeFound != null) {
 						break block1;
 					}
 				}
 			}
-			if (!((nodePrev = nodeFound.getPrevious()) instanceof VarInsnNode) || ((VarInsnNode) nodePrev).getOpcode() != 25 || ((VarInsnNode) nodePrev).var != 9) {
+			if (!((nodePrev = nodeFound.getPrevious()) instanceof VarInsnNode) || nodePrev.getOpcode() != 25 || ((VarInsnNode) nodePrev).var != 9) {
 				System.out.println("WARNING! Expected ALOAD 9! Instead got " + nodePrev);
 				System.out.println("WARNING! Things may break!");
 			}
 			method.instructions.remove(nodePrev);
 			InsnList newIns = new InsnList();
-			if (!isCauldron) {
-				newIns.add(new VarInsnNode(25, 7));
-			} else {
+			if (isCauldron) {
 				newIns.add(new VarInsnNode(25, 8));
+			} else {
+				newIns.add(new VarInsnNode(25, 7));
 			}
 			newIns.add(new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$Enchants", "getDamageReduceAmount", "(Lnet/minecraft/item/ItemStack;)I", false));
 			method.instructions.insert(nodeFound, newIns);
@@ -153,7 +153,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 		for (MethodNode method : classNode.methods) {
 			InsnList newIns;
 			if ("<clinit>".equals(method.name)) {
-				LdcInsnNode nodeNameIndex1 = LOTRClassTransformer.findNodeInMethod(method, new LdcInsnNode("default"), 1);
+				LdcInsnNode nodeNameIndex1 = findNodeInMethod(method, new LdcInsnNode("default"), 1);
 				method.instructions.set(nodeNameIndex1, new LdcInsnNode(LOTRReplacedMethods.Dirt.nameIndex1));
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
@@ -233,7 +233,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 				method.instructions.insert(newIns);
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
-			if (!method.name.equals(targetMethodName2) && !method.name.equals(targetMethodNameObf2) || !method.desc.equals(targetMethodSign2) && !method.desc.equals(targetMethodSignObf2)) {
+			if (!method.name.equals(targetMethodName2) || !method.desc.equals(targetMethodSign2) && !method.desc.equals(targetMethodSignObf2)) {
 				continue;
 			}
 			method.instructions.clear();
@@ -299,7 +299,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 				method.instructions.insert(lastTryCatchFire, newIns);
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
-			if (!method.name.equals(targetMethodName2) && !method.name.equals(targetMethodNameObf2) || !method.desc.equals(targetMethodSign2) && !method.desc.equals(targetMethodSignObf2)) {
+			if (!method.name.equals(targetMethodName2) || !method.desc.equals(targetMethodSign2) && !method.desc.equals(targetMethodSignObf2)) {
 				continue;
 			}
 			MethodInsnNode canLightning = null;
@@ -370,16 +370,17 @@ public class LOTRClassTransformer implements IClassTransformer {
 			int skip = 0;
 			do {
 				MethodInsnNode nodeFound = null;
-				block2: for (boolean pistonObf : new boolean[] { false, true }) {
-					for (boolean canPushObf : new boolean[] { false, true }) {
-						for (boolean blockObf : new boolean[] { false, true }) {
-							for (boolean worldObf : new boolean[] { false, true }) {
+				block2:
+				for (boolean pistonObf : new boolean[]{false, true}) {
+					for (boolean canPushObf : new boolean[]{false, true}) {
+						for (boolean blockObf : new boolean[]{false, true}) {
+							for (boolean worldObf : new boolean[]{false, true}) {
 								String _piston = pistonObf ? cls_BlockPistonBase_obf : cls_BlockPistonBase;
 								String _canPush = canPushObf ? "func_150080_a" : "canPushBlock";
 								String _block = blockObf ? cls_Block_obf : cls_Block;
 								String _world = worldObf ? cls_World_obf : cls_World;
 								MethodInsnNode nodeInvokeCanPush = new MethodInsnNode(184, _piston, _canPush, "(L" + _block + ";L" + _world + ";IIIZ)Z", false);
-								nodeFound = LOTRClassTransformer.findNodeInMethod(method, nodeInvokeCanPush, skip);
+								nodeFound = findNodeInMethod(method, nodeInvokeCanPush, skip);
 								if (nodeFound != null) {
 									break block2;
 								}
@@ -508,7 +509,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 				method.instructions.insert(newIns);
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
-			if ((method.name.equals(targetMethodName2) || method.name.equals(targetMethodNameObf2)) && (method.desc.equals(targetMethodSign2) || method.desc.equals(targetMethodSignObf2))) {
+			if (method.name.equals(targetMethodName2) && (method.desc.equals(targetMethodSign2) || method.desc.equals(targetMethodSignObf2))) {
 				method.instructions.clear();
 				newIns = new InsnList();
 				newIns.add(new VarInsnNode(25, 0));
@@ -517,7 +518,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 				method.instructions.insert(newIns);
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
-			if (!method.name.equals(targetMethodName3) && !method.name.equals(targetMethodNameObf3) || !method.desc.equals(targetMethodSign3) && !method.desc.equals(targetMethodSignObf3)) {
+			if (!method.name.equals(targetMethodName3) && !method.name.equals(targetMethodNameObf3) || !method.desc.equals(targetMethodSign3)) {
 				continue;
 			}
 			method.instructions.clear();
@@ -570,20 +571,19 @@ public class LOTRClassTransformer implements IClassTransformer {
 		ClassReader classReader = new ClassReader(bytes);
 		classReader.accept(classNode, 0);
 		for (MethodNode method : classNode.methods) {
-			if (!method.name.equals(targetMethodName) && !method.name.equals(targetMethodNameObf) || !method.desc.equals(targetMethodSign) && !method.desc.equals(targetMethodSignObf)) {
+			if (!method.name.equals(targetMethodName) || !method.desc.equals(targetMethodSign) && !method.desc.equals(targetMethodSignObf)) {
 				continue;
 			}
 			FieldInsnNode nodeFound = null;
-			block1: for (boolean blocksObf : new boolean[] { false, true }) {
-				for (boolean doorObf : new boolean[] { false, true }) {
-					for (boolean blockObf : new boolean[] { false, true }) {
-						String _blocks = blocksObf ? cls_Blocks_obf : cls_Blocks;
-						String _door = doorObf ? "field_150466_ao" : "wooden_door";
-						FieldInsnNode nodeGetDoor = new FieldInsnNode(178, _blocks, _door, "Lnet/minecraft/block/Block;");
-						nodeFound = LOTRClassTransformer.findNodeInMethod(method, nodeGetDoor);
-						if (nodeFound != null) {
-							break block1;
-						}
+			block1:
+			for (boolean blocksObf : new boolean[]{false, true}) {
+				for (boolean doorObf : new boolean[]{false, true}) {
+					String _blocks = blocksObf ? cls_Blocks_obf : cls_Blocks;
+					String _door = doorObf ? "field_150466_ao" : "wooden_door";
+					FieldInsnNode nodeGetDoor = new FieldInsnNode(178, _blocks, _door, "Lnet/minecraft/block/Block;");
+					nodeFound = findNodeInMethod(method, nodeGetDoor);
+					if (nodeFound != null) {
+						break block1;
 					}
 				}
 			}
@@ -643,7 +643,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 			InsnNode nodeReturn;
 			InsnList extraIns;
 			if ((method.name.equals(targetMethodName) || method.name.equals(targetMethodNameObf)) && (method.desc.equals(targetMethodSign) || method.desc.equals(targetMethodSignObf))) {
-				nodeReturn = LOTRClassTransformer.findNodeInMethod(method, new InsnNode(174));
+				nodeReturn = findNodeInMethod(method, new InsnNode(174));
 				extraIns = new InsnList();
 				extraIns.add(new VarInsnNode(25, 0));
 				extraIns.add(new VarInsnNode(25, 1));
@@ -651,8 +651,8 @@ public class LOTRClassTransformer implements IClassTransformer {
 				method.instructions.insertBefore(nodeReturn, extraIns);
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
-			if ((method.name.equals(targetMethodName2) || method.name.equals(targetMethodNameObf2)) && (method.desc.equals(targetMethodSign2) || method.desc.equals(targetMethodSignObf2))) {
-				nodeReturn = LOTRClassTransformer.findNodeInMethod(method, new InsnNode(174));
+			if (method.name.equals(targetMethodName2) && (method.desc.equals(targetMethodSign2) || method.desc.equals(targetMethodSignObf2))) {
+				nodeReturn = findNodeInMethod(method, new InsnNode(174));
 				extraIns = new InsnList();
 				extraIns.add(new VarInsnNode(25, 0));
 				extraIns.add(new VarInsnNode(25, 1));
@@ -661,7 +661,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
 			if ((method.name.equals(targetMethodName3) || method.name.equals(targetMethodNameObf3)) && (method.desc.equals(targetMethodSign3) || method.desc.equals(targetMethodSignObf3))) {
-				nodeReturn = LOTRClassTransformer.findNodeInMethod(method, new InsnNode(172));
+				nodeReturn = findNodeInMethod(method, new InsnNode(172));
 				extraIns = new InsnList();
 				extraIns.add(new VarInsnNode(25, 0));
 				extraIns.add(new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$Enchants", "getSilkTouchModifier", "(ZLnet/minecraft/entity/EntityLivingBase;)Z", false));
@@ -669,7 +669,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
 			if ((method.name.equals(targetMethodName4) || method.name.equals(targetMethodNameObf4)) && (method.desc.equals(targetMethodSign4) || method.desc.equals(targetMethodSignObf4))) {
-				nodeReturn = LOTRClassTransformer.findNodeInMethod(method, new InsnNode(172));
+				nodeReturn = findNodeInMethod(method, new InsnNode(172));
 				extraIns = new InsnList();
 				extraIns.add(new VarInsnNode(25, 0));
 				extraIns.add(new VarInsnNode(25, 1));
@@ -678,7 +678,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
 			if ((method.name.equals(targetMethodName5) || method.name.equals(targetMethodNameObf5)) && (method.desc.equals(targetMethodSign5) || method.desc.equals(targetMethodSignObf5))) {
-				nodeReturn = LOTRClassTransformer.findNodeInMethod(method, new InsnNode(172));
+				nodeReturn = findNodeInMethod(method, new InsnNode(172));
 				extraIns = new InsnList();
 				extraIns.add(new VarInsnNode(25, 0));
 				extraIns.add(new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$Enchants", "getFortuneModifier", "(ILnet/minecraft/entity/EntityLivingBase;)I", false));
@@ -686,7 +686,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
 			if ((method.name.equals(targetMethodName6) || method.name.equals(targetMethodNameObf6)) && (method.desc.equals(targetMethodSign6) || method.desc.equals(targetMethodSignObf6))) {
-				nodeReturn = LOTRClassTransformer.findNodeInMethod(method, new InsnNode(172));
+				nodeReturn = findNodeInMethod(method, new InsnNode(172));
 				extraIns = new InsnList();
 				extraIns.add(new VarInsnNode(25, 0));
 				extraIns.add(new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$Enchants", "getLootingModifier", "(ILnet/minecraft/entity/EntityLivingBase;)I", false));
@@ -694,7 +694,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
 			if ((method.name.equals(targetMethodName7) || method.name.equals(targetMethodNameObf7)) && (method.desc.equals(targetMethodSign7) || method.desc.equals(targetMethodSignObf7))) {
-				nodeReturn = LOTRClassTransformer.findNodeInMethod(method, new InsnNode(172));
+				nodeReturn = findNodeInMethod(method, new InsnNode(172));
 				extraIns = new InsnList();
 				extraIns.add(new VarInsnNode(25, 0));
 				extraIns.add(new VarInsnNode(25, 1));
@@ -705,7 +705,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 			if (!method.name.equals(targetMethodName8) && !method.name.equals(targetMethodNameObf8) || !method.desc.equals(targetMethodSign8) && !method.desc.equals(targetMethodSignObf8)) {
 				continue;
 			}
-			nodeReturn = LOTRClassTransformer.findNodeInMethod(method, new InsnNode(172));
+			nodeReturn = findNodeInMethod(method, new InsnNode(172));
 			extraIns = new InsnList();
 			extraIns.add(new VarInsnNode(25, 0));
 			extraIns.add(new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$Enchants", "getFireAspectModifier", "(ILnet/minecraft/entity/EntityLivingBase;)I", false));
@@ -729,7 +729,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 			if (!method.name.equals(targetMethodName) && !method.name.equals(targetMethodNameObf) || !method.desc.equals(targetMethodSign) && !method.desc.equals(targetMethodSignObf)) {
 				continue;
 			}
-			VarInsnNode nodeIStore = LOTRClassTransformer.findNodeInMethod(method, new VarInsnNode(54, 2));
+			VarInsnNode nodeIStore = findNodeInMethod(method, new VarInsnNode(54, 2));
 			InsnList newIns = new InsnList();
 			newIns.add(new VarInsnNode(25, 0));
 			newIns.add(new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$Enchants", "getMaxFireProtectionLevel", "(ILnet/minecraft/entity/Entity;)I", false));
@@ -749,7 +749,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 		ClassReader classReader = new ClassReader(bytes);
 		classReader.accept(classNode, 0);
 		for (MethodNode method : classNode.methods) {
-			if (!method.name.equals(targetMethodName) && !method.name.equals(targetMethodNameObf) || !method.desc.equals(targetMethodSign)) {
+			if (!method.name.equals(targetMethodName) || !method.desc.equals(targetMethodSign)) {
 				continue;
 			}
 			method.instructions.clear();
@@ -777,12 +777,13 @@ public class LOTRClassTransformer implements IClassTransformer {
 				continue;
 			}
 			FieldInsnNode nodeIsRemote = null;
-			block1: for (boolean worldObf : new boolean[] { false, true }) {
-				boolean[] arrbl = { false, true };
+			block1:
+			for (boolean worldObf : new boolean[]{false, true}) {
+				boolean[] arrbl = {false, true};
 				int n = arrbl.length;
-				for (int i = 0; i < n; ++i) {
+				for (boolean b : arrbl) {
 					String _world = worldObf ? cls_World_obf : cls_World;
-					nodeIsRemote = LOTRClassTransformer.findNodeInMethod(method, new FieldInsnNode(180, _world, arrbl[i] ? "field_72995_K" : "isRemote", "Z"));
+					nodeIsRemote = findNodeInMethod(method, new FieldInsnNode(180, _world, b ? "field_72995_K" : "isRemote", "Z"));
 					if (nodeIsRemote != null) {
 						break block1;
 					}
@@ -835,13 +836,14 @@ public class LOTRClassTransformer implements IClassTransformer {
 			int count = 0;
 			do {
 				MethodInsnNode nodeSetBlock = null;
-				block4: for (boolean worldObf : new boolean[] { false, true }) {
-					for (boolean setBlockObf : new boolean[] { false, true }) {
-						for (boolean blockObf : new boolean[] { false, true }) {
+				block4:
+				for (boolean worldObf : new boolean[]{false, true}) {
+					for (boolean setBlockObf : new boolean[]{false, true}) {
+						for (boolean blockObf : new boolean[]{false, true}) {
 							String _world = worldObf ? cls_World_obf : cls_World;
 							String _setBlock = setBlockObf ? "func_147449_b" : "setBlock";
 							String _block = blockObf ? cls_Block_obf : cls_Block;
-							nodeSetBlock = LOTRClassTransformer.findNodeInMethod(method, new MethodInsnNode(182, _world, _setBlock, "(IIIL" + _block + ";)Z", false));
+							nodeSetBlock = findNodeInMethod(method, new MethodInsnNode(182, _world, _setBlock, "(IIIL" + _block + ";)Z", false));
 							if (nodeSetBlock != null) {
 								break block4;
 							}
@@ -886,7 +888,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 					method.instructions.remove(nodeStore.getPrevious());
 				}
 				AbstractInsnNode newPrev = nodeStore.getPrevious();
-				if (!(newPrev instanceof VarInsnNode) || ((VarInsnNode) newPrev).getOpcode() != 25 || ((VarInsnNode) newPrev).var != 5) {
+				if (!(newPrev instanceof VarInsnNode) || newPrev.getOpcode() != 25 || ((VarInsnNode) newPrev).var != 5) {
 					System.out.println("WARNING! Expected ALOAD 5! Instead got " + newPrev);
 					System.out.println("WARNING! Things may break!");
 				}
@@ -897,7 +899,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 			}
 			if ((method.name.equals(targetMethodName2) || method.name.equals(targetMethodNameObf2)) && (method.desc.equals(targetMethodSign2) || method.desc.equals(targetMethodSignObf2))) {
 				TypeInsnNode nodeIsInstance = null;
-				for (boolean playerObf : new boolean[] { false, true }) {
+				for (boolean playerObf : new boolean[]{false, true}) {
 					nodeIsInstance = findNodeInMethod(method, new TypeInsnNode(193, playerObf ? "yz" : "net/minecraft/entity/player/EntityPlayer"));
 					if (nodeIsInstance != null) {
 						break;
@@ -926,12 +928,12 @@ public class LOTRClassTransformer implements IClassTransformer {
 		ClassReader classReader = new ClassReader(bytes);
 		classReader.accept(classNode, 0);
 		for (MethodNode method : classNode.methods) {
-			if (!method.name.equals(targetMethodName) && !method.name.equals(targetMethodNameObf) || !method.desc.equals(targetMethodSign) && !method.desc.equals(targetMethodSignObf)) {
+			if (!method.name.equals(targetMethodName) || !method.desc.equals(targetMethodSign) && !method.desc.equals(targetMethodSignObf)) {
 				continue;
 			}
-			VarInsnNode nodeLoadRailBlockForPoweredCheck = LOTRClassTransformer.findNodeInMethod(method, new VarInsnNode(25, 8), 1);
+			VarInsnNode nodeLoadRailBlockForPoweredCheck = findNodeInMethod(method, new VarInsnNode(25, 8), 1);
 			AbstractInsnNode nextNode = nodeLoadRailBlockForPoweredCheck.getNext();
-			if (!(nextNode instanceof TypeInsnNode) || ((TypeInsnNode) nextNode).getOpcode() != 192) {
+			if (!(nextNode instanceof TypeInsnNode) || nextNode.getOpcode() != 192) {
 				System.out.println("WARNING! Expected CHECKCAST! Instead got " + nextNode);
 				System.out.println("WARNING! Things may break!");
 			}
@@ -994,7 +996,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 		ClassReader classReader = new ClassReader(bytes);
 		classReader.accept(classNode, 0);
 		for (MethodNode method : classNode.methods) {
-			if (!method.name.equals(targetMethodName) && !method.name.equals(targetMethodNameObf) || !method.desc.equals(targetMethodSign) && !method.desc.equals(targetMethodSignObf)) {
+			if (!method.name.equals(targetMethodName) || !method.desc.equals(targetMethodSign) && !method.desc.equals(targetMethodSignObf)) {
 				continue;
 			}
 			method.instructions.clear();
@@ -1026,7 +1028,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 			newIns.add(new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$Food", "getExhaustionFactor", "()F", false));
 			newIns.add(new InsnNode(106));
 			newIns.add(new VarInsnNode(56, 1));
-			VarInsnNode nodeAfter = LOTRClassTransformer.findNodeInMethod(method, new VarInsnNode(25, 0));
+			VarInsnNode nodeAfter = findNodeInMethod(method, new VarInsnNode(25, 0));
 			method.instructions.insertBefore(nodeAfter, newIns);
 			System.out.println("LOTRCore: Patched method " + method.name);
 		}
@@ -1125,33 +1127,31 @@ public class LOTRClassTransformer implements IClassTransformer {
 
 	public byte[] patchPathFinder(String name, byte[] bytes) {
 		String targetMethodName = "func_82565_a";
-		String targetMethodNameObf = targetMethodName;
 		String targetMethodSign = "(Lnet/minecraft/entity/Entity;IIILnet/minecraft/pathfinding/PathPoint;ZZZ)I";
 		String targetMethodSignObf = "(Lsa;IIILaye;ZZZ)I";
 		ClassNode classNode = new ClassNode();
 		ClassReader classReader = new ClassReader(bytes);
 		classReader.accept(classNode, 0);
 		for (MethodNode method : classNode.methods) {
-			if ((method.name.equals(targetMethodName) || method.name.equals(targetMethodNameObf)) && (method.desc.equals(targetMethodSign) || method.desc.equals(targetMethodSignObf))) {
+			if ((method.name.equals(targetMethodName)) && (method.desc.equals(targetMethodSign) || method.desc.equals(targetMethodSignObf))) {
 				FieldInsnNode nodeFound1 = null;
 				FieldInsnNode nodeFound2 = null;
 				for (int pass = 0; pass <= 1; pass++) {
-					label97: for (boolean blocksObf : new boolean[] { false, true }) {
-						for (boolean doorObf : new boolean[] { false, true }) {
-							for (boolean blockObf : new boolean[] { false, true }) {
-								String _blocks = blocksObf ? "ajn" : "net/minecraft/init/Blocks";
-								String _door = doorObf ? "field_150466_ao" : "wooden_door";
-								FieldInsnNode nodeGetDoor = new FieldInsnNode(178, _blocks, _door, "Lnet/minecraft/block/Block;");
-								if (pass == 0) {
-									nodeFound1 = findNodeInMethod(method, nodeGetDoor, 0);
-									if (nodeFound1 != null) {
-										break label97;
-									}
-								} else if (pass == 1) {
-									nodeFound2 = findNodeInMethod(method, nodeGetDoor, 1);
-									if (nodeFound2 != null) {
-										break label97;
-									}
+					label97:
+					for (boolean blocksObf : new boolean[]{false, true}) {
+						for (boolean doorObf : new boolean[]{false, true}) {
+							String _blocks = blocksObf ? "ajn" : "net/minecraft/init/Blocks";
+							String _door = doorObf ? "field_150466_ao" : "wooden_door";
+							FieldInsnNode nodeGetDoor = new FieldInsnNode(178, _blocks, _door, "Lnet/minecraft/block/Block;");
+							if (pass == 0) {
+								nodeFound1 = findNodeInMethod(method, nodeGetDoor, 0);
+								if (nodeFound1 != null) {
+									break label97;
+								}
+							} else {
+								nodeFound2 = findNodeInMethod(method, nodeGetDoor, 1);
+								if (nodeFound2 != null) {
+									break label97;
 								}
 							}
 						}
@@ -1164,7 +1164,9 @@ public class LOTRClassTransformer implements IClassTransformer {
 				MethodInsnNode nodeCheckDoor2 = new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$PathFinder", "isWoodenDoor", "(Lnet/minecraft/block/Block;)Z", false);
 				method.instructions.set(nodeFound2, nodeCheckDoor2);
 				JumpInsnNode nodeIf2 = (JumpInsnNode) nodeCheckDoor2.getNext();
-				if (nodeIf2.getOpcode() != 165) {
+				if (nodeIf2.getOpcode() == 165) {
+					nodeIf2.setOpcode(154);
+				} else {
 					System.out.println("WARNING! WARNING! THIS OPCODE SHOULD HAVE BEEN IF_ACMPEQ!");
 					System.out.println("WARNING! INSTEAD IT WAS " + nodeIf2.getOpcode());
 					if (nodeIf2.getOpcode() == 166) {
@@ -1174,32 +1176,29 @@ public class LOTRClassTransformer implements IClassTransformer {
 					} else {
 						System.out.println("WARNING! NOT SURE WHAT TO DO HERE! THINGS MIGHT BREAK!");
 					}
-				} else {
-					nodeIf2.setOpcode(154);
 				}
 				FieldInsnNode nodeFoundGate = null;
-				label95: for (boolean blocksObf : new boolean[] { false, true }) {
-					for (boolean gateObf : new boolean[] { false, true }) {
-						for (boolean blockObf : new boolean[] { false, true }) {
-							String _blocks = blocksObf ? "ajn" : "net/minecraft/init/Blocks";
-							String _gate = gateObf ? "field_150396_be" : "fence_gate";
-							FieldInsnNode nodeGetGate = new FieldInsnNode(178, _blocks, _gate, "Lnet/minecraft/block/Block;");
-							nodeFoundGate = findNodeInMethod(method, nodeGetGate, 0);
-							if (nodeFoundGate != null) {
-								break label95;
-							}
+				label95:
+				for (boolean blocksObf : new boolean[]{false, true}) {
+					for (boolean gateObf : new boolean[]{false, true}) {
+						String _blocks = blocksObf ? "ajn" : "net/minecraft/init/Blocks";
+						String _gate = gateObf ? "field_150396_be" : "fence_gate";
+						FieldInsnNode nodeGetGate = new FieldInsnNode(178, _blocks, _gate, "Lnet/minecraft/block/Block;");
+						nodeFoundGate = findNodeInMethod(method, nodeGetGate, 0);
+						if (nodeFoundGate != null) {
+							break label95;
 						}
 					}
 				}
 				MethodInsnNode nodeCheckGate = new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$PathFinder", "isFenceGate", "(Lnet/minecraft/block/Block;)Z", false);
 				method.instructions.set(nodeFoundGate, nodeCheckGate);
 				JumpInsnNode nodeIfGate = (JumpInsnNode) nodeCheckGate.getNext();
-				if (nodeIfGate.getOpcode() != 165) {
+				if (nodeIfGate.getOpcode() == 165) {
+					nodeIfGate.setOpcode(154);
+				} else {
 					System.out.println("WARNING! WARNING! THIS OPCODE SHOULD HAVE BEEN IF_ACMPEQ!");
 					System.out.println("WARNING! INSTEAD IT WAS " + nodeIfGate.getOpcode());
 					System.out.println("WARNING! NOT SURE WHAT TO DO HERE! THINGS MIGHT BREAK!");
-				} else {
-					nodeIfGate.setOpcode(154);
 				}
 				System.out.println("LOTRCore: Patched method " + method.name);
 			}
@@ -1218,7 +1217,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 		ClassReader classReader = new ClassReader(bytes);
 		classReader.accept(classNode, 0);
 		for (MethodNode method : classNode.methods) {
-			if (!method.name.equals(targetMethodName) && !method.name.equals(targetMethodNameObf) || !method.desc.equals(targetMethodSign) && !method.desc.equals(targetMethodSignObf)) {
+			if (!method.name.equals(targetMethodName) || !method.desc.equals(targetMethodSign) && !method.desc.equals(targetMethodSignObf)) {
 				continue;
 			}
 			method.instructions.clear();
@@ -1238,11 +1237,8 @@ public class LOTRClassTransformer implements IClassTransformer {
 
 	public byte[] patchRenderBlocks(String name, byte[] bytes) {
 		try {
-			String s = this.getClass().getPackage().getName() + ".RandomTexturePatchCheck";
+			String s = getClass().getPackage().getName() + ".RandomTexturePatchCheck";
 			Class<?> enableClass = Class.forName(s);
-			if (enableClass == null) {
-				return bytes;
-			}
 		} catch (ClassNotFoundException e) {
 			return bytes;
 		}
@@ -1258,14 +1254,15 @@ public class LOTRClassTransformer implements IClassTransformer {
 				continue;
 			}
 			MethodInsnNode nodeFound = null;
-			block3: for (boolean rbObf : new boolean[] { false, true }) {
-				for (boolean renderObf : new boolean[] { false, true }) {
-					for (boolean blockObf : new boolean[] { false, true }) {
+			block3:
+			for (boolean rbObf : new boolean[]{false, true}) {
+				for (boolean renderObf : new boolean[]{false, true}) {
+					for (boolean blockObf : new boolean[]{false, true}) {
 						String _rb = rbObf ? cls_RenderBlocks_obf : cls_RenderBlocks;
 						String _render = renderObf ? "func_147784_q" : "renderStandardBlock";
 						String _block = blockObf ? cls_Block_obf : cls_Block;
 						MethodInsnNode nodeRender = new MethodInsnNode(182, _rb, _render, "(L" + _block + ";III)Z", false);
-						nodeFound = LOTRClassTransformer.findNodeInMethod(method, nodeRender);
+						nodeFound = findNodeInMethod(method, nodeRender);
 						if (nodeFound != null) {
 							break block3;
 						}
@@ -1331,9 +1328,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 		if ("akz".equals(name) || "net.minecraft.block.BlockFence".equals(name)) {
 			return patchBlockFence(name, basicClass);
 		}
-		if ("amw".equals(name) || "net.minecraft.block.BlockPumpkin".equals(name)) {
-			// empty if block
-		}
+		// empty if block
 		if ("aoe".equals(name) || "net.minecraft.block.BlockTrapDoor".equals(name)) {
 			return patchBlockTrapdoor(name, basicClass);
 		}
@@ -1417,7 +1412,7 @@ public class LOTRClassTransformer implements IClassTransformer {
 	}
 
 	public static <N extends AbstractInsnNode> N findNodeInMethod(MethodNode method, N target) {
-		return LOTRClassTransformer.findNodeInMethod(method, target, 0);
+		return findNodeInMethod(method, target, 0);
 	}
 
 	public static <N extends AbstractInsnNode> N findNodeInMethod(MethodNode method, N targetAbstract, int skip) {

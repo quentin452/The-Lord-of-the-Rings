@@ -27,7 +27,7 @@ public class LOTREntitySaruman extends LOTREntityNPC {
 		tasks.addTask(0, new EntityAISwimming(this));
 		tasks.addTask(1, new EntityAIOpenDoor(this, true));
 		tasks.addTask(2, new EntityAIWander(this, 1.0));
-		tasks.addTask(3, new LOTREntityAIEat(this, new LOTRFoods(new ItemStack[] { new ItemStack(Blocks.log) }), 200));
+		tasks.addTask(3, new LOTREntityAIEat(this, new LOTRFoods(new ItemStack[]{new ItemStack(Blocks.log)}), 200));
 		tasks.addTask(4, new EntityAIWatchClosest(this, EntityLivingBase.class, 20.0f, 0.05f));
 		tasks.addTask(5, new EntityAILookIdle(this));
 	}
@@ -141,9 +141,7 @@ public class LOTREntitySaruman extends LOTREntityNPC {
 				}
 			}
 			if (targetingRabbit != null) {
-				if (!targetingRabbit.isEntityAlive()) {
-					targetingRabbit = null;
-				} else {
+				if (targetingRabbit.isEntityAlive()) {
 					getNavigator().tryMoveToEntityLiving(targetingRabbit, 1.0);
 					if (getDistanceToEntity(targetingRabbit) < 1.0) {
 						Entity entityToMount = this;
@@ -153,6 +151,8 @@ public class LOTREntitySaruman extends LOTREntityNPC {
 						targetingRabbit.mountEntity(entityToMount);
 						targetingRabbit = null;
 					}
+				} else {
+					targetingRabbit = null;
 				}
 			}
 		}

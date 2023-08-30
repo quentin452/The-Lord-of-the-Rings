@@ -12,7 +12,7 @@ public class LOTRTileEntitySignCarvedIthildin extends LOTRTileEntitySignCarved {
 		return glowLogic.getGlowBrightness(worldObj, xCoord, yCoord, zCoord, f);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public double getMaxRenderDistanceSquared() {
 		return 1024.0;

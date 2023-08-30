@@ -22,58 +22,58 @@ public class LOTRBlockSapling6 extends LOTRBlockSaplingBase {
 		int xOffset = 0;
 		int zOffset = 0;
 		switch (meta) {
-		case 0:
-			treeGen = LOTRTreeType.MAHOGANY.create(true, random);
-			break;
-		case 1:
-			treeGen = LOTRTreeType.WILLOW.create(true, random);
-			break;
-		case 2:
-			for (i1 = 0; i1 >= -1; --i1) {
-				for (k1 = 0; k1 >= -1; --k1) {
-					if (!this.isSameSapling(world, i + i1, j, k + k1, meta) || !this.isSameSapling(world, i + i1 + 1, j, k + k1, meta) || !this.isSameSapling(world, i + i1, j, k + k1 + 1, meta) || !this.isSameSapling(world, i + i1 + 1, j, k + k1 + 1, meta)) {
-						continue;
+			case 0:
+				treeGen = LOTRTreeType.MAHOGANY.create(true, random);
+				break;
+			case 1:
+				treeGen = LOTRTreeType.WILLOW.create(true, random);
+				break;
+			case 2:
+				for (i1 = 0; i1 >= -1; --i1) {
+					for (k1 = 0; k1 >= -1; --k1) {
+						if (!isSameSapling(world, i + i1, j, k + k1, meta) || !isSameSapling(world, i + i1 + 1, j, k + k1, meta) || !isSameSapling(world, i + i1, j, k + k1 + 1, meta) || !isSameSapling(world, i + i1 + 1, j, k + k1 + 1, meta)) {
+							continue;
+						}
+						treeGen = LOTRTreeType.CYPRESS_LARGE.create(true, random);
+						extraTrunkWidth = 1;
+						xOffset = i1;
+						zOffset = k1;
+						break;
 					}
-					treeGen = LOTRTreeType.CYPRESS_LARGE.create(true, random);
-					extraTrunkWidth = 1;
-					xOffset = i1;
-					zOffset = k1;
-					break;
-				}
-				if (treeGen != null) {
-					break;
-				}
-			}
-			if (treeGen == null) {
-				xOffset = 0;
-				zOffset = 0;
-				treeGen = LOTRTreeType.CYPRESS.create(true, random);
-			}
-			break;
-		case 3:
-			for (i1 = 0; i1 >= -1; --i1) {
-				for (k1 = 0; k1 >= -1; --k1) {
-					if (!this.isSameSapling(world, i + i1, j, k + k1, meta) || !this.isSameSapling(world, i + i1 + 1, j, k + k1, meta) || !this.isSameSapling(world, i + i1, j, k + k1 + 1, meta) || !this.isSameSapling(world, i + i1 + 1, j, k + k1 + 1, meta)) {
-						continue;
+					if (treeGen != null) {
+						break;
 					}
-					treeGen = LOTRTreeType.OLIVE_LARGE.create(true, random);
-					extraTrunkWidth = 1;
-					xOffset = i1;
-					zOffset = k1;
-					break;
 				}
-				if (treeGen != null) {
-					break;
+				if (treeGen == null) {
+					xOffset = 0;
+					zOffset = 0;
+					treeGen = LOTRTreeType.CYPRESS.create(true, random);
 				}
-			}
-			if (treeGen == null) {
-				xOffset = 0;
-				zOffset = 0;
-				treeGen = LOTRTreeType.OLIVE.create(true, random);
-			}
-			break;
-		default:
-			break;
+				break;
+			case 3:
+				for (i1 = 0; i1 >= -1; --i1) {
+					for (k1 = 0; k1 >= -1; --k1) {
+						if (!isSameSapling(world, i + i1, j, k + k1, meta) || !isSameSapling(world, i + i1 + 1, j, k + k1, meta) || !isSameSapling(world, i + i1, j, k + k1 + 1, meta) || !isSameSapling(world, i + i1 + 1, j, k + k1 + 1, meta)) {
+							continue;
+						}
+						treeGen = LOTRTreeType.OLIVE_LARGE.create(true, random);
+						extraTrunkWidth = 1;
+						xOffset = i1;
+						zOffset = k1;
+						break;
+					}
+					if (treeGen != null) {
+						break;
+					}
+				}
+				if (treeGen == null) {
+					xOffset = 0;
+					zOffset = 0;
+					treeGen = LOTRTreeType.OLIVE.create(true, random);
+				}
+				break;
+			default:
+				break;
 		}
 		for (i1 = 0; i1 <= extraTrunkWidth; ++i1) {
 			for (k1 = 0; k1 <= extraTrunkWidth; ++k1) {

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class LOTREntityUmbarian extends LOTREntityNearHaradrimBase {
 	public LOTREntityUmbarian(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -51,13 +51,8 @@ public class LOTREntityUmbarian extends LOTREntityNearHaradrimBase {
 	}
 
 	@Override
-	public LOTRAchievement getKillAchievement() {
-		return LOTRAchievement.killNearHaradrim;
-	}
-
-	@Override
 	public String getNPCFormattedName(String npcName, String entityName) {
-		if (this.getClass() == LOTREntityUmbarian.class) {
+		if (getClass() == LOTREntityUmbarian.class) {
 			return StatCollector.translateToLocalFormatted("entity.lotr.Umbarian.entityName", npcName);
 		}
 		return super.getNPCFormattedName(npcName, entityName);

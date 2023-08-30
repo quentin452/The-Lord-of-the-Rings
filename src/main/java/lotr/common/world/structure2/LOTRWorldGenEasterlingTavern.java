@@ -38,7 +38,7 @@ public class LOTRWorldGenEasterlingTavern extends LOTRWorldGenEasterlingStructur
 		int i22;
 		int k14;
 		int k15;
-		this.setOriginAndRotation(world, i, j, k, rotation, 11);
+		setOriginAndRotation(world, i, j, k, rotation, 11);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -83,9 +83,6 @@ public class LOTRWorldGenEasterlingTavern extends LOTRWorldGenEasterlingStructur
 					}
 					if (k22 == 10) {
 						setBlockAndMetadata(world, i14, 4, k12, woodBeamBlock, woodBeamMeta | 4);
-						continue;
-					}
-					if (i22 != 8) {
 						continue;
 					}
 					setBlockAndMetadata(world, i14, 4, k12, woodBeamBlock, woodBeamMeta | 8);
@@ -212,13 +209,10 @@ public class LOTRWorldGenEasterlingTavern extends LOTRWorldGenEasterlingStructur
 					setBlockAndMetadata(world, i14, 8, k12, woodBeamBlock, woodBeamMeta | 4);
 					continue;
 				}
-				if (i22 != 4) {
-					continue;
-				}
 				setBlockAndMetadata(world, i14, 8, k12, woodBeamBlock, woodBeamMeta | 8);
 			}
 		}
-		for (int i1521 : new int[] { -2, 2 }) {
+		for (int i1521 : new int[]{-2, 2}) {
 			setBlockAndMetadata(world, i1521, 6, -9, LOTRMod.reedBars, 0);
 			setBlockAndMetadata(world, i1521, 7, -9, brickStairBlock, 6);
 			if (i1521 < 0) {
@@ -227,11 +221,11 @@ public class LOTRWorldGenEasterlingTavern extends LOTRWorldGenEasterlingStructur
 			setBlockAndMetadata(world, i1521, 6, 9, LOTRMod.reedBars, 0);
 			setBlockAndMetadata(world, i1521, 7, 9, brickStairBlock, 7);
 		}
-		for (int i1521 : new int[] { -4, 4 }) {
+		for (int i1521 : new int[]{-4, 4}) {
 			setBlockAndMetadata(world, i1521, 8, -10, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, i1521, 8, 10, fenceBlock, fenceMeta);
 		}
-		int[] i16 = { -9, 9 };
+		int[] i16 = {-9, 9};
 		k12 = i16.length;
 		for (i22 = 0; i22 < k12; ++i22) {
 			k1 = i16[i22];
@@ -340,7 +334,7 @@ public class LOTRWorldGenEasterlingTavern extends LOTRWorldGenEasterlingStructur
 		}
 		for (i1 = -5; i1 <= 5; ++i1) {
 			i2 = Math.abs(i1);
-			int[] k17 = { -10, 10 };
+			int[] k17 = {-10, 10};
 			i152 = k17.length;
 			for (j13 = 0; j13 < i152; ++j13) {
 				int k18 = k17[j13];
@@ -401,7 +395,7 @@ public class LOTRWorldGenEasterlingTavern extends LOTRWorldGenEasterlingStructur
 		setBlockAndMetadata(world, 0, 13, -10, roofStairBlock, 3);
 		setBlockAndMetadata(world, 0, 12, 10, roofStairBlock, 7);
 		setBlockAndMetadata(world, 0, 13, 10, roofStairBlock, 2);
-		int[] k19 = { -8, 8 };
+		int[] k19 = {-8, 8};
 		step = k19.length;
 		for (j14 = 0; j14 < step; ++j14) {
 			k1 = k19[j14];
@@ -477,16 +471,16 @@ public class LOTRWorldGenEasterlingTavern extends LOTRWorldGenEasterlingStructur
 		setBlockAndMetadata(world, -2, 1, 2, fenceGateBlock, 0);
 		setBlockAndMetadata(world, -1, 1, 2, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, -4, 1, 1, Blocks.cauldron, 3);
-		this.placeChest(world, random, -1, 0, -1, 3, LOTRChestContents.EASTERLING_HOUSE);
-		this.placeBarrel(world, random, -3, 2, -2, 2, LOTRFoods.RHUN_DRINK);
-		this.placeBarrel(world, random, 0, 2, -1, 4, LOTRFoods.RHUN_DRINK);
+		placeChest(world, random, -1, 0, -1, 3, LOTRChestContents.EASTERLING_HOUSE);
+		placeBarrel(world, random, -3, 2, -2, 2, LOTRFoods.RHUN_DRINK);
+		placeBarrel(world, random, 0, 2, -1, 4, LOTRFoods.RHUN_DRINK);
 		for (i12 = -4; i12 <= 0; ++i12) {
 			for (k12 = -2; k12 <= 2; ++k12) {
 				if ((i12 != -4 || k12 < -1 || k12 > 0) && (k12 != -2 || i12 < -2 || i12 > -1) && (i12 != 0 || k12 < 0 || k12 > 1)) {
 					continue;
 				}
 				if (random.nextBoolean()) {
-					this.placeMug(world, random, i12, 2, k12, random.nextInt(4), LOTRFoods.RHUN_DRINK);
+					placeMug(world, random, i12, 2, k12, random.nextInt(4), LOTRFoods.RHUN_DRINK);
 					continue;
 				}
 				placePlate(world, random, i12, 2, k12, plateBlock, LOTRFoods.RHUN);
@@ -573,7 +567,7 @@ public class LOTRWorldGenEasterlingTavern extends LOTRWorldGenEasterlingStructur
 		setBlockAndMetadata(world, -3, 5, -5, plankBlock, plankMeta);
 		placePlateWithCertainty(world, random, -3, 6, -5, plateBlock, LOTRFoods.RHUN);
 		setBlockAndMetadata(world, -3, 5, -6, Blocks.chest, 4);
-		for (int i1521 : new int[] { -3, -1 }) {
+		for (int i1521 : new int[]{-3, -1}) {
 			setBlockAndMetadata(world, i1521, 5, -7, bedBlock, 2);
 			setBlockAndMetadata(world, i1521, 5, -8, bedBlock, 10);
 		}
@@ -586,7 +580,7 @@ public class LOTRWorldGenEasterlingTavern extends LOTRWorldGenEasterlingStructur
 		setBlockAndMetadata(world, 3, 5, -5, plankBlock, plankMeta);
 		placePlateWithCertainty(world, random, 3, 6, -5, plateBlock, LOTRFoods.RHUN);
 		setBlockAndMetadata(world, 3, 5, -6, Blocks.chest, 5);
-		for (int i1521 : new int[] { 1, 3 }) {
+		for (int i1521 : new int[]{1, 3}) {
 			setBlockAndMetadata(world, i1521, 5, -7, bedBlock, 2);
 			setBlockAndMetadata(world, i1521, 5, -8, bedBlock, 10);
 		}
@@ -614,7 +608,7 @@ public class LOTRWorldGenEasterlingTavern extends LOTRWorldGenEasterlingStructur
 					continue;
 				}
 				if (random.nextBoolean()) {
-					this.placeMug(world, random, i, j + 1, k, random.nextInt(4), LOTRFoods.RHUN_DRINK);
+					placeMug(world, random, i, j + 1, k, random.nextInt(4), LOTRFoods.RHUN_DRINK);
 					continue;
 				}
 				placePlate(world, random, i, j + 1, k, plateBlock, LOTRFoods.RHUN);
@@ -627,7 +621,7 @@ public class LOTRWorldGenEasterlingTavern extends LOTRWorldGenEasterlingStructur
 		super.setupRandomBlocks(random);
 		bedBlock = LOTRMod.strawBed;
 		tavernName = LOTRNames.getRhunTavernName(random);
-		tavernNameSign = new String[] { "", tavernName[0], tavernName[1], "" };
+		tavernNameSign = new String[]{"", tavernName[0], tavernName[1], ""};
 		tavernNameNPC = tavernName[0] + " " + tavernName[1];
 	}
 }

@@ -40,7 +40,7 @@ public class LOTRWorldGenTauredainChieftainPyramid extends LOTRWorldGenTauredain
 				if (i2 >= 8 || k2 >= 8) {
 					setBlockAndMetadata(world, i12, 0, k1, brickBlock, brickMeta);
 					if (k1 < 0 && i12 == 0) {
-						setBlockAndMetadata(world, i12, 0, k1, LOTRMod.brick4, 4);
+						setBlockAndMetadata(world, 0, 0, k1, LOTRMod.brick4, 4);
 					}
 					if (i2 > 9 || k2 > 9 || i2 != 9 && k2 != 9) {
 						continue;
@@ -60,12 +60,9 @@ public class LOTRWorldGenTauredainChieftainPyramid extends LOTRWorldGenTauredain
 						setAir(world, i12, j1, k1);
 					}
 					if (step == 0) {
-						setBlockAndMetadata(world, -1, step, k1, brickBlock, brickMeta);
-						setBlockAndMetadata(world, 0, step, k1, LOTRMod.brick4, 4);
-						setBlockAndMetadata(world, 1, step, k1, brickBlock, brickMeta);
-						continue;
-					}
-					if (step > 4) {
+						setBlockAndMetadata(world, -1, 0, k1, brickBlock, brickMeta);
+						setBlockAndMetadata(world, 0, 0, k1, LOTRMod.brick4, 4);
+						setBlockAndMetadata(world, 1, 0, k1, brickBlock, brickMeta);
 						continue;
 					}
 					setBlockAndMetadata(world, -1, step, k1, brickStairBlock, 2);
@@ -86,8 +83,8 @@ public class LOTRWorldGenTauredainChieftainPyramid extends LOTRWorldGenTauredain
 		for (i12 = -4; i12 <= 4; ++i12) {
 			setBlockAndMetadata(world, i12, 4, 0, LOTRMod.brick4, 4);
 		}
-		for (int i13 : new int[] { -5, 5 }) {
-			for (int k14 : new int[] { -5, 5 }) {
+		for (int i13 : new int[]{-5, 5}) {
+			for (int k14 : new int[]{-5, 5}) {
 				for (int i22 = i13 - 1; i22 <= i13 + 1; ++i22) {
 					for (int k22 = k14 - 1; k22 <= k14 + 1; ++k22) {
 						int i3 = Math.abs(i22 - i13);
@@ -106,7 +103,7 @@ public class LOTRWorldGenTauredainChieftainPyramid extends LOTRWorldGenTauredain
 				}
 			}
 		}
-		for (int i13 : new int[] { -3, 3 }) {
+		for (int i13 : new int[]{-3, 3}) {
 			setBlockAndMetadata(world, i13, 5, -6, brickWallBlock, brickWallMeta);
 			for (int j1 = 5; j1 <= 7; ++j1) {
 				for (int k15 = -5; k15 <= -3; ++k15) {
@@ -130,7 +127,7 @@ public class LOTRWorldGenTauredainChieftainPyramid extends LOTRWorldGenTauredain
 				setBlockAndMetadata(world, i13, 8, k16, brickSlabBlock, brickSlabMeta);
 			}
 		}
-		for (int i13 : new int[] { -4, 4 }) {
+		for (int i13 : new int[]{-4, 4}) {
 			for (int j1 = 5; j1 <= 7; ++j1) {
 				setBlockAndMetadata(world, i13, j1, -4, brickBlock, brickMeta);
 				setBlockAndMetadata(world, i13, j1, -2, brickBlock, brickMeta);
@@ -149,7 +146,7 @@ public class LOTRWorldGenTauredainChieftainPyramid extends LOTRWorldGenTauredain
 				setBlockAndMetadata(world, i13, 8, k17, brickSlabBlock, brickSlabMeta);
 			}
 		}
-		int[] i14 = { -2, 2 };
+		int[] i14 = {-2, 2};
 		k1 = i14.length;
 		for (i2 = 0; i2 < k1; ++i2) {
 			int i13;
@@ -160,7 +157,7 @@ public class LOTRWorldGenTauredainChieftainPyramid extends LOTRWorldGenTauredain
 			setBlockAndMetadata(world, i13, 6, -5, brickSlabBlock, brickSlabMeta);
 			setBlockAndMetadata(world, i13, 8, -4, brickSlabBlock, brickSlabMeta);
 			setBlockAndMetadata(world, i13, 8, -3, brickSlabBlock, brickSlabMeta);
-			placeArmorStand(world, i13, 5, 2, 0, new ItemStack[] { new ItemStack(LOTRMod.helmetTauredain), new ItemStack(LOTRMod.bodyTauredain), new ItemStack(LOTRMod.legsTauredain), new ItemStack(LOTRMod.bootsTauredain) });
+			placeArmorStand(world, i13, 5, 2, 0, new ItemStack[]{new ItemStack(LOTRMod.helmetTauredain), new ItemStack(LOTRMod.bodyTauredain), new ItemStack(LOTRMod.legsTauredain), new ItemStack(LOTRMod.bootsTauredain)});
 		}
 		for (int j1 = 5; j1 <= 7; ++j1) {
 			setBlockAndMetadata(world, -2, j1, 4, brickBlock, brickMeta);
@@ -226,19 +223,19 @@ public class LOTRWorldGenTauredainChieftainPyramid extends LOTRWorldGenTauredain
 				}
 				setBlockAndMetadata(world, i1, 13, k1, LOTRMod.brick4, 3);
 				if (k1 == -1) {
-					setBlockAndMetadata(world, i1, 14, k1, LOTRMod.stairsTauredainBrickGold, 2);
+					setBlockAndMetadata(world, i1, 14, -1, LOTRMod.stairsTauredainBrickGold, 2);
 					continue;
 				}
 				if (k1 == 1) {
-					setBlockAndMetadata(world, i1, 14, k1, LOTRMod.stairsTauredainBrickGold, 3);
+					setBlockAndMetadata(world, i1, 14, 1, LOTRMod.stairsTauredainBrickGold, 3);
 					continue;
 				}
 				if (i1 == -1) {
-					setBlockAndMetadata(world, i1, 14, k1, LOTRMod.stairsTauredainBrickGold, 1);
+					setBlockAndMetadata(world, -1, 14, k1, LOTRMod.stairsTauredainBrickGold, 1);
 					continue;
 				}
 				if (i1 == 1) {
-					setBlockAndMetadata(world, i1, 14, k1, LOTRMod.stairsTauredainBrickGold, 0);
+					setBlockAndMetadata(world, 1, 14, k1, LOTRMod.stairsTauredainBrickGold, 0);
 					continue;
 				}
 				setBlockAndMetadata(world, i1, 14, k1, LOTRMod.brick4, 3);

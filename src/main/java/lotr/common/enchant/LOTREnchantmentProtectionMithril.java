@@ -39,9 +39,7 @@ public class LOTREnchantmentProtectionMithril extends LOTREnchantmentProtectionS
 			ItemStack weaponBase = weapon.copy();
 			LOTREnchantmentHelper.clearEnchants(weaponBase);
 			float range = LOTRWeaponStats.getMeleeReachFactor(weaponBase);
-			if (range >= 1.3f) {
-				return true;
-			}
+			return range >= 1.3f;
 		}
 		return false;
 	}

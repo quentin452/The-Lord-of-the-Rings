@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class LOTRBlockMorgulPortal extends LOTRBlockPortal {
 	public LOTRBlockMorgulPortal() {
-		super(new LOTRFaction[] { LOTRFaction.MORDOR, LOTRFaction.ANGMAR, LOTRFaction.DOL_GULDUR }, LOTRTeleporterMorgulPortal.class);
+		super(new LOTRFaction[]{LOTRFaction.MORDOR, LOTRFaction.ANGMAR, LOTRFaction.DOL_GULDUR}, LOTRTeleporterMorgulPortal.class);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class LOTRBlockMorgulPortal extends LOTRBlockPortal {
 					}
 					continue;
 				}
-				if (!(Math.abs(i1 - i) == 2 || Math.abs(k1 - k) == 2 ? !LOTRMod.isOpaque(world, i1, j, k1) : world.getBlock(i1, j, k1) != (portalAlreadyMade ? LOTRMod.morgulPortal : Blocks.lava) || !LOTRMod.isOpaque(world, i1, j - 1, k1))) {
+				if (Math.abs(i1 - i) == 2 || Math.abs(k1 - k) == 2 ? LOTRMod.isOpaque(world, i1, j, k1) : world.getBlock(i1, j, k1) == (portalAlreadyMade ? LOTRMod.morgulPortal : Blocks.lava) && LOTRMod.isOpaque(world, i1, j - 1, k1)) {
 					continue;
 				}
 				return false;
@@ -44,7 +44,7 @@ public class LOTRBlockMorgulPortal extends LOTRBlockPortal {
 		return true;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		double d = i + random.nextFloat();

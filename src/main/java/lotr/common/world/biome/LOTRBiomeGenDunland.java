@@ -49,8 +49,8 @@ public class LOTRBiomeGenDunland extends LOTRBiome {
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer6);
 		npcSpawnList.conquestGainRate = 0.5f;
 		addBiomeVariantSet(LOTRBiomeVariant.SET_MOUNTAINS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.4f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.4f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.4f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.4f);
 		decorator.treesPerChunk = 0;
 		decorator.willowPerChunk = 1;
 		decorator.grassPerChunk = 6;

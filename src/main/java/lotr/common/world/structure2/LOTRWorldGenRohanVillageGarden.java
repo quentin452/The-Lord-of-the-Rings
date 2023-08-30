@@ -18,7 +18,7 @@ public class LOTRWorldGenRohanVillageGarden extends LOTRWorldGenRohanStructure {
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int k1;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 2);
+		setOriginAndRotation(world, i, j, k, rotation, 2);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -3; i1 <= 3; ++i1) {
@@ -35,7 +35,6 @@ public class LOTRWorldGenRohanVillageGarden extends LOTRWorldGenRohanStructure {
 			for (k1 = -1; k1 <= 1; ++k1) {
 				int j1;
 				int i2 = Math.abs(i1);
-				Math.abs(k1);
 				boolean foundSurface = false;
 				for (j1 = 5; j1 >= -5; --j1) {
 					if (!isSurface(world, i1, j1 - 1, k1)) {

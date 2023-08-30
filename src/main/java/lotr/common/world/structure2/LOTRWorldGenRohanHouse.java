@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 	public boolean hasStoneBase;
-	public boolean setHasBase = false;
+	public boolean setHasBase;
 
 	public LOTRWorldGenRohanHouse(boolean flag) {
 		super(flag);
@@ -34,7 +34,7 @@ public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 		if (!setHasBase) {
 			hasStoneBase = random.nextBoolean();
 		}
-		this.setOriginAndRotation(world, i, j, k, rotation, hasStoneBase ? 10 : 6);
+		setOriginAndRotation(world, i, j, k, rotation, hasStoneBase ? 10 : 6);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -177,7 +177,7 @@ public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 				setBlockAndMetadata(world, 3 - step, j13, k15, stairBlock, 5);
 			}
 		}
-		for (int k161 : new int[] { -6, -5, 5 }) {
+		for (int k161 : new int[]{-6, -5, 5}) {
 			setBlockAndMetadata(world, -2, 5, k161, plankBlock, plankMeta);
 			setBlockAndMetadata(world, -1, 5, k161, plankStairBlock, 4);
 			setBlockAndMetadata(world, 0, 5, k161, plankStairBlock, 5);
@@ -185,7 +185,7 @@ public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 			setBlockAndMetadata(world, -1, 6, k161, plankBlock, plankMeta);
 			setBlockAndMetadata(world, 0, 6, k161, plankBlock, plankMeta);
 		}
-		int[] k15 = { -7, 6 };
+		int[] k15 = {-7, 6};
 		roofEdge = k15.length;
 		for (step = 0; step < roofEdge; ++step) {
 			k16 = k15[step];
@@ -219,14 +219,14 @@ public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 		}
 		setBlockAndMetadata(world, -1, 3, -5, plankStairBlock, 4);
 		setBlockAndMetadata(world, 0, 3, -5, plankStairBlock, 5);
-		for (int i15 : new int[] { -5, 4 }) {
-			for (int k17 : new int[] { -7, 6 }) {
+		for (int i15 : new int[]{-5, 4}) {
+			for (int k17 : new int[]{-7, 6}) {
 				for (j12 = 2; (j12 >= 1 || !isOpaque(world, i15, j12, k17)) && getY(j12) >= 0; --j12) {
 					setBlockAndMetadata(world, i15, j12, k17, fenceBlock, fenceMeta);
 				}
 			}
 		}
-		for (int i15 : new int[] { -4, 3 }) {
+		for (int i15 : new int[]{-4, 3}) {
 			setAir(world, i15, 2, -2);
 			setBlockAndMetadata(world, i15, 3, -2, plankSlabBlock, plankSlabMeta | 8);
 			setBlockAndMetadata(world, i15, 4, -2, roofBlock, roofMeta);
@@ -235,7 +235,7 @@ public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 			setBlockAndMetadata(world, i15, 3, -3, plankStairBlock, 7);
 			setBlockAndMetadata(world, i15, 3, -1, plankStairBlock, 6);
 		}
-		for (int i15 : new int[] { -5, 4 }) {
+		for (int i15 : new int[]{-5, 4}) {
 			setBlockAndMetadata(world, i15, 1, -3, plankStairBlock, 7);
 			setBlockAndMetadata(world, i15, 1, -2, plankSlabBlock, plankSlabMeta | 8);
 			setBlockAndMetadata(world, i15, 1, -1, plankStairBlock, 6);
@@ -253,7 +253,7 @@ public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 			setBlockAndMetadata(world, i15, 3, -1, roofSlabBlock, roofSlabMeta | 8);
 			setBlockAndMetadata(world, i15, 4, -1, roofSlabBlock, roofSlabMeta);
 			setBlockAndMetadata(world, i15, 3, 0, roofBlock, roofMeta);
-			for (int k17 : new int[] { -4, 0 }) {
+			for (int k17 : new int[]{-4, 0}) {
 				for (j12 = 2; (j12 >= 1 || !isOpaque(world, i15, j12, k17)) && getY(j12) >= 0; --j12) {
 					setBlockAndMetadata(world, i15, j12, k17, fenceBlock, fenceMeta);
 				}
@@ -285,7 +285,7 @@ public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 				setBlockAndMetadata(world, 1 - step2, 5 + step2, k13, brickStairBlock, 5);
 			}
 		}
-		for (int k161 : new int[] { 0, 4 }) {
+		for (int k161 : new int[]{0, 4}) {
 			for (int j18 = 1; j18 <= 3; ++j18) {
 				setBlockAndMetadata(world, 2, j18, k161, rockWallBlock, rockWallMeta);
 			}
@@ -310,13 +310,13 @@ public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 		setBlockAndMetadata(world, -3, 1, -3, plankStairBlock, 2);
 		setBlockAndMetadata(world, -3, 1, -2, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, -3, 1, -1, tableBlock, 0);
-		this.placeChest(world, random, -3, 1, 0, 4, LOTRChestContents.ROHAN_HOUSE);
+		placeChest(world, random, -3, 1, 0, 4, LOTRChestContents.ROHAN_HOUSE);
 		setBlockAndMetadata(world, 2, 1, -4, plankStairBlock, 7);
 		setBlockAndMetadata(world, 2, 1, -3, plankSlabBlock, plankSlabMeta | 8);
 		setBlockAndMetadata(world, 2, 1, -2, plankStairBlock, 6);
 		setBlockAndMetadata(world, 2, 1, -1, Blocks.cauldron, 3);
-		this.placeBarrel(world, random, 2, 2, -4, 5, LOTRFoods.ROHAN_DRINK);
-		this.placeMug(world, random, 2, 2, -3, 1, LOTRFoods.ROHAN_DRINK);
+		placeBarrel(world, random, 2, 2, -4, 5, LOTRFoods.ROHAN_DRINK);
+		placeMug(world, random, 2, 2, -3, 1, LOTRFoods.ROHAN_DRINK);
 		if (random.nextBoolean()) {
 			placePlateWithCertainty(world, random, 2, 2, -2, plateBlock, LOTRFoods.ROHAN);
 		} else {
@@ -330,7 +330,7 @@ public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 			setBlockAndMetadata(world, -3, 1, k14, bedBlock, 11);
 			setBlockAndMetadata(world, -3, 3, k14, plank2SlabBlock, plank2SlabMeta | 8);
 		}
-		for (int k161 : new int[] { 1, 4 }) {
+		for (int k161 : new int[]{1, 4}) {
 			for (int j19 = 1; j19 <= 2; ++j19) {
 				setBlockAndMetadata(world, -3, j19, k161, fenceBlock, fenceMeta);
 			}
@@ -391,7 +391,7 @@ public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 				while (!isOpaque(world, i15, j110 - 1, k12) && getY(j110) >= 0) {
 					--j110;
 				}
-				this.placeChest(world, random, i15, j110, k12, 3, LOTRChestContents.ROHAN_HOUSE);
+				placeChest(world, random, i15, j110, k12, 3, LOTRChestContents.ROHAN_HOUSE);
 			}
 		}
 		int men = 1 + random.nextInt(2);

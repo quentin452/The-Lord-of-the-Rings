@@ -14,7 +14,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.*;
 
 public class LOTRBlockDoubleTorch extends Block {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] torchIcons;
 	public Item torchItem;
 
@@ -30,7 +30,7 @@ public class LOTRBlockDoubleTorch extends Block {
 			return super.canBlockStay(world, i, j, k);
 		}
 		int l = world.getBlockMetadata(i, j, k);
-		return l == 1 ? world.getBlock(i, j - 1, k) == this : world.getBlock(i, j + 1, k) == this && LOTRBlockDoubleTorch.canPlaceTorchOn(world, i, j - 1, k);
+		return l == 1 ? world.getBlock(i, j - 1, k) == this : world.getBlock(i, j + 1, k) == this && canPlaceTorchOn(world, i, j - 1, k);
 	}
 
 	@Override
@@ -38,13 +38,13 @@ public class LOTRBlockDoubleTorch extends Block {
 		return null;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return j == 1 ? torchIcons[1] : torchIcons[0];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public Item getItem(World world, int i, int j, int k) {
 		return torchItem;
@@ -68,7 +68,7 @@ public class LOTRBlockDoubleTorch extends Block {
 		return LOTRMod.proxy.getDoubleTorchRenderID();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int i, int j, int k) {
 		int meta = world.getBlockMetadata(i, j, k);
@@ -89,10 +89,10 @@ public class LOTRBlockDoubleTorch extends Block {
 	public void onBlockHarvested(World world, int i, int j, int k, int meta, EntityPlayer entityplayer) {
 		if (meta == 1) {
 			if (world.getBlock(i, j - 1, k) == this) {
-				if (!entityplayer.capabilities.isCreativeMode) {
-					world.func_147480_a(i, j - 1, k, true);
-				} else {
+				if (entityplayer.capabilities.isCreativeMode) {
 					world.setBlockToAir(i, j - 1, k);
+				} else {
+					world.func_147480_a(i, j - 1, k, true);
 				}
 			}
 		} else if (entityplayer.capabilities.isCreativeMode && world.getBlock(i, j + 1, k) == this) {
@@ -106,7 +106,7 @@ public class LOTRBlockDoubleTorch extends Block {
 		if (!canBlockStay(world, i, j, k)) {
 			int meta = world.getBlockMetadata(i, j, k);
 			if (meta == 0) {
-				this.dropBlockAsItem(world, i, j, k, meta, 0);
+				dropBlockAsItem(world, i, j, k, 0, 0);
 				if (world.getBlock(i, j + 1, k) == this) {
 					world.setBlock(i, j + 1, k, Blocks.air, 0, 2);
 				}
@@ -115,7 +115,7 @@ public class LOTRBlockDoubleTorch extends Block {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		if (world.getBlockMetadata(i, j, k) == 1) {
@@ -127,7 +127,7 @@ public class LOTRBlockDoubleTorch extends Block {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		torchIcons = new IIcon[2];

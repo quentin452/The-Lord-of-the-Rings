@@ -39,7 +39,7 @@ import net.minecraft.world.*;
 public class LOTRReplacedMethods {
 
 	public static class Anvil {
-		public static AxisAlignedBB getCollisionBoundingBoxFromPool(Block block, World world, int i, int j, int k) {
+		public static AxisAlignedBB getCollisionBoundingBoxFromPool(Block block, IBlockAccess world, int i, int j, int k) {
 			block.setBlockBoundsBasedOnState(world, i, j, k);
 			return AxisAlignedBB.getBoundingBox(i + block.getBlockBoundsMinX(), j + block.getBlockBoundsMinY(), k + block.getBlockBoundsMinZ(), i + block.getBlockBoundsMaxX(), j + block.getBlockBoundsMaxY(), k + block.getBlockBoundsMaxZ());
 		}
@@ -52,19 +52,19 @@ public class LOTRReplacedMethods {
 		public static Map<BlockAndMeta, boolean[]> cachedNaturalBlocks = new HashMap<>();
 
 		public static void add(Block block, int meta) {
-			BlockRendering.add(block, -1, 0, 1, 2, 3, 4, 5);
+			add(block, -1, 0, 1, 2, 3, 4, 5);
 		}
 
 		public static void add(Block block, int meta, Integer... sides) {
-			naturalBlockTable.put(new BlockAndMeta(block, meta), BlockRendering.getSideFlagsFrom(sides));
+			naturalBlockTable.put(new BlockAndMeta(block, meta), getSideFlagsFrom(sides));
 		}
 
 		public static void add(Class<? extends Block> cls) {
-			BlockRendering.add(cls, 0, 1, 2, 3, 4, 5);
+			add(cls, 0, 1, 2, 3, 4, 5);
 		}
 
 		public static void add(Class<? extends Block> cls, Integer... sides) {
-			naturalBlockClassTable.put(cls, BlockRendering.getSideFlagsFrom(sides));
+			naturalBlockClassTable.put(cls, getSideFlagsFrom(sides));
 		}
 
 		public static boolean[] getSideFlagsFrom(Integer... sides) {
@@ -81,7 +81,7 @@ public class LOTRReplacedMethods {
 
 		public static boolean renderStandardBlock(RenderBlocks renderblocks, Block block, int i, int j, int k) {
 			if (naturalBlockClassTable.isEmpty()) {
-				BlockRendering.setupNaturalBlockTable();
+				setupNaturalBlockTable();
 			}
 			if (LOTRConfig.naturalBlocks) {
 				int meta = renderblocks.blockAccess.getBlockMetadata(i, j, k);
@@ -93,11 +93,11 @@ public class LOTRReplacedMethods {
 					sideFlags = naturalBlockTable.get(bam);
 					cachedNaturalBlocks.put(bam, sideFlags);
 				} else {
-					for (Class<? extends Block> cls : naturalBlockClassTable.keySet()) {
-						if (!cls.isAssignableFrom(block.getClass())) {
+					for (Map.Entry<Class<? extends Block>, boolean[]> entry : naturalBlockClassTable.entrySet()) {
+						if (!entry.getKey().isAssignableFrom(block.getClass())) {
 							continue;
 						}
-						sideFlags = naturalBlockClassTable.get(cls);
+						sideFlags = entry.getValue();
 						cachedNaturalBlocks.put(bam, sideFlags);
 					}
 				}
@@ -105,7 +105,7 @@ public class LOTRReplacedMethods {
 					int[] randomSides = new int[6];
 					for (int l = 0; l < randomSides.length; ++l) {
 						int hash = i * 234890405 ^ k * 37383934 ^ j;
-						blockRand.setSeed(hash += l * 285502);
+						blockRand.setSeed(hash + l * 285502);
 						blockRand.setSeed(blockRand.nextLong());
 						randomSides[l] = blockRand.nextInt(4);
 					}
@@ -143,40 +143,40 @@ public class LOTRReplacedMethods {
 		}
 
 		public static void setupNaturalBlockTable() {
-			BlockRendering.add(BlockGrass.class, 1, 0);
-			BlockRendering.add(Blocks.dirt, 0);
-			BlockRendering.add(Blocks.dirt, 1);
-			BlockRendering.add(Blocks.dirt, 2, 1, 0);
-			BlockRendering.add(LOTRBlockSlabDirt.class);
-			BlockRendering.add(LOTRBlockMudGrass.class, 1, 0);
-			BlockRendering.add(LOTRBlockMud.class);
-			BlockRendering.add(BlockSand.class);
-			BlockRendering.add(LOTRBlockSand.class);
-			BlockRendering.add(LOTRBlockSlabSand.class);
-			BlockRendering.add(Blocks.sandstone, 0, 1, 0);
-			BlockRendering.add(Blocks.stone_slab, 1, 1, 0);
-			BlockRendering.add(Blocks.double_stone_slab, 1, 1, 0);
-			BlockRendering.add(Blocks.sandstone_stairs, 1, 0);
-			BlockRendering.add(LOTRMod.wallStoneV, 4, 1, 0);
-			BlockRendering.add(LOTRBlockSandstone.class, 1, 0);
-			BlockRendering.add(LOTRMod.slabSingle7, 5, 1, 0);
-			BlockRendering.add(LOTRMod.slabDouble7, 5, 1, 0);
-			BlockRendering.add(LOTRMod.stairsRedSandstone, 1, 0);
-			BlockRendering.add(LOTRMod.wallStoneV, 5, 1, 0);
-			BlockRendering.add(LOTRMod.slabSingle10, 6, 1, 0);
-			BlockRendering.add(LOTRMod.slabDouble10, 6, 1, 0);
-			BlockRendering.add(LOTRMod.stairsWhiteSandstone, 1, 0);
-			BlockRendering.add(LOTRMod.wall3, 14, 1, 0);
-			BlockRendering.add(LOTRMod.rock, 0, 1, 0);
-			BlockRendering.add(BlockGravel.class);
-			BlockRendering.add(LOTRBlockSlabGravel.class);
-			BlockRendering.add(BlockClay.class);
-			BlockRendering.add(BlockSnow.class);
-			BlockRendering.add(BlockSnowBlock.class);
-			BlockRendering.add(BlockMycelium.class, 1, 0);
-			BlockRendering.add(LOTRBlockMordorDirt.class);
-			BlockRendering.add(LOTRBlockDirtPath.class);
-			BlockRendering.add(LOTRBlockMordorMoss.class);
+			add(BlockGrass.class, 1, 0);
+			add(Blocks.dirt, 0);
+			add(Blocks.dirt, 1);
+			add(Blocks.dirt, 2, 1, 0);
+			add(LOTRBlockSlabDirt.class);
+			add(LOTRBlockMudGrass.class, 1, 0);
+			add(LOTRBlockMud.class);
+			add(BlockSand.class);
+			add(LOTRBlockSand.class);
+			add(LOTRBlockSlabSand.class);
+			add(Blocks.sandstone, 0, 1, 0);
+			add(Blocks.stone_slab, 1, 1, 0);
+			add(Blocks.double_stone_slab, 1, 1, 0);
+			add(Blocks.sandstone_stairs, 1, 0);
+			add(LOTRMod.wallStoneV, 4, 1, 0);
+			add(LOTRBlockSandstone.class, 1, 0);
+			add(LOTRMod.slabSingle7, 5, 1, 0);
+			add(LOTRMod.slabDouble7, 5, 1, 0);
+			add(LOTRMod.stairsRedSandstone, 1, 0);
+			add(LOTRMod.wallStoneV, 5, 1, 0);
+			add(LOTRMod.slabSingle10, 6, 1, 0);
+			add(LOTRMod.slabDouble10, 6, 1, 0);
+			add(LOTRMod.stairsWhiteSandstone, 1, 0);
+			add(LOTRMod.wall3, 14, 1, 0);
+			add(LOTRMod.rock, 0, 1, 0);
+			add(BlockGravel.class);
+			add(LOTRBlockSlabGravel.class);
+			add(BlockClay.class);
+			add(BlockSnow.class);
+			add(BlockSnowBlock.class);
+			add(BlockMycelium.class, 1, 0);
+			add(LOTRBlockMordorDirt.class);
+			add(LOTRBlockDirtPath.class);
+			add(LOTRBlockMordorMoss.class);
 		}
 
 		public static class BlockAndMeta {
@@ -240,11 +240,11 @@ public class LOTRReplacedMethods {
 			return 0;
 		}
 
-		public static int getDamageValue(World world, int i, int j, int k) {
+		public static int getDamageValue(IBlockAccess world, int i, int j, int k) {
 			return world.getBlockMetadata(i, j, k);
 		}
 
-		public static void getSubBlocks(Block thisBlock, Item item, CreativeTabs tab, List list) {
+		public static void getSubBlocks(Block thisBlock, Item item, CreativeTabs tab, Collection list) {
 			list.add(new ItemStack(thisBlock, 1, 0));
 			list.add(new ItemStack(thisBlock, 1, 1));
 			list.add(new ItemStack(thisBlock, 1, 2));
@@ -295,8 +295,7 @@ public class LOTRReplacedMethods {
 		}
 
 		public static float func_152377_a(float base, ItemStack itemstack, EnumCreatureAttribute creatureAttribute) {
-			float f = base;
-			return f += LOTREnchantmentHelper.calcBaseMeleeDamageBoost(itemstack);
+			return base + LOTREnchantmentHelper.calcBaseMeleeDamageBoost(itemstack);
 		}
 
 		public static int getDamageReduceAmount(ItemStack itemstack) {
@@ -304,34 +303,29 @@ public class LOTRReplacedMethods {
 		}
 
 		public static float getEnchantmentModifierLiving(float base, EntityLivingBase attacker, EntityLivingBase target) {
-			float f = base;
-			return f += LOTREnchantmentHelper.calcEntitySpecificDamage(attacker.getHeldItem(), target);
+			return base + LOTREnchantmentHelper.calcEntitySpecificDamage(attacker.getHeldItem(), target);
 		}
 
 		public static int getFireAspectModifier(int base, EntityLivingBase entity) {
-			int i = base;
-			return i += LOTREnchantmentHelper.calcFireAspectForMelee(entity.getHeldItem());
+			return base + LOTREnchantmentHelper.calcFireAspectForMelee(entity.getHeldItem());
 		}
 
 		public static int getFortuneModifier(int base, EntityLivingBase entity) {
-			int i = base;
-			return i += LOTREnchantmentHelper.calcLootingLevel(entity.getHeldItem());
+			return base + LOTREnchantmentHelper.calcLootingLevel(entity.getHeldItem());
 		}
 
 		public static int getKnockbackModifier(int base, EntityLivingBase attacker, EntityLivingBase target) {
 			int i = base;
 			i += LOTRWeaponStats.getBaseExtraKnockback(attacker.getHeldItem());
-			return i += LOTREnchantmentHelper.calcExtraKnockback(attacker.getHeldItem());
+			return i + LOTREnchantmentHelper.calcExtraKnockback(attacker.getHeldItem());
 		}
 
 		public static int getLootingModifier(int base, EntityLivingBase entity) {
-			int i = base;
-			return i += LOTREnchantmentHelper.calcLootingLevel(entity.getHeldItem());
+			return base + LOTREnchantmentHelper.calcLootingLevel(entity.getHeldItem());
 		}
 
 		public static int getMaxFireProtectionLevel(int base, Entity entity) {
-			int i = base;
-			return Math.max(i, LOTREnchantmentHelper.getMaxFireProtectionLevel(entity.getLastActiveItems()));
+			return Math.max(base, LOTREnchantmentHelper.getMaxFireProtectionLevel(entity.getLastActiveItems()));
 		}
 
 		public static boolean getSilkTouchModifier(boolean base, EntityLivingBase entity) {
@@ -528,6 +522,7 @@ public class LOTRReplacedMethods {
 	}
 
 	public static class Piston {
+		@SuppressWarnings("Convert2Lambda")
 		public static boolean canPushBlock(Block block, World world, int i, int j, int k, boolean flag) {
 			AxisAlignedBB bannerSearchBox = AxisAlignedBB.getBoundingBox(i, j, k, i + 1, j + 4, k + 1);
 			List banners = world.selectEntitiesWithinAABB(LOTREntityBanner.class, bannerSearchBox, new IEntitySelector() {
@@ -606,7 +601,7 @@ public class LOTRReplacedMethods {
 					if (world.blockExists(i += random.nextInt(3) - 1, ++j, k += random.nextInt(3) - 1)) {
 						Block block = world.getBlock(i, j, k);
 						if (block.getMaterial() == Material.air) {
-							if (!StaticLiquid.isFlammable(world, i - 1, j, k) && !StaticLiquid.isFlammable(world, i + 1, j, k) && !StaticLiquid.isFlammable(world, i, j, k - 1) && !StaticLiquid.isFlammable(world, i, j, k + 1) && !StaticLiquid.isFlammable(world, i, j - 1, k) && !StaticLiquid.isFlammable(world, i, j + 1, k)) {
+							if (!isFlammable(world, i - 1, j, k) && !isFlammable(world, i + 1, j, k) && !isFlammable(world, i, j, k - 1) && !isFlammable(world, i, j, k + 1) && !isFlammable(world, i, j - 1, k) && !isFlammable(world, i, j + 1, k)) {
 								continue;
 							}
 							world.setBlock(i, j, k, Blocks.fire);
@@ -623,7 +618,7 @@ public class LOTRReplacedMethods {
 					int k1 = k;
 					for (int l = 0; l < 3; ++l) {
 						i = i1 + random.nextInt(3) - 1;
-						if (!world.blockExists(i, j, k = k1 + random.nextInt(3) - 1) || !world.isAirBlock(i, j + 1, k) || !StaticLiquid.isFlammable(world, i, j, k)) {
+						if (!world.blockExists(i, j, k = k1 + random.nextInt(3) - 1) || !world.isAirBlock(i, j + 1, k) || !isFlammable(world, i, j, k)) {
 							continue;
 						}
 						world.setBlock(i, j + 1, k, Blocks.fire);

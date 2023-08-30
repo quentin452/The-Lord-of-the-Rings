@@ -12,13 +12,8 @@ import net.minecraft.world.World;
 public class LOTREntityDolAmrothCaptain extends LOTREntitySwanKnight implements LOTRUnitTradeable {
 	public LOTREntityDolAmrothCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.GONDOR;
-	}
-
-	@Override
-	public void applyEntityAttributes() {
-		super.applyEntityAttributes();
 	}
 
 	@Override

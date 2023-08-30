@@ -7,23 +7,17 @@ import net.minecraft.entity.player.EntityPlayer;
 public class LOTRPlayerDetailsCache {
 	public Map<UUID, PlayerDetails> detailsForPlayer = new HashMap<>();
 	public PlayerDetailsApiClient apiClient = new PlayerDetailsApiClient();
-	public Set<UUID> apiRequestedPlayers = new HashSet<>();
+	public Collection<UUID> apiRequestedPlayers = new HashSet<>();
 
 	public void fireRequest(UUID playerId) {
 		if (!apiRequestedPlayers.contains(playerId)) {
 			apiRequestedPlayers.add(playerId);
-			apiClient.getPlayerDetailsAsync(playerId, new PlayerDetailsApiClient.Callback() {
-
-				@Override
-				public void accept(PlayerDetails details) {
-					detailsForPlayer.put(playerId, details);
-				}
-			});
+			apiClient.getPlayerDetailsAsync(playerId, details -> detailsForPlayer.put(playerId, details));
 		}
 	}
 
 	public PlayerDetails getPlayerDetails(EntityPlayer player) {
-		return this.getPlayerDetails(player.getUniqueID());
+		return getPlayerDetails(player.getUniqueID());
 	}
 
 	public PlayerDetails getPlayerDetails(UUID playerId) {

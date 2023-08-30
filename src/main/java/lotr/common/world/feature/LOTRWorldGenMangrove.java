@@ -111,9 +111,7 @@ public class LOTRWorldGenMangrove extends WorldGenAbstractTree {
 								rootZ += zWay;
 							}
 							roots++;
-							if (roots <= 4 + random.nextInt(3)) {
-								continue;
-							}
+							random.nextInt(3);
 						}
 					}
 				}

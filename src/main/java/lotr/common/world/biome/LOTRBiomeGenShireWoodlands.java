@@ -9,8 +9,8 @@ public class LOTRBiomeGenShireWoodlands extends LOTRBiomeGenShire {
 		super(i, major);
 		variantChance = 0.2f;
 		clearBiomeVariants();
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
 		decorator.treesPerChunk = 9;
 		decorator.flowersPerChunk = 6;
 		decorator.doubleFlowersPerChunk = 2;

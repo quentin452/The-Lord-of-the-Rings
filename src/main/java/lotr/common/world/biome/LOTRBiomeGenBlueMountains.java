@@ -32,11 +32,11 @@ public class LOTRBiomeGenBlueMountains extends LOTRBiome {
 		npcSpawnList.newFactionList(0, 2.0f).add(arrspawnListContainer3);
 		variantChance = 0.2f;
 		addBiomeVariantSet(LOTRBiomeVariant.SET_MOUNTAINS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.2f);
 		decorator.biomeGemFactor = 1.0f;
 		decorator.addSoil(new WorldGenMinable(LOTRMod.rock, 3, 60, Blocks.stone), 6.0f, 0, 96);
 		decorator.addOre(new WorldGenMinable(Blocks.coal_ore, 8), 10.0f, 0, 128);

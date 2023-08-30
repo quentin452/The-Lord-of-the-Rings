@@ -42,12 +42,12 @@ public class LOTRBiomeGenAdornland extends LOTRBiome {
 		arrspawnListContainer4[0] = LOTRBiomeSpawnList.entry(LOTRSpawnList.ROHIRRIM_WARRIORS, 10);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer4);
 		addBiomeVariantSet(LOTRBiomeVariant.SET_NORMAL_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.BOULDERS_ROHAN);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.BOULDERS_ROHAN);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.5f);
 		decorator.addSoil(new WorldGenMinable(LOTRMod.rock, 2, 60, Blocks.stone), 2.0f, 0, 64);
 		decorator.setTreeCluster(12, 30);
 		decorator.willowPerChunk = 1;
@@ -91,11 +91,6 @@ public class LOTRBiomeGenAdornland extends LOTRBiome {
 		invasionSpawns.addInvasion(LOTRInvasions.ROHAN, LOTREventSpawner.EventChance.UNCOMMON);
 		invasionSpawns.addInvasion(LOTRInvasions.GUNDABAD, LOTREventSpawner.EventChance.RARE);
 		invasionSpawns.addInvasion(LOTRInvasions.GUNDABAD_WARG, LOTREventSpawner.EventChance.RARE);
-	}
-
-	@Override
-	public boolean canSpawnHostilesInDay() {
-		return false;
 	}
 
 	@Override

@@ -21,7 +21,7 @@ apply plugin: 'forge'
 final def currentDate = LocalDate.now()
 version = currentDate.format(DateTimeFormatter.ofPattern('yy.MM.dd'))
 group = 'com.yourname.modid'
-archivesBaseName = 'Black Dragon'
+archivesBaseName = 'LOTR'
 
 targetCompatibility = JavaVersion.VERSION_1_8
 sourceCompatibility = JavaVersion.VERSION_1_8

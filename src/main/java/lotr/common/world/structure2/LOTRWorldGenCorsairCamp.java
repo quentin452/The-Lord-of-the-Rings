@@ -37,10 +37,12 @@ public class LOTRWorldGenCorsairCamp extends LOTRWorldGenCampBase {
 			int k1;
 			float ang;
 			int r;
+			//noinspection StatementWithEmptyBody
 			for (int att = 0; att < 16 && !generateSubstructureWithRestrictionFlag(new LOTRWorldGenCorsairCampCage(notifyChanges), world, random, i1 = (int) ((r = MathHelper.getRandomIntegerInRange(random, 8, 20)) * MathHelper.cos(ang = random.nextFloat() * 3.1415927f * 2.0f)), getTopBlock(world, i1, k1 = (int) (r * MathHelper.sin(ang))), k1, random.nextInt(4), true); ++att) {
 			}
 			int chestPiles = 1 + random.nextInt(2);
-			block1: for (int l = 0; l < chestPiles; ++l) {
+			block1:
+			for (int l = 0; l < chestPiles; ++l) {
 				for (int att = 0; att < 16; ++att) {
 					int j12;
 					float ang2;
@@ -52,7 +54,7 @@ public class LOTRWorldGenCorsairCamp extends LOTRWorldGenCampBase {
 					}
 					setBlockAndMetadata(world, i12, j12, k12, LOTRMod.wood8, 3);
 					setGrassToDirt(world, i12, j12 - 1, k12);
-					this.placeChest(world, random, i12, j12 + 1, k12, LOTRMod.chestBasket, 2, LOTRChestContents.CORSAIR, 3 + random.nextInt(3));
+					placeChest(world, random, i12, j12 + 1, k12, LOTRMod.chestBasket, 2, LOTRChestContents.CORSAIR, 3 + random.nextInt(3));
 					tryPlaceSideChest(world, random, i12 - 1, j12, k12, 5);
 					tryPlaceSideChest(world, random, i12 + 1, j12, k12, 4);
 					tryPlaceSideChest(world, random, i12, j12, k12 - 1, 2);
@@ -76,7 +78,7 @@ public class LOTRWorldGenCorsairCamp extends LOTRWorldGenCampBase {
 		respawner.setSpawnClass(LOTREntityCorsair.class);
 		respawner.setCheckRanges(24, -12, 12, 10);
 		respawner.setSpawnRanges(8, -4, 4, 16);
-		this.placeNPCRespawner(respawner, world, i, j, k);
+		placeNPCRespawner(respawner, world, i, j, k);
 		int corsairs = 3 + random.nextInt(5);
 		for (int l = 0; l < corsairs; ++l) {
 			LOTREntityCorsair corsair = new LOTREntityCorsair(world);
@@ -97,7 +99,7 @@ public class LOTRWorldGenCorsairCamp extends LOTRWorldGenCampBase {
 			if (random.nextBoolean()) {
 				setBlockAndMetadata(world, i, j, k, LOTRMod.chestBasket, meta);
 			} else {
-				this.placeChest(world, random, i, j, k, LOTRMod.chestBasket, meta, LOTRChestContents.CORSAIR, 1);
+				placeChest(world, random, i, j, k, LOTRMod.chestBasket, meta, LOTRChestContents.CORSAIR, 1);
 			}
 		}
 	}

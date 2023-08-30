@@ -9,6 +9,7 @@ import lotr.common.entity.npc.LOTREntityDorwinionElfVintner;
 import lotr.common.item.*;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.MathHelper;
@@ -28,7 +29,7 @@ public class LOTRWorldGenDorwinionBrewery extends LOTRWorldGenDorwinionHouse {
 		int k12;
 		int k13;
 		int i13;
-		this.setOriginAndRotation(world, i, j, k, rotation, 1);
+		setOriginAndRotation(world, i, j, k, rotation, 1);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i12 = -6; i12 <= 6; ++i12) {
@@ -166,7 +167,7 @@ public class LOTRWorldGenDorwinionBrewery extends LOTRWorldGenDorwinionHouse {
 			setBlockAndMetadata(world, i12, 2, 18, brickSlabBlock, brickSlabMeta);
 			setAir(world, i12, 3, 18);
 		}
-		for (int k14 : new int[] { 1, 18 }) {
+		for (int k14 : new int[]{1, 18}) {
 			int i14;
 			setBlockAndMetadata(world, -4, 6, k14, brickBlock, brickMeta);
 			setBlockAndMetadata(world, -3, 6, k14, brickBlock, brickMeta);
@@ -216,7 +217,7 @@ public class LOTRWorldGenDorwinionBrewery extends LOTRWorldGenDorwinionHouse {
 			setBlockAndMetadata(world, 4, 7, k13, clayStairBlock, 0);
 			setBlockAndMetadata(world, 5, 6, k13, clayStairBlock, 0);
 		}
-		for (int k14 : new int[] { 0, 19 }) {
+		for (int k14 : new int[]{0, 19}) {
 			setBlockAndMetadata(world, -4, 6, k14, clayStairBlock, 4);
 			setBlockAndMetadata(world, -3, 7, k14, clayStairBlock, 4);
 			setBlockAndMetadata(world, -2, 8, k14, clayStairBlock, 4);
@@ -268,9 +269,9 @@ public class LOTRWorldGenDorwinionBrewery extends LOTRWorldGenDorwinionHouse {
 				continue;
 			}
 			setBlockAndMetadata(world, -4, 1, k1, plankBlock, plankMeta);
-			this.placeBarrel(world, random, -4, 2, k1, 4, drink);
+			placeBarrel(world, random, -4, 2, k1, 4, drink);
 			setBlockAndMetadata(world, 4, 1, k1, plankBlock, plankMeta);
-			this.placeBarrel(world, random, 4, 2, k1, 5, drink);
+			placeBarrel(world, random, 4, 2, k1, 5, drink);
 		}
 		for (k1 = 8; k1 <= 11; ++k1) {
 			for (i1 = -1; i1 <= 1; ++i1) {
@@ -280,8 +281,8 @@ public class LOTRWorldGenDorwinionBrewery extends LOTRWorldGenDorwinionHouse {
 				}
 				setBlockAndMetadata(world, i1, 1, k1, plankSlabBlock, plankSlabMeta | 8);
 			}
-			this.placeMug(world, random, -1, 2, k1, 1, drink, LOTRFoods.DORWINION_DRINK);
-			this.placeMug(world, random, 1, 2, k1, 3, drink, LOTRFoods.DORWINION_DRINK);
+			placeMug(world, random, -1, 2, k1, 1, drink, LOTRFoods.DORWINION_DRINK);
+			placeMug(world, random, 1, 2, k1, 3, drink, LOTRFoods.DORWINION_DRINK);
 		}
 		setBlockAndMetadata(world, 0, 1, 17, Blocks.crafting_table, 0);
 		for (i13 = -2; i13 <= 2; ++i13) {
@@ -293,7 +294,7 @@ public class LOTRWorldGenDorwinionBrewery extends LOTRWorldGenDorwinionHouse {
 			if (!(tileentity instanceof TileEntityChest)) {
 				continue;
 			}
-			TileEntityChest chest = (TileEntityChest) tileentity;
+			IInventory chest = (IInventory) tileentity;
 			int wines = MathHelper.getRandomIntegerInRange(random, 3, 6);
 			for (int l = 0; l < wines; ++l) {
 				ItemStack chestDrinkItem = drink.copy();

@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.lwjgl.opengl.GL11;
 
 import lotr.common.entity.npc.*;
@@ -16,8 +17,6 @@ import net.minecraft.world.World;
 public class LOTRGuiTrade extends GuiContainer {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/npc/trade.png");
 	public static int lockedTradeColor = -1610612736;
-	static {
-	}
 	public LOTREntityNPC theEntity;
 	public LOTRContainerTrade containerTrade;
 	public GuiButton buttonSell;
@@ -32,7 +31,7 @@ public class LOTRGuiTrade extends GuiContainer {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button.enabled && button == buttonSell) {
-			LOTRPacketSell packet = new LOTRPacketSell();
+			IMessage packet = new LOTRPacketSell();
 			LOTRPacketHandler.networkWrapper.sendToServer(packet);
 		}
 	}
@@ -51,7 +50,7 @@ public class LOTRGuiTrade extends GuiContainer {
 	@Override
 	public void drawGuiContainerForegroundLayer(int i, int j) {
 		int l;
-		this.drawCenteredString(theEntity.getNPCName(), 89, 11, 4210752);
+		drawCenteredString(theEntity.getNPCName(), 89, 11, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.lotr.trade.buy"), 8, 28, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.lotr.trade.sell"), 8, 79, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.lotr.trade.sellOffer"), 8, 129, 4210752);
@@ -99,7 +98,7 @@ public class LOTRGuiTrade extends GuiContainer {
 			y *= 2;
 			y += fontRendererObj.FONT_HEIGHT / 2;
 		}
-		this.drawCenteredString(s, x, y, 4210752);
+		drawCenteredString(s, x, y, 4210752);
 		if (halfSize) {
 			GL11.glPopMatrix();
 		}
@@ -108,14 +107,14 @@ public class LOTRGuiTrade extends GuiContainer {
 	public void renderTradeSlot(LOTRSlotTrade slot) {
 		LOTRTradeEntry trade = slot.getTrade();
 		if (trade != null) {
-			int lockedPixels = 0;
-			boolean inFront = false;
-			if (!trade.isAvailable()) {
-				lockedPixels = 16;
-				inFront = true;
-			} else {
+			int lockedPixels;
+			boolean inFront;
+			if (trade.isAvailable()) {
 				lockedPixels = trade.getLockedProgressForSlot();
 				inFront = false;
+			} else {
+				lockedPixels = 16;
+				inFront = true;
 			}
 			if (lockedPixels > 0) {
 				GL11.glPushMatrix();
@@ -133,7 +132,7 @@ public class LOTRGuiTrade extends GuiContainer {
 					renderCost(Integer.toString(cost), slot.xDisplayPosition + 8, slot.yDisplayPosition + 22);
 				}
 			} else {
-				this.drawCenteredString(StatCollector.translateToLocal("container.lotr.trade.locked"), slot.xDisplayPosition + 8, slot.yDisplayPosition + 22, 4210752);
+				drawCenteredString(StatCollector.translateToLocal("container.lotr.trade.locked"), slot.xDisplayPosition + 8, slot.yDisplayPosition + 22, 4210752);
 			}
 		}
 	}

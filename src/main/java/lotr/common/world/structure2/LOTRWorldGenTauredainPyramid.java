@@ -71,7 +71,7 @@ public class LOTRWorldGenTauredainPyramid extends LOTRWorldGenStructureBase2 {
 						continue;
 					}
 					ForgeDirection dir = validDirs.get(random.nextInt(validDirs.size()));
-					placeDartTrap(world, random, (i + i1) * scale + dir.offsetX * scaleR, j + 0, (k + k1) * scale + dir.offsetZ * scaleR, dir.ordinal());
+					placeDartTrap(world, random, (i + i1) * scale + dir.offsetX * scaleR, j, (k + k1) * scale + dir.offsetZ * scaleR, dir.ordinal());
 				}
 			}
 		}
@@ -85,13 +85,13 @@ public class LOTRWorldGenTauredainPyramid extends LOTRWorldGenStructureBase2 {
 		int k12;
 		int j1;
 		int depth = 20;
-		this.setOriginAndRotation(world, i, j -= depth - 1, k, rotation, usingPlayer != null ? RADIUS - depth : 0);
+		setOriginAndRotation(world, i, j - (depth - 1), k, rotation, usingPlayer != null ? RADIUS - depth : 0);
 		isGolden = random.nextInt(20) == 0;
 		boolean carson = random.nextInt(200) == 0;
 		int maze1R = 19;
 		int maze1W = maze1R * 2 + 1;
 		LOTRMazeGenerator maze1 = new LOTRMazeGenerator(maze1W, maze1W);
-		maze1.setStart(maze1R + 0, maze1R + 4);
+		maze1.setStart(maze1R, maze1R + 4);
 		int maze1CentreW = 3;
 		for (int i13 = -maze1CentreW - 1; i13 <= maze1CentreW + 1; ++i13) {
 			for (int k13 = -maze1CentreW - 1; k13 <= maze1CentreW + 1; ++k13) {
@@ -116,7 +116,7 @@ public class LOTRWorldGenTauredainPyramid extends LOTRWorldGenStructureBase2 {
 		int maze3R = 13;
 		int maze3W = maze3R * 2 + 1;
 		LOTRMazeGenerator maze3 = new LOTRMazeGenerator(maze3W, maze3W);
-		maze3.setStart(maze3R + 0, maze3R + 2);
+		maze3.setStart(maze3R, maze3R + 2);
 		int maze3CentreW = 1;
 		for (int i14 = -maze3CentreW - 1; i14 <= maze3CentreW + 1; ++i14) {
 			for (int k14 = -maze3CentreW - 1; k14 <= maze3CentreW + 1; ++k14) {
@@ -199,8 +199,8 @@ public class LOTRWorldGenTauredainPyramid extends LOTRWorldGenStructureBase2 {
 				setBlockAndMetadata(world, i16, topHeight + 7, k16, LOTRMod.brick4, 3);
 			}
 		}
-		for (int i15 : new int[] { -10, 10 }) {
-			for (int k17 : new int[] { -10, 10 }) {
+		for (int i15 : new int[]{-10, 10}) {
+			for (int k17 : new int[]{-10, 10}) {
 				setBlockAndMetadata(world, i15, topHeight, k17, LOTRMod.brick4, 3);
 				for (int j14 = topHeight + 1; j14 <= topHeight + 3; ++j14) {
 					setBlockAndMetadata(world, i15, j14, k17, LOTRMod.pillar2, 12);
@@ -220,31 +220,31 @@ public class LOTRWorldGenTauredainPyramid extends LOTRWorldGenStructureBase2 {
 			int newY = stepY;
 			int newZ = stepZ;
 			if (stepX == -3 && stepZ == -3) {
-				placeRandomBrick(world, random, stepX, stepY, stepZ);
+				placeRandomBrick(world, random, -3, stepY, -3);
 				++newZ;
 			} else if (stepX == -3 && stepZ == 3) {
-				placeRandomBrick(world, random, stepX, stepY, stepZ);
+				placeRandomBrick(world, random, -3, stepY, 3);
 				++newX;
 			} else if (stepX == 3 && stepZ == 3) {
-				placeRandomBrick(world, random, stepX, stepY, stepZ);
+				placeRandomBrick(world, random, 3, stepY, 3);
 				--newZ;
 			} else if (stepX == 3 && stepZ == -3) {
-				placeRandomBrick(world, random, stepX, stepY, stepZ);
+				placeRandomBrick(world, random, 3, stepY, -3);
 				--newX;
 			} else if (stepZ == -3) {
-				placeRandomStairs(world, random, stepX, stepY, stepZ, 1);
+				placeRandomStairs(world, random, stepX, stepY, -3, 1);
 				--newX;
 				--newY;
 			} else if (stepZ == 3) {
-				placeRandomStairs(world, random, stepX, stepY, stepZ, 0);
+				placeRandomStairs(world, random, stepX, stepY, 3, 0);
 				++newX;
 				--newY;
 			} else if (stepX == -3) {
-				placeRandomStairs(world, random, stepX, stepY, stepZ, 3);
+				placeRandomStairs(world, random, -3, stepY, stepZ, 3);
 				++newZ;
 				--newY;
 			} else if (stepX == 3) {
-				placeRandomStairs(world, random, stepX, stepY, stepZ, 2);
+				placeRandomStairs(world, random, 3, stepY, stepZ, 2);
 				--newZ;
 				--newY;
 			}
@@ -385,9 +385,6 @@ public class LOTRWorldGenTauredainPyramid extends LOTRWorldGenStructureBase2 {
 						placeRandomStairs(world, random, i12, actingRoomTop - 3, k1, 6);
 						continue;
 					}
-					if (k2 != roomPillarEdge) {
-						continue;
-					}
 					if (i3 == 1) {
 						placeRandomStairs(world, random, i12, actingRoomTop - 3, k1, 4);
 						continue;
@@ -435,7 +432,7 @@ public class LOTRWorldGenTauredainPyramid extends LOTRWorldGenStructureBase2 {
 					setBlockAndMetadata(world, i12, actingRoomTop, k1, Blocks.flowing_lava, 0);
 				}
 				if (i2 == roomPillarEdge - 1 || k2 == roomPillarEdge - 1) {
-					if (random.nextInt(4) <= 0) {
+					if (random.nextInt(4) == 0) {
 						continue;
 					}
 					setBlockAndMetadata(world, i12, roomFloor, k1, Blocks.obsidian, 0);
@@ -477,13 +474,13 @@ public class LOTRWorldGenTauredainPyramid extends LOTRWorldGenStructureBase2 {
 			}
 		}
 		placePyramidBanner(world, 0, roomFloor + 6, 0);
-		this.placeSpawnerChest(world, random, -1, roomFloor + 5, 0, LOTRMod.spawnerChestStone, 5, LOTREntityTauredainPyramidWraith.class, null);
+		placeSpawnerChest(world, random, -1, roomFloor + 5, 0, LOTRMod.spawnerChestStone, 5, LOTREntityTauredainPyramidWraith.class, null);
 		putInventoryInChest(world, -1, roomFloor + 5, 0, chests[0]);
-		this.placeSpawnerChest(world, random, 1, roomFloor + 5, 0, LOTRMod.spawnerChestStone, 4, LOTREntityTauredainPyramidWraith.class, null);
+		placeSpawnerChest(world, random, 1, roomFloor + 5, 0, LOTRMod.spawnerChestStone, 4, LOTREntityTauredainPyramidWraith.class, null);
 		putInventoryInChest(world, 1, roomFloor + 5, 0, chests[1]);
-		this.placeSpawnerChest(world, random, 0, roomFloor + 5, -1, LOTRMod.spawnerChestStone, 2, LOTREntityTauredainPyramidWraith.class, null);
+		placeSpawnerChest(world, random, 0, roomFloor + 5, -1, LOTRMod.spawnerChestStone, 2, LOTREntityTauredainPyramidWraith.class, null);
 		putInventoryInChest(world, 0, roomFloor + 5, -1, chests[2]);
-		this.placeSpawnerChest(world, random, 0, roomFloor + 5, 1, LOTRMod.spawnerChestStone, 3, LOTREntityTauredainPyramidWraith.class, null);
+		placeSpawnerChest(world, random, 0, roomFloor + 5, 1, LOTRMod.spawnerChestStone, 3, LOTREntityTauredainPyramidWraith.class, null);
 		putInventoryInChest(world, 0, roomFloor + 5, 1, chests[3]);
 		stepX = 1;
 		stepY = topHeight - 36;
@@ -554,7 +551,7 @@ public class LOTRWorldGenTauredainPyramid extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, i, j, k, dartTrapBlock, meta);
 		TileEntity tileentity = getTileEntity(world, i, j, k);
 		if (tileentity instanceof LOTRTileEntityDartTrap) {
-			LOTRTileEntityDartTrap trap = (LOTRTileEntityDartTrap) tileentity;
+			IInventory trap = (IInventory) tileentity;
 			for (int l = 0; l < trap.getSizeInventory(); ++l) {
 				if (!random.nextBoolean()) {
 					continue;
@@ -574,7 +571,7 @@ public class LOTRWorldGenTauredainPyramid extends LOTRWorldGenStructureBase2 {
 		for (int j1 = 0; j1 <= 3; ++j1) {
 			setAir(world, i, j + j1, k);
 		}
-		this.placeBanner(world, i, j, k, LOTRItemBanner.BannerType.TAUREDAIN, 0, true, 64);
+		placeBanner(world, i, j, k, LOTRItemBanner.BannerType.TAUREDAIN, 0, true, 64);
 	}
 
 	public void placeRandomBrick(World world, Random random, int i, int j, int k) {

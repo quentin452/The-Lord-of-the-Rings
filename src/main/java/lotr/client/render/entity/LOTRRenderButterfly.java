@@ -12,7 +12,7 @@ import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderButterfly extends RenderLiving {
-	public static Map<LOTREntityButterfly.ButterflyType, LOTRRandomSkins> textures = new HashMap<>();
+	public static Map<LOTREntityButterfly.ButterflyType, LOTRRandomSkins> textures = new EnumMap<>(LOTREntityButterfly.ButterflyType.class);
 
 	public LOTRRenderButterfly() {
 		super(new LOTRModelButterfly(), 0.2f);

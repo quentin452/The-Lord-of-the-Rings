@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 
 public class LOTREntityShirePony extends LOTREntityHorse {
 	public static float PONY_SCALE = 0.8f;
-	public boolean breedingFlag = false;
+	public boolean breedingFlag;
 
 	public LOTREntityShirePony(World world) {
 		super(world);
@@ -92,10 +92,10 @@ public class LOTREntityShirePony extends LOTREntityHorse {
 	@Override
 	public void onLOTRHorseSpawn() {
 		double maxHealth = getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue();
-		getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHealth *= 0.75);
+		getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHealth * 0.75);
 		double jumpStrength = getEntityAttribute(LOTRReflection.getHorseJumpStrength()).getAttributeValue();
-		getEntityAttribute(LOTRReflection.getHorseJumpStrength()).setBaseValue(jumpStrength *= 0.5);
+		getEntityAttribute(LOTRReflection.getHorseJumpStrength()).setBaseValue(jumpStrength * 0.5);
 		double moveSpeed = getEntityAttribute(SharedMonsterAttributes.movementSpeed).getBaseValue();
-		getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(moveSpeed *= 0.8);
+		getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(moveSpeed * 0.8);
 	}
 }

@@ -20,7 +20,7 @@ public class LOTRBlockGateDwarven extends LOTRBlockGate {
 		setFullBlock();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(IBlockAccess world, int i, int j, int k, int side) {
 		boolean open = LOTRBlockGate.isGateOpen(world, i, j, k);
@@ -30,7 +30,7 @@ public class LOTRBlockGateDwarven extends LOTRBlockGate {
 		return Blocks.stone.getIcon(side, 0);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return Blocks.stone.getIcon(i, 0);
@@ -45,7 +45,7 @@ public class LOTRBlockGateDwarven extends LOTRBlockGate {
 		return flag;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		LOTRConnectedTextures.registerNonConnectedGateIcons(iconregister, this, 0, Blocks.stone.getIcon(0, 0).getIconName());

@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.lwjgl.opengl.GL11;
 
 import lotr.common.LOTRMod;
@@ -20,7 +21,7 @@ public class LOTRGuiHornSelect extends LOTRGuiScreenBase {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button.enabled) {
-			LOTRPacketHornSelect packet = new LOTRPacketHornSelect(button.id);
+			IMessage packet = new LOTRPacketHornSelect(button.id);
 			LOTRPacketHandler.networkWrapper.sendToServer(packet);
 			mc.thePlayer.closeScreen();
 		}
@@ -31,7 +32,7 @@ public class LOTRGuiHornSelect extends LOTRGuiScreenBase {
 		drawDefaultBackground();
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		mc.getTextureManager().bindTexture(guiTexture);
-		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		String s = StatCollector.translateToLocal("lotr.gui.hornSelect.title");
 		fontRendererObj.drawString(s, guiLeft + xSize / 2 - fontRendererObj.getStringWidth(s) / 2, guiTop + 11, 4210752);
 		super.drawScreen(i, j, f);

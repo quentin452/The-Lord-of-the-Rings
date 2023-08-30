@@ -27,7 +27,7 @@ public class LOTRGuiNPCRespawner extends LOTRGuiScreenBase {
 	public LOTRGuiSlider sliderSpawnIntervalS;
 	public LOTRGuiSlider sliderNoPlayerRange;
 	public GuiButton buttonDestroy;
-	public boolean destroySpawner = false;
+	public boolean destroySpawner;
 
 	public LOTRGuiNPCRespawner(LOTREntityNPCRespawner entity) {
 		theSpawner = entity;
@@ -67,15 +67,15 @@ public class LOTRGuiNPCRespawner extends LOTRGuiScreenBase {
 		} else {
 			buttonMounts.setState(StatCollector.translateToLocal("lotr.gui.npcRespawner.mounts.2"));
 		}
-		if (!theSpawner.blockEnemySpawns()) {
-			sliderBlockEnemy.setOverrideStateString(StatCollector.translateToLocal("lotr.gui.npcRespawner.blockEnemy.off"));
-		} else {
+		if (theSpawner.blockEnemySpawns()) {
 			sliderBlockEnemy.setOverrideStateString(null);
-		}
-		if (!theSpawner.hasHomeRange()) {
-			sliderHomeRange.setOverrideStateString(StatCollector.translateToLocal("lotr.gui.npcRespawner.homeRange.off"));
 		} else {
+			sliderBlockEnemy.setOverrideStateString(StatCollector.translateToLocal("lotr.gui.npcRespawner.blockEnemy.off"));
+		}
+		if (theSpawner.hasHomeRange()) {
 			sliderHomeRange.setOverrideStateString(null);
+		} else {
+			sliderHomeRange.setOverrideStateString(StatCollector.translateToLocal("lotr.gui.npcRespawner.homeRange.off"));
 		}
 		String timepre = StatCollector.translateToLocal("lotr.gui.npcRespawner.spawnInterval");
 		int timepreX = sliderSpawnIntervalM.xPosition - 5 - fontRendererObj.getStringWidth(timepre);

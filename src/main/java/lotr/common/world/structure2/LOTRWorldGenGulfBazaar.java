@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
-	public static Class[] stalls = { Mason.class, Butcher.class, Brewer.class, Fish.class, Baker.class, Miner.class, Goldsmith.class, Lumber.class, Hunter.class, Blacksmith.class, Farmer.class };
+	public static Class[] stalls = {Mason.class, Butcher.class, Brewer.class, Fish.class, Baker.class, Miner.class, Goldsmith.class, Lumber.class, Hunter.class, Blacksmith.class, Farmer.class};
 
 	public LOTRWorldGenGulfBazaar(boolean flag) {
 		super(flag);
@@ -20,7 +20,7 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 8);
+		setOriginAndRotation(world, i, j, k, rotation, 8);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -48,7 +48,7 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 			for (int k1 = -12; k1 <= 8; ++k1) {
 				int i2 = Math.abs(i1);
 				int k2 = Math.abs(k1);
-				if (i2 >= 5 && i2 <= 9 && k2 >= 10 && k2 <= 12) {
+				if (i2 >= 5 && i2 <= 9 && k2 >= 10) {
 					for (j1 = 1; j1 <= 5; ++j1) {
 						setAir(world, i1, j1, k1);
 					}
@@ -101,14 +101,14 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 		placeWallBanner(world, 7, 10, -6, LOTRItemBanner.BannerType.HARAD_GULF, 0);
 		placeWallBanner(world, 6, 10, -7, LOTRItemBanner.BannerType.HARAD_GULF, 3);
 		placeWallBanner(world, 8, 10, -7, LOTRItemBanner.BannerType.HARAD_GULF, 1);
-		for (int i1 : new int[] { -7, 7 }) {
+		for (int i1 : new int[]{-7, 7}) {
 			j1 = 1;
 			int k1 = -11;
 			LOTREntityGulfHaradWarrior guard = new LOTREntityGulfHaradWarrior(world);
 			guard.spawnRidingHorse = false;
 			spawnNPCAndSetHome(guard, world, i1, j1, k1, 4);
 		}
-		ArrayList<Class> stallClasses = new ArrayList<>(Arrays.asList(stalls));
+		List<Class> stallClasses = new ArrayList<>(Arrays.asList(stalls));
 		while (stallClasses.size() > 5) {
 			stallClasses.remove(random.nextInt(stallClasses.size()));
 		}
@@ -136,7 +136,7 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 2, 1, 2, Blocks.furnace, 2);
 			setBlockAndMetadata(world, 1, 1, 2, LOTRMod.chestBasket, 2);
 			placePlate_item(world, random, 1, 2, 0, LOTRMod.ceramicPlateBlock, new ItemStack(Items.bread, 1 + random.nextInt(3)), true);
@@ -155,9 +155,9 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 2, 1, 2, Blocks.anvil, 3);
-			placeArmorStand(world, 1, 1, 2, 0, new ItemStack[] { null, new ItemStack(LOTRMod.bodyGulfHarad), null, null });
+			placeArmorStand(world, 1, 1, 2, 0, new ItemStack[]{null, new ItemStack(LOTRMod.bodyGulfHarad), null, null});
 			placeWeaponRack(world, 0, 2, 2, 1, new LOTRWorldGenGulfBazaar(false).getRandomGulfWeapon(random));
 			placeWeaponRack(world, 3, 2, 2, 3, new LOTRWorldGenGulfBazaar(false).getRandomGulfWeapon(random));
 			LOTREntityGulfBlacksmith trader = new LOTREntityGulfBlacksmith(world);
@@ -173,11 +173,11 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 1, 1, 1, LOTRMod.barrel, 3);
-			this.placeMug(world, random, 1, 2, 0, 0, LOTRFoods.GULF_HARAD_DRINK);
-			this.placeMug(world, random, 0, 2, 2, 3, LOTRFoods.GULF_HARAD_DRINK);
-			this.placeMug(world, random, 3, 2, 1, 1, LOTRFoods.GULF_HARAD_DRINK);
+			placeMug(world, random, 1, 2, 0, 0, LOTRFoods.GULF_HARAD_DRINK);
+			placeMug(world, random, 0, 2, 2, 3, LOTRFoods.GULF_HARAD_DRINK);
+			placeMug(world, random, 3, 2, 1, 1, LOTRFoods.GULF_HARAD_DRINK);
 			placeFlowerPot(world, 2, 2, 3, getRandomFlower(world, random));
 			LOTREntityGulfBrewer trader = new LOTREntityGulfBrewer(world);
 			spawnNPCAndSetHome(trader, world, 2, 1, 1, 4);
@@ -192,11 +192,11 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			placePlate_item(world, random, 1, 2, 0, LOTRMod.woodPlateBlock, new ItemStack(LOTRMod.rabbitRaw, 1 + random.nextInt(3)), true);
 			placePlate_item(world, random, 0, 2, 2, LOTRMod.woodPlateBlock, new ItemStack(LOTRMod.camelRaw, 1 + random.nextInt(3)), true);
 			placePlate_item(world, random, 3, 2, 1, LOTRMod.woodPlateBlock, new ItemStack(LOTRMod.muttonRaw, 1 + random.nextInt(3)), true);
-			this.placeSkull(world, random, 2, 2, 3);
+			placeSkull(world, random, 2, 2, 3);
 			LOTREntityGulfButcher trader = new LOTREntityGulfButcher(world);
 			spawnNPCAndSetHome(trader, world, 2, 1, 1, 4);
 			return true;
@@ -210,7 +210,7 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 2, 1, 2, Blocks.cauldron, 3);
 			setBlockAndMetadata(world, 1, 2, 3, Blocks.hay_block, 0);
 			placePlate_item(world, random, 3, 2, 1, LOTRMod.woodPlateBlock, new ItemStack(LOTRMod.orange, 1 + random.nextInt(3)), true);
@@ -228,7 +228,7 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 2, 1, 2, Blocks.cauldron, 3);
 			placePlate_item(world, random, 1, 2, 0, LOTRMod.woodPlateBlock, new ItemStack(Items.fish, 1 + random.nextInt(3), 0), true);
 			placePlate_item(world, random, 0, 2, 2, LOTRMod.woodPlateBlock, new ItemStack(Items.fish, 1 + random.nextInt(3), 1), true);
@@ -247,7 +247,7 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 2, 2, 2, LOTRMod.birdCage, 3);
 			setBlockAndMetadata(world, 2, 3, 2, LOTRMod.goldBars, 0);
 			placeFlowerPot(world, 0, 2, 1, getRandomFlower(world, random));
@@ -264,11 +264,11 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 2, 1, 2, LOTRMod.wood8, 3);
 			setBlockAndMetadata(world, 2, 2, 2, LOTRMod.wood8, 3);
-			this.placeSkull(world, random, 2, 3, 2);
-			this.placeSkull(world, random, 3, 2, 2);
+			placeSkull(world, random, 2, 3, 2);
+			placeSkull(world, random, 3, 2, 2);
 			spawnItemFrame(world, 2, 2, 2, 2, new ItemStack(LOTRMod.lionFur));
 			placePlate_item(world, random, 1, 2, 0, LOTRMod.woodPlateBlock, new ItemStack(LOTRMod.rabbitRaw, 1 + random.nextInt(3)), true);
 			placeWeaponRack(world, 0, 2, 2, 1, new ItemStack(LOTRMod.spearHarad));
@@ -285,7 +285,7 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 2, 1, 2, LOTRMod.wood8, 3);
 			setBlockAndMetadata(world, 2, 2, 2, LOTRMod.wood8, 3);
 			placeFlowerPot(world, 0, 2, 2, new ItemStack(Blocks.sapling, 1, 4));
@@ -303,7 +303,7 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 2, 1, 2, LOTRMod.brick, 15);
 			setBlockAndMetadata(world, 2, 2, 2, LOTRMod.brick3, 13);
 			placeFlowerPot(world, 0, 2, 2, getRandomFlower(world, random));
@@ -321,7 +321,7 @@ public class LOTRWorldGenGulfBazaar extends LOTRWorldGenGulfStructure {
 
 		@Override
 		public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-			this.setOriginAndRotation(world, i, j, k, rotation, 0);
+			setOriginAndRotation(world, i, j, k, rotation, 0);
 			setBlockAndMetadata(world, 1, 1, 2, LOTRMod.chestBasket, 2);
 			setBlockAndMetadata(world, 2, 1, 2, LOTRMod.oreTin, 0);
 			setBlockAndMetadata(world, 2, 2, 2, LOTRMod.oreCopper, 0);

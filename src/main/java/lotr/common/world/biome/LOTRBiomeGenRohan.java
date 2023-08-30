@@ -58,10 +58,10 @@ public class LOTRBiomeGenRohan extends LOTRBiome {
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer8);
 		variantChance = 0.3f;
 		addBiomeVariantSet(LOTRBiomeVariant.SET_NORMAL_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.BOULDERS_ROHAN);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.5f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.5f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.BOULDERS_ROHAN);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.5f);
 		decorator.addSoil(new WorldGenMinable(LOTRMod.rock, 2, 60, Blocks.stone), 2.0f, 0, 64);
 		decorator.setTreeCluster(12, 30);
 		decorator.willowPerChunk = 1;
@@ -91,11 +91,6 @@ public class LOTRBiomeGenRohan extends LOTRBiome {
 		setBanditChance(LOTREventSpawner.EventChance.BANDIT_RARE);
 		invasionSpawns.addInvasion(LOTRInvasions.DUNLAND, LOTREventSpawner.EventChance.UNCOMMON);
 		invasionSpawns.addInvasion(LOTRInvasions.URUK_HAI, LOTREventSpawner.EventChance.UNCOMMON);
-	}
-
-	@Override
-	public boolean canSpawnHostilesInDay() {
-		return false;
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public class LOTRWorldGenEasterlingStatue extends LOTRWorldGenEasterlingStructur
 		int k1;
 		int k12;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -6; i1 <= 6; ++i1) {
@@ -32,8 +32,6 @@ public class LOTRWorldGenEasterlingStatue extends LOTRWorldGenEasterlingStructur
 		for (i1 = -6; i1 <= 6; ++i1) {
 			for (k12 = -5; k12 <= 5; ++k12) {
 				int j13;
-				Math.abs(i1);
-				Math.abs(k12);
 				for (j13 = 1; (j13 >= 0 || !isOpaque(world, i1, j13, k12)) && getY(j13) >= 0; --j13) {
 					setBlockAndMetadata(world, i1, j13, k12, LOTRMod.rock, 4);
 					setGrassToDirt(world, i1, j13 - 1, k12);
@@ -42,15 +40,15 @@ public class LOTRWorldGenEasterlingStatue extends LOTRWorldGenEasterlingStructur
 					setAir(world, i1, j13, k12);
 				}
 				if (i1 == -6) {
-					setBlockAndMetadata(world, i1, 1, k12, LOTRMod.stairsRedRock, 1);
+					setBlockAndMetadata(world, -6, 1, k12, LOTRMod.stairsRedRock, 1);
 					continue;
 				}
 				if (i1 == 6) {
-					setBlockAndMetadata(world, i1, 1, k12, LOTRMod.stairsRedRock, 0);
+					setBlockAndMetadata(world, 6, 1, k12, LOTRMod.stairsRedRock, 0);
 					continue;
 				}
 				if (k12 == -5) {
-					setBlockAndMetadata(world, i1, 1, k12, LOTRMod.stairsRedRock, 2);
+					setBlockAndMetadata(world, i1, 1, -5, LOTRMod.stairsRedRock, 2);
 					continue;
 				}
 				if (k12 != 5) {

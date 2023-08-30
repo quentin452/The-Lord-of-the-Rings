@@ -117,7 +117,7 @@ public class LOTRWorldGenMoredainHutVillage extends LOTRWorldGenMoredainHut {
 		setBlockAndMetadata(world, -1, 1, 2, plankBlock, plankMeta);
 		setBlockAndMetadata(world, 2, 1, 2, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, 2, 1, 1, plankBlock, plankMeta);
-		this.placeChest(world, random, 2, 1, 0, LOTRMod.chestBasket, 5, LOTRChestContents.MOREDAIN_HUT);
+		placeChest(world, random, 2, 1, 0, LOTRMod.chestBasket, 5, LOTRChestContents.MOREDAIN_HUT);
 		setBlockAndMetadata(world, 2, 1, -1, plankBlock, plankMeta);
 		setBlockAndMetadata(world, 2, 1, -2, LOTRMod.moredainTable, 0);
 		setBlockAndMetadata(world, -1, 1, -1, bedBlock, 3);

@@ -44,7 +44,7 @@ public class LOTRWorldGenDorwinionTent extends LOTRWorldGenStructureBase2 {
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int k1;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 3);
+		setOriginAndRotation(world, i, j, k, rotation, 3);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -2; i1 <= 2; ++i1) {
@@ -112,10 +112,10 @@ public class LOTRWorldGenDorwinionTent extends LOTRWorldGenStructureBase2 {
 			setBlockAndMetadata(world, 0, 5, k12, clay2SlabBlock, clay2SlabMeta);
 		}
 		if (random.nextBoolean()) {
-			this.placeChest(world, random, -1, 1, 0, 4, LOTRChestContents.DORWINION_CAMP);
+			placeChest(world, random, -1, 1, 0, 4, LOTRChestContents.DORWINION_CAMP);
 			setBlockAndMetadata(world, 1, 2, 0, Blocks.torch, 1);
 		} else {
-			this.placeChest(world, random, 1, 1, 0, 4, LOTRChestContents.DORWINION_CAMP);
+			placeChest(world, random, 1, 1, 0, 4, LOTRChestContents.DORWINION_CAMP);
 			setBlockAndMetadata(world, -1, 2, 0, Blocks.torch, 2);
 		}
 		LOTREntityDorwinionGuard guard = new LOTREntityDorwinionGuard(world);
@@ -127,94 +127,94 @@ public class LOTRWorldGenDorwinionTent extends LOTRWorldGenStructureBase2 {
 	public void setupRandomBlocks(Random random) {
 		int randomWood = random.nextInt(3);
 		switch (randomWood) {
-		case 0:
-			woodBeamBlock = LOTRMod.woodBeamV1;
-			woodBeamMeta = 0;
-			plankBlock = Blocks.planks;
-			plankMeta = 0;
-			plankSlabBlock = Blocks.wooden_slab;
-			plankSlabMeta = 0;
-			plankStairBlock = Blocks.oak_stairs;
-			fenceBlock = Blocks.fence;
-			fenceMeta = 0;
-			break;
-		case 1:
-			woodBeamBlock = LOTRMod.woodBeam6;
-			woodBeamMeta = 2;
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 10;
-			plankSlabBlock = LOTRMod.woodSlabSingle4;
-			plankSlabMeta = 2;
-			plankStairBlock = LOTRMod.stairsCypress;
-			fenceBlock = LOTRMod.fence2;
-			fenceMeta = 10;
-			break;
-		case 2:
-			woodBeamBlock = LOTRMod.woodBeam6;
-			woodBeamMeta = 3;
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 11;
-			plankSlabBlock = LOTRMod.woodSlabSingle4;
-			plankSlabMeta = 3;
-			plankStairBlock = LOTRMod.stairsOlive;
-			fenceBlock = LOTRMod.fence2;
-			fenceMeta = 11;
-			break;
-		default:
-			break;
+			case 0:
+				woodBeamBlock = LOTRMod.woodBeamV1;
+				woodBeamMeta = 0;
+				plankBlock = Blocks.planks;
+				plankMeta = 0;
+				plankSlabBlock = Blocks.wooden_slab;
+				plankSlabMeta = 0;
+				plankStairBlock = Blocks.oak_stairs;
+				fenceBlock = Blocks.fence;
+				fenceMeta = 0;
+				break;
+			case 1:
+				woodBeamBlock = LOTRMod.woodBeam6;
+				woodBeamMeta = 2;
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 10;
+				plankSlabBlock = LOTRMod.woodSlabSingle4;
+				plankSlabMeta = 2;
+				plankStairBlock = LOTRMod.stairsCypress;
+				fenceBlock = LOTRMod.fence2;
+				fenceMeta = 10;
+				break;
+			case 2:
+				woodBeamBlock = LOTRMod.woodBeam6;
+				woodBeamMeta = 3;
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 11;
+				plankSlabBlock = LOTRMod.woodSlabSingle4;
+				plankSlabMeta = 3;
+				plankStairBlock = LOTRMod.stairsOlive;
+				fenceBlock = LOTRMod.fence2;
+				fenceMeta = 11;
+				break;
+			default:
+				break;
 		}
 		int randomFloor = random.nextInt(4);
 		switch (randomFloor) {
-		case 0:
-			floorBlock = Blocks.stained_hardened_clay;
-			floorMeta = 2;
-			break;
-		case 1:
-			floorBlock = Blocks.stained_hardened_clay;
-			floorMeta = 3;
-			break;
-		case 2:
-			floorBlock = Blocks.stained_hardened_clay;
-			floorMeta = 14;
-			break;
-		case 3:
-			floorBlock = Blocks.stained_hardened_clay;
-			floorMeta = 10;
-			break;
-		default:
-			break;
+			case 0:
+				floorBlock = Blocks.stained_hardened_clay;
+				floorMeta = 2;
+				break;
+			case 1:
+				floorBlock = Blocks.stained_hardened_clay;
+				floorMeta = 3;
+				break;
+			case 2:
+				floorBlock = Blocks.stained_hardened_clay;
+				floorMeta = 14;
+				break;
+			case 3:
+				floorBlock = Blocks.stained_hardened_clay;
+				floorMeta = 10;
+				break;
+			default:
+				break;
 		}
 		int randomWool1 = random.nextInt(3);
 		switch (randomWool1) {
-		case 0:
-			wool1Block = Blocks.wool;
-			wool1Meta = 10;
-			clay1Block = LOTRMod.clayTileDyed;
-			clay1Meta = 10;
-			clay1SlabBlock = LOTRMod.slabClayTileDyedSingle2;
-			clay1SlabMeta = 2;
-			clay1StairBlock = LOTRMod.stairsClayTileDyedPurple;
-			break;
-		case 1:
-			wool1Block = Blocks.wool;
-			wool1Meta = 2;
-			clay1Block = LOTRMod.clayTileDyed;
-			clay1Meta = 2;
-			clay1SlabBlock = LOTRMod.slabClayTileDyedSingle;
-			clay1SlabMeta = 2;
-			clay1StairBlock = LOTRMod.stairsClayTileDyedMagenta;
-			break;
-		case 2:
-			wool1Block = Blocks.wool;
-			wool1Meta = 14;
-			clay1Block = LOTRMod.clayTileDyed;
-			clay1Meta = 14;
-			clay1SlabBlock = LOTRMod.slabClayTileDyedSingle2;
-			clay1SlabMeta = 6;
-			clay1StairBlock = LOTRMod.stairsClayTileDyedRed;
-			break;
-		default:
-			break;
+			case 0:
+				wool1Block = Blocks.wool;
+				wool1Meta = 10;
+				clay1Block = LOTRMod.clayTileDyed;
+				clay1Meta = 10;
+				clay1SlabBlock = LOTRMod.slabClayTileDyedSingle2;
+				clay1SlabMeta = 2;
+				clay1StairBlock = LOTRMod.stairsClayTileDyedPurple;
+				break;
+			case 1:
+				wool1Block = Blocks.wool;
+				wool1Meta = 2;
+				clay1Block = LOTRMod.clayTileDyed;
+				clay1Meta = 2;
+				clay1SlabBlock = LOTRMod.slabClayTileDyedSingle;
+				clay1SlabMeta = 2;
+				clay1StairBlock = LOTRMod.stairsClayTileDyedMagenta;
+				break;
+			case 2:
+				wool1Block = Blocks.wool;
+				wool1Meta = 14;
+				clay1Block = LOTRMod.clayTileDyed;
+				clay1Meta = 14;
+				clay1SlabBlock = LOTRMod.slabClayTileDyedSingle2;
+				clay1SlabMeta = 6;
+				clay1StairBlock = LOTRMod.stairsClayTileDyedRed;
+				break;
+			default:
+				break;
 		}
 		int randomWool2 = random.nextInt(2);
 		if (randomWool2 == 0) {
@@ -225,7 +225,7 @@ public class LOTRWorldGenDorwinionTent extends LOTRWorldGenStructureBase2 {
 			clay2SlabBlock = LOTRMod.slabClayTileDyedSingle;
 			clay2SlabMeta = 4;
 			clay2StairBlock = LOTRMod.stairsClayTileDyedYellow;
-		} else if (randomWool2 == 1) {
+		} else {
 			wool2Block = Blocks.wool;
 			wool2Meta = 0;
 			clay2Block = LOTRMod.clayTileDyed;

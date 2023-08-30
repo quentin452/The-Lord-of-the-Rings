@@ -22,21 +22,21 @@ public class LOTRWorldGenGondorRuin extends LOTRWorldGenStructureBase {
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			k += 8;
-			break;
-		}
-		case 1: {
-			i -= 8;
-			break;
-		}
-		case 2: {
-			k -= 8;
-			break;
-		}
-		case 3: {
-			i += 8;
-		}
+			case 0: {
+				k += 8;
+				break;
+			}
+			case 1: {
+				i -= 8;
+				break;
+			}
+			case 2: {
+				k -= 8;
+				break;
+			}
+			case 3: {
+				i += 8;
+			}
 		}
 		j = world.getTopSolidOrLiquidBlock(i, k);
 		if (restrictions && world.getBlock(i, j - 1, k) != Blocks.grass) {
@@ -76,7 +76,8 @@ public class LOTRWorldGenGondorRuin extends LOTRWorldGenStructureBase {
 			}
 		}
 		for (i1 = i - 7; i1 <= i + 7; i1 += 7) {
-			block9: for (k1 = k - 7; k1 <= k + 7; k1 += 7) {
+			block9:
+			for (k1 = k - 7; k1 <= k + 7; k1 += 7) {
 				j1 = world.getTopSolidOrLiquidBlock(i1, k1);
 				setGrassToDirt(world, i1, j1 - 1, k1);
 				int j2 = j1;

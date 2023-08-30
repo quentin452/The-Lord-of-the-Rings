@@ -26,21 +26,21 @@ public class LOTRRenderTrollTotem extends TileEntitySpecialRenderer {
 		int meta = i & 3;
 		float rotation = 0.0f;
 		switch ((i & 0xC) >> 2) {
-		case 0: {
-			rotation = 180.0f;
-			break;
-		}
-		case 1: {
-			rotation = 270.0f;
-			break;
-		}
-		case 2: {
-			rotation = 0.0f;
-			break;
-		}
-		case 3: {
-			rotation = 90.0f;
-		}
+			case 0: {
+				rotation = 180.0f;
+				break;
+			}
+			case 1: {
+				rotation = 270.0f;
+				break;
+			}
+			case 2: {
+				rotation = 0.0f;
+				break;
+			}
+			case 3: {
+				rotation = 90.0f;
+			}
 		}
 		renderTrollTotem(d, d1, d2, meta, rotation, trollTotem.getJawRotation(f));
 	}
@@ -54,17 +54,17 @@ public class LOTRRenderTrollTotem extends TileEntitySpecialRenderer {
 		GL11.glRotatef(rotation, 0.0f, 1.0f, 0.0f);
 		bindTexture(totemTexture);
 		switch (meta) {
-		case 0: {
-			totemModel.renderHead(0.0625f, jawRotation);
-			break;
-		}
-		case 1: {
-			totemModel.renderBody(0.0625f);
-			break;
-		}
-		case 2: {
-			totemModel.renderBase(0.0625f);
-		}
+			case 0: {
+				totemModel.renderHead(0.0625f, jawRotation);
+				break;
+			}
+			case 1: {
+				totemModel.renderBody(0.0625f);
+				break;
+			}
+			case 2: {
+				totemModel.renderBase(0.0625f);
+			}
 		}
 		GL11.glPopMatrix();
 	}

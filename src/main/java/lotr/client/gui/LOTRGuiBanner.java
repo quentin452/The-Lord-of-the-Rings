@@ -2,6 +2,7 @@ package lotr.client.gui;
 
 import java.util.Arrays;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -34,8 +35,8 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 	public boolean[] invalidUsernames = {};
 	public boolean[] validatedUsernames = {};
 	public boolean[] checkUsernames = {};
-	public float currentScroll = 0.0f;
-	public boolean isScrolling = false;
+	public float currentScroll;
+	public boolean isScrolling;
 	public boolean wasMouseDown;
 	public int scrollBarWidth = 12;
 	public int scrollBarHeight = 132;
@@ -45,7 +46,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 	public int scrollWidgetWidth = 10;
 	public int scrollWidgetHeight = 17;
 	public int permIconX = 3;
-	public int permIconY = 0;
+	public int permIconY;
 	public int permIconWidth = 10;
 	public int permissionsMouseoverIndex = -1;
 	public int permissionsMouseoverY = -1;
@@ -54,8 +55,8 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 	public int permWindowHeight = 70;
 	public int permissionsOpenIndex = -1;
 	public int permissionsOpenY = -1;
-	public LOTRBannerProtection.Permission mouseOverPermission = null;
-	public boolean defaultPermissionsOpen = false;
+	public LOTRBannerProtection.Permission mouseOverPermission;
+	public boolean defaultPermissionsOpen;
 
 	public LOTRGuiBanner(LOTREntityBanner banner) {
 		theBanner = banner;
@@ -96,7 +97,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 		GuiTextField textBox = allowedPlayers[index];
 		String username = textBox.getText();
 		if (!StringUtils.isBlank(username) && !invalidUsernames[index]) {
-			LOTRPacketBannerRequestInvalidName packet = new LOTRPacketBannerRequestInvalidName(theBanner, index, username);
+			IMessage packet = new LOTRPacketBannerRequestInvalidName(theBanner, index, username);
 			LOTRPacketHandler.networkWrapper.sendToServer(packet);
 		}
 	}
@@ -118,7 +119,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 			if (i >= x && i < x + 10 && j >= y && j < y + 10) {
 				mouseOverPermission = p;
 			}
-			this.drawTexturedModalRect(x, y, 200 + (getEnabled.apply(p) ? 0 : 20) + (mouseOverPermission == p ? 10 : 0), 160 + p.ordinal() * 10, 10, 10);
+			drawTexturedModalRect(x, y, 200 + (getEnabled.apply(p) ? 0 : 20) + (mouseOverPermission == p ? 10 : 0), 160 + p.ordinal() * 10, 10, 10);
 			x += 14;
 			if (p != LOTRBannerProtection.Permission.FULL) {
 				continue;
@@ -148,7 +149,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 		drawDefaultBackground();
 		mc.getTextureManager().bindTexture(bannerTexture);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		String title = StatCollector.translateToLocal("lotr.gui.bannerEdit.title");
 		fontRendererObj.drawString(title, guiLeft + xSize / 2 - fontRendererObj.getStringWidth(title) / 2, guiTop + 6, 4210752);
 		if (theBanner.isPlayerSpecificProtection()) {
@@ -159,7 +160,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 			fontRendererObj.drawString(s, guiLeft + xSize / 2 - fontRendererObj.getStringWidth(s) / 2, guiTop + 46 + fontRendererObj.FONT_HEIGHT, 4210752);
 			s = LOTRFellowshipProfile.getFellowshipCodeHint();
 			fontRendererObj.drawString(s, guiLeft + xSize / 2 - fontRendererObj.getStringWidth(s) / 2, guiTop + 206, 4210752);
-			int start = 0 + Math.round(currentScroll * (allowedPlayers.length - 6));
+			int start = Math.round(currentScroll * (allowedPlayers.length - 6));
 			int end = start + 6 - 1;
 			start = Math.max(start, 0);
 			end = Math.min(end, allowedPlayers.length - 1);
@@ -173,7 +174,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 				textBox.drawTextBox();
 				String number = index + 1 + ".";
 				fontRendererObj.drawString(number, guiLeft + 24 - fontRendererObj.getStringWidth(number), textBox.yPosition + 6, 4210752);
-				if (index <= 0 || !validatedUsernames[index]) {
+				if (index == 0 || !validatedUsernames[index]) {
 					continue;
 				}
 				mc.getTextureManager().bindTexture(bannerTexture);
@@ -181,7 +182,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 				int permX = textBox.xPosition + textBox.width + permIconX;
 				int permY = textBox.yPosition + permIconY;
 				boolean mouseOver = i >= permX && i < permX + permIconWidth && j >= permY && j < permY + permIconWidth;
-				this.drawTexturedModalRect(permX, permY, 200 + (mouseOver ? permIconWidth : 0), 150, permIconWidth, permIconWidth);
+				drawTexturedModalRect(permX, permY, 200 + (mouseOver ? permIconWidth : 0), 150, permIconWidth, permIconWidth);
 				if (!mouseOver) {
 					continue;
 				}
@@ -191,10 +192,10 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 			if (hasScrollBar()) {
 				mc.getTextureManager().bindTexture(bannerTexture);
 				GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-				this.drawTexturedModalRect(guiLeft + scrollBarX, guiTop + scrollBarY, 200, 0, scrollBarWidth, scrollBarHeight);
+				drawTexturedModalRect(guiLeft + scrollBarX, guiTop + scrollBarY, 200, 0, scrollBarWidth, scrollBarHeight);
 				if (canScroll()) {
 					int scroll = (int) (currentScroll * (scrollBarHeight - scrollBarBorder * 2 - scrollWidgetHeight));
-					this.drawTexturedModalRect(guiLeft + scrollBarX + scrollBarBorder, guiTop + scrollBarY + scrollBarBorder + scroll, 212, 0, scrollWidgetWidth, scrollWidgetHeight);
+					drawTexturedModalRect(guiLeft + scrollBarX + scrollBarBorder, guiTop + scrollBarY + scrollBarBorder + scroll, 212, 0, scrollWidgetWidth, scrollWidgetHeight);
 				}
 			}
 		} else {
@@ -203,7 +204,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 			buttonMode.displayString = StatCollector.translateToLocal("lotr.gui.bannerEdit.protectionMode.faction");
 			s = StatCollector.translateToLocalFormatted("lotr.gui.bannerEdit.protectionMode.faction.desc.1");
 			fontRendererObj.drawString(s, guiLeft + xSize / 2 - fontRendererObj.getStringWidth(s) / 2, guiTop + 46, 4210752);
-			s = StatCollector.translateToLocalFormatted("lotr.gui.bannerEdit.protectionMode.faction.desc.2", Float.valueOf(theBanner.getAlignmentProtection()), theBanner.getBannerType().faction.factionName());
+			s = StatCollector.translateToLocalFormatted("lotr.gui.bannerEdit.protectionMode.faction.desc.2", theBanner.getAlignmentProtection(), theBanner.getBannerType().faction.factionName());
 			fontRendererObj.drawString(s, guiLeft + xSize / 2 - fontRendererObj.getStringWidth(s) / 2, guiTop + 46 + fontRendererObj.FONT_HEIGHT, 4210752);
 			s = StatCollector.translateToLocal("lotr.gui.bannerEdit.protectionMode.faction.desc.3");
 			fontRendererObj.drawString(s, guiLeft + xSize / 2 - fontRendererObj.getStringWidth(s) / 2, guiTop + 46 + fontRendererObj.FONT_HEIGHT * 2, 4210752);
@@ -223,13 +224,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 			}
 			String boxTitle = StatCollector.translateToLocal(isFellowship ? "lotr.gui.bannerEdit.perms.fellowship" : "lotr.gui.bannerEdit.perms.player");
 			String boxSubtitle = StatCollector.translateToLocalFormatted("lotr.gui.bannerEdit.perms.name", username);
-			Function<LOTRBannerProtection.Permission, Boolean> getEnabled = new Function<LOTRBannerProtection.Permission, Boolean>() {
-
-				@Override
-				public Boolean apply(LOTRBannerProtection.Permission p) {
-					return theBanner.getWhitelistEntry(permissionsOpenIndex).isPermissionEnabled(p);
-				}
-			};
+			Function<LOTRBannerProtection.Permission, Boolean> getEnabled = p -> theBanner.getWhitelistEntry(permissionsOpenIndex).isPermissionEnabled(p);
 			drawPermissionsWindow(i, j, windowX, windowY, boxTitle, boxSubtitle, getEnabled, true);
 		}
 		if (defaultPermissionsOpen) {
@@ -237,13 +232,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 			windowY = guiTop + ySize - permWindowHeight;
 			String boxTitle = StatCollector.translateToLocal("lotr.gui.bannerEdit.perms.default");
 			String boxSubtitle = StatCollector.translateToLocalFormatted("lotr.gui.bannerEdit.perms.allPlayers");
-			Function<LOTRBannerProtection.Permission, Boolean> getEnabled = new Function<LOTRBannerProtection.Permission, Boolean>() {
-
-				@Override
-				public Boolean apply(LOTRBannerProtection.Permission p) {
-					return theBanner.hasDefaultPermission(p);
-				}
-			};
+			Function<LOTRBannerProtection.Permission, Boolean> getEnabled = p -> theBanner.hasDefaultPermission(p);
 			drawPermissionsWindow(i, j, windowX, windowY, boxTitle, boxSubtitle, getEnabled, false);
 		}
 		super.drawScreen(i, j, f);
@@ -287,7 +276,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 			if (i < 0) {
 				i = -1;
 			}
-			currentScroll = (float) (currentScroll - (double) i / (double) j);
+			currentScroll = (float) (currentScroll - (double) i / j);
 			if (currentScroll < 0.0f) {
 				currentScroll = 0.0f;
 			}
@@ -527,7 +516,7 @@ public class LOTRGuiBanner extends LOTRGuiScreenBase {
 		}
 		wasMouseDown = isMouseDown;
 		if (isScrolling) {
-			currentScroll = (j - j1 - scrollWidgetHeight / 2.0f) / ((float) (j2 - j1) - (float) scrollWidgetHeight);
+			currentScroll = (j - j1 - scrollWidgetHeight / 2.0f) / ((float) (j2 - j1) - scrollWidgetHeight);
 			if (currentScroll < 0.0f) {
 				currentScroll = 0.0f;
 			}

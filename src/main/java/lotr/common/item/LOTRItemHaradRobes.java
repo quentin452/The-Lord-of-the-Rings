@@ -21,26 +21,26 @@ public class LOTRItemHaradRobes extends LOTRItemArmor {
 		setCreativeTab(LOTRCreativeTabs.tabMisc);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-		if (LOTRItemHaradRobes.areRobesDyed(itemstack)) {
+		if (areRobesDyed(itemstack)) {
 			list.add(StatCollector.translateToLocal("item.lotr.haradRobes.dyed"));
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getColorFromItemStack(ItemStack itemstack, int pass) {
-		return LOTRItemHaradRobes.getRobesColor(itemstack);
+		return getRobesColor(itemstack);
 	}
 
 	public static boolean areRobesDyed(ItemStack itemstack) {
-		return LOTRItemHaradRobes.getSavedDyeColor(itemstack) != -1;
+		return getSavedDyeColor(itemstack) != -1;
 	}
 
 	public static int getRobesColor(ItemStack itemstack) {
-		int dye = LOTRItemHaradRobes.getSavedDyeColor(itemstack);
+		int dye = getSavedDyeColor(itemstack);
 		if (dye != -1) {
 			return dye;
 		}

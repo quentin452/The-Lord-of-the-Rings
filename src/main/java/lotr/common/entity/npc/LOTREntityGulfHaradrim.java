@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class LOTREntityGulfHaradrim extends LOTREntityNearHaradrimBase {
 	public LOTREntityGulfHaradrim(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 	}
 
 	@Override
@@ -39,11 +39,6 @@ public class LOTREntityGulfHaradrim extends LOTREntityNearHaradrimBase {
 	@Override
 	public LOTRFoods getHaradrimFoods() {
 		return LOTRFoods.GULF_HARAD;
-	}
-
-	@Override
-	public LOTRAchievement getKillAchievement() {
-		return LOTRAchievement.killNearHaradrim;
 	}
 
 	@Override

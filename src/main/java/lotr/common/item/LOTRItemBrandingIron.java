@@ -23,9 +23,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRItemBrandingIron extends Item {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconCool;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconHot;
 
 	public LOTRItemBrandingIron() {
@@ -37,16 +37,16 @@ public class LOTRItemBrandingIron extends Item {
 
 	@Override
 	public IIcon getIcon(ItemStack itemstack, int pass) {
-		if (LOTRItemBrandingIron.isHeated(itemstack)) {
+		if (isHeated(itemstack)) {
 			return iconHot;
 		}
 		return iconCool;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIconIndex(ItemStack itemstack) {
-		return this.getIcon(itemstack, 0);
+		return getIcon(itemstack, 0);
 	}
 
 	@Override
@@ -57,8 +57,8 @@ public class LOTRItemBrandingIron extends Item {
 	@Override
 	public String getItemStackDisplayName(ItemStack itemstack) {
 		String name = super.getItemStackDisplayName(itemstack);
-		if (LOTRItemBrandingIron.hasBrandName(itemstack)) {
-			String brandName = LOTRItemBrandingIron.getBrandName(itemstack);
+		if (hasBrandName(itemstack)) {
+			String brandName = getBrandName(itemstack);
 			name = StatCollector.translateToLocalFormatted("item.lotr.brandingIron.named", name, brandName);
 		} else {
 			name = StatCollector.translateToLocalFormatted("item.lotr.brandingIron.unnamed", name);
@@ -68,14 +68,11 @@ public class LOTRItemBrandingIron extends Item {
 
 	@Override
 	public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer entityplayer, EntityLivingBase entity) {
-		if (LOTRItemBrandingIron.isHeated(itemstack) && LOTRItemBrandingIron.hasBrandName(itemstack)) {
-			String brandName = LOTRItemBrandingIron.getBrandName(itemstack);
+		if (isHeated(itemstack) && hasBrandName(itemstack)) {
+			String brandName = getBrandName(itemstack);
 			if (entity instanceof EntityLiving) {
 				EntityLiving entityliving = (EntityLiving) entity;
-				boolean acceptableEntity = false;
-				if (entityliving instanceof EntityAnimal || entityliving instanceof LOTREntityNPC && ((LOTREntityNPC) entityliving).canRenameNPC()) {
-					acceptableEntity = true;
-				}
+				boolean acceptableEntity = entityliving instanceof EntityAnimal || entityliving instanceof LOTREntityNPC && ((LOTREntityNPC) entityliving).canRenameNPC();
 				if (acceptableEntity && !entityliving.getCustomNameTag().equals(brandName)) {
 					entityliving.setCustomNameTag(brandName);
 					entityliving.func_110163_bv();
@@ -88,10 +85,10 @@ public class LOTRItemBrandingIron extends Item {
 					itemstack.damageItem(1, entityplayer);
 					int newDamage = itemstack.getItemDamage();
 					if (preDamage / 5 != newDamage / 5) {
-						LOTRItemBrandingIron.setHeated(itemstack, false);
+						setHeated(itemstack, false);
 					}
 					if (!world.isRemote) {
-						LOTRItemBrandingIron.setBrandingPlayer(entityliving, entityplayer.getUniqueID());
+						setBrandingPlayer(entityliving, entityplayer.getUniqueID());
 					}
 					return true;
 				}
@@ -102,7 +99,7 @@ public class LOTRItemBrandingIron extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		if (!LOTRItemBrandingIron.hasBrandName(itemstack)) {
+		if (!hasBrandName(itemstack)) {
 			entityplayer.openGui(LOTRMod.instance, 61, world, 0, 0, 0);
 		}
 		return itemstack;
@@ -110,7 +107,7 @@ public class LOTRItemBrandingIron extends Item {
 
 	@Override
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int side, float f, float f1, float f2) {
-		if (LOTRItemBrandingIron.hasBrandName(itemstack) && !LOTRItemBrandingIron.isHeated(itemstack)) {
+		if (hasBrandName(itemstack) && !isHeated(itemstack)) {
 			boolean isHotBlock = false;
 			TileEntity te = world.getTileEntity(i, j, k);
 			if (te instanceof TileEntityFurnace && ((TileEntityFurnace) te).isBurning() || te instanceof LOTRTileEntityForgeBase && ((LOTRTileEntityForgeBase) te).isSmelting()) {
@@ -126,14 +123,14 @@ public class LOTRItemBrandingIron extends Item {
 				}
 			}
 			if (isHotBlock) {
-				LOTRItemBrandingIron.setHeated(itemstack, true);
+				setHeated(itemstack, true);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerIcons(IIconRegister iconregister) {
 		iconCool = iconregister.registerIcon(getIconString());
@@ -158,7 +155,7 @@ public class LOTRItemBrandingIron extends Item {
 	}
 
 	public static boolean hasBrandName(ItemStack itemstack) {
-		return LOTRItemBrandingIron.getBrandName(itemstack) != null;
+		return getBrandName(itemstack) != null;
 	}
 
 	public static boolean isHeated(ItemStack itemstack) {

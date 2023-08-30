@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class LOTREntityEasterlingBartender extends LOTREntityEasterling implements LOTRTradeable.Bartender {
 	public LOTREntityEasterlingBartender(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcLocationName = "entity.lotr.EasterlingBartender.locationName";
 	}
 

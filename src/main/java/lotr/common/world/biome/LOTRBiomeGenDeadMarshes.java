@@ -21,7 +21,7 @@ public class LOTRBiomeGenDeadMarshes extends LOTRBiome {
 		decorator.addOre(new WorldGenMinable(LOTRMod.remains, 6, Blocks.dirt), 5.0f, 55, 65);
 		clearBiomeVariants();
 		variantChance = 1.0f;
-		this.addBiomeVariant(LOTRBiomeVariant.SWAMP_LOWLAND);
+		addBiomeVariant(LOTRBiomeVariant.SWAMP_LOWLAND);
 		decorator.sandPerChunk = 0;
 		decorator.clayPerChunk = 0;
 		decorator.quagmirePerChunk = 1;
@@ -63,6 +63,7 @@ public class LOTRBiomeGenDeadMarshes extends LOTRBiome {
 		for (l = 0; l < 4; ++l) {
 			i1 = i + random.nextInt(16) + 8;
 			k1 = k + random.nextInt(16) + 8;
+			//noinspection StatementWithEmptyBody
 			for (j1 = 128; j1 > 0 && world.isAirBlock(i1, j1 - 1, k1); --j1) {
 			}
 			new LOTRWorldGenMarshLights().generate(world, random, i1, j1, k1);

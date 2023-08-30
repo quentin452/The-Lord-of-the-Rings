@@ -16,7 +16,7 @@ public class LOTRWorldGenGondorTownGarden extends LOTRWorldGenGondorStructure {
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int k1;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -3; i1 <= 3; ++i1) {

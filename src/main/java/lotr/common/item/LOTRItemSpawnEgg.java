@@ -25,7 +25,7 @@ public class LOTRItemSpawnEgg extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
 		String entityName = LOTREntities.getStringFromID(itemstack.getItemDamage());
 		if (entityName != null) {
@@ -34,21 +34,21 @@ public class LOTRItemSpawnEgg extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack itemstack, int i) {
 		LOTREntities.SpawnEggInfo info = LOTREntities.spawnEggs.get(itemstack.getItemDamage());
 		return info != null ? i == 0 ? info.primaryColor : info.secondaryColor : 16777215;
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamageForRenderPass(int i, int j) {
 		return Items.spawn_egg.getIconFromDamageForRenderPass(i, j);
 	}
 
 	@Override
 	public String getItemStackDisplayName(ItemStack itemstack) {
-		StringBuilder itemName = new StringBuilder().append(("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim());
+		StringBuilder itemName = new StringBuilder().append((StatCollector.translateToLocal(getUnlocalizedName() + ".name")).trim());
 		String entityName = LOTREntities.getStringFromID(itemstack.getItemDamage());
 		if (entityName != null) {
 			itemName.append(" ").append(StatCollector.translateToLocal("entity." + entityName + ".name"));
@@ -57,7 +57,7 @@ public class LOTRItemSpawnEgg extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (LOTREntities.SpawnEggInfo info : LOTREntities.spawnEggs.values()) {
 			list.add(new ItemStack(item, 1, info.spawnedID));
@@ -78,7 +78,7 @@ public class LOTRItemSpawnEgg extends Item {
 		if (l == 1 && block != null && block.getRenderType() == 11) {
 			d = 0.5;
 		}
-		entity = LOTRItemSpawnEgg.spawnCreature(world, itemstack.getItemDamage(), i + 0.5, j + d, k + 0.5);
+		entity = spawnCreature(world, itemstack.getItemDamage(), i + 0.5, j + d, k + 0.5);
 		if (entity != null) {
 			if (entity instanceof EntityLiving && itemstack.hasDisplayName()) {
 				((EntityLiving) entity).setCustomNameTag(itemstack.getDisplayName());
@@ -95,12 +95,12 @@ public class LOTRItemSpawnEgg extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconregister) {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public boolean requiresMultipleRenderPasses() {
 		return true;
 	}

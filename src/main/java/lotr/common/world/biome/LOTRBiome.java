@@ -1,32 +1,54 @@
 package lotr.common.world.biome;
 
-import java.awt.Color;
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.client.LOTRTickHandlerClient;
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRDimension;
+import lotr.common.LOTRMod;
 import lotr.common.entity.animal.*;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityBandit;
+import lotr.common.entity.npc.LOTREntityDwarf;
+import lotr.common.entity.npc.LOTREntityWickedDwarf;
 import lotr.common.world.LOTRWorldChunkManager;
-import lotr.common.world.biome.variant.*;
+import lotr.common.world.biome.variant.LOTRBiomeVariant;
+import lotr.common.world.biome.variant.LOTRBiomeVariantList;
+import lotr.common.world.biome.variant.LOTRBiomeVariantStorage;
 import lotr.common.world.feature.LOTRTreeType;
-import lotr.common.world.map.*;
-import lotr.common.world.spawning.*;
+import lotr.common.world.map.LOTRRoadType;
+import lotr.common.world.map.LOTRWaypoint;
+import lotr.common.world.spawning.LOTRBiomeInvasionSpawns;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTREventSpawner;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.passive.*;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
-import net.minecraft.world.biome.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.Vec3;
+import net.minecraft.util.WeightedRandom;
+import net.minecraft.world.ColorizerFoliage;
+import net.minecraft.world.ColorizerGrass;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenDoublePlant;
+import net.minecraft.world.gen.feature.WorldGenTallGrass;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.util.EnumHelper;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
+
 public abstract class LOTRBiome extends BiomeGenBase {
-	public static Class[][] correctCreatureTypeParams = { { EnumCreatureType.class, Class.class, Integer.TYPE, Material.class, Boolean.TYPE, Boolean.TYPE } };
+	public static Class[][] correctCreatureTypeParams = {{EnumCreatureType.class, Class.class, Integer.TYPE, Material.class, Boolean.TYPE, Boolean.TYPE}};
 	public static EnumCreatureType creatureType_LOTRAmbient = EnumHelper.addEnum(correctCreatureTypeParams, EnumCreatureType.class, "LOTRAmbient", LOTRAmbientCreature.class, 45, Material.air, true, false);
 	public static LOTRBiome river;
 	public static LOTRBiome rohan;
@@ -198,24 +220,17 @@ public abstract class LOTRBiome extends BiomeGenBase {
 	public static LOTRBiome halfTrollForest;
 	public static LOTRBiome farHaradKanuka;
 	public static LOTRBiome utumno;
-	public static NoiseGeneratorPerlin biomeTerrainNoise;
-	public static Random terrainRand;
-	public static Color waterColorNorth;
-	public static Color waterColorSouth;
-	public static int waterLimitNorth;
-	public static int waterLimitSouth;
-	static {
-		biomeTerrainNoise = new NoiseGeneratorPerlin(new Random(1955L), 1);
-		terrainRand = new Random();
-		waterColorNorth = new Color(602979);
-		waterColorSouth = new Color(4973293);
-		waterLimitNorth = -40000;
-		waterLimitSouth = 160000;
-	}
+	public static NoiseGeneratorPerlin biomeTerrainNoise = new NoiseGeneratorPerlin(new Random(1955L), 1);
+	public static Random terrainRand = new Random();
+	public static Color waterColorNorth = new Color(602979);
+	public static Color waterColorSouth = new Color(4973293);
+	public static int waterLimitNorth = -40000;
+	public static int waterLimitSouth = 160000;
+
 	public LOTRDimension biomeDimension;
 	public LOTRBiomeDecorator decorator;
-	public int topBlockMeta = 0;
-	public int fillerBlockMeta = 0;
+	public int topBlockMeta;
+	public int fillerBlockMeta;
 	public float heightBaseParameter;
 	public boolean enablePodzol = true;
 	public boolean enableRocky = true;
@@ -224,21 +239,21 @@ public abstract class LOTRBiome extends BiomeGenBase {
 	public float variantChance = 0.4f;
 	public LOTRBiomeSpawnList npcSpawnList = new LOTRBiomeSpawnList(this);
 	public List spawnableLOTRAmbientList = new ArrayList();
-	public List spawnableTraders = new ArrayList();
+	public Collection spawnableTraders = new ArrayList();
 	public LOTREventSpawner.EventChance banditChance;
 	public Class<? extends LOTREntityBandit> banditEntityClass;
 	public LOTRBiomeInvasionSpawns invasionSpawns;
 	public BiomeColors biomeColors = new BiomeColors(this);
 	public BiomeTerrain biomeTerrain = new BiomeTerrain(this);
-	public boolean initDwarven = false;
+	public boolean initDwarven;
 
 	public boolean isDwarven;
 
-	public LOTRBiome(int i, boolean major) {
+	protected LOTRBiome(int i, boolean major) {
 		this(i, major, LOTRDimension.MIDDLE_EARTH);
 	}
 
-	public LOTRBiome(int i, boolean major, LOTRDimension dim) {
+	protected LOTRBiome(int i, boolean major, LOTRDimension dim) {
 		super(i, false);
 		biomeDimension = dim;
 		if (biomeDimension.biomeList[i] != null) {
@@ -272,22 +287,22 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		spawnableLOTRAmbientList.add(new BiomeGenBase.SpawnListEntry(LOTREntityRabbit.class, 8, 4, 4));
 		spawnableLOTRAmbientList.add(new BiomeGenBase.SpawnListEntry(LOTREntityBird.class, 10, 4, 4));
 		spawnableCaveCreatureList.add(new BiomeGenBase.SpawnListEntry(EntityBat.class, 10, 8, 8));
-		setBanditChance(LOTREventSpawner.EventChance.NEVER);
+		banditChance = LOTREventSpawner.EventChance.NEVER;
 		invasionSpawns = new LOTRBiomeInvasionSpawns(this);
 	}
 
 	public void addBiomeF3Info(List info, World world, LOTRBiomeVariant variant, int i, int j, int k) {
 		int colorRGB = color & 0xFFFFFF;
-		String colorString = Integer.toHexString(colorRGB);
+		StringBuilder colorString = new StringBuilder(Integer.toHexString(colorRGB));
 		while (colorString.length() < 6) {
-			colorString = "0" + colorString;
+			colorString.insert(0, "0");
 		}
 		info.add("Middle-earth biome: " + getBiomeDisplayName() + ", ID: " + biomeID + ", c: #" + colorString);
 		info.add("Variant: " + variant.variantName + ", loaded: " + LOTRBiomeVariantStorage.getSize(world));
 	}
 
 	public void addBiomeVariant(LOTRBiomeVariant v) {
-		this.addBiomeVariant(v, 1.0f);
+		addBiomeVariant(v, 1.0f);
 	}
 
 	public void addBiomeVariant(LOTRBiomeVariant v, float f) {
@@ -303,7 +318,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 
 	public void addBiomeVariantSet(LOTRBiomeVariant[] set) {
 		for (LOTRBiomeVariant v : set) {
-			this.addBiomeVariant(v);
+			addBiomeVariant(v);
 		}
 	}
 
@@ -375,9 +390,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 				fillerMeta = 0;
 				int prevHeight = height;
 				height++;
-				if (random.nextInt(20) == 0) {
-					// empty if block
-				}
+				random.nextInt(20);// empty if block
 				for (int j = height; j >= prevHeight; --j) {
 					int index = xzIndex * ySize + j;
 					blocks[index] = Blocks.stone;
@@ -432,7 +445,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		}
 		for (int j = ySize - 1; j >= 0; --j) {
 			int index = xzIndex * ySize + j;
-			if (j <= 0 + random.nextInt(5)) {
+			if (j <= random.nextInt(5)) {
 				blocks[index] = Blocks.bedrock;
 				continue;
 			}
@@ -533,7 +546,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		return banditEntityClass;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getBaseFoliageColor(int i, int j, int k) {
 		LOTRBiomeVariant variant = ((LOTRWorldChunkManager) LOTRMod.proxy.getClientWorld().getWorldChunkManager()).getBiomeVariantAt(i, k);
 		float temp = getFloatTemperature(i, j, k) + variant.tempBoost;
@@ -543,7 +556,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		return ColorizerFoliage.getFoliageColor(temp, rain);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getBaseGrassColor(int i, int j, int k) {
 		float temp = getFloatTemperature(i, j, k);
 		float rain = rainfall;
@@ -558,7 +571,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		return ColorizerGrass.getGrassColor(temp, rain);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getBaseSkyColorByTemp(int i, int j, int k) {
 		return super.getSkyColorByTemp(getFloatTemperature(i, j, k));
 	}
@@ -572,13 +585,13 @@ public abstract class LOTRBiome extends BiomeGenBase {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getBiomeFoliageColor(int i, int j, int k) {
 		return biomeColors.foliage != null ? biomeColors.foliage.getRGB() : getBaseFoliageColor(i, j, k);
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getBiomeGrassColor(int i, int j, int k) {
 		return biomeColors.grass != null ? biomeColors.grass.getRGB() : getBaseGrassColor(i, j, k);
 	}
@@ -605,14 +618,13 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		return 1.0f;
 	}
 
-	public Vec3 getCloudColor(Vec3 clouds) {
+	public void getCloudColor(Vec3 clouds) {
 		if (biomeColors.clouds != null) {
 			float[] colors = biomeColors.clouds.getColorComponents(null);
 			clouds.xCoord *= colors[0];
 			clouds.yCoord *= colors[1];
 			clouds.zCoord *= colors[2];
 		}
-		return clouds;
 	}
 
 	public boolean getEnableRain() {
@@ -631,14 +643,13 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		return super.getEnableSnow();
 	}
 
-	public Vec3 getFogColor(Vec3 fog) {
+	public void getFogColor(Vec3 fog) {
 		if (biomeColors.fog != null) {
 			float[] colors = biomeColors.fog.getColorComponents(null);
 			fog.xCoord *= colors[0];
 			fog.yCoord *= colors[1];
 			fog.zCoord *= colors[2];
 		}
-		return fog;
 	}
 
 	public LOTRBiomeSpawnList getNPCSpawnList(World world, Random random, int i, int j, int k, LOTRBiomeVariant variant) {
@@ -685,17 +696,17 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		WorldGenDoublePlant doubleFlowerGen = new WorldGenDoublePlant();
 		int i = random.nextInt(3);
 		switch (i) {
-		case 0: {
-			doubleFlowerGen.func_150548_a(1);
-			break;
-		}
-		case 1: {
-			doubleFlowerGen.func_150548_a(4);
-			break;
-		}
-		case 2: {
-			doubleFlowerGen.func_150548_a(5);
-		}
+			case 0: {
+				doubleFlowerGen.func_150548_a(1);
+				break;
+			}
+			case 1: {
+				doubleFlowerGen.func_150548_a(4);
+				break;
+			}
+			case 2: {
+				doubleFlowerGen.func_150548_a(5);
+			}
 		}
 		return doubleFlowerGen;
 	}
@@ -721,7 +732,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getSkyColorByTemp(float f) {
 		if (LOTRTickHandlerClient.scrapTraderMisbehaveTick > 0) {
 			return 0;
@@ -917,7 +928,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 	public LOTRBiome setMinMaxHeight(float f, float f1) {
 		heightBaseParameter = f;
 		f -= 2.0f;
-		rootHeight = f += 0.2f;
+		rootHeight = f + 0.2f;
 		heightVariation = f1 / 2.0f;
 		return this;
 	}
@@ -1108,7 +1119,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 	public static void updateWaterColor(int i, int j, int k) {
 		int min = 0;
 		int max = waterLimitSouth - waterLimitNorth;
-		float latitude = (float) MathHelper.clamp_int(k - waterLimitNorth, min, max) / (float) max;
+		float latitude = (float) MathHelper.clamp_int(k - waterLimitNorth, min, max) / max;
 		float[] northColors = waterColorNorth.getColorComponents(null);
 		float[] southColors = waterColorSouth.getColorComponents(null);
 		float dR = southColors[0] - northColors[0];
@@ -1117,7 +1128,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		float r = dR * latitude;
 		float g = dG * latitude;
 		float b = dB * latitude;
-		Color water = new Color(r += northColors[0], g += northColors[1], b += northColors[2]);
+		Color water = new Color(r + northColors[0], g + northColors[1], b + northColors[2]);
 		int waterRGB = water.getRGB();
 		for (LOTRDimension dimension : LOTRDimension.values()) {
 			for (LOTRBiome biome : dimension.biomeList) {
@@ -1138,7 +1149,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		public Color clouds;
 		public Color fog;
 		public boolean foggy;
-		public boolean hasCustomWater = false;
+		public boolean hasCustomWater;
 
 		public BiomeColors(LOTRBiome biome) {
 			theBiome = biome;
@@ -1232,11 +1243,11 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		}
 
 		public void resetHeightStretchFactor() {
-			setHeightStretchFactor(-1.0);
+			heightStretchFactor = -1.0;
 		}
 
 		public void resetXZScale() {
-			setXZScale(-1.0);
+			xzScale = -1.0;
 		}
 
 		public void setHeightStretchFactor(double d) {

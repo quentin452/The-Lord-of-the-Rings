@@ -11,13 +11,13 @@ public class LOTRBlockWoodSlab extends LOTRBlockSlabBase {
 		super(flag, Material.wood, 8);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
-		return LOTRMod.planks.getIcon(i, j &= 7);
+		return LOTRMod.planks.getIcon(i, j & 7);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

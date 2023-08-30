@@ -19,7 +19,7 @@ public abstract class LOTRContainerCraftingTable extends ContainerWorkbench {
 	public List<IRecipe> recipeList;
 	public LOTRBlockCraftingTable tableBlock;
 
-	public LOTRContainerCraftingTable(InventoryPlayer inv, World world, int i, int j, int k, List<IRecipe> list, Block block) {
+	protected LOTRContainerCraftingTable(InventoryPlayer inv, World world, int i, int j, int k, List<IRecipe> list, Block block) {
 		super(inv, world, i, j, k);
 		theWorld = world;
 		tablePosX = i;

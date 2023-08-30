@@ -19,7 +19,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class LOTREntityButterfly extends EntityLiving implements LOTRAmbientCreature, LOTRRandomSkinEntity {
 	public LOTRBlockTorch elfTorchBlock;
 	public ChunkCoordinates currentFlightTarget;
-	public int flapTime = 0;
+	public int flapTime;
 
 	public LOTREntityButterfly(World world) {
 		super(world);
@@ -120,17 +120,16 @@ public class LOTREntityButterfly extends EntityLiving implements LOTRAmbientCrea
 	public IEntityLivingData onSpawnWithEgg(IEntityLivingData data) {
 		data = super.onSpawnWithEgg(data);
 		int i = MathHelper.floor_double(posX);
-		MathHelper.floor_double(posY);
 		int k = MathHelper.floor_double(posZ);
 		BiomeGenBase biome = worldObj.getBiomeGenForCoords(i, k);
 		if (biome instanceof LOTRBiomeGenMirkwood || biome instanceof LOTRBiomeGenWoodlandRealm) {
-			this.setButterflyType(ButterflyType.MIRKWOOD);
+			setButterflyType(ButterflyType.MIRKWOOD);
 		} else if (biome instanceof LOTRBiomeGenLothlorien) {
-			this.setButterflyType(ButterflyType.LORIEN);
+			setButterflyType(ButterflyType.LORIEN);
 		} else if (biome instanceof LOTRBiomeGenFarHaradJungle) {
-			this.setButterflyType(ButterflyType.JUNGLE);
+			setButterflyType(ButterflyType.JUNGLE);
 		} else {
-			this.setButterflyType(ButterflyType.COMMON);
+			setButterflyType(ButterflyType.COMMON);
 		}
 		return data;
 	}
@@ -177,7 +176,7 @@ public class LOTREntityButterfly extends EntityLiving implements LOTRAmbientCrea
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
-		this.setButterflyType(nbt.getInteger("ButterflyType"));
+		setButterflyType(nbt.getInteger("ButterflyType"));
 		setButterflyStill(nbt.getBoolean("ButterflyStill"));
 	}
 
@@ -186,7 +185,7 @@ public class LOTREntityButterfly extends EntityLiving implements LOTRAmbientCrea
 	}
 
 	public void setButterflyType(ButterflyType type) {
-		this.setButterflyType(type.ordinal());
+		setButterflyType(type.ordinal());
 	}
 
 	public void setButterflyType(int i) {

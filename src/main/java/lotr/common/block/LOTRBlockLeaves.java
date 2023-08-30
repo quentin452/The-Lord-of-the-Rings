@@ -14,7 +14,7 @@ public class LOTRBlockLeaves extends LOTRBlockLeavesBase {
 	}
 
 	@Override
-	public void addSpecialLeafDrops(ArrayList drops, World world, int i, int j, int k, int meta, int fortune) {
+	public void addSpecialLeafDrops(List drops, World world, int i, int j, int k, int meta, int fortune) {
 		if ((meta & 3) == 1 && world.rand.nextInt(calcFortuneModifiedDropChance(100, fortune)) == 0) {
 			drops.add(new ItemStack(LOTRMod.mallornNut));
 		}
@@ -34,7 +34,7 @@ public class LOTRBlockLeaves extends LOTRBlockLeavesBase {
 		return super.getLightOpacity(world, i, j, k);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		super.randomDisplayTick(world, i, j, k, random);

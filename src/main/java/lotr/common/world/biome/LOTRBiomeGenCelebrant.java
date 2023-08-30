@@ -40,10 +40,10 @@ public class LOTRBiomeGenCelebrant extends LOTRBiome {
 		arrspawnListContainer5[3] = LOTRBiomeSpawnList.entry(LOTRSpawnList.OLOG_HAI, 1).setConquestThreshold(200.0f);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer5);
 		variantChance = 0.3f;
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
 		decorator.treesPerChunk = 0;
 		decorator.setTreeCluster(6, 50);
 		decorator.willowPerChunk = 1;

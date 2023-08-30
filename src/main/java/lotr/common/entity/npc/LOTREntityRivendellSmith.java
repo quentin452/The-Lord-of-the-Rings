@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public class LOTREntityRivendellSmith extends LOTREntityRivendellElf implements LOTRTradeable.Smith {
 	public LOTREntityRivendellSmith(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

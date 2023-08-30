@@ -40,9 +40,7 @@ public class LOTRNPCTargetSelector implements IEntitySelector {
 						hiringPlayer = npc.hiredNPCInfo.getHiringPlayer();
 					}
 				}
-				if (hiringPlayer != null && LOTRLevelData.getData(hiringPlayer).getAlignment(targetFaction) < 0.0f) {
-					return true;
-				}
+				return hiringPlayer != null && LOTRLevelData.getData(hiringPlayer).getAlignment(targetFaction) < 0.0f;
 			}
 		}
 		return false;

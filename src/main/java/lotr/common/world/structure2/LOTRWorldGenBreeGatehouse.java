@@ -26,7 +26,7 @@ public class LOTRWorldGenBreeGatehouse extends LOTRWorldGenBreeStructure {
 		int i12;
 		int k12;
 		int j12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 2);
+		setOriginAndRotation(world, i, j, k, rotation, 2);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i12 = -10; i12 <= 5; ++i12) {
@@ -82,7 +82,7 @@ public class LOTRWorldGenBreeGatehouse extends LOTRWorldGenBreeStructure {
 		addBlockMetaAliasOption("PATH", 2, Blocks.gravel, 0);
 		generateStrScan(world, random, 0, 0, 0);
 		int maxSteps = 12;
-		for (int step = 0; step < maxSteps && !isOpaque(world, i1 = -3, j12 = 0 - Math.max(0, step - 2), k1 = 6 + step); ++step) {
+		for (int step = 0; step < maxSteps && !isOpaque(world, i1 = -3, j12 = -Math.max(0, step - 2), k1 = 6 + step); ++step) {
 			if (step < 2) {
 				setBlockAndMetadata(world, i1, j12, k1, Blocks.cobblestone, 0);
 			} else {
@@ -96,8 +96,8 @@ public class LOTRWorldGenBreeGatehouse extends LOTRWorldGenBreeStructure {
 				--j2;
 			}
 		}
-		this.placeChest(world, random, -5, 2, 8, 5, LOTRChestContents.BREE_HOUSE);
-		this.placeMug(world, random, -7, 3, 5, 2, LOTRFoods.BREE_DRINK);
+		placeChest(world, random, -5, 2, 8, 5, LOTRChestContents.BREE_HOUSE);
+		placeMug(world, random, -7, 3, 5, 2, LOTRFoods.BREE_DRINK);
 		placePlateWithCertainty(world, random, -8, 3, 5, LOTRMod.plateBlock, LOTRFoods.BREE);
 		setBlockAndMetadata(world, -7, 2, 8, bedBlock, 3);
 		setBlockAndMetadata(world, -8, 2, 8, bedBlock, 11);
@@ -109,7 +109,7 @@ public class LOTRWorldGenBreeGatehouse extends LOTRWorldGenBreeStructure {
 		respawner.setCheckRanges(20, -12, 12, 1);
 		respawner.setSpawnRanges(4, -2, 2, 8);
 		placeNPCRespawner(respawner, world, -7, 2, 6);
-		placeSign(world, -4, 3, -5, Blocks.wall_sign, 2, new String[] { "", "Welcome to", villageName, "" });
+		placeSign(world, -4, 3, -5, Blocks.wall_sign, 2, new String[]{"", "Welcome to", villageName, ""});
 		placeWallBanner(world, -4, 6, -1, LOTRItemBanner.BannerType.BREE, 2);
 		placeWallBanner(world, 4, 6, -1, LOTRItemBanner.BannerType.BREE, 2);
 		placeWallBanner(world, 4, 6, 1, LOTRItemBanner.BannerType.BREE, 0);

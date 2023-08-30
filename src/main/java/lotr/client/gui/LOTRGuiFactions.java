@@ -2,6 +2,7 @@ package lotr.client.gui;
 
 import java.util.*;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -24,12 +25,10 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 	public static LOTRDimension.DimensionRegion currentRegion;
 	public static LOTRDimension.DimensionRegion prevRegion;
 	public static List<LOTRFaction> currentFactionList;
-	public static Page currentPage;
-	static {
-		currentPage = Page.FRONT;
-	}
-	public int currentFactionIndex = 0;
-	public int prevFactionIndex = 0;
+	public static Page currentPage = Page.FRONT;
+
+	public int currentFactionIndex;
+	public int prevFactionIndex;
 	public LOTRFaction currentFaction;
 	public int pageY = 46;
 	public int pageWidth = 256;
@@ -91,7 +90,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 	public void actionPerformed(GuiButton button) {
 		if (button.enabled) {
 			if (button == buttonRegions) {
-				List<LOTRDimension.DimensionRegion> regionList = LOTRGuiFactions.currentDimension.dimensionRegions;
+				List<LOTRDimension.DimensionRegion> regionList = currentDimension.dimensionRegions;
 				if (!regionList.isEmpty()) {
 					int i = regionList.indexOf(currentRegion);
 					++i;
@@ -130,11 +129,11 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 					isPledging = true;
 				}
 			} else if (button == buttonPledgeConfirm) {
-				LOTRPacketPledgeSet packet = new LOTRPacketPledgeSet(currentFaction);
+				IMessage packet = new LOTRPacketPledgeSet(currentFaction);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				isPledging = false;
 			} else if (button == buttonPledgeRevoke) {
-				LOTRPacketPledgeSet packet = new LOTRPacketPledgeSet(null);
+				IMessage packet = new LOTRPacketPledgeSet(null);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				isUnpledging = false;
 				mc.displayGuiScreen(null);
@@ -203,7 +202,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 				buttonPledgeConfirm.setDisplayLines(StatCollector.translateToLocal("lotr.gui.factions.pledge"));
 				buttonPledgeRevoke.enabled = false;
 				buttonPledgeRevoke.visible = false;
-			} else if (isUnpledging) {
+			} else {
 				buttonPledgeConfirm.enabled = false;
 				buttonPledgeConfirm.visible = false;
 				buttonPledgeRevoke.enabled = true;
@@ -220,13 +219,13 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 			mc.getTextureManager().bindTexture(factionsTexture);
 		}
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		this.drawTexturedModalRect(guiLeft, guiTop + pageY, 0, 0, pageWidth, pageHeight);
+		drawTexturedModalRect(guiLeft, guiTop + pageY, 0, 0, pageWidth, pageHeight);
 		String title = StatCollector.translateToLocalFormatted("lotr.gui.factions.title", currentDimension.getDimensionName());
 		if (isOtherPlayer) {
 			title = StatCollector.translateToLocalFormatted("lotr.gui.factions.titleOther", otherPlayerName);
 		}
 		fontRendererObj.drawString(title, guiLeft + xSize / 2 - fontRendererObj.getStringWidth(title) / 2, guiTop - 30, 16777215);
-		if (currentRegion != null && LOTRGuiFactions.currentDimension.dimensionRegions.size() > 1) {
+		if (currentRegion != null && currentDimension.dimensionRegions.size() > 1) {
 			buttonRegions.displayString = currentRegion.getRegionName();
 			buttonRegions.enabled = true;
 			buttonRegions.visible = true;
@@ -241,8 +240,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 			int y = guiTop;
 			LOTRTickHandlerClient.renderAlignmentBar(alignment, isOtherPlayer, currentFaction, x, y, true, false, true, true);
 			String s = currentFaction.factionSubtitle();
-			this.drawCenteredString(s, x, y += fontRendererObj.FONT_HEIGHT + 22, 16777215);
-			y += fontRendererObj.FONT_HEIGHT * 3;
+			drawCenteredString(s, x, y + (fontRendererObj.FONT_HEIGHT + 22), 16777215);
 			if (!useFullPageTexture()) {
 				if (currentFaction.factionMapInfo != null) {
 					LOTRMapRegion mapInfo = currentFaction.factionMapInfo;
@@ -255,7 +253,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 					int yMax = yMin + pageMapSize;
 					int mapBorder = 1;
 					Gui.drawRect(xMin - mapBorder, yMin - mapBorder, xMax + mapBorder, yMax + mapBorder, -16777216);
-					float zoom = (float) pageMapSize / (float) (mapR * 2);
+					float zoom = (float) pageMapSize / (mapR * 2);
 					float zoomExp = (float) Math.log(zoom) / (float) Math.log(2.0);
 					mapDrawGui.setFakeMapProperties(mapX, mapY, zoom, zoomExp, zoom);
 					int[] statics = LOTRGuiMap.setFakeStaticProperties(pageMapSize, pageMapSize, xMin, xMax, yMin, yMax);
@@ -270,9 +268,9 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 				mc.getTextureManager().bindTexture(factionsTexture);
 				GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 				if (currentFaction.approvesWarCrimes) {
-					this.drawTexturedModalRect(wcX, wcY, 33, 142, wcWidth, wcWidth);
+					drawTexturedModalRect(wcX, wcY, 33, 142, wcWidth, wcWidth);
 				} else {
-					this.drawTexturedModalRect(wcX, wcY, 41, 142, wcWidth, wcWidth);
+					drawTexturedModalRect(wcX, wcY, 41, 142, wcWidth, wcWidth);
 				}
 				if (i >= wcX && i < wcX + wcWidth && j >= wcY && j < wcY + wcWidth) {
 					mouseOverWarCrimes = true;
@@ -296,10 +294,9 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 						mc.getTextureManager().bindTexture(factionsTexture);
 						GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 						int lockX = x + fontRendererObj.getStringWidth(alignmentString) + 5;
-						int lockY = y;
 						int lockWidth = 16;
-						this.drawTexturedModalRect(lockX, lockY, 0, 200, lockWidth, lockWidth);
-						if (i >= lockX && i < lockX + lockWidth && j >= lockY && j < lockY + lockWidth) {
+						drawTexturedModalRect(lockX, y, 0, 200, lockWidth, lockWidth);
+						if (i >= lockX && i < lockX + lockWidth && j >= y && j < y + lockWidth) {
 							mouseOverAlignLock = true;
 						}
 					}
@@ -332,7 +329,6 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 						if (alignment <= 0.0f) {
 							s = StatCollector.translateToLocalFormatted("lotr.gui.factions.data.npcsKilled", factionData.getNPCsKilled());
 							fontRendererObj.drawString(s, x, y, 8019267);
-							y += fontRendererObj.FONT_HEIGHT;
 						}
 						if (buttonPledge.visible && clientPD.isPledgedTo(currentFaction)) {
 							s = StatCollector.translateToLocal("lotr.gui.factions.pledged");
@@ -356,10 +352,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 							if (rank == LOTRFactionRank.RANK_ENEMY) {
 								rankAlign = "-";
 							}
-							boolean hiddenRankName = false;
-							if (!clientPD.isPledgedTo(currentFaction) && rank.alignment > currentFaction.getPledgeAlignment() && rank.alignment > currentFaction.getRankAbove(curRank).alignment) {
-								hiddenRankName = true;
-							}
+							boolean hiddenRankName = !clientPD.isPledgedTo(currentFaction) && rank.alignment > currentFaction.getPledgeAlignment() && rank.alignment > currentFaction.getRankAbove(curRank).alignment;
 							if (hiddenRankName) {
 								rankName = StatCollector.translateToLocal("lotr.gui.factions.rank?");
 							}
@@ -394,7 +387,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 				}
 			} else {
 				int stringWidth2 = pageWidth - pageBorderLeft * 2;
-				ArrayList<String> displayLines = new ArrayList<>();
+				Collection<String> displayLines = new ArrayList<>();
 				if (isPledging) {
 					List<LOTRFaction> facsPreventingPledge = clientPD.getFactionsPreventingPledgeTo(currentFaction);
 					if (facsPreventingPledge.isEmpty()) {
@@ -414,19 +407,15 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 							displayLines.add("");
 							GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 							mc.getTextureManager().bindTexture(factionsTexture);
-							this.drawTexturedModalRect(guiLeft + pageWidth / 2 - 97, guiTop + pageY + 56, 0, 240, 194, 16);
-							float cdFrac = (float) clientPD.getPledgeBreakCooldown() / (float) clientPD.getPledgeBreakCooldownStart();
-							this.drawTexturedModalRect(guiLeft + pageWidth / 2 - 75, guiTop + pageY + 60, 22, 232, MathHelper.ceiling_float_int(cdFrac * 150.0f), 8);
+							drawTexturedModalRect(guiLeft + pageWidth / 2 - 97, guiTop + pageY + 56, 0, 240, 194, 16);
+							float cdFrac = (float) clientPD.getPledgeBreakCooldown() / clientPD.getPledgeBreakCooldownStart();
+							drawTexturedModalRect(guiLeft + pageWidth / 2 - 75, guiTop + pageY + 60, 22, 232, MathHelper.ceiling_float_int(cdFrac * 150.0f), 8);
 						}
 					} else {
-						Collections.sort(facsPreventingPledge, new Comparator<LOTRFaction>() {
-
-							@Override
-							public int compare(LOTRFaction o1, LOTRFaction o2) {
-								float align1 = clientPD.getAlignment(o1);
-								float align2 = clientPD.getAlignment(o2);
-								return -Float.compare(align1, align2);
-							}
+						facsPreventingPledge.sort((o1, o2) -> {
+							float align1 = clientPD.getAlignment(o1);
+							float align2 = clientPD.getAlignment(o2);
+							return -Float.compare(align1, align2);
 						});
 						String facNames = "If you are reading this, something has gone hideously wrong.";
 						if (facsPreventingPledge.size() == 1) {
@@ -442,7 +431,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 						displayLines.addAll(fontRendererObj.listFormattedStringToWidth(desc4, stringWidth2));
 						displayLines.add("");
 					}
-				} else if (isUnpledging) {
+				} else {
 					String desc5 = StatCollector.translateToLocalFormatted("lotr.gui.factions.unpledgeDesc1", currentFaction.factionName());
 					displayLines.addAll(fontRendererObj.listFormattedStringToWidth(desc5, stringWidth2));
 					displayLines.add("");
@@ -458,21 +447,21 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 		if (hasScrollBar()) {
 			mc.getTextureManager().bindTexture(factionsTexture);
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-			this.drawTexturedModalRect(guiLeft + scrollBarX, guiTop + scrollBarY, 0, 128, scrollBarWidth, scrollBarHeight);
+			drawTexturedModalRect(guiLeft + scrollBarX, guiTop + scrollBarY, 0, 128, scrollBarWidth, scrollBarHeight);
 			int factions = currentFactionList.size();
 			for (int index = 0; index < factions; ++index) {
 				LOTRFaction faction = currentFactionList.get(index);
 				float[] factionColors = faction.getFactionRGB();
 				float shade = 0.6f;
 				GL11.glColor4f(factionColors[0] * shade, factionColors[1] * shade, factionColors[2] * shade, 1.0f);
-				float xMin = (float) index / (float) factions;
-				float xMax = (float) (index + 1) / (float) factions;
+				float xMin = (float) index / factions;
+				float xMax = (float) (index + 1) / factions;
 				xMin = guiLeft + scrollBarX + scrollBarBorder + xMin * (scrollBarWidth - scrollBarBorder * 2);
 				xMax = guiLeft + scrollBarX + scrollBarBorder + xMax * (scrollBarWidth - scrollBarBorder * 2);
 				float yMin = guiTop + scrollBarY + scrollBarBorder;
 				float yMax = guiTop + scrollBarY + scrollBarHeight - scrollBarBorder;
-				float minU = (0 + scrollBarBorder) / 256.0f;
-				float maxU = (0 + scrollBarWidth - scrollBarBorder) / 256.0f;
+				float minU = (scrollBarBorder) / 256.0f;
+				float maxU = (scrollBarWidth - scrollBarBorder) / 256.0f;
 				float minV = (128 + scrollBarBorder) / 256.0f;
 				float maxV = (128 + scrollBarHeight - scrollBarBorder) / 256.0f;
 				Tessellator tessellator = Tessellator.instance;
@@ -487,7 +476,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			if (canScroll()) {
 				int scroll = (int) (currentScroll * (scrollBarWidth - scrollBarBorder * 2 - scrollWidgetWidth));
-				this.drawTexturedModalRect(guiLeft + scrollBarX + scrollBarBorder + scroll, guiTop + scrollBarY + scrollBarBorder, 0, 142, scrollWidgetWidth, scrollWidgetHeight);
+				drawTexturedModalRect(guiLeft + scrollBarX + scrollBarBorder + scroll, guiTop + scrollBarY + scrollBarBorder, 0, 142, scrollWidgetWidth, scrollWidgetHeight);
 			}
 		}
 		super.drawScreen(i, j, f);
@@ -577,11 +566,11 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 		prevDimension = currentDimension = LOTRDimension.getCurrentDimensionWithFallback(mc.theWorld);
 		currentFaction = LOTRLevelData.getData(mc.thePlayer).getViewingFaction();
 		prevRegion = currentRegion = currentFaction.factionRegion;
-		currentFactionList = LOTRGuiFactions.currentRegion.factionList;
+		currentFactionList = currentRegion.factionList;
 		prevFactionIndex = currentFactionIndex = currentFactionList.indexOf(currentFaction);
 		setCurrentScrollFromFaction();
 		if (mc.currentScreen == this) {
-			LOTRPacketClientMQEvent packet = new LOTRPacketClientMQEvent(LOTRPacketClientMQEvent.ClientMQEvent.FACTIONS);
+			IMessage packet = new LOTRPacketClientMQEvent(LOTRPacketClientMQEvent.ClientMQEvent.FACTIONS);
 			LOTRPacketHandler.networkWrapper.sendToServer(packet);
 		}
 	}
@@ -606,7 +595,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 	}
 
 	public void setCurrentScrollFromFaction() {
-		currentScroll = (float) currentFactionIndex / (float) (currentFactionList.size() - 1);
+		currentScroll = (float) currentFactionIndex / (currentFactionList.size() - 1);
 	}
 
 	public void setOtherPlayer(String name, Map<LOTRFaction, Float> alignments) {
@@ -629,7 +618,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 		}
 		wasMouseDown = isMouseDown;
 		if (isScrolling) {
-			currentScroll = (i - i1 - scrollWidgetWidth / 2.0f) / ((float) (i2 - i1) - (float) scrollWidgetWidth);
+			currentScroll = (i - i1 - scrollWidgetWidth / 2.0f) / ((float) (i2 - i1) - scrollWidgetWidth);
 			currentScroll = MathHelper.clamp_float(currentScroll, 0.0f, 1.0f);
 			currentFactionIndex = Math.round(currentScroll * (currentFactionList.size() - 1));
 			scrollPaneAlliesEnemies.resetScroll();
@@ -665,7 +654,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 					currentAlliesEnemies.add(LOTRFactionRelations.Relation.ENEMY);
 					currentAlliesEnemies.addAll(enemies);
 				}
-			} else if (currentPage == Page.RANKS) {
+			} else {
 				currentAlliesEnemies = new ArrayList();
 				currentAlliesEnemies.add(StatCollector.translateToLocal("lotr.gui.factions.rankHeader"));
 				if (LOTRLevelData.getData(mc.thePlayer).getAlignment(currentFaction) <= 0.0f) {
@@ -709,19 +698,19 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 	public void updateCurrentDimensionAndFaction() {
 		boolean changes;
 		LOTRPlayerData pd = LOTRLevelData.getData(mc.thePlayer);
-		HashMap<LOTRDimension.DimensionRegion, LOTRFaction> lastViewedRegions = new HashMap<>();
+		Map<LOTRDimension.DimensionRegion, LOTRFaction> lastViewedRegions = new EnumMap<>(LOTRDimension.DimensionRegion.class);
 		if (currentFactionIndex != prevFactionIndex) {
 			currentFaction = currentFactionList.get(currentFactionIndex);
 		}
 		prevFactionIndex = currentFactionIndex;
 		currentDimension = LOTRDimension.getCurrentDimensionWithFallback(mc.theWorld);
 		if (currentDimension != prevDimension) {
-			currentRegion = LOTRGuiFactions.currentDimension.dimensionRegions.get(0);
+			currentRegion = currentDimension.dimensionRegions.get(0);
 		}
 		if (currentRegion != prevRegion) {
 			pd.setRegionLastViewedFaction(prevRegion, currentFaction);
 			lastViewedRegions.put(prevRegion, currentFaction);
-			currentFactionList = LOTRGuiFactions.currentRegion.factionList;
+			currentFactionList = currentRegion.factionList;
 			currentFaction = pd.getRegionLastViewedFaction(currentRegion);
 			prevFactionIndex = currentFactionIndex = currentFactionList.indexOf(currentFaction);
 		}
@@ -759,11 +748,11 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 
 		public Page next() {
 			int i = ordinal();
-			if (i == Page.values().length - 1) {
+			if (i == values().length - 1) {
 				return null;
 			}
 			i++;
-			return Page.values()[i];
+			return values()[i];
 		}
 
 		public Page prev() {
@@ -772,7 +761,7 @@ public class LOTRGuiFactions extends LOTRGuiMenuBase {
 				return null;
 			}
 			i--;
-			return Page.values()[i];
+			return values()[i];
 		}
 	}
 

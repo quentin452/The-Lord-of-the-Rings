@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityHarnedorBlacksmith extends LOTREntityHarnedhrim implements LOTRTradeable.Smith {
 	public LOTREntityHarnedorBlacksmith(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

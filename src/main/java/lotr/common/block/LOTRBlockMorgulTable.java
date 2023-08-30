@@ -12,7 +12,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class LOTRBlockMorgulTable extends LOTRBlockCraftingTable {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] tableIcons;
 
 	public LOTRBlockMorgulTable() {
@@ -21,7 +21,7 @@ public class LOTRBlockMorgulTable extends LOTRBlockCraftingTable {
 		setLightLevel(0.5f);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (i == 1) {
@@ -33,7 +33,7 @@ public class LOTRBlockMorgulTable extends LOTRBlockCraftingTable {
 		return tableIcons[0];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		for (int l = 0; l < 2; ++l) {
@@ -44,7 +44,7 @@ public class LOTRBlockMorgulTable extends LOTRBlockCraftingTable {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		tableIcons = new IIcon[2];

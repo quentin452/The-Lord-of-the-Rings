@@ -10,6 +10,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 
 public class LOTREntityAIAvoidHuorn extends EntityAIAvoidEntity {
+	@SuppressWarnings("Convert2Lambda")
 	public LOTREntityAIAvoidHuorn(EntityCreature entity, float range, double near, double far) {
 		super(entity, LOTREntityHuornBase.class, range, near, far);
 		try {

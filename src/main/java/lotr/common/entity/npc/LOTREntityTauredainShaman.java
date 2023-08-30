@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class LOTREntityTauredainShaman extends LOTREntityTauredain implements LOTRTradeable {
 	public LOTREntityTauredainShaman(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

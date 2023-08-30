@@ -37,7 +37,7 @@ public class LOTRGenLayerBiomeSubtypes extends LOTRGenLayer {
 				} else if (biome == LOTRBiome.ocean.biomeID && variant < 2) {
 					newBiome = LOTRBiome.island.biomeID;
 				}
-				ints[i1 + k1 * xSize] = newBiome != biome ? newBiome : biome;
+				ints[i1 + k1 * xSize] = newBiome;
 			}
 		}
 		return ints;

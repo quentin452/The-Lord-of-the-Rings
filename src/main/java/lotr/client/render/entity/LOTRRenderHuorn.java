@@ -1,6 +1,7 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelHuorn;
+import lotr.common.entity.LOTRRandomSkinEntity;
 import lotr.common.entity.npc.LOTREntityHuornBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.*;
@@ -31,7 +32,7 @@ public class LOTRRenderHuorn extends RenderLiving {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityHuornBase huorn = (LOTREntityHuornBase) entity;
+		LOTRRandomSkinEntity huorn = (LOTRRandomSkinEntity) entity;
 		return faceSkins.getRandomSkin(huorn);
 	}
 
@@ -51,7 +52,7 @@ public class LOTRRenderHuorn extends RenderLiving {
 			d1 = j - RenderManager.renderPosY;
 			d2 = k + 0.5 - RenderManager.renderPosZ;
 		}
-		super.renderLivingAt(entity, d, d1 -= 0.0078125, d2);
+		super.renderLivingAt(entity, d, d1 - 0.0078125, d2);
 		huorn.hurtTime = 0;
 	}
 

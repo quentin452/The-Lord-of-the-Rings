@@ -62,13 +62,13 @@ public class LOTRPacketFTScreen implements IMessage {
 			EntityPlayer entityplayer = LOTRMod.proxy.getClientPlayer();
 			LOTRPlayerData playerData = LOTRLevelData.getData(entityplayer);
 			LOTRAbstractWaypoint waypoint = null;
-			if (!custom) {
+			if (custom) {
+				UUID sharingPlayerID = packet.sharingPlayer;
+				waypoint = sharingPlayerID != null ? playerData.getSharedCustomWaypointByID(sharingPlayerID, wpID) : playerData.getCustomWaypointByID(wpID);
+			} else {
 				if (wpID >= 0 && wpID < LOTRWaypoint.values().length) {
 					waypoint = LOTRWaypoint.values()[wpID];
 				}
-			} else {
-				UUID sharingPlayerID = packet.sharingPlayer;
-				waypoint = sharingPlayerID != null ? playerData.getSharedCustomWaypointByID(sharingPlayerID, wpID) : playerData.getCustomWaypointByID(wpID);
 			}
 			if (waypoint != null) {
 				LOTRMod.proxy.displayFTScreen(waypoint, packet.startX, packet.startZ);

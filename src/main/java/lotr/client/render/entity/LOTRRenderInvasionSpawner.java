@@ -34,6 +34,7 @@ public class LOTRRenderInvasionSpawner extends Render {
 
 	public float interpolateRotation(float prevRotation, float newRotation, float tick) {
 		float interval;
+		//noinspection StatementWithEmptyBody
 		for (interval = newRotation - prevRotation; interval < -180.0f; interval += 360.0f) {
 		}
 		while (interval >= 180.0f) {

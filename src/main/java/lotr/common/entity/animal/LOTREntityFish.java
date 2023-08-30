@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 public class LOTREntityFish extends EntityWaterMob implements LOTRRandomSkinEntity {
 	public ChunkCoordinates currentSwimTarget;
-	public int swimTargetTime = 0;
+	public int swimTargetTime;
 
 	public LOTREntityFish(World world) {
 		super(world);
@@ -105,15 +105,14 @@ public class LOTREntityFish extends EntityWaterMob implements LOTRRandomSkinEnti
 	public IEntityLivingData onSpawnWithEgg(IEntityLivingData data) {
 		data = super.onSpawnWithEgg(data);
 		int i = MathHelper.floor_double(posX);
-		MathHelper.floor_double(posY);
 		int k = MathHelper.floor_double(posZ);
 		worldObj.getBiomeGenForCoords(i, k);
 		if (rand.nextInt(30) == 0) {
-			this.setFishType(FishType.CLOWNFISH);
+			setFishType(FishType.CLOWNFISH);
 		} else if (rand.nextInt(8) == 0) {
-			this.setFishType(FishType.SALMON);
+			setFishType(FishType.SALMON);
 		} else {
-			this.setFishType(FishType.COMMON);
+			setFishType(FishType.COMMON);
 		}
 		return data;
 	}
@@ -121,11 +120,11 @@ public class LOTREntityFish extends EntityWaterMob implements LOTRRandomSkinEnti
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
-		this.setFishType(nbt.getInteger("FishType"));
+		setFishType(nbt.getInteger("FishType"));
 	}
 
 	public void setFishType(FishType type) {
-		this.setFishType(type.ordinal());
+		setFishType(type.ordinal());
 	}
 
 	public void setFishType(int i) {

@@ -2,8 +2,10 @@ package lotr.common.entity;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.entity.npc.*;
 import lotr.common.network.*;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,14 +16,14 @@ public class LOTRMountFunctions {
 	public static boolean canRiderControl(Entity entity) {
 		Entity rider = entity.riddenByEntity;
 		if (rider instanceof EntityPlayer) {
-			return ((EntityPlayer) rider).isClientWorld();
+			return ((EntityLivingBase) rider).isClientWorld();
 		}
 		return !entity.worldObj.isRemote;
 	}
 
 	public static boolean canRiderControl_elseNoMotion(EntityLiving entity) {
-		boolean flag = LOTRMountFunctions.canRiderControl(entity);
-		if (!flag && entity.riddenByEntity instanceof EntityPlayer && LOTRMountFunctions.isMountControllable(entity)) {
+		boolean flag = canRiderControl(entity);
+		if (!flag && entity.riddenByEntity instanceof EntityPlayer && isMountControllable(entity)) {
 			entity.motionX = 0.0;
 			entity.motionY = 0.0;
 			entity.motionZ = 0.0;
@@ -29,7 +31,7 @@ public class LOTRMountFunctions {
 		return flag;
 	}
 
-	public static boolean interact(LOTRNPCMount mount, EntityPlayer entityplayer) {
+	public static boolean interact(LOTRNPCMount mount, ICommandSender entityplayer) {
 		EntityLiving entity = (EntityLiving) mount;
 		if (mount.getBelongsToNPC() && entity.riddenByEntity == null) {
 			if (!entity.worldObj.isRemote) {
@@ -48,8 +50,8 @@ public class LOTRMountFunctions {
 	}
 
 	public static boolean isPlayerControlledMount(Entity mount) {
-		if (mount != null && mount.riddenByEntity instanceof EntityPlayer && LOTRMountFunctions.isMountControllable(mount)) {
-			return LOTRMountFunctions.canRiderControl(mount);
+		if (mount != null && mount.riddenByEntity instanceof EntityPlayer && isMountControllable(mount)) {
+			return canRiderControl(mount);
 		}
 		return false;
 	}
@@ -70,7 +72,7 @@ public class LOTRMountFunctions {
 			}
 			entity.stepHeight = mount.getStepHeightWhileRiddenByPlayer();
 			entity.jumpMovementFactor = entity.getAIMoveSpeed() * 0.1f;
-			if (LOTRMountFunctions.canRiderControl_elseNoMotion(entity)) {
+			if (canRiderControl_elseNoMotion(entity)) {
 				entity.setAIMoveSpeed((float) entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
 				mount.super_moveEntityWithHeading(strafe, forward);
 			}
@@ -90,22 +92,20 @@ public class LOTRMountFunctions {
 		}
 	}
 
-	public static boolean sendControlToServer(EntityPlayer clientPlayer) {
-		return LOTRMountFunctions.sendControlToServer(clientPlayer, null);
+	public static void sendControlToServer(EntityPlayer clientPlayer) {
+		sendControlToServer(clientPlayer, null);
 	}
 
-	public static boolean sendControlToServer(EntityPlayer clientPlayer, LOTRPacketMountControlServerEnforce pktSet) {
+	public static void sendControlToServer(EntityPlayer clientPlayer, LOTRPacketMountControlServerEnforce pktSet) {
 		Entity mount = clientPlayer.ridingEntity;
-		if (LOTRMountFunctions.isPlayerControlledMount(mount)) {
+		if (isPlayerControlledMount(mount)) {
 			if (pktSet != null) {
 				mount.setPositionAndRotation(pktSet.posX, pktSet.posY, pktSet.posZ, pktSet.rotationYaw, pktSet.rotationPitch);
 				mount.updateRiderPosition();
 			}
-			LOTRPacketMountControl pkt = new LOTRPacketMountControl(mount);
+			IMessage pkt = new LOTRPacketMountControl(mount);
 			LOTRPacketHandler.networkWrapper.sendToServer(pkt);
-			return true;
 		}
-		return false;
 	}
 
 	public static void setNavigatorRangeFromNPC(LOTRNPCMount mount, LOTREntityNPC npc) {

@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public class LOTREntityIronHillsMerchant extends LOTREntityDwarf implements LOTRTravellingTrader {
 	public LOTREntityIronHillsMerchant(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

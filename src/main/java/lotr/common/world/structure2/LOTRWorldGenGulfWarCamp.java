@@ -21,7 +21,7 @@ public class LOTRWorldGenGulfWarCamp extends LOTRWorldGenGulfStructure {
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int i1;
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 15);
+		setOriginAndRotation(world, i, j, k, rotation, 15);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -53,25 +53,25 @@ public class LOTRWorldGenGulfWarCamp extends LOTRWorldGenGulfStructure {
 					if (j1 == 0) {
 						if (i2 <= 14 && k2 <= 14) {
 							if (random.nextBoolean()) {
-								setBlockAndMetadata(world, i1, j1, k1, LOTRMod.dirtPath, 0);
+								setBlockAndMetadata(world, i1, 0, k1, LOTRMod.dirtPath, 0);
 							} else {
 								int randomGround = random.nextInt(3);
 								switch (randomGround) {
-								case 0:
-									setBlockAndMetadata(world, i1, j1, k1, Blocks.grass, 0);
-									break;
-								case 1:
-									setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 1);
-									break;
-								case 2:
-									setBlockAndMetadata(world, i1, j1, k1, Blocks.sand, 1);
-									break;
-								default:
-									break;
+									case 0:
+										setBlockAndMetadata(world, i1, 0, k1, Blocks.grass, 0);
+										break;
+									case 1:
+										setBlockAndMetadata(world, i1, 0, k1, Blocks.dirt, 1);
+										break;
+									case 2:
+										setBlockAndMetadata(world, i1, 0, k1, Blocks.sand, 1);
+										break;
+									default:
+										break;
 								}
 							}
 						} else {
-							setBlockAndMetadata(world, i1, j1, k1, Blocks.grass, 0);
+							setBlockAndMetadata(world, i1, 0, k1, Blocks.grass, 0);
 						}
 					} else {
 						setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 0);
@@ -110,11 +110,11 @@ public class LOTRWorldGenGulfWarCamp extends LOTRWorldGenGulfStructure {
 			setBlockAndMetadata(world, i1, 1, 12, bedBlock, 0);
 			setBlockAndMetadata(world, i1, 1, 13, bedBlock, 8);
 		}
-		this.placeChest(world, random, -12, 1, 13, LOTRMod.chestBasket, 2, LOTRChestContents.GULF_HOUSE);
-		this.placeChest(world, random, -10, 1, 13, LOTRMod.chestBasket, 2, LOTRChestContents.GULF_HOUSE);
-		this.placeChest(world, random, 10, 1, 13, LOTRMod.chestBasket, 2, LOTRChestContents.GULF_HOUSE);
-		this.placeChest(world, random, 12, 1, 13, LOTRMod.chestBasket, 2, LOTRChestContents.GULF_HOUSE);
-		this.placeChest(world, random, -1, 1, 3, LOTRMod.chestBasket, 2, LOTRChestContents.GULF_HOUSE);
+		placeChest(world, random, -12, 1, 13, LOTRMod.chestBasket, 2, LOTRChestContents.GULF_HOUSE);
+		placeChest(world, random, -10, 1, 13, LOTRMod.chestBasket, 2, LOTRChestContents.GULF_HOUSE);
+		placeChest(world, random, 10, 1, 13, LOTRMod.chestBasket, 2, LOTRChestContents.GULF_HOUSE);
+		placeChest(world, random, 12, 1, 13, LOTRMod.chestBasket, 2, LOTRChestContents.GULF_HOUSE);
+		placeChest(world, random, -1, 1, 3, LOTRMod.chestBasket, 2, LOTRChestContents.GULF_HOUSE);
 		placeGulfArmor(world, random, -11, 1, -13, 2);
 		placeGulfArmor(world, random, -9, 1, -13, 2);
 		placeGulfArmor(world, random, -13, 1, -11, 3);
@@ -131,12 +131,12 @@ public class LOTRWorldGenGulfWarCamp extends LOTRWorldGenGulfStructure {
 		placeWeaponRack(world, 7, 2, -8, 7, getRandomGulfWeapon(random));
 		placeWeaponRack(world, 9, 2, -8, 5, getRandomGulfWeapon(random));
 		placeWeaponRack(world, 8, 2, -7, 4, getRandomGulfWeapon(random));
-		this.placeSkull(world, random, -12, 3, -2);
-		this.placeSkull(world, random, -12, 3, 2);
+		placeSkull(world, random, -12, 3, -2);
+		placeSkull(world, random, -12, 3, 2);
 		placeWeaponRack(world, 11, 2, -4, 7, new ItemStack(LOTRMod.nearHaradBow));
 		placeWeaponRack(world, 11, 2, 4, 7, new ItemStack(LOTRMod.nearHaradBow));
-		this.placeBarrel(world, random, -13, 2, 9, 3, LOTRFoods.GULF_HARAD_DRINK);
-		this.placeBarrel(world, random, 13, 2, 9, 3, LOTRFoods.GULF_HARAD_DRINK);
+		placeBarrel(world, random, -13, 2, 9, 3, LOTRFoods.GULF_HARAD_DRINK);
+		placeBarrel(world, random, 13, 2, 9, 3, LOTRFoods.GULF_HARAD_DRINK);
 		placeWallBanner(world, 0, 6, -15, LOTRItemBanner.BannerType.HARAD_GULF, 2);
 		placeWallBanner(world, -2, 5, -15, LOTRItemBanner.BannerType.HARAD_GULF, 2);
 		placeWallBanner(world, 2, 5, -15, LOTRItemBanner.BannerType.HARAD_GULF, 2);
@@ -150,7 +150,7 @@ public class LOTRWorldGenGulfWarCamp extends LOTRWorldGenGulfStructure {
 		placeWallBanner(world, -5, 13, 5, LOTRItemBanner.BannerType.HARAD_GULF, 3);
 		placeWallBanner(world, 5, 13, -5, LOTRItemBanner.BannerType.HARAD_GULF, 1);
 		placeWallBanner(world, 5, 13, 5, LOTRItemBanner.BannerType.HARAD_GULF, 1);
-		for (int i13 : new int[] { -2, 2 }) {
+		for (int i13 : new int[]{-2, 2}) {
 			j1 = 1;
 			int k1 = 12;
 			LOTREntityHorse horse = new LOTREntityHorse(world);
@@ -179,7 +179,7 @@ public class LOTRWorldGenGulfWarCamp extends LOTRWorldGenGulfStructure {
 	}
 
 	public void placeGulfArmor(World world, Random random, int i, int j, int k, int meta) {
-		ItemStack[] armor = random.nextInt(3) != 0 ? new ItemStack[] { null, null, null, null } : new ItemStack[] { new ItemStack(LOTRMod.helmetGulfHarad), new ItemStack(LOTRMod.bodyGulfHarad), new ItemStack(LOTRMod.legsGulfHarad), new ItemStack(LOTRMod.bootsGulfHarad) };
+		ItemStack[] armor = random.nextInt(3) != 0 ? new ItemStack[]{null, null, null, null} : new ItemStack[]{new ItemStack(LOTRMod.helmetGulfHarad), new ItemStack(LOTRMod.bodyGulfHarad), new ItemStack(LOTRMod.legsGulfHarad), new ItemStack(LOTRMod.bootsGulfHarad)};
 		placeArmorStand(world, i, j, k, meta, armor);
 	}
 }

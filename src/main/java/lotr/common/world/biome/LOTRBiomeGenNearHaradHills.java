@@ -16,8 +16,8 @@ public class LOTRBiomeGenNearHaradHills extends LOTRBiomeGenNearHarad {
 		super(i, major);
 		enableRain = true;
 		clearBiomeVariants();
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.SCRUBLAND_SAND);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
+		addBiomeVariant(LOTRBiomeVariant.SCRUBLAND_SAND);
 	}
 
 	@Override

@@ -44,7 +44,7 @@ public class LOTRBlockTreasurePile extends Block {
 		}
 	};
 	public static int MAX_META = 7;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon sideIcon;
 
 	public LOTRBlockTreasurePile() {
@@ -76,7 +76,7 @@ public class LOTRBlockTreasurePile extends Block {
 		return super.getCollisionBoundingBoxFromPool(world, i, j, k);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (i == 0 || i == 1) {
@@ -90,7 +90,7 @@ public class LOTRBlockTreasurePile extends Block {
 		return LOTRMod.proxy.getTreasureRenderID();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		list.add(new ItemStack(item, 1, 0));
@@ -115,41 +115,38 @@ public class LOTRBlockTreasurePile extends Block {
 	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer entityplayer, int side, float f, float f1, float f2) {
 		ItemStack itemstack = entityplayer.getHeldItem();
 		if (itemstack != null && itemstack.getItem() == Item.getItemFromBlock(this) && side == 1) {
-			boolean placedTreasure = false;
+			boolean placedTreasure;
 			int meta = world.getBlockMetadata(i, j, k);
 			if (meta < 7) {
 				int itemMeta;
+				//noinspection StatementWithEmptyBody
 				for (itemMeta = itemstack.getItemDamage(); meta < 7 && itemMeta >= 0; ++meta, --itemMeta) {
 				}
 				world.setBlockMetadataWithNotify(i, j, k, meta, 3);
-				placedTreasure = true;
 				if (itemMeta >= 0 && world.getBlock(i, j + 1, k).isReplaceable(world, i, j + 1, k)) {
 					world.setBlock(i, j + 1, k, this, itemMeta, 3);
 					itemMeta = -1;
-					placedTreasure = true;
 				}
-				if (placedTreasure) {
-					world.playSoundEffect(i + 0.5f, j + 0.5f, k + 0.5f, stepSound.func_150496_b(), (stepSound.getVolume() + 1.0f) / 2.0f, stepSound.getPitch() * 0.8f);
-					if (!entityplayer.capabilities.isCreativeMode) {
-						if (itemMeta < 0) {
-							--itemstack.stackSize;
-						} else {
-							--itemstack.stackSize;
-							ItemStack remainder = itemstack.copy();
-							remainder.stackSize = 1;
-							remainder.setItemDamage(itemMeta);
-							if (itemstack.stackSize <= 0) {
-								entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, remainder);
-							} else if (!entityplayer.inventory.addItemStackToInventory(remainder)) {
-								entityplayer.dropPlayerItemWithRandomChoice(remainder, false);
-							}
-						}
-						if (!world.isRemote) {
-							entityplayer.openContainer.detectAndSendChanges();
+				world.playSoundEffect(i + 0.5f, j + 0.5f, k + 0.5f, stepSound.func_150496_b(), (stepSound.getVolume() + 1.0f) / 2.0f, stepSound.getPitch() * 0.8f);
+				if (!entityplayer.capabilities.isCreativeMode) {
+					if (itemMeta < 0) {
+						--itemstack.stackSize;
+					} else {
+						--itemstack.stackSize;
+						ItemStack remainder = itemstack.copy();
+						remainder.stackSize = 1;
+						remainder.setItemDamage(itemMeta);
+						if (itemstack.stackSize <= 0) {
+							entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, remainder);
+						} else if (!entityplayer.inventory.addItemStackToInventory(remainder)) {
+							entityplayer.dropPlayerItemWithRandomChoice(remainder, false);
 						}
 					}
-					return true;
+					if (!world.isRemote) {
+						entityplayer.openContainer.detectAndSendChanges();
+					}
 				}
+				return true;
 			}
 		}
 		return false;
@@ -189,7 +186,7 @@ public class LOTRBlockTreasurePile extends Block {
 		return 1;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		super.registerBlockIcons(iconregister);
@@ -224,7 +221,7 @@ public class LOTRBlockTreasurePile extends Block {
 
 	public boolean tryFall(World world, int i, int j, int k) {
 		int meta = world.getBlockMetadata(i, j, k);
-		if (LOTRBlockTreasurePile.canFallUpon(world, i, j - 1, k, this, meta) && j >= 0) {
+		if (canFallUpon(world, i, j - 1, k, this, meta) && j >= 0) {
 			int range = 32;
 			if (!BlockFalling.fallInstantly && world.checkChunksExist(i - range, j - range, k - range, i + range, j + range, k + range)) {
 				if (!world.isRemote) {
@@ -234,7 +231,7 @@ public class LOTRBlockTreasurePile extends Block {
 				}
 			} else {
 				world.setBlockToAir(i, j, k);
-				while (LOTRBlockTreasurePile.canFallUpon(world, i, j - 1, k, this, meta) && j > 0) {
+				while (canFallUpon(world, i, j - 1, k, this, meta) && j > 0) {
 					--j;
 				}
 				if (j > 0) {
@@ -249,7 +246,7 @@ public class LOTRBlockTreasurePile extends Block {
 	@Override
 	public void updateTick(World world, int i, int j, int k, Random random) {
 		if (!world.isRemote && !tryFall(world, i, j, k) && !canBlockStay(world, i, j, k)) {
-			this.dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
+			dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
 			world.setBlockToAir(i, j, k);
 		}
 	}
@@ -264,7 +261,7 @@ public class LOTRBlockTreasurePile extends Block {
 	}
 
 	public static void generateTreasureRecipes(Block block, Item ingot) {
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(block, 8, 0), "XX", "XX", Character.valueOf('X'), ingot));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(block, 8, 0), "XX", "XX", 'X', ingot));
 		GameRegistry.addRecipe(new LOTRRecipesTreasurePile(block, ingot));
 	}
 

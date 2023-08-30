@@ -27,16 +27,16 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 	public Block pillarBlock = LOTRMod.pillar;
 	public int pillarMeta = 6;
 	public Block logBlock = Blocks.log;
-	public int logMeta = 0;
+	public int logMeta;
 	public Block plankBlock = Blocks.planks;
-	public int plankMeta = 0;
+	public int plankMeta;
 	public Block plankSlabBlock = Blocks.wooden_slab;
-	public int plankSlabMeta = 0;
+	public int plankSlabMeta;
 	public Block fenceBlock = Blocks.fence;
-	public int fenceMeta = 0;
+	public int fenceMeta;
 	public Block gateBlock;
 	public Block woodBeamBlock = LOTRMod.woodBeamV1;
-	public int woodBeamMeta = 0;
+	public int woodBeamMeta;
 	public Block roofBlock;
 	public int roofMeta = 11;
 	public Block roofSlabBlock;
@@ -90,7 +90,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 		int k15;
 		int k16;
 		int k17;
-		this.setOriginAndRotation(world, i, j, k, rotation, 2);
+		setOriginAndRotation(world, i, j, k, rotation, 2);
 		if (restrictions) {
 			int minHeight = 0;
 			int maxHeight = 0;
@@ -132,7 +132,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 			}
 			placeWoodPillar(world, -8, kz);
 			placeWoodPillar(world, 8, kz);
-			int[] i111 = { -3, 3 };
+			int[] i111 = {-3, 3};
 			k142 = i111.length;
 			for (j12 = 0; j12 < k142; ++j12) {
 				i192 = i111[j12];
@@ -188,18 +188,18 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 					setBlockAndMetadata(world, i142, 1, k18, LOTRMod.thatchFloor, 0);
 				}
 			}
-			for (int i1921 : new int[] { -7, 7 }) {
+			for (int i1921 : new int[]{-7, 7}) {
 				setBlockAndMetadata(world, i1921, 1, kz + 1, Blocks.hay_block, 0);
 				setBlockAndMetadata(world, i1921, 1, kz + 2, Blocks.hay_block, 0);
 				setBlockAndMetadata(world, i1921, 1, kz + 3, fenceBlock, fenceMeta);
 			}
-			for (int i1921 : new int[] { -3, 3 }) {
+			for (int i1921 : new int[]{-3, 3}) {
 				setBlockAndMetadata(world, i1921, 1, kz + 1, gateBlock, 1);
 				setBlockAndMetadata(world, i1921, 1, kz + 2, gateBlock, 1);
 				setBlockAndMetadata(world, i1921, 1, kz + 3, fenceBlock, fenceMeta);
 				setBlockAndMetadata(world, i1921, 2, kz + 3, Blocks.torch, 5);
 			}
-			int[] k19 = { -1, 1 };
+			int[] k19 = {-1, 1};
 			i142 = k19.length;
 			for (j12 = 0; j12 < i142; ++j12) {
 				int f = k19[j12];
@@ -222,14 +222,14 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 				}
 				setBlockAndMetadata(world, i112, 4, kz, brickBlock, brickMeta);
 			}
-			for (int i1921 : new int[] { -3, 3 }) {
+			for (int i1921 : new int[]{-3, 3}) {
 				setBlockAndMetadata(world, i1921, 4, kz + 1, doubleRockSlabBlock, rockSlabMeta);
 				setBlockAndMetadata(world, i1921, 4, kz + 3, doubleRockSlabBlock, rockSlabMeta);
 			}
 			for (int i113 = -8; i113 <= 8; ++i113) {
 				setBlockAndMetadata(world, i113, 5, kz, brickBlock, brickMeta);
 			}
-			for (int i1921 : new int[] { -7, 4 }) {
+			for (int i1921 : new int[]{-7, 4}) {
 				setBlockAndMetadata(world, i1921, 6, kz, stairBlock, 1);
 				setBlockAndMetadata(world, i1921 + 1, 6, kz, brickBlock, brickMeta);
 				setBlockAndMetadata(world, i1921 + 1, 7, kz, stairBlock, 1);
@@ -265,7 +265,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 				setBlockAndMetadata(world, 1, 6, k110, roofStairBlock, 0);
 				setBlockAndMetadata(world, 2, 5, k110, roofStairBlock, 0);
 			}
-			int[] k110 = { -8, -3, 3, 8 };
+			int[] k110 = {-8, -3, 3, 8};
 			k142 = k110.length;
 			for (j12 = 0; j12 < k142; ++j12) {
 				i192 = k110[j12];
@@ -291,7 +291,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 			setBlockAndMetadata(world, i17, 1, -1, leafBlock, leafMeta);
 		}
 		for (int k111 = 0; k111 <= 11; ++k111) {
-			int[] i221 = { -9, 9 };
+			int[] i221 = {-9, 9};
 			j13 = i221.length;
 			for (k142 = 0; k142 < j13; ++k142) {
 				i13 = i221[k142];
@@ -320,7 +320,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 				setBlockAndMetadata(world, i17, j1, 0, LOTRMod.gateDolAmroth, 2);
 			}
 		}
-		for (int i1421 : new int[] { -2, 2 }) {
+		for (int i1421 : new int[]{-2, 2}) {
 			for (j12 = 1; j12 <= 4; ++j12) {
 				setBlockAndMetadata(world, i1421, j12, 0, brickBlock, brickMeta);
 			}
@@ -328,12 +328,12 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 		}
 		setBlockAndMetadata(world, -8, 5, -1, stairBlock, 1);
 		setBlockAndMetadata(world, 8, 5, -1, stairBlock, 0);
-		int[] i114 = { -7, 4 };
+		int[] i114 = {-7, 4};
 		j1 = i114.length;
 		for (j13 = 0; j13 < j1; ++j13) {
 			i142 = i114[j13];
-			setBlockAndMetadata(world, i142 + 0, 5, -1, stairBlock, 4);
-			setBlockAndMetadata(world, i142 + 0, 6, -1, stairBlock, 1);
+			setBlockAndMetadata(world, i142, 5, -1, stairBlock, 4);
+			setBlockAndMetadata(world, i142, 6, -1, stairBlock, 1);
 			setBlockAndMetadata(world, i142 + 1, 6, -1, stairBlock, 4);
 			setBlockAndMetadata(world, i142 + 1, 7, -1, stairBlock, 1);
 			setBlockAndMetadata(world, i142 + 2, 6, -1, stairBlock, 5);
@@ -377,7 +377,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 				}
 			}
 		}
-		int[] i115 = { 12, 18 };
+		int[] i115 = {12, 18};
 		k122 = i115.length;
 		for (j13 = 0; j13 < k122; ++j13) {
 			k142 = i115[j13];
@@ -387,7 +387,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 					setBlockAndMetadata(world, i13, j15, k142, brickBlock, brickMeta);
 				}
 			}
-			int[] i116 = { -9, 9 };
+			int[] i116 = {-9, 9};
 			j15 = i116.length;
 			for (k16 = 0; k16 < j15; ++k16) {
 				int i117 = i116[k16];
@@ -433,7 +433,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 			}
 		}
 		for (k13 = 13; k13 <= 17; ++k13) {
-			int[] k1221 = { -4, 4 };
+			int[] k1221 = {-4, 4};
 			j13 = k1221.length;
 			for (k142 = 0; k142 < j13; ++k142) {
 				i13 = k1221[k142];
@@ -471,7 +471,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 			setBlockAndMetadata(world, 2, 12, k13, roofStairBlock, 0);
 			setBlockAndMetadata(world, 3, 11, k13, roofStairBlock, 0);
 		}
-		int[] k112 = { 13, 17 };
+		int[] k112 = {13, 17};
 		i22 = k112.length;
 		for (k1 = 0; k1 < i22; ++k1) {
 			k142 = k112[k1];
@@ -503,7 +503,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 		placeWoodPillar(world, 2, 18);
 		placeWoodPillar(world, 6, 18);
 		for (k17 = 13; k17 <= 17; ++k17) {
-			int[] i24 = { -9, 9 };
+			int[] i24 = {-9, 9};
 			k1 = i24.length;
 			for (k142 = 0; k142 < k1; ++k142) {
 				i13 = i24[k142];
@@ -537,34 +537,34 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 		for (i12 = -8; i12 <= 8; ++i12) {
 			i22 = Math.abs(i12);
 			switch (i22) {
-			case 8:
-				for (k1 = 13; k1 <= 17; ++k1) {
-					setBlockAndMetadata(world, i12, 7, k1, leafBlock, leafMeta);
-				}
-				for (k1 = 14; k1 <= 16; ++k1) {
-					setBlockAndMetadata(world, i12, 8, k1, leafBlock, leafMeta);
-				}
-				continue;
-			case 7:
-				for (k1 = 13; k1 <= 17; ++k1) {
-					setBlockAndMetadata(world, i12, 7, k1, leafBlock, leafMeta);
-				}
-				setBlockAndMetadata(world, i12, 8, 13, leafBlock, leafMeta);
-				setBlockAndMetadata(world, i12, 8, 17, leafBlock, leafMeta);
-				setBlockAndMetadata(world, i12, 7, 15, rockSlabBlock, rockSlabMeta);
-				setBlockAndMetadata(world, i12, 6, 15, brickBlock, brickMeta);
-				continue;
-			case 6:
-				setBlockAndMetadata(world, i12, 7, 13, leafBlock, leafMeta);
-				setBlockAndMetadata(world, i12, 7, 17, leafBlock, leafMeta);
-				setBlockAndMetadata(world, i12, 8, 13, leafBlock, leafMeta);
-				setBlockAndMetadata(world, i12, 8, 17, leafBlock, leafMeta);
-				setBlockAndMetadata(world, i12, 7, 14, rockSlabBlock, rockSlabMeta);
-				setBlockAndMetadata(world, i12, 7, 15, rockSlabBlock, rockSlabMeta);
-				setBlockAndMetadata(world, i12, 7, 16, rockSlabBlock, rockSlabMeta);
-				continue;
-			default:
-				break;
+				case 8:
+					for (k1 = 13; k1 <= 17; ++k1) {
+						setBlockAndMetadata(world, i12, 7, k1, leafBlock, leafMeta);
+					}
+					for (k1 = 14; k1 <= 16; ++k1) {
+						setBlockAndMetadata(world, i12, 8, k1, leafBlock, leafMeta);
+					}
+					continue;
+				case 7:
+					for (k1 = 13; k1 <= 17; ++k1) {
+						setBlockAndMetadata(world, i12, 7, k1, leafBlock, leafMeta);
+					}
+					setBlockAndMetadata(world, i12, 8, 13, leafBlock, leafMeta);
+					setBlockAndMetadata(world, i12, 8, 17, leafBlock, leafMeta);
+					setBlockAndMetadata(world, i12, 7, 15, rockSlabBlock, rockSlabMeta);
+					setBlockAndMetadata(world, i12, 6, 15, brickBlock, brickMeta);
+					continue;
+				case 6:
+					setBlockAndMetadata(world, i12, 7, 13, leafBlock, leafMeta);
+					setBlockAndMetadata(world, i12, 7, 17, leafBlock, leafMeta);
+					setBlockAndMetadata(world, i12, 8, 13, leafBlock, leafMeta);
+					setBlockAndMetadata(world, i12, 8, 17, leafBlock, leafMeta);
+					setBlockAndMetadata(world, i12, 7, 14, rockSlabBlock, rockSlabMeta);
+					setBlockAndMetadata(world, i12, 7, 15, rockSlabBlock, rockSlabMeta);
+					setBlockAndMetadata(world, i12, 7, 16, rockSlabBlock, rockSlabMeta);
+					continue;
+				default:
+					break;
 			}
 			if (i22 != 5) {
 				continue;
@@ -586,7 +586,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 			}
 		}
 		for (int j18 = 1; j18 <= 3; ++j18) {
-			int[] j19 = { -2, 2 };
+			int[] j19 = {-2, 2};
 			k1 = j19.length;
 			for (k142 = 0; k142 < k1; ++k142) {
 				i13 = j19[k142];
@@ -596,12 +596,12 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 				setBlockAndMetadata(world, i119, j18, 12, LOTRMod.gateDolAmroth, 2);
 			}
 		}
-		for (int f : new int[] { -1, 1 }) {
+		for (int f : new int[]{-1, 1}) {
 			setBlockAndMetadata(world, 4 * f, 4, 13, slabBlock, slabMeta | 8);
 			setBlockAndMetadata(world, 3 * f, 5, 13, slabBlock, slabMeta);
 			setBlockAndMetadata(world, 2 * f, 5, 13, slabBlock, slabMeta | 8);
-			setBlockAndMetadata(world, 1 * f, 6, 13, slabBlock, slabMeta);
-			setBlockAndMetadata(world, 0 * f, 6, 13, slabBlock, slabMeta);
+			setBlockAndMetadata(world, f, 6, 13, slabBlock, slabMeta);
+			setBlockAndMetadata(world, 0, 6, 13, slabBlock, slabMeta);
 			placeWallBanner(world, 3 * f, 4, 12, LOTRItemBanner.BannerType.DOL_AMROTH, 0);
 			setBlockAndMetadata(world, 6 * f, 3, 13, Blocks.torch, 3);
 			for (j12 = 5; j12 <= 6; ++j12) {
@@ -615,18 +615,18 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 			placeWallBanner(world, 2 * f, 6, 18, LOTRItemBanner.BannerType.DOL_AMROTH, 0);
 			placeWallBanner(world, 2 * f, 6, 18, LOTRItemBanner.BannerType.DOL_AMROTH, 2);
 			setBlockAndMetadata(world, 6 * f, 3, 17, Blocks.torch, 4);
-			for (int k113 : new int[] { 13, 17 }) {
+			for (int k113 : new int[]{13, 17}) {
 				setBlockAndMetadata(world, 4 * f, 1, k113, plankBlock, plankMeta);
 				setBlockAndMetadata(world, 5 * f, 1, k113, plankSlabBlock, plankSlabMeta | 8);
 				setBlockAndMetadata(world, 7 * f, 1, k113, plankSlabBlock, plankSlabMeta | 8);
-				this.placeChest(world, random, 6 * f, 1, k113, 0, LOTRChestContents.DOL_AMROTH_STABLES);
+				placeChest(world, random, 6 * f, 1, k113, 0, LOTRChestContents.DOL_AMROTH_STABLES);
 			}
 		}
 		setBlockAndMetadata(world, -8, 1, 13, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, -8, 1, 17, Blocks.furnace, 2);
 		setBlockAndMetadata(world, 8, 1, 13, LOTRMod.gondorianTable, 0);
 		setBlockAndMetadata(world, 8, 1, 17, LOTRMod.dolAmrothTable, 0);
-		for (int i1421 : new int[] { -9, 9 }) {
+		for (int i1421 : new int[]{-9, 9}) {
 			for (int k114 = 14; k114 <= 16; ++k114) {
 				setBlockAndMetadata(world, i1421, 1, k114, doubleRockSlabBlock, rockSlabMeta);
 				setAir(world, i1421, 2, k114);
@@ -635,7 +635,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 			setBlockAndMetadata(world, i1421, 3, 15, slabBlock, slabMeta | 8);
 			setBlockAndMetadata(world, i1421, 3, 16, stairBlock, 6);
 		}
-		int[] j18 = { -8, 7 };
+		int[] j18 = {-8, 7};
 		i18 = j18.length;
 		for (k1 = 0; k1 < i18; ++k1) {
 			for (int i25 = i142 = j18[k1]; i25 <= i142 + 1; ++i25) {
@@ -654,7 +654,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 		}
 		generateWindow(world, -4, 3, 18);
 		generateWindow(world, 4, 3, 18);
-		for (int k1421 : new int[] { 14, 16 }) {
+		for (int k1421 : new int[]{14, 16}) {
 			setBlockAndMetadata(world, -1, 9, k1421, Blocks.stained_hardened_clay, 3);
 			setBlockAndMetadata(world, 0, 9, k1421, Blocks.stained_hardened_clay, 11);
 			setBlockAndMetadata(world, 1, 9, k1421, Blocks.stained_hardened_clay, 3);
@@ -695,7 +695,7 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 				setBlockAndMetadata(world, i1, 7, 19, slabBlock, slabMeta);
 				continue;
 			}
-			if (i22 >= 2) {
+			if (i22 == 2) {
 				setBlockAndMetadata(world, i1, 7, 19, slabBlock, slabMeta | 8);
 				continue;
 			}
@@ -714,8 +714,8 @@ public class LOTRWorldGenDolAmrothStables extends LOTRWorldGenStructureBase2 {
 				continue;
 			}
 			if (j1 == 0) {
-				setBlockAndMetadata(world, i, j1, k, Blocks.grass, 0);
-				setGrassToDirt(world, i, j1 - 1, k);
+				setBlockAndMetadata(world, i, 0, k, Blocks.grass, 0);
+				setGrassToDirt(world, i, -1, k);
 				continue;
 			}
 			setBlockAndMetadata(world, i, j1, k, Blocks.dirt, 0);

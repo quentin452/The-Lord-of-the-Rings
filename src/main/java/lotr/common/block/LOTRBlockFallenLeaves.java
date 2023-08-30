@@ -16,7 +16,7 @@ import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRBlockFallenLeaves extends Block implements IShearable {
-	public static List<LOTRBlockFallenLeaves> allFallenLeaves = new ArrayList<>();
+	public static Collection<LOTRBlockFallenLeaves> allFallenLeaves = new ArrayList<>();
 	public Block[] leafBlocks;
 
 	public LOTRBlockFallenLeaves() {
@@ -52,7 +52,7 @@ public class LOTRBlockFallenLeaves extends Block implements IShearable {
 		return canBlockStay(world, i, j, k);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int colorMultiplier(IBlockAccess world, int i, int j, int k) {
 		int meta = world.getBlockMetadata(i, j, k);
@@ -65,7 +65,7 @@ public class LOTRBlockFallenLeaves extends Block implements IShearable {
 		return i;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		Object[] obj = leafBlockMetaFromFallenMeta(j);
@@ -81,7 +81,7 @@ public class LOTRBlockFallenLeaves extends Block implements IShearable {
 		return leafBlocks;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getRenderColor(int i) {
 		Object[] obj = leafBlockMetaFromFallenMeta(i);
@@ -93,12 +93,12 @@ public class LOTRBlockFallenLeaves extends Block implements IShearable {
 		return LOTRMod.proxy.getFallenLeavesRenderID();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < leafBlocks.length; ++i) {
 			Block leaf = leafBlocks[i];
-			ArrayList<ItemStack> leafTypes = new ArrayList<>();
+			List<ItemStack> leafTypes = new ArrayList<>();
 			leaf.getSubBlocks(Item.getItemFromBlock(leaf), leaf.getCreativeTabToDisplayOn(), leafTypes);
 			for (ItemStack leafItem : leafTypes) {
 				int meta = leafItem.getItemDamage();
@@ -120,13 +120,13 @@ public class LOTRBlockFallenLeaves extends Block implements IShearable {
 	public Object[] leafBlockMetaFromFallenMeta(int meta) {
 		Block leaf = leafBlocks[meta / 4];
 		int leafMeta = meta & 3;
-		return new Object[] { leaf, leafMeta };
+		return new Object[]{leaf, leafMeta};
 	}
 
 	@Override
 	public void onNeighborBlockChange(World world, int i, int j, int k, Block block) {
 		if (!canBlockStay(world, i, j, k)) {
-			this.dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
+			dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
 			world.setBlockToAir(i, j, k);
 		}
 	}
@@ -138,7 +138,7 @@ public class LOTRBlockFallenLeaves extends Block implements IShearable {
 		return drops;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}
@@ -160,7 +160,7 @@ public class LOTRBlockFallenLeaves extends Block implements IShearable {
 				if (leafBlock != block) {
 					continue;
 				}
-				return new Object[] { fallenLeaves, i * 4 + meta };
+				return new Object[]{fallenLeaves, i * 4 + meta};
 			}
 		}
 		return null;

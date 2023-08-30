@@ -42,7 +42,7 @@ public class LOTRRoadGenerator {
 				bridgeBase = roadTop = j + 1;
 				int maxBridgeTop = j + 6;
 				float bridgeHeight = 0.0f;
-				for (int j1 = j - 1; j1 > 0 && blocks[indexLower = xzIndex * ySize + j1].getMaterial().isLiquid(); --j1) {
+				for (int j1 = j - 1; j1 > 0 && blocks[xzIndex * ySize + j1].getMaterial().isLiquid(); --j1) {
 					bridgeHeight += 0.5f;
 				}
 				int bridgeHeightInt = (int) Math.floor(bridgeHeight);
@@ -64,10 +64,10 @@ public class LOTRRoadGenerator {
 				LOTRRoadType.RoadBlock bridgeBlockSlab = bridgeType.getBlock(rand, true);
 				LOTRRoadType.RoadBlock bridgeEdge = bridgeType.getEdge(rand);
 				LOTRRoadType.RoadBlock bridgeFence = bridgeType.getFence(rand);
-				boolean fence = LOTRRoadGenerator.isFenceAt(i, k);
+				boolean fence = isFenceAt(i, k);
 				int index2 = xzIndex * ySize + roadTop;
 				if (fence) {
-					boolean pillar = LOTRRoadGenerator.isPillarAt(i, k);
+					boolean pillar = isPillarAt(i, k);
 					if (pillar) {
 						int pillarIndex;
 						for (int j2 = roadTop + 4; j2 > 0 && !blocks[pillarIndex = xzIndex * ySize + j2].isOpaqueCube(); --j2) {
@@ -151,7 +151,8 @@ public class LOTRRoadGenerator {
 				break;
 			}
 			boolean adjRoad = false;
-			block5: for (i1 = -2; i1 <= 2; ++i1) {
+			block5:
+			for (i1 = -2; i1 <= 2; ++i1) {
 				for (int k1 = -2; k1 <= 2; ++k1) {
 					if (i1 == 0 && k1 == 0 || !LOTRRoads.isRoadAt(i + i1, k + k1)) {
 						continue;
@@ -167,7 +168,8 @@ public class LOTRRoadGenerator {
 				metadata[index] = (byte) flower.metadata;
 			} else {
 				adjRoad = false;
-				block7: for (i1 = -3; i1 <= 3; ++i1) {
+				block7:
+				for (i1 = -3; i1 <= 3; ++i1) {
 					for (int k1 = -3; k1 <= 3; ++k1) {
 						if (Math.abs(i1) <= 2 && Math.abs(k1) <= 2 || !LOTRRoads.isRoadAt(i + i1, k + k1)) {
 							continue;
@@ -188,7 +190,7 @@ public class LOTRRoadGenerator {
 	}
 
 	public static boolean isBridgeEdgePillar(int i, int k) {
-		return LOTRRoads.isRoadAt(i, k) && LOTRRoadGenerator.isFenceAt(i, k) && LOTRRoadGenerator.isPillarAt(i, k);
+		return LOTRRoads.isRoadAt(i, k) && isFenceAt(i, k) && isPillarAt(i, k);
 	}
 
 	public static boolean isFenceAt(int i, int k) {
@@ -207,7 +209,7 @@ public class LOTRRoadGenerator {
 		int pRange = 8;
 		int xmod = IntMath.mod(i, pRange);
 		if (IntMath.mod(xmod + IntMath.mod(k, pRange), pRange) == 0) {
-			return !LOTRRoadGenerator.isBridgeEdgePillar(i + 1, k - 1) && !LOTRRoadGenerator.isBridgeEdgePillar(i + 1, k + 1);
+			return !isBridgeEdgePillar(i + 1, k - 1) && !isBridgeEdgePillar(i + 1, k + 1);
 		}
 		return false;
 	}

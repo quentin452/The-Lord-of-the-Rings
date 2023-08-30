@@ -8,7 +8,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class LOTRDispenseRhunFireJar extends BehaviorDefaultDispenseItem {
-	public BehaviorDefaultDispenseItem dispenseDefault = new BehaviorDefaultDispenseItem();
+	public IBehaviorDispenseItem dispenseDefault = new BehaviorDefaultDispenseItem();
 
 	@Override
 	public ItemStack dispenseStack(IBlockSource dispenser, ItemStack itemstack) {

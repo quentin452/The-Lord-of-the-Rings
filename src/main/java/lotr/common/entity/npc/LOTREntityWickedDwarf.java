@@ -10,16 +10,11 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class LOTREntityWickedDwarf extends LOTREntityDwarf implements LOTRTradeable.Smith {
-	public static ItemStack[] wickedWeapons = { new ItemStack(LOTRMod.swordDwarven), new ItemStack(LOTRMod.battleaxeDwarven), new ItemStack(LOTRMod.hammerDwarven) };
+	public static ItemStack[] wickedWeapons = {new ItemStack(LOTRMod.swordDwarven), new ItemStack(LOTRMod.battleaxeDwarven), new ItemStack(LOTRMod.hammerDwarven)};
 
 	public LOTREntityWickedDwarf(World world) {
 		super(world);
-		this.addTargetTasks(true);
-	}
-
-	@Override
-	public boolean canDwarfSpawnAboveGround() {
-		return true;
+		addTargetTasks(true);
 	}
 
 	@Override
@@ -33,7 +28,7 @@ public class LOTREntityWickedDwarf extends LOTREntityDwarf implements LOTRTradea
 	@Override
 	public boolean canTradeWith(EntityPlayer entityplayer) {
 		boolean hasSuitableAlignment = false;
-		for (LOTRFaction f : LOTREntityWickedDwarf.getTradeFactions()) {
+		for (LOTRFaction f : getTradeFactions()) {
 			if (LOTRLevelData.getData(entityplayer).getAlignment(f) < 100.0f) {
 				continue;
 			}
@@ -113,12 +108,7 @@ public class LOTREntityWickedDwarf extends LOTREntityDwarf implements LOTRTradea
 		return data;
 	}
 
-	@Override
-	public void setupNPCGender() {
-		familyInfo.setMale(true);
-	}
-
 	public static LOTRFaction[] getTradeFactions() {
-		return new LOTRFaction[] { LOTRFaction.MORDOR, LOTRFaction.ANGMAR, LOTRFaction.RHUDEL };
+		return new LOTRFaction[]{LOTRFaction.MORDOR, LOTRFaction.ANGMAR, LOTRFaction.RHUDEL};
 	}
 }

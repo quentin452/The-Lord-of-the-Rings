@@ -36,14 +36,14 @@ public class LOTRItemNPCRespawner extends Item {
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int side, float f, float f1, float f2) {
 		if (entityplayer.capabilities.isCreativeMode) {
 			if (!world.isRemote) {
-				placeSpawnerAt(world, i += Facing.offsetsXForSide[side], j += Facing.offsetsYForSide[side], k += Facing.offsetsZForSide[side]);
+				placeSpawnerAt(world, i + Facing.offsetsXForSide[side], j + Facing.offsetsYForSide[side], k + Facing.offsetsZForSide[side]);
 			}
 			return true;
 		}
 		return false;
 	}
 
-	public boolean placeSpawnerAt(World world, int i, int j, int k) {
+	public void placeSpawnerAt(World world, int i, int j, int k) {
 		LOTREntityNPCRespawner spawner = new LOTREntityNPCRespawner(world);
 		double f = 0.1;
 		double f1 = 1.0 - f;
@@ -53,9 +53,7 @@ public class LOTRItemNPCRespawner extends Item {
 			double c = 0.01;
 			if (world.getCollidingBoundingBoxes(spawner, spawner.boundingBox.contract(c, c, c)).isEmpty()) {
 				world.spawnEntityInWorld(spawner);
-				return true;
 			}
 		}
-		return false;
 	}
 }

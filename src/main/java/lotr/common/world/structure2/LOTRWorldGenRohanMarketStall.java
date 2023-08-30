@@ -10,9 +10,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public abstract class LOTRWorldGenRohanMarketStall extends LOTRWorldGenRohanStructure {
-	public static Class[] allStallTypes = { Blacksmith.class, Farmer.class, Lumber.class, Builder.class, Brewer.class, Butcher.class, Fish.class, Baker.class, Orcharder.class };
+	public static Class[] allStallTypes = {Blacksmith.class, Farmer.class, Lumber.class, Builder.class, Brewer.class, Butcher.class, Fish.class, Baker.class, Orcharder.class};
 
-	public LOTRWorldGenRohanMarketStall(boolean flag) {
+	protected LOTRWorldGenRohanMarketStall(boolean flag) {
 		super(flag);
 	}
 
@@ -24,7 +24,7 @@ public abstract class LOTRWorldGenRohanMarketStall extends LOTRWorldGenRohanStru
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int k1;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 3);
+		setOriginAndRotation(world, i, j, k, rotation, 3);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -2; i1 <= 2; ++i1) {
@@ -120,7 +120,6 @@ public abstract class LOTRWorldGenRohanMarketStall extends LOTRWorldGenRohanStru
 		@Override
 		public void generateRoof(World world, Random random, int i1, int j1, int k1) {
 			int i2 = Math.abs(i1);
-			Math.abs(k1);
 			if (i2 % 2 == 0) {
 				setBlockAndMetadata(world, i1, j1, k1, Blocks.wool, 12);
 			} else {
@@ -163,7 +162,7 @@ public abstract class LOTRWorldGenRohanMarketStall extends LOTRWorldGenRohanStru
 		@Override
 		public void generateRoof(World world, Random random, int i1, int j1, int k1) {
 			int i2 = Math.abs(i1);
-			Math.abs(k1);
+			//noinspection BadOddness
 			if (i2 % 2 == 1) {
 				setBlockAndMetadata(world, i1, j1, k1, Blocks.wool, 12);
 			} else {
@@ -248,6 +247,7 @@ public abstract class LOTRWorldGenRohanMarketStall extends LOTRWorldGenRohanStru
 		public void generateRoof(World world, Random random, int i1, int j1, int k1) {
 			int i2 = Math.abs(i1);
 			int k2 = Math.abs(k1);
+			//noinspection BadOddness
 			if (k2 % 2 == 1) {
 				setBlockAndMetadata(world, i1, j1, k1, Blocks.wool, 11);
 			} else if (i2 % 2 == k2 / 2 % 2) {

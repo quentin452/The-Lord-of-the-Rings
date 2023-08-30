@@ -1,7 +1,5 @@
 package lotr.client.render.entity;
 
-import java.util.UUID;
-
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.authlib.GameProfile;
@@ -28,7 +26,7 @@ public abstract class LOTRRenderBiped extends RenderBiped {
 	public ModelBiped capeModel = new LOTRModelBiped();
 	public ModelBiped npcRenderPassModel;
 
-	public LOTRRenderBiped(ModelBiped model, float f) {
+	protected LOTRRenderBiped(ModelBiped model, float f) {
 		super(model, f);
 	}
 
@@ -116,7 +114,7 @@ public abstract class LOTRRenderBiped extends RenderBiped {
 					if (nbttagcompound.hasKey("SkullOwner", new NBTTagCompound().getId())) {
 						gameprofile = NBTUtil.func_152459_a(nbttagcompound.getCompoundTag("SkullOwner"));
 					} else if (nbttagcompound.hasKey("SkullOwner", new NBTTagString().getId()) && !StringUtils.isNullOrEmpty(nbttagcompound.getString("SkullOwner"))) {
-						gameprofile = new GameProfile((UUID) null, nbttagcompound.getString("SkullOwner"));
+						gameprofile = new GameProfile(null, nbttagcompound.getString("SkullOwner"));
 					}
 				}
 				TileEntitySkullRenderer.field_147536_b.func_152674_a(-0.5f, 0.0f, -0.5f, 1, 180.0f, headItem.getItemDamage(), gameprofile);

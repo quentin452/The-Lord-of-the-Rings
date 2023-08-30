@@ -10,7 +10,7 @@ public class LOTREntityAINPCMate extends EntityAIBase {
 	public LOTREntityNPC theNPC;
 	public World theWorld;
 	public LOTREntityNPC theSpouse;
-	public int spawnBabyDelay = 0;
+	public int spawnBabyDelay;
 	public double moveSpeed;
 
 	public LOTREntityAINPCMate(LOTREntityNPC npc, double d) {

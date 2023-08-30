@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityBreeInnkeeper extends LOTREntityBreeMan implements LOTRTradeable.Bartender {
 	public LOTREntityBreeInnkeeper(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcLocationName = "entity.lotr.BreeInnkeeper.locationName";
 	}
 
@@ -22,29 +22,29 @@ public class LOTREntityBreeInnkeeper extends LOTREntityBreeMan implements LOTRTr
 	@Override
 	public void dropBreeItems(boolean flag, int i) {
 		int j = rand.nextInt(3) + rand.nextInt(i + 1);
-		block6: for (int k = 0; k < j; ++k) {
+		for (int k = 0; k < j; ++k) {
 			int l = rand.nextInt(7);
 			switch (l) {
-			case 0:
-			case 1:
-			case 2: {
-				Item food = LOTRFoods.BREE.getRandomFood(rand).getItem();
-				entityDropItem(new ItemStack(food), 0.0f);
-				continue block6;
-			}
-			case 3: {
-				entityDropItem(new ItemStack(Items.gold_nugget, 2 + rand.nextInt(3)), 0.0f);
-				continue block6;
-			}
-			case 4:
-			case 5: {
-				entityDropItem(new ItemStack(LOTRMod.mug), 0.0f);
-				continue block6;
-			}
-			case 6: {
-				Item drink = LOTRFoods.BREE.getRandomFood(rand).getItem();
-				entityDropItem(new ItemStack(drink, 1, 1 + rand.nextInt(3)), 0.0f);
-			}
+				case 0:
+				case 1:
+				case 2: {
+					Item food = LOTRFoods.BREE.getRandomFood(rand).getItem();
+					entityDropItem(new ItemStack(food), 0.0f);
+					continue;
+				}
+				case 3: {
+					entityDropItem(new ItemStack(Items.gold_nugget, 2 + rand.nextInt(3)), 0.0f);
+					continue;
+				}
+				case 4:
+				case 5: {
+					entityDropItem(new ItemStack(LOTRMod.mug), 0.0f);
+					continue;
+				}
+				case 6: {
+					Item drink = LOTRFoods.BREE.getRandomFood(rand).getItem();
+					entityDropItem(new ItemStack(drink, 1, 1 + rand.nextInt(3)), 0.0f);
+				}
 			}
 		}
 	}

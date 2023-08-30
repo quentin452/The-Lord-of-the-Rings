@@ -61,15 +61,15 @@ public class LOTRBiomeGenRhunLand extends LOTRBiome {
 		npcSpawnList.conquestGainRate = 0.75f;
 		variantChance = 0.3f;
 		addBiomeVariantSet(LOTRBiomeVariant.SET_NORMAL_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_OLIVE, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_DATE, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_POMEGRANATE, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.1f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_ALMOND, 0.1f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.1f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_OLIVE, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_DATE, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_POMEGRANATE, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.1f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_ALMOND, 0.1f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.1f);
 		decorator.setTreeCluster(8, 20);
 		decorator.willowPerChunk = 1;
 		decorator.flowersPerChunk = 6;
@@ -182,11 +182,6 @@ public class LOTRBiomeGenRhunLand extends LOTRBiome {
 	@Override
 	public LOTRRoadType getRoadBlock() {
 		return LOTRRoadType.RHUN;
-	}
-
-	@Override
-	public float getTreeIncreaseChance() {
-		return 0.1f;
 	}
 
 	@Override

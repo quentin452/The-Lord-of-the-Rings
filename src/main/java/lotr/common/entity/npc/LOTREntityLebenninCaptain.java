@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityLebenninCaptain extends LOTREntityGondorSoldier implements LOTRUnitTradeable {
 	public LOTREntityLebenninCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.GONDOR;
 		npcShield = LOTRShields.ALIGNMENT_LEBENNIN;
 	}

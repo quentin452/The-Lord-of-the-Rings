@@ -7,5 +7,5 @@ public interface LOTRTravellingTrader extends LOTRTradeable {
 
 	String getDepartureSpeech();
 
-	void startTraderVisiting(EntityPlayer var1);
+	void startTraderVisiting(EntityPlayer entityplayer);
 }

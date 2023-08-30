@@ -9,7 +9,7 @@ public class LOTRWorldGenUmbarStatue extends LOTRWorldGenSouthronStatue {
 
 	@Override
 	public String getRandomStatueStrscan(Random random) {
-		String[] statues = { "pillar", "snake", "pharazon" };
+		String[] statues = {"pillar", "snake", "pharazon"};
 		return "umbar_statue_" + statues[random.nextInt(statues.length)];
 	}
 

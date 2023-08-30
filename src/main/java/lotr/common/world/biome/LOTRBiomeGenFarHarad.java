@@ -13,7 +13,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.*;
 
 public abstract class LOTRBiomeGenFarHarad extends LOTRBiome {
-	public LOTRBiomeGenFarHarad(int i, boolean major) {
+	protected LOTRBiomeGenFarHarad(int i, boolean major) {
 		super(i, major);
 		spawnableCreatureList.clear();
 		spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(LOTREntityLion.class, 4, 2, 4));

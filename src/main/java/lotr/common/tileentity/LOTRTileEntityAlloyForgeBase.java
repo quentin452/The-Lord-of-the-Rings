@@ -146,8 +146,8 @@ public abstract class LOTRTileEntityAlloyForgeBase extends LOTRTileEntityForgeBa
 
 	@Override
 	public void setupForgeSlots() {
-		inputSlots = new int[] { 4, 5, 6, 7 };
-		outputSlots = new int[] { 8, 9, 10, 11 };
+		inputSlots = new int[]{4, 5, 6, 7};
+		outputSlots = new int[]{8, 9, 10, 11};
 		fuelSlot = 12;
 	}
 

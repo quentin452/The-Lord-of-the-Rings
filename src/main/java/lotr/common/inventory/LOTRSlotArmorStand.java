@@ -17,7 +17,7 @@ public class LOTRSlotArmorStand extends Slot {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getBackgroundIconIndex() {
 		return ItemArmor.func_94602_b(armorSlot);
 	}

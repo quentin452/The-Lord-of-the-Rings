@@ -16,7 +16,7 @@ public class LOTRWorldGenNomadTentLarge extends LOTRWorldGenNomadStructure {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 8);
+		setOriginAndRotation(world, i, j, k, rotation, 8);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -42,8 +42,6 @@ public class LOTRWorldGenNomadTentLarge extends LOTRWorldGenNomadStructure {
 		}
 		for (int i1 = -10; i1 <= 10; ++i1) {
 			for (int k1 = -7; k1 <= 7; ++k1) {
-				Math.abs(i1);
-				Math.abs(k1);
 				if (!isSurface(world, i1, 0, k1)) {
 					laySandBase(world, i1, 0, k1);
 				}
@@ -68,7 +66,7 @@ public class LOTRWorldGenNomadTentLarge extends LOTRWorldGenNomadStructure {
 		setBlockAndMetadata(world, -4, 1, 4, bedBlock, 0);
 		setBlockAndMetadata(world, -4, 1, 5, bedBlock, 8);
 		placeWeaponRack(world, 0, 3, 6, 6, getRandomNomadWeapon(random));
-		this.placeChest(world, random, -4, 1, -5, LOTRMod.chestBasket, 3, LOTRChestContents.NOMAD_TENT);
+		placeChest(world, random, -4, 1, -5, LOTRMod.chestBasket, 3, LOTRChestContents.NOMAD_TENT);
 		placeWallBanner(world, 0, 5, 7, LOTRItemBanner.BannerType.HARAD_NOMAD, 2);
 		int nomads = 1 + random.nextInt(3);
 		for (int l = 0; l < nomads; ++l) {

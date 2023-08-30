@@ -35,11 +35,6 @@ public class LOTREntityGondorSoldier extends LOTREntityGondorLevyman {
 	}
 
 	@Override
-	public float getAlignmentBonus() {
-		return 2.0f;
-	}
-
-	@Override
 	public void onAttackModeChange(LOTREntityNPC.AttackMode mode, boolean mounted) {
 		if (mode == LOTREntityNPC.AttackMode.IDLE) {
 			if (mounted) {
@@ -59,20 +54,20 @@ public class LOTREntityGondorSoldier extends LOTREntityGondorLevyman {
 		data = super.onSpawnWithEgg(data);
 		int i = rand.nextInt(6);
 		switch (i) {
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.hammerGondor));
-			break;
-		case 4:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordGondor));
-			break;
-		case 5:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pikeGondor));
-			break;
-		default:
-			break;
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.hammerGondor));
+				break;
+			case 4:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordGondor));
+				break;
+			case 5:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pikeGondor));
+				break;
+			default:
+				break;
 		}
 		if (rand.nextInt(3) == 0) {
 			npcItemsInv.setMeleeWeaponMounted(new ItemStack(LOTRMod.lanceGondor));

@@ -19,7 +19,7 @@ public class LOTRWorldGenDunlendingTavern extends LOTRWorldGenDunlandStructure {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 8);
+		setOriginAndRotation(world, i, j, k, rotation, 8);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -84,9 +84,9 @@ public class LOTRWorldGenDunlendingTavern extends LOTRWorldGenDunlandStructure {
 		placeFlowerPot(world, 8, 2, 5, getRandomFlower(world, random));
 		placeFlowerPot(world, -8, 2, -4, getRandomFlower(world, random));
 		placeFlowerPot(world, -8, 2, 4, getRandomFlower(world, random));
-		this.placeChest(world, random, 7, 1, -5, LOTRMod.chestBasket, 5, LOTRChestContents.DUNLENDING_HOUSE);
-		this.placeBarrel(world, random, 7, 2, 6, 2, LOTRFoods.DUNLENDING_DRINK);
-		this.placeBarrel(world, random, 4, 2, 6, 2, LOTRFoods.DUNLENDING_DRINK);
+		placeChest(world, random, 7, 1, -5, LOTRMod.chestBasket, 5, LOTRChestContents.DUNLENDING_HOUSE);
+		placeBarrel(world, random, 7, 2, 6, 2, LOTRFoods.DUNLENDING_DRINK);
+		placeBarrel(world, random, 4, 2, 6, 2, LOTRFoods.DUNLENDING_DRINK);
 		placeFoodOrDrink(world, random, -6, 2, -6);
 		placeFoodOrDrink(world, random, -5, 2, -6);
 		placeFoodOrDrink(world, random, -6, 2, -1);
@@ -110,10 +110,10 @@ public class LOTRWorldGenDunlendingTavern extends LOTRWorldGenDunlandStructure {
 		placeFoodOrDrink(world, random, 7, 2, -6);
 		String[] tavernName = LOTRNames.getDunlendingTavernName(random);
 		String tavernNameNPC = tavernName[0] + " " + tavernName[1];
-		placeSign(world, 0, 3, -8, Blocks.wall_sign, 2, new String[] { "", tavernName[0], tavernName[1], "" });
+		placeSign(world, 0, 3, -8, Blocks.wall_sign, 2, new String[]{"", tavernName[0], tavernName[1], ""});
 		placeWallBanner(world, -8, 6, 0, LOTRItemBanner.BannerType.DUNLAND, 1);
 		placeWallBanner(world, 8, 6, 0, LOTRItemBanner.BannerType.DUNLAND, 3);
-		for (int k1 : new int[] { -3, 3 }) {
+		for (int k1 : new int[]{-3, 3}) {
 			placeDunlandItemFrame(world, random, -3, 2, k1, 1);
 			placeDunlandItemFrame(world, random, 3, 2, k1, 3);
 		}
@@ -135,7 +135,7 @@ public class LOTRWorldGenDunlendingTavern extends LOTRWorldGenDunlandStructure {
 	public void placeFoodOrDrink(World world, Random random, int i, int j, int k) {
 		if (random.nextBoolean()) {
 			if (random.nextBoolean()) {
-				this.placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.DUNLENDING_DRINK);
+				placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.DUNLENDING_DRINK);
 			} else {
 				Block plateBlock;
 				plateBlock = random.nextBoolean() ? LOTRMod.woodPlateBlock : LOTRMod.ceramicPlateBlock;

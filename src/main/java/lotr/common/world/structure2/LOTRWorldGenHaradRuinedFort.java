@@ -17,7 +17,7 @@ public class LOTRWorldGenHaradRuinedFort extends LOTRWorldGenStructureBase2 {
 		int j1;
 		int k1;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 4);
+		setOriginAndRotation(world, i, j, k, rotation, 4);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -7; i1 <= 12; ++i1) {
@@ -60,40 +60,40 @@ public class LOTRWorldGenHaradRuinedFort extends LOTRWorldGenStructureBase2 {
 		addBlockMetaAliasOption("BRICK_WALL", 1, LOTRMod.wall3, 3);
 		addBlockMetaAliasOption("PILLAR", 4, LOTRMod.pillar, 5);
 		generateStrScan(world, random, 0, 1, 0);
-		ArrayList<int[]> chestCoords = new ArrayList<>();
-		chestCoords.add(new int[] { 3, 1, -2 });
-		chestCoords.add(new int[] { 0, 1, -2 });
-		chestCoords.add(new int[] { -3, 1, -2 });
-		chestCoords.add(new int[] { -6, 1, -2 });
-		chestCoords.add(new int[] { 8, 1, 0 });
-		chestCoords.add(new int[] { 10, 1, 1 });
-		chestCoords.add(new int[] { 11, 1, 3 });
-		chestCoords.add(new int[] { 8, 1, 3 });
-		chestCoords.add(new int[] { 6, 1, 3 });
-		chestCoords.add(new int[] { 3, 1, 3 });
-		chestCoords.add(new int[] { 0, 1, 3 });
-		chestCoords.add(new int[] { -3, 1, 3 });
-		chestCoords.add(new int[] { -6, 1, 3 });
-		chestCoords.add(new int[] { 6, 2, -2 });
-		chestCoords.add(new int[] { 6, 2, 0 });
-		chestCoords.add(new int[] { 6, 6, -2 });
-		chestCoords.add(new int[] { -6, 6, -2 });
-		chestCoords.add(new int[] { -1, 6, -1 });
-		chestCoords.add(new int[] { 8, 6, 0 });
-		chestCoords.add(new int[] { 10, 6, 1 });
-		chestCoords.add(new int[] { 0, 6, 1 });
-		chestCoords.add(new int[] { -2, 6, 1 });
-		chestCoords.add(new int[] { -6, 6, 1 });
-		chestCoords.add(new int[] { 8, 6, 3 });
-		chestCoords.add(new int[] { 0, 6, 3 });
-		chestCoords.add(new int[] { -2, 6, 3 });
-		chestCoords.add(new int[] { -6, 6, 3 });
+		List<int[]> chestCoords = new ArrayList<>();
+		chestCoords.add(new int[]{3, 1, -2});
+		chestCoords.add(new int[]{0, 1, -2});
+		chestCoords.add(new int[]{-3, 1, -2});
+		chestCoords.add(new int[]{-6, 1, -2});
+		chestCoords.add(new int[]{8, 1, 0});
+		chestCoords.add(new int[]{10, 1, 1});
+		chestCoords.add(new int[]{11, 1, 3});
+		chestCoords.add(new int[]{8, 1, 3});
+		chestCoords.add(new int[]{6, 1, 3});
+		chestCoords.add(new int[]{3, 1, 3});
+		chestCoords.add(new int[]{0, 1, 3});
+		chestCoords.add(new int[]{-3, 1, 3});
+		chestCoords.add(new int[]{-6, 1, 3});
+		chestCoords.add(new int[]{6, 2, -2});
+		chestCoords.add(new int[]{6, 2, 0});
+		chestCoords.add(new int[]{6, 6, -2});
+		chestCoords.add(new int[]{-6, 6, -2});
+		chestCoords.add(new int[]{-1, 6, -1});
+		chestCoords.add(new int[]{8, 6, 0});
+		chestCoords.add(new int[]{10, 6, 1});
+		chestCoords.add(new int[]{0, 6, 1});
+		chestCoords.add(new int[]{-2, 6, 1});
+		chestCoords.add(new int[]{-6, 6, 1});
+		chestCoords.add(new int[]{8, 6, 3});
+		chestCoords.add(new int[]{0, 6, 3});
+		chestCoords.add(new int[]{-2, 6, 3});
+		chestCoords.add(new int[]{-6, 6, 3});
 		int chests = 2 + random.nextInt(4);
 		while (chestCoords.size() > chests) {
 			chestCoords.remove(random.nextInt(chestCoords.size()));
 		}
 		for (int[] coords : chestCoords) {
-			this.placeChest(world, random, coords[0], coords[1], coords[2], LOTRMod.chestBasket, MathHelper.getRandomIntegerInRange(random, 2, 4), LOTRChestContents.NEAR_HARAD_PYRAMID);
+			placeChest(world, random, coords[0], coords[1], coords[2], LOTRMod.chestBasket, MathHelper.getRandomIntegerInRange(random, 2, 4), LOTRChestContents.NEAR_HARAD_PYRAMID);
 		}
 		return true;
 	}

@@ -1,6 +1,7 @@
 package lotr.common.recipe;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import lotr.common.item.*;
 import net.minecraft.block.BlockColored;
@@ -32,7 +33,7 @@ public class LOTRRecipeHaradRobesDye implements IRecipe {
 			if (itemstack == null) {
 				continue;
 			}
-			if (itemstack.getItem() instanceof LOTRItemHaradRobes && ((LOTRItemHaradRobes) itemstack.getItem()).getArmorMaterial() == robeMaterial) {
+			if (itemstack.getItem() instanceof LOTRItemHaradRobes && ((ItemArmor) itemstack.getItem()).getArmorMaterial() == robeMaterial) {
 				if (robes != null) {
 					return null;
 				}
@@ -72,7 +73,7 @@ public class LOTRRecipeHaradRobesDye implements IRecipe {
 		int r = rgb[0] / coloredItems;
 		int g = rgb[1] / coloredItems;
 		int b = rgb[2] / coloredItems;
-		float averageColor = (float) totalColor / (float) coloredItems;
+		float averageColor = (float) totalColor / coloredItems;
 		float maxColor = Math.max(r, Math.max(g, b));
 		r = (int) (r * averageColor / maxColor);
 		g = (int) (g * averageColor / maxColor);
@@ -95,13 +96,13 @@ public class LOTRRecipeHaradRobesDye implements IRecipe {
 	@Override
 	public boolean matches(InventoryCrafting inv, World world) {
 		ItemStack robes = null;
-		ArrayList<ItemStack> dyes = new ArrayList<>();
+		Collection<ItemStack> dyes = new ArrayList<>();
 		for (int i = 0; i < inv.getSizeInventory(); ++i) {
 			ItemStack itemstack = inv.getStackInSlot(i);
 			if (itemstack == null) {
 				continue;
 			}
-			if (itemstack.getItem() instanceof LOTRItemHaradRobes && ((LOTRItemHaradRobes) itemstack.getItem()).getArmorMaterial() == robeMaterial) {
+			if (itemstack.getItem() instanceof LOTRItemHaradRobes && ((ItemArmor) itemstack.getItem()).getArmorMaterial() == robeMaterial) {
 				if (robes != null) {
 					return false;
 				}

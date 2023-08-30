@@ -31,11 +31,11 @@ public class LOTRRenderEntJar extends TileEntitySpecialRenderer {
 		GL11.glBlendFunc(770, 771);
 		float transparency = 0.5f;
 		Tessellator tessellator = Tessellator.instance;
-		IIcon icon = null;
-		float minU = 0.0f;
-		float maxU = 0.0f;
-		float minV = 0.0f;
-		float maxV = 0.0f;
+		IIcon icon;
+		float minU;
+		float maxU;
+		float minV;
+		float maxV;
 		int color = 16777215;
 		if (jar.drinkMeta >= 0) {
 			bindTexture(TextureMap.locationItemsTexture);

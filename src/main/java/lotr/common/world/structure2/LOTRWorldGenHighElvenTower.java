@@ -21,7 +21,7 @@ public class LOTRWorldGenHighElvenTower extends LOTRWorldGenStructureBase2 {
 	public Block pillarBlock = LOTRMod.pillar;
 	public int pillarMeta = 10;
 	public Block floorBlock = Blocks.double_stone_slab;
-	public int floorMeta = 0;
+	public int floorMeta;
 	public Block roofBlock = LOTRMod.clayTileDyed;
 	public int roofMeta = 3;
 	public Block roofSlabBlock = LOTRMod.slabClayTileDyedSingle;
@@ -65,7 +65,7 @@ public class LOTRWorldGenHighElvenTower extends LOTRWorldGenStructureBase2 {
 		int radiusPlusOne = radius + 1;
 		int sections = 2 + random.nextInt(3);
 		int sectionHeight = 8;
-		this.setOriginAndRotation(world, i, j, k, rotation, radius + 3);
+		setOriginAndRotation(world, i, j, k, rotation, radius + 3);
 		double radiusD = radius - 0.5;
 		double radiusDPlusOne = radiusD + 1.0;
 		int wallThresholdMin = (int) (radiusD * radiusD);
@@ -163,7 +163,7 @@ public class LOTRWorldGenHighElvenTower extends LOTRWorldGenStructureBase2 {
 		layFoundation(world, -1, -radius - 2);
 		layFoundation(world, 1, -radius - 2);
 		layFoundation(world, 2, -radius - 1);
-		for (int i18 : new int[] { -radius + 1, radius - 1 }) {
+		for (int i18 : new int[]{-radius + 1, radius - 1}) {
 			setBlockAndMetadata(world, i18, 2, -2, plankStairBlock, 7);
 			setBlockAndMetadata(world, i18, 2, 2, plankStairBlock, 6);
 			for (int k17 = -1; k17 <= 1; ++k17) {
@@ -175,13 +175,13 @@ public class LOTRWorldGenHighElvenTower extends LOTRWorldGenStructureBase2 {
 		for (int i19 = -1; i19 <= 1; ++i19) {
 			setBlockAndMetadata(world, i19, 2, radius - 1, plankSlabBlock, plankSlabMeta | 8);
 		}
-		for (int i18 : new int[] { -radius + 2, radius - 2 }) {
+		for (int i18 : new int[]{-radius + 2, radius - 2}) {
 			setBlockAndMetadata(world, i18, 2, -4, plankStairBlock, 7);
 			setBlockAndMetadata(world, i18, 2, -3, plankStairBlock, 6);
 			setBlockAndMetadata(world, i18, 2, 3, plankStairBlock, 7);
 			setBlockAndMetadata(world, i18, 2, 4, plankStairBlock, 6);
 		}
-		int[] i19 = { -radius + 2, radius - 2 };
+		int[] i19 = {-radius + 2, radius - 2};
 		k13 = i19.length;
 		for (i22 = 0; i22 < k13; ++i22) {
 			k142 = i19[i22];
@@ -196,7 +196,7 @@ public class LOTRWorldGenHighElvenTower extends LOTRWorldGenStructureBase2 {
 				k2 = Math.abs(k13);
 				if ((i22 == radius - 1 && k2 <= 2 || k13 == radius - 1 && i22 <= 2 || i22 == radius - 2 && k2 >= 3 && k2 <= 4 || k2 == radius - 2 && i22 >= 3 && i22 <= 4) && random.nextInt(3) == 0) {
 					if (random.nextInt(3) == 0) {
-						this.placeMug(world, random, i15, 3, k13, random.nextInt(4), LOTRFoods.ELF_DRINK);
+						placeMug(world, random, i15, 3, k13, random.nextInt(4), LOTRFoods.ELF_DRINK);
 					} else {
 						placePlate(world, random, i15, 3, k13, plateBlock, LOTRFoods.ELF);
 					}
@@ -242,15 +242,15 @@ public class LOTRWorldGenHighElvenTower extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, -radius + 2, 6, 4, brickStairBlock, 6);
 		setBlockAndMetadata(world, radius - 2, 6, 3, brickStairBlock, 5);
 		setBlockAndMetadata(world, radius - 2, 6, 4, brickStairBlock, 6);
-		for (int k1421 : new int[] { -radius + 2, radius - 2 }) {
+		for (int k1421 : new int[]{-radius + 2, radius - 2}) {
 			setBlockAndMetadata(world, -2, 6, k1421, brickStairBlock, 4);
 			setBlockAndMetadata(world, 2, 6, k1421, brickStairBlock, 5);
 		}
-		for (int i18 : new int[] { -radius + 2, radius - 2 }) {
+		for (int i18 : new int[]{-radius + 2, radius - 2}) {
 			setBlockAndMetadata(world, i18, 6, -2, brickStairBlock, 7);
 			setBlockAndMetadata(world, i18, 6, 2, brickStairBlock, 6);
 		}
-		for (int k1421 : new int[] { -4, 4 }) {
+		for (int k1421 : new int[]{-4, 4}) {
 			setBlockAndMetadata(world, -4, 6, k1421, brickStairBlock, 4);
 			setBlockAndMetadata(world, 4, 6, k1421, brickStairBlock, 5);
 		}
@@ -344,7 +344,7 @@ public class LOTRWorldGenHighElvenTower extends LOTRWorldGenStructureBase2 {
 					setBlockAndMetadata(world, i110, sectionBase + 1, k12, plankBlock, plankMeta);
 					if (random.nextInt(4) == 0) {
 						if (random.nextBoolean()) {
-							this.placeMug(world, random, i110, sectionBase + 2, k12, random.nextInt(4), LOTRFoods.ELF_DRINK);
+							placeMug(world, random, i110, sectionBase + 2, k12, random.nextInt(4), LOTRFoods.ELF_DRINK);
 						} else {
 							placePlate(world, random, i110, sectionBase + 2, k12, plateBlock, LOTRFoods.ELF);
 						}
@@ -384,46 +384,46 @@ public class LOTRWorldGenHighElvenTower extends LOTRWorldGenStructureBase2 {
 			setBlockAndMetadata(world, 0, j16, 0, pillarBlock, pillarMeta);
 			int step = (j16 + 2) % 4;
 			switch (step) {
-			case 0:
-				for (i111 = -2; i111 <= -1; ++i111) {
-					setBlockAndMetadata(world, i111, j16, 0, brickSlabBlock, brickSlabMeta);
-					setBlockAndMetadata(world, i111, j16, 1, brickSlabBlock, brickSlabMeta | 8);
-					setBlockAndMetadata(world, i111, j16, 2, brickSlabBlock, brickSlabMeta | 8);
-					for (j2 = j16 + 1; j2 <= j16 + 3; ++j2) {
-						setAir(world, i111, j2, 0);
-						setAir(world, i111, j2, 1);
-						setAir(world, i111, j2, 2);
+				case 0:
+					for (i111 = -2; i111 <= -1; ++i111) {
+						setBlockAndMetadata(world, i111, j16, 0, brickSlabBlock, brickSlabMeta);
+						setBlockAndMetadata(world, i111, j16, 1, brickSlabBlock, brickSlabMeta | 8);
+						setBlockAndMetadata(world, i111, j16, 2, brickSlabBlock, brickSlabMeta | 8);
+						for (j2 = j16 + 1; j2 <= j16 + 3; ++j2) {
+							setAir(world, i111, j2, 0);
+							setAir(world, i111, j2, 1);
+							setAir(world, i111, j2, 2);
+						}
 					}
-				}
-				setBlockAndMetadata(world, 0, j16, 1, LOTRMod.highElvenTorch, 3);
-				continue;
-			case 1:
-				for (k12 = 1; k12 <= 2; ++k12) {
-					setBlockAndMetadata(world, 0, j16, k12, brickSlabBlock, brickSlabMeta);
-					setBlockAndMetadata(world, 1, j16, k12, brickSlabBlock, brickSlabMeta | 8);
-					setBlockAndMetadata(world, 2, j16, k12, brickSlabBlock, brickSlabMeta | 8);
-					for (j2 = j16 + 1; j2 <= j16 + 3; ++j2) {
-						setAir(world, 0, j2, k12);
-						setAir(world, 1, j2, k12);
-						setAir(world, 2, j2, k12);
+					setBlockAndMetadata(world, 0, j16, 1, LOTRMod.highElvenTorch, 3);
+					continue;
+				case 1:
+					for (k12 = 1; k12 <= 2; ++k12) {
+						setBlockAndMetadata(world, 0, j16, k12, brickSlabBlock, brickSlabMeta);
+						setBlockAndMetadata(world, 1, j16, k12, brickSlabBlock, brickSlabMeta | 8);
+						setBlockAndMetadata(world, 2, j16, k12, brickSlabBlock, brickSlabMeta | 8);
+						for (j2 = j16 + 1; j2 <= j16 + 3; ++j2) {
+							setAir(world, 0, j2, k12);
+							setAir(world, 1, j2, k12);
+							setAir(world, 2, j2, k12);
+						}
 					}
-				}
-				continue;
-			case 2:
-				for (i111 = 1; i111 <= 2; ++i111) {
-					setBlockAndMetadata(world, i111, j16, 0, brickSlabBlock, brickSlabMeta);
-					setBlockAndMetadata(world, i111, j16, -1, brickSlabBlock, brickSlabMeta | 8);
-					setBlockAndMetadata(world, i111, j16, -2, brickSlabBlock, brickSlabMeta | 8);
-					for (j2 = j16 + 1; j2 <= j16 + 3; ++j2) {
-						setAir(world, i111, j2, 0);
-						setAir(world, i111, j2, -1);
-						setAir(world, i111, j2, -2);
+					continue;
+				case 2:
+					for (i111 = 1; i111 <= 2; ++i111) {
+						setBlockAndMetadata(world, i111, j16, 0, brickSlabBlock, brickSlabMeta);
+						setBlockAndMetadata(world, i111, j16, -1, brickSlabBlock, brickSlabMeta | 8);
+						setBlockAndMetadata(world, i111, j16, -2, brickSlabBlock, brickSlabMeta | 8);
+						for (j2 = j16 + 1; j2 <= j16 + 3; ++j2) {
+							setAir(world, i111, j2, 0);
+							setAir(world, i111, j2, -1);
+							setAir(world, i111, j2, -2);
+						}
 					}
-				}
-				setBlockAndMetadata(world, 0, j16, -1, LOTRMod.highElvenTorch, 4);
-				continue;
-			default:
-				break;
+					setBlockAndMetadata(world, 0, j16, -1, LOTRMod.highElvenTorch, 4);
+					continue;
+				default:
+					break;
 			}
 			if (step != 3) {
 				continue;
@@ -547,15 +547,15 @@ public class LOTRWorldGenHighElvenTower extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, -radius + 2, sectionTopHeight + 1, 4, brickStairBlock, 2);
 		setBlockAndMetadata(world, radius - 2, sectionTopHeight + 1, 3, brickStairBlock, 1);
 		setBlockAndMetadata(world, radius - 2, sectionTopHeight + 1, 4, brickStairBlock, 2);
-		for (int k112 : new int[] { -radius + 2, radius - 2 }) {
+		for (int k112 : new int[]{-radius + 2, radius - 2}) {
 			setBlockAndMetadata(world, -2, sectionTopHeight + 1, k112, brickStairBlock, 0);
 			setBlockAndMetadata(world, 2, sectionTopHeight + 1, k112, brickStairBlock, 1);
 		}
-		for (int i112 : new int[] { -radius + 2, radius - 2 }) {
+		for (int i112 : new int[]{-radius + 2, radius - 2}) {
 			setBlockAndMetadata(world, i112, sectionTopHeight + 1, -2, brickStairBlock, 3);
 			setBlockAndMetadata(world, i112, sectionTopHeight + 1, 2, brickStairBlock, 2);
 		}
-		int[] i113 = { -4, 4 };
+		int[] i113 = {-4, 4};
 		int k111 = i113.length;
 		for (i2 = 0; i2 < k111; ++i2) {
 			int k112;

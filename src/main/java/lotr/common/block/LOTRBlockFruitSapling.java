@@ -17,20 +17,20 @@ public class LOTRBlockFruitSapling extends LOTRBlockSaplingBase {
 		int meta = world.getBlockMetadata(i, j, k) & 7;
 		WorldGenAbstractTree treeGen = null;
 		switch (meta) {
-		case 0:
-			treeGen = LOTRTreeType.APPLE.create(true, random);
-			break;
-		case 1:
-			treeGen = LOTRTreeType.PEAR.create(true, random);
-			break;
-		case 2:
-			treeGen = LOTRTreeType.CHERRY.create(true, random);
-			break;
-		case 3:
-			treeGen = LOTRTreeType.MANGO.create(true, random);
-			break;
-		default:
-			break;
+			case 0:
+				treeGen = LOTRTreeType.APPLE.create(true, random);
+				break;
+			case 1:
+				treeGen = LOTRTreeType.PEAR.create(true, random);
+				break;
+			case 2:
+				treeGen = LOTRTreeType.CHERRY.create(true, random);
+				break;
+			case 3:
+				treeGen = LOTRTreeType.MANGO.create(true, random);
+				break;
+			default:
+				break;
 		}
 		world.setBlock(i, j, k, Blocks.air, 0, 4);
 		if (treeGen != null && !treeGen.generate(world, random, i, j, k)) {

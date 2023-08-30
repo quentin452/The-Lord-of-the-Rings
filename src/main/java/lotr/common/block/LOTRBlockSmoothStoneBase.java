@@ -5,12 +5,12 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 
 public abstract class LOTRBlockSmoothStoneBase extends LOTRBlockBrickBase {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] topIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] sideIcons;
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j >= brickNames.length) {
@@ -22,7 +22,7 @@ public abstract class LOTRBlockSmoothStoneBase extends LOTRBlockBrickBase {
 		return sideIcons[j];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		topIcons = new IIcon[brickNames.length];

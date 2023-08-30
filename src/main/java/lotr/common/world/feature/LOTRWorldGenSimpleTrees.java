@@ -60,7 +60,7 @@ public class LOTRWorldGenSimpleTrees extends WorldGenAbstractTree {
 			for (i1 = i; i1 <= i + extraTrunkWidth && flag1; ++i1) {
 				for (k1 = k; k1 <= k + extraTrunkWidth && flag1; ++k1) {
 					Block block = world.getBlock(i1, j - 1, k1);
-					if (block.canSustainPlant((IBlockAccess) world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
+					if (block.canSustainPlant(world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 						continue;
 					}
 					flag1 = false;

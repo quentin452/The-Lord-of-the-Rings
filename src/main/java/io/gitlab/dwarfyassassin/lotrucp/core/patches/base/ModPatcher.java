@@ -5,7 +5,7 @@ import cpw.mods.fml.common.Loader;
 public abstract class ModPatcher extends Patcher {
 	public String modID;
 
-	public ModPatcher(String name, String modID) {
+	protected ModPatcher(String name, String modID) {
 		super(name);
 		this.modID = modID;
 	}

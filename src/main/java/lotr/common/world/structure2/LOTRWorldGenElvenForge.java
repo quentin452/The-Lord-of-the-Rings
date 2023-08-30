@@ -31,9 +31,9 @@ public abstract class LOTRWorldGenElvenForge extends LOTRWorldGenStructureBase2 
 	public int roofMeta;
 	public Block roofStairBlock;
 	public Block chestBlock = Blocks.chest;
-	public boolean ruined = false;
+	public boolean ruined;
 
-	public LOTRWorldGenElvenForge(boolean flag) {
+	protected LOTRWorldGenElvenForge(boolean flag) {
 		super(flag);
 	}
 
@@ -58,7 +58,7 @@ public abstract class LOTRWorldGenElvenForge extends LOTRWorldGenStructureBase2 
 		int j1;
 		int i2;
 		int k12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 7);
+		setOriginAndRotation(world, i, j, k, rotation, 7);
 		if (restrictions) {
 			int minHeight = 0;
 			int maxHeight = 0;
@@ -116,7 +116,7 @@ public abstract class LOTRWorldGenElvenForge extends LOTRWorldGenStructureBase2 
 				placeRoofStairs(world, -width, j12 - 1, k12, 4, random);
 				placeRoofStairs(world, width, j12 - 1, k12, 5, random);
 			}
-			if (l >= 3) {
+			if (l == 3) {
 				continue;
 			}
 			int width2 = 2 - l;
@@ -244,9 +244,9 @@ public abstract class LOTRWorldGenElvenForge extends LOTRWorldGenStructureBase2 
 		setBlockAndMetadata(world, -4, 2, 0, LOTRMod.elvenForge, 4);
 		setBlockAndMetadata(world, 4, 2, 0, LOTRMod.elvenForge, 5);
 		if (!ruined) {
-			this.placeChest(world, random, -1, 2, 4, chestBlock, 2, LOTRChestContents.ELVEN_FORGE);
+			placeChest(world, random, -1, 2, 4, chestBlock, 2, LOTRChestContents.ELVEN_FORGE);
 			setBlockAndMetadata(world, 0, 2, 4, Blocks.crafting_table, 0);
-			this.placeChest(world, random, 1, 2, 4, chestBlock, 2, LOTRChestContents.ELVEN_FORGE);
+			placeChest(world, random, 1, 2, 4, chestBlock, 2, LOTRChestContents.ELVEN_FORGE);
 		}
 		setBlockAndMetadata(world, 0, 1, -2, carvedBrickBlock, carvedBrickMeta);
 		setBlockAndMetadata(world, 0, 1, 2, carvedBrickBlock, carvedBrickMeta);

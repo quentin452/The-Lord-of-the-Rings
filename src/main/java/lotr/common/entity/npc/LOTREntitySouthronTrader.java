@@ -12,9 +12,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public abstract class LOTREntitySouthronTrader extends LOTREntityNearHaradrim implements LOTRTradeable {
-	public LOTREntitySouthronTrader(World world) {
+	protected LOTREntitySouthronTrader(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -36,15 +36,6 @@ public abstract class LOTREntitySouthronTrader extends LOTREntityNearHaradrim im
 	}
 
 	@Override
-	public void onAttackModeChange(LOTREntityNPC.AttackMode mode, boolean mounted) {
-		if (mode == LOTREntityNPC.AttackMode.IDLE) {
-			setCurrentItemOrArmor(0, npcItemsInv.getIdleItem());
-		} else {
-			setCurrentItemOrArmor(0, npcItemsInv.getMeleeWeapon());
-		}
-	}
-
-	@Override
 	public void onPlayerTrade(EntityPlayer entityplayer, LOTRTradeEntries.TradeType type, ItemStack itemstack) {
 		LOTRLevelData.getData(entityplayer).addAchievement(LOTRAchievement.tradeBazaarTrader);
 	}
@@ -52,7 +43,7 @@ public abstract class LOTREntitySouthronTrader extends LOTREntityNearHaradrim im
 	@Override
 	public IEntityLivingData onSpawnWithEgg(IEntityLivingData data) {
 		data = super.onSpawnWithEgg(data);
-		setCurrentItemOrArmor(4, LOTREntitySouthronTrader.createTraderTurban(rand));
+		setCurrentItemOrArmor(4, createTraderTurban(rand));
 		return data;
 	}
 

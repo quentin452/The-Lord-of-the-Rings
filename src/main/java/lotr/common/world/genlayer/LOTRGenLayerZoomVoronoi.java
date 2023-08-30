@@ -24,22 +24,22 @@ public class LOTRGenLayerZoomVoronoi extends LOTRGenLayer {
 		for (int k3 = 0; k3 < zSizeZoom - 1; ++k3) {
 			int i3;
 			int int00 = variants[k3 * xSizeZoom];
-			int int01 = variants[k3 + 1 * xSizeZoom];
+			int int01 = variants[k3 + xSizeZoom];
 			for (i3 = 0; i3 < xSizeZoom - 1; ++i3) {
 				double d0 = 3.6;
-				initChunkSeed(i3 + i1 << 2, k3 + k1 << 2);
+				initChunkSeed((long) i3 + i1 << 2, (long) k3 + k1 << 2);
 				double d00_a = nextInt(zoomScale) / zoomDivisor * d0;
 				double d00_b = nextInt(zoomScale) / zoomDivisor * d0;
-				initChunkSeed(i3 + i1 + 1 << 2, k3 + k1 << 2);
+				initChunkSeed((long) i3 + i1 + 1 << 2, (long) k3 + k1 << 2);
 				double d10_a = nextInt(zoomScale) / zoomDivisor * d0 + 4.0;
 				double d10_b = nextInt(zoomScale) / zoomDivisor * d0;
-				initChunkSeed(i3 + i1 << 2, k3 + k1 + 1 << 2);
+				initChunkSeed((long) i3 + i1 << 2, (long) k3 + k1 + 1 << 2);
 				double d01_a = nextInt(zoomScale) / zoomDivisor * d0;
 				double d01_b = nextInt(zoomScale) / zoomDivisor * d0 + 4.0;
-				initChunkSeed(i3 + i1 + 1 << 2, k3 + k1 + 1 << 2);
+				initChunkSeed((long) i3 + i1 + 1 << 2, (long) k3 + k1 + 1 << 2);
 				double d11_a = nextInt(zoomScale) / zoomDivisor * d0 + 4.0;
 				double d11_b = nextInt(zoomScale) / zoomDivisor * d0 + 4.0;
-				int int10 = variants[i3 + 1 + (k3 + 0) * xSizeZoom];
+				int int10 = variants[i3 + 1 + (k3) * xSizeZoom];
 				int int11 = variants[i3 + 1 + (k3 + 1) * xSizeZoom];
 				for (int k4 = 0; k4 < 4; ++k4) {
 					int index = ((k3 << 2) + k4) * i2 + (i3 << 2);

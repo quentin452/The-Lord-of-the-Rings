@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityHighElfLord extends LOTREntityHighElfWarrior implements LOTRUnitTradeable {
 	public LOTREntityHighElfLord(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.HIGH_ELF;
 	}
 

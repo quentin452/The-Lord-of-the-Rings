@@ -4,7 +4,7 @@ import java.util.*;
 
 public class LOTRBiomeVariantList {
 	public float totalWeight;
-	public List<VariantBucket> variantList = new ArrayList<>();
+	public Collection<VariantBucket> variantList = new ArrayList<>();
 
 	public void add(LOTRBiomeVariant v, float f) {
 		variantList.add(new VariantBucket(v, totalWeight, totalWeight + f));

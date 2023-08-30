@@ -9,7 +9,7 @@ public class LOTRBlockWallClayTile extends LOTRBlockWallBase {
 		super(LOTRMod.clayTile, 1);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return LOTRMod.clayTile.getIcon(i, j);

@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class LOTREntityUmbarBartender extends LOTREntityUmbarian implements LOTRTradeable.Bartender {
 	public LOTREntityUmbarBartender(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcLocationName = "entity.lotr.UmbarBartender.locationName";
 	}
 

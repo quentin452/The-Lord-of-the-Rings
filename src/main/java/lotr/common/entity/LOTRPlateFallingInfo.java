@@ -55,12 +55,10 @@ public class LOTRPlateFallingInfo implements IExtendedEntityProperties {
 				posXTicksAgo[l] = Math.max(posXTicksAgo[l], curPos);
 			}
 		}
-		if (updateTick % 1 == 0) {
-			for (l = posXTicksAgo.length - 1; l > 0; --l) {
-				posXTicksAgo[l] = posXTicksAgo[l - 1];
-			}
-			posXTicksAgo[0] = curPos;
+		for (l = posXTicksAgo.length - 1; l > 0; --l) {
+			posXTicksAgo[l] = posXTicksAgo[l - 1];
 		}
+		posXTicksAgo[0] = curPos;
 		++updateTick;
 		for (l = 0; l < fallerPos.length; ++l) {
 			prevFallerPos[l] = fallerPos[l];

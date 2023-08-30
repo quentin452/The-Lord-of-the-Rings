@@ -10,7 +10,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public class LOTRWorldGenBreeInn extends LOTRWorldGenBreeStructure {
-	public boolean hasPresets = false;
+	public boolean hasPresets;
 	public String[] presetInnName;
 	public String presetInnkeeperName;
 	public boolean presetIsMaleKeeper;
@@ -26,7 +26,7 @@ public class LOTRWorldGenBreeInn extends LOTRWorldGenBreeStructure {
 		int i1;
 		LOTREntityMan innkeeper;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 5, -2);
+		setOriginAndRotation(world, i, j, k, rotation, 5, -2);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -9; i1 <= 9; ++i1) {
@@ -77,10 +77,10 @@ public class LOTRWorldGenBreeInn extends LOTRWorldGenBreeStructure {
 		plantFlower(world, random, 8, 6, 0);
 		plantFlower(world, random, -8, 6, 1);
 		plantFlower(world, random, 8, 6, 1);
-		this.placeChest(world, random, -5, 1, -3, 3, LOTRChestContents.BREE_HOUSE);
+		placeChest(world, random, -5, 1, -3, 3, LOTRChestContents.BREE_HOUSE);
 		setBlockAndMetadata(world, -6, 2, -3, LOTRWorldGenBreeStructure.getRandomPieBlock(random), 0);
-		this.placeBarrel(world, random, -6, 2, 1, 4, LOTRFoods.BREE_DRINK);
-		this.placeBarrel(world, random, -4, 2, 4, 2, LOTRFoods.BREE_DRINK);
+		placeBarrel(world, random, -6, 2, 1, 4, LOTRFoods.BREE_DRINK);
+		placeBarrel(world, random, -4, 2, 4, 2, LOTRFoods.BREE_DRINK);
 		placeFoodOrDrink(world, random, 6, 2, -3);
 		placeFoodOrDrink(world, random, 5, 2, -3);
 		placeFoodOrDrink(world, random, 1, 2, -3);
@@ -122,9 +122,9 @@ public class LOTRWorldGenBreeInn extends LOTRWorldGenBreeStructure {
 			innName = presetInnName;
 		}
 		String innNameNPC = innName[0] + " " + innName[1];
-		placeSign(world, -2, 4, -7, Blocks.wall_sign, 2, new String[] { "", innName[0], innName[1], "" });
-		placeSign(world, -1, 4, -6, Blocks.wall_sign, 4, new String[] { "", innName[0], innName[1], "" });
-		placeSign(world, -3, 4, -6, Blocks.wall_sign, 5, new String[] { "", innName[0], innName[1], "" });
+		placeSign(world, -2, 4, -7, Blocks.wall_sign, 2, new String[]{"", innName[0], innName[1], ""});
+		placeSign(world, -1, 4, -6, Blocks.wall_sign, 4, new String[]{"", innName[0], innName[1], ""});
+		placeSign(world, -3, 4, -6, Blocks.wall_sign, 5, new String[]{"", innName[0], innName[1], ""});
 		if (hasPresets) {
 			innkeeper = presetIsHobbitKeeper ? new LOTREntityBreeHobbitInnkeeper(world) : new LOTREntityBreeInnkeeper(world);
 		} else {
@@ -138,9 +138,9 @@ public class LOTRWorldGenBreeInn extends LOTRWorldGenBreeStructure {
 		spawnNPCAndSetHome(innkeeper, world, -5, 1, 0, 4);
 		String[] innkeeperNameParts = innkeeper.getNPCName().split(" ");
 		if (innkeeperNameParts.length < 2) {
-			innkeeperNameParts = new String[] { innkeeperNameParts[0], "" };
+			innkeeperNameParts = new String[]{innkeeperNameParts[0], ""};
 		}
-		placeSign(world, -2, 3, -5, Blocks.wall_sign, 2, new String[] { "", "by " + innkeeperNameParts[0], innkeeperNameParts[1], "" });
+		placeSign(world, -2, 3, -5, Blocks.wall_sign, 2, new String[]{"", "by " + innkeeperNameParts[0], innkeeperNameParts[1], ""});
 		int men = 8 + random.nextInt(6);
 		for (int l = 0; l < men; ++l) {
 			LOTREntityMan breelander;
@@ -156,9 +156,9 @@ public class LOTRWorldGenBreeInn extends LOTRWorldGenBreeStructure {
 	public void placeFoodOrDrink(World world, Random random, int i, int j, int k) {
 		if (random.nextBoolean()) {
 			if (random.nextBoolean()) {
-				this.placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.BREE_DRINK);
+				placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.BREE_DRINK);
 			} else {
-				Block[] plates = { LOTRMod.plateBlock, LOTRMod.ceramicPlateBlock, LOTRMod.woodPlateBlock };
+				Block[] plates = {LOTRMod.plateBlock, LOTRMod.ceramicPlateBlock, LOTRMod.woodPlateBlock};
 				Block plateBlock = plates[random.nextInt(plates.length)];
 				if (random.nextBoolean()) {
 					setBlockAndMetadata(world, i, j, k, plateBlock, 0);

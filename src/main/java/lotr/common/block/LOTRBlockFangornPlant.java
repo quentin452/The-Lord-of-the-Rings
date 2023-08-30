@@ -9,9 +9,9 @@ import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 
 public class LOTRBlockFangornPlant extends LOTRBlockFlower {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] plantIcons;
-	public String[] plantNames = { "green", "brown", "gold", "yellow", "red", "silver" };
+	public String[] plantNames = {"green", "brown", "gold", "yellow", "red", "silver"};
 
 	public LOTRBlockFangornPlant() {
 		setFlowerBounds(0.2f, 0.0f, 0.2f, 0.8f, 0.8f, 0.8f);
@@ -22,7 +22,7 @@ public class LOTRBlockFangornPlant extends LOTRBlockFlower {
 		return i;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j >= plantNames.length) {
@@ -31,7 +31,7 @@ public class LOTRBlockFangornPlant extends LOTRBlockFlower {
 		return plantIcons[j];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int j = 0; j < plantNames.length; ++j) {
@@ -39,7 +39,7 @@ public class LOTRBlockFangornPlant extends LOTRBlockFlower {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		plantIcons = new IIcon[plantNames.length];

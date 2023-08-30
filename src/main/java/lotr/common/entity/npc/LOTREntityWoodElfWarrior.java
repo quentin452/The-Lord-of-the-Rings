@@ -80,10 +80,10 @@ public class LOTREntityWoodElfWarrior extends LOTREntityWoodElf {
 		setCurrentItemOrArmor(1, new ItemStack(LOTRMod.bootsWoodElven));
 		setCurrentItemOrArmor(2, new ItemStack(LOTRMod.legsWoodElven));
 		setCurrentItemOrArmor(3, new ItemStack(LOTRMod.bodyWoodElven));
-		if (rand.nextInt(10) != 0) {
-			setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetWoodElven));
-		} else {
+		if (rand.nextInt(10) == 0) {
 			setCurrentItemOrArmor(4, null);
+		} else {
+			setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetWoodElven));
 		}
 		return data;
 	}

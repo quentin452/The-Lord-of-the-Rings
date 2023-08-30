@@ -54,7 +54,7 @@ public class LOTRVillageGenHaradNomad extends LOTRVillageGen {
 
 		public void setupVillage(Random random) {
 			if (villageType == VillageType.SMALL) {
-				this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+				addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 					@Override
 					public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -64,7 +64,7 @@ public class LOTRVillageGenHaradNomad extends LOTRVillageGen {
 						spawner.setBlockEnemySpawnRange(40);
 					}
 				}, 0, 0, 0);
-				this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+				addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 					@Override
 					public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -74,9 +74,9 @@ public class LOTRVillageGenHaradNomad extends LOTRVillageGen {
 						spawner.setBlockEnemySpawnRange(40);
 					}
 				}, 0, 0, 0);
-				this.addStructure(new LOTRWorldGenNomadTentLarge(false), 0, -8, 0, true);
+				addStructure(new LOTRWorldGenNomadTentLarge(false), 0, -8, 0, true);
 			} else if (villageType == VillageType.BIG) {
-				this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+				addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 					@Override
 					public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -86,7 +86,7 @@ public class LOTRVillageGenHaradNomad extends LOTRVillageGen {
 						spawner.setBlockEnemySpawnRange(60);
 					}
 				}, 0, 0, 0);
-				this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+				addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 					@Override
 					public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -96,11 +96,11 @@ public class LOTRVillageGenHaradNomad extends LOTRVillageGen {
 						spawner.setBlockEnemySpawnRange(60);
 					}
 				}, 0, 0, 0);
-				this.addStructure(new LOTRWorldGenNomadWell(false), 0, 0, 0, true);
-				this.addStructure(new LOTRWorldGenNomadChieftainTent(false), 0, 14, 0, true);
-				this.addStructure(new LOTRWorldGenNomadBazaarTent(false), 0, -14, 2, true);
-				this.addStructure(new LOTRWorldGenNomadTentLarge(false), -14, 0, 1, true);
-				this.addStructure(new LOTRWorldGenNomadTentLarge(false), 14, 0, 3, true);
+				addStructure(new LOTRWorldGenNomadWell(false), 0, 0, 0, true);
+				addStructure(new LOTRWorldGenNomadChieftainTent(false), 0, 14, 0, true);
+				addStructure(new LOTRWorldGenNomadBazaarTent(false), 0, -14, 2, true);
+				addStructure(new LOTRWorldGenNomadTentLarge(false), -14, 0, 1, true);
+				addStructure(new LOTRWorldGenNomadTentLarge(false), 14, 0, 3, true);
 			}
 			int minOuterSize = 0;
 			if (villageType == VillageType.SMALL) {
@@ -128,7 +128,7 @@ public class LOTRVillageGenHaradNomad extends LOTRVillageGen {
 				int l = minOuterSize + random.nextInt(5);
 				int i = Math.round(l * cos);
 				int k = Math.round(l * sin);
-				this.addStructure(new LOTRWorldGenNomadTent(false), i, k, r);
+				addStructure(new LOTRWorldGenNomadTent(false), i, k, r);
 			}
 		}
 
@@ -146,7 +146,7 @@ public class LOTRVillageGenHaradNomad extends LOTRVillageGen {
 	}
 
 	public enum VillageType {
-		SMALL, BIG;
+		SMALL, BIG
 
 	}
 

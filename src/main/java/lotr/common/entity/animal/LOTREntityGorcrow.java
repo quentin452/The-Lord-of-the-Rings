@@ -30,7 +30,7 @@ public class LOTREntityGorcrow extends LOTREntityBird {
 	@Override
 	public IEntityLivingData onSpawnWithEgg(IEntityLivingData data) {
 		data = super.onSpawnWithEgg(data);
-		this.setBirdType(LOTREntityBird.BirdType.CROW);
+		setBirdType(LOTREntityBird.BirdType.CROW);
 		return data;
 	}
 }

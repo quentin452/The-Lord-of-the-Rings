@@ -10,12 +10,9 @@ public class LOTRModChecker {
 	public static boolean hasNEI() {
 		if (hasNEI == -1) {
 			try {
-				if (Class.forName("codechicken.nei.api.API") != null) {
-					System.out.println("LOTR: Found NEI installed");
-					hasNEI = 1;
-				} else {
-					hasNEI = 0;
-				}
+				Class.forName("codechicken.nei.api.API");
+				System.out.println("LOTR: Found NEI installed");
+				hasNEI = 1;
 			} catch (ClassNotFoundException e) {
 				hasNEI = 0;
 			}
@@ -26,12 +23,9 @@ public class LOTRModChecker {
 	public static boolean hasShaders() {
 		if (hasShaders == -1) {
 			try {
-				if (Class.forName("shadersmodcore.client.Shaders") != null) {
-					LOTRLog.logger.info("LOTR: Found shaders installed");
-					hasShaders = 1;
-				} else {
-					hasShaders = 0;
-				}
+				Class.forName("shadersmodcore.client.Shaders");
+				LOTRLog.logger.info("LOTR: Found shaders installed");
+				hasShaders = 1;
 			} catch (ClassNotFoundException e) {
 				hasShaders = 0;
 			}
@@ -42,26 +36,24 @@ public class LOTRModChecker {
 	public static boolean isCauldronServer() {
 		if (isCauldron == -1) {
 			try {
-				if (Class.forName("kcauldron.KCauldronClassTransformer") != null) {
-					System.out.println("LOTR: Found Cauldron installed");
-					if (LOTRLog.logger != null) {
-						LOTRLog.logger.info("LOTR: Found Cauldron installed");
-					}
-					isCauldron = 1;
-					return true;
+				Class.forName("kcauldron.KCauldronClassTransformer");
+				System.out.println("LOTR: Found Cauldron installed");
+				if (LOTRLog.logger != null) {
+					LOTRLog.logger.info("LOTR: Found Cauldron installed");
 				}
+				isCauldron = 1;
+				return true;
 			} catch (ClassNotFoundException classNotFoundException) {
 				// empty catch block
 			}
 			try {
-				if (Class.forName("thermos.ThermosClassTransformer") != null) {
-					System.out.println("LOTR: Found Thermos installed");
-					if (LOTRLog.logger != null) {
-						LOTRLog.logger.info("LOTR: Found Thermos installed");
-					}
-					isCauldron = 1;
-					return true;
+				Class.forName("thermos.ThermosClassTransformer");
+				System.out.println("LOTR: Found Thermos installed");
+				if (LOTRLog.logger != null) {
+					LOTRLog.logger.info("LOTR: Found Thermos installed");
 				}
+				isCauldron = 1;
+				return true;
 			} catch (ClassNotFoundException classNotFoundException) {
 				// empty catch block
 			}

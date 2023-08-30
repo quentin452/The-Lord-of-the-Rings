@@ -44,18 +44,18 @@ public class LOTRWorldGenRuinedRohanWatchtower extends LOTRWorldGenStructureBase
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			return generateFacingSouth(world, random, i, j, k);
-		}
-		case 1: {
-			return generateFacingWest(world, random, i, j, k);
-		}
-		case 2: {
-			return generateFacingNorth(world, random, i, j, k);
-		}
-		case 3: {
-			return generateFacingEast(world, random, i, j, k);
-		}
+			case 0: {
+				return generateFacingSouth(world, random, i, j, k);
+			}
+			case 1: {
+				return generateFacingWest(world, random, i, j, k);
+			}
+			case 2: {
+				return generateFacingNorth(world, random, i, j, k);
+			}
+			case 3: {
+				return generateFacingEast(world, random, i, j, k);
+			}
 		}
 		return true;
 	}

@@ -59,9 +59,8 @@ public class LOTRWorldGenFangornTrees extends WorldGenAbstractTree {
 			for (int i1 = i - 1; i1 <= i + 1; ++i1) {
 				for (int k1 = k - 1; k1 <= k + 1; ++k1) {
 					for (int j1 = j; j1 <= j + height; ++j1) {
-						int width = trunkRadiusMax;
-						for (int i2 = i1 - width; i2 <= i1 + width && flag; ++i2) {
-							for (int k2 = k1 - width; k2 <= k1 + width && flag; ++k2) {
+						for (int i2 = i1 - trunkRadiusMax; i2 <= i1 + trunkRadiusMax && flag; ++i2) {
+							for (int k2 = k1 - trunkRadiusMax; k2 <= k1 + trunkRadiusMax && flag; ++k2) {
 								if (j1 >= 0 && j1 < 256 && isReplaceable(world, i2, j1, k2)) {
 									continue;
 								}
@@ -76,7 +75,7 @@ public class LOTRWorldGenFangornTrees extends WorldGenAbstractTree {
 			}
 		}
 		for (int j1 = 0; j1 < height; ++j1) {
-			int width = trunkRadiusMax - (int) ((float) j1 / (float) height * (trunkRadiusMax - trunkRadiusMin));
+			int width = trunkRadiusMax - (int) ((float) j1 / height * (trunkRadiusMax - trunkRadiusMin));
 			for (int i1 = i - width; i1 <= i + width; ++i1) {
 				for (int k1 = k - width; k1 <= k + width; ++k1) {
 					int i2 = i1 - i;
@@ -101,7 +100,7 @@ public class LOTRWorldGenFangornTrees extends WorldGenAbstractTree {
 			if (j1 % xSlope == 0) {
 				if (xSlope > 0) {
 					++i;
-				} else if (xSlope < 0) {
+				} else {
 					--i;
 				}
 			}
@@ -110,9 +109,6 @@ public class LOTRWorldGenFangornTrees extends WorldGenAbstractTree {
 			}
 			if (zSlope > 0) {
 				++k;
-				continue;
-			}
-			if (zSlope >= 0) {
 				continue;
 			}
 			--k;
@@ -129,8 +125,8 @@ public class LOTRWorldGenFangornTrees extends WorldGenAbstractTree {
 			for (int l = 0; l < boughLength; ++l) {
 				int i1 = i + Math.round(sin * l);
 				int k1 = k + Math.round(cos * l);
-				int j1 = boughBaseHeight + Math.round((float) l / (float) boughLength * boughHeight);
-				int range = boughThickness - Math.round((float) l / (float) boughLength * boughThickness * 0.5f);
+				int j1 = boughBaseHeight + Math.round((float) l / boughLength * boughHeight);
+				int range = boughThickness - Math.round((float) l / boughLength * boughThickness * 0.5f);
 				for (int i2 = i1 - range; i2 <= i1 + range; ++i2) {
 					for (int j2 = j1 - range; j2 <= j1 + range; ++j2) {
 						for (int k2 = k1 - range; k2 <= k1 + range; ++k2) {
@@ -153,7 +149,7 @@ public class LOTRWorldGenFangornTrees extends WorldGenAbstractTree {
 					int j2;
 					int i2 = i1 + Math.round(branch_sin * l1);
 					int k2 = k1 + Math.round(branch_cos * l1);
-					for (int j3 = j2 = j1 + Math.round((float) l1 / (float) branchLength * branchHeight); j3 >= j2 - 1; --j3) {
+					for (int j3 = j2 = j1 + Math.round((float) l1 / branchLength * branchHeight); j3 >= j2 - 1; --j3) {
 						Block block = world.getBlock(i2, j3, k2);
 						if (!block.isReplaceable(world, i2, j3, k2) && !block.isLeaves(world, i2, j3, k2)) {
 							continue;

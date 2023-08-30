@@ -20,7 +20,8 @@ public class LOTRGenLayerNarrowRivers extends LOTRGenLayer {
 				initChunkSeed(i + i1, k + k1);
 				int isRiver = rivers[i1 + maxRange + (k1 + maxRange) * (xSize + maxRange * 2)];
 				if (isRiver > 0) {
-					block2: for (int range = 1; range <= maxRange; ++range) {
+					block2:
+					for (int range = 1; range <= maxRange; ++range) {
 						for (int k2 = k1 - range; k2 <= k1 + range; ++k2) {
 							for (int i2 = i1 - range; i2 <= i1 + range; ++i2) {
 								if (Math.abs(i2 - i1) != range && Math.abs(k2 - k1) != range || rivers[i2 + maxRange + (k2 + maxRange) * (xSize + maxRange * 2)] != 0) {

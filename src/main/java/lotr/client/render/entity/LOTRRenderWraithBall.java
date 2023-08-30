@@ -29,10 +29,10 @@ public class LOTRRenderWraithBall extends Render {
 	}
 
 	public void drawSprite(Tessellator tessellator, int index) {
-		float var3 = (index % 4 * 16 + 0) / 64.0f;
+		float var3 = (index % 4 * 16) / 64.0f;
 		float var4 = (index % 4 * 16 + 16) / 64.0f;
-		float var5 = (index / 4 * 16 + 0) / 64.0f;
-		float var6 = (index / 4 * 16 + 16) / 64.0f;
+		float var5 = ((float) index / 4 * 16) / 64.0f;
+		float var6 = ((float) index / 4 * 16 + 16) / 64.0f;
 		float var7 = 1.0f;
 		float var8 = 0.5f;
 		float var9 = 0.25f;

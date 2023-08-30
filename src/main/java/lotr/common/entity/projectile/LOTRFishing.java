@@ -9,9 +9,9 @@ import net.minecraft.util.*;
 import net.minecraftforge.common.FishingHooks;
 
 public class LOTRFishing {
-	public static List<FishingItem> fish = new ArrayList<>();
-	public static List<FishingItem> junk = new ArrayList<>();
-	public static List<FishingItem> treasure = new ArrayList<>();
+	public static Collection<FishingItem> fish = new ArrayList<>();
+	public static Collection<FishingItem> junk = new ArrayList<>();
+	public static Collection<FishingItem> treasure = new ArrayList<>();
 
 	static {
 		fish.add(new FishingItem(new ItemStack(Items.fish, 1, ItemFishFood.FishType.COD.func_150976_a()), 60));
@@ -97,7 +97,7 @@ public class LOTRFishing {
 
 	public static class FishingItem extends WeightedRandom.Item {
 		public ItemStack theItem;
-		public float maxDurability = 0.0f;
+		public float maxDurability;
 
 		public FishingItem(ItemStack item, int weight) {
 			super(weight);

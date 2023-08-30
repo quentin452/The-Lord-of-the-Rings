@@ -11,17 +11,17 @@ import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 
 public abstract class LOTRBlockWoodBase extends BlockLog {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[][] woodIcons;
 	public String[] woodNames;
 
-	public LOTRBlockWoodBase() {
+	protected LOTRBlockWoodBase() {
 		setHardness(2.0f);
 		setStepSound(Block.soundTypeWood);
 		setCreativeTab(LOTRCreativeTabs.tabBlock);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		int j1 = j & 0xC;
@@ -35,12 +35,7 @@ public abstract class LOTRBlockWoodBase extends BlockLog {
 		return woodIcons[j][1];
 	}
 
-	@Override
-	public Item getItemDropped(int i, Random random, int j) {
-		return Item.getItemFromBlock(this);
-	}
-
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < woodNames.length; ++i) {
@@ -48,7 +43,7 @@ public abstract class LOTRBlockWoodBase extends BlockLog {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		woodIcons = new IIcon[woodNames.length][2];

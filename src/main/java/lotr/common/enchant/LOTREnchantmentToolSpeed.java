@@ -7,7 +7,7 @@ public class LOTREnchantmentToolSpeed extends LOTREnchantment {
 	public float speedFactor;
 
 	public LOTREnchantmentToolSpeed(String s, float speed) {
-		super(s, new LOTREnchantmentType[] { LOTREnchantmentType.TOOL, LOTREnchantmentType.SHEARS });
+		super(s, new LOTREnchantmentType[]{LOTREnchantmentType.TOOL, LOTREnchantmentType.SHEARS});
 		speedFactor = speed;
 		setValueModifier(speedFactor);
 	}

@@ -12,19 +12,19 @@ public class LOTRItemFeatherDyed extends Item {
 		setMaxStackSize(1);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getColorFromItemStack(ItemStack itemstack, int pass) {
-		return LOTRItemFeatherDyed.getFeatherColor(itemstack);
+		return getFeatherColor(itemstack);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIconFromDamage(int i) {
 		return Items.feather.getIconFromDamage(i);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerIcons(IIconRegister iconregister) {
 	}
@@ -37,11 +37,11 @@ public class LOTRItemFeatherDyed extends Item {
 	}
 
 	public static boolean isFeatherDyed(ItemStack itemstack) {
-		return LOTRItemFeatherDyed.getFeatherColor(itemstack) != 16777215;
+		return getFeatherColor(itemstack) != 16777215;
 	}
 
 	public static void removeFeatherDye(ItemStack itemstack) {
-		LOTRItemFeatherDyed.setFeatherColor(itemstack, 16777215);
+		setFeatherColor(itemstack, 16777215);
 	}
 
 	public static void setFeatherColor(ItemStack itemstack, int i) {

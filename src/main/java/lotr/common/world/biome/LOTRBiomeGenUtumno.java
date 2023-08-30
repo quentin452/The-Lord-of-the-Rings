@@ -10,10 +10,11 @@ import lotr.common.world.spawning.*;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class LOTRBiomeGenUtumno extends LOTRBiome {
-	public static List<LOTRBiome> utumnoBiomes = new ArrayList<>();
+	public static Collection<LOTRBiome> utumnoBiomes = new ArrayList<>();
 	public LOTRWorldGenStalactites stalactiteGen = new LOTRWorldGenStalactites(LOTRMod.stalactite);
 	public LOTRWorldGenStalactites stalactiteIceGen = new LOTRWorldGenStalactites(LOTRMod.stalactiteIce);
 	public LOTRWorldGenStalactites stalactiteObsidianGen = new LOTRWorldGenStalactites(LOTRMod.stalactiteObsidian);
@@ -75,16 +76,14 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 				facingZ = random.nextBoolean() ? -1 : 1;
 			}
 			boolean generate = true;
-			block1: for (int pass = 0; pass <= 1; ++pass) {
+			block1:
+			for (int pass = 0; pass <= 1; ++pass) {
 				for (int xz = 0; xz < barWidth; ++xz) {
 					for (int y = -1; y < barHeight + 1; ++y) {
 						int i2 = i1 + xz * facingZ;
 						int j2 = j1 + y;
 						int k2 = k1 + xz * facingX;
-						boolean flag = true;
-						if (!world.getBlock(i2, j2, k2).isOpaqueCube()) {
-							flag = false;
-						}
+						boolean flag = world.getBlock(i2, j2, k2).isOpaqueCube();
 						if (y >= 0 && y < barHeight && !world.isAirBlock(i2 + facingX, j2, k2 + facingZ)) {
 							flag = false;
 						}
@@ -125,7 +124,8 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 	}
 
 	public void generateBridges(World world, Random random, int i, int k) {
-		block0: for (int l = 0; l < 20; ++l) {
+		block0:
+		for (int l = 0; l < 20; ++l) {
 			int i1 = i + 8 + random.nextInt(16);
 			int k1 = k + 8 + random.nextInt(16);
 			LOTRUtumnoLevel utumnoLevel = LOTRUtumnoLevel.values()[random.nextInt(LOTRUtumnoLevel.values().length)];
@@ -203,7 +203,8 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 	}
 
 	public void generatePillars(World world, Random random, int i, int k) {
-		block0: for (int l = 0; l < 40; ++l) {
+		block0:
+		for (int l = 0; l < 40; ++l) {
 			int i1 = i + 8 + random.nextInt(16);
 			int k1 = k + 8 + random.nextInt(16);
 			LOTRUtumnoLevel utumnoLevel = LOTRUtumnoLevel.values()[random.nextInt(LOTRUtumnoLevel.values().length)];
@@ -259,7 +260,8 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 	}
 
 	public void generatePortalBases(World world, Random random, int i, int k) {
-		block0: for (int l = 0; l < 1; ++l) {
+		block0:
+		for (int l = 0; l < 1; ++l) {
 			int i1 = i + 8 + random.nextInt(16);
 			int k1 = k + 8 + random.nextInt(16);
 			float f = random.nextFloat();
@@ -286,7 +288,8 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 	}
 
 	public void generateStairs(World world, Random random, int i, int k) {
-		block0: for (int l = 0; l < 8; ++l) {
+		block0:
+		for (int l = 0; l < 8; ++l) {
 			int i1 = i + 8 + random.nextInt(16);
 			int k1 = k + 8 + random.nextInt(16);
 			LOTRUtumnoLevel utumnoLevel = LOTRUtumnoLevel.values()[random.nextInt(LOTRUtumnoLevel.values().length)];
@@ -298,7 +301,7 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 				}
 				int xDirection = 0;
 				int zDirection = 0;
-				int stairMeta = 0;
+				int stairMeta;
 				if (random.nextBoolean()) {
 					xDirection = random.nextBoolean() ? 1 : -1;
 					stairMeta = xDirection > 0 ? 1 : 0;
@@ -394,7 +397,7 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 		return LOTRUtumnoLevel.forY(j).getNPCSpawnList();
 	}
 
-	public int[] searchForBridge(World world, int i, int j, int k, int xDirection, int zDirection) {
+	public int[] searchForBridge(IBlockAccess world, int i, int j, int k, int xDirection, int zDirection) {
 		LOTRUtumnoLevel utumnoLevel = LOTRUtumnoLevel.forY(j);
 		int maxBridgeLength = 16;
 		int minBridgeLength = 2 + utumnoLevel.corridorWidth / 2;
@@ -431,14 +434,11 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 				foundBrick = z;
 				break;
 			}
-			if (zDirection != 0) {
-				break;
-			}
 			foundBrick = x;
 			break;
 		}
 		if (foundBrick != 0 && Math.abs(foundBrick - foundAir) >= minBridgeLength) {
-			return new int[] { x, z };
+			return new int[]{x, z};
 		}
 		return null;
 	}

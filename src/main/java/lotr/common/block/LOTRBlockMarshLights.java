@@ -64,7 +64,7 @@ public class LOTRBlockMarshLights extends Block {
 		return 0;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		if (random.nextInt(3) > 0) {
@@ -76,7 +76,7 @@ public class LOTRBlockMarshLights extends Block {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

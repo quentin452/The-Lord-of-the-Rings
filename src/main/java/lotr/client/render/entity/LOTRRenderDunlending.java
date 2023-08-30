@@ -8,10 +8,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderDunlending extends LOTRRenderDunlendingBase {
 	public static LOTRRandomSkins dunlendingOutfits;
-	public static ResourceLocation outfitApron;
-	static {
-		outfitApron = new ResourceLocation("lotr:mob/dunland/bartender_apron.png");
-	}
+	public static ResourceLocation outfitApron = new ResourceLocation("lotr:mob/dunland/bartender_apron.png");
 
 	public ModelBiped outfitModel = new LOTRModelHuman(0.6f, false);
 

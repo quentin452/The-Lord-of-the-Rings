@@ -26,7 +26,7 @@ public class LOTRBlockBookshelfStorage extends BlockContainer {
 
 	@Override
 	public void breakBlock(World world, int i, int j, int k, Block block, int meta) {
-		LOTRTileEntityBookshelf bookshelf = (LOTRTileEntityBookshelf) world.getTileEntity(i, j, k);
+		IInventory bookshelf = (IInventory) world.getTileEntity(i, j, k);
 		if (bookshelf != null) {
 			LOTRMod.dropContainerItems(bookshelf, world, i, j, k);
 			world.func_147453_f(i, j, k, block);
@@ -59,7 +59,7 @@ public class LOTRBlockBookshelfStorage extends BlockContainer {
 		return Blocks.bookshelf.getDrops(world, i, j, k, meta, fortune);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return Blocks.bookshelf.getIcon(i, j);
@@ -72,7 +72,7 @@ public class LOTRBlockBookshelfStorage extends BlockContainer {
 
 	@Override
 	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer entityplayer, int side, float f, float f1, float f2) {
-		if (!LOTRBlockBookshelfStorage.canOpenBookshelf(world, i, j, k, entityplayer)) {
+		if (!canOpenBookshelf(world, i, j, k, entityplayer)) {
 			return false;
 		}
 		if (!world.isRemote) {
@@ -81,7 +81,7 @@ public class LOTRBlockBookshelfStorage extends BlockContainer {
 		return true;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

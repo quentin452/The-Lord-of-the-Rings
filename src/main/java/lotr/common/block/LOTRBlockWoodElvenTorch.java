@@ -9,6 +9,6 @@ public class LOTRBlockWoodElvenTorch extends LOTRBlockTorch {
 		double x = -0.01 + random.nextFloat() * 0.02f;
 		double y = -0.01 + random.nextFloat() * 0.02f;
 		double z = -0.01 + random.nextFloat() * 0.02f;
-		return new LOTRBlockTorch.TorchParticle(s, 0.0, 0.0, 0.0, x, y, z);
+		return new TorchParticle(s, 0.0, 0.0, 0.0, x, y, z);
 	}
 }

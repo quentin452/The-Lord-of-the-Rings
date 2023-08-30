@@ -35,21 +35,21 @@ public class LOTRRenderUnsmeltery extends TileEntitySpecialRenderer {
 		float rocking = 0.0f;
 		if (unsmeltery != null) {
 			switch (unsmeltery.getBlockMetadata() & 7) {
-			case 2: {
-				rotation = 180.0f;
-				break;
-			}
-			case 3: {
-				rotation = 0.0f;
-				break;
-			}
-			case 4: {
-				rotation = 90.0f;
-				break;
-			}
-			case 5: {
-				rotation = 270.0f;
-			}
+				case 2: {
+					rotation = 180.0f;
+					break;
+				}
+				case 3: {
+					rotation = 0.0f;
+					break;
+				}
+				case 4: {
+					rotation = 90.0f;
+					break;
+				}
+				case 5: {
+					rotation = 270.0f;
+				}
 			}
 			rocking = unsmeltery.getRockingAmount(f);
 		}

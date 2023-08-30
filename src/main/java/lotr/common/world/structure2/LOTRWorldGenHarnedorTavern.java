@@ -23,7 +23,7 @@ public class LOTRWorldGenHarnedorTavern extends LOTRWorldGenHarnedorStructure {
 		int step;
 		int j12;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 7, -3);
+		setOriginAndRotation(world, i, j, k, rotation, 7, -3);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -51,7 +51,7 @@ public class LOTRWorldGenHarnedorTavern extends LOTRWorldGenHarnedorStructure {
 			for (int k13 = -6; k13 <= 6; ++k13) {
 				int i2 = Math.abs(i13);
 				int k2 = Math.abs(k13);
-				if ((i2 > 8 || k2 != 6) && (i2 > 11 || k2 > 5) && (i2 > 13 || k2 > 4)) {
+				if ((i2 > 8 || k2 != 6) && (i2 > 11 || k2 > 5) && k2 > 4) {
 					continue;
 				}
 				for (j12 = 1; j12 <= 8; ++j12) {
@@ -120,25 +120,25 @@ public class LOTRWorldGenHarnedorTavern extends LOTRWorldGenHarnedorStructure {
 			placeFoodOrDrink(world, random, -12, 2, -2);
 			placeFoodOrDrink(world, random, -12, 2, 1);
 			placeFoodOrDrink(world, random, -12, 2, 2);
-			this.placeBarrel(world, random, -12, 2, 3, 4, LOTRFoods.HARNEDOR_DRINK);
-			this.placeBarrel(world, random, -11, 2, 4, 2, LOTRFoods.HARNEDOR_DRINK);
+			placeBarrel(world, random, -12, 2, 3, 4, LOTRFoods.HARNEDOR_DRINK);
+			placeBarrel(world, random, -11, 2, 4, 2, LOTRFoods.HARNEDOR_DRINK);
 			placeKebabStand(world, random, -10, 2, -4, LOTRMod.kebabStand, 3);
 			setBlockAndMetadata(world, 11, 1, -3, bedBlock, 2);
 			setBlockAndMetadata(world, 11, 1, -4, bedBlock, 10);
 			setBlockAndMetadata(world, 11, 1, 3, bedBlock, 0);
 			setBlockAndMetadata(world, 11, 1, 4, bedBlock, 8);
-			this.placeChest(world, random, 12, 1, -3, LOTRMod.chestBasket, 3, LOTRChestContents.HARNENNOR_HOUSE);
-			this.placeChest(world, random, 12, 1, 3, LOTRMod.chestBasket, 2, LOTRChestContents.HARNENNOR_HOUSE);
+			placeChest(world, random, 12, 1, -3, LOTRMod.chestBasket, 3, LOTRChestContents.HARNENNOR_HOUSE);
+			placeChest(world, random, 12, 1, 3, LOTRMod.chestBasket, 2, LOTRChestContents.HARNENNOR_HOUSE);
 			placeFlowerPot(world, 12, 2, -1, getRandomFlower(world, random));
 			placeFoodOrDrink(world, random, 11, 2, -1);
 			placeFlowerPot(world, 11, 2, 1, getRandomFlower(world, random));
 			placeFoodOrDrink(world, random, 12, 2, 1);
 			String[] tavernName = LOTRNames.getHaradTavernName(random);
 			String tavernNameNPC = tavernName[0] + " " + tavernName[1];
-			placeSign(world, -1, 2, -6, Blocks.wall_sign, 5, new String[] { "", tavernName[0], tavernName[1], "" });
-			placeSign(world, 1, 2, -6, Blocks.wall_sign, 4, new String[] { "", tavernName[0], tavernName[1], "" });
-			placeSign(world, -1, 2, 6, Blocks.wall_sign, 5, new String[] { "", tavernName[0], tavernName[1], "" });
-			placeSign(world, 1, 2, 6, Blocks.wall_sign, 4, new String[] { "", tavernName[0], tavernName[1], "" });
+			placeSign(world, -1, 2, -6, Blocks.wall_sign, 5, new String[]{"", tavernName[0], tavernName[1], ""});
+			placeSign(world, 1, 2, -6, Blocks.wall_sign, 4, new String[]{"", tavernName[0], tavernName[1], ""});
+			placeSign(world, -1, 2, 6, Blocks.wall_sign, 5, new String[]{"", tavernName[0], tavernName[1], ""});
+			placeSign(world, 1, 2, 6, Blocks.wall_sign, 4, new String[]{"", tavernName[0], tavernName[1], ""});
 			placeWallBanner(world, -6, 4, -8, LOTRItemBanner.BannerType.NEAR_HARAD, 2);
 			placeWallBanner(world, 6, 4, -8, LOTRItemBanner.BannerType.NEAR_HARAD, 2);
 			placeWallBanner(world, -6, 4, 8, LOTRItemBanner.BannerType.NEAR_HARAD, 0);
@@ -157,7 +157,7 @@ public class LOTRWorldGenHarnedorTavern extends LOTRWorldGenHarnedorStructure {
 			}
 		}
 		for (i1 = -5; i1 <= -1; ++i1) {
-			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = 0 - step, k1 = -7 - step); ++step) {
+			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = -step, k1 = -7 - step); ++step) {
 				setBlockAndMetadata(world, i1, j1, k1, plank2StairBlock, 2);
 				setGrassToDirt(world, i1, j1 - 1, k1);
 				int j2 = j1 - 1;
@@ -169,7 +169,7 @@ public class LOTRWorldGenHarnedorTavern extends LOTRWorldGenHarnedorStructure {
 			}
 		}
 		for (i1 = 1; i1 <= 5; ++i1) {
-			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = 0 - step, k1 = -7 - step); ++step) {
+			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = -step, k1 = -7 - step); ++step) {
 				setBlockAndMetadata(world, i1, j1, k1, plank2StairBlock, 2);
 				setGrassToDirt(world, i1, j1 - 1, k1);
 				int j2 = j1 - 1;
@@ -181,7 +181,7 @@ public class LOTRWorldGenHarnedorTavern extends LOTRWorldGenHarnedorStructure {
 			}
 		}
 		for (i1 = -5; i1 <= -1; ++i1) {
-			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = 0 - step, k1 = 7 + step); ++step) {
+			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = -step, k1 = 7 + step); ++step) {
 				setBlockAndMetadata(world, i1, j1, k1, plank2StairBlock, 3);
 				setGrassToDirt(world, i1, j1 - 1, k1);
 				int j2 = j1 - 1;
@@ -193,7 +193,7 @@ public class LOTRWorldGenHarnedorTavern extends LOTRWorldGenHarnedorStructure {
 			}
 		}
 		for (i1 = 1; i1 <= 5; ++i1) {
-			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = 0 - step, k1 = 7 + step); ++step) {
+			for (step = 0; step < 12 && !isOpaque(world, i1, j1 = -step, k1 = 7 + step); ++step) {
 				setBlockAndMetadata(world, i1, j1, k1, plank2StairBlock, 3);
 				setGrassToDirt(world, i1, j1 - 1, k1);
 				int j2 = j1 - 1;
@@ -210,7 +210,7 @@ public class LOTRWorldGenHarnedorTavern extends LOTRWorldGenHarnedorStructure {
 	public void placeFoodOrDrink(World world, Random random, int i, int j, int k) {
 		if (random.nextBoolean()) {
 			if (random.nextBoolean()) {
-				this.placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.HARNEDOR_DRINK);
+				placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.HARNEDOR_DRINK);
 			} else {
 				Block plateBlock;
 				plateBlock = random.nextBoolean() ? LOTRMod.woodPlateBlock : LOTRMod.ceramicPlateBlock;

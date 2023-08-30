@@ -27,8 +27,8 @@ public class LOTRBiomeGenTowerHills extends LOTRBiomeGenLindon {
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer4);
 		npcSpawnList.conquestGainRate = 0.5f;
 		clearBiomeVariants();
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
 		decorator.clearRandomStructures();
 		decorator.addRandomStructure(new LOTRWorldGenTowerHillsTower(false), 600);
 		decorator.addRandomStructure(new LOTRWorldGenRangerCamp(false), 800);

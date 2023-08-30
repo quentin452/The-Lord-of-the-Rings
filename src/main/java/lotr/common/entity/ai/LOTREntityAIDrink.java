@@ -15,6 +15,7 @@ public class LOTREntityAIDrink extends LOTREntityAIConsumeBase {
 		super(entity, foods, chance);
 	}
 
+	@SuppressWarnings("Convert2Lambda")
 	@Override
 	public void consume() {
 		ItemStack itemstack = theEntity.getHeldItem();
@@ -28,13 +29,13 @@ public class LOTREntityAIDrink extends LOTREntityAIConsumeBase {
 
 					@Override
 					public boolean isEntityApplicable(Entity entity) {
-						return entity.isEntityAlive() && !LOTRMod.getNPCFaction(entity).isBadRelation(LOTREntityAIDrink.this.theEntity.getFaction());
+						return entity.isEntityAlive() && !LOTRMod.getNPCFaction(entity).isBadRelation(theEntity.getFaction());
 					}
 				};
 				List nearbyBartenders = theEntity.worldObj.selectEntitiesWithinAABB(LOTRTradeable.Bartender.class, theEntity.boundingBox.expand(range, range, range), selectNonEnemyBartenders);
 				if (!nearbyBartenders.isEmpty()) {
 					int drunkTime = MathHelper.getRandomIntegerInRange(rand, 30, 1500);
-					theEntity.familyInfo.setDrunkTime(drunkTime *= 20);
+					theEntity.familyInfo.setDrunkTime(drunkTime * 20);
 				}
 			}
 		}

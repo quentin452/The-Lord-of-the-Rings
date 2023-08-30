@@ -37,21 +37,21 @@ public class LOTRComponentDwarvenMineStairs extends StructureComponent {
 	public void buildComponent(StructureComponent component, List list, Random random) {
 		int i = getComponentType();
 		switch (coordBaseMode) {
-		case 0: {
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY, boundingBox.maxZ + 1, 0, i, ruined);
-			break;
-		}
-		case 1: {
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY, boundingBox.minZ, 1, i, ruined);
-			break;
-		}
-		case 2: {
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY, boundingBox.minZ - 1, 2, i, ruined);
-			break;
-		}
-		case 3: {
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY, boundingBox.minZ, 3, i, ruined);
-		}
+			case 0: {
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY, boundingBox.maxZ + 1, 0, i, ruined);
+				break;
+			}
+			case 1: {
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY, boundingBox.minZ, 1, i, ruined);
+				break;
+			}
+			case 2: {
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY, boundingBox.minZ - 1, 2, i, ruined);
+				break;
+			}
+			case 3: {
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY, boundingBox.minZ, 3, i, ruined);
+			}
 		}
 	}
 
@@ -68,25 +68,25 @@ public class LOTRComponentDwarvenMineStairs extends StructureComponent {
 	public static StructureBoundingBox findValidPlacement(List list, Random random, int i, int j, int k, int l) {
 		StructureBoundingBox structureboundingbox = new StructureBoundingBox(i, j - 5, k, i, j + 2, k);
 		switch (l) {
-		case 0: {
-			structureboundingbox.maxX = i + 2;
-			structureboundingbox.maxZ = k + 8;
-			break;
-		}
-		case 1: {
-			structureboundingbox.minX = i - 8;
-			structureboundingbox.maxZ = k + 2;
-			break;
-		}
-		case 2: {
-			structureboundingbox.maxX = i + 2;
-			structureboundingbox.minZ = k - 8;
-			break;
-		}
-		case 3: {
-			structureboundingbox.maxX = i + 8;
-			structureboundingbox.maxZ = k + 2;
-		}
+			case 0: {
+				structureboundingbox.maxX = i + 2;
+				structureboundingbox.maxZ = k + 8;
+				break;
+			}
+			case 1: {
+				structureboundingbox.minX = i - 8;
+				structureboundingbox.maxZ = k + 2;
+				break;
+			}
+			case 2: {
+				structureboundingbox.maxX = i + 2;
+				structureboundingbox.minZ = k - 8;
+				break;
+			}
+			case 3: {
+				structureboundingbox.maxX = i + 8;
+				structureboundingbox.maxZ = k + 2;
+			}
 		}
 		return StructureComponent.findIntersecting(list, structureboundingbox) != null ? null : structureboundingbox;
 	}

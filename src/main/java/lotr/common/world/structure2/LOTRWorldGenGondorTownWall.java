@@ -26,11 +26,10 @@ public class LOTRWorldGenGondorTownWall extends LOTRWorldGenGondorStructure {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		for (int i1 = xMin; i1 <= xMax; ++i1) {
 			int j1;
-			Math.abs(i1);
 			int k1 = 0;
 			findSurface(world, i1, k1);
 			for (j1 = 1; (j1 >= 0 || !isOpaque(world, i1, j1, k1)) && getY(j1) >= 0; --j1) {
@@ -47,17 +46,17 @@ public class LOTRWorldGenGondorTownWall extends LOTRWorldGenGondorStructure {
 			} else {
 				setBlockAndMetadata(world, i1, 5, k1, brickBlock, brickMeta);
 				switch (i3) {
-				case 3:
-					setBlockAndMetadata(world, i1, 6, k1, brickStairBlock, 1);
-					break;
-				case 0:
-					setBlockAndMetadata(world, i1, 6, k1, brickBlock, brickMeta);
-					break;
-				case 1:
-					setBlockAndMetadata(world, i1, 6, k1, brickStairBlock, 0);
-					break;
-				default:
-					break;
+					case 3:
+						setBlockAndMetadata(world, i1, 6, k1, brickStairBlock, 1);
+						break;
+					case 0:
+						setBlockAndMetadata(world, i1, 6, k1, brickBlock, brickMeta);
+						break;
+					case 1:
+						setBlockAndMetadata(world, i1, 6, k1, brickStairBlock, 0);
+						break;
+					default:
+						break;
 				}
 			}
 			if (i1 < xMinInner || i1 > xMaxInner) {

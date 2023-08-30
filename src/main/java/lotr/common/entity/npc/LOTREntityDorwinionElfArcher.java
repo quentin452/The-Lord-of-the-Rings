@@ -13,11 +13,6 @@ public class LOTREntityDorwinionElfArcher extends LOTREntityDorwinionElfWarrior 
 	}
 
 	@Override
-	public void attackEntityWithRangedAttack(EntityLivingBase target, float f) {
-		npcArrowAttack(target, f);
-	}
-
-	@Override
 	public EntityAIBase createElfRangedAttackAI() {
 		return new LOTREntityAIRangedAttack(this, 1.25, 30, 50, 24.0f);
 	}

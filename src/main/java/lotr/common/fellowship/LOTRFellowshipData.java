@@ -12,7 +12,7 @@ import net.minecraft.server.MinecraftServer;
 public class LOTRFellowshipData {
 	public static Map<UUID, LOTRFellowship> fellowshipMap = new HashMap<>();
 	public static boolean needsLoad = true;
-	public static boolean doFullClearing = false;
+	public static boolean doFullClearing;
 
 	public static void addFellowship(LOTRFellowship fs) {
 		if (!fellowshipMap.containsKey(fs.getFellowshipID())) {
@@ -35,7 +35,7 @@ public class LOTRFellowshipData {
 	}
 
 	public static LOTRFellowship getActiveFellowship(UUID fsID) {
-		LOTRFellowship fs = LOTRFellowshipData.getFellowship(fsID);
+		LOTRFellowship fs = getFellowship(fsID);
 		if (fs != null && fs.isDisbanded()) {
 			return null;
 		}
@@ -44,16 +44,17 @@ public class LOTRFellowshipData {
 
 	public static LOTRFellowship getFellowship(UUID fsID) {
 		LOTRFellowship fs = fellowshipMap.get(fsID);
-		if (fs == null && (fs = LOTRFellowshipData.loadFellowship(fsID)) != null) {
+		if (fs == null && (fs = loadFellowship(fsID)) != null) {
 			fellowshipMap.put(fsID, fs);
 		}
 		return fs;
 	}
 
 	public static File getFellowshipDat(UUID fsID) {
-		return new File(LOTRFellowshipData.getFellowshipDir(), fsID.toString() + ".dat");
+		return new File(getFellowshipDir(), fsID.toString() + ".dat");
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static File getFellowshipDir() {
 		File fsDir = new File(LOTRLevelData.getOrCreateLOTRDir(), "fellowships");
 		if (!fsDir.exists()) {
@@ -64,9 +65,9 @@ public class LOTRFellowshipData {
 
 	public static void loadAll() {
 		try {
-			LOTRFellowshipData.destroyAllFellowshipData();
+			destroyAllFellowshipData();
 			needsLoad = false;
-			LOTRFellowshipData.saveAll();
+			saveAll();
 		} catch (Exception e) {
 			FMLLog.severe("Error loading LOTR fellowship data");
 			e.printStackTrace();
@@ -74,7 +75,7 @@ public class LOTRFellowshipData {
 	}
 
 	public static LOTRFellowship loadFellowship(UUID fsID) {
-		File fsDat = LOTRFellowshipData.getFellowshipDat(fsID);
+		File fsDat = getFellowshipDat(fsID);
 		try {
 			NBTTagCompound nbt = LOTRLevelData.loadNBTFromFile(fsDat);
 			if (nbt.hasNoTags()) {
@@ -96,7 +97,7 @@ public class LOTRFellowshipData {
 				if (!fs.needsSave()) {
 					continue;
 				}
-				LOTRFellowshipData.saveFellowship(fs);
+				saveFellowship(fs);
 			}
 		} catch (Exception e) {
 			FMLLog.severe("Error saving LOTR fellowship data");
@@ -106,7 +107,7 @@ public class LOTRFellowshipData {
 
 	public static void saveAndClearFellowship(LOTRFellowship fs) {
 		if (fellowshipMap.containsValue(fs)) {
-			LOTRFellowshipData.saveFellowship(fs);
+			saveFellowship(fs);
 			fellowshipMap.remove(fs.getFellowshipID());
 		} else {
 			FMLLog.severe("Attempted to clear LOTR fellowship data for %s; no data found", fs.getFellowshipID());
@@ -115,7 +116,7 @@ public class LOTRFellowshipData {
 
 	public static void saveAndClearUnusedFellowships() {
 		if (doFullClearing) {
-			ArrayList<LOTRFellowship> clearing = new ArrayList<>();
+			Collection<LOTRFellowship> clearing = new ArrayList<>();
 			for (LOTRFellowship fs : fellowshipMap.values()) {
 				boolean foundMember = false;
 				for (Object player : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
@@ -132,7 +133,7 @@ public class LOTRFellowshipData {
 				clearing.add(fs);
 			}
 			for (LOTRFellowship fs : clearing) {
-				LOTRFellowshipData.saveAndClearFellowship(fs);
+				saveAndClearFellowship(fs);
 			}
 		}
 	}
@@ -141,7 +142,7 @@ public class LOTRFellowshipData {
 		try {
 			NBTTagCompound nbt = new NBTTagCompound();
 			fs.save(nbt);
-			LOTRLevelData.saveNBTToFile(LOTRFellowshipData.getFellowshipDat(fs.getFellowshipID()), nbt);
+			LOTRLevelData.saveNBTToFile(getFellowshipDat(fs.getFellowshipID()), nbt);
 		} catch (Exception e) {
 			FMLLog.severe("Error saving LOTR fellowship data for %s", fs.getFellowshipID());
 			e.printStackTrace();

@@ -19,7 +19,7 @@ public class LOTRWorldGenGulfSmithy extends LOTRWorldGenGulfStructure {
 		int k1;
 		int i1;
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -80,24 +80,24 @@ public class LOTRWorldGenGulfSmithy extends LOTRWorldGenGulfStructure {
 		generateStrScan(world, random, 0, 0, 0);
 		setBlockAndMetadata(world, 0, 1, 3, bedBlock, 0);
 		setBlockAndMetadata(world, 0, 1, 4, bedBlock, 8);
-		this.placeChest(world, random, -4, 1, -2, LOTRMod.chestBasket, 3, LOTRChestContents.GULF_HOUSE);
+		placeChest(world, random, -4, 1, -2, LOTRMod.chestBasket, 3, LOTRChestContents.GULF_HOUSE);
 		placeFlowerPot(world, 2, 2, -4, getRandomFlower(world, random));
 		placeFlowerPot(world, -2, 2, 4, getRandomFlower(world, random));
 		placeFlowerPot(world, -4, 1, 1, new ItemStack(Blocks.cactus));
-		this.placeMug(world, random, 4, 2, -1, 1, LOTRFoods.GULF_HARAD_DRINK);
-		this.placeMug(world, random, 2, 2, 4, 0, LOTRFoods.GULF_HARAD_DRINK);
+		placeMug(world, random, 4, 2, -1, 1, LOTRFoods.GULF_HARAD_DRINK);
+		placeMug(world, random, 2, 2, 4, 0, LOTRFoods.GULF_HARAD_DRINK);
 		placePlate(world, random, 4, 2, 0, LOTRMod.woodPlateBlock, LOTRFoods.GULF_HARAD);
 		placePlate(world, random, 4, 2, 1, LOTRMod.woodPlateBlock, LOTRFoods.GULF_HARAD);
 		if (random.nextBoolean()) {
-			placeArmorStand(world, -7, 1, -2, 1, new ItemStack[] { new ItemStack(LOTRMod.helmetGulfHarad), new ItemStack(LOTRMod.bodyGulfHarad), new ItemStack(LOTRMod.legsGulfHarad), new ItemStack(LOTRMod.bootsGulfHarad) });
+			placeArmorStand(world, -7, 1, -2, 1, new ItemStack[]{new ItemStack(LOTRMod.helmetGulfHarad), new ItemStack(LOTRMod.bodyGulfHarad), new ItemStack(LOTRMod.legsGulfHarad), new ItemStack(LOTRMod.bootsGulfHarad)});
 		} else {
-			placeArmorStand(world, -7, 1, -2, 1, new ItemStack[] { null, new ItemStack(LOTRMod.bodyGulfHarad), null, null });
+			placeArmorStand(world, -7, 1, -2, 1, new ItemStack[]{null, new ItemStack(LOTRMod.bodyGulfHarad), null, null});
 		}
 		placeWeaponRack(world, -13, 3, 0, 5, getRandomGulfWeapon(random));
 		LOTREntityGulfBlacksmith smith = new LOTREntityGulfBlacksmith(world);
 		spawnNPCAndSetHome(smith, world, -6, 1, 0, 8);
 		int maxSteps = 12;
-		for (int step = 0; step < maxSteps && !isOpaque(world, i1 = -9, j1 = 0 - step, k1 = -5 - step); ++step) {
+		for (int step = 0; step < maxSteps && !isOpaque(world, i1 = -9, j1 = -step, k1 = -5 - step); ++step) {
 			setBlockAndMetadata(world, i1, j1, k1, LOTRMod.stairsRedSandstone, 2);
 			setGrassToDirt(world, i1, j1 - 1, k1);
 			int j2 = j1 - 1;

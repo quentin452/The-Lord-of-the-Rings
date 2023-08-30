@@ -21,8 +21,8 @@ public class LOTRBiomeGenNearHaradRiverbank extends LOTRBiomeGenNearHaradFertile
 		arrspawnListContainer[1] = LOTRBiomeSpawnList.entry(LOTRSpawnList.NOMAD_WARRIORS, 10).setSpawnChance(1000);
 		npcSpawnList.newFactionList(100).add(arrspawnListContainer);
 		clearBiomeVariants();
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
 		variantChance = 0.3f;
 		decorator.treesPerChunk = 0;
 		decorator.grassPerChunk = 10;
@@ -48,11 +48,6 @@ public class LOTRBiomeGenNearHaradRiverbank extends LOTRBiomeGenNearHaradFertile
 	@Override
 	public LOTRWaypoint.Region getBiomeWaypoints() {
 		return LOTRWaypoint.Region.HARAD_DESERT;
-	}
-
-	@Override
-	public float getChanceToSpawnAnimals() {
-		return 0.5f;
 	}
 
 	@Override

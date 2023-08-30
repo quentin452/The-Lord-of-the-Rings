@@ -12,8 +12,8 @@ import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 
 public class LOTRBlockThatch extends Block {
-	public static String[] thatchNames = { "thatch", "reed" };
-	@SideOnly(value = Side.CLIENT)
+	public static String[] thatchNames = {"thatch", "reed"};
+	@SideOnly(Side.CLIENT)
 	public IIcon[] thatchIcons;
 
 	public LOTRBlockThatch() {
@@ -28,7 +28,7 @@ public class LOTRBlockThatch extends Block {
 		return i;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j >= thatchNames.length) {
@@ -37,7 +37,7 @@ public class LOTRBlockThatch extends Block {
 		return thatchIcons[j];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < thatchNames.length; ++i) {
@@ -45,7 +45,7 @@ public class LOTRBlockThatch extends Block {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		thatchIcons = new IIcon[thatchNames.length];

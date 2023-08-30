@@ -25,7 +25,7 @@ public class LOTRGuiButtonPledge extends GuiButton {
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			field_146123_n = i >= xPosition && j >= yPosition && i < xPosition + width && j < yPosition + height;
 			int state = getHoverState(field_146123_n);
-			drawTexturedModalRect(xPosition, yPosition, 0 + state * width, 180, width, height);
+			drawTexturedModalRect(xPosition, yPosition, state * width, 180, width, height);
 			mouseDragged(mc, i, j);
 			if (func_146115_a() && displayLines != null) {
 				float z = zLevel;

@@ -16,11 +16,11 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public abstract class LOTREntitySpiderBase extends LOTREntityNPCRideable {
-	public static int VENOM_NONE = 0;
+	public static int VENOM_NONE;
 	public static int VENOM_SLOWNESS = 1;
 	public static int VENOM_POISON = 2;
 
-	public LOTREntitySpiderBase(World world) {
+	protected LOTREntitySpiderBase(World world) {
 		super(world);
 		setSize(1.4f, 0.8f);
 		getNavigator().setAvoidsWater(true);
@@ -33,7 +33,7 @@ public abstract class LOTREntitySpiderBase extends LOTREntityNPCRideable {
 		tasks.addTask(6, new EntityAIWander(this, 1.0));
 		tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0f, 0.02f));
 		tasks.addTask(8, new EntityAILookIdle(this));
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		spawnsInDarkness = true;
 	}
 
@@ -214,7 +214,7 @@ public abstract class LOTREntitySpiderBase extends LOTREntityNPCRideable {
 		if (canRideSpider() && getAttackTarget() != entityplayer) {
 			boolean hasRequiredAlignment = LOTRLevelData.getData(entityplayer).getAlignment(getFaction()) >= 50.0f;
 			boolean notifyNotEnoughAlignment = false;
-			if (!notifyNotEnoughAlignment && itemstack != null && LOTRMod.isOreNameEqual(itemstack, "bone") && isNPCTamed() && getHealth() < getMaxHealth()) {
+			if (itemstack != null && LOTRMod.isOreNameEqual(itemstack, "bone") && isNPCTamed() && getHealth() < getMaxHealth()) {
 				if (hasRequiredAlignment) {
 					if (!entityplayer.capabilities.isCreativeMode) {
 						--itemstack.stackSize;
@@ -234,7 +234,7 @@ public abstract class LOTREntitySpiderBase extends LOTREntityNPCRideable {
 				}
 				if (hasRequiredAlignment) {
 					entityplayer.mountEntity(this);
-					this.setAttackTarget(null);
+					setAttackTarget(null);
 					getNavigator().clearPathEntity();
 					return true;
 				}

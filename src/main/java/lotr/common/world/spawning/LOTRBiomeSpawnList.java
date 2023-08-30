@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 
 public class LOTRBiomeSpawnList {
 	public String biomeIdentifier;
-	public List<FactionContainer> factionContainers = new ArrayList<>();
-	public List<LOTRFaction> presentFactions = new ArrayList<>();
+	public Collection<FactionContainer> factionContainers = new ArrayList<>();
+	public Collection<LOTRFaction> presentFactions = new ArrayList<>();
 	public float conquestGainRate = 1.0f;
 
 	public LOTRBiomeSpawnList(LOTRBiome biome) {
@@ -65,7 +65,7 @@ public class LOTRBiomeSpawnList {
 
 	public List<LOTRSpawnEntry> getAllSpawnEntries(World world) {
 		determineFactions(world);
-		ArrayList<LOTRSpawnEntry> spawns = new ArrayList<>();
+		List<LOTRSpawnEntry> spawns = new ArrayList<>();
 		for (FactionContainer facCont : factionContainers) {
 			if (facCont.isEmpty()) {
 				continue;
@@ -107,7 +107,7 @@ public class LOTRBiomeSpawnList {
 				if (facWeight <= cont.baseWeight) {
 					break;
 				}
-				isConquestSpawn = rand.nextFloat() < (float) (facWeight - cont.baseWeight) / (float) facWeight;
+				isConquestSpawn = rand.nextFloat() < (float) (facWeight - cont.baseWeight) / facWeight;
 				break;
 			}
 			if (chosenFacContainer != null) {
@@ -132,7 +132,7 @@ public class LOTRBiomeSpawnList {
 	}
 
 	public FactionContainer newFactionList(int w) {
-		return this.newFactionList(w, 1.0f);
+		return newFactionList(w, 1.0f);
 	}
 
 	public FactionContainer newFactionList(int w, float conq) {
@@ -143,7 +143,7 @@ public class LOTRBiomeSpawnList {
 	}
 
 	public static SpawnListContainer entry(LOTRSpawnList list) {
-		return LOTRBiomeSpawnList.entry(list, 1);
+		return entry(list, 1);
 	}
 
 	public static SpawnListContainer entry(LOTRSpawnList list, int weight) {
@@ -153,7 +153,7 @@ public class LOTRBiomeSpawnList {
 	public static class FactionContainer {
 		public LOTRBiomeSpawnList parent;
 		public LOTRFaction theFaction;
-		public List<SpawnListContainer> spawnLists = new ArrayList<>();
+		public Collection<SpawnListContainer> spawnLists = new ArrayList<>();
 		public int baseWeight;
 		public float conquestSensitivity = 1.0f;
 
@@ -240,7 +240,7 @@ public class LOTRBiomeSpawnList {
 	public static class SpawnListContainer {
 		public LOTRSpawnList spawnList;
 		public int weight;
-		public int spawnChance = 0;
+		public int spawnChance;
 		public float conquestThreshold = -1.0f;
 
 		public SpawnListContainer(LOTRSpawnList list, int w) {

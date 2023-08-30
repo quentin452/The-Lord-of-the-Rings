@@ -30,7 +30,7 @@ public class LOTREntityHalfTroll extends LOTREntityNPC {
 		tasks.addTask(6, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 5.0f, 0.02f));
 		tasks.addTask(7, new EntityAIWatchClosest(this, EntityLiving.class, 8.0f, 0.02f));
 		tasks.addTask(8, new EntityAILookIdle(this));
-		int target = this.addTargetTasks(true);
+		int target = addTargetTasks(true);
 		targetTasks.addTask(target + 1, new LOTREntityAINearestAttackableTargetBasic(this, LOTREntityRabbit.class, 1000, false));
 		spawnsInDarkness = true;
 	}
@@ -47,17 +47,17 @@ public class LOTREntityHalfTroll extends LOTREntityNPC {
 
 	@Override
 	public boolean canReEquipHired(int slot, ItemStack itemstack) {
-		block3: {
-			block2: {
+		block3:
+		{
+			block2:
+			{
 				switch (slot) {
-				case 0:
-					break block2;
-				case 1:
-					break block2;
-				case 2:
-					break block2;
-				default:
-					break;
+					case 0:
+					case 2:
+					case 1:
+						break block2;
+					default:
+						break;
 				}
 				if (slot != 3) {
 					break block3;
@@ -198,7 +198,7 @@ public class LOTREntityHalfTroll extends LOTREntityNPC {
 	public void setHalfTrollModelFlag(int part, boolean flag) {
 		int i = dataWatcher.getWatchableObjectByte(17);
 		int pow2 = 1 << part;
-		i = flag ? (i |= pow2) : (i &= ~pow2);
+		i = flag ? i | pow2 : i & ~pow2;
 		dataWatcher.updateObject(17, (byte) i);
 	}
 

@@ -11,10 +11,10 @@ import net.minecraft.world.World;
 
 public class LOTRWorldGenEasterlingTower extends LOTRWorldGenEasterlingStructureTown {
 	public boolean enableDoor = true;
-	public boolean frontLadder = false;
-	public boolean backLadder = false;
-	public boolean leftLadder = false;
-	public boolean rightLadder = false;
+	public boolean frontLadder;
+	public boolean backLadder;
+	public boolean leftLadder;
+	public boolean rightLadder;
 
 	public LOTRWorldGenEasterlingTower(boolean flag) {
 		super(flag);
@@ -32,7 +32,7 @@ public class LOTRWorldGenEasterlingTower extends LOTRWorldGenEasterlingStructure
 		int i12;
 		int k2;
 		int i2;
-		this.setOriginAndRotation(world, i, j, k, rotation, 3);
+		setOriginAndRotation(world, i, j, k, rotation, 3);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i12 = -3; i12 <= 3; ++i12) {
@@ -85,7 +85,7 @@ public class LOTRWorldGenEasterlingTower extends LOTRWorldGenEasterlingStructure
 						}
 						for (int j12 = 3; j12 <= 8; ++j12) {
 							if (j12 == 4) {
-								setBlockAndMetadata(world, i12, j12, k1, brickRedStairBlock, stairMeta);
+								setBlockAndMetadata(world, i12, 4, k1, brickRedStairBlock, stairMeta);
 								continue;
 							}
 							setBlockAndMetadata(world, i12, j12, k1, brickStairBlock, stairMeta);
@@ -128,7 +128,7 @@ public class LOTRWorldGenEasterlingTower extends LOTRWorldGenEasterlingStructure
 		setBlockAndMetadata(world, 0, 10, 1, trapdoorBlock, 9);
 		setBlockAndMetadata(world, -1, 6, -1, plankSlabBlock, plankSlabMeta | 8);
 		setBlockAndMetadata(world, 0, 6, -1, plankSlabBlock, plankSlabMeta | 8);
-		int[] j1 = { 5, 7 };
+		int[] j1 = {5, 7};
 		k1 = j1.length;
 		for (i2 = 0; i2 < k1; ++i2) {
 			int j13 = j1[i2];
@@ -138,7 +138,7 @@ public class LOTRWorldGenEasterlingTower extends LOTRWorldGenEasterlingStructure
 		for (int j14 = 6; j14 <= 9; ++j14) {
 			setBlockAndMetadata(world, 1, j14, -1, Blocks.ladder, 3);
 		}
-		this.placeChest(world, random, 1, 5, -1, 3, LOTRChestContents.EASTERLING_TOWER);
+		placeChest(world, random, 1, 5, -1, 3, LOTRChestContents.EASTERLING_TOWER);
 		setBlockAndMetadata(world, -1, 8, 0, Blocks.torch, 2);
 		setBlockAndMetadata(world, 1, 8, 0, Blocks.torch, 1);
 		spawnItemFrame(world, -2, 7, 0, 1, getEasterlingFramedItem(random));

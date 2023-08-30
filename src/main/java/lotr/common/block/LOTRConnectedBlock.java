@@ -8,7 +8,7 @@ public interface LOTRConnectedBlock {
 
 	String getConnectedName(int var1);
 
-	public static class Checks {
+	class Checks {
 		public static boolean matchBlockAndMeta(Block block, IBlockAccess world, int i, int j, int k, int i1, int j1, int k1) {
 			int meta = world.getBlockMetadata(i, j, k);
 			Block otherBlock = world.getBlock(i1, j1, k1);

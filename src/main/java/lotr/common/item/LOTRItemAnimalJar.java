@@ -25,10 +25,10 @@ public class LOTRItemAnimalJar extends LOTRItemBlockMetadata {
 		itemstack = entityplayer.getCurrentEquippedItem();
 		World world = entityplayer.worldObj;
 		LOTRBlockAnimalJar jarBlock = (LOTRBlockAnimalJar) field_150939_a;
-		if (jarBlock.canCapture(entity) && LOTRItemAnimalJar.getEntityData(itemstack) == null) {
+		if (jarBlock.canCapture(entity) && getEntityData(itemstack) == null) {
 			NBTTagCompound nbt;
 			if (!world.isRemote && entity.writeToNBTOptional(nbt = new NBTTagCompound())) {
-				LOTRItemAnimalJar.setEntityData(itemstack, nbt);
+				setEntityData(itemstack, nbt);
 				entity.playSound("random.pop", 0.5f, 0.5f + world.rand.nextFloat() * 0.5f);
 				entity.setDead();
 				if (entity instanceof LOTREntityButterfly) {
@@ -43,16 +43,16 @@ public class LOTRItemAnimalJar extends LOTRItemBlockMetadata {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		Entity jarEntity;
-		if (!world.isRemote && (jarEntity = LOTRItemAnimalJar.getItemJarEntity(itemstack, world)) != null) {
+		if (!world.isRemote && (jarEntity = getItemJarEntity(itemstack, world)) != null) {
 			double x = entityplayer.posX;
 			double y = entityplayer.boundingBox.minY + entityplayer.getEyeHeight();
 			double z = entityplayer.posZ;
 			Vec3 look = entityplayer.getLookVec();
 			float length = 2.0f;
-			jarEntity.setLocationAndAngles(x += look.xCoord * length, y += look.yCoord * length, z += look.zCoord * length, world.rand.nextFloat(), 0.0f);
+			jarEntity.setLocationAndAngles(x + look.xCoord * length, y + look.yCoord * length, z + look.zCoord * length, world.rand.nextFloat(), 0.0f);
 			world.spawnEntityInWorld(jarEntity);
 			jarEntity.playSound("random.pop", 0.5f, 0.5f + world.rand.nextFloat() * 0.5f);
-			LOTRItemAnimalJar.setEntityData(itemstack, null);
+			setEntityData(itemstack, null);
 		}
 		return itemstack;
 	}
@@ -63,7 +63,7 @@ public class LOTRItemAnimalJar extends LOTRItemBlockMetadata {
 			TileEntity tileentity = world.getTileEntity(i, j, k);
 			if (tileentity instanceof LOTRTileEntityAnimalJar) {
 				LOTRTileEntityAnimalJar jar = (LOTRTileEntityAnimalJar) tileentity;
-				jar.setEntityData(LOTRItemAnimalJar.getEntityData(itemstack));
+				jar.setEntityData(getEntityData(itemstack));
 			}
 			return true;
 		}
@@ -77,7 +77,7 @@ public class LOTRItemAnimalJar extends LOTRItemBlockMetadata {
 				nbt = itemstack.getTagCompound().getCompoundTag("LOTRButterfly");
 				if (!nbt.hasNoTags()) {
 					nbt.setString("id", LOTREntities.getStringFromClass(LOTREntityButterfly.class));
-					LOTRItemAnimalJar.setEntityData(itemstack, (NBTTagCompound) nbt.copy());
+					setEntityData(itemstack, (NBTTagCompound) nbt.copy());
 				}
 				itemstack.getTagCompound().removeTag("LOTRButterfly");
 			}
@@ -89,7 +89,7 @@ public class LOTRItemAnimalJar extends LOTRItemBlockMetadata {
 	}
 
 	public static Entity getItemJarEntity(ItemStack itemstack, World world) {
-		NBTTagCompound nbt = LOTRItemAnimalJar.getEntityData(itemstack);
+		NBTTagCompound nbt = getEntityData(itemstack);
 		if (nbt != null) {
 			return EntityList.createEntityFromNBT(nbt, world);
 		}

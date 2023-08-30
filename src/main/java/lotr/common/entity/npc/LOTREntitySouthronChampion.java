@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTREntitySouthronChampion extends LOTREntityNearHaradrimWarrior {
-	public static ItemStack[] weaponsChampion = { new ItemStack(LOTRMod.scimitarNearHarad), new ItemStack(LOTRMod.poleaxeNearHarad), new ItemStack(LOTRMod.maceNearHarad) };
+	public static ItemStack[] weaponsChampion = {new ItemStack(LOTRMod.scimitarNearHarad), new ItemStack(LOTRMod.poleaxeNearHarad), new ItemStack(LOTRMod.maceNearHarad)};
 
 	public LOTREntitySouthronChampion(World world) {
 		super(world);

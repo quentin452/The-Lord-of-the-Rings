@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class LOTREntityDaleMan extends LOTREntityMan {
-	public static ItemStack[] weapons = { new ItemStack(LOTRMod.daggerDale), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.daggerBronze), new ItemStack(Items.iron_axe), new ItemStack(LOTRMod.axeBronze), new ItemStack(Items.stone_axe) };
+	public static ItemStack[] weapons = {new ItemStack(LOTRMod.daggerDale), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.daggerBronze), new ItemStack(Items.iron_axe), new ItemStack(LOTRMod.axeBronze), new ItemStack(Items.stone_axe)};
 
 	public LOTREntityDaleMan(World world) {
 		super(world);
@@ -35,7 +35,7 @@ public class LOTREntityDaleMan extends LOTREntityMan {
 		tasks.addTask(7, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 5.0f, 0.02f));
 		tasks.addTask(8, new EntityAIWatchClosest(this, EntityLiving.class, 8.0f, 0.02f));
 		tasks.addTask(9, new EntityAILookIdle(this));
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -100,9 +100,7 @@ public class LOTREntityDaleMan extends LOTREntityMan {
 			int i = MathHelper.floor_double(posX);
 			int j = MathHelper.floor_double(boundingBox.minY);
 			int k = MathHelper.floor_double(posZ);
-			if (j > 62 && worldObj.getBlock(i, j - 1, k) == worldObj.getBiomeGenForCoords(i, k).topBlock) {
-				return true;
-			}
+			return j > 62 && worldObj.getBlock(i, j - 1, k) == worldObj.getBiomeGenForCoords(i, k).topBlock;
 		}
 		return false;
 	}
@@ -119,7 +117,7 @@ public class LOTREntityDaleMan extends LOTREntityMan {
 
 	@Override
 	public String getNPCFormattedName(String npcName, String entityName) {
-		if (this.getClass() == LOTREntityDaleMan.class) {
+		if (getClass() == LOTREntityDaleMan.class) {
 			return StatCollector.translateToLocalFormatted("entity.lotr.DaleMan.entityName", npcName);
 		}
 		return super.getNPCFormattedName(npcName, entityName);

@@ -1,6 +1,8 @@
 package lotr.common.world.structure2.scan;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.zip.*;
 
@@ -20,8 +22,8 @@ public class LOTRStructureScan {
 	public static String strscanFormat = ".strscan";
 	public static Map<String, LOTRStructureScan> allLoadedScans = new HashMap<>();
 	public String scanName;
-	public List<ScanStepBase> scanSteps = new ArrayList<>();
-	public List<LOTRScanAlias> aliases = new ArrayList<>();
+	public Collection<ScanStepBase> scanSteps = new ArrayList<>();
+	public Collection<LOTRScanAlias> aliases = new ArrayList<>();
 
 	public LOTRStructureScan(String name) {
 		scanName = name;
@@ -42,7 +44,7 @@ public class LOTRStructureScan {
 	}
 
 	public void includeAlias(String alias, LOTRScanAlias.Type type) {
-		this.includeAlias(new LOTRScanAlias(alias, type));
+		includeAlias(new LOTRScanAlias(alias, type));
 	}
 
 	public static LOTRStructureScan getScanByName(String name) {
@@ -51,7 +53,7 @@ public class LOTRStructureScan {
 
 	public static void loadAllScans() {
 		allLoadedScans.clear();
-		HashMap<String, BufferedReader> scanNamesAndReaders = new HashMap<>();
+		Map<String, BufferedReader> scanNamesAndReaders = new HashMap<>();
 		ZipFile zip = null;
 		try {
 			ModContainer mc = LOTRMod.getModContainer();
@@ -61,18 +63,18 @@ public class LOTRStructureScan {
 				while (entries.hasMoreElements()) {
 					String path;
 					ZipEntry entry = entries.nextElement();
-					Object s = entry.getName();
-					if (!((String) s).startsWith(path = "assets/lotr/strscan/") || !((String) s).endsWith(strscanFormat)) {
+					String s = entry.getName();
+					if (!s.startsWith(path = "assets/lotr/strscan/") || !s.endsWith(strscanFormat)) {
 						continue;
 					}
-					s = ((String) s).substring(path.length());
-					int i = ((String) s).indexOf(strscanFormat);
+					s = s.substring(path.length());
+					int i = s.indexOf(strscanFormat);
 					try {
-						s = ((String) s).substring(0, i);
-						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(zip.getInputStream(entry)), Charsets.UTF_8.name()));
-						scanNamesAndReaders.put((String) s, reader);
+						s = s.substring(0, i);
+						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(zip.getInputStream(entry)), Charsets.UTF_8));
+						scanNamesAndReaders.put(s, reader);
 					} catch (Exception e) {
-						FMLLog.severe("Failed to load LOTR structure scan " + (String) s + "from zip file");
+						FMLLog.severe("Failed to load LOTR structure scan " + s + "from zip file");
 						e.printStackTrace();
 					}
 				}
@@ -89,7 +91,7 @@ public class LOTRStructureScan {
 					}
 					try {
 						s = s.substring(0, i);
-						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(new FileInputStream(subfile)), Charsets.UTF_8.name()));
+						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(Files.newInputStream(subfile.toPath())), Charsets.UTF_8));
 						scanNamesAndReaders.put(s, reader);
 					} catch (Exception e) {
 						FMLLog.severe("Failed to load LOTR structure scan " + s + " from MCP folder");
@@ -101,12 +103,13 @@ public class LOTRStructureScan {
 			FMLLog.severe("Failed to load LOTR structure scans");
 			e.printStackTrace();
 		}
-		for (String strName : scanNamesAndReaders.keySet()) {
-			BufferedReader reader = scanNamesAndReaders.get(strName);
+		for (Map.Entry<String, BufferedReader> entry : scanNamesAndReaders.entrySet()) {
+			String strName = entry.getKey();
+			BufferedReader reader = entry.getValue();
 			int curLine = 0;
 			try {
 				String nextLine;
-				ArrayList<String> lines = new ArrayList<>();
+				Collection<String> lines = new ArrayList<>();
 				while ((nextLine = reader.readLine()) != null) {
 					lines.add(nextLine);
 				}
@@ -120,7 +123,7 @@ public class LOTRStructureScan {
 					String alias;
 					String s1;
 					++curLine;
-					if (line.length() == 0) {
+					if (line.isEmpty()) {
 						continue;
 					}
 					if (line.charAt(0) == LOTRScanAlias.Type.BLOCK.typeCode) {
@@ -134,33 +137,33 @@ public class LOTRStructureScan {
 						continue;
 					}
 					int i = 0;
-					int j = line.indexOf(".");
+					int j = line.indexOf('.');
 					String s12 = line.substring(i, j);
 					int x = Integer.parseInt(s12);
 					ScanStepBase step = null;
 					boolean fillDown = false;
 					boolean findLowest = false;
 					i = j + 1;
-					j = line.indexOf(".", i);
+					j = line.indexOf('.', i);
 					s12 = line.substring(i, j);
-					if (s12.endsWith("v")) {
+					if (!s12.isEmpty() && s12.charAt(s12.length() - 1) == 'v') {
 						fillDown = true;
 						s12 = s12.substring(0, s12.length() - 1);
-					} else if (s12.endsWith("_")) {
+					} else if (!s12.isEmpty() && s12.charAt(s12.length() - 1) == '_') {
 						findLowest = true;
 						s12 = s12.substring(0, s12.length() - 1);
 					}
 					int y = Integer.parseInt(s12);
 					i = j + 1;
-					j = line.indexOf(".", i);
+					j = line.indexOf('.', i);
 					s12 = line.substring(i, j);
 					int z = Integer.parseInt(s12);
 					i = j + 1;
 					char c = line.charAt(i);
 					if (c == '\"') {
-						j = line.indexOf("\"", i + 1);
+						j = line.indexOf('"', i + 1);
 						s12 = line.substring(i, j + 1);
-						String blockID = s12 = s12.substring(1, s12.length() - 1);
+						String blockID = s12.substring(1, s12.length() - 1);
 						Block block = Block.getBlockFromName(blockID);
 						if (block == null) {
 							FMLLog.severe("LOTRStrScan: Block " + blockID + " does not exist!");
@@ -174,7 +177,7 @@ public class LOTRStructureScan {
 					} else if (c == LOTRScanAlias.Type.BLOCK.typeCode) {
 						j = line.indexOf(LOTRScanAlias.Type.BLOCK.typeCode, i + 1);
 						s12 = line.substring(i, j + 1);
-						alias = s12 = s12.substring(1, s12.length() - 1);
+						alias = s12.substring(1, s12.length() - 1);
 						i = j + 2;
 						j = line.length();
 						s12 = line.substring(i, j);
@@ -183,12 +186,12 @@ public class LOTRStructureScan {
 					} else if (c == LOTRScanAlias.Type.BLOCK_META.typeCode) {
 						j = line.indexOf(LOTRScanAlias.Type.BLOCK_META.typeCode, i + 1);
 						s12 = line.substring(i, j + 1);
-						alias = s12 = s12.substring(1, s12.length() - 1);
+						alias = s12.substring(1, s12.length() - 1);
 						step = new ScanStepBlockMetaAlias(x, y, z, alias);
 					} else if (c == '/') {
-						j = line.indexOf("/", i + 1);
+						j = line.indexOf('/', i + 1);
 						s12 = line.substring(i, j + 1);
-						String code = s12 = s12.substring(1, s12.length() - 1);
+						String code = s12.substring(1, s12.length() - 1);
 						if ("SKULL".equals(code)) {
 							step = new ScanStepSkull(x, y, z);
 						}
@@ -217,6 +220,7 @@ public class LOTRStructureScan {
 		}
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static boolean writeScanToFile(LOTRStructureScan scan) {
 		File dir = new File(DimensionManager.getCurrentSaveRootDirectory(), "lotr_str_scans");
 		if (!dir.exists()) {
@@ -227,7 +231,7 @@ public class LOTRStructureScan {
 			if (!scanFile.exists()) {
 				scanFile.createNewFile();
 			}
-			PrintStream writer = new PrintStream(new FileOutputStream(scanFile));
+			PrintStream writer = new PrintStream(Files.newOutputStream(scanFile.toPath()), true, StandardCharsets.UTF_8.name());
 			if (!scan.aliases.isEmpty()) {
 				for (LOTRScanAlias alias : scan.aliases) {
 					writer.println(alias.getFullCode());
@@ -317,15 +321,15 @@ public class LOTRStructureScan {
 		}
 	}
 
-	public static abstract class ScanStepBase {
+	public abstract static class ScanStepBase {
 		public int x;
 		public int y;
 		public int z;
-		public boolean fillDown = false;
-		public boolean findLowest = false;
+		public boolean fillDown;
+		public boolean findLowest;
 		public int lineNumber;
 
-		public ScanStepBase(int _x, int _y, int _z) {
+		protected ScanStepBase(int _x, int _y, int _z) {
 			x = _x;
 			y = _y;
 			z = _z;

@@ -15,7 +15,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class LOTREntityBarrowWight extends LOTREntityNPC {
-	public static Potion[] attackEffects = { Potion.moveSlowdown, Potion.digSlowdown, Potion.wither };
+	public static Potion[] attackEffects = {Potion.moveSlowdown, Potion.digSlowdown, Potion.wither};
 
 	public LOTREntityBarrowWight(World world) {
 		super(world);
@@ -30,7 +30,7 @@ public class LOTREntityBarrowWight extends LOTREntityNPC {
 		tasks.addTask(5, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 8.0f, 0.02f));
 		tasks.addTask(6, new EntityAIWatchClosest(this, EntityLiving.class, 12.0f, 0.02f));
 		tasks.addTask(7, new EntityAILookIdle(this));
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		spawnsInDarkness = true;
 	}
 
@@ -88,11 +88,6 @@ public class LOTREntityBarrowWight extends LOTREntityNPC {
 
 	@Override
 	public void func_145780_a(int i, int j, int k, Block block) {
-	}
-
-	@Override
-	public float getAlignmentBonus() {
-		return 0.0f;
 	}
 
 	@Override

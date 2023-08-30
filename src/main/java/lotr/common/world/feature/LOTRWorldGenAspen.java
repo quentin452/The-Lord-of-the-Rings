@@ -13,12 +13,12 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRWorldGenAspen extends WorldGenAbstractTree {
 	public Block woodBlock = LOTRMod.wood7;
-	public int woodMeta = 0;
+	public int woodMeta;
 	public Block leafBlock = LOTRMod.leaves7;
-	public int leafMeta = 0;
+	public int leafMeta;
 	public int minHeight = 8;
 	public int maxHeight = 15;
-	public int extraTrunk = 0;
+	public int extraTrunk;
 
 	public LOTRWorldGenAspen(boolean flag) {
 		super(flag);
@@ -64,7 +64,7 @@ public class LOTRWorldGenAspen extends WorldGenAbstractTree {
 		for (i12 = i; i12 <= i + extraTrunk && canGrow; ++i12) {
 			for (k1 = k; k1 <= k + extraTrunk && canGrow; ++k1) {
 				below = world.getBlock(i12, j - 1, k1);
-				if (below.canSustainPlant((IBlockAccess) world, i12, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
+				if (below.canSustainPlant(world, i12, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 					continue;
 				}
 				canGrow = false;
@@ -102,20 +102,17 @@ public class LOTRWorldGenAspen extends WorldGenAbstractTree {
 					setBlockAndNotifyAdequately(world, i2, j1, k2, leafBlock, leafMeta);
 					int dir = random.nextInt(4);
 					switch (dir) {
-					case 0:
-						--i2;
-						continue;
-					case 1:
-						++i2;
-						continue;
-					case 2:
-						--k2;
-						continue;
-					default:
-						break;
-					}
-					if (dir != 3) {
-						continue;
+						case 0:
+							--i2;
+							continue;
+						case 1:
+							++i2;
+							continue;
+						case 2:
+							--k2;
+							continue;
+						default:
+							break;
 					}
 					++k2;
 				}

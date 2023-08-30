@@ -18,7 +18,7 @@ public class LOTRWorldGenEasterlingGarden extends LOTRWorldGenEasterlingStructur
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 10);
+		setOriginAndRotation(world, i, j, k, rotation, 10);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -48,7 +48,7 @@ public class LOTRWorldGenEasterlingGarden extends LOTRWorldGenEasterlingStructur
 				int k2 = Math.abs(k1);
 				for (j1 = 0; (j1 >= 0 || !isOpaque(world, i1, j1, k1)) && getY(j1) >= 0; --j1) {
 					if (j1 == 0) {
-						setBlockAndMetadata(world, i1, j1, k1, Blocks.grass, 0);
+						setBlockAndMetadata(world, i1, 0, k1, Blocks.grass, 0);
 					} else {
 						setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 0);
 					}
@@ -57,7 +57,7 @@ public class LOTRWorldGenEasterlingGarden extends LOTRWorldGenEasterlingStructur
 				for (j1 = 1; j1 <= 9; ++j1) {
 					setAir(world, i1, j1, k1);
 				}
-				if (i2 <= 9 && k2 <= 9 && (i2 == 9 && k2 >= 2 && k2 <= 8 || k2 == 9 && i2 >= 2 && i2 <= 8)) {
+				if ((i2 == 9 && k2 >= 2 && k2 <= 8 || k2 == 9 && i2 >= 2 && i2 <= 8)) {
 					setBlockAndMetadata(world, i1, 0, k1, brickBlock, brickMeta);
 					if (i2 == 9 && k2 == 2 || k2 == 9 && i2 == 2) {
 						for (j1 = 1; j1 <= 6; ++j1) {
@@ -76,10 +76,10 @@ public class LOTRWorldGenEasterlingGarden extends LOTRWorldGenEasterlingStructur
 				}
 				if (i2 >= 2 && i2 <= 8 && k2 >= 2 && k2 <= 8) {
 					if (i2 == 2 && k2 >= 5 || k2 == 2 && i2 >= 5) {
-						int hedgeHeight = 0;
+						int hedgeHeight;
 						if (i2 == 2) {
 							hedgeHeight = k2 - 4;
-						} else if (k2 == 2) {
+						} else {
 							hedgeHeight = i2 - 4;
 						}
 						for (int j12 = 1; j12 <= hedgeHeight; ++j12) {
@@ -91,11 +91,11 @@ public class LOTRWorldGenEasterlingGarden extends LOTRWorldGenEasterlingStructur
 						}
 					} else {
 						int sum = i2 + k2;
-						if (sum >= 4 && sum <= 7) {
+						if (sum <= 7) {
 							if (random.nextBoolean()) {
 								plantFlower(world, random, i1, 1, k1);
 							}
-						} else if (sum >= 8 && sum <= 9) {
+						} else if (sum <= 9) {
 							setBlockAndMetadata(world, i1, 1, k1, Blocks.grass, 0);
 							setGrassToDirt(world, i1, 0, k1);
 							if (random.nextBoolean()) {
@@ -145,7 +145,7 @@ public class LOTRWorldGenEasterlingGarden extends LOTRWorldGenEasterlingStructur
 						setBlockAndMetadata(world, i1, 0, k1, brickCarvedBlock, brickCarvedMeta);
 					} else if (i2 + k2 == 1) {
 						setBlockAndMetadata(world, i1, 0, k1, brickFloweryBlock, brickFloweryMeta);
-					} else if (i2 + k2 == 2) {
+					} else {
 						setBlockAndMetadata(world, i1, 0, k1, brickRedBlock, brickRedMeta);
 					}
 				}
@@ -196,25 +196,25 @@ public class LOTRWorldGenEasterlingGarden extends LOTRWorldGenEasterlingStructur
 		setBlockAndMetadata(world, -8, 7, 8, brickStairBlock, 7);
 		setBlockAndMetadata(world, 8, 7, 8, brickStairBlock, 7);
 		setBlockAndMetadata(world, 9, 7, 8, brickStairBlock, 7);
-		for (int k1 : new int[] { -9, 9 }) {
+		for (int k1 : new int[]{-9, 9}) {
 			setBlockAndMetadata(world, -1, 5, k1, brickStairBlock, 4);
 			setBlockAndMetadata(world, 1, 5, k1, brickStairBlock, 5);
 			setBlockAndMetadata(world, -1, 6, k1, brickStairBlock, 0);
 			setBlockAndMetadata(world, 0, 6, k1, brickSlabBlock, brickSlabMeta);
 			setBlockAndMetadata(world, 1, 6, k1, brickStairBlock, 1);
 		}
-		for (int i1 : new int[] { -9, 9 }) {
+		for (int i1 : new int[]{-9, 9}) {
 			setBlockAndMetadata(world, i1, 5, -1, brickStairBlock, 7);
 			setBlockAndMetadata(world, i1, 5, 1, brickStairBlock, 6);
 			setBlockAndMetadata(world, i1, 6, -1, brickStairBlock, 3);
 			setBlockAndMetadata(world, i1, 6, 0, brickSlabBlock, brickSlabMeta);
 			setBlockAndMetadata(world, i1, 6, 1, brickStairBlock, 2);
 		}
-		for (int i1 : new int[] { -2, 2 }) {
+		for (int i1 : new int[]{-2, 2}) {
 			setBlockAndMetadata(world, i1, 6, -8, Blocks.torch, 3);
 			setBlockAndMetadata(world, i1, 6, 8, Blocks.torch, 4);
 		}
-		for (int k1 : new int[] { -2, 2 }) {
+		for (int k1 : new int[]{-2, 2}) {
 			setBlockAndMetadata(world, -8, 6, k1, Blocks.torch, 2);
 			setBlockAndMetadata(world, 8, 6, k1, Blocks.torch, 1);
 		}
@@ -229,7 +229,7 @@ public class LOTRWorldGenEasterlingGarden extends LOTRWorldGenEasterlingStructur
 			if (i2 != 3 && i2 != 7) {
 				continue;
 			}
-			for (int k1 : new int[] { -10, 10 }) {
+			for (int k1 : new int[]{-10, 10}) {
 				setBlockAndMetadata(world, i1 - 1, 9, k1, brickStairBlock, 1);
 				setBlockAndMetadata(world, i1, 9, k1, brickBlock, brickMeta);
 				setBlockAndMetadata(world, i1 + 1, 9, k1, brickStairBlock, 0);
@@ -246,7 +246,7 @@ public class LOTRWorldGenEasterlingGarden extends LOTRWorldGenEasterlingStructur
 			if (k2 != 3 && k2 != 7) {
 				continue;
 			}
-			for (int i1 : new int[] { -10, 10 }) {
+			for (int i1 : new int[]{-10, 10}) {
 				setBlockAndMetadata(world, i1, 9, k1 - 1, brickStairBlock, 2);
 				setBlockAndMetadata(world, i1, 9, k1, brickBlock, brickMeta);
 				setBlockAndMetadata(world, i1, 9, k1 + 1, brickStairBlock, 3);

@@ -21,7 +21,7 @@ public class LOTRUnitTradeEntry {
 	public float alignmentRequired;
 	public PledgeType pledgeType = PledgeType.NONE;
 	public LOTRHiredNPCInfo.Task task = LOTRHiredNPCInfo.Task.WARRIOR;
-	public String extraInfo = null;
+	public String extraInfo;
 
 	public LOTRUnitTradeEntry(Class c, Class c1, String s, int cost, float alignment) {
 		this(c, cost, alignment);
@@ -74,7 +74,7 @@ public class LOTRUnitTradeEntry {
 			f = alignSurplus / 2000.0f;
 		}
 		f = MathHelper.clamp_float(f, 0.0f, 1.0f);
-		cost *= 1.0f - (f *= 0.5f);
+		cost *= 1.0f - f * 0.5f;
 		int costI = Math.round(cost);
 		return Math.max(costI, 1);
 	}
@@ -150,7 +150,7 @@ public class LOTRUnitTradeEntry {
 	}
 
 	public LOTRUnitTradeEntry setMountArmor(Item item) {
-		return this.setMountArmor(item, 1.0f);
+		return setMountArmor(item, 1.0f);
 	}
 
 	public LOTRUnitTradeEntry setMountArmor(Item item, float chance) {
@@ -208,7 +208,7 @@ public class LOTRUnitTradeEntry {
 		}
 
 		public static PledgeType forID(int i) {
-			for (PledgeType t : PledgeType.values()) {
+			for (PledgeType t : values()) {
 				if (t.typeID != i) {
 					continue;
 				}

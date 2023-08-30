@@ -27,8 +27,8 @@ public class LOTRBiomeGenRivendellHills extends LOTRBiomeGenRivendell {
 		npcSpawnList.conquestGainRate = 0.2f;
 		clearBiomeVariants();
 		variantChance = 0.4f;
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
 		decorator.treesPerChunk = 3;
 		decorator.flowersPerChunk = 2;
 		decorator.grassPerChunk = 10;

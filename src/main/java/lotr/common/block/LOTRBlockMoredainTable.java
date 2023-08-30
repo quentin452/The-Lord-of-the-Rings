@@ -9,7 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 
 public class LOTRBlockMoredainTable extends LOTRBlockCraftingTable {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] tableIcons;
 
 	public LOTRBlockMoredainTable() {
@@ -18,7 +18,7 @@ public class LOTRBlockMoredainTable extends LOTRBlockCraftingTable {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int i, int j) {
 		if (i == 1) {
 			return tableIcons[1];
@@ -30,7 +30,7 @@ public class LOTRBlockMoredainTable extends LOTRBlockCraftingTable {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconregister) {
 		tableIcons = new IIcon[2];
 		tableIcons[0] = iconregister.registerIcon(getTextureName() + "_side");

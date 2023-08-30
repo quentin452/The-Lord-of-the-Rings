@@ -119,8 +119,4 @@ public class LOTRBiomeGenIronHills extends LOTRBiome {
 		return LOTRRoadType.DWARVEN;
 	}
 
-	@Override
-	public float getTreeIncreaseChance() {
-		return 0.1f;
-	}
 }

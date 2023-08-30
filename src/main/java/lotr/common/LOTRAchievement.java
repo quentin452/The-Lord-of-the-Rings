@@ -516,8 +516,8 @@ public class LOTRAchievement {
 	public boolean isBiomeAchievement;
 	public boolean isSpecial;
 	public LOTRTitle achievementTitle;
-	public List<LOTRFaction> enemyFactions = new ArrayList<>();
-	public List<LOTRFaction> allyFactions = new ArrayList<>();
+	public Collection<LOTRFaction> enemyFactions = new ArrayList<>();
+	public Collection<LOTRFaction> allyFactions = new ArrayList<>();
 
 	public LOTRAchievement(Category c, int i, Block block, String s) {
 		this(c, i, new ItemStack(block), s);
@@ -548,7 +548,7 @@ public class LOTRAchievement {
 		}
 		ChatComponentTranslation dimName = new ChatComponentTranslation(getDimension().getUntranslatedDimensionName());
 		IChatComponent earnName = getChatComponentForEarn(entityplayer);
-		ChatComponentTranslation msg = new ChatComponentTranslation("chat.lotr.achievement", entityplayer.func_145748_c_(), dimName, earnName);
+		IChatComponent msg = new ChatComponentTranslation("chat.lotr.achievement", entityplayer.func_145748_c_(), dimName, earnName);
 		MinecraftServer.getServer().getConfigurationManager().sendChatMsg(msg);
 	}
 
@@ -577,20 +577,18 @@ public class LOTRAchievement {
 				}
 				anyAllies = true;
 			}
-			if (!anyAllies) {
-				return false;
-			}
+			return anyAllies;
 		}
 		return true;
 	}
 
 	public LOTRAchievement createTitle() {
-		return this.createTitle(null);
+		return createTitle(null);
 	}
 
 	public LOTRAchievement createTitle(String s) {
 		if (achievementTitle != null) {
-			throw new IllegalArgumentException("LOTR achievement " + getCodeName() + " already has an associated title!");
+			throw new IllegalArgumentException("LOTR achievement " + name + " already has an associated title!");
 		}
 		achievementTitle = new LOTRTitle(s, this);
 		return this;
@@ -645,11 +643,11 @@ public class LOTRAchievement {
 	}
 
 	public LOTRAchievement setRequiresAnyAlly(List<LOTRFaction> f) {
-		return setRequiresAlly(f.<LOTRFaction>toArray(new LOTRFaction[0]));
+		return setRequiresAlly(f.toArray(new LOTRFaction[0]));
 	}
 
 	public LOTRAchievement setRequiresAnyEnemy(List<LOTRFaction> f) {
-		return setRequiresEnemy(f.<LOTRFaction>toArray(new LOTRFaction[0]));
+		return setRequiresEnemy(f.toArray(new LOTRFaction[0]));
 	}
 
 	public LOTRAchievement setRequiresEnemy(LOTRFaction... f) {
@@ -1183,7 +1181,7 @@ public class LOTRAchievement {
 	public static LOTRAchievement findByName(String name) {
 		for (Category category : Category.values()) {
 			for (LOTRAchievement achievement : category.list) {
-				if (!achievement.getCodeName().equalsIgnoreCase(name)) {
+				if (!achievement.name.equalsIgnoreCase(name)) {
 					continue;
 				}
 				return achievement;
@@ -1193,7 +1191,7 @@ public class LOTRAchievement {
 	}
 
 	public static List<LOTRAchievement> getAllAchievements() {
-		ArrayList<LOTRAchievement> list = new ArrayList<>();
+		List<LOTRAchievement> list = new ArrayList<>();
 		for (Category category : Category.values()) {
 			list.addAll(category.list);
 		}
@@ -1201,37 +1199,25 @@ public class LOTRAchievement {
 	}
 
 	public static Comparator<LOTRAchievement> sortForDisplay(EntityPlayer entityplayer) {
-		return new Comparator<LOTRAchievement>() {
-
-			@Override
-			public int compare(LOTRAchievement ach1, LOTRAchievement ach2) {
-				if (ach1.isSpecial) {
-					if (!ach2.isSpecial) {
-						return -1;
-					}
-					if (ach2.ID < ach1.ID) {
-						return 1;
-					}
-					if (ach2.ID == ach1.ID) {
-						return 0;
-					}
-					if (ach2.ID > ach1.ID) {
-						return -1;
-					}
-				} else if (ach2.isSpecial) {
-					return 1;
-				}
-				if (ach1.isBiomeAchievement) {
-					if (ach2.isBiomeAchievement) {
-						return ach1.getTitle(entityplayer).compareTo(ach2.getTitle(entityplayer));
-					}
+		return (ach1, ach2) -> {
+			if (ach1.isSpecial) {
+				if (!ach2.isSpecial) {
 					return -1;
 				}
-				if (!ach2.isBiomeAchievement) {
-					return ach1.getTitle(entityplayer).compareTo(ach2.getTitle(entityplayer));
-				}
+				return Integer.compare(ach1.ID, ach2.ID);
+			} else if (ach2.isSpecial) {
 				return 1;
 			}
+			if (ach1.isBiomeAchievement) {
+				if (ach2.isBiomeAchievement) {
+					return ach1.getTitle(entityplayer).compareTo(ach2.getTitle(entityplayer));
+				}
+				return -1;
+			}
+			if (!ach2.isBiomeAchievement) {
+				return ach1.getTitle(entityplayer).compareTo(ach2.getTitle(entityplayer));
+			}
+			return 1;
 		};
 	}
 
@@ -1241,7 +1227,7 @@ public class LOTRAchievement {
 		public String codeName;
 		public float[] categoryColors;
 		public LOTRDimension dimension;
-		public List<LOTRAchievement> list = new ArrayList<>();
+		public Collection<LOTRAchievement> list = new ArrayList<>();
 		public int nextRankAchID = 1000;
 
 		Category(int color) {

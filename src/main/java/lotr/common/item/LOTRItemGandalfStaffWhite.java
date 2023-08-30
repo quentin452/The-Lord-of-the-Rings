@@ -1,5 +1,6 @@
 package lotr.common.item;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.LOTRCreativeTabs;
 import lotr.common.entity.projectile.LOTREntityGandalfFireball;
 import lotr.common.network.*;
@@ -32,7 +33,7 @@ public class LOTRItemGandalfStaffWhite extends LOTRItemSword implements LOTRStor
 		world.playSoundAtEntity(entityplayer, "mob.ghast.fireball", 2.0f, (itemRand.nextFloat() - itemRand.nextFloat()) * 0.2f + 1.0f);
 		if (!world.isRemote) {
 			world.spawnEntityInWorld(new LOTREntityGandalfFireball(world, entityplayer));
-			LOTRPacketWeaponFX packet = new LOTRPacketWeaponFX(LOTRPacketWeaponFX.Type.STAFF_GANDALF_WHITE, entityplayer);
+			IMessage packet = new LOTRPacketWeaponFX(LOTRPacketWeaponFX.Type.STAFF_GANDALF_WHITE, entityplayer);
 			LOTRPacketHandler.networkWrapper.sendToAllAround(packet, LOTRPacketHandler.nearEntity(entityplayer, 64.0));
 		}
 		return itemstack;

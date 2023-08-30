@@ -10,7 +10,7 @@ import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 
 public class LOTRBlockClayTileDyed extends LOTRBlockClayTile {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] clayIcons;
 
 	@Override
@@ -18,7 +18,7 @@ public class LOTRBlockClayTileDyed extends LOTRBlockClayTile {
 		return i;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j >= 16) {
@@ -27,7 +27,7 @@ public class LOTRBlockClayTileDyed extends LOTRBlockClayTile {
 		return clayIcons[j];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < 16; ++i) {
@@ -35,7 +35,7 @@ public class LOTRBlockClayTileDyed extends LOTRBlockClayTile {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		clayIcons = new IIcon[16];

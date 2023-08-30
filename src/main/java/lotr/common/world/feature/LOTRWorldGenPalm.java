@@ -16,7 +16,7 @@ public class LOTRWorldGenPalm extends WorldGenAbstractTree {
 	public int woodMeta;
 	public Block leafBlock;
 	public int leafMeta;
-	public boolean hasDates = false;
+	public boolean hasDates;
 	public int minHeight = 5;
 	public int maxHeight = 8;
 
@@ -76,30 +76,30 @@ public class LOTRWorldGenPalm extends WorldGenAbstractTree {
 			trunkZ = (int) (trunkZ + Math.signum(trunkSin));
 		}
 		int leafAngle = 0;
-		block5: while (leafAngle < 360) {
+		block5:
+		while (leafAngle < 360) {
 			float angleR = (float) Math.toRadians(leafAngle += 15 + random.nextInt(15));
 			float sin = MathHelper.sin(angleR);
 			float cos = MathHelper.cos(angleR);
-			float angleY = random.nextFloat() * (float) Math.toRadians(30.0);
-			MathHelper.cos(angleY);
+			float angleY = random.nextFloat() * 0.5235987755982988f;
 			float sinY = MathHelper.sin(angleY);
 			int i1 = trunkX;
 			int j1 = j + height - 1;
 			int k1 = trunkZ;
 			int branchLength = 5;
 			for (int l = 1; l <= branchLength; ++l) {
-				if (Math.floor(sinY * l) != Math.floor(sinY * (l - 1))) {
-					j1 = (int) (j1 + Math.signum(sinY));
-				} else {
+				if (Math.floor(sinY * l) == Math.floor(sinY * (l - 1))) {
 					boolean cosOrSin;
 					double dCos = Math.floor(Math.abs(cos * l)) - Math.floor(Math.abs(cos * (l - 1)));
 					double dSin = Math.floor(Math.abs(sin * l)) - Math.floor(Math.abs(sin * (l - 1)));
-					cosOrSin = (dCos = Math.abs(dCos)) == (dSin = Math.abs(dSin)) ? random.nextBoolean() : (cosOrSin = dCos > dSin);
+					cosOrSin = (dCos = Math.abs(dCos)) == (dSin = Math.abs(dSin)) ? random.nextBoolean() : dCos > dSin;
 					if (cosOrSin) {
 						i1 = (int) (i1 + Math.signum(cos));
 					} else {
 						k1 = (int) (k1 + Math.signum(sin));
 					}
+				} else {
+					j1 = (int) (j1 + Math.signum(sinY));
 				}
 				boolean wood = l == 1;
 				Block block = world.getBlock(i1, j1, k1);
@@ -112,7 +112,7 @@ public class LOTRWorldGenPalm extends WorldGenAbstractTree {
 				} else if (!replacingWood) {
 					setBlockAndNotifyAdequately(world, i1, j1, k1, leafBlock, leafMeta);
 				}
-				if (l >= 5) {
+				if (l == 5) {
 					continue block5;
 				}
 			}

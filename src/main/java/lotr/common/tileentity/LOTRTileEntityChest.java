@@ -59,7 +59,7 @@ public class LOTRTileEntityChest extends TileEntity implements IInventory {
 		return 64;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
 		return AxisAlignedBB.getBoundingBox(xCoord - 1, yCoord, zCoord - 1, xCoord + 2, yCoord + 2, zCoord + 2);
@@ -87,7 +87,7 @@ public class LOTRTileEntityChest extends TileEntity implements IInventory {
 
 	@Override
 	public boolean hasCustomInventoryName() {
-		return customName != null && customName.length() > 0;
+		return customName != null && !customName.isEmpty();
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class LOTRTileEntityChest extends TileEntity implements IInventory {
 		for (int i = 0; i < itemTags.tagCount(); ++i) {
 			NBTTagCompound slotData = itemTags.getCompoundTagAt(i);
 			int slot = slotData.getByte("Slot") & 0xFF;
-			if (slot < 0 || slot >= chestContents.length) {
+			if (slot >= chestContents.length) {
 				continue;
 			}
 			chestContents[slot] = ItemStack.loadItemStackFromNBT(slotData);
@@ -180,7 +180,7 @@ public class LOTRTileEntityChest extends TileEntity implements IInventory {
 		if (numPlayersUsing == 0 && lidAngle > 0.0f || numPlayersUsing > 0 && lidAngle < 1.0f) {
 			float pre = lidAngle;
 			float incr = 0.1f;
-			lidAngle = numPlayersUsing > 0 ? (lidAngle += incr) : (lidAngle -= incr);
+			lidAngle = numPlayersUsing > 0 ? lidAngle + incr : lidAngle - incr;
 			lidAngle = Math.min(lidAngle, 1.0f);
 			lidAngle = Math.max(lidAngle, 0.0f);
 			float thr = 0.5f;

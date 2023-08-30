@@ -2,7 +2,6 @@ package lotr.common.world.biome;
 
 import java.util.Random;
 
-import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityNomadMerchant;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRTreeType;
@@ -29,13 +28,13 @@ public class LOTRBiomeGenNearHaradSemiDesert extends LOTRBiomeGenNearHarad {
 		arrspawnListContainer3[0] = LOTRBiomeSpawnList.entry(LOTRSpawnList.GONDOR_SOLDIERS);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer3);
 		clearBiomeVariants();
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE);
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE_BARREN);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.SHRUBLAND_OAK);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE_BARREN);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
+		addBiomeVariant(LOTRBiomeVariant.SHRUBLAND_OAK);
 		decorator.clearTrees();
 		decorator.addTree(LOTRTreeType.OAK_DEAD, 500);
 		decorator.addTree(LOTRTreeType.OAK_DESERT, 500);
@@ -89,11 +88,6 @@ public class LOTRBiomeGenNearHaradSemiDesert extends LOTRBiomeGenNearHarad {
 		topBlockMeta = topBlockMeta_pre;
 		fillerBlock = fillerBlock_pre;
 		fillerBlockMeta = fillerBlockMeta_pre;
-	}
-
-	@Override
-	public LOTRBiome.GrassBlockAndMeta getRandomGrass(Random random) {
-		return new LOTRBiome.GrassBlockAndMeta(LOTRMod.aridGrass, 0);
 	}
 
 	@Override

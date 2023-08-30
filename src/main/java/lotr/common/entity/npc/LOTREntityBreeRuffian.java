@@ -17,18 +17,19 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityBreeRuffian extends LOTREntityBreeMan {
-	public static ItemStack[] ruffianWeapons = { new ItemStack(Items.iron_sword), new ItemStack(Items.iron_sword), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.battleaxeIron) };
+	public static ItemStack[] ruffianWeapons = {new ItemStack(Items.iron_sword), new ItemStack(Items.iron_sword), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.battleaxeIron)};
 	public int ruffianAngerTick;
 
-	public LOTREntityBreeRuffian(World world) {
+	@SuppressWarnings("Convert2Lambda")
+	protected LOTREntityBreeRuffian(World world) {
 		super(world);
-		int target = this.addTargetTasks(false);
+		int target = addTargetTasks(false);
 		targetTasks.addTask(target + 1, new LOTREntityAINearestAttackableTargetBasic(this, EntityPlayer.class, 0, true, new IEntitySelector() {
 
 			@Override
 			public boolean isEntityApplicable(Entity entity) {
 				EntityPlayer player = (EntityPlayer) entity;
-				return LOTREntityBreeRuffian.this.canRuffianTarget(player);
+				return canRuffianTarget(player);
 			}
 		}));
 	}
@@ -78,8 +79,8 @@ public abstract class LOTREntityBreeRuffian extends LOTREntityBreeMan {
 			int nauseaTime = nausea.getDuration() / 20;
 			int minNauseaTime = 20;
 			int fullNauseaTime = 120;
-			float chance = (float) (nauseaTime - minNauseaTime) / (float) (fullNauseaTime - minNauseaTime);
-			return rand.nextFloat() < (chance *= 0.05f);
+			float chance = (float) (nauseaTime - minNauseaTime) / (fullNauseaTime - minNauseaTime);
+			return rand.nextFloat() < chance * 0.05f;
 		}
 		return false;
 	}

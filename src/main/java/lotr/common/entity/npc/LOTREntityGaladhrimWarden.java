@@ -11,7 +11,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class LOTREntityGaladhrimWarden extends LOTREntityGaladhrimElf {
-	public int sneakCooldown = 0;
+	public int sneakCooldown;
 	public EntityLivingBase prevElfTarget;
 
 	public LOTREntityGaladhrimWarden(World world) {

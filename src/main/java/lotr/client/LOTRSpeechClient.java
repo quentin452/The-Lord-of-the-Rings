@@ -21,7 +21,7 @@ public class LOTRSpeechClient {
 	}
 
 	public static boolean hasSpeech(LOTREntityNPC npc) {
-		return LOTRSpeechClient.getSpeechFor(npc) != null;
+		return getSpeechFor(npc) != null;
 	}
 
 	public static void receiveSpeech(LOTREntityNPC npc, String speech) {
@@ -33,7 +33,7 @@ public class LOTRSpeechClient {
 	}
 
 	public static void update() {
-		HashMap<UUID, TimedSpeech> newMap = new HashMap<>();
+		Map<UUID, TimedSpeech> newMap = new HashMap<>();
 		for (Map.Entry<UUID, TimedSpeech> e : npcSpeeches.entrySet()) {
 			UUID key = e.getKey();
 			TimedSpeech speech = e.getValue();
@@ -56,7 +56,7 @@ public class LOTRSpeechClient {
 		}
 
 		public float getAge() {
-			return (float) time / (float) DISPLAY_TIME;
+			return (float) time / DISPLAY_TIME;
 		}
 
 		public String getSpeech() {

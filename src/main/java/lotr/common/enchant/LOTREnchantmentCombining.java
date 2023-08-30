@@ -7,7 +7,7 @@ import lotr.common.item.LOTRItemModifierTemplate;
 import net.minecraft.item.ItemStack;
 
 public class LOTREnchantmentCombining {
-	public static List<CombineRecipe> allCombineRecipes = new ArrayList<>();
+	public static Collection<CombineRecipe> allCombineRecipes = new ArrayList<>();
 
 	public static void combine(LOTREnchantment in, LOTREnchantment out, int cost) {
 		if (!in.hasTemplateItem() || !out.hasTemplateItem()) {
@@ -20,27 +20,27 @@ public class LOTREnchantmentCombining {
 	}
 
 	public static void createRecipes() {
-		LOTREnchantmentCombining.combine(LOTREnchantment.strong1, LOTREnchantment.strong2, 200);
-		LOTREnchantmentCombining.combine(LOTREnchantment.strong2, LOTREnchantment.strong3, 800);
-		LOTREnchantmentCombining.combine(LOTREnchantment.strong3, LOTREnchantment.strong4, 1600);
-		LOTREnchantmentCombining.combine(LOTREnchantment.durable1, LOTREnchantment.durable2, 300);
-		LOTREnchantmentCombining.combine(LOTREnchantment.durable2, LOTREnchantment.durable3, 1500);
-		LOTREnchantmentCombining.combine(LOTREnchantment.knockback1, LOTREnchantment.knockback2, 2500);
-		LOTREnchantmentCombining.combine(LOTREnchantment.toolSpeed1, LOTREnchantment.toolSpeed2, 200);
-		LOTREnchantmentCombining.combine(LOTREnchantment.toolSpeed2, LOTREnchantment.toolSpeed3, 800);
-		LOTREnchantmentCombining.combine(LOTREnchantment.toolSpeed3, LOTREnchantment.toolSpeed4, 1500);
-		LOTREnchantmentCombining.combine(LOTREnchantment.looting1, LOTREnchantment.looting2, 400);
-		LOTREnchantmentCombining.combine(LOTREnchantment.looting2, LOTREnchantment.looting3, 1500);
-		LOTREnchantmentCombining.combine(LOTREnchantment.protect1, LOTREnchantment.protect2, 2000);
-		LOTREnchantmentCombining.combine(LOTREnchantment.protectFire1, LOTREnchantment.protectFire2, 400);
-		LOTREnchantmentCombining.combine(LOTREnchantment.protectFire2, LOTREnchantment.protectFire3, 1500);
-		LOTREnchantmentCombining.combine(LOTREnchantment.protectFall1, LOTREnchantment.protectFall2, 400);
-		LOTREnchantmentCombining.combine(LOTREnchantment.protectFall2, LOTREnchantment.protectFall3, 1500);
-		LOTREnchantmentCombining.combine(LOTREnchantment.protectRanged1, LOTREnchantment.protectRanged2, 400);
-		LOTREnchantmentCombining.combine(LOTREnchantment.protectRanged2, LOTREnchantment.protectRanged3, 1500);
-		LOTREnchantmentCombining.combine(LOTREnchantment.rangedStrong1, LOTREnchantment.rangedStrong2, 400);
-		LOTREnchantmentCombining.combine(LOTREnchantment.rangedStrong2, LOTREnchantment.rangedStrong3, 1500);
-		LOTREnchantmentCombining.combine(LOTREnchantment.rangedKnockback1, LOTREnchantment.rangedKnockback2, 2500);
+		combine(LOTREnchantment.strong1, LOTREnchantment.strong2, 200);
+		combine(LOTREnchantment.strong2, LOTREnchantment.strong3, 800);
+		combine(LOTREnchantment.strong3, LOTREnchantment.strong4, 1600);
+		combine(LOTREnchantment.durable1, LOTREnchantment.durable2, 300);
+		combine(LOTREnchantment.durable2, LOTREnchantment.durable3, 1500);
+		combine(LOTREnchantment.knockback1, LOTREnchantment.knockback2, 2500);
+		combine(LOTREnchantment.toolSpeed1, LOTREnchantment.toolSpeed2, 200);
+		combine(LOTREnchantment.toolSpeed2, LOTREnchantment.toolSpeed3, 800);
+		combine(LOTREnchantment.toolSpeed3, LOTREnchantment.toolSpeed4, 1500);
+		combine(LOTREnchantment.looting1, LOTREnchantment.looting2, 400);
+		combine(LOTREnchantment.looting2, LOTREnchantment.looting3, 1500);
+		combine(LOTREnchantment.protect1, LOTREnchantment.protect2, 2000);
+		combine(LOTREnchantment.protectFire1, LOTREnchantment.protectFire2, 400);
+		combine(LOTREnchantment.protectFire2, LOTREnchantment.protectFire3, 1500);
+		combine(LOTREnchantment.protectFall1, LOTREnchantment.protectFall2, 400);
+		combine(LOTREnchantment.protectFall2, LOTREnchantment.protectFall3, 1500);
+		combine(LOTREnchantment.protectRanged1, LOTREnchantment.protectRanged2, 400);
+		combine(LOTREnchantment.protectRanged2, LOTREnchantment.protectRanged3, 1500);
+		combine(LOTREnchantment.rangedStrong1, LOTREnchantment.rangedStrong2, 400);
+		combine(LOTREnchantment.rangedStrong2, LOTREnchantment.rangedStrong3, 1500);
+		combine(LOTREnchantment.rangedKnockback1, LOTREnchantment.rangedKnockback2, 2500);
 	}
 
 	public static CombineRecipe getCombinationResult(ItemStack item1, ItemStack item2) {

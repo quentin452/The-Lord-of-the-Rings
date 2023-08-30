@@ -34,7 +34,7 @@ public class LOTRRenderUtumnoReturnPortal extends TileEntitySpecialRenderer {
 			GL11.glPushMatrix();
 			tessellator.startDrawingQuads();
 			tessellator.setColorRGBA_F(1.0f, 1.0f, 1.0f, alpha);
-			double width = (float) (i + 1) / (float) passes * 0.99f;
+			double width = (float) (i + 1) / passes * 0.99f;
 			double bottom = 0.0;
 			double top = bottom + LOTRTileEntityUtumnoReturnPortal.PORTAL_TOP;
 			tessellator.addVertexWithUV(width /= 2.0, bottom, width, 0.0, 0.0);

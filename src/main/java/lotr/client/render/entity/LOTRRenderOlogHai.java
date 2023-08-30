@@ -1,7 +1,7 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelTroll;
-import lotr.common.entity.npc.LOTREntityOlogHai;
+import lotr.common.entity.LOTRRandomSkinEntity;
 import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
 
@@ -16,12 +16,12 @@ public class LOTRRenderOlogHai extends LOTRRenderTroll {
 
 	@Override
 	public void bindTrollOutfitTexture(EntityLivingBase entity) {
-		bindTexture(ologArmorSkins.getRandomSkin((LOTREntityOlogHai) entity));
+		bindTexture(ologArmorSkins.getRandomSkin((LOTRRandomSkinEntity) entity));
 	}
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		return ologSkins.getRandomSkin((LOTREntityOlogHai) entity);
+		return ologSkins.getRandomSkin((LOTRRandomSkinEntity) entity);
 	}
 
 	@Override

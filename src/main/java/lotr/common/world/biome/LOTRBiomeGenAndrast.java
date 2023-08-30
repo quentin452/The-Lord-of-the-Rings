@@ -25,16 +25,16 @@ public class LOTRBiomeGenAndrast extends LOTRBiomeGenGondor {
 		npcSpawnList.clear();
 		clearBiomeVariants();
 		variantChance = 0.5f;
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.SHRUBLAND_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.SCRUBLAND, 3.0f);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS_SCRUBLAND);
-		this.addBiomeVariant(LOTRBiomeVariant.WASTELAND, 3.0f);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.FOREST);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
+		addBiomeVariant(LOTRBiomeVariant.SHRUBLAND_OAK);
+		addBiomeVariant(LOTRBiomeVariant.SCRUBLAND, 3.0f);
+		addBiomeVariant(LOTRBiomeVariant.HILLS_SCRUBLAND);
+		addBiomeVariant(LOTRBiomeVariant.WASTELAND, 3.0f);
 		decorator.setTreeCluster(10, 30);
 		decorator.treesPerChunk = 0;
 		decorator.flowersPerChunk = 3;
@@ -119,11 +119,6 @@ public class LOTRBiomeGenAndrast extends LOTRBiomeGenGondor {
 	@Override
 	public LOTRMusicRegion.Sub getBiomeMusic() {
 		return LOTRMusicRegion.PUKEL.getSubregion("andrast");
-	}
-
-	@Override
-	public float getChanceToSpawnAnimals() {
-		return 0.25f;
 	}
 
 	@Override

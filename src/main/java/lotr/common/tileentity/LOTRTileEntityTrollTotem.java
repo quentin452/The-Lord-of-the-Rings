@@ -22,9 +22,7 @@ public class LOTRTileEntityTrollTotem extends TileEntity {
 		}
 		if (getBlockType() == LOTRMod.trollTotem && (getBlockMetadata() & 3) == 0) {
 			int rotation = (getBlockMetadata() & 0xC) >> 2;
-			if (worldObj.getBlock(xCoord, yCoord - 1, zCoord) == LOTRMod.trollTotem && worldObj.getBlockMetadata(xCoord, yCoord - 1, zCoord) == (1 | rotation << 2) && worldObj.getBlock(xCoord, yCoord - 2, zCoord) == LOTRMod.trollTotem && worldObj.getBlockMetadata(xCoord, yCoord - 2, zCoord) == (2 | rotation << 2)) {
-				return true;
-			}
+			return worldObj.getBlock(xCoord, yCoord - 1, zCoord) == LOTRMod.trollTotem && worldObj.getBlockMetadata(xCoord, yCoord - 1, zCoord) == (1 | rotation << 2) && worldObj.getBlock(xCoord, yCoord - 2, zCoord) == LOTRMod.trollTotem && worldObj.getBlockMetadata(xCoord, yCoord - 2, zCoord) == (2 | rotation << 2);
 		}
 		return false;
 	}
@@ -61,19 +59,19 @@ public class LOTRTileEntityTrollTotem extends TileEntity {
 
 	@Override
 	public void updateEntity() {
-		if (!worldObj.isRemote) {
-			boolean flag = canSummon();
-			if (flag != prevCanSummon) {
-				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			}
-			prevCanSummon = flag;
-		} else {
+		if (worldObj.isRemote) {
 			prevJawRotation = jawRotation;
 			if (jawRotation < 60 && canSummon()) {
 				++jawRotation;
 			} else if (jawRotation > 0 && !canSummon()) {
 				--jawRotation;
 			}
+		} else {
+			boolean flag = canSummon();
+			if (flag != prevCanSummon) {
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			}
+			prevCanSummon = flag;
 		}
 	}
 }

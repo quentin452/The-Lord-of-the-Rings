@@ -28,7 +28,7 @@ public class LOTRRenderFallingFireJar extends RenderFallingBlock {
 				GL11.glTranslatef((float) d, (float) d1, (float) d2);
 				bindEntityTexture(entity);
 				GL11.glDisable(2896);
-				LOTRRenderFallingFireJar.renderBlocks.blockAccess = world;
+				renderBlocks.blockAccess = world;
 				Tessellator tessellator = Tessellator.instance;
 				tessellator.startDrawingQuads();
 				tessellator.setTranslation((-i) - 0.5f, (-j) - 0.5f, (-k) - 0.5f);

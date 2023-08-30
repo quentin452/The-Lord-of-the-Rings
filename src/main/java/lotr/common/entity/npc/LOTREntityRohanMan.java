@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class LOTREntityRohanMan extends LOTREntityMan {
-	public static ItemStack[] weapons = { new ItemStack(LOTRMod.daggerRohan), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.daggerBronze), new ItemStack(Items.iron_axe), new ItemStack(LOTRMod.axeBronze), new ItemStack(Items.stone_axe), new ItemStack(LOTRMod.battleaxeBronze), new ItemStack(LOTRMod.battleaxeIron), new ItemStack(LOTRMod.battleaxeRohan) };
+	public static ItemStack[] weapons = {new ItemStack(LOTRMod.daggerRohan), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.daggerBronze), new ItemStack(Items.iron_axe), new ItemStack(LOTRMod.axeBronze), new ItemStack(Items.stone_axe), new ItemStack(LOTRMod.battleaxeBronze), new ItemStack(LOTRMod.battleaxeIron), new ItemStack(LOTRMod.battleaxeRohan)};
 
 	public LOTREntityRohanMan(World world) {
 		super(world);
@@ -36,7 +36,7 @@ public class LOTREntityRohanMan extends LOTREntityMan {
 		tasks.addTask(7, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 5.0f, 0.02f));
 		tasks.addTask(8, new EntityAIWatchClosest(this, EntityLiving.class, 8.0f, 0.02f));
 		tasks.addTask(9, new EntityAILookIdle(this));
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -107,9 +107,7 @@ public class LOTREntityRohanMan extends LOTREntityMan {
 			int i = MathHelper.floor_double(posX);
 			int j = MathHelper.floor_double(boundingBox.minY);
 			int k = MathHelper.floor_double(posZ);
-			if (j > 62 && worldObj.getBlock(i, j - 1, k) == worldObj.getBiomeGenForCoords(i, k).topBlock) {
-				return true;
-			}
+			return j > 62 && worldObj.getBlock(i, j - 1, k) == worldObj.getBiomeGenForCoords(i, k).topBlock;
 		}
 		return false;
 	}
@@ -126,7 +124,7 @@ public class LOTREntityRohanMan extends LOTREntityMan {
 
 	@Override
 	public String getNPCFormattedName(String npcName, String entityName) {
-		if (this.getClass() == LOTREntityRohanMan.class) {
+		if (getClass() == LOTREntityRohanMan.class) {
 			return StatCollector.translateToLocalFormatted("entity.lotr.RohanMan.entityName", npcName);
 		}
 		return super.getNPCFormattedName(npcName, entityName);

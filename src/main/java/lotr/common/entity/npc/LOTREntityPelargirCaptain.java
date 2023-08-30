@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityPelargirCaptain extends LOTREntityPelargirMarine implements LOTRUnitTradeable {
 	public LOTREntityPelargirCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.PELARGIR;
 	}
 

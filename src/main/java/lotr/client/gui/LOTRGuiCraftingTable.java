@@ -12,7 +12,7 @@ public abstract class LOTRGuiCraftingTable extends GuiContainer {
 	public static ResourceLocation craftingTexture = new ResourceLocation("textures/gui/container/crafting_table.png");
 	public String unlocalizedName;
 
-	public LOTRGuiCraftingTable(LOTRContainerCraftingTable container, String s) {
+	protected LOTRGuiCraftingTable(LOTRContainerCraftingTable container, String s) {
 		super(container);
 		unlocalizedName = s;
 	}

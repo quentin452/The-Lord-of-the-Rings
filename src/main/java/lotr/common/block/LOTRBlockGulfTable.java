@@ -9,7 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 
 public class LOTRBlockGulfTable extends LOTRBlockCraftingTable {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] tableIcons;
 
 	public LOTRBlockGulfTable() {
@@ -17,7 +17,7 @@ public class LOTRBlockGulfTable extends LOTRBlockCraftingTable {
 		setStepSound(Block.soundTypeStone);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (i == 1) {
@@ -29,7 +29,7 @@ public class LOTRBlockGulfTable extends LOTRBlockCraftingTable {
 		return tableIcons[0];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		tableIcons = new IIcon[2];

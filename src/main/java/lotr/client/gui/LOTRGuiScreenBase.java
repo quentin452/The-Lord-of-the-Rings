@@ -17,19 +17,19 @@ public abstract class LOTRGuiScreenBase extends GuiScreen {
 
 	@Override
 	public void drawTexturedModalRect(int x, int y, int u, int v, int width, int height) {
-		this.drawTexturedModalRect(x, y, u, v, width, height, 256);
+		drawTexturedModalRect(x, y, u, v, width, height, 256);
 	}
 
 	public void drawTexturedModalRect(int x, int y, int u, int v, int width, int height, int imageWidth) {
-		LOTRGuiScreenBase.drawTexturedModalRectFloat(x, y, u, v, width, height, imageWidth, zLevel);
+		drawTexturedModalRectFloat(x, y, u, v, width, height, imageWidth, zLevel);
 	}
 
 	public void drawTexturedModalRectFloat(float x, float y, int u, int v, float width, float height) {
-		this.drawTexturedModalRectFloat(x, y, u, v, width, height, 256);
+		drawTexturedModalRectFloat(x, y, u, v, width, height, 256);
 	}
 
 	public void drawTexturedModalRectFloat(float x, float y, int u, int v, float width, float height, int imageWidth) {
-		LOTRGuiScreenBase.drawTexturedModalRectFloat(x, y, u, v, width, height, imageWidth, zLevel);
+		drawTexturedModalRectFloat(x, y, u, v, width, height, imageWidth, zLevel);
 	}
 
 	@Override

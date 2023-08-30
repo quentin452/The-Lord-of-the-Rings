@@ -10,9 +10,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.IIcon;
 
 public class LOTRBlockButterflyJar extends LOTRBlockAnimalJar {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon glassIcon;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon lidIcon;
 
 	public LOTRBlockButterflyJar() {
@@ -27,7 +27,7 @@ public class LOTRBlockButterflyJar extends LOTRBlockAnimalJar {
 		return entity instanceof LOTREntityButterfly;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (i == -1) {
@@ -41,7 +41,7 @@ public class LOTRBlockButterflyJar extends LOTRBlockAnimalJar {
 		return 0.25f;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getRenderBlockPass() {
 		return 1;
@@ -52,7 +52,7 @@ public class LOTRBlockButterflyJar extends LOTRBlockAnimalJar {
 		return LOTRMod.proxy.getButterflyJarRenderID();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		glassIcon = iconregister.registerIcon(getTextureName() + "_glass");

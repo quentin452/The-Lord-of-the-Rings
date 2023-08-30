@@ -1,27 +1,29 @@
 package lotr.common.item;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRDimension;
+import lotr.common.LOTRMod;
 import lotr.common.world.LOTRUtumnoLevel;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class LOTRItemUtumnoKey extends Item {
-	@SideOnly(value = Side.CLIENT)
-	public static IIcon[] keyIcons;
-	public static String[] keyTypes;
+import java.util.List;
+import java.util.Random;
 
-	static {
-		keyTypes = new String[] { "ice", "obsidian", "ice0", "ice1", "ice2", "obsidian0", "obsidian1", "obsidian2" };
-	}
+public class LOTRItemUtumnoKey extends Item {
+	@SideOnly(Side.CLIENT)
+	public static IIcon[] keyIcons;
+	public static String[] keyTypes = new String[]{"ice", "obsidian", "ice0", "ice1", "ice2", "obsidian0", "obsidian1", "obsidian2"};
 
 	public LOTRItemUtumnoKey() {
 		setCreativeTab(LOTRCreativeTabs.tabMisc);
@@ -31,7 +33,7 @@ public class LOTRItemUtumnoKey extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int i) {
 		if (i >= keyIcons.length) {
 			i = 0;
@@ -40,7 +42,7 @@ public class LOTRItemUtumnoKey extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int j = 0; j < keyTypes.length; ++j) {
 			list.add(new ItemStack(item, 1, j));
@@ -49,7 +51,7 @@ public class LOTRItemUtumnoKey extends Item {
 
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
-		return super.getUnlocalizedName() + "." + itemstack.getItemDamage();
+		return getUnlocalizedName() + "." + itemstack.getItemDamage();
 	}
 
 	@Override
@@ -69,7 +71,7 @@ public class LOTRItemUtumnoKey extends Item {
 					world.playSoundEffect(i + 0.5, j + 0.5, k + 0.5, "random.explode", 2.0f, 0.2f + world.rand.nextFloat() * 0.2f);
 				}
 				for (int l = 0; l < 60; ++l) {
-					world.spawnParticle("blockcrack_" + Block.getIdFromBlock(block) + "_" + meta, i + 0.5 + world.rand.nextGaussian() * 1.0, j + 1.5, k + 0.5 + world.rand.nextGaussian() * 1.0, 0.0, 0.0, 0.0);
+					world.spawnParticle("blockcrack_" + Block.getIdFromBlock(block) + "_" + meta, i + 0.5 + world.rand.nextGaussian(), j + 1.5, k + 0.5 + world.rand.nextGaussian(), 0.0, 0.0, 0.0);
 				}
 				if (!world.isRemote) {
 					LOTRUtumnoLevel targetLevel = LOTRUtumnoLevel.values()[keyUsageLevel.ordinal() + 1];
@@ -79,26 +81,26 @@ public class LOTRItemUtumnoKey extends Item {
 					int stairY = j;
 					while (stairY >= targetLevel.corridorBaseLevels[0] && (LOTRUtumnoLevel.forY(stairY) != targetLevel || !world.isAirBlock(stairX, stairY + 1, stairZ) || !World.doesBlockHaveSolidTopSurface(world, stairX, stairY, stairZ))) {
 						switch (stair) {
-						case 0:
-						case 2:
-						case 4:
-						case 6:
-							world.setBlock(stairX, stairY, stairZ, keyUsageLevel.brickBlock, keyUsageLevel.brickMeta, 3);
-							break;
-						case 1:
-							world.setBlock(stairX, stairY, stairZ, keyUsageLevel.brickStairBlock, 1, 3);
-							break;
-						case 3:
-							world.setBlock(stairX, stairY, stairZ, keyUsageLevel.brickStairBlock, 3, 3);
-							break;
-						case 5:
-							world.setBlock(stairX, stairY, stairZ, keyUsageLevel.brickStairBlock, 0, 3);
-							break;
-						case 7:
-							world.setBlock(stairX, stairY, stairZ, keyUsageLevel.brickStairBlock, 2, 3);
-							break;
-						default:
-							break;
+							case 0:
+							case 2:
+							case 4:
+							case 6:
+								world.setBlock(stairX, stairY, stairZ, keyUsageLevel.brickBlock, keyUsageLevel.brickMeta, 3);
+								break;
+							case 1:
+								world.setBlock(stairX, stairY, stairZ, keyUsageLevel.brickStairBlock, 1, 3);
+								break;
+							case 3:
+								world.setBlock(stairX, stairY, stairZ, keyUsageLevel.brickStairBlock, 3, 3);
+								break;
+							case 5:
+								world.setBlock(stairX, stairY, stairZ, keyUsageLevel.brickStairBlock, 0, 3);
+								break;
+							case 7:
+								world.setBlock(stairX, stairY, stairZ, keyUsageLevel.brickStairBlock, 2, 3);
+								break;
+							default:
+								break;
 						}
 						for (int j1 = 1; j1 <= 3; ++j1) {
 							world.setBlock(stairX, stairY + j1, stairZ, Blocks.air, 0, 3);
@@ -124,9 +126,9 @@ public class LOTRItemUtumnoKey extends Item {
 				return true;
 			}
 			for (int l = 0; l < 8; ++l) {
-				double d = (double) i + (double) world.rand.nextFloat();
+				double d = (double) i + world.rand.nextFloat();
 				double d1 = j + 1.0;
-				double d2 = (double) k + (double) world.rand.nextFloat();
+				double d2 = (double) k + world.rand.nextFloat();
 				world.spawnParticle("smoke", d, d1, d2, 0.0, 0.0, 0.0);
 			}
 		}
@@ -134,11 +136,11 @@ public class LOTRItemUtumnoKey extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconregister) {
 		keyIcons = new IIcon[keyTypes.length];
 		for (int i = 0; i < keyTypes.length; ++i) {
-			LOTRItemUtumnoKey.keyIcons[i] = iconregister.registerIcon(getIconString() + "_" + keyTypes[i]);
+			keyIcons[i] = iconregister.registerIcon(getIconString() + "_" + keyTypes[i]);
 		}
 	}
 

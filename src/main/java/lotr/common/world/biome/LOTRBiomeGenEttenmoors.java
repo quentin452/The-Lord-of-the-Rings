@@ -50,7 +50,7 @@ public class LOTRBiomeGenEttenmoors extends LOTRBiome {
 		npcSpawnList.conquestGainRate = 0.75f;
 		biomeTerrain.setXZScale(100.0);
 		addBiomeVariantSet(LOTRBiomeVariant.SET_MOUNTAINS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 1.0f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 1.0f);
 		decorator.biomeGemFactor = 0.75f;
 		decorator.flowersPerChunk = 1;
 		decorator.grassPerChunk = 4;

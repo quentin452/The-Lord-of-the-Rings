@@ -1,9 +1,9 @@
 package lotr.client.render.entity;
 
+import lotr.common.entity.LOTRRandomSkinEntity;
 import org.lwjgl.opengl.GL11;
 
 import lotr.client.model.LOTRModelRabbit;
-import lotr.common.entity.animal.LOTREntityRabbit;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +18,7 @@ public class LOTRRenderRabbit extends RenderLiving {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityRabbit rabbit = (LOTREntityRabbit) entity;
+		LOTRRandomSkinEntity rabbit = (LOTRRandomSkinEntity) entity;
 		return rabbitSkins.getRandomSkin(rabbit);
 	}
 

@@ -28,8 +28,8 @@ public class LOTRBiomeGenLastDesert extends LOTRBiome {
 		spawnableMonsterList.add(new BiomeGenBase.SpawnListEntry(LOTREntityDesertScorpion.class, 10, 4, 4));
 		npcSpawnList.clear();
 		variantChance = 0.3f;
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
 		decorator.grassPerChunk = 0;
 		decorator.doubleGrassPerChunk = 0;
 		decorator.flowersPerChunk = 0;

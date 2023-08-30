@@ -33,13 +33,11 @@ public class LOTRBiomeVariantWasteland extends LOTRBiomeVariant {
 		double d4 = podzolNoise.func_151601_a(i * 0.3, k * 0.3);
 		d4 *= 0.3;
 		if (d3 + d4 > 0.5) {
-			int j = height;
-			int index = xzIndex * ySize + j;
+			int index = xzIndex * ySize + height;
 			blocks[index] = Blocks.dirt;
 			meta[index] = 1;
 		} else if (d1 + d2 > -0.3) {
-			int j = height;
-			int index = xzIndex * ySize + j;
+			int index = xzIndex * ySize + height;
 			if (random.nextInt(5) == 0) {
 				blocks[index] = Blocks.gravel;
 			} else {

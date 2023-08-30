@@ -83,32 +83,32 @@ public class LOTREntityMordorOrc extends LOTREntityOrc {
 		data = super.onSpawnWithEgg(data);
 		int i = rand.nextInt(8);
 		switch (i) {
-		case 0:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeOrc));
-			break;
-		case 1:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerOrc));
-			break;
-		case 2:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerOrcPoisoned));
-			break;
-		case 3:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.scimitarOrc));
-			break;
-		case 4:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.hammerOrc));
-			break;
-		case 5:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pickaxeOrc));
-			break;
-		case 6:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.axeOrc));
-			break;
-		case 7:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.polearmOrc));
-			break;
-		default:
-			break;
+			case 0:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeOrc));
+				break;
+			case 1:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerOrc));
+				break;
+			case 2:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerOrcPoisoned));
+				break;
+			case 3:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.scimitarOrc));
+				break;
+			case 4:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.hammerOrc));
+				break;
+			case 5:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pickaxeOrc));
+				break;
+			case 6:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.axeOrc));
+				break;
+			case 7:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.polearmOrc));
+				break;
+			default:
+				break;
 		}
 		if (rand.nextInt(6) == 0) {
 			npcItemsInv.setSpearBackup(npcItemsInv.getMeleeWeapon());

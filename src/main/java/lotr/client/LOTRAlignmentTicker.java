@@ -7,12 +7,12 @@ import lotr.common.fac.LOTRFaction;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class LOTRAlignmentTicker {
-	public static Map<LOTRFaction, LOTRAlignmentTicker> allFactionTickers = new HashMap<>();
+	public static Map<LOTRFaction, LOTRAlignmentTicker> allFactionTickers = new EnumMap<>(LOTRFaction.class);
 	public LOTRFaction theFac;
 	public float oldAlign;
 	public float newAlign;
-	public int moveTick = 0;
-	public int prevMoveTick = 0;
+	public int moveTick;
+	public int prevMoveTick;
 	public int flashTick;
 	public int numericalTick;
 
@@ -43,7 +43,6 @@ public class LOTRAlignmentTicker {
 				oldAlign = newAlign;
 				newAlign = curAlign;
 				moveTick = 20;
-				prevMoveTick = 20;
 				flashTick = 30;
 				numericalTick = 200;
 			}
@@ -75,7 +74,7 @@ public class LOTRAlignmentTicker {
 	public static void updateAll(EntityPlayer entityplayer, boolean forceInstant) {
 		for (LOTRDimension dim : LOTRDimension.values()) {
 			for (LOTRFaction fac : dim.factionList) {
-				LOTRAlignmentTicker.forFaction(fac).update(entityplayer, forceInstant);
+				forFaction(fac).update(entityplayer, forceInstant);
 			}
 		}
 	}

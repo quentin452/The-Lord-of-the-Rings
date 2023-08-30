@@ -49,29 +49,29 @@ public class LOTRModelBalrog extends ModelBase {
 		head.setRotationPoint(0.0f, 0.0f, -10.0f);
 		head.addBox(-4.0f, -6.0f, -6.0f, 8, 10, 7, f);
 		head.setTextureOffset(57, 58).addBox(-6.0f, -7.0f, -4.0f, 12, 4, 4, f);
-		head.rotateAngleX = (float) Math.toRadians(10.0);
+		head.rotateAngleX = 0.17453292519943295f;
 		neck.addChild(head);
 		ModelRenderer rightHorn1 = new ModelRenderer(this, 57, 47);
 		rightHorn1.setRotationPoint(-6.0f, -5.0f, -2.0f);
 		rightHorn1.addBox(-7.0f, -1.5f, -1.5f, 8, 3, 3, f);
-		rightHorn1.rotateAngleY = (float) Math.toRadians(-35.0);
+		rightHorn1.rotateAngleY = -0.6108652381980153f;
 		head.addChild(rightHorn1);
 		ModelRenderer rightHorn2 = new ModelRenderer(this, 57, 35);
 		rightHorn2.setRotationPoint(-7.0f, 0.0f, 0.0f);
 		rightHorn2.addBox(-1.0f, -1.0f, -6.0f, 2, 2, 6, f);
-		rightHorn2.rotateAngleY = (float) Math.toRadians(45.0);
+		rightHorn2.rotateAngleY = 0.7853981633974483f;
 		rightHorn1.addChild(rightHorn2);
 		ModelRenderer leftHorn1 = new ModelRenderer(this, 57, 47);
 		leftHorn1.setRotationPoint(6.0f, -5.0f, -2.0f);
 		leftHorn1.mirror = true;
 		leftHorn1.addBox(-1.0f, -1.5f, -1.5f, 8, 3, 3, f);
-		leftHorn1.rotateAngleY = (float) Math.toRadians(35.0);
+		leftHorn1.rotateAngleY = 0.6108652381980153f;
 		head.addChild(leftHorn1);
 		ModelRenderer leftHorn2 = new ModelRenderer(this, 57, 35);
 		leftHorn2.setRotationPoint(7.0f, 0.0f, 0.0f);
 		leftHorn2.mirror = true;
 		leftHorn2.addBox(-1.0f, -1.0f, -6.0f, 2, 2, 6, f);
-		leftHorn2.rotateAngleY = (float) Math.toRadians(-45.0);
+		leftHorn2.rotateAngleY = -0.7853981633974483f;
 		leftHorn1.addChild(leftHorn2);
 		rightArm = new ModelRenderer(this, 59, 136);
 		rightArm.setRotationPoint(-9.0f, -25.0f, 0.0f);
@@ -91,7 +91,7 @@ public class LOTRModelBalrog extends ModelBase {
 		ModelRenderer rightFoot = new ModelRenderer(this, 0, 243);
 		rightFoot.setRotationPoint(0.0f, 0.0f, 0.0f);
 		rightFoot.addBox(-7.0f, 15.0f, -6.0f, 7, 3, 9, f);
-		rightFoot.rotateAngleX = (float) Math.toRadians(25.0);
+		rightFoot.rotateAngleX = 0.4363323129985824f;
 		rightLeg.addChild(rightFoot);
 		leftLeg = new ModelRenderer(this, 46, 230);
 		leftLeg.setRotationPoint(6.0f, 6.0f, 3.0f);
@@ -102,7 +102,7 @@ public class LOTRModelBalrog extends ModelBase {
 		leftFoot.setRotationPoint(0.0f, 0.0f, 0.0f);
 		leftFoot.mirror = true;
 		leftFoot.addBox(0.0f, 15.0f, -6.0f, 7, 3, 9, f);
-		leftFoot.rotateAngleX = (float) Math.toRadians(25.0);
+		leftFoot.rotateAngleX = 0.4363323129985824f;
 		leftLeg.addChild(leftFoot);
 		tail = new ModelRenderer(this, 79, 200);
 		tail.setRotationPoint(0.0f, -3.0f, 3.0f);
@@ -149,11 +149,11 @@ public class LOTRModelBalrog extends ModelBase {
 
 	@Override
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-		neck.rotateAngleX = (float) Math.toRadians(-10.0);
+		neck.rotateAngleX = -0.17453292519943295f;
 		neck.rotateAngleY = 0.0f;
-		neck.rotateAngleX += f4 / (float) Math.toDegrees(1.0);
-		neck.rotateAngleY += f3 / (float) Math.toDegrees(1.0);
-		body.rotateAngleX = (float) Math.toRadians(10.0);
+		neck.rotateAngleX += f4 / 57.29577951308232f;
+		neck.rotateAngleY += f3 / 57.29577951308232f;
+		body.rotateAngleX = 0.17453292519943295f;
 		body.rotateAngleX += MathHelper.cos(f2 * 0.03f) * 0.15f;
 		rightArm.rotateAngleX = 0.0f;
 		leftArm.rotateAngleX = 0.0f;
@@ -180,17 +180,17 @@ public class LOTRModelBalrog extends ModelBase {
 		if (heldItemRight != 0) {
 			rightArm.rotateAngleX = rightArm.rotateAngleX * 0.5f - 0.31415927f * heldItemRight;
 		}
-		rightLeg.rotateAngleX = (float) Math.toRadians(-25.0);
-		leftLeg.rotateAngleX = (float) Math.toRadians(-25.0);
+		rightLeg.rotateAngleX = -0.4363323129985824f;
+		leftLeg.rotateAngleX = -0.4363323129985824f;
 		rightLeg.rotateAngleX += MathHelper.sin(f * 0.4f) * 1.2f * f1;
 		leftLeg.rotateAngleX += MathHelper.sin(f * 0.4f + 3.1415927f) * 1.2f * f1;
-		rightWing.rotateAngleX = (float) Math.toRadians(40.0);
-		leftWing.rotateAngleX = (float) Math.toRadians(40.0);
-		rightWing.rotateAngleY = (float) Math.toRadians(-40.0);
-		leftWing.rotateAngleY = (float) Math.toRadians(40.0);
+		rightWing.rotateAngleX = 0.6981317007977318f;
+		leftWing.rotateAngleX = 0.6981317007977318f;
+		rightWing.rotateAngleY = -0.6981317007977318f;
+		leftWing.rotateAngleY = 0.6981317007977318f;
 		rightWing.rotateAngleY += MathHelper.cos(f2 * 0.04f) * 0.5f;
 		leftWing.rotateAngleY -= MathHelper.cos(f2 * 0.04f) * 0.5f;
-		tail.rotateAngleX = (float) Math.toRadians(-40.0);
+		tail.rotateAngleX = -0.6981317007977318f;
 		tail.rotateAngleY = 0.0f;
 		tail.rotateAngleY += MathHelper.cos(f2 * 0.05f) * 0.15f;
 		tail.rotateAngleY += MathHelper.sin(f * 0.1f) * 0.6f * f1;

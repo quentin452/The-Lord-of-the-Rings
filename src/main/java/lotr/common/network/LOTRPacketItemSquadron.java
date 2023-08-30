@@ -45,11 +45,11 @@ public class LOTRPacketItemSquadron implements IMessage {
 			ItemStack itemstack = entityplayer.getCurrentEquippedItem();
 			if (itemstack != null && itemstack.getItem() instanceof LOTRSquadrons.SquadronItem) {
 				String squadron = packet.squadron;
-				if (!StringUtils.isNullOrEmpty(squadron)) {
+				if (StringUtils.isNullOrEmpty(squadron)) {
+					LOTRSquadrons.setSquadron(itemstack, "");
+				} else {
 					squadron = LOTRSquadrons.checkAcceptableLength(squadron);
 					LOTRSquadrons.setSquadron(itemstack, squadron);
-				} else {
-					LOTRSquadrons.setSquadron(itemstack, "");
 				}
 			}
 			return null;

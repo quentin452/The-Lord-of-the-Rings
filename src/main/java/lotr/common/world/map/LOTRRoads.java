@@ -11,10 +11,10 @@ import net.minecraft.util.StatCollector;
 
 public class LOTRRoads {
 	public static List<LOTRRoads> allRoads = new ArrayList<>();
-	public static List<LOTRRoads> displayOnlyRoads = new ArrayList<>();
+	public static Collection<LOTRRoads> displayOnlyRoads = new ArrayList<>();
 	public static RoadPointDatabase roadPointDatabase = new RoadPointDatabase();
 	public RoadPoint[] roadPoints;
-	public List<RoadPoint> endpoints = new ArrayList<>();
+	public Collection<RoadPoint> endpoints = new ArrayList<>();
 	public String roadName;
 
 	public LOTRRoads(String name, RoadPoint... ends) {
@@ -32,71 +32,71 @@ public class LOTRRoads {
 		allRoads.clear();
 		displayOnlyRoads.clear();
 		roadPointDatabase = new RoadPointDatabase();
-		LOTRRoads.registerRoad("EredLuin", LOTRWaypoint.NOGROD, LOTRWaypoint.BELEGOST);
-		LOTRRoads.registerRoad("NogrodForlond", LOTRWaypoint.NOGROD, LOTRWaypoint.FORLOND);
-		LOTRRoads.registerRoad("NogrodMithlond", LOTRWaypoint.NOGROD, new int[] { 654, 650 }, LOTRWaypoint.MITHLOND_NORTH);
-		LOTRRoads.registerRoad("Mithlond", LOTRWaypoint.HARLOND, new int[] { 658, 755 }, LOTRWaypoint.MITHLOND_SOUTH, new int[] { 690, 711 }, new int[] { 681, 705 }, LOTRWaypoint.MITHLOND_NORTH, new int[] { 644, 733 }, new int[] { 603, 733 }, new int[] { 554, 715 }, LOTRWaypoint.FORLOND);
-		LOTRRoads.registerRoad("WestEast", LOTRWaypoint.MITHLOND_SOUTH, LOTRWaypoint.TOWER_HILLS, LOTRWaypoint.GREENHOLM, LOTRWaypoint.MICHEL_DELVING, LOTRWaypoint.WAYMEET, LOTRWaypoint.BYWATER, LOTRWaypoint.FROGMORTON, LOTRWaypoint.WHITFURROWS, LOTRWaypoint.BRANDYWINE_BRIDGE, new int[] { 870, 718 }, new int[] { 902, 729 }, LOTRWaypoint.BREE);
-		LOTRRoads.registerRoad("WestEast", LOTRWaypoint.BREE, new double[] { LOTRWaypoint.BREE.getX() + 0.5, LOTRWaypoint.BREE.getY() });
-		LOTRRoads.registerRoad("WestEast", new double[] { LOTRWaypoint.BREE.getX() + 2.0, LOTRWaypoint.BREE.getY() + 1.5 }, new double[] { LOTRWaypoint.STADDLE.getX(), LOTRWaypoint.STADDLE.getY() + 5.0 }, LOTRWaypoint.FORSAKEN_INN, new double[] { LOTRWaypoint.WEATHERTOP.getX(), LOTRWaypoint.WEATHERTOP.getY() + 2.0 }, LOTRWaypoint.LAST_BRIDGE, new int[] { 1132, 723 }, new int[] { 1178, 704 }, LOTRWaypoint.HIGH_PASS, LOTRWaypoint.OLD_FORD, LOTRWaypoint.RIVER_GATE, LOTRWaypoint.DALE_CROSSROADS, LOTRWaypoint.REDWATER_FORD, new int[] { 1785, 775 }, LOTRWaypoint.RHUN_NORTH_FORD, LOTRWaypoint.RHUN_NORTHEAST, LOTRWaypoint.RHUN_ROAD_WAY, LOTRWaypoint.BARAZ_DUM);
-		LOTRRoads.registerRoad("WestEast", new double[] { LOTRWaypoint.BREE.getX() - 0.375, LOTRWaypoint.BREE.getY() - 2.476 }, new double[] { LOTRWaypoint.BREE.getX() + 2.0, LOTRWaypoint.BREE.getY() - 1.5 });
-		LOTRRoads.registerDisplayOnlyRoad("WestEast", new double[] { LOTRWaypoint.BREE.getX() + 0.5, LOTRWaypoint.BREE.getY() }, new double[] { LOTRWaypoint.BREE.getX() + 2.0, LOTRWaypoint.BREE.getY() });
-		LOTRRoads.registerDisplayOnlyRoad("WestEast", new double[] { LOTRWaypoint.BREE.getX() + 2.0, LOTRWaypoint.BREE.getY() - 1.5 }, new double[] { LOTRWaypoint.BREE.getX() + 2.0, LOTRWaypoint.BREE.getY() + 1.5 });
-		LOTRRoads.registerRoad("BywaterRoad", LOTRWaypoint.BYWATER, LOTRWaypoint.HOBBITON);
-		LOTRRoads.registerRoad("Overhill", LOTRWaypoint.HOBBITON, LOTRWaypoint.OVERHILL);
-		LOTRRoads.registerRoad("BucklandRoad", LOTRWaypoint.HAY_GATE, LOTRWaypoint.BUCKLEBURY, LOTRWaypoint.HAYSEND);
-		LOTRRoads.registerRoad("Chetroad", new double[] { LOTRWaypoint.STADDLE.getX(), LOTRWaypoint.STADDLE.getY() + 5.0 }, LOTRWaypoint.STADDLE, LOTRWaypoint.COMBE, LOTRWaypoint.ARCHET);
-		LOTRRoads.registerRoad("Chetroad", LOTRWaypoint.STADDLE, new double[] { LOTRWaypoint.STADDLE.getX() - 0.5, LOTRWaypoint.STADDLE.getY() });
-		LOTRRoads.registerRoad("Chetroad", LOTRWaypoint.COMBE, new double[] { LOTRWaypoint.COMBE.getX() + 0.5, LOTRWaypoint.COMBE.getY() });
-		LOTRRoads.registerRoad("Chetroad", LOTRWaypoint.ARCHET, new double[] { LOTRWaypoint.ARCHET.getX(), LOTRWaypoint.ARCHET.getY() - 0.5 });
-		LOTRRoads.registerRoad("ElfPath", LOTRWaypoint.FOREST_GATE, LOTRWaypoint.ENCHANTED_RIVER, LOTRWaypoint.THRANDUIL_HALLS);
-		LOTRRoads.registerRoad("EreborRoad", LOTRWaypoint.LONG_LAKE, LOTRWaypoint.DALE_CITY, LOTRWaypoint.EREBOR);
-		LOTRRoads.registerRoad("DalePortRoad", LOTRWaypoint.DALE_CITY, LOTRWaypoint.DALE_CROSSROADS, LOTRWaypoint.DALE_PORT);
-		LOTRRoads.registerRoad("DaleSouthRoad", LOTRWaypoint.EAST_RHOVANION_ROAD, LOTRWaypoint.OLD_RHOVANION, LOTRWaypoint.RUNNING_FORD, LOTRWaypoint.DALE_CROSSROADS, LOTRWaypoint.WEST_PEAK);
-		LOTRRoads.registerRoad("IronHills", LOTRWaypoint.WEST_PEAK, new int[] { 1652, 621 }, LOTRWaypoint.EAST_PEAK);
-		LOTRRoads.registerRoad("DorwinionSouthRoad", LOTRWaypoint.DALE_PORT, LOTRWaypoint.DORWINION_CROSSROADS, LOTRWaypoint.DORWINION_COURT, LOTRWaypoint.DORWINION_FORD);
-		LOTRRoads.registerRoad("DorwinionEastRoad", LOTRWaypoint.OLD_RHOVANION, LOTRWaypoint.DORWINION_CROSSROADS, LOTRWaypoint.DORWINION_PORT);
-		LOTRRoads.registerRoad("RhunRoad", LOTRWaypoint.DORWINION_FORD, LOTRWaypoint.BORDER_TOWN, LOTRWaypoint.RHUN_SEA_CITY, LOTRWaypoint.RHUN_CAPITAL, new int[] { 1888, 958 }, LOTRWaypoint.RHUN_NORTH_CITY, LOTRWaypoint.BAZYLAN, LOTRWaypoint.RHUN_NORTHEAST);
-		LOTRRoads.registerRoad("RhunEastRoad", LOTRWaypoint.RHUN_NORTH_CITY, LOTRWaypoint.RHUN_EAST_TOWN, LOTRWaypoint.RHUN_EAST_CITY);
-		LOTRRoads.registerRoad("Nobottle", LOTRWaypoint.TIGHFIELD, LOTRWaypoint.LITTLE_DELVING, LOTRWaypoint.NOBOTTLE, LOTRWaypoint.NEEDLEHOLE);
-		LOTRRoads.registerRoad("Oatbarton", LOTRWaypoint.OATBARTON, LOTRWaypoint.FROGMORTON);
-		LOTRRoads.registerRoad("Stock", LOTRWaypoint.TUCKBOROUGH, LOTRWaypoint.STOCK);
-		LOTRRoads.registerRoad("Deephallow", LOTRWaypoint.SCARY, LOTRWaypoint.WHITFURROWS, LOTRWaypoint.STOCK, LOTRWaypoint.DEEPHALLOW);
-		LOTRRoads.registerRoad("Willowbottom", LOTRWaypoint.WILLOWBOTTOM, LOTRWaypoint.DEEPHALLOW);
-		LOTRRoads.registerRoad("ArnorRoad", LOTRWaypoint.ANNUMINAS, LOTRWaypoint.FORNOST);
-		LOTRRoads.registerRoad("Greenway", LOTRWaypoint.FORNOST, LOTRWaypoint.BREE, LOTRWaypoint.GREENWAY_CROSSROADS);
-		LOTRRoads.registerRoad("ElvenWay", LOTRWaypoint.WEST_GATE, new int[] { 1133, 867 }, new int[] { 1124, 868 }, LOTRWaypoint.OST_IN_EDHIL, new int[] { 1073, 864 }, LOTRWaypoint.OLD_ELF_WAY, new int[] { 1002, 849 }, new int[] { 992, 860 }, LOTRWaypoint.THARBAD, new int[] { 959, 889 }, new int[] { 926, 913 }, new int[] { 902, 942 }, LOTRWaypoint.LOND_DAER);
-		LOTRRoads.registerRoad("BruinenPath", LOTRWaypoint.FORD_BRUINEN, LOTRWaypoint.RIVENDELL);
-		LOTRRoads.registerRoad("NimrodelRoad", LOTRWaypoint.DIMRILL_DALE, LOTRWaypoint.NIMRODEL);
-		LOTRRoads.registerRoad("AnduinRoad", LOTRWaypoint.MORANNON, new int[] { 1428, 1066 }, LOTRWaypoint.EAST_RHOVANION_ROAD, LOTRWaypoint.ANDUIN_CROSSROADS, new int[] { 1325, 820 }, new int[] { 1318, 735 }, LOTRWaypoint.FOREST_GATE);
-		LOTRRoads.registerRoad("DolGuldurRoad", LOTRWaypoint.ANDUIN_CROSSROADS, LOTRWaypoint.DOL_GULDUR);
-		LOTRRoads.registerRoad("Framsburg", LOTRWaypoint.FOREST_GATE, new int[] { 1278, 605 }, LOTRWaypoint.FRAMSBURG, new int[] { 1260, 565 }, LOTRWaypoint.DAINS_HALLS);
-		LOTRRoads.registerRoad("NorthSouth", LOTRWaypoint.LITTLE_DELVING, LOTRWaypoint.WAYMEET, LOTRWaypoint.LONGBOTTOM, LOTRWaypoint.SARN_FORD, LOTRWaypoint.GREENWAY_CROSSROADS, LOTRWaypoint.THARBAD, LOTRWaypoint.ENEDWAITH_ROAD, LOTRWaypoint.FORDS_OF_ISEN, LOTRWaypoint.HELMS_CROSSROADS, LOTRWaypoint.GRIMSLADE, LOTRWaypoint.EDORAS, LOTRWaypoint.ALDBURG, LOTRWaypoint.MERING_STREAM, LOTRWaypoint.AMON_DIN);
-		LOTRRoads.registerRoad("TirithRoad", LOTRWaypoint.AMON_DIN, LOTRWaypoint.MINAS_TIRITH);
-		LOTRRoads.registerRoad("OsgiliathRoad", LOTRWaypoint.MINAS_TIRITH, LOTRWaypoint.OSGILIATH_WEST);
-		LOTRRoads.registerRoad("OsgiliathCrossing", LOTRWaypoint.OSGILIATH_WEST, LOTRWaypoint.OSGILIATH_EAST);
-		LOTRRoads.registerRoad("OsgiliathMorgulRoad", LOTRWaypoint.OSGILIATH_EAST, LOTRWaypoint.CROSSROADS_ITHILIEN, LOTRWaypoint.MINAS_MORGUL);
-		LOTRRoads.registerRoad("GondorSouthRoad", LOTRWaypoint.MINAS_TIRITH, LOTRWaypoint.CROSSINGS_ERUI, new int[] { 1408, 1291 }, LOTRWaypoint.PELARGIR, LOTRWaypoint.LINHIR, new int[] { 1266, 1301 }, LOTRWaypoint.ETHRING, LOTRWaypoint.CALEMBEL, LOTRWaypoint.TARLANG, LOTRWaypoint.ERECH);
-		LOTRRoads.registerRoad("IsengardRoad", LOTRWaypoint.FORDS_OF_ISEN, LOTRWaypoint.ISENGARD);
-		LOTRRoads.registerRoad("IsengardRoad", LOTRWaypoint.ISENGARD, new double[] { LOTRWaypoint.ISENGARD.getX(), LOTRWaypoint.ISENGARD.getY() - 3.5 });
-		LOTRRoads.registerRoad("HelmRoad", LOTRWaypoint.HELMS_CROSSROADS, LOTRWaypoint.HELMS_DEEP);
-		LOTRRoads.registerRoad("WoldRoad", LOTRWaypoint.EDORAS, LOTRWaypoint.ENTWADE, new int[] { 1260, 1060 }, LOTRWaypoint.WOLD);
-		LOTRRoads.registerRoad("DolAmroth", new int[] { 1266, 1301 }, LOTRWaypoint.TARNOST, LOTRWaypoint.EDHELLOND, new int[] { 1185, 1325 }, LOTRWaypoint.DOL_AMROTH);
-		LOTRRoads.registerRoad("Pelargir", LOTRWaypoint.PELARGIR, new int[] { 1394, 1352 });
-		LOTRRoads.registerRoad("Poros", new int[] { 1397, 1355 }, LOTRWaypoint.CROSSINGS_OF_POROS);
-		LOTRRoads.registerRoad("CairAndros", LOTRWaypoint.AMON_DIN, LOTRWaypoint.CAIR_ANDROS, LOTRWaypoint.NORTH_ITHILIEN);
-		LOTRRoads.registerRoad("SauronRoad", LOTRWaypoint.MINAS_MORGUL, LOTRWaypoint.MOUNT_DOOM, LOTRWaypoint.BARAD_DUR, LOTRWaypoint.SEREGOST, new int[] { 1742, 1209 }, new int[] { 1809, 1172 }, LOTRWaypoint.EASTERN_GUARD, LOTRWaypoint.MORDOR_FORD, LOTRWaypoint.RHUN_SOUTH_PASS, new int[] { 1875, 1003 }, new int[] { 1867, 996 }, LOTRWaypoint.RHUN_CAPITAL);
-		LOTRRoads.registerRoad("MorannonRoad", LOTRWaypoint.MORANNON, LOTRWaypoint.UDUN);
-		LOTRRoads.registerRoad("MorannonRhunRoad", LOTRWaypoint.MORANNON, new int[] { 1520, 1130 }, new int[] { 1658, 1140 }, new int[] { 1780, 1115 }, LOTRWaypoint.MORDOR_FORD, LOTRWaypoint.RHUN_SOUTHEAST, LOTRWaypoint.KHAND_NORTH_ROAD, LOTRWaypoint.KHAND_FORD, LOTRWaypoint.HARNEN_BLACK_TOWN, LOTRWaypoint.CROSSINGS_OF_LITHNEN, LOTRWaypoint.HARNEN_ROAD_TOWN, LOTRWaypoint.HARNEN_RIVER_TOWN, LOTRWaypoint.HARNEN_SEA_TOWN, LOTRWaypoint.COAST_FORTRESS, LOTRWaypoint.GATE_FUINUR, LOTRWaypoint.UMBAR_CITY, LOTRWaypoint.GATE_HERUMOR);
-		LOTRRoads.registerRoad("GorgorothRoad", LOTRWaypoint.UDUN, LOTRWaypoint.CARACH_ANGREN, LOTRWaypoint.BARAD_DUR, LOTRWaypoint.THAURBAND);
-		LOTRRoads.registerRoad("HaradRoad", LOTRWaypoint.MORANNON, LOTRWaypoint.NORTH_ITHILIEN, LOTRWaypoint.CROSSROADS_ITHILIEN, LOTRWaypoint.CROSSINGS_OF_POROS, new int[] { 1429, 1394 }, new int[] { 1408, 1432 }, new int[] { 1428, 1470 }, new int[] { 1435, 1526 }, LOTRWaypoint.CROSSINGS_OF_HARAD, LOTRWaypoint.HARNEN_ROAD_TOWN, LOTRWaypoint.DESERT_TOWN);
-		LOTRRoads.registerRoad("UmbarRoad", LOTRWaypoint.UMBAR_CITY, LOTRWaypoint.UMBAR_GATE, LOTRWaypoint.AIN_AL_HARAD, LOTRWaypoint.GARDENS_BERUTHIEL, LOTRWaypoint.FERTILE_VALLEY, LOTRWaypoint.SOUTH_DESERT_TOWN);
-		LOTRRoads.registerRoad("GulfRoad", LOTRWaypoint.TOWN_BONES, new int[] { 1794, 2110 }, LOTRWaypoint.GULF_FORD, LOTRWaypoint.GULF_TRADE_TOWN, LOTRWaypoint.GULF_CITY, LOTRWaypoint.GULF_NORTH_TOWN, new int[] { 1702, 1940 }, LOTRWaypoint.GULF_OF_HARAD, new int[] { 1775, 2002 }, LOTRWaypoint.GULF_EAST_PORT);
-		LOTRRoads.registerRoad("JungleNorthRoad", LOTRWaypoint.JUNGLE_CITY_TRADE, LOTRWaypoint.JUNGLE_CITY_OLD, LOTRWaypoint.JUNGLE_CITY_NORTH);
-		LOTRRoads.registerRoad("JungleMangroveRoad", LOTRWaypoint.JUNGLE_CITY_NORTH, LOTRWaypoint.JUNGLE_CITY_EAST, LOTRWaypoint.HARADUIN_MOUTH);
-		LOTRRoads.registerRoad("JungleDeepRoad", LOTRWaypoint.JUNGLE_CITY_NORTH, LOTRWaypoint.JUNGLE_CITY_CAPITAL, LOTRWaypoint.JUNGLE_CITY_CAVES, LOTRWaypoint.JUNGLE_CITY_DEEP);
-		LOTRRoads.registerRoad("JungleWestEastRoad", LOTRWaypoint.JUNGLE_CITY_OLD, LOTRWaypoint.JUNGLE_CITY_STONE, LOTRWaypoint.JUNGLE_CITY_CAPITAL, LOTRWaypoint.JUNGLE_LAKES, LOTRWaypoint.JUNGLE_CITY_WATCH);
-		LOTRRoads.registerRoad("JungleLakeRoad", LOTRWaypoint.JUNGLE_LAKES, LOTRWaypoint.JUNGLE_CITY_EAST, LOTRWaypoint.HARADUIN_BRIDGE, LOTRWaypoint.OLD_JUNGLE_RUIN);
+		registerRoad("EredLuin", LOTRWaypoint.NOGROD, LOTRWaypoint.BELEGOST);
+		registerRoad("NogrodForlond", LOTRWaypoint.NOGROD, LOTRWaypoint.FORLOND);
+		registerRoad("NogrodMithlond", LOTRWaypoint.NOGROD, new int[]{654, 650}, LOTRWaypoint.MITHLOND_NORTH);
+		registerRoad("Mithlond", LOTRWaypoint.HARLOND, new int[]{658, 755}, LOTRWaypoint.MITHLOND_SOUTH, new int[]{690, 711}, new int[]{681, 705}, LOTRWaypoint.MITHLOND_NORTH, new int[]{644, 733}, new int[]{603, 733}, new int[]{554, 715}, LOTRWaypoint.FORLOND);
+		registerRoad("WestEast", LOTRWaypoint.MITHLOND_SOUTH, LOTRWaypoint.TOWER_HILLS, LOTRWaypoint.GREENHOLM, LOTRWaypoint.MICHEL_DELVING, LOTRWaypoint.WAYMEET, LOTRWaypoint.BYWATER, LOTRWaypoint.FROGMORTON, LOTRWaypoint.WHITFURROWS, LOTRWaypoint.BRANDYWINE_BRIDGE, new int[]{870, 718}, new int[]{902, 729}, LOTRWaypoint.BREE);
+		registerRoad("WestEast", LOTRWaypoint.BREE, new double[]{LOTRWaypoint.BREE.getX() + 0.5, LOTRWaypoint.BREE.getY()});
+		registerRoad("WestEast", new double[]{LOTRWaypoint.BREE.getX() + 2.0, LOTRWaypoint.BREE.getY() + 1.5}, new double[]{LOTRWaypoint.STADDLE.getX(), LOTRWaypoint.STADDLE.getY() + 5.0}, LOTRWaypoint.FORSAKEN_INN, new double[]{LOTRWaypoint.WEATHERTOP.getX(), LOTRWaypoint.WEATHERTOP.getY() + 2.0}, LOTRWaypoint.LAST_BRIDGE, new int[]{1132, 723}, new int[]{1178, 704}, LOTRWaypoint.HIGH_PASS, LOTRWaypoint.OLD_FORD, LOTRWaypoint.RIVER_GATE, LOTRWaypoint.DALE_CROSSROADS, LOTRWaypoint.REDWATER_FORD, new int[]{1785, 775}, LOTRWaypoint.RHUN_NORTH_FORD, LOTRWaypoint.RHUN_NORTHEAST, LOTRWaypoint.RHUN_ROAD_WAY, LOTRWaypoint.BARAZ_DUM);
+		registerRoad("WestEast", new double[]{LOTRWaypoint.BREE.getX() - 0.375, LOTRWaypoint.BREE.getY() - 2.476}, new double[]{LOTRWaypoint.BREE.getX() + 2.0, LOTRWaypoint.BREE.getY() - 1.5});
+		registerDisplayOnlyRoad("WestEast", new double[]{LOTRWaypoint.BREE.getX() + 0.5, LOTRWaypoint.BREE.getY()}, new double[]{LOTRWaypoint.BREE.getX() + 2.0, LOTRWaypoint.BREE.getY()});
+		registerDisplayOnlyRoad("WestEast", new double[]{LOTRWaypoint.BREE.getX() + 2.0, LOTRWaypoint.BREE.getY() - 1.5}, new double[]{LOTRWaypoint.BREE.getX() + 2.0, LOTRWaypoint.BREE.getY() + 1.5});
+		registerRoad("BywaterRoad", LOTRWaypoint.BYWATER, LOTRWaypoint.HOBBITON);
+		registerRoad("Overhill", LOTRWaypoint.HOBBITON, LOTRWaypoint.OVERHILL);
+		registerRoad("BucklandRoad", LOTRWaypoint.HAY_GATE, LOTRWaypoint.BUCKLEBURY, LOTRWaypoint.HAYSEND);
+		registerRoad("Chetroad", new double[]{LOTRWaypoint.STADDLE.getX(), LOTRWaypoint.STADDLE.getY() + 5.0}, LOTRWaypoint.STADDLE, LOTRWaypoint.COMBE, LOTRWaypoint.ARCHET);
+		registerRoad("Chetroad", LOTRWaypoint.STADDLE, new double[]{LOTRWaypoint.STADDLE.getX() - 0.5, LOTRWaypoint.STADDLE.getY()});
+		registerRoad("Chetroad", LOTRWaypoint.COMBE, new double[]{LOTRWaypoint.COMBE.getX() + 0.5, LOTRWaypoint.COMBE.getY()});
+		registerRoad("Chetroad", LOTRWaypoint.ARCHET, new double[]{LOTRWaypoint.ARCHET.getX(), LOTRWaypoint.ARCHET.getY() - 0.5});
+		registerRoad("ElfPath", LOTRWaypoint.FOREST_GATE, LOTRWaypoint.ENCHANTED_RIVER, LOTRWaypoint.THRANDUIL_HALLS);
+		registerRoad("EreborRoad", LOTRWaypoint.LONG_LAKE, LOTRWaypoint.DALE_CITY, LOTRWaypoint.EREBOR);
+		registerRoad("DalePortRoad", LOTRWaypoint.DALE_CITY, LOTRWaypoint.DALE_CROSSROADS, LOTRWaypoint.DALE_PORT);
+		registerRoad("DaleSouthRoad", LOTRWaypoint.EAST_RHOVANION_ROAD, LOTRWaypoint.OLD_RHOVANION, LOTRWaypoint.RUNNING_FORD, LOTRWaypoint.DALE_CROSSROADS, LOTRWaypoint.WEST_PEAK);
+		registerRoad("IronHills", LOTRWaypoint.WEST_PEAK, new int[]{1652, 621}, LOTRWaypoint.EAST_PEAK);
+		registerRoad("DorwinionSouthRoad", LOTRWaypoint.DALE_PORT, LOTRWaypoint.DORWINION_CROSSROADS, LOTRWaypoint.DORWINION_COURT, LOTRWaypoint.DORWINION_FORD);
+		registerRoad("DorwinionEastRoad", LOTRWaypoint.OLD_RHOVANION, LOTRWaypoint.DORWINION_CROSSROADS, LOTRWaypoint.DORWINION_PORT);
+		registerRoad("RhunRoad", LOTRWaypoint.DORWINION_FORD, LOTRWaypoint.BORDER_TOWN, LOTRWaypoint.RHUN_SEA_CITY, LOTRWaypoint.RHUN_CAPITAL, new int[]{1888, 958}, LOTRWaypoint.RHUN_NORTH_CITY, LOTRWaypoint.BAZYLAN, LOTRWaypoint.RHUN_NORTHEAST);
+		registerRoad("RhunEastRoad", LOTRWaypoint.RHUN_NORTH_CITY, LOTRWaypoint.RHUN_EAST_TOWN, LOTRWaypoint.RHUN_EAST_CITY);
+		registerRoad("Nobottle", LOTRWaypoint.TIGHFIELD, LOTRWaypoint.LITTLE_DELVING, LOTRWaypoint.NOBOTTLE, LOTRWaypoint.NEEDLEHOLE);
+		registerRoad("Oatbarton", LOTRWaypoint.OATBARTON, LOTRWaypoint.FROGMORTON);
+		registerRoad("Stock", LOTRWaypoint.TUCKBOROUGH, LOTRWaypoint.STOCK);
+		registerRoad("Deephallow", LOTRWaypoint.SCARY, LOTRWaypoint.WHITFURROWS, LOTRWaypoint.STOCK, LOTRWaypoint.DEEPHALLOW);
+		registerRoad("Willowbottom", LOTRWaypoint.WILLOWBOTTOM, LOTRWaypoint.DEEPHALLOW);
+		registerRoad("ArnorRoad", LOTRWaypoint.ANNUMINAS, LOTRWaypoint.FORNOST);
+		registerRoad("Greenway", LOTRWaypoint.FORNOST, LOTRWaypoint.BREE, LOTRWaypoint.GREENWAY_CROSSROADS);
+		registerRoad("ElvenWay", LOTRWaypoint.WEST_GATE, new int[]{1133, 867}, new int[]{1124, 868}, LOTRWaypoint.OST_IN_EDHIL, new int[]{1073, 864}, LOTRWaypoint.OLD_ELF_WAY, new int[]{1002, 849}, new int[]{992, 860}, LOTRWaypoint.THARBAD, new int[]{959, 889}, new int[]{926, 913}, new int[]{902, 942}, LOTRWaypoint.LOND_DAER);
+		registerRoad("BruinenPath", LOTRWaypoint.FORD_BRUINEN, LOTRWaypoint.RIVENDELL);
+		registerRoad("NimrodelRoad", LOTRWaypoint.DIMRILL_DALE, LOTRWaypoint.NIMRODEL);
+		registerRoad("AnduinRoad", LOTRWaypoint.MORANNON, new int[]{1428, 1066}, LOTRWaypoint.EAST_RHOVANION_ROAD, LOTRWaypoint.ANDUIN_CROSSROADS, new int[]{1325, 820}, new int[]{1318, 735}, LOTRWaypoint.FOREST_GATE);
+		registerRoad("DolGuldurRoad", LOTRWaypoint.ANDUIN_CROSSROADS, LOTRWaypoint.DOL_GULDUR);
+		registerRoad("Framsburg", LOTRWaypoint.FOREST_GATE, new int[]{1278, 605}, LOTRWaypoint.FRAMSBURG, new int[]{1260, 565}, LOTRWaypoint.DAINS_HALLS);
+		registerRoad("NorthSouth", LOTRWaypoint.LITTLE_DELVING, LOTRWaypoint.WAYMEET, LOTRWaypoint.LONGBOTTOM, LOTRWaypoint.SARN_FORD, LOTRWaypoint.GREENWAY_CROSSROADS, LOTRWaypoint.THARBAD, LOTRWaypoint.ENEDWAITH_ROAD, LOTRWaypoint.FORDS_OF_ISEN, LOTRWaypoint.HELMS_CROSSROADS, LOTRWaypoint.GRIMSLADE, LOTRWaypoint.EDORAS, LOTRWaypoint.ALDBURG, LOTRWaypoint.MERING_STREAM, LOTRWaypoint.AMON_DIN);
+		registerRoad("TirithRoad", LOTRWaypoint.AMON_DIN, LOTRWaypoint.MINAS_TIRITH);
+		registerRoad("OsgiliathRoad", LOTRWaypoint.MINAS_TIRITH, LOTRWaypoint.OSGILIATH_WEST);
+		registerRoad("OsgiliathCrossing", LOTRWaypoint.OSGILIATH_WEST, LOTRWaypoint.OSGILIATH_EAST);
+		registerRoad("OsgiliathMorgulRoad", LOTRWaypoint.OSGILIATH_EAST, LOTRWaypoint.CROSSROADS_ITHILIEN, LOTRWaypoint.MINAS_MORGUL);
+		registerRoad("GondorSouthRoad", LOTRWaypoint.MINAS_TIRITH, LOTRWaypoint.CROSSINGS_ERUI, new int[]{1408, 1291}, LOTRWaypoint.PELARGIR, LOTRWaypoint.LINHIR, new int[]{1266, 1301}, LOTRWaypoint.ETHRING, LOTRWaypoint.CALEMBEL, LOTRWaypoint.TARLANG, LOTRWaypoint.ERECH);
+		registerRoad("IsengardRoad", LOTRWaypoint.FORDS_OF_ISEN, LOTRWaypoint.ISENGARD);
+		registerRoad("IsengardRoad", LOTRWaypoint.ISENGARD, new double[]{LOTRWaypoint.ISENGARD.getX(), LOTRWaypoint.ISENGARD.getY() - 3.5});
+		registerRoad("HelmRoad", LOTRWaypoint.HELMS_CROSSROADS, LOTRWaypoint.HELMS_DEEP);
+		registerRoad("WoldRoad", LOTRWaypoint.EDORAS, LOTRWaypoint.ENTWADE, new int[]{1260, 1060}, LOTRWaypoint.WOLD);
+		registerRoad("DolAmroth", new int[]{1266, 1301}, LOTRWaypoint.TARNOST, LOTRWaypoint.EDHELLOND, new int[]{1185, 1325}, LOTRWaypoint.DOL_AMROTH);
+		registerRoad("Pelargir", LOTRWaypoint.PELARGIR, new int[]{1394, 1352});
+		registerRoad("Poros", new int[]{1397, 1355}, LOTRWaypoint.CROSSINGS_OF_POROS);
+		registerRoad("CairAndros", LOTRWaypoint.AMON_DIN, LOTRWaypoint.CAIR_ANDROS, LOTRWaypoint.NORTH_ITHILIEN);
+		registerRoad("SauronRoad", LOTRWaypoint.MINAS_MORGUL, LOTRWaypoint.MOUNT_DOOM, LOTRWaypoint.BARAD_DUR, LOTRWaypoint.SEREGOST, new int[]{1742, 1209}, new int[]{1809, 1172}, LOTRWaypoint.EASTERN_GUARD, LOTRWaypoint.MORDOR_FORD, LOTRWaypoint.RHUN_SOUTH_PASS, new int[]{1875, 1003}, new int[]{1867, 996}, LOTRWaypoint.RHUN_CAPITAL);
+		registerRoad("MorannonRoad", LOTRWaypoint.MORANNON, LOTRWaypoint.UDUN);
+		registerRoad("MorannonRhunRoad", LOTRWaypoint.MORANNON, new int[]{1520, 1130}, new int[]{1658, 1140}, new int[]{1780, 1115}, LOTRWaypoint.MORDOR_FORD, LOTRWaypoint.RHUN_SOUTHEAST, LOTRWaypoint.KHAND_NORTH_ROAD, LOTRWaypoint.KHAND_FORD, LOTRWaypoint.HARNEN_BLACK_TOWN, LOTRWaypoint.CROSSINGS_OF_LITHNEN, LOTRWaypoint.HARNEN_ROAD_TOWN, LOTRWaypoint.HARNEN_RIVER_TOWN, LOTRWaypoint.HARNEN_SEA_TOWN, LOTRWaypoint.COAST_FORTRESS, LOTRWaypoint.GATE_FUINUR, LOTRWaypoint.UMBAR_CITY, LOTRWaypoint.GATE_HERUMOR);
+		registerRoad("GorgorothRoad", LOTRWaypoint.UDUN, LOTRWaypoint.CARACH_ANGREN, LOTRWaypoint.BARAD_DUR, LOTRWaypoint.THAURBAND);
+		registerRoad("HaradRoad", LOTRWaypoint.MORANNON, LOTRWaypoint.NORTH_ITHILIEN, LOTRWaypoint.CROSSROADS_ITHILIEN, LOTRWaypoint.CROSSINGS_OF_POROS, new int[]{1429, 1394}, new int[]{1408, 1432}, new int[]{1428, 1470}, new int[]{1435, 1526}, LOTRWaypoint.CROSSINGS_OF_HARAD, LOTRWaypoint.HARNEN_ROAD_TOWN, LOTRWaypoint.DESERT_TOWN);
+		registerRoad("UmbarRoad", LOTRWaypoint.UMBAR_CITY, LOTRWaypoint.UMBAR_GATE, LOTRWaypoint.AIN_AL_HARAD, LOTRWaypoint.GARDENS_BERUTHIEL, LOTRWaypoint.FERTILE_VALLEY, LOTRWaypoint.SOUTH_DESERT_TOWN);
+		registerRoad("GulfRoad", LOTRWaypoint.TOWN_BONES, new int[]{1794, 2110}, LOTRWaypoint.GULF_FORD, LOTRWaypoint.GULF_TRADE_TOWN, LOTRWaypoint.GULF_CITY, LOTRWaypoint.GULF_NORTH_TOWN, new int[]{1702, 1940}, LOTRWaypoint.GULF_OF_HARAD, new int[]{1775, 2002}, LOTRWaypoint.GULF_EAST_PORT);
+		registerRoad("JungleNorthRoad", LOTRWaypoint.JUNGLE_CITY_TRADE, LOTRWaypoint.JUNGLE_CITY_OLD, LOTRWaypoint.JUNGLE_CITY_NORTH);
+		registerRoad("JungleMangroveRoad", LOTRWaypoint.JUNGLE_CITY_NORTH, LOTRWaypoint.JUNGLE_CITY_EAST, LOTRWaypoint.HARADUIN_MOUTH);
+		registerRoad("JungleDeepRoad", LOTRWaypoint.JUNGLE_CITY_NORTH, LOTRWaypoint.JUNGLE_CITY_CAPITAL, LOTRWaypoint.JUNGLE_CITY_CAVES, LOTRWaypoint.JUNGLE_CITY_DEEP);
+		registerRoad("JungleWestEastRoad", LOTRWaypoint.JUNGLE_CITY_OLD, LOTRWaypoint.JUNGLE_CITY_STONE, LOTRWaypoint.JUNGLE_CITY_CAPITAL, LOTRWaypoint.JUNGLE_LAKES, LOTRWaypoint.JUNGLE_CITY_WATCH);
+		registerRoad("JungleLakeRoad", LOTRWaypoint.JUNGLE_LAKES, LOTRWaypoint.JUNGLE_CITY_EAST, LOTRWaypoint.HARADUIN_BRIDGE, LOTRWaypoint.OLD_JUNGLE_RUIN);
 		long newTime = System.nanoTime();
 		int roads = allRoads.size();
 		int points = 0;
@@ -107,7 +107,7 @@ public class LOTRRoads {
 		}
 		for (Map.Entry e : roadPointDatabase.pointMap.entrySet()) {
 			++dbEntries;
-			dbPoints += ((List) e.getValue()).size();
+			dbPoints += ((Collection<?>) e.getValue()).size();
 		}
 		FMLLog.info("LOTRRoads: Created roads in " + (newTime - time) / 1.0E9 + "s");
 		FMLLog.info("LOTRRoads: roads=" + roads + ", points=" + points + ", dbEntries=" + dbEntries + ", dbPoints=" + dbPoints);
@@ -122,7 +122,7 @@ public class LOTRRoads {
 	}
 
 	public static boolean isRoadAt(int x, int z) {
-		return LOTRRoads.isRoadNear(x, z, 4) >= 0.0f;
+		return isRoadNear(x, z, 4) >= 0.0f;
 	}
 
 	public static float isRoadNear(int x, int z, int width) {
@@ -150,18 +150,18 @@ public class LOTRRoads {
 	}
 
 	public static void registerDisplayOnlyRoad(String name, Object... waypoints) {
-		LOTRRoads.registerRoadToList(displayOnlyRoads, name, waypoints);
+		registerRoadToList(displayOnlyRoads, name, waypoints);
 	}
 
 	public static void registerRoad(String name, Object... waypoints) {
-		LOTRRoads.registerRoadToList(allRoads, name, waypoints);
+		registerRoadToList(allRoads, name, waypoints);
 	}
 
-	public static void registerRoadToList(List<LOTRRoads> targetList, String name, Object... waypoints) {
+	public static void registerRoadToList(Collection<LOTRRoads> targetList, String name, Object... waypoints) {
 		List<RoadPoint> points = new ArrayList<>();
 		for (Object obj : waypoints) {
 			if (obj instanceof LOTRWaypoint) {
-				LOTRWaypoint wp = (LOTRWaypoint) obj;
+				LOTRAbstractWaypoint wp = (LOTRAbstractWaypoint) obj;
 				points.add(new RoadPoint(wp.getXCoord(), wp.getZCoord(), true));
 			} else if (obj instanceof int[]) {
 				int[] coords = (int[]) obj;
@@ -179,7 +179,7 @@ public class LOTRRoads {
 				throw new IllegalArgumentException("Wrong road parameter!");
 			}
 		}
-		RoadPoint[] array = points.<RoadPoint>toArray(new RoadPoint[0]);
+		RoadPoint[] array = points.toArray(new RoadPoint[0]);
 		LOTRRoads[] roads = BezierCurves.getSplines(name, array);
 		targetList.addAll(Arrays.asList(roads));
 	}
@@ -187,16 +187,13 @@ public class LOTRRoads {
 	public static class BezierCurves {
 		public static int roadLengthFactor = 1;
 
-		public BezierCurves() {
-		}
-
 		public static RoadPoint bezier(RoadPoint a, RoadPoint b, RoadPoint c, RoadPoint d, double t) {
-			RoadPoint ab = BezierCurves.lerp(a, b, t);
-			RoadPoint bc = BezierCurves.lerp(b, c, t);
-			RoadPoint cd = BezierCurves.lerp(c, d, t);
-			RoadPoint abbc = BezierCurves.lerp(ab, bc, t);
-			RoadPoint bccd = BezierCurves.lerp(bc, cd, t);
-			return BezierCurves.lerp(abbc, bccd, t);
+			RoadPoint ab = lerp(a, b, t);
+			RoadPoint bc = lerp(b, c, t);
+			RoadPoint cd = lerp(c, d, t);
+			RoadPoint abbc = lerp(ab, bc, t);
+			RoadPoint bccd = lerp(bc, cd, t);
+			return lerp(abbc, bccd, t);
 		}
 
 		public static double[][] getControlPoints(double[] src) {
@@ -235,7 +232,7 @@ public class LOTRRoads {
 				p2[i] = 2.0 * src[i + 1] - p1[i + 1];
 			}
 			p2[length - 1] = 0.5 * (src[length] + p1[length - 1]);
-			return new double[][] { p1, p2 };
+			return new double[][]{p1, p2};
 		}
 
 		public static LOTRRoads[] getSplines(String name, RoadPoint[] waypoints) {
@@ -250,11 +247,11 @@ public class LOTRRoads {
 				road.roadPoints = new RoadPoint[points];
 				for (int l = 0; l < points; ++l) {
 					RoadPoint point;
-					double t = (double) l / (double) points;
+					double t = (double) l / points;
 					road.roadPoints[l] = point = new RoadPoint(p1.x + dx * t, p1.z + dz * t, false);
 					roadPointDatabase.add(point);
 				}
-				return new LOTRRoads[] { road };
+				return new LOTRRoads[]{road};
 			}
 			int length = waypoints.length;
 			double[] x = new double[length];
@@ -263,8 +260,8 @@ public class LOTRRoads {
 				x[i] = waypoints[i].x;
 				z[i] = waypoints[i].z;
 			}
-			double[][] controlX = BezierCurves.getControlPoints(x);
-			double[][] controlZ = BezierCurves.getControlPoints(z);
+			double[][] controlX = getControlPoints(x);
+			double[][] controlZ = getControlPoints(z);
 			int controlPoints = controlX[0].length;
 			RoadPoint[] controlPoints1 = new RoadPoint[controlPoints];
 			RoadPoint[] controlPoints2 = new RoadPoint[controlPoints];
@@ -289,8 +286,8 @@ public class LOTRRoads {
 				road.roadPoints = new RoadPoint[points];
 				for (int l = 0; l < points; ++l) {
 					RoadPoint point;
-					double t = (double) l / (double) points;
-					road.roadPoints[l] = point = BezierCurves.bezier(p1, cp1, cp2, p2, t);
+					double t = (double) l / points;
+					road.roadPoints[l] = point = bezier(p1, cp1, cp2, p2, t);
 					roadPointDatabase.add(point);
 				}
 			}
@@ -318,9 +315,6 @@ public class LOTRRoads {
 
 	public static class RoadPointDatabase {
 		public Map<Pair<Integer, Integer>, List<RoadPoint>> pointMap = new HashMap<>();
-
-		public RoadPointDatabase() {
-		}
 
 		public void add(RoadPoint point) {
 			int x = (int) Math.round(point.x / 1000.0);

@@ -24,7 +24,7 @@ public class LOTRWorldGenCorsairCove extends LOTRWorldGenCorsairStructure {
 		int i1;
 		int j1;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -74,10 +74,10 @@ public class LOTRWorldGenCorsairCove extends LOTRWorldGenCorsairStructure {
 		associateBlockMetaAlias("FENCE", fenceBlock, fenceMeta);
 		associateBlockAlias("FENCE_GATE", fenceGateBlock);
 		generateStrScan(world, random, 0, 0, 0);
-		this.placeSkull(world, random, -3, 7, 3);
-		this.placeBanner(world, 1, 5, 3, LOTRItemBanner.BannerType.UMBAR, 2);
-		this.placeChest(world, random, -14, 4, 4, Blocks.chest, 4, LOTRChestContents.CORSAIR, MathHelper.getRandomIntegerInRange(random, 6, 12));
-		this.placeBarrel(world, random, -14, 5, 6, 4, LOTRFoods.CORSAIR_DRINK);
+		placeSkull(world, random, -3, 7, 3);
+		placeBanner(world, 1, 5, 3, LOTRItemBanner.BannerType.UMBAR, 2);
+		placeChest(world, random, -14, 4, 4, Blocks.chest, 4, LOTRChestContents.CORSAIR, MathHelper.getRandomIntegerInRange(random, 6, 12));
+		placeBarrel(world, random, -14, 5, 6, 4, LOTRFoods.CORSAIR_DRINK);
 		placeWallBanner(world, -12, 8, 3, LOTRItemBanner.BannerType.UMBAR, 2);
 		placeWallBanner(world, -12, 8, 7, LOTRItemBanner.BannerType.UMBAR, 0);
 		placeWallBanner(world, -14, 8, 5, LOTRItemBanner.BannerType.UMBAR, 3);
@@ -140,15 +140,15 @@ public class LOTRWorldGenCorsairCove extends LOTRWorldGenCorsairStructure {
 	}
 
 	public void placeFoodOrDrink(World world, Random random, int i, int j, int k) {
-		if (random.nextInt(3) != 0) {
-			this.placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.CORSAIR_DRINK);
-		} else {
+		if (random.nextInt(3) == 0) {
 			Block plateBlock = LOTRMod.woodPlateBlock;
 			if (random.nextBoolean()) {
 				setBlockAndMetadata(world, i, j, k, plateBlock, 0);
 			} else {
 				placePlateWithCertainty(world, random, i, j, k, plateBlock, LOTRFoods.CORSAIR);
 			}
+		} else {
+			placeMug(world, random, i, j, k, random.nextInt(4), LOTRFoods.CORSAIR_DRINK);
 		}
 	}
 

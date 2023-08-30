@@ -21,7 +21,7 @@ public class LOTRWorldGenGulfPyramid extends LOTRWorldGenGulfStructure {
 		int j12;
 		int k1;
 		int step;
-		this.setOriginAndRotation(world, i, j, k, rotation, 11);
+		setOriginAndRotation(world, i, j, k, rotation, 11);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -11; i1 <= 11; ++i1) {
@@ -70,13 +70,13 @@ public class LOTRWorldGenGulfPyramid extends LOTRWorldGenGulfStructure {
 				if (i2 <= 2 && k2 <= 2 || !isOpaque(world, i1, j13 - 1, k1) || !isAir(world, i1, j13, k1) || random.nextInt(12) != 0) {
 					continue;
 				}
-				this.placeChest(world, random, i1, j13, k1, LOTRMod.chestBasket, MathHelper.getRandomIntegerInRange(random, 2, 5), LOTRChestContents.GULF_PYRAMID);
+				placeChest(world, random, i1, j13, k1, LOTRMod.chestBasket, MathHelper.getRandomIntegerInRange(random, 2, 5), LOTRChestContents.GULF_PYRAMID);
 			}
 		}
 		int maxStep = 4;
-		for (int k12 : new int[] { -11, 11 }) {
+		for (int k12 : new int[]{-11, 11}) {
 			int i12;
-			for (step = 0; step < maxStep && !isOpaque(world, i12 = -7 - step, j1 = 0 - step, k12); ++step) {
+			for (step = 0; step < maxStep && !isOpaque(world, i12 = -7 - step, j1 = -step, k12); ++step) {
 				setBlockAndMetadata(world, i12, j1, k12, Blocks.sandstone_stairs, 1);
 				setGrassToDirt(world, i12, j1 - 1, k12);
 				j2 = j1 - 1;
@@ -86,7 +86,7 @@ public class LOTRWorldGenGulfPyramid extends LOTRWorldGenGulfStructure {
 					--j2;
 				}
 			}
-			for (step = 0; step < maxStep && !isOpaque(world, i12 = 7 + step, j1 = 0 - step, k12); ++step) {
+			for (step = 0; step < maxStep && !isOpaque(world, i12 = 7 + step, j1 = -step, k12); ++step) {
 				setBlockAndMetadata(world, i12, j1, k12, Blocks.sandstone_stairs, 0);
 				setGrassToDirt(world, i12, j1 - 1, k12);
 				j2 = j1 - 1;
@@ -97,9 +97,9 @@ public class LOTRWorldGenGulfPyramid extends LOTRWorldGenGulfStructure {
 				}
 			}
 		}
-		for (int i13 : new int[] { -11, 11 }) {
+		for (int i13 : new int[]{-11, 11}) {
 			int k13;
-			for (step = 0; step < maxStep && !isOpaque(world, i13, j1 = 0 - step, k13 = -7 - step); ++step) {
+			for (step = 0; step < maxStep && !isOpaque(world, i13, j1 = -step, k13 = -7 - step); ++step) {
 				setBlockAndMetadata(world, i13, j1, k13, Blocks.sandstone_stairs, 2);
 				setGrassToDirt(world, i13, j1 - 1, k13);
 				j2 = j1 - 1;
@@ -109,7 +109,7 @@ public class LOTRWorldGenGulfPyramid extends LOTRWorldGenGulfStructure {
 					--j2;
 				}
 			}
-			for (step = 0; step < maxStep && !isOpaque(world, i13, j1 = 0 - step, k13 = 7 + step); ++step) {
+			for (step = 0; step < maxStep && !isOpaque(world, i13, j1 = -step, k13 = 7 + step); ++step) {
 				setBlockAndMetadata(world, i13, j1, k13, Blocks.sandstone_stairs, 3);
 				setGrassToDirt(world, i13, j1 - 1, k13);
 				j2 = j1 - 1;

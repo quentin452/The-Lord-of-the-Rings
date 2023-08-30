@@ -4,7 +4,6 @@ import java.util.Random;
 
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
-import net.minecraft.world.World;
 
 public abstract class LOTRWorldGenMordorStructure extends LOTRWorldGenStructureBase2 {
 	public Block brickBlock;
@@ -44,14 +43,8 @@ public abstract class LOTRWorldGenMordorStructure extends LOTRWorldGenStructureB
 	public int chandelierMeta;
 	public Block trapdoorBlock;
 
-	public LOTRWorldGenMordorStructure(boolean flag) {
+	protected LOTRWorldGenMordorStructure(boolean flag) {
 		super(flag);
-	}
-
-	@Override
-	public void placeOrcTorch(World world, int i, int j, int k) {
-		setBlockAndMetadata(world, i, j, k, LOTRMod.orcTorch, 0);
-		setBlockAndMetadata(world, i, j + 1, k, LOTRMod.orcTorch, 1);
 	}
 
 	@Override

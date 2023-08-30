@@ -16,12 +16,9 @@ import net.minecraft.item.ItemStack;
 public enum LOTRMiniQuestFactory {
 	HOBBIT("hobbit"), BREE("bree"), RUFFIAN_SPY("ruffianSpy"), RUFFIAN_BRUTE("ruffianBrute"), RANGER_NORTH("rangerNorth"), RANGER_NORTH_ARNOR_RELIC("rangerNorthArnorRelic"), BLUE_MOUNTAINS("blueMountains"), HIGH_ELF("highElf"), RIVENDELL("rivendell"), GUNDABAD("gundabad"), ANGMAR("angmar"), ANGMAR_HILLMAN("angmarHillman"), WOOD_ELF("woodElf"), DOL_GULDUR("dolGuldur"), DALE("dale"), DURIN("durin"), GALADHRIM("galadhrim"), DUNLAND("dunland"), ISENGARD("isengard"), ENT("ent"), ROHAN("rohan"), ROHAN_SHIELDMAIDEN("rohanShieldmaiden"), GONDOR("gondor"), GONDOR_KILL_RENEGADE("gondorKillRenegade"), MORDOR("mordor"), DORWINION("dorwinion"), DORWINION_ELF("dorwinionElf"), RHUN("rhun"), HARNENNOR("harnennor"), NEAR_HARAD("nearHarad"), UMBAR("umbar"), CORSAIR("corsair"), GONDOR_RENEGADE("gondorRenegade"), NOMAD("nomad"), GULF_HARAD("gulfHarad"), MOREDAIN("moredain"), TAUREDAIN("tauredain"), HALF_TROLL("halfTroll");
 
-	public static Random rand;
-	public static Map<Class<? extends LOTRMiniQuest>, Integer> questClassWeights;
-	static {
-		rand = new Random();
-		questClassWeights = new HashMap<>();
-	}
+	public static Random rand= new Random();
+	public static Map<Class<? extends LOTRMiniQuest>, Integer> questClassWeights = new HashMap<>();
+
 	public String baseName;
 	public LOTRMiniQuestFactory baseSpeechGroup;
 	public Map<Class<? extends LOTRMiniQuest>, List<LOTRMiniQuest.QuestFactoryBase>> questFactories = new HashMap<>();
@@ -29,7 +26,7 @@ public enum LOTRMiniQuestFactory {
 	public List<LOTRLore.LoreCategory> loreCategories = new ArrayList<>();
 	public LOTRFaction alignmentRewardOverride;
 
-	public boolean noAlignRewardForEnemy = false;
+	public boolean noAlignRewardForEnemy;
 
 	LOTRMiniQuestFactory(String s) {
 		baseName = s;
@@ -58,11 +55,7 @@ public enum LOTRMiniQuestFactory {
 			throw new IllegalArgumentException("Could not find registered quest class for " + questClass.toString());
 		}
 		factory.setFactoryGroup(this);
-		List<LOTRMiniQuest.QuestFactoryBase> list = questFactories.get(registryClass);
-		if (list == null) {
-			list = new ArrayList<>();
-			questFactories.put(registryClass, list);
-		}
+		List<LOTRMiniQuest.QuestFactoryBase> list = questFactories.computeIfAbsent(registryClass, k -> new ArrayList<>());
 		list.add(factory);
 	}
 
@@ -74,7 +67,7 @@ public enum LOTRMiniQuestFactory {
 	}
 
 	public LOTRMiniQuest createQuest(LOTREntityNPC npc) {
-		int totalWeight = LOTRMiniQuestFactory.getTotalQuestClassWeight(this);
+		int totalWeight = getTotalQuestClassWeight(this);
 		if (totalWeight <= 0) {
 			FMLLog.warning("LOTR: No quests registered for %s!", baseName);
 			return null;
@@ -83,10 +76,7 @@ public enum LOTRMiniQuestFactory {
 		List<LOTRMiniQuest.QuestFactoryBase> chosenFactoryList = null;
 		for (Entry<Class<? extends LOTRMiniQuest>, List<QuestFactoryBase>> next : questFactories.entrySet()) {
 			chosenFactoryList = next.getValue();
-			i -= LOTRMiniQuestFactory.getQuestClassWeight(next.getKey());
-			if (i >= 0) {
-				continue;
-			}
+			i -= getQuestClassWeight(next.getKey());
 		}
 		LOTRMiniQuest.QuestFactoryBase factory = chosenFactoryList.get(rand.nextInt(chosenFactoryList.size()));
 		LOTRMiniQuest quest = factory.createQuest(npc, rand);
@@ -145,10 +135,10 @@ public enum LOTRMiniQuestFactory {
 	}
 
 	public static void createMiniQuests() {
-		LOTRMiniQuestFactory.registerQuestClass(LOTRMiniQuestCollect.class, 10);
-		LOTRMiniQuestFactory.registerQuestClass(LOTRMiniQuestPickpocket.class, 6);
-		LOTRMiniQuestFactory.registerQuestClass(LOTRMiniQuestKill.class, 8);
-		LOTRMiniQuestFactory.registerQuestClass(LOTRMiniQuestBounty.class, 4);
+		registerQuestClass(LOTRMiniQuestCollect.class, 10);
+		registerQuestClass(LOTRMiniQuestPickpocket.class, 6);
+		registerQuestClass(LOTRMiniQuestKill.class, 8);
+		registerQuestClass(LOTRMiniQuestBounty.class, 4);
 		HOBBIT.setAchievement(LOTRAchievement.doMiniquestHobbit);
 		HOBBIT.setLore(LOTRLore.LoreCategory.SHIRE);
 		HOBBIT.addQuest(new LOTRMiniQuestCollect.QFCollect("pipeweed").setCollectItem(new ItemStack(LOTRMod.pipeweed), 20, 40).setRewardFactor(0.25f));
@@ -255,7 +245,7 @@ public enum LOTRMiniQuestFactory {
 		RUFFIAN_BRUTE.addQuest(new LOTRMiniQuestCollect.QFCollect("collectDrink").setCollectItem(new ItemStack(LOTRMod.mugMead), 3, 6));
 		RUFFIAN_BRUTE.addQuest(new LOTRMiniQuestCollect.QFCollect("collectPipeweed").setCollectItem(new ItemStack(LOTRMod.pipeweed), 20, 40));
 		RUFFIAN_BRUTE.addQuest(new LOTRMiniQuestKillFaction.QFKillFaction("killBreelanders").setKillFaction(LOTRFaction.BREE, 10, 30));
-		for (List<LOTRMiniQuest.QuestFactoryBase> qfList : LOTRMiniQuestFactory.RUFFIAN_BRUTE.questFactories.values()) {
+		for (List<LOTRMiniQuest.QuestFactoryBase> qfList : RUFFIAN_BRUTE.questFactories.values()) {
 			for (LOTRMiniQuest.QuestFactoryBase qf : qfList) {
 				qf.setRewardFactor(0.0f);
 				qf.setHiring(0.0f);
@@ -304,15 +294,15 @@ public enum LOTRMiniQuestFactory {
 		RANGER_NORTH.addQuest(new LOTRMiniQuestKillEntity.QFKillEntity("killHillmen").setKillEntity(LOTREntityAngmarHillman.class, 10, 30));
 		RANGER_NORTH.addQuest(new LOTRMiniQuestBounty.QFBounty("bounty"));
 		RANGER_NORTH_ARNOR_RELIC.setAchievement(LOTRAchievement.doMiniquestRanger);
-		RANGER_NORTH_ARNOR_RELIC.setBaseSpeechGroup(RANGER_NORTH);
+		RANGER_NORTH_ARNOR_RELIC.baseSpeechGroup = RANGER_NORTH;
 		RANGER_NORTH_ARNOR_RELIC.setLore(LOTRLore.LoreCategory.ERIADOR);
 		RANGER_NORTH_ARNOR_RELIC.addQuest(new LOTRMiniQuestKillFaction.QFKillFaction("arnorRelicKill").setKillFaction(LOTRFaction.GUNDABAD, 10, 30));
 		RANGER_NORTH_ARNOR_RELIC.addQuest(new LOTRMiniQuestKillEntity.QFKillEntity("arnorRelicKill").setKillEntity(LOTREntityGundabadOrc.class, 10, 30));
 		RANGER_NORTH_ARNOR_RELIC.addQuest(new LOTRMiniQuestKillEntity.QFKillEntity("arnorRelicKill").setKillEntity(LOTREntityGundabadWarg.class, 10, 30));
-		for (List<LOTRMiniQuest.QuestFactoryBase> qfList : LOTRMiniQuestFactory.RANGER_NORTH_ARNOR_RELIC.questFactories.values()) {
+		for (List<LOTRMiniQuest.QuestFactoryBase> qfList : RANGER_NORTH_ARNOR_RELIC.questFactories.values()) {
 			for (LOTRMiniQuest.QuestFactoryBase qf : qfList) {
 				qf.setRewardFactor(0.0f);
-				qf.setRewardItems(new ItemStack[] { new ItemStack(LOTRMod.helmetArnor), new ItemStack(LOTRMod.bodyArnor), new ItemStack(LOTRMod.legsArnor), new ItemStack(LOTRMod.bootsArnor), new ItemStack(LOTRMod.swordArnor), new ItemStack(LOTRMod.daggerArnor), new ItemStack(LOTRMod.spearArnor) });
+				qf.setRewardItems(new ItemStack[]{new ItemStack(LOTRMod.helmetArnor), new ItemStack(LOTRMod.bodyArnor), new ItemStack(LOTRMod.legsArnor), new ItemStack(LOTRMod.bootsArnor), new ItemStack(LOTRMod.swordArnor), new ItemStack(LOTRMod.daggerArnor), new ItemStack(LOTRMod.spearArnor)});
 			}
 		}
 		BLUE_MOUNTAINS.setAchievement(LOTRAchievement.doMiniquestBlueMountains);
@@ -757,7 +747,7 @@ public enum LOTRMiniQuestFactory {
 		ROHAN_SHIELDMAIDEN.setLore(LOTRLore.LoreCategory.ROHAN);
 		ROHAN_SHIELDMAIDEN.addQuest(new LOTRMiniQuestKillFaction.QFKillFaction("killEnemies").setKillFaction(LOTRFaction.DUNLAND, 5, 20));
 		ROHAN_SHIELDMAIDEN.addQuest(new LOTRMiniQuestKillFaction.QFKillFaction("killEnemies").setKillFaction(LOTRFaction.ISENGARD, 5, 20));
-		for (List<LOTRMiniQuest.QuestFactoryBase> qfList : LOTRMiniQuestFactory.ROHAN_SHIELDMAIDEN.questFactories.values()) {
+		for (List<LOTRMiniQuest.QuestFactoryBase> qfList : ROHAN_SHIELDMAIDEN.questFactories.values()) {
 			for (LOTRMiniQuest.QuestFactoryBase qf : qfList) {
 				qf.setRewardFactor(0.0f);
 				qf.setHiring(150.0f);
@@ -793,7 +783,7 @@ public enum LOTRMiniQuestFactory {
 		GONDOR.addQuest(new LOTRMiniQuestKillEntity.QFKillEntity("killHarnennor").setKillEntity(LOTREntityHarnedorWarrior.class, 20, 30));
 		GONDOR.addQuest(new LOTRMiniQuestBounty.QFBounty("bounty"));
 		GONDOR_KILL_RENEGADE.setAchievement(LOTRAchievement.doMiniquestGondorKillRenegade);
-		GONDOR_KILL_RENEGADE.setBaseSpeechGroup(GONDOR);
+		GONDOR_KILL_RENEGADE.baseSpeechGroup = GONDOR;
 		GONDOR_KILL_RENEGADE.setLore(LOTRLore.LoreCategory.GONDOR);
 		GONDOR_KILL_RENEGADE.addQuest(new LOTRMiniQuestKillEntity.QFKillEntity("killRenegades").setKillEntity(LOTREntityGondorRenegade.class, 2, 6).setRewardFactor(8.0f));
 		MORDOR.setAchievement(LOTRAchievement.doMiniquestMordor);
@@ -1110,7 +1100,7 @@ public enum LOTRMiniQuestFactory {
 		GONDOR_RENEGADE.setAchievement(LOTRAchievement.doMiniquestGondorRenegade);
 		GONDOR_RENEGADE.setLore(LOTRLore.LoreCategory.UMBAR);
 		GONDOR_RENEGADE.addQuest(new LOTRMiniQuestKillEntity.QFKillEntity("killGondorSoldiers").setKillEntity(LOTREntityGondorSoldier.class, 3, 8));
-		for (List<LOTRMiniQuest.QuestFactoryBase> qfList : LOTRMiniQuestFactory.GONDOR_RENEGADE.questFactories.values()) {
+		for (List<LOTRMiniQuest.QuestFactoryBase> qfList : GONDOR_RENEGADE.questFactories.values()) {
 			for (LOTRMiniQuest.QuestFactoryBase qf : qfList) {
 				qf.setRewardFactor(0.0f);
 				qf.setHiring(50.0f);
@@ -1291,8 +1281,8 @@ public enum LOTRMiniQuestFactory {
 	}
 
 	public static LOTRMiniQuestFactory forName(String name) {
-		for (LOTRMiniQuestFactory group : LOTRMiniQuestFactory.values()) {
-			if (!group.getBaseName().equals(name)) {
+		for (LOTRMiniQuestFactory group : values()) {
+			if (!group.baseName.equals(name)) {
 				continue;
 			}
 			return group;
@@ -1309,14 +1299,14 @@ public enum LOTRMiniQuestFactory {
 	}
 
 	public static int getTotalQuestClassWeight(LOTRMiniQuestFactory factory) {
-		HashSet<Class<? extends LOTRMiniQuest>> registeredQuestTypes = new HashSet<>();
+		Collection<Class<? extends LOTRMiniQuest>> registeredQuestTypes = new HashSet<>();
 		for (Map.Entry<Class<? extends LOTRMiniQuest>, List<LOTRMiniQuest.QuestFactoryBase>> entry : factory.questFactories.entrySet()) {
 			Class<? extends LOTRMiniQuest> questType = entry.getKey();
 			registeredQuestTypes.add(questType);
 		}
 		int totalWeight = 0;
 		for (Class c : registeredQuestTypes) {
-			totalWeight += LOTRMiniQuestFactory.getQuestClassWeight(c);
+			totalWeight += getQuestClassWeight(c);
 		}
 		return totalWeight;
 	}

@@ -20,40 +20,40 @@ public class LOTREntityHobbitBartender extends LOTREntityHobbit implements LOTRT
 	@Override
 	public void dropHobbitItems(boolean flag, int i) {
 		int count = rand.nextInt(3) + rand.nextInt(i + 1);
-		block9: for (int k = 0; k < count; ++k) {
+		for (int k = 0; k < count; ++k) {
 			int j = rand.nextInt(10);
 			switch (j) {
-			case 0:
-			case 1: {
-				entityDropItem(LOTRFoods.HOBBIT.getRandomFood(rand), 0.0f);
-				continue block9;
-			}
-			case 2: {
-				entityDropItem(new ItemStack(Items.gold_nugget, 2 + rand.nextInt(3)), 0.0f);
-				continue block9;
-			}
-			case 3: {
-				entityDropItem(new ItemStack(Items.bowl, 1 + rand.nextInt(4)), 0.0f);
-				continue block9;
-			}
-			case 4: {
-				entityDropItem(new ItemStack(LOTRMod.hobbitPipe, 1, rand.nextInt(100)), 0.0f);
-				continue block9;
-			}
-			case 5: {
-				entityDropItem(new ItemStack(LOTRMod.pipeweed, 1 + rand.nextInt(2)), 0.0f);
-				continue block9;
-			}
-			case 6:
-			case 7:
-			case 8: {
-				entityDropItem(new ItemStack(LOTRMod.mug), 0.0f);
-				continue block9;
-			}
-			case 9: {
-				Item drink = LOTRFoods.HOBBIT_DRINK.getRandomFood(rand).getItem();
-				entityDropItem(new ItemStack(drink, 1, 1 + rand.nextInt(3)), 0.0f);
-			}
+				case 0:
+				case 1: {
+					entityDropItem(LOTRFoods.HOBBIT.getRandomFood(rand), 0.0f);
+					continue;
+				}
+				case 2: {
+					entityDropItem(new ItemStack(Items.gold_nugget, 2 + rand.nextInt(3)), 0.0f);
+					continue;
+				}
+				case 3: {
+					entityDropItem(new ItemStack(Items.bowl, 1 + rand.nextInt(4)), 0.0f);
+					continue;
+				}
+				case 4: {
+					entityDropItem(new ItemStack(LOTRMod.hobbitPipe, 1, rand.nextInt(100)), 0.0f);
+					continue;
+				}
+				case 5: {
+					entityDropItem(new ItemStack(LOTRMod.pipeweed, 1 + rand.nextInt(2)), 0.0f);
+					continue;
+				}
+				case 6:
+				case 7:
+				case 8: {
+					entityDropItem(new ItemStack(LOTRMod.mug), 0.0f);
+					continue;
+				}
+				case 9: {
+					Item drink = LOTRFoods.HOBBIT_DRINK.getRandomFood(rand).getItem();
+					entityDropItem(new ItemStack(drink, 1, 1 + rand.nextInt(3)), 0.0f);
+				}
 			}
 		}
 	}

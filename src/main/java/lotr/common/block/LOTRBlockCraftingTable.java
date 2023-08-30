@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 public class LOTRBlockCraftingTable extends Block {
-	public static List<LOTRBlockCraftingTable> allCraftingTables = new ArrayList<>();
+	public static Collection<LOTRBlockCraftingTable> allCraftingTables = new ArrayList<>();
 	public LOTRFaction tableFaction;
 	public int tableGUIID;
 

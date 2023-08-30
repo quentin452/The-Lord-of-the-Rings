@@ -20,6 +20,7 @@ public class LOTREntityAINearestAttackableTargetBasic extends EntityAITarget {
 		this(entity, cls, chance, checkSight, false, null);
 	}
 
+	@SuppressWarnings("Convert2Lambda")
 	public LOTREntityAINearestAttackableTargetBasic(EntityCreature entity, Class cls, int chance, boolean checkSight, boolean nearby, IEntitySelector selector) {
 		super(entity, checkSight, nearby);
 		targetClass = cls;
@@ -35,7 +36,7 @@ public class LOTREntityAINearestAttackableTargetBasic extends EntityAITarget {
 					if (selector != null && !selector.isEntityApplicable(testEntityLiving)) {
 						return false;
 					}
-					return LOTREntityAINearestAttackableTargetBasic.this.isSuitableTarget(testEntityLiving, false);
+					return isSuitableTarget(testEntityLiving, false);
 				}
 				return false;
 			}
@@ -90,7 +91,7 @@ public class LOTREntityAINearestAttackableTargetBasic extends EntityAITarget {
 		double range = getTargetDistance();
 		double rangeY = Math.min(range, 8.0);
 		List entities = taskOwner.worldObj.selectEntitiesWithinAABB(targetClass, taskOwner.boundingBox.expand(range, rangeY, range), targetSelector);
-		Collections.sort(entities, targetSorter);
+		entities.sort(targetSorter);
 		if (entities.isEmpty()) {
 			return false;
 		}
@@ -116,13 +117,7 @@ public class LOTREntityAINearestAttackableTargetBasic extends EntityAITarget {
 			double d2;
 			double d1 = distanceMetricSq(e1);
 			d2 = distanceMetricSq(e2);
-			if (d1 < d2) {
-				return -1;
-			}
-			if (d1 > d2) {
-				return 1;
-			}
-			return 0;
+			return Double.compare(d1, d2);
 		}
 
 		public double distanceMetricSq(Entity target) {

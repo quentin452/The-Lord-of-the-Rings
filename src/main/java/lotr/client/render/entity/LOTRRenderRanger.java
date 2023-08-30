@@ -1,5 +1,6 @@
 package lotr.client.render.entity;
 
+import lotr.common.entity.LOTRRandomSkinEntity;
 import org.lwjgl.opengl.GL11;
 
 import lotr.common.entity.npc.*;
@@ -23,7 +24,7 @@ public class LOTRRenderRanger extends LOTRRenderDunedain {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityRanger ranger = (LOTREntityRanger) entity;
+		LOTRRandomSkinEntity ranger = (LOTRRandomSkinEntity) entity;
 		if (ranger instanceof LOTREntityRangerIthilien) {
 			return ithilienSkins.getRandomSkin(ranger);
 		}

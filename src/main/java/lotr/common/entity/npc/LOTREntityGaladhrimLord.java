@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityGaladhrimLord extends LOTREntityGaladhrimWarrior implements LOTRUnitTradeable {
 	public LOTREntityGaladhrimLord(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.GALADHRIM;
 	}
 

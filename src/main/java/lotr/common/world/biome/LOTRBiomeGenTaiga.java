@@ -9,10 +9,10 @@ public class LOTRBiomeGenTaiga extends LOTRBiomeGenTundra {
 		clearBiomeVariants();
 		variantChance = 0.75f;
 		addBiomeVariantSet(LOTRBiomeVariant.SET_FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_SPRUCE);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE);
+		addBiomeVariant(LOTRBiomeVariant.FOREST);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_SPRUCE);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE);
 		decorator.treesPerChunk = 2;
 		decorator.flowersPerChunk = 2;
 		decorator.grassPerChunk = 8;

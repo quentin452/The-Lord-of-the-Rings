@@ -28,7 +28,7 @@ public class LOTRWorldGenBreeRuffianHouse extends LOTRWorldGenBreeStructure {
 		int j12;
 		int i13;
 		int k12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 9);
+		setOriginAndRotation(world, i, j, k, rotation, 9);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i13 = -7; i13 <= 8; ++i13) {
@@ -126,24 +126,24 @@ public class LOTRWorldGenBreeRuffianHouse extends LOTRWorldGenBreeStructure {
 			for (int step = 0; step < 12 && !isOpaque(world, i1, j1 = -1 - step, k1 = 5 + step); ++step) {
 				randPath = random.nextInt(4);
 				switch (randPath) {
-				case 0:
-					setBlockAndMetadata(world, i1, j1, k1, Blocks.grass, 0);
-					break;
-				case 1:
-					setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 1);
-					break;
-				case 2:
-					setBlockAndMetadata(world, i1, j1, k1, LOTRMod.dirtPath, 0);
-					break;
-				case 3:
-					if (random.nextBoolean()) {
-						setBlockAndMetadata(world, i1, j1, k1, Blocks.cobblestone, 0);
-					} else {
-						setBlockAndMetadata(world, i1, j1, k1, Blocks.mossy_cobblestone, 0);
-					}
-					break;
-				default:
-					break;
+					case 0:
+						setBlockAndMetadata(world, i1, j1, k1, Blocks.grass, 0);
+						break;
+					case 1:
+						setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 1);
+						break;
+					case 2:
+						setBlockAndMetadata(world, i1, j1, k1, LOTRMod.dirtPath, 0);
+						break;
+					case 3:
+						if (random.nextBoolean()) {
+							setBlockAndMetadata(world, i1, j1, k1, Blocks.cobblestone, 0);
+						} else {
+							setBlockAndMetadata(world, i1, j1, k1, Blocks.mossy_cobblestone, 0);
+						}
+						break;
+					default:
+						break;
 				}
 				setGrassToDirt(world, i1, j1 - 1, k1);
 				j2 = j1 - 1;
@@ -154,27 +154,27 @@ public class LOTRWorldGenBreeRuffianHouse extends LOTRWorldGenBreeStructure {
 				}
 			}
 		}
-		for (int step = 0; step < 12 && !isOpaque(world, i12 = -5, j1 = 0 - step, k1 = -5 - step); ++step) {
+		for (int step = 0; step < 12 && !isOpaque(world, i12 = -5, j1 = -step, k1 = -5 - step); ++step) {
 			randPath = random.nextInt(4);
 			switch (randPath) {
-			case 0:
-				setBlockAndMetadata(world, i12, j1, k1, Blocks.grass, 0);
-				break;
-			case 1:
-				setBlockAndMetadata(world, i12, j1, k1, Blocks.dirt, 1);
-				break;
-			case 2:
-				setBlockAndMetadata(world, i12, j1, k1, LOTRMod.dirtPath, 0);
-				break;
-			case 3:
-				if (random.nextBoolean()) {
-					setBlockAndMetadata(world, i12, j1, k1, Blocks.cobblestone, 0);
-				} else {
-					setBlockAndMetadata(world, i12, j1, k1, Blocks.mossy_cobblestone, 0);
-				}
-				break;
-			default:
-				break;
+				case 0:
+					setBlockAndMetadata(world, i12, j1, k1, Blocks.grass, 0);
+					break;
+				case 1:
+					setBlockAndMetadata(world, i12, j1, k1, Blocks.dirt, 1);
+					break;
+				case 2:
+					setBlockAndMetadata(world, i12, j1, k1, LOTRMod.dirtPath, 0);
+					break;
+				case 3:
+					if (random.nextBoolean()) {
+						setBlockAndMetadata(world, i12, j1, k1, Blocks.cobblestone, 0);
+					} else {
+						setBlockAndMetadata(world, i12, j1, k1, Blocks.mossy_cobblestone, 0);
+					}
+					break;
+				default:
+					break;
 			}
 			setGrassToDirt(world, i12, j1 - 1, k1);
 			j2 = j1 - 1;
@@ -191,20 +191,20 @@ public class LOTRWorldGenBreeRuffianHouse extends LOTRWorldGenBreeStructure {
 		setBlockAndMetadata(world, 0, 5, 0, bedBlock, 3);
 		setBlockAndMetadata(world, -1, 5, 0, bedBlock, 11);
 		placePlateWithCertainty(world, random, 1, -1, -4, LOTRMod.ceramicPlateBlock, LOTRFoods.BREE);
-		this.placeMug(world, random, 0, -1, -4, 0, LOTRFoods.BREE_DRINK);
-		this.placeBarrel(world, random, 5, -2, -4, 5, LOTRFoods.BREE_DRINK);
-		this.placeBarrel(world, random, 4, -2, -3, 2, LOTRFoods.BREE_DRINK);
-		this.placeChest(world, random, 3, -2, -3, 2, LOTRChestContents.BREE_RUFFIAN_PIPEWEED);
-		this.placeChest(world, random, -2, -2, 0, 4, LOTRChestContents.BREE_TREASURE);
-		this.placeChest(world, random, 3, -2, 1, 2, LOTRChestContents.BREE_TREASURE);
+		placeMug(world, random, 0, -1, -4, 0, LOTRFoods.BREE_DRINK);
+		placeBarrel(world, random, 5, -2, -4, 5, LOTRFoods.BREE_DRINK);
+		placeBarrel(world, random, 4, -2, -3, 2, LOTRFoods.BREE_DRINK);
+		placeChest(world, random, 3, -2, -3, 2, LOTRChestContents.BREE_RUFFIAN_PIPEWEED);
+		placeChest(world, random, -2, -2, 0, 4, LOTRChestContents.BREE_TREASURE);
+		placeChest(world, random, 3, -2, 1, 2, LOTRChestContents.BREE_TREASURE);
 		placePlateWithCertainty(world, random, 3, 2, -3, LOTRMod.plateBlock, LOTRFoods.BREE);
-		this.placeMug(world, random, 3, 2, -2, 3, LOTRFoods.BREE_DRINK);
-		this.placeChest(world, random, -1, 1, 1, 4, LOTRChestContents.BREE_HOUSE);
-		this.placeChest(world, random, 1, 5, 1, 2, LOTRChestContents.BREE_HOUSE);
+		placeMug(world, random, 3, 2, -2, 3, LOTRFoods.BREE_DRINK);
+		placeChest(world, random, -1, 1, 1, 4, LOTRChestContents.BREE_HOUSE);
+		placeChest(world, random, 1, 5, 1, 2, LOTRChestContents.BREE_HOUSE);
 		for (i1 = -6; i1 <= -3; ++i1) {
 			for (int k13 = -3; k13 <= 1; ++k13) {
 				j1 = 1;
-				Block gardenBlock = getBlock(world, i1, j1 - 1, k13);
+				Block gardenBlock = getBlock(world, i1, 0, k13);
 				if (gardenBlock != Blocks.grass && gardenBlock != Blocks.dirt || random.nextInt(3) != 0) {
 					continue;
 				}

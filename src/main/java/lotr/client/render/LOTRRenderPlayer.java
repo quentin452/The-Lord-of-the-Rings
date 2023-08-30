@@ -82,7 +82,7 @@ public class LOTRRenderPlayer {
 			}
 		}
 		if (shouldRenderFellowPlayerHealth(entityplayer)) {
-			LOTRNPCRendering.renderHealthBar(entityplayer, fr0, fr1, fr2, new int[] { 16375808, 12006707 }, null);
+			LOTRNPCRendering.renderHealthBar(entityplayer, fr0, fr1, fr2, new int[]{16375808, 12006707}, null);
 		}
 	}
 

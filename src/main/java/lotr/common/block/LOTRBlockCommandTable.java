@@ -14,9 +14,9 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class LOTRBlockCommandTable extends BlockContainer {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon topIcon;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon sideIcon;
 
 	public LOTRBlockCommandTable() {
@@ -32,7 +32,7 @@ public class LOTRBlockCommandTable extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int i, int j) {
 		if (i == 1 || i == 0) {
 			return topIcon;
@@ -78,7 +78,7 @@ public class LOTRBlockCommandTable extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconregister) {
 		sideIcon = iconregister.registerIcon(getTextureName() + "_side");
 		topIcon = iconregister.registerIcon(getTextureName() + "_top");

@@ -32,26 +32,26 @@ public class LOTRRenderCommandTable extends TileEntitySpecialRenderer {
 		int viewportWidth = 400;
 		viewportWidth = (int) Math.round(viewportWidth * Math.pow(2.0, zoomExp));
 		double radius = 0.9;
-		float minX = posX - viewportWidth / 2;
-		float maxX = posX + viewportWidth / 2;
+		float minX = posX - (float) viewportWidth / 2;
+		float maxX = posX + (float) viewportWidth / 2;
 		if (minX < 0.0f) {
-			posX = 0 + viewportWidth / 2;
+			posX = (float) viewportWidth / 2;
 		}
 		if (maxX >= LOTRGenLayerWorld.imageWidth) {
-			posX = LOTRGenLayerWorld.imageWidth - viewportWidth / 2;
+			posX = LOTRGenLayerWorld.imageWidth - (float) viewportWidth / 2;
 		}
-		float minY = posY - viewportWidth / 2;
-		float maxY = posY + viewportWidth / 2;
+		float minY = posY - (float) viewportWidth / 2;
+		float maxY = posY + (float) viewportWidth / 2;
 		if (minY < 0.0f) {
-			posY = 0 + viewportWidth / 2;
+			posY = (float) viewportWidth / 2;
 		}
 		if (maxY >= LOTRGenLayerWorld.imageHeight) {
-			posY = LOTRGenLayerWorld.imageHeight - viewportWidth / 2;
+			posY = LOTRGenLayerWorld.imageHeight - (float) viewportWidth / 2;
 		}
-		double minU = (double) (posX - viewportWidth / 2) / (double) LOTRGenLayerWorld.imageWidth;
-		double maxU = (double) (posX + viewportWidth / 2) / (double) LOTRGenLayerWorld.imageWidth;
-		double minV = (double) (posY - viewportWidth / 2) / (double) LOTRGenLayerWorld.imageHeight;
-		double maxV = (double) (posY + viewportWidth / 2) / (double) LOTRGenLayerWorld.imageHeight;
+		double minU = (double) (posX - viewportWidth / 2) / LOTRGenLayerWorld.imageWidth;
+		double maxU = (double) (posX + viewportWidth / 2) / LOTRGenLayerWorld.imageWidth;
+		double minV = (double) (posY - viewportWidth / 2) / LOTRGenLayerWorld.imageHeight;
+		double maxV = (double) (posY + viewportWidth / 2) / LOTRGenLayerWorld.imageHeight;
 		GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		LOTRTextures.drawMap(Minecraft.getMinecraft().thePlayer, true, -radius, radius, -radius, radius, 0.0, minU, maxU, minV, maxV, 1.0f);

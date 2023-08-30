@@ -25,7 +25,7 @@ public class LOTRWorldGenDaleSmithy extends LOTRWorldGenDaleStructure {
 		int j13;
 		Block block;
 		int k12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 2);
+		setOriginAndRotation(world, i, j, k, rotation, 2);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -80,16 +80,16 @@ public class LOTRWorldGenDaleSmithy extends LOTRWorldGenDaleStructure {
 					setBlockAndMetadata(world, i1, 3, k1, brickStairBlock, 6);
 				}
 				if (k1 == 11 && IntMath.mod(i1, 4) == 1) {
-					setBlockAndMetadata(world, i1, 3, k1, brickStairBlock, 4);
+					setBlockAndMetadata(world, i1, 3, 11, brickStairBlock, 4);
 				}
 				if (k1 == 11 && IntMath.mod(i1, 4) == 3) {
-					setBlockAndMetadata(world, i1, 3, k1, brickStairBlock, 5);
+					setBlockAndMetadata(world, i1, 3, 11, brickStairBlock, 5);
 				}
 				if (k1 == -1 && i1 == -3) {
-					setBlockAndMetadata(world, i1, 3, k1, brickStairBlock, 4);
+					setBlockAndMetadata(world, -3, 3, -1, brickStairBlock, 4);
 				}
 				if (k1 == -1 && i1 == 3) {
-					setBlockAndMetadata(world, i1, 3, k1, brickStairBlock, 5);
+					setBlockAndMetadata(world, 3, 3, -1, brickStairBlock, 5);
 				}
 				if (i2 == 1 && k1 == -1) {
 					for (j14 = 3; (j14 >= 1 || !isOpaque(world, i1, j14, k1)) && getY(j14) >= 0; --j14) {
@@ -208,7 +208,7 @@ public class LOTRWorldGenDaleSmithy extends LOTRWorldGenDaleStructure {
 				if (k1 == 3 || k1 == 7) {
 					setBlockAndMetadata(world, i1, 8, k1, woodBeamBlock, woodBeamMeta | 4);
 				} else if (i1 == 0) {
-					setBlockAndMetadata(world, i1, 8, k1, woodBeamBlock, woodBeamMeta | 8);
+					setBlockAndMetadata(world, 0, 8, k1, woodBeamBlock, woodBeamMeta | 8);
 				}
 				setBlockAndMetadata(world, i1, 10, k1, brickBlock, brickMeta);
 			}
@@ -241,7 +241,7 @@ public class LOTRWorldGenDaleSmithy extends LOTRWorldGenDaleStructure {
 			for (k1 = 7; k1 <= 9; ++k1) {
 				for (j12 = 1; j12 <= 12; ++j12) {
 					if (i1 == 0 && k1 == 8) {
-						setAir(world, i1, j12, k1);
+						setAir(world, 0, j12, 8);
 						continue;
 					}
 					setBlockAndMetadata(world, i1, j12, k1, brickBlock, brickMeta);
@@ -262,7 +262,7 @@ public class LOTRWorldGenDaleSmithy extends LOTRWorldGenDaleStructure {
 		setBlockAndMetadata(world, 0, 2, 0, doorBlock, 8);
 		setBlockAndMetadata(world, 0, 3, 0, brickStairBlock, 6);
 		setBlockAndMetadata(world, 0, 3, 1, Blocks.torch, 3);
-		int[] i14 = { -2, 2 };
+		int[] i14 = {-2, 2};
 		k1 = i14.length;
 		for (j12 = 0; j12 < k1; ++j12) {
 			int i15 = i14[j12];
@@ -285,7 +285,7 @@ public class LOTRWorldGenDaleSmithy extends LOTRWorldGenDaleStructure {
 		for (int l = 0; l <= 3; ++l) {
 			k1 = 6 + l;
 			j12 = 1 + l;
-			for (int i16 : new int[] { -2, 2 }) {
+			for (int i16 : new int[]{-2, 2}) {
 				setAir(world, i16, 4, k1);
 				setBlockAndMetadata(world, i16, j12, k1, brickStairBlock, 2);
 				for (int j2 = j12 - 1; j2 >= 1; --j2) {
@@ -319,8 +319,8 @@ public class LOTRWorldGenDaleSmithy extends LOTRWorldGenDaleStructure {
 		setBlockAndMetadata(world, 3, 7, 7, Blocks.torch, 1);
 		setBlockAndMetadata(world, 0, 7, 10, Blocks.torch, 4);
 		setBlockAndMetadata(world, 0, 5, 6, Blocks.crafting_table, 0);
-		this.placeChest(world, random, -1, 5, 6, 2, LOTRChestContents.DALE_HOUSE);
-		this.placeChest(world, random, 1, 5, 6, 2, LOTRChestContents.DALE_HOUSE);
+		placeChest(world, random, -1, 5, 6, 2, LOTRChestContents.DALE_HOUSE);
+		placeChest(world, random, 1, 5, 6, 2, LOTRChestContents.DALE_HOUSE);
 		for (int i17 = -2; i17 <= 0; ++i17) {
 			for (k1 = 1; k1 <= 3; ++k1) {
 				if ((i17 == -2 || i17 == 0) && (k1 == 1 || k1 == 3)) {
@@ -333,10 +333,10 @@ public class LOTRWorldGenDaleSmithy extends LOTRWorldGenDaleStructure {
 					continue;
 				}
 				int mugMeta = random.nextInt(4);
-				this.placeMug(world, random, i17, 6, k1, mugMeta, LOTRFoods.DALE_DRINK);
+				placeMug(world, random, i17, 6, k1, mugMeta, LOTRFoods.DALE_DRINK);
 			}
 		}
-		for (int i18 : new int[] { 2, 3 }) {
+		for (int i18 : new int[]{2, 3}) {
 			setBlockAndMetadata(world, i18, 5, 1, LOTRMod.strawBed, 2);
 			setBlockAndMetadata(world, i18, 5, 0, LOTRMod.strawBed, 10);
 		}

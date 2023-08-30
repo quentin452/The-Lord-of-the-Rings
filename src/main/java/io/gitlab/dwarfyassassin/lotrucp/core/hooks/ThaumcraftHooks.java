@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 
 public class ThaumcraftHooks {
-	public static boolean doneReflection = false;
+	public static boolean doneReflection;
 	public static Class class_golem;
 	public static Method method_getOwnerName;
 
@@ -64,14 +64,14 @@ public class ThaumcraftHooks {
 				e.printStackTrace();
 			}
 			if (uuid == null) {
-				UCPCoreMod.log.error("Was unable to find the player UUID from Thaumcraft EntityGolemBase.getOwnerName - UUID is %s", uuid);
+				UCPCoreMod.log.error("Was unable to find the player UUID from Thaumcraft EntityGolemBase.getOwnerName - UUID is %s", (Object) null);
 				return null;
 			}
 			try {
 				LOTRReflection.setFinalField(GameProfile.class, profile, uuid, "id");
 				ReflectionHelper.setPrivateValue(Entity.class, fakePlayer, (Object) uuid, "entityUniqueID", "field_96093_i");
 			} catch (Exception e) {
-				UCPCoreMod.log.error("Was unable to set a FakeThaumcraftGolem player uuid to " + uuid.toString());
+				UCPCoreMod.log.error("Was unable to set a FakeThaumcraftGolem player uuid to " + uuid);
 				e.printStackTrace();
 			}
 		}

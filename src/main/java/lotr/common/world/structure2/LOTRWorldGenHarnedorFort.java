@@ -21,7 +21,7 @@ public class LOTRWorldGenHarnedorFort extends LOTRWorldGenHarnedorStructure {
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int i1;
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 12);
+		setOriginAndRotation(world, i, j, k, rotation, 12);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -61,21 +61,21 @@ public class LOTRWorldGenHarnedorFort extends LOTRWorldGenHarnedorStructure {
 					if (j1 == 0) {
 						int randomGround;
 						if (i2 <= 11 && k2 <= 11 && random.nextBoolean()) {
-							setBlockAndMetadata(world, i1, j1, k1, LOTRMod.dirtPath, 0);
+							setBlockAndMetadata(world, i1, 0, k1, LOTRMod.dirtPath, 0);
 						} else {
 							randomGround = random.nextInt(3);
 							switch (randomGround) {
-							case 0:
-								setBlockAndMetadata(world, i1, j1, k1, Blocks.grass, 0);
-								break;
-							case 1:
-								setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 1);
-								break;
-							case 2:
-								setBlockAndMetadata(world, i1, j1, k1, Blocks.sand, 0);
-								break;
-							default:
-								break;
+								case 0:
+									setBlockAndMetadata(world, i1, 0, k1, Blocks.grass, 0);
+									break;
+								case 1:
+									setBlockAndMetadata(world, i1, 0, k1, Blocks.dirt, 1);
+									break;
+								case 2:
+									setBlockAndMetadata(world, i1, 0, k1, Blocks.sand, 0);
+									break;
+								default:
+									break;
 							}
 						}
 					} else {
@@ -114,9 +114,9 @@ public class LOTRWorldGenHarnedorFort extends LOTRWorldGenHarnedorStructure {
 		setBlockAndMetadata(world, -10, 1, 8, bedBlock, 8);
 		setBlockAndMetadata(world, -7, 1, 10, bedBlock, 3);
 		setBlockAndMetadata(world, -8, 1, 10, bedBlock, 11);
-		this.placeChest(world, random, 0, 0, 7, LOTRMod.chestBasket, 3, LOTRChestContents.HARNENNOR_HOUSE);
-		this.placeChest(world, random, -9, 1, 9, LOTRMod.chestBasket, 2, LOTRChestContents.HARNENNOR_HOUSE);
-		this.placeChest(world, random, 9, 1, 9, LOTRMod.chestBasket, 2, LOTRChestContents.HARNENNOR_HOUSE);
+		placeChest(world, random, 0, 0, 7, LOTRMod.chestBasket, 3, LOTRChestContents.HARNENNOR_HOUSE);
+		placeChest(world, random, -9, 1, 9, LOTRMod.chestBasket, 2, LOTRChestContents.HARNENNOR_HOUSE);
+		placeChest(world, random, 9, 1, 9, LOTRMod.chestBasket, 2, LOTRChestContents.HARNENNOR_HOUSE);
 		for (i1 = -2; i1 <= 0; ++i1) {
 			int j13 = 1;
 			int k1 = 9;
@@ -124,7 +124,7 @@ public class LOTRWorldGenHarnedorFort extends LOTRWorldGenHarnedorStructure {
 				placePlate(world, random, i1, j13, k1, LOTRMod.ceramicPlateBlock, LOTRFoods.HARNEDOR);
 				continue;
 			}
-			this.placeMug(world, random, i1, j13, k1, 0, LOTRFoods.HARNEDOR_DRINK);
+			placeMug(world, random, i1, j13, k1, 0, LOTRFoods.HARNEDOR_DRINK);
 		}
 		placeWeaponRack(world, 4, 2, -1, 6, getRandomHarnedorWeapon(random));
 		placeWeaponRack(world, 5, 2, 0, 5, getRandomHarnedorWeapon(random));
@@ -137,14 +137,14 @@ public class LOTRWorldGenHarnedorFort extends LOTRWorldGenHarnedorStructure {
 		placeHarnedorArmor(world, random, 9, 1, -3, 1);
 		placeHarnedorArmor(world, random, 9, 1, 0, 1);
 		placeHarnedorArmor(world, random, 9, 1, 3, 1);
-		this.placeSkull(world, random, -8, 3, -4);
-		this.placeSkull(world, random, -8, 3, 2);
-		this.placeSkull(world, random, -10, 6, 0);
-		this.placeSkull(world, random, 10, 6, 0);
-		this.placeSkull(world, random, -13, 8, -15);
-		this.placeSkull(world, random, 13, 8, -15);
-		this.placeSkull(world, random, -13, 8, 15);
-		this.placeSkull(world, random, 13, 8, 15);
+		placeSkull(world, random, -8, 3, -4);
+		placeSkull(world, random, -8, 3, 2);
+		placeSkull(world, random, -10, 6, 0);
+		placeSkull(world, random, 10, 6, 0);
+		placeSkull(world, random, -13, 8, -15);
+		placeSkull(world, random, 13, 8, -15);
+		placeSkull(world, random, -13, 8, 15);
+		placeSkull(world, random, 13, 8, 15);
 		placeWallBanner(world, 0, 5, -13, LOTRItemBanner.BannerType.NEAR_HARAD, 2);
 		placeWallBanner(world, -3, 4, -13, LOTRItemBanner.BannerType.NEAR_HARAD, 2);
 		placeWallBanner(world, 3, 4, -13, LOTRItemBanner.BannerType.NEAR_HARAD, 2);
@@ -159,7 +159,7 @@ public class LOTRWorldGenHarnedorFort extends LOTRWorldGenHarnedorStructure {
 			warrior.spawnRidingHorse = false;
 			spawnNPCAndSetHome(warrior, world, 0, 1, 0, 16);
 		}
-		for (int i13 : new int[] { -4, 4 }) {
+		for (int i13 : new int[]{-4, 4}) {
 			j1 = 1;
 			int k1 = -6;
 			LOTREntityHorse horse = new LOTREntityHorse(world);
@@ -178,7 +178,7 @@ public class LOTRWorldGenHarnedorFort extends LOTRWorldGenHarnedorStructure {
 	}
 
 	public void placeHarnedorArmor(World world, Random random, int i, int j, int k, int meta) {
-		ItemStack[] armor = random.nextInt(3) != 0 ? new ItemStack[] { null, null, null, null } : new ItemStack[] { new ItemStack(LOTRMod.helmetHarnedor), new ItemStack(LOTRMod.bodyHarnedor), new ItemStack(LOTRMod.legsHarnedor), new ItemStack(LOTRMod.bootsHarnedor) };
+		ItemStack[] armor = random.nextInt(3) != 0 ? new ItemStack[]{null, null, null, null} : new ItemStack[]{new ItemStack(LOTRMod.helmetHarnedor), new ItemStack(LOTRMod.bodyHarnedor), new ItemStack(LOTRMod.legsHarnedor), new ItemStack(LOTRMod.bootsHarnedor)};
 		placeArmorStand(world, i, j, k, meta, armor);
 	}
 }

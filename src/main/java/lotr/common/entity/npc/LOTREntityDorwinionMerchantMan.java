@@ -8,12 +8,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTREntityDorwinionMerchantMan extends LOTREntityDorwinionMan implements LOTRTravellingTrader {
-	public static int[] hatColors = { 15387062, 12361599, 7422850, 12677797, 13401212, 11350064, 9523548, 12502137, 11718290, 8817612, 6316484 };
-	public static int[] featherColors = { 16777215, 12887724, 15061504, 0, 7475245, 4402118, 8311657 };
+	public static int[] hatColors = {15387062, 12361599, 7422850, 12677797, 13401212, 11350064, 9523548, 12502137, 11718290, 8817612, 6316484};
+	public static int[] featherColors = {16777215, 12887724, 15061504, 0, 7475245, 4402118, 8311657};
 
 	public LOTREntityDorwinionMerchantMan(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

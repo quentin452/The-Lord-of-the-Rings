@@ -32,7 +32,7 @@ public class LOTREntityDorwinionMan extends LOTREntityMan {
 		tasks.addTask(7, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 5.0f, 0.02f));
 		tasks.addTask(8, new EntityAIWatchClosest(this, EntityLiving.class, 8.0f, 0.02f));
 		tasks.addTask(9, new EntityAILookIdle(this));
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -96,9 +96,7 @@ public class LOTREntityDorwinionMan extends LOTREntityMan {
 			int i = MathHelper.floor_double(posX);
 			int j = MathHelper.floor_double(boundingBox.minY);
 			int k = MathHelper.floor_double(posZ);
-			if (j > 62 && worldObj.getBlock(i, j - 1, k) == worldObj.getBiomeGenForCoords(i, k).topBlock) {
-				return true;
-			}
+			return j > 62 && worldObj.getBlock(i, j - 1, k) == worldObj.getBiomeGenForCoords(i, k).topBlock;
 		}
 		return false;
 	}
@@ -115,7 +113,7 @@ public class LOTREntityDorwinionMan extends LOTREntityMan {
 
 	@Override
 	public String getNPCFormattedName(String npcName, String entityName) {
-		if (this.getClass() == LOTREntityDorwinionMan.class) {
+		if (getClass() == LOTREntityDorwinionMan.class) {
 			return StatCollector.translateToLocalFormatted("entity.lotr.DorwinionMan.entityName", npcName);
 		}
 		return super.getNPCFormattedName(npcName, entityName);

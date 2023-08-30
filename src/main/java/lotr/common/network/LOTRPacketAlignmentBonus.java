@@ -44,7 +44,7 @@ public class LOTRPacketAlignmentBonus implements IMessage {
 	public void fromBytes(ByteBuf data) {
 		mainFaction = LOTRFaction.forID(data.readByte());
 		prevMainAlignment = data.readFloat();
-		byte factionID = 0;
+		byte factionID;
 		while ((factionID = data.readByte()) >= 0) {
 			LOTRFaction faction = LOTRFaction.forID(factionID);
 			float bonus = data.readFloat();

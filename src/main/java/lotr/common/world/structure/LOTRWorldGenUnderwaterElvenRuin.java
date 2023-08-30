@@ -26,21 +26,21 @@ public class LOTRWorldGenUnderwaterElvenRuin extends LOTRWorldGenStructureBase {
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			k += width + 1;
-			break;
-		}
-		case 1: {
-			i -= width + 1;
-			break;
-		}
-		case 2: {
-			k -= width + 1;
-			break;
-		}
-		case 3: {
-			i += width + 1;
-		}
+			case 0: {
+				k += width + 1;
+				break;
+			}
+			case 1: {
+				i -= width + 1;
+				break;
+			}
+			case 2: {
+				k -= width + 1;
+				break;
+			}
+			case 3: {
+				i += width + 1;
+			}
 		}
 		if (restrictions) {
 			int minHeight = j + 1;
@@ -106,17 +106,17 @@ public class LOTRWorldGenUnderwaterElvenRuin extends LOTRWorldGenStructureBase {
 	public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 		int l = random.nextInt(3);
 		switch (l) {
-		case 0: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 2);
-			break;
-		}
-		case 1: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 3);
-			break;
-		}
-		case 2: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 4);
-		}
+			case 0: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 2);
+				break;
+			}
+			case 1: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 3);
+				break;
+			}
+			case 2: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 4);
+			}
 		}
 	}
 

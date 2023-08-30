@@ -15,10 +15,10 @@ public class LOTRItemKebabStand extends ItemBlock {
 		super(block);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-		NBTTagCompound kebabData = LOTRItemKebabStand.getKebabData(itemstack);
+		NBTTagCompound kebabData = getKebabData(itemstack);
 		if (kebabData != null) {
 			LOTRTileEntityKebabStand kebabStand = new LOTRTileEntityKebabStand();
 			kebabStand.readKebabStandFromNBT(kebabData);
@@ -38,7 +38,7 @@ public class LOTRItemKebabStand extends ItemBlock {
 	}
 
 	public static void loadKebabData(ItemStack itemstack, LOTRTileEntityKebabStand kebabStand) {
-		NBTTagCompound kebabData = LOTRItemKebabStand.getKebabData(itemstack);
+		NBTTagCompound kebabData = getKebabData(itemstack);
 		if (kebabData != null) {
 			kebabStand.readKebabStandFromNBT(kebabData);
 		}
@@ -48,7 +48,7 @@ public class LOTRItemKebabStand extends ItemBlock {
 		if (kebabStand.shouldSaveBlockData()) {
 			NBTTagCompound kebabData = new NBTTagCompound();
 			kebabStand.writeKebabStandToNBT(kebabData);
-			LOTRItemKebabStand.setKebabData(itemstack, kebabData);
+			setKebabData(itemstack, kebabData);
 		}
 	}
 

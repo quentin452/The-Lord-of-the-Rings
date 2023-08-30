@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.network.*;
 import net.minecraft.client.gui.GuiButton;
@@ -16,7 +17,7 @@ public class LOTRGuiTradeUnitTradeInteract extends LOTRGuiTradeInteract {
 	public void actionPerformed(GuiButton button) {
 		if (button.enabled) {
 			if (button == buttonHire) {
-				LOTRPacketUnitTraderInteract packet = new LOTRPacketUnitTraderInteract(theEntity.getEntityId(), 1);
+				IMessage packet = new LOTRPacketUnitTraderInteract(theEntity.getEntityId(), 1);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 			} else {
 				super.actionPerformed(button);

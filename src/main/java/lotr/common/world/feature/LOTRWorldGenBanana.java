@@ -28,7 +28,7 @@ public class LOTRWorldGenBanana extends WorldGenAbstractTree {
 			return false;
 		}
 		Block below = world.getBlock(i, j - 1, k);
-		if (!below.canSustainPlant((IBlockAccess) world, i, j - 1, k, ForgeDirection.UP, (IPlantable) LOTRMod.sapling2)) {
+		if (!below.canSustainPlant(world, i, j - 1, k, ForgeDirection.UP, (IPlantable) LOTRMod.sapling2)) {
 			return false;
 		}
 		for (l = 0; l < height + 2; ++l) {

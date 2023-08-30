@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class LOTRInventoryNPCItems extends LOTRInventoryNPC {
-	public static int IDLE_ITEM = 0;
+	public static int IDLE_ITEM;
 	public static int WEAPON_MELEE = 1;
 	public static int WEAPON_RANGED = 2;
 	public static int SPEAR_BACKUP = 3;
@@ -17,7 +17,7 @@ public class LOTRInventoryNPCItems extends LOTRInventoryNPC {
 	public static int REPLACED_IDLE_MOUNTED = 9;
 	public static int BOMBING_ITEM = 10;
 	public static int BOMB = 11;
-	public boolean isEating = false;
+	public boolean isEating;
 
 	public LOTRInventoryNPCItems(LOTREntityNPC npc) {
 		super("NPCItemsInv", npc, 12);

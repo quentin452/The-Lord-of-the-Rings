@@ -85,11 +85,6 @@ public class LOTREntitySnowTroll extends LOTREntityTroll {
 	}
 
 	@Override
-	public float getAlignmentBonus() {
-		return 3.0f;
-	}
-
-	@Override
 	public LOTRAchievement getKillAchievement() {
 		return LOTRAchievement.killSnowTroll;
 	}
@@ -119,7 +114,7 @@ public class LOTREntitySnowTroll extends LOTREntityTroll {
 		return 0.8f;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
 		if (b == 15) {

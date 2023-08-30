@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityDaleBaker extends LOTREntityDaleMan implements LOTRTradeable {
 	public LOTREntityDaleBaker(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcLocationName = "entity.lotr.DaleBaker.locationName";
 	}
 
@@ -50,8 +50,7 @@ public class LOTREntityDaleBaker extends LOTREntityDaleMan implements LOTRTradea
 	@Override
 	public String getSpeechBank(EntityPlayer entityplayer) {
 		if (isFriendly(entityplayer)) {
-			if (canTradeWith(entityplayer)) {
-			}
+			canTradeWith(entityplayer);
 			return "dale/baker/friendly";
 		}
 		return "dale/baker/hostile";

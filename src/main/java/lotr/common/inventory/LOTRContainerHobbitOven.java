@@ -10,9 +10,9 @@ import net.minecraft.tileentity.TileEntityFurnace;
 
 public class LOTRContainerHobbitOven extends Container {
 	public LOTRTileEntityHobbitOven theOven;
-	public int currentCookTime = 0;
-	public int ovenCookTime = 0;
-	public int currentItemFuelValue = 0;
+	public int currentCookTime;
+	public int ovenCookTime;
+	public int currentItemFuelValue;
 
 	public LOTRContainerHobbitOven(InventoryPlayer inv, LOTRTileEntityHobbitOven oven) {
 		int i;
@@ -80,7 +80,7 @@ public class LOTRContainerHobbitOven extends Container {
 					return null;
 				}
 				slot.onSlotChange(itemstack1, itemstack);
-			} else if (i >= 9 && i != 18 ? LOTRTileEntityHobbitOven.isCookResultAcceptable(FurnaceRecipes.smelting().getSmeltingResult(itemstack1)) ? !mergeItemStack(itemstack1, 0, 9, false) : TileEntityFurnace.isItemFuel(itemstack1) ? !mergeItemStack(itemstack1, 18, 19, false) : i >= 19 && i < 46 ? !mergeItemStack(itemstack1, 46, 55, false) : i >= 46 && i < 55 && !mergeItemStack(itemstack1, 19, 46, false) : !mergeItemStack(itemstack1, 19, 55, false)) {
+			} else if (i >= 9 && i != 18 ? LOTRTileEntityHobbitOven.isCookResultAcceptable(FurnaceRecipes.smelting().getSmeltingResult(itemstack1)) ? !mergeItemStack(itemstack1, 0, 9, false) : TileEntityFurnace.isItemFuel(itemstack1) ? !mergeItemStack(itemstack1, 18, 19, false) : i < 46 ? !mergeItemStack(itemstack1, 46, 55, false) : i < 55 && !mergeItemStack(itemstack1, 19, 46, false) : !mergeItemStack(itemstack1, 19, 55, false)) {
 				return null;
 			}
 			if (itemstack1.stackSize == 0) {
@@ -96,7 +96,7 @@ public class LOTRContainerHobbitOven extends Container {
 		return itemstack;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void updateProgressBar(int i, int j) {
 		if (i == 0) {

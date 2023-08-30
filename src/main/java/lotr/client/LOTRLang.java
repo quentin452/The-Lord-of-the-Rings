@@ -1,6 +1,8 @@
 package lotr.client;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.zip.*;
 
@@ -14,9 +16,9 @@ import lotr.common.LOTRMod;
 
 public class LOTRLang {
 	public static void copyZipEntryToFile(ZipFile zip, ZipEntry entry, File copy) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(zip.getInputStream(entry)), Charsets.UTF_8.name()));
-		PrintStream writer = new PrintStream(new FileOutputStream(copy), true, Charsets.UTF_8.name());
-		String line = "";
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(zip.getInputStream(entry)), Charsets.UTF_8));
+		PrintStream writer = new PrintStream(Files.newOutputStream(copy.toPath()), true, Charsets.UTF_8.name());
+		String line;
 		while ((line = reader.readLine()) != null) {
 			writer.println(line);
 		}
@@ -24,10 +26,11 @@ public class LOTRLang {
 		writer.close();
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static void generateReadmeFile(File folder) throws IOException {
 		File readme = new File(folder, "readme.txt");
 		readme.createNewFile();
-		PrintStream writer = new PrintStream(new FileOutputStream(readme));
+		PrintStream writer = new PrintStream(Files.newOutputStream(readme.toPath()), true, StandardCharsets.UTF_8.name());
 		writer.println("LOTR lang file update-helper");
 		writer.println();
 		writer.println("This helper system is to assist people in updating the mod's lang files after a mod update.");
@@ -56,7 +59,7 @@ public class LOTRLang {
 	public static void outputEnUS(File folder, ZipFile zip, ZipEntry entry) throws IOException {
 		String name = FilenameUtils.getName(entry.getName());
 		File output = new File(folder, name);
-		LOTRLang.copyZipEntryToFile(zip, entry, output);
+		copyZipEntryToFile(zip, entry, output);
 	}
 
 	public static void runUpdateThread() {
@@ -64,13 +67,14 @@ public class LOTRLang {
 
 			@Override
 			public void run() {
-				LOTRLang.updateTranslations();
+				updateTranslations();
 			}
 		};
 		thread.setDaemon(true);
 		thread.start();
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static void updateTranslations() {
 		try {
 			ModContainer container = LOTRMod.getModContainer();
@@ -81,7 +85,7 @@ public class LOTRLang {
 			ZipFile zip = new ZipFile(mod);
 			ZipEntry en_US = null;
 			ZipEntry en_GB = null;
-			ArrayList<ZipEntry> langFiles = new ArrayList<>();
+			Collection<ZipEntry> langFiles = new ArrayList<>();
 			Enumeration<? extends ZipEntry> entries = zip.entries();
 			while (entries.hasMoreElements()) {
 				ZipEntry file = entries.nextElement();
@@ -106,8 +110,8 @@ public class LOTRLang {
 				newLangFolder.delete();
 			}
 			newLangFolder.mkdir();
-			LOTRLang.generateReadmeFile(newLangFolder);
-			LOTRLang.outputEnUS(newLangFolder, zip, en_US);
+			generateReadmeFile(newLangFolder);
+			outputEnUS(newLangFolder, zip, en_US);
 			for (ZipEntry entry : langFiles) {
 				if (entry.equals(en_US) || entry.equals(en_GB)) {
 					continue;
@@ -115,24 +119,24 @@ public class LOTRLang {
 				String name = FilenameUtils.getName(entry.getName());
 				FMLLog.info("Checking LOTR lang file for updates " + name);
 				File oldLang_temp = File.createTempFile(name + "_old", ".lang");
-				LOTRLang.copyZipEntryToFile(zip, entry, oldLang_temp);
+				copyZipEntryToFile(zip, entry, oldLang_temp);
 				File newLang = new File(newLangFolder, name);
 				newLang.createNewFile();
-				PrintStream writer = new PrintStream(new FileOutputStream(newLang), true, Charsets.UTF_8.name());
-				BufferedReader en_US_reader = new BufferedReader(new InputStreamReader(new BOMInputStream(zip.getInputStream(en_US)), Charsets.UTF_8.name()));
-				String en_US_line = "";
+				PrintStream writer = new PrintStream(Files.newOutputStream(newLang.toPath()), true, Charsets.UTF_8.name());
+				BufferedReader en_US_reader = new BufferedReader(new InputStreamReader(new BOMInputStream(zip.getInputStream(en_US)), Charsets.UTF_8));
+				String en_US_line;
 				while ((en_US_line = en_US_reader.readLine()) != null) {
-					int i1 = en_US_line.indexOf("=");
+					int i1 = en_US_line.indexOf('=');
 					if (i1 < 0) {
 						writer.println(en_US_line);
 						continue;
 					}
 					String en_US_key = en_US_line.substring(0, i1);
 					boolean foundKey = false;
-					BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(new FileInputStream(oldLang_temp)), Charsets.UTF_8.name()));
-					String line = "";
+					BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(Files.newInputStream(oldLang_temp.toPath())), Charsets.UTF_8));
+					String line;
 					while ((line = reader.readLine()) != null) {
-						int i2 = line.indexOf("=");
+						int i2 = line.indexOf('=');
 						if (i2 < 0 || !line.substring(0, i2).equals(en_US_key)) {
 							continue;
 						}

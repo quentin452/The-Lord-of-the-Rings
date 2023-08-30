@@ -35,7 +35,7 @@ public class LOTRBlockMordorMoss extends Block implements IShearable {
 
 	public void checkMossCanStay(World world, int i, int j, int k) {
 		if (!canBlockStay(world, i, j, k)) {
-			this.dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
+			dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
 			world.setBlockToAir(i, j, k);
 		}
 	}

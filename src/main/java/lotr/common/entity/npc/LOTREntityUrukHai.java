@@ -114,28 +114,28 @@ public class LOTREntityUrukHai extends LOTREntityOrc {
 		data = super.onSpawnWithEgg(data);
 		int i = rand.nextInt(8);
 		switch (i) {
-		case 0:
-		case 1:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.scimitarUruk));
-			break;
-		case 2:
-		case 3:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pikeUruk));
-			break;
-		case 4:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeUruk));
-			break;
-		case 5:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerUruk));
-			break;
-		case 6:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerUrukPoisoned));
-			break;
-		case 7:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.hammerUruk));
-			break;
-		default:
-			break;
+			case 0:
+			case 1:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.scimitarUruk));
+				break;
+			case 2:
+			case 3:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pikeUruk));
+				break;
+			case 4:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeUruk));
+				break;
+			case 5:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerUruk));
+				break;
+			case 6:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerUrukPoisoned));
+				break;
+			case 7:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.hammerUruk));
+				break;
+			default:
+				break;
 		}
 		if (rand.nextInt(6) == 0) {
 			npcItemsInv.setSpearBackup(npcItemsInv.getMeleeWeapon());

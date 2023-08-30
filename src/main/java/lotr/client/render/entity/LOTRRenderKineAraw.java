@@ -1,5 +1,6 @@
 package lotr.client.render.entity;
 
+import lotr.common.entity.LOTRRandomSkinEntity;
 import org.lwjgl.opengl.GL11;
 
 import lotr.common.entity.animal.LOTREntityKineAraw;
@@ -15,7 +16,7 @@ public class LOTRRenderKineAraw extends LOTRRenderAurochs {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityKineAraw kine = (LOTREntityKineAraw) entity;
+		LOTRRandomSkinEntity kine = (LOTRRandomSkinEntity) entity;
 		return kineSkins.getRandomSkin(kine);
 	}
 

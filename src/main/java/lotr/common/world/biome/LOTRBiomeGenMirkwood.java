@@ -8,7 +8,7 @@ import lotr.common.world.structure.LOTRWorldGenRuinedWoodElfTower;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public abstract class LOTRBiomeGenMirkwood extends LOTRBiome {
-	public LOTRBiomeGenMirkwood(int i, boolean major) {
+	protected LOTRBiomeGenMirkwood(int i, boolean major) {
 		super(i, major);
 		spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(LOTREntityElk.class, 30, 4, 6));
 		spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(LOTREntityDeer.class, 30, 4, 6));

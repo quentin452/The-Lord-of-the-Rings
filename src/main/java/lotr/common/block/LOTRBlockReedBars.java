@@ -13,13 +13,13 @@ public class LOTRBlockReedBars extends LOTRBlockPane {
 		setStepSound(Block.soundTypeGrass);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon func_150097_e() {
 		return blockIcon;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		blockIcon = iconregister.registerIcon(getTextureName());

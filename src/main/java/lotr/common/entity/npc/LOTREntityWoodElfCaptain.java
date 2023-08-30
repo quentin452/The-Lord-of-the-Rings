@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityWoodElfCaptain extends LOTREntityWoodElfWarrior implements LOTRUnitTradeable {
 	public LOTREntityWoodElfCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.WOOD_ELF;
 	}
 

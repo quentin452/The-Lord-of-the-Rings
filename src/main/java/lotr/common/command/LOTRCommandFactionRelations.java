@@ -9,19 +9,19 @@ public class LOTRCommandFactionRelations extends CommandBase {
 	@Override
 	public List addTabCompletionOptions(ICommandSender sender, String[] args) {
 		switch (args.length) {
-		case 1:
-			return CommandBase.getListOfStringsMatchingLastWord(args, "set", "reset");
-		case 2:
-		case 3: {
-			List<String> list = LOTRFaction.getPlayableAlignmentFactionNames();
-			return CommandBase.getListOfStringsMatchingLastWord(args, list.toArray(new String[0]));
-		}
-		case 4: {
-			List<String> list = LOTRFactionRelations.Relation.listRelationNames();
-			return CommandBase.getListOfStringsMatchingLastWord(args, list.toArray(new String[0]));
-		}
-		default:
-			break;
+			case 1:
+				return CommandBase.getListOfStringsMatchingLastWord(args, "set", "reset");
+			case 2:
+			case 3: {
+				List<String> list = LOTRFaction.getPlayableAlignmentFactionNames();
+				return CommandBase.getListOfStringsMatchingLastWord(args, list.toArray(new String[0]));
+			}
+			case 4: {
+				List<String> list = LOTRFactionRelations.Relation.listRelationNames();
+				return CommandBase.getListOfStringsMatchingLastWord(args, list.toArray(new String[0]));
+			}
+			default:
+				break;
 		}
 		return null;
 	}
@@ -39,11 +39,6 @@ public class LOTRCommandFactionRelations extends CommandBase {
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 2;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int i) {
-		return false;
 	}
 
 	@Override

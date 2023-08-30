@@ -13,9 +13,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRWorldGenShirePine extends WorldGenAbstractTree {
 	public Block woodBlock = LOTRMod.wood;
-	public int woodMeta = 0;
+	public int woodMeta;
 	public Block leafBlock = LOTRMod.leaves;
-	public int leafMeta = 0;
+	public int leafMeta;
 	public int minHeight = 10;
 	public int maxHeight = 20;
 
@@ -47,7 +47,7 @@ public class LOTRWorldGenShirePine extends WorldGenAbstractTree {
 				return false;
 			}
 			Block below = world.getBlock(i, j - 1, k);
-			if (below.canSustainPlant((IBlockAccess) world, i, j - 1, k, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
+			if (below.canSustainPlant(world, i, j - 1, k, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 				below.onPlantGrow(world, i, j - 1, k, i, j, k);
 				int leafWidth = random.nextInt(2);
 				int leafWidthLimit = 1;

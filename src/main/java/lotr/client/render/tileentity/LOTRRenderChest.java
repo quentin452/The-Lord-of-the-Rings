@@ -36,9 +36,7 @@ public class LOTRRenderChest extends TileEntitySpecialRenderer {
 	public void renderTileEntityAt(TileEntity tileentity, double d, double d1, double d2, float f) {
 		int meta;
 		LOTRTileEntityChest chest = (LOTRTileEntityChest) tileentity;
-		if (!chest.hasWorldObj()) {
-			meta = 0;
-		} else {
+		if (chest.hasWorldObj()) {
 			Block block = tileentity.getBlockType();
 			meta = tileentity.getBlockMetadata();
 			if (block instanceof BlockChest && meta == 0) {
@@ -49,6 +47,8 @@ public class LOTRRenderChest extends TileEntitySpecialRenderer {
 				}
 				meta = tileentity.getBlockMetadata();
 			}
+		} else {
+			meta = 0;
 		}
 		GL11.glPushMatrix();
 		GL11.glEnable(32826);
@@ -74,8 +74,8 @@ public class LOTRRenderChest extends TileEntitySpecialRenderer {
 		float lid = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * f;
 		lid = 1.0f - lid;
 		lid = 1.0f - lid * lid * lid;
-		LOTRRenderChest.chestModel.chestLid.rotateAngleX = -(lid * 3.1415927f / 2.0f);
-		bindTexture(LOTRRenderChest.getChestTexture(chest.textureName));
+		chestModel.chestLid.rotateAngleX = -(lid * 3.1415927f / 2.0f);
+		bindTexture(getChestTexture(chest.textureName));
 		chestModel.renderAll();
 		GL11.glDisable(32826);
 		GL11.glPopMatrix();

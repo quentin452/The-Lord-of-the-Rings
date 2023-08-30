@@ -30,21 +30,21 @@ public class LOTRWorldGenHighElvenTurret extends LOTRWorldGenStructureBase {
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			k += 6;
-			break;
-		}
-		case 1: {
-			i -= 6;
-			break;
-		}
-		case 2: {
-			k -= 6;
-			break;
-		}
-		case 3: {
-			i += 6;
-		}
+			case 0: {
+				k += 6;
+				break;
+			}
+			case 1: {
+				i -= 6;
+				break;
+			}
+			case 2: {
+				k -= 6;
+				break;
+			}
+			case 3: {
+				i += 6;
+			}
 		}
 		for (i1 = i - 4; i1 <= i + 4; ++i1) {
 			for (k1 = k - 4; k1 <= k + 4; ++k1) {
@@ -102,6 +102,7 @@ public class LOTRWorldGenHighElvenTurret extends LOTRWorldGenStructureBase {
 			for (k1 = k - 4; k1 <= k + 4; ++k1) {
 				for (j12 = j + 16; j12 <= j + 18; ++j12) {
 					if (j12 - j == 16 || Math.abs(i1 - i) == 4 || Math.abs(k1 - k) == 4) {
+						//noinspection BadOddness
 						if (j12 - j == 18 && (Math.abs(i1 - i) % 2 == 1 || Math.abs(k1 - k) % 2 == 1)) {
 							setBlockAndNotifyAdequately(world, i1, j12, k1, Blocks.air, 0);
 							continue;
@@ -122,100 +123,100 @@ public class LOTRWorldGenHighElvenTurret extends LOTRWorldGenStructureBase {
 			setBlockAndNotifyAdequately(world, i + 4, j + 16, k12, LOTRMod.stairsHighElvenBrick, 5);
 		}
 		switch (rotation) {
-		case 0:
-			for (i1 = i - 1; i1 <= i + 1; ++i1) {
-				setBlockAndNotifyAdequately(world, i1, j, k - 5, Blocks.double_stone_slab, 0);
-				setBlockAndNotifyAdequately(world, i1, j, k - 4, Blocks.double_stone_slab, 0);
-			}
-			for (j13 = j + 1; j13 <= j + 2; ++j13) {
-				setBlockAndNotifyAdequately(world, i - 1, j13, k - 5, LOTRMod.brick3, 2);
-				setBlockAndNotifyAdequately(world, i, j13, k - 5, Blocks.air, 0);
-				setBlockAndNotifyAdequately(world, i, j13, k - 4, Blocks.air, 0);
-				setBlockAndNotifyAdequately(world, i + 1, j13, k - 5, LOTRMod.brick3, 2);
-			}
-			setBlockAndNotifyAdequately(world, i - 1, j + 3, k - 5, LOTRMod.stairsHighElvenBrick, 0);
-			setBlockAndNotifyAdequately(world, i, j + 3, k - 5, LOTRMod.brick3, 2);
-			setBlockAndNotifyAdequately(world, i + 1, j + 3, k - 5, LOTRMod.stairsHighElvenBrick, 1);
-			for (i1 = i + 1; i1 <= i + 2; ++i1) {
-				for (j1 = j + 1; j1 <= j + 7; ++j1) {
-					setBlockAndNotifyAdequately(world, i1, j1, k + 3, LOTRMod.brick3, 2);
+			case 0:
+				for (i1 = i - 1; i1 <= i + 1; ++i1) {
+					setBlockAndNotifyAdequately(world, i1, j, k - 5, Blocks.double_stone_slab, 0);
+					setBlockAndNotifyAdequately(world, i1, j, k - 4, Blocks.double_stone_slab, 0);
 				}
-				for (j1 = j + 1; j1 <= j + 16; ++j1) {
-					setBlockAndNotifyAdequately(world, i1, j1, k + 2, Blocks.ladder, 2);
+				for (j13 = j + 1; j13 <= j + 2; ++j13) {
+					setBlockAndNotifyAdequately(world, i - 1, j13, k - 5, LOTRMod.brick3, 2);
+					setBlockAndNotifyAdequately(world, i, j13, k - 5, Blocks.air, 0);
+					setBlockAndNotifyAdequately(world, i, j13, k - 4, Blocks.air, 0);
+					setBlockAndNotifyAdequately(world, i + 1, j13, k - 5, LOTRMod.brick3, 2);
 				}
-			}
-			break;
-		case 1:
-			for (k12 = k - 1; k12 <= k + 1; ++k12) {
-				setBlockAndNotifyAdequately(world, i + 5, j, k12, Blocks.double_stone_slab, 0);
-				setBlockAndNotifyAdequately(world, i + 4, j, k12, Blocks.double_stone_slab, 0);
-			}
-			for (j13 = j + 1; j13 <= j + 2; ++j13) {
-				setBlockAndNotifyAdequately(world, i + 5, j13, k - 1, LOTRMod.brick3, 2);
-				setBlockAndNotifyAdequately(world, i + 5, j13, k, Blocks.air, 0);
-				setBlockAndNotifyAdequately(world, i + 4, j13, k, Blocks.air, 0);
-				setBlockAndNotifyAdequately(world, i + 5, j13, k + 1, LOTRMod.brick3, 2);
-			}
-			setBlockAndNotifyAdequately(world, i + 5, j + 3, k - 1, LOTRMod.stairsHighElvenBrick, 2);
-			setBlockAndNotifyAdequately(world, i + 5, j + 3, k, LOTRMod.brick3, 2);
-			setBlockAndNotifyAdequately(world, i + 5, j + 3, k + 1, LOTRMod.stairsHighElvenBrick, 3);
-			for (k12 = k - 1; k12 >= k - 2; --k12) {
-				for (j1 = j + 1; j1 <= j + 7; ++j1) {
-					setBlockAndNotifyAdequately(world, i - 3, j1, k12, LOTRMod.brick3, 2);
+				setBlockAndNotifyAdequately(world, i - 1, j + 3, k - 5, LOTRMod.stairsHighElvenBrick, 0);
+				setBlockAndNotifyAdequately(world, i, j + 3, k - 5, LOTRMod.brick3, 2);
+				setBlockAndNotifyAdequately(world, i + 1, j + 3, k - 5, LOTRMod.stairsHighElvenBrick, 1);
+				for (i1 = i + 1; i1 <= i + 2; ++i1) {
+					for (j1 = j + 1; j1 <= j + 7; ++j1) {
+						setBlockAndNotifyAdequately(world, i1, j1, k + 3, LOTRMod.brick3, 2);
+					}
+					for (j1 = j + 1; j1 <= j + 16; ++j1) {
+						setBlockAndNotifyAdequately(world, i1, j1, k + 2, Blocks.ladder, 2);
+					}
 				}
-				for (j1 = j + 1; j1 <= j + 16; ++j1) {
-					setBlockAndNotifyAdequately(world, i - 2, j1, k12, Blocks.ladder, 5);
+				break;
+			case 1:
+				for (k12 = k - 1; k12 <= k + 1; ++k12) {
+					setBlockAndNotifyAdequately(world, i + 5, j, k12, Blocks.double_stone_slab, 0);
+					setBlockAndNotifyAdequately(world, i + 4, j, k12, Blocks.double_stone_slab, 0);
 				}
-			}
-			break;
-		case 2:
-			for (i1 = i - 1; i1 <= i + 1; ++i1) {
-				setBlockAndNotifyAdequately(world, i1, j, k + 5, Blocks.double_stone_slab, 0);
-				setBlockAndNotifyAdequately(world, i1, j, k + 4, Blocks.double_stone_slab, 0);
-			}
-			for (j13 = j + 1; j13 <= j + 2; ++j13) {
-				setBlockAndNotifyAdequately(world, i - 1, j13, k + 5, LOTRMod.brick3, 2);
-				setBlockAndNotifyAdequately(world, i, j13, k + 5, Blocks.air, 0);
-				setBlockAndNotifyAdequately(world, i, j13, k + 4, Blocks.air, 0);
-				setBlockAndNotifyAdequately(world, i + 1, j13, k + 5, LOTRMod.brick3, 2);
-			}
-			setBlockAndNotifyAdequately(world, i - 1, j + 3, k + 5, LOTRMod.stairsHighElvenBrick, 0);
-			setBlockAndNotifyAdequately(world, i, j + 3, k + 5, LOTRMod.brick3, 2);
-			setBlockAndNotifyAdequately(world, i + 1, j + 3, k + 5, LOTRMod.stairsHighElvenBrick, 1);
-			for (i1 = i - 1; i1 >= i - 2; --i1) {
-				for (j1 = j + 1; j1 <= j + 7; ++j1) {
-					setBlockAndNotifyAdequately(world, i1, j1, k - 3, LOTRMod.brick3, 2);
+				for (j13 = j + 1; j13 <= j + 2; ++j13) {
+					setBlockAndNotifyAdequately(world, i + 5, j13, k - 1, LOTRMod.brick3, 2);
+					setBlockAndNotifyAdequately(world, i + 5, j13, k, Blocks.air, 0);
+					setBlockAndNotifyAdequately(world, i + 4, j13, k, Blocks.air, 0);
+					setBlockAndNotifyAdequately(world, i + 5, j13, k + 1, LOTRMod.brick3, 2);
 				}
-				for (j1 = j + 1; j1 <= j + 16; ++j1) {
-					setBlockAndNotifyAdequately(world, i1, j1, k - 2, Blocks.ladder, 3);
+				setBlockAndNotifyAdequately(world, i + 5, j + 3, k - 1, LOTRMod.stairsHighElvenBrick, 2);
+				setBlockAndNotifyAdequately(world, i + 5, j + 3, k, LOTRMod.brick3, 2);
+				setBlockAndNotifyAdequately(world, i + 5, j + 3, k + 1, LOTRMod.stairsHighElvenBrick, 3);
+				for (k12 = k - 1; k12 >= k - 2; --k12) {
+					for (j1 = j + 1; j1 <= j + 7; ++j1) {
+						setBlockAndNotifyAdequately(world, i - 3, j1, k12, LOTRMod.brick3, 2);
+					}
+					for (j1 = j + 1; j1 <= j + 16; ++j1) {
+						setBlockAndNotifyAdequately(world, i - 2, j1, k12, Blocks.ladder, 5);
+					}
 				}
-			}
-			break;
-		case 3:
-			for (k12 = k - 1; k12 <= k + 1; ++k12) {
-				setBlockAndNotifyAdequately(world, i - 5, j, k12, Blocks.double_stone_slab, 0);
-				setBlockAndNotifyAdequately(world, i - 4, j, k12, Blocks.double_stone_slab, 0);
-			}
-			for (j13 = j + 1; j13 <= j + 2; ++j13) {
-				setBlockAndNotifyAdequately(world, i - 5, j13, k - 1, LOTRMod.brick3, 2);
-				setBlockAndNotifyAdequately(world, i - 5, j13, k, Blocks.air, 0);
-				setBlockAndNotifyAdequately(world, i - 4, j13, k, Blocks.air, 0);
-				setBlockAndNotifyAdequately(world, i - 5, j13, k + 1, LOTRMod.brick3, 2);
-			}
-			setBlockAndNotifyAdequately(world, i - 5, j + 3, k - 1, LOTRMod.stairsHighElvenBrick, 2);
-			setBlockAndNotifyAdequately(world, i - 5, j + 3, k, LOTRMod.brick3, 2);
-			setBlockAndNotifyAdequately(world, i - 5, j + 3, k + 1, LOTRMod.stairsHighElvenBrick, 3);
-			for (k12 = k + 1; k12 <= k + 2; ++k12) {
-				for (j1 = j + 1; j1 <= j + 7; ++j1) {
-					setBlockAndNotifyAdequately(world, i + 3, j1, k12, LOTRMod.brick3, 2);
+				break;
+			case 2:
+				for (i1 = i - 1; i1 <= i + 1; ++i1) {
+					setBlockAndNotifyAdequately(world, i1, j, k + 5, Blocks.double_stone_slab, 0);
+					setBlockAndNotifyAdequately(world, i1, j, k + 4, Blocks.double_stone_slab, 0);
 				}
-				for (j1 = j + 1; j1 <= j + 16; ++j1) {
-					setBlockAndNotifyAdequately(world, i + 2, j1, k12, Blocks.ladder, 4);
+				for (j13 = j + 1; j13 <= j + 2; ++j13) {
+					setBlockAndNotifyAdequately(world, i - 1, j13, k + 5, LOTRMod.brick3, 2);
+					setBlockAndNotifyAdequately(world, i, j13, k + 5, Blocks.air, 0);
+					setBlockAndNotifyAdequately(world, i, j13, k + 4, Blocks.air, 0);
+					setBlockAndNotifyAdequately(world, i + 1, j13, k + 5, LOTRMod.brick3, 2);
 				}
-			}
-			break;
-		default:
-			break;
+				setBlockAndNotifyAdequately(world, i - 1, j + 3, k + 5, LOTRMod.stairsHighElvenBrick, 0);
+				setBlockAndNotifyAdequately(world, i, j + 3, k + 5, LOTRMod.brick3, 2);
+				setBlockAndNotifyAdequately(world, i + 1, j + 3, k + 5, LOTRMod.stairsHighElvenBrick, 1);
+				for (i1 = i - 1; i1 >= i - 2; --i1) {
+					for (j1 = j + 1; j1 <= j + 7; ++j1) {
+						setBlockAndNotifyAdequately(world, i1, j1, k - 3, LOTRMod.brick3, 2);
+					}
+					for (j1 = j + 1; j1 <= j + 16; ++j1) {
+						setBlockAndNotifyAdequately(world, i1, j1, k - 2, Blocks.ladder, 3);
+					}
+				}
+				break;
+			case 3:
+				for (k12 = k - 1; k12 <= k + 1; ++k12) {
+					setBlockAndNotifyAdequately(world, i - 5, j, k12, Blocks.double_stone_slab, 0);
+					setBlockAndNotifyAdequately(world, i - 4, j, k12, Blocks.double_stone_slab, 0);
+				}
+				for (j13 = j + 1; j13 <= j + 2; ++j13) {
+					setBlockAndNotifyAdequately(world, i - 5, j13, k - 1, LOTRMod.brick3, 2);
+					setBlockAndNotifyAdequately(world, i - 5, j13, k, Blocks.air, 0);
+					setBlockAndNotifyAdequately(world, i - 4, j13, k, Blocks.air, 0);
+					setBlockAndNotifyAdequately(world, i - 5, j13, k + 1, LOTRMod.brick3, 2);
+				}
+				setBlockAndNotifyAdequately(world, i - 5, j + 3, k - 1, LOTRMod.stairsHighElvenBrick, 2);
+				setBlockAndNotifyAdequately(world, i - 5, j + 3, k, LOTRMod.brick3, 2);
+				setBlockAndNotifyAdequately(world, i - 5, j + 3, k + 1, LOTRMod.stairsHighElvenBrick, 3);
+				for (k12 = k + 1; k12 <= k + 2; ++k12) {
+					for (j1 = j + 1; j1 <= j + 7; ++j1) {
+						setBlockAndNotifyAdequately(world, i + 3, j1, k12, LOTRMod.brick3, 2);
+					}
+					for (j1 = j + 1; j1 <= j + 16; ++j1) {
+						setBlockAndNotifyAdequately(world, i + 2, j1, k12, Blocks.ladder, 4);
+					}
+				}
+				break;
+			default:
+				break;
 		}
 		setBlockAndNotifyAdequately(world, i - 3, j + 3, k, LOTRMod.highElvenTorch, 1);
 		setBlockAndNotifyAdequately(world, i + 3, j + 3, k, LOTRMod.highElvenTorch, 2);

@@ -21,14 +21,14 @@ public class LOTRRenderCrossbow implements IItemRenderer {
 
 	@Override
 	public void renderItem(IItemRenderer.ItemRenderType type, ItemStack itemstack, Object... data) {
-		RotationMode rotationMode = null;
+		RotationMode rotationMode;
 		EntityLivingBase holder = (EntityLivingBase) data[1];
 		boolean loaded = LOTRItemCrossbow.isLoaded(itemstack);
 		boolean using = false;
 		if (holder instanceof EntityPlayer) {
 			using = ((EntityPlayer) holder).getItemInUse() == itemstack;
 		} else if (holder instanceof EntityLiving) {
-			using = ((EntityLiving) holder).getHeldItem() == itemstack;
+			using = holder.getHeldItem() == itemstack;
 			if (using && holder instanceof LOTREntityNPC) {
 				using = ((LOTREntityNPC) holder).clientCombatStance;
 			}
@@ -76,7 +76,6 @@ public class LOTRRenderCrossbow implements IItemRenderer {
 			GL11.glPopMatrix();
 			return;
 		}
-		Minecraft.getMinecraft().getTextureManager();
 		Tessellator tessellator = Tessellator.instance;
 		float f = icon.getMinU();
 		float f1 = icon.getMaxU();
@@ -95,7 +94,7 @@ public class LOTRRenderCrossbow implements IItemRenderer {
 	}
 
 	public enum RotationMode {
-		FIRST_PERSON_HOLDING, FIRST_PERSON_LOADED, ENTITY_HOLDING, ENTITY_LOADED;
+		FIRST_PERSON_HOLDING, FIRST_PERSON_LOADED, ENTITY_HOLDING, ENTITY_LOADED
 
 	}
 

@@ -18,13 +18,13 @@ public class LOTRBlockUnsmeltery extends LOTRBlockForgeBase {
 		return new LOTRTileEntityUnsmeltery();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(IBlockAccess world, int i, int j, int k, int side) {
-		return this.getIcon(side, world.getBlockMetadata(i, j, k));
+		return getIcon(side, world.getBlockMetadata(i, j, k));
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return Blocks.cobblestone.getIcon(i, j);
@@ -61,7 +61,7 @@ public class LOTRBlockUnsmeltery extends LOTRBlockForgeBase {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

@@ -15,7 +15,7 @@ public class LOTREntityFlamingo extends EntityAnimal {
 	public static int NECK_TIME = 20;
 	public static int FISHING_TIME = 160;
 	public static int FISHING_TIME_TOTAL = 200;
-	public boolean field_753_a = false;
+	public boolean field_753_a;
 	public float field_752_b;
 	public float destPos;
 	public float field_757_d;
@@ -138,16 +138,16 @@ public class LOTREntityFlamingo extends EntityAnimal {
 			setFishingTick(200, 200);
 		}
 		if (getFishingTickCur() > 0) {
-			if (!worldObj.isRemote) {
-				int cur = getFishingTickCur();
-				setFishingTick(cur, cur - 1);
-			} else {
+			if (worldObj.isRemote) {
 				for (int i = 0; i < 3; ++i) {
 					double d = posX + MathHelper.getRandomDoubleInRange(rand, -0.3, 0.3);
 					double d1 = boundingBox.minY + MathHelper.getRandomDoubleInRange(rand, -0.3, 0.3);
 					double d2 = posZ + MathHelper.getRandomDoubleInRange(rand, -0.3, 0.3);
 					worldObj.spawnParticle("bubble", d, d1, d2, 0.0, 0.0, 0.0);
 				}
+			} else {
+				int cur = getFishingTickCur();
+				setFishingTick(cur, cur - 1);
 			}
 		}
 		if (!worldObj.isRemote && isInLove() && getFishingTickCur() > 20) {

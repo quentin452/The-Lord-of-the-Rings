@@ -23,21 +23,21 @@ public abstract class LOTREntityProjectileBase extends Entity implements IThrowa
 	public int yTile = -1;
 	public int zTile = -1;
 	public Block inTile;
-	public int inData = 0;
-	public boolean inGround = false;
-	public int shake = 0;
+	public int inData;
+	public boolean inGround;
+	public int shake;
 	public Entity shootingEntity;
 	public int ticksInGround;
-	public int ticksInAir = 0;
-	public int canBePickedUp = 0;
-	public int knockbackStrength = 0;
+	public int ticksInAir;
+	public int canBePickedUp;
+	public int knockbackStrength;
 
-	public LOTREntityProjectileBase(World world) {
+	protected LOTREntityProjectileBase(World world) {
 		super(world);
 		setSize(0.5f, 0.5f);
 	}
 
-	public LOTREntityProjectileBase(World world, EntityLivingBase entityliving, EntityLivingBase target, ItemStack item, float charge, float inaccuracy) {
+	protected LOTREntityProjectileBase(World world, EntityLivingBase entityliving, EntityLivingBase target, ItemStack item, float charge, float inaccuracy) {
 		super(world);
 		setProjectileItem(item);
 		shootingEntity = entityliving;
@@ -62,7 +62,7 @@ public abstract class LOTREntityProjectileBase extends Entity implements IThrowa
 		}
 	}
 
-	public LOTREntityProjectileBase(World world, EntityLivingBase entityliving, ItemStack item, float charge) {
+	protected LOTREntityProjectileBase(World world, EntityLivingBase entityliving, ItemStack item, float charge) {
 		super(world);
 		setProjectileItem(item);
 		shootingEntity = entityliving;
@@ -82,7 +82,7 @@ public abstract class LOTREntityProjectileBase extends Entity implements IThrowa
 		setThrowableHeading(motionX, motionY, motionZ, charge * 1.5f, 1.0f);
 	}
 
-	public LOTREntityProjectileBase(World world, ItemStack item, double d, double d1, double d2) {
+	protected LOTREntityProjectileBase(World world, ItemStack item, double d, double d1, double d2) {
 		super(world);
 		setProjectileItem(item);
 		setSize(0.5f, 0.5f);
@@ -160,7 +160,7 @@ public abstract class LOTREntityProjectileBase extends Entity implements IThrowa
 		return shootingEntity;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean isInRangeToRenderDist(double d) {
 		double d1 = boundingBox.getAverageEdgeLength() * 4.0;
@@ -283,15 +283,15 @@ public abstract class LOTREntityProjectileBase extends Entity implements IThrowa
 					int damageInt = MathHelper.ceiling_double_int(getBaseImpactDamage(hitEntity, itemstack));
 					int fireAspect = 0;
 					if (itemstack != null) {
-						knockbackStrength = shootingEntity instanceof EntityLivingBase && hitEntity instanceof EntityLivingBase ? (knockbackStrength += EnchantmentHelper.getKnockbackModifier((EntityLivingBase) shootingEntity, (EntityLivingBase) hitEntity)) : (knockbackStrength += LOTRWeaponStats.getTotalKnockback(itemstack));
+						knockbackStrength = shootingEntity instanceof EntityLivingBase && hitEntity instanceof EntityLivingBase ? knockbackStrength + EnchantmentHelper.getKnockbackModifier((EntityLivingBase) shootingEntity, (EntityLivingBase) hitEntity) : knockbackStrength + LOTRWeaponStats.getTotalKnockback(itemstack);
 					}
 					if (getIsCritical()) {
 						damageInt += rand.nextInt(damageInt / 2 + 2);
 					}
-					double[] prevMotion = { hitEntity.motionX, hitEntity.motionY, hitEntity.motionZ };
+					double[] prevMotion = {hitEntity.motionX, hitEntity.motionY, hitEntity.motionZ};
 					DamageSource damagesource = getDamageSource();
 					if (hitEntity.attackEntityFrom(damagesource, damageInt)) {
-						double[] newMotion = { hitEntity.motionX, hitEntity.motionY, hitEntity.motionZ };
+						double[] newMotion = {hitEntity.motionX, hitEntity.motionY, hitEntity.motionZ};
 						float kbf = getKnockbackFactor();
 						hitEntity.motionX = prevMotion[0] + (newMotion[0] - prevMotion[0]) * kbf;
 						hitEntity.motionY = prevMotion[1] + (newMotion[1] - prevMotion[1]) * kbf;
@@ -304,9 +304,6 @@ public abstract class LOTREntityProjectileBase extends Entity implements IThrowa
 							EntityLivingBase hitEntityLiving = (EntityLivingBase) hitEntity;
 							if (knockbackStrength > 0 && (knockback = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ)) > 0.0f) {
 								hitEntityLiving.addVelocity(motionX * knockbackStrength * 0.6 / knockback, 0.1, motionZ * knockbackStrength * 0.6 / knockback);
-							}
-							if (fireAspect > 0) {
-								hitEntityLiving.setFire(fireAspect * 4);
 							}
 							if (shootingEntity instanceof EntityLivingBase) {
 								EnchantmentHelper.func_151384_a(hitEntityLiving, shootingEntity);
@@ -452,8 +449,6 @@ public abstract class LOTREntityProjectileBase extends Entity implements IThrowa
 			float f = MathHelper.sqrt_double(d * d + d2 * d2);
 			prevRotationYaw = rotationYaw = (float) (Math.atan2(d, d2) * 180.0 / 3.141592653589793);
 			prevRotationPitch = rotationPitch = (float) (Math.atan2(d1, f) * 180.0 / 3.141592653589793);
-			prevRotationPitch = rotationPitch;
-			prevRotationYaw = rotationYaw;
 			setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
 			ticksInGround = 0;
 		}

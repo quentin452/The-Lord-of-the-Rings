@@ -33,11 +33,6 @@ public class LOTRCommandInvasion extends CommandBase {
 	}
 
 	@Override
-	public boolean isUsernameIndex(String[] args, int i) {
-		return false;
-	}
-
-	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		EntityPlayer player = sender instanceof EntityPlayer ? (EntityPlayer) sender : null;
 		World world = sender.getEntityWorld();

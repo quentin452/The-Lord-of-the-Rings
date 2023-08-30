@@ -17,7 +17,7 @@ public class LOTRWorldGenSouthronHouse extends LOTRWorldGenSouthronStructure {
 		int k1;
 		int i1;
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 5);
+		setOriginAndRotation(world, i, j, k, rotation, 5);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -109,21 +109,21 @@ public class LOTRWorldGenSouthronHouse extends LOTRWorldGenSouthronStructure {
 			}
 		}
 		placeWallBanner(world, -2, 3, 0, bannerType, 1);
-		for (int k12 : new int[] { -2, 0, 2 }) {
+		for (int k12 : new int[]{-2, 0, 2}) {
 			int i13 = -1;
 			int j13 = 2;
 			if (random.nextBoolean()) {
 				placePlate(world, random, i13, j13, k12, LOTRMod.woodPlateBlock, LOTRFoods.SOUTHRON);
 				continue;
 			}
-			this.placeMug(world, random, i13, j13, k12, 1, LOTRFoods.SOUTHRON_DRINK);
+			placeMug(world, random, i13, j13, k12, 1, LOTRFoods.SOUTHRON_DRINK);
 		}
 		setBlockAndMetadata(world, -1, 5, -2, bedBlock, 2);
 		setBlockAndMetadata(world, -1, 5, -3, bedBlock, 10);
 		setBlockAndMetadata(world, 1, 5, -2, bedBlock, 2);
 		setBlockAndMetadata(world, 1, 5, -3, bedBlock, 10);
 		placeFlowerPot(world, 0, 6, -3, getRandomFlower(world, random));
-		this.placeChest(world, random, -1, 5, 3, LOTRMod.chestBasket, 2, LOTRChestContents.NEAR_HARAD_HOUSE);
+		placeChest(world, random, -1, 5, 3, LOTRMod.chestBasket, 2, LOTRChestContents.NEAR_HARAD_HOUSE);
 		int men = 1 + random.nextInt(2);
 		for (int l = 0; l < men; ++l) {
 			LOTREntityNearHaradrimBase haradrim = createHaradrim(world);

@@ -11,6 +11,7 @@ import lotr.common.world.structure.LOTRWorldGenMordorTower;
 import lotr.common.world.structure2.*;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.feature.*;
@@ -232,7 +233,7 @@ public class LOTRBiomeGenMordor extends LOTRBiome {
 		return true;
 	}
 
-	public static boolean isSurfaceMordorBlock(World world, int i, int j, int k) {
+	public static boolean isSurfaceMordorBlock(IBlockAccess world, int i, int j, int k) {
 		Block block = world.getBlock(i, j, k);
 		int meta = world.getBlockMetadata(i, j, k);
 		return block == LOTRMod.rock && meta == 0 || block == LOTRMod.mordorDirt || block == LOTRMod.mordorGravel;

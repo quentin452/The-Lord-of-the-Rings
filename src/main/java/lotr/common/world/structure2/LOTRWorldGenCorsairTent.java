@@ -15,7 +15,7 @@ public class LOTRWorldGenCorsairTent extends LOTRWorldGenCorsairStructure {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 4);
+		setOriginAndRotation(world, i, j, k, rotation, 4);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -46,21 +46,21 @@ public class LOTRWorldGenCorsairTent extends LOTRWorldGenCorsairStructure {
 				for (j1 = 0; (j1 >= 0 || !isOpaque(world, i1, j1, k1)) && getY(j1) >= 0; --j1) {
 					int randomGround = random.nextInt(3);
 					switch (randomGround) {
-					case 0:
-						if (j1 == 0) {
-							setBiomeTop(world, i1, j1, k1);
-						} else {
-							setBiomeFiller(world, i1, j1, k1);
-						}
-						break;
-					case 1:
-						setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 1);
-						break;
-					case 2:
-						setBlockAndMetadata(world, i1, j1, k1, Blocks.sand, 0);
-						break;
-					default:
-						break;
+						case 0:
+							if (j1 == 0) {
+								setBiomeTop(world, i1, 0, k1);
+							} else {
+								setBiomeFiller(world, i1, j1, k1);
+							}
+							break;
+						case 1:
+							setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 1);
+							break;
+						case 2:
+							setBlockAndMetadata(world, i1, j1, k1, Blocks.sand, 0);
+							break;
+						default:
+							break;
 					}
 					setGrassToDirt(world, i1, j1 - 1, k1);
 				}
@@ -70,7 +70,7 @@ public class LOTRWorldGenCorsairTent extends LOTRWorldGenCorsairStructure {
 			}
 		}
 		for (int k1 = -3; k1 <= 3; ++k1) {
-			for (int i1 : new int[] { -2, 2 }) {
+			for (int i1 : new int[]{-2, 2}) {
 				for (int j1 = 1; j1 <= 2; ++j1) {
 					setBlockAndMetadata(world, i1, j1, k1, Blocks.wool, random.nextBoolean() ? 15 : 7);
 				}
@@ -93,9 +93,9 @@ public class LOTRWorldGenCorsairTent extends LOTRWorldGenCorsairStructure {
 		setBlockAndMetadata(world, -1, 2, 3, Blocks.torch, 2);
 		setBlockAndMetadata(world, 1, 2, 3, Blocks.torch, 1);
 		if (random.nextBoolean()) {
-			this.placeChest(world, random, -1, 1, 0, LOTRMod.chestBasket, 4, LOTRChestContents.CORSAIR, 1 + random.nextInt(2));
+			placeChest(world, random, -1, 1, 0, LOTRMod.chestBasket, 4, LOTRChestContents.CORSAIR, 1 + random.nextInt(2));
 		} else {
-			this.placeChest(world, random, 1, 1, 0, LOTRMod.chestBasket, 5, LOTRChestContents.CORSAIR, 1 + random.nextInt(2));
+			placeChest(world, random, 1, 1, 0, LOTRMod.chestBasket, 5, LOTRChestContents.CORSAIR, 1 + random.nextInt(2));
 		}
 		return true;
 	}

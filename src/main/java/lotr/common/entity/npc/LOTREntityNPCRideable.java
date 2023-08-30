@@ -16,7 +16,7 @@ public abstract class LOTREntityNPCRideable extends LOTREntityNPC implements LOT
 	public UUID tamingPlayer;
 	public int npcTemper;
 
-	public LOTREntityNPCRideable(World world) {
+	protected LOTREntityNPCRideable(World world) {
 		super(world);
 	}
 
@@ -31,7 +31,7 @@ public abstract class LOTREntityNPCRideable extends LOTREntityNPC implements LOT
 
 	@Override
 	public boolean canRenameNPC() {
-		return isNPCTamed() ? true : super.canRenameNPC();
+		return isNPCTamed() || super.canRenameNPC();
 	}
 
 	@Override
@@ -74,10 +74,8 @@ public abstract class LOTREntityNPCRideable extends LOTREntityNPC implements LOT
 		return worldObj.func_152378_a(tamingPlayer);
 	}
 
-	public int increaseNPCTemper(int i) {
-		int temper = MathHelper.clamp_int(getNPCTemper() + i, 0, getMaxNPCTemper());
-		setNPCTemper(temper);
-		return getNPCTemper();
+	public void increaseNPCTemper(int i) {
+		npcTemper = MathHelper.clamp_int(npcTemper + i, 0, getMaxNPCTemper());
 	}
 
 	@Override

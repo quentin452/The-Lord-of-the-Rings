@@ -86,7 +86,7 @@ public class LOTREntityRangerIthilien extends LOTREntityRanger {
 		int i = rand.nextInt(4);
 		if (i == 0 || i == 1 || i == 2) {
 			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerGondor));
-		} else if (i == 3) {
+		} else {
 			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordGondor));
 		}
 		npcItemsInv.setRangedWeapon(new ItemStack(LOTRMod.gondorBow));

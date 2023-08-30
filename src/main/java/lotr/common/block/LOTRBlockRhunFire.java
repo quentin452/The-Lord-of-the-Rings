@@ -33,7 +33,7 @@ public class LOTRBlockRhunFire extends BlockFire {
 		return false;
 	}
 
-	public int getChanceOfNeighborsEncouragingFire(World world, int i, int j, int k) {
+	public int getChanceOfNeighborsEncouragingFire(IBlockAccess world, int i, int j, int k) {
 		if (!world.isAirBlock(i, j, k)) {
 			return 0;
 		}
@@ -163,7 +163,7 @@ public class LOTRBlockRhunFire extends BlockFire {
 				world.setBlockToAir(i, j, k);
 			} else {
 				boolean canBurnStone;
-				HashMap<Block, Pair> infos = new HashMap<>();
+				Map<Block, Pair> infos = new HashMap<>();
 				canBurnStone = random.nextFloat() < 0.9f;
 				if (canBurnStone) {
 					for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
@@ -173,7 +173,7 @@ public class LOTRBlockRhunFire extends BlockFire {
 							continue;
 						}
 						int enco = getEncouragement(block);
-						int flam = this.getFlammability(block);
+						int flam = getFlammability(block);
 						infos.put(block, Pair.of((Object) enco, (Object) flam));
 						Blocks.fire.setFireInfo(block, 30, 30);
 					}
@@ -185,7 +185,7 @@ public class LOTRBlockRhunFire extends BlockFire {
 				}
 				if (!infos.isEmpty()) {
 					for (Map.Entry e : infos.entrySet()) {
-						Blocks.fire.setFireInfo((Block) e.getKey(), (Integer) ((Pair) e.getValue()).getLeft(), (Integer) ((Pair) e.getValue()).getRight());
+						Blocks.fire.setFireInfo((Block) e.getKey(), (Integer) ((Pair<?, ?>) e.getValue()).getLeft(), (Integer) ((Pair<?, ?>) e.getValue()).getRight());
 					}
 				}
 			}

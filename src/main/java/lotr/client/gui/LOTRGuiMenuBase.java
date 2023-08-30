@@ -31,7 +31,7 @@ public abstract class LOTRGuiMenuBase extends LOTRGuiScreenBase {
 		int minGap = 10;
 		buttonMenuReturn = new LOTRGuiButtonLeftRight(1000, true, 0, guiTop + (ySize + buttonH) / 4, StatCollector.translateToLocal("lotr.gui.menuButton"));
 		buttonList.add(buttonMenuReturn);
-		buttonMenuReturn.xPosition = Math.min(0 + buttonGap, guiLeft - minGap - buttonMenuReturn.width);
+		buttonMenuReturn.xPosition = Math.min(buttonGap, guiLeft - minGap - buttonMenuReturn.width);
 	}
 
 	@Override

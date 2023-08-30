@@ -126,23 +126,6 @@ public class LOTRBiomeGenOcean extends LOTRBiome {
 			return false;
 		}
 		int l = -1;
-		if (l < 1) {
-			return true;
-		}
-		iceRand.setSeed(i * 341873128712L + k * 132897987541L);
-		l -= Math.abs(-30000) / 2;
-		if (l < 0) {
-			l *= -1;
-			l = (int) Math.sqrt(l);
-			if (l < 2) {
-				l = 2;
-			}
-			return iceRand.nextInt(l) != 0;
-		}
-		l = (int) Math.sqrt(l);
-		if (l < 2) {
-			l = 2;
-		}
-		return iceRand.nextInt(l) == 0;
+		return true;
 	}
 }

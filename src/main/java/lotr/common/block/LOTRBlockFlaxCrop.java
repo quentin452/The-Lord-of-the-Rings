@@ -10,7 +10,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.EnumPlantType;
 
 public class LOTRBlockFlaxCrop extends BlockCrops {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] flaxIcons;
 
 	@Override
@@ -23,7 +23,7 @@ public class LOTRBlockFlaxCrop extends BlockCrops {
 		return LOTRMod.flaxSeeds;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j < 7) {
@@ -40,7 +40,7 @@ public class LOTRBlockFlaxCrop extends BlockCrops {
 		return EnumPlantType.Crop;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		flaxIcons = new IIcon[3];

@@ -29,7 +29,7 @@ public class LOTRBlockWeaponRack extends BlockContainer {
 		ItemStack weaponItem;
 		LOTRTileEntityWeaponRack rack = (LOTRTileEntityWeaponRack) world.getTileEntity(i, j, k);
 		if (rack != null && (weaponItem = rack.getWeaponItem()) != null) {
-			this.dropBlockAsItem(world, i, j, k, weaponItem);
+			dropBlockAsItem(world, i, j, k, weaponItem);
 		}
 		super.breakBlock(world, i, j, k, block, meta);
 	}
@@ -69,13 +69,13 @@ public class LOTRBlockWeaponRack extends BlockContainer {
 		return null;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return Blocks.planks.getIcon(i, 0);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public String getItemIconName() {
 		return getTextureName();
@@ -114,7 +114,7 @@ public class LOTRBlockWeaponRack extends BlockContainer {
 						entityplayer.setCurrentItemOrArmor(0, rackItem);
 						world.playSoundEffect(i + 0.5, j + 0.5, k + 0.5, "random.pop", 0.2f, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7f + 1.0f) * 2.0f);
 					} else {
-						this.dropBlockAsItem(world, i, j, k, rackItem);
+						dropBlockAsItem(world, i, j, k, rackItem);
 					}
 					rack.setWeaponItem(null);
 				}
@@ -149,7 +149,7 @@ public class LOTRBlockWeaponRack extends BlockContainer {
 		int meta = world.getBlockMetadata(i, j, k);
 		if ((meta & 4) == 0) {
 			int rotation = MathHelper.floor_double(entity.rotationYaw * 4.0f / 360.0f + 2.5) & 3;
-			world.setBlockMetadataWithNotify(i, j, k, meta |= rotation, 2);
+			world.setBlockMetadataWithNotify(i, j, k, meta | rotation, 2);
 		}
 	}
 
@@ -157,12 +157,12 @@ public class LOTRBlockWeaponRack extends BlockContainer {
 	public void onNeighborBlockChange(World world, int i, int j, int k, Block block) {
 		if (!canBlockStay(world, i, j, k)) {
 			int meta = world.getBlockMetadata(i, j, k);
-			this.dropBlockAsItem(world, i, j, k, meta, 0);
+			dropBlockAsItem(world, i, j, k, meta, 0);
 			world.setBlockToAir(i, j, k);
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}
@@ -178,28 +178,28 @@ public class LOTRBlockWeaponRack extends BlockContainer {
 		float h = 0.9f;
 		int meta = world.getBlockMetadata(i, j, k);
 		switch (meta) {
-		case 0:
-		case 2:
-			setBlockBounds(0.0f, 0.0f, f, 1.0f, h, 1.0f - f);
-			break;
-		case 1:
-		case 3:
-			setBlockBounds(f, 0.0f, 0.0f, 1.0f - f, h, 1.0f);
-			break;
-		case 4:
-			setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, h, 1.0f - f * 2.0f);
-			break;
-		case 6:
-			setBlockBounds(0.0f, 0.0f, f * 2.0f, 1.0f, h, 1.0f);
-			break;
-		case 5:
-			setBlockBounds(f * 2.0f, 0.0f, 0.0f, 1.0f, h, 1.0f);
-			break;
-		case 7:
-			setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f - f * 2.0f, h, 1.0f);
-			break;
-		default:
-			break;
+			case 0:
+			case 2:
+				setBlockBounds(0.0f, 0.0f, f, 1.0f, h, 1.0f - f);
+				break;
+			case 1:
+			case 3:
+				setBlockBounds(f, 0.0f, 0.0f, 1.0f - f, h, 1.0f);
+				break;
+			case 4:
+				setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, h, 1.0f - f * 2.0f);
+				break;
+			case 6:
+				setBlockBounds(0.0f, 0.0f, f * 2.0f, 1.0f, h, 1.0f);
+				break;
+			case 5:
+				setBlockBounds(f * 2.0f, 0.0f, 0.0f, 1.0f, h, 1.0f);
+				break;
+			case 7:
+				setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f - f * 2.0f, h, 1.0f);
+				break;
+			default:
+				break;
 		}
 	}
 }

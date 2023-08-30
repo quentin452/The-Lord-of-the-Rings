@@ -17,7 +17,7 @@ public class LOTRWorldGenNumenorRuin extends LOTRWorldGenStructureBase2 {
 		int k1;
 		int i1;
 		int width = 3 + random.nextInt(3);
-		this.setOriginAndRotation(world, i, j, k, rotation, width + 1);
+		setOriginAndRotation(world, i, j, k, rotation, width + 1);
 		for (i1 = -width; i1 <= width; ++i1) {
 			for (k1 = -width; k1 <= width; ++k1) {
 				int j1;
@@ -75,9 +75,6 @@ public class LOTRWorldGenNumenorRuin extends LOTRWorldGenStructureBase2 {
 				placeRandomBrick(world, random, i12, j1 - 1, k12);
 				continue;
 			}
-			if (l1 != 2) {
-				continue;
-			}
 			int height = 1 + random.nextInt(3);
 			for (int j2 = j1; j2 < j1 + height && !isOpaque(world, i12, j2, k12); ++j2) {
 				placeRandomBrick(world, random, i12, j2, k12);
@@ -89,23 +86,23 @@ public class LOTRWorldGenNumenorRuin extends LOTRWorldGenStructureBase2 {
 	public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 		int l = random.nextInt(5);
 		switch (l) {
-		case 0:
-			setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 0);
-			break;
-		case 1:
-			setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 1);
-			break;
-		case 2:
-			setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 2);
-			break;
-		case 3:
-			setBlockAndMetadata(world, i, j, k, Blocks.cobblestone, 0);
-			break;
-		case 4:
-			setBlockAndMetadata(world, i, j, k, Blocks.mossy_cobblestone, 0);
-			break;
-		default:
-			break;
+			case 0:
+				setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 0);
+				break;
+			case 1:
+				setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 1);
+				break;
+			case 2:
+				setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 2);
+				break;
+			case 3:
+				setBlockAndMetadata(world, i, j, k, Blocks.cobblestone, 0);
+				break;
+			case 4:
+				setBlockAndMetadata(world, i, j, k, Blocks.mossy_cobblestone, 0);
+				break;
+			default:
+				break;
 		}
 	}
 }

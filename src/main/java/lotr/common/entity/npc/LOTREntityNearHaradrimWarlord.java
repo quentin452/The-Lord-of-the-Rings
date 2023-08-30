@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityNearHaradrimWarlord extends LOTREntityNearHaradrimWarrior implements LOTRUnitTradeable {
 	public LOTREntityNearHaradrimWarlord(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.NEAR_HARAD;
 	}
 

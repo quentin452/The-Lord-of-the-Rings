@@ -34,7 +34,7 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 		int k14;
 		int j14;
 		int k152;
-		this.setOriginAndRotation(world, i, j, k, rotation, 12);
+		setOriginAndRotation(world, i, j, k, rotation, 12);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -62,7 +62,7 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 			for (k12 = -11; k12 <= 11; ++k12) {
 				i2 = Math.abs(i14);
 				k2 = Math.abs(k12);
-				if (i2 >= 9 && i2 <= 11 && k2 <= 5 || k2 >= 9 && k2 <= 11 && i2 <= 5) {
+				if (i2 >= 9 && k2 <= 5 || k2 >= 9 && k2 <= 11 && i2 <= 5) {
 					boolean pillar = false;
 					if (i2 == 11) {
 						pillar = k2 == 2 || k2 == 5;
@@ -100,8 +100,8 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 				}
 			}
 		}
-		for (int i15 : new int[] { -10, 10 }) {
-			for (int k11 : new int[] { -10, 10 }) {
+		for (int i15 : new int[]{-10, 10}) {
+			for (int k11 : new int[]{-10, 10}) {
 				int j15;
 				for (int i22 = i15 - 4; i22 <= i15 + 4; ++i22) {
 					for (k22 = k11 - 4; k22 <= k11 + 4; ++k22) {
@@ -113,7 +113,7 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 						if (i3 == 4 && k3 >= 3 || k3 == 4 && i3 >= 3) {
 							continue;
 						}
-						if (i3 == 4 && k3 <= 2 || k3 == 4 && i3 <= 2 || i3 == 3 && k3 == 3) {
+						if (i3 == 4 || k3 == 4 || i3 == 3 && k3 == 3) {
 							int j17;
 							boolean pillar = false;
 							if (i3 == 4) {
@@ -198,9 +198,9 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i15, 6, k11 - 1, trapdoorBlock, 9);
 			}
 		}
-		for (int i15 : new int[] { -11, 11 }) {
+		for (int i15 : new int[]{-11, 11}) {
 			int i23 = i15 + Integer.signum(i15) * -1;
-			int[] j18 = { -4, 3 };
+			int[] j18 = {-4, 3};
 			n = j18.length;
 			for (k1 = 0; k1 < n; ++k1) {
 				k13 = j18[k1];
@@ -224,9 +224,9 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i23, 3, k23, LOTRMod.brick, 5);
 			}
 		}
-		for (int k1521 : new int[] { -11, 11 }) {
+		for (int k1521 : new int[]{-11, 11}) {
 			int k24 = k1521 + Integer.signum(k1521) * -1;
-			int[] k23 = { -4, 3 };
+			int[] k23 = {-4, 3};
 			n = k23.length;
 			for (k1 = 0; k1 < n; ++k1) {
 				i12 = k23[k1];
@@ -253,9 +253,9 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i25, 3, k24, LOTRMod.brick, 5);
 			}
 		}
-		for (int k1521 : new int[] { -14, 14 }) {
+		for (int k1521 : new int[]{-14, 14}) {
 			int k25 = k1521 + Integer.signum(k1521) * -1;
-			int[] i25 = { -10, 10 };
+			int[] i25 = {-10, 10};
 			n = i25.length;
 			for (k1 = 0; k1 < n; ++k1) {
 				i12 = i25[k1];
@@ -271,9 +271,9 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i12, 2, k25, brickSlabBlock, brickSlabMeta);
 			}
 		}
-		for (int i15 : new int[] { -14, 14 }) {
+		for (int i15 : new int[]{-14, 14}) {
 			int i26 = i15 + Integer.signum(i15) * -1;
-			int[] i25 = { -10, 10 };
+			int[] i25 = {-10, 10};
 			n = i25.length;
 			for (k1 = 0; k1 < n; ++k1) {
 				k13 = i25[k1];
@@ -289,30 +289,30 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i26, 2, k13, brickSlabBlock, brickSlabMeta);
 			}
 		}
-		for (int i15 : new int[] { -10, 10 }) {
-			for (int i27 : new int[] { i15 - 2, i15 + 2 }) {
+		for (int i15 : new int[]{-10, 10}) {
+			for (int i27 : new int[]{i15 - 2, i15 + 2}) {
 				placeArmorStand(world, i27, 1, -7, 0, null);
 				placeArmorStand(world, i27, 1, 7, 2, null);
 			}
-			this.placeChest(world, random, i15, 1, -6, LOTRMod.chestLebethron, 2, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES, 1);
+			placeChest(world, random, i15, 1, -6, LOTRMod.chestLebethron, 2, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES, 1);
 			setAir(world, i15, 2, -6);
 			spawnItemFrame(world, i15, 3, -6, 2, getGondorFramedItem(random));
-			this.placeChest(world, random, i15, 1, 6, LOTRMod.chestLebethron, 3, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES, 1);
+			placeChest(world, random, i15, 1, 6, LOTRMod.chestLebethron, 3, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES, 1);
 			setAir(world, i15, 2, 6);
 			spawnItemFrame(world, i15, 3, 6, 0, getGondorFramedItem(random));
 		}
-		int[] i14 = { -10, 10 };
+		int[] i14 = {-10, 10};
 		k12 = i14.length;
 		for (i2 = 0; i2 < k12; ++i2) {
 			k152 = i14[i2];
-			for (int k26 : new int[] { k152 - 2, k152 + 2 }) {
+			for (int k26 : new int[]{k152 - 2, k152 + 2}) {
 				placeArmorStand(world, -7, 1, k26, 1, null);
 				placeArmorStand(world, 7, 1, k26, 3, null);
 			}
-			this.placeChest(world, random, -6, 1, k152, LOTRMod.chestLebethron, 5, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES, 1);
+			placeChest(world, random, -6, 1, k152, LOTRMod.chestLebethron, 5, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES, 1);
 			setAir(world, -6, 2, k152);
 			spawnItemFrame(world, -6, 3, k152, 3, getGondorFramedItem(random));
-			this.placeChest(world, random, 6, 1, k152, LOTRMod.chestLebethron, 4, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES, 1);
+			placeChest(world, random, 6, 1, k152, LOTRMod.chestLebethron, 4, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES, 1);
 			setAir(world, 6, 2, k152);
 			spawnItemFrame(world, 6, 3, k152, 1, getGondorFramedItem(random));
 		}
@@ -385,7 +385,7 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 				continue;
 			}
 			for (int k16 = -7; k16 <= -2; ++k16) {
-				k2 = k16 - -9;
+				k2 = k16 + 9;
 				int d = Math.abs(i28 - k2);
 				if (d == 0 && (i28 == 2 || i28 == 7)) {
 					d = 2;
@@ -401,9 +401,6 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 				}
 				if (d == 1) {
 					setBlockAndMetadata(world, i1, 1, k16, Blocks.red_flower, 6);
-					continue;
-				}
-				if (d != 2) {
 					continue;
 				}
 				setBlockAndMetadata(world, i1, 1, k16, Blocks.red_flower, 4);
@@ -460,7 +457,7 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 8, 2, -1, Blocks.furnace, 5);
 		placeArmorStand(world, 8, 1, 0, 1, strFief.getFiefdomArmor());
 		setBlockAndMetadata(world, 8, 1, 1, tableBlock, 0);
-		this.placeChest(world, random, 8, 1, 2, LOTRMod.chestLebethron, 5, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES);
+		placeChest(world, random, 8, 1, 2, LOTRMod.chestLebethron, 5, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES);
 		setBlockAndMetadata(world, 8, 1, 3, Blocks.crafting_table, 0);
 		spawnItemFrame(world, 9, 2, 1, 3, getGondorFramedItem(random));
 		spawnItemFrame(world, 9, 2, 2, 3, getGondorFramedItem(random));
@@ -500,14 +497,14 @@ public class LOTRWorldGenGondorFortress extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i1, 1, 8, bedBlock, 8);
 				continue;
 			}
-			this.placeChest(world, random, i1, 1, 8, LOTRMod.chestLebethron, 2, LOTRChestContents.GONDOR_FORTRESS_DRINKS);
+			placeChest(world, random, i1, 1, 8, LOTRMod.chestLebethron, 2, LOTRChestContents.GONDOR_FORTRESS_DRINKS);
 		}
 		placeWallBanner(world, -2, 3, 9, bannerType, 2);
 		placeWallBanner(world, 2, 3, 9, bannerType, 2);
 		setBlockAndMetadata(world, -4, 1, 5, plankBlock, plankMeta);
 		setBlockAndMetadata(world, -3, 1, 5, plankBlock, plankMeta);
-		this.placeBarrel(world, random, -4, 2, 5, 3, LOTRFoods.GONDOR_DRINK);
-		this.placeMug(world, random, -3, 2, 5, 2, LOTRFoods.GONDOR_DRINK);
+		placeBarrel(world, random, -4, 2, 5, 3, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, -3, 2, 5, 2, LOTRFoods.GONDOR_DRINK);
 		setBlockAndMetadata(world, 3, 1, 5, plankBlock, plankMeta);
 		setBlockAndMetadata(world, 4, 1, 5, plankBlock, plankMeta);
 		placePlateWithCertainty(world, random, 3, 2, 5, plateBlock, LOTRFoods.GONDOR);

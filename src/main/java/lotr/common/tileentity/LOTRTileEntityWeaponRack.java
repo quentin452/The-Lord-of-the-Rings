@@ -15,9 +15,7 @@ public class LOTRTileEntityWeaponRack extends TileEntity {
 	public boolean canAcceptItem(ItemStack itemstack) {
 		if (itemstack != null) {
 			Item item = itemstack.getItem();
-			if (LOTRWeaponStats.isMeleeWeapon(itemstack) || LOTRWeaponStats.isRangedWeapon(itemstack) || item instanceof ItemHoe || item instanceof ItemFishingRod) {
-				return true;
-			}
+			return LOTRWeaponStats.isMeleeWeapon(itemstack) || LOTRWeaponStats.isRangedWeapon(itemstack) || item instanceof ItemHoe || item instanceof ItemFishingRod;
 		}
 		return false;
 	}

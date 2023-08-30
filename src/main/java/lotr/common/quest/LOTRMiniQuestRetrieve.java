@@ -13,7 +13,7 @@ import net.minecraft.util.StatCollector;
 
 public class LOTRMiniQuestRetrieve extends LOTRMiniQuestCollect {
 	public Class killEntityType;
-	public boolean hasDropped = false;
+	public boolean hasDropped;
 
 	public LOTRMiniQuestRetrieve(LOTRPlayerData pd) {
 		super(pd);
@@ -38,7 +38,7 @@ public class LOTRMiniQuestRetrieve extends LOTRMiniQuestCollect {
 	@Override
 	public boolean isQuestItem(ItemStack itemstack) {
 		if (super.isQuestItem(itemstack)) {
-			UUID retrieveQuestID = LOTRMiniQuestRetrieve.getRetrieveQuestID(itemstack);
+			UUID retrieveQuestID = getRetrieveQuestID(itemstack);
 			return retrieveQuestID.equals(questUUID);
 		}
 		return false;
@@ -53,7 +53,7 @@ public class LOTRMiniQuestRetrieve extends LOTRMiniQuestCollect {
 	public void onKill(EntityPlayer entityplayer, EntityLivingBase entity) {
 		if (!hasDropped && killEntityType.isAssignableFrom(entity.getClass())) {
 			ItemStack itemstack = collectItem.copy();
-			LOTRMiniQuestRetrieve.setRetrieveQuest(itemstack, this);
+			setRetrieveQuest(itemstack, this);
 			hasDropped = true;
 			updateQuest();
 		}

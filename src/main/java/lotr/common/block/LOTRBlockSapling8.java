@@ -28,7 +28,7 @@ public class LOTRBlockSapling8 extends LOTRBlockSaplingBase {
 			int[] tree2x2;
 			int[] tree3x3;
 			int[] tree4x4;
-			int[] tree5x5 = LOTRBlockSaplingBase.findSaplingSquare(world, i, j, k, this, meta, -2, 2, -4, 4);
+			int[] tree5x5 = LOTRBlockSaplingBase.findSaplingSquare(world, i, j, k, this, 1, -2, 2, -4, 4);
 			if (tree5x5 != null) {
 				treeGen = LOTRTreeType.REDWOOD_5.create(true, random);
 				trunkNeg = 2;
@@ -36,21 +36,21 @@ public class LOTRBlockSapling8 extends LOTRBlockSaplingBase {
 				xOffset = tree5x5[0];
 				zOffset = tree5x5[1];
 			}
-			if (treeGen == null && (tree4x4 = LOTRBlockSaplingBase.findSaplingSquare(world, i, j, k, this, meta, -1, 2, -2, 1)) != null) {
+			if (treeGen == null && (tree4x4 = LOTRBlockSaplingBase.findSaplingSquare(world, i, j, k, this, 1, -1, 2, -2, 1)) != null) {
 				treeGen = LOTRTreeType.REDWOOD_4.create(true, random);
 				trunkNeg = 1;
 				trunkPos = 2;
 				xOffset = tree4x4[0];
 				zOffset = tree4x4[1];
 			}
-			if (treeGen == null && (tree3x3 = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta)) != null) {
+			if (treeGen == null && (tree3x3 = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, 1)) != null) {
 				treeGen = LOTRTreeType.REDWOOD_3.create(true, random);
 				trunkNeg = 1;
 				trunkPos = 1;
 				xOffset = tree3x3[0];
 				zOffset = tree3x3[1];
 			}
-			if (treeGen == null && (tree2x2 = LOTRBlockSaplingBase.findSaplingSquare(world, i, j, k, this, meta, 0, 1, -1, 0)) != null) {
+			if (treeGen == null && (tree2x2 = LOTRBlockSaplingBase.findSaplingSquare(world, i, j, k, this, 1, 0, 1, -1, 0)) != null) {
 				treeGen = LOTRTreeType.REDWOOD_2.create(true, random);
 				trunkNeg = 0;
 				trunkPos = 1;

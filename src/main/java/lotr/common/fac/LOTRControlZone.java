@@ -1,5 +1,6 @@
 package lotr.common.fac;
 
+import lotr.common.world.map.LOTRAbstractWaypoint;
 import lotr.common.world.map.LOTRWaypoint;
 
 public class LOTRControlZone {
@@ -18,10 +19,10 @@ public class LOTRControlZone {
 		xCoord = LOTRWaypoint.mapToWorldX(mapX);
 		zCoord = LOTRWaypoint.mapToWorldZ(mapY);
 		radiusCoord = LOTRWaypoint.mapToWorldR(radius);
-		radiusCoordSq = (long) radiusCoord * (long) radiusCoord;
+		radiusCoordSq = (long) radiusCoord * radiusCoord;
 	}
 
-	public LOTRControlZone(LOTRWaypoint wp, int r) {
+	public LOTRControlZone(LOTRAbstractWaypoint wp, int r) {
 		this(wp.getX(), wp.getY(), r);
 	}
 
@@ -42,7 +43,7 @@ public class LOTRControlZone {
 			return distSq <= radiusCoordSq;
 		}
 		int checkRadius = LOTRWaypoint.mapToWorldR(radius + extraMapRange);
-		long checkRadiusSq = (long) checkRadius * (long) checkRadius;
+		long checkRadiusSq = (long) checkRadius * checkRadius;
 		return distSq <= checkRadiusSq;
 	}
 }

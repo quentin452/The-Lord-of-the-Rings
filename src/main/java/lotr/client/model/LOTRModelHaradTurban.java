@@ -20,7 +20,7 @@ public class LOTRModelHaradTurban extends LOTRModelHaradRobes {
 		bipedHead.addBox(-5.0f, -10.0f, -5.0f, 10, 5, 10, 0.0f);
 		ModelRenderer shawl = new ModelRenderer(this, 0, 15);
 		shawl.addBox(-4.5f, -5.0f, 1.5f, 9, 6, 4, 0.25f);
-		shawl.rotateAngleX = (float) Math.toRadians(13.0);
+		shawl.rotateAngleX = 0.22689280275926285f;
 		bipedHead.addChild(shawl);
 		ornament = new ModelRenderer(this, 0, 0);
 		ornament.addBox(-1.0f, -9.0f, -6.0f, 2, 2, 1, 0.0f);

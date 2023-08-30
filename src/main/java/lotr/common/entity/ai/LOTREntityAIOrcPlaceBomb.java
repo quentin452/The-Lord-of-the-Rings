@@ -32,7 +32,7 @@ public class LOTREntityAIOrcPlaceBomb extends EntityAIBase {
 			return false;
 		}
 		EntityLivingBase entity = attacker.getAttackTarget();
-		return entity == null ? false : !entityTarget.isEntityAlive() ? false : !attacker.getNavigator().noPath();
+		return entity != null && entityTarget.isEntityAlive() && !attacker.getNavigator().noPath();
 	}
 
 	@Override
@@ -73,7 +73,6 @@ public class LOTREntityAIOrcPlaceBomb extends EntityAIBase {
 				meta = bombItem.getItemDamage();
 			}
 			bomb.setBombStrengthLevel(meta);
-			bomb.setFuseFromHiredUnit();
 			bomb.droppedByHiredUnit = attacker.hiredNPCInfo.isActive;
 			bomb.droppedTargetingPlayer = entityTarget instanceof EntityPlayer;
 			worldObj.spawnEntityInWorld(bomb);

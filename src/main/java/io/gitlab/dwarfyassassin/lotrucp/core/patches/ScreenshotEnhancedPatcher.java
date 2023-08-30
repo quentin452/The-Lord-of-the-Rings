@@ -10,13 +10,7 @@ import net.minecraftforge.classloading.FMLForgePlugin;
 public class ScreenshotEnhancedPatcher extends ModPatcher {
 	public ScreenshotEnhancedPatcher() {
 		super("Screenshots Enhanced", "screenshots");
-		classes.put("lotr.client.render.entity.LOTRRenderScrapTrader", new Patcher.ConsumerImplBecauseNoLambdas<ClassNode>() {
-
-			@Override
-			public void accept(ClassNode node) {
-				ScreenshotEnhancedPatcher.this.patchScrapTraderRender(node);
-			}
-		});
+		classes.put("lotr.client.render.entity.LOTRRenderScrapTrader", this::patchScrapTraderRender);
 	}
 
 	public void patchScrapTraderRender(ClassNode classNode) {

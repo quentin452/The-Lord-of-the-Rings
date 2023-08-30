@@ -13,8 +13,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.*;
 
 public class LOTRBlockLeavesBase extends BlockLeaves {
-	public static List allLeafBlocks = new ArrayList();
-	@SideOnly(value = Side.CLIENT)
+	public static Collection allLeafBlocks = new ArrayList();
+	@SideOnly(Side.CLIENT)
 	public IIcon[][] leafIcons;
 	public String[] leafNames;
 	public String vanillaTextureName;
@@ -33,7 +33,7 @@ public class LOTRBlockLeavesBase extends BlockLeaves {
 		allLeafBlocks.add(this);
 	}
 
-	public void addSpecialLeafDrops(ArrayList drops, World world, int i, int j, int k, int meta, int fortune) {
+	public void addSpecialLeafDrops(List drops, World world, int i, int j, int k, int meta, int fortune) {
 	}
 
 	public int calcFortuneModifiedDropChance(int baseChance, int fortune) {
@@ -47,7 +47,7 @@ public class LOTRBlockLeavesBase extends BlockLeaves {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess world, int i, int j, int k) {
 		return 16777215;
 	}
@@ -74,7 +74,7 @@ public class LOTRBlockLeavesBase extends BlockLeaves {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int i, int j) {
 		int meta = j & 3;
 		if (meta >= leafNames.length) {
@@ -84,7 +84,7 @@ public class LOTRBlockLeavesBase extends BlockLeaves {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getRenderColor(int i) {
 		return 16777215;
 	}
@@ -94,7 +94,7 @@ public class LOTRBlockLeavesBase extends BlockLeaves {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int j = 0; j < leafNames.length; ++j) {
 			list.add(new ItemStack(item, 1, j));
@@ -110,7 +110,7 @@ public class LOTRBlockLeavesBase extends BlockLeaves {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconregister) {
 		leafIcons = new IIcon[leafNames.length][2];
 		for (int i = 0; i < leafNames.length; ++i) {
@@ -160,7 +160,7 @@ public class LOTRBlockLeavesBase extends BlockLeaves {
 
 	public static void setAllGraphicsLevels(boolean flag) {
 		for (Object leafBlock : allLeafBlocks) {
-			((LOTRBlockLeavesBase) leafBlock).setGraphicsLevel(flag);
+			((BlockLeaves) leafBlock).setGraphicsLevel(flag);
 		}
 	}
 }

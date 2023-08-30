@@ -3,6 +3,7 @@ package lotr.common.world.feature;
 import java.util.Random;
 
 import lotr.common.LOTRMod;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -23,10 +24,7 @@ public class LOTRWorldGenWebOfUngoliant extends WorldGenerator {
 			if (!world.isAirBlock(i1, j1 = j - random.nextInt(6) + random.nextInt(6), k1 = k - random.nextInt(8) + random.nextInt(8))) {
 				continue;
 			}
-			boolean flag = false;
-			if (isSuitableBlock(world, i1 - 1, j1, k1)) {
-				flag = true;
-			}
+			boolean flag = isSuitableBlock(world, i1 - 1, j1, k1);
 			if (isSuitableBlock(world, i1 + 1, j1, k1)) {
 				flag = true;
 			}
@@ -50,7 +48,7 @@ public class LOTRWorldGenWebOfUngoliant extends WorldGenerator {
 		return true;
 	}
 
-	public boolean isSuitableBlock(World world, int i, int j, int k) {
+	public boolean isSuitableBlock(IBlockAccess world, int i, int j, int k) {
 		return world.getBlock(i, j, k).isNormalCube();
 	}
 }

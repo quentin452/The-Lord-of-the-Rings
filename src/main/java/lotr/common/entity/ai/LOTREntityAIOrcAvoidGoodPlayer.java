@@ -28,6 +28,7 @@ public class LOTREntityAIOrcAvoidGoodPlayer extends EntityAIBase {
 		setMutexBits(1);
 	}
 
+	@SuppressWarnings("Convert2Lambda")
 	public boolean anyNearbyOrcsAttacked() {
 		List nearbyAllies = theOrc.worldObj.selectEntitiesWithinAABB(EntityLiving.class, theOrc.boundingBox.expand(distanceFromEntity, distanceFromEntity / 2.0, distanceFromEntity), new IEntitySelector() {
 
@@ -41,7 +42,7 @@ public class LOTREntityAIOrcAvoidGoodPlayer extends EntityAIBase {
 		});
 		for (Object obj : nearbyAllies) {
 			EntityLiving ally = (EntityLiving) obj;
-			if (!(ally instanceof LOTREntityOrc ? ((LOTREntityOrc) ally).currentRevengeTarget instanceof EntityPlayer : ally.getAttackTarget() instanceof EntityPlayer)) {
+			if (ally instanceof LOTREntityOrc ? !(((LOTREntityOrc) ally).currentRevengeTarget instanceof EntityPlayer) : !(ally.getAttackTarget() instanceof EntityPlayer)) {
 				continue;
 			}
 			return true;
@@ -59,6 +60,7 @@ public class LOTREntityAIOrcAvoidGoodPlayer extends EntityAIBase {
 		closestEnemyPlayer = null;
 	}
 
+	@SuppressWarnings("Convert2Lambda")
 	@Override
 	public boolean shouldExecute() {
 		if (!theOrc.isWeakOrc || theOrc.hiredNPCInfo.isActive || theOrc.getFaction() == LOTRFaction.MORDOR) {
@@ -88,7 +90,7 @@ public class LOTREntityAIOrcAvoidGoodPlayer extends EntityAIBase {
 			return false;
 		}
 		entityPathEntity = entityPathNavigate.getPathToXYZ(fleePath.xCoord, fleePath.yCoord, fleePath.zCoord);
-		return entityPathEntity == null ? false : entityPathEntity.isDestinationSame(fleePath);
+		return entityPathEntity != null && entityPathEntity.isDestinationSame(fleePath);
 	}
 
 	@Override

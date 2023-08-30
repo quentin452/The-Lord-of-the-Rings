@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 
 public class LOTRContainerMillstone extends Container {
 	public LOTRTileEntityMillstone theMillstone;
-	public int currentMillTime = 0;
+	public int currentMillTime;
 	public boolean isMilling;
 
 	public LOTRContainerMillstone(InventoryPlayer inv, LOTRTileEntityMillstone millstone) {
@@ -68,7 +68,7 @@ public class LOTRContainerMillstone extends Container {
 					return null;
 				}
 				slot.onSlotChange(itemstack1, itemstack);
-			} else if (i != 0 ? LOTRMillstoneRecipes.getMillingResult(itemstack1) != null ? !mergeItemStack(itemstack1, 0, 1, false) : i >= 2 && i < 29 ? !mergeItemStack(itemstack1, 29, 38, false) : i >= 29 && i < 38 && !mergeItemStack(itemstack1, 2, 29, false) : !mergeItemStack(itemstack1, 2, 38, false)) {
+			} else if (i != 0 ? LOTRMillstoneRecipes.getMillingResult(itemstack1) != null ? !mergeItemStack(itemstack1, 0, 1, false) : i < 29 ? !mergeItemStack(itemstack1, 29, 38, false) : i < 38 && !mergeItemStack(itemstack1, 2, 29, false) : !mergeItemStack(itemstack1, 2, 38, false)) {
 				return null;
 			}
 			if (itemstack1.stackSize == 0) {
@@ -84,7 +84,7 @@ public class LOTRContainerMillstone extends Container {
 		return itemstack;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void updateProgressBar(int i, int j) {
 		if (i == 0) {

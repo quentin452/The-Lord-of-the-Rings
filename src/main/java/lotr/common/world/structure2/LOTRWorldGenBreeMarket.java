@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class LOTRWorldGenBreeMarket extends LOTRWorldGenBreeStructure {
 	public LOTRWorldGenBreeMarketStall[] presetStalls;
-	public boolean frontStepsOnly = false;
+	public boolean frontStepsOnly;
 
 	public LOTRWorldGenBreeMarket(boolean flag) {
 		super(flag);
@@ -25,7 +25,7 @@ public class LOTRWorldGenBreeMarket extends LOTRWorldGenBreeStructure {
 		int i1;
 		int j2;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 13);
+		setOriginAndRotation(world, i, j, k, rotation, 13);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -12; i1 <= 12; ++i1) {
@@ -51,7 +51,7 @@ public class LOTRWorldGenBreeMarket extends LOTRWorldGenBreeStructure {
 					marketBounds = true;
 				} else if (i2 <= 7 && k2 <= 9 || k2 <= 7 && i2 <= 9) {
 					marketBounds = true;
-				} else if (i2 <= 8 && k2 <= 8) {
+				} else if (i2 <= 8 && k2 == 8) {
 					marketBounds = true;
 				}
 				if (!marketBounds) {
@@ -138,7 +138,7 @@ public class LOTRWorldGenBreeMarket extends LOTRWorldGenBreeStructure {
 		placeAnimalJar(world, 0, 2, 1, LOTRMod.butterflyJar, 0, new LOTREntityButterfly(world));
 		LOTREntityBreeGuard armorGuard = new LOTREntityBreeGuard(world);
 		armorGuard.onSpawnWithEgg(null);
-		placeArmorStand(world, 2, 1, 0, 3, new ItemStack[] { armorGuard.getEquipmentInSlot(4), armorGuard.getEquipmentInSlot(3), null, null });
+		placeArmorStand(world, 2, 1, 0, 3, new ItemStack[]{armorGuard.getEquipmentInSlot(4), armorGuard.getEquipmentInSlot(3), null, null});
 		LOTRWorldGenBreeMarketStall[] stalls = presetStalls;
 		if (stalls == null) {
 			stalls = LOTRWorldGenBreeMarketStall.getRandomStalls(random, notifyChanges, 4);

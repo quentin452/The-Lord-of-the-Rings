@@ -20,12 +20,12 @@ public class LOTRRenderBear extends RenderLiving {
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
 		LOTREntityBear bear = (LOTREntityBear) entity;
-		return LOTRRenderBear.getBearSkin(bear.getBearType());
+		return getBearSkin(bear.getBearType());
 	}
 
 	@Override
 	public void preRenderCallback(EntityLivingBase entity, float f) {
-		LOTRRenderBear.scaleBearModel();
+		scaleBearModel();
 	}
 
 	public static ResourceLocation getBearSkin(LOTREntityBear.BearType type) {

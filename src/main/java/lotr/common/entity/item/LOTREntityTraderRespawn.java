@@ -90,7 +90,7 @@ public class LOTREntityTraderRespawn extends Entity {
 
 	public float getBobbingOffset(float tick) {
 		float f = bobbingTime - prevBobbingTime;
-		return MathHelper.sin((prevBobbingTime + (f *= tick)) / 5.0f) * 0.25f;
+		return MathHelper.sin((prevBobbingTime + f * tick) / 5.0f) * 0.25f;
 	}
 
 	public String getClientTraderString() {
@@ -119,7 +119,7 @@ public class LOTREntityTraderRespawn extends Entity {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void handleHealthUpdate(byte b) {
 		if (b == 16) {
 			for (int l = 0; l < 16; ++l) {
@@ -153,7 +153,7 @@ public class LOTREntityTraderRespawn extends Entity {
 		prevPosY = posY;
 		prevPosZ = posZ;
 		prevSpawnerSpin = spawnerSpin;
-		spawnerSpin = isSpawnImminent() ? (spawnerSpin += 24.0f) : (spawnerSpin += 6.0f);
+		spawnerSpin = isSpawnImminent() ? spawnerSpin + 24.0f : spawnerSpin + 6.0f;
 		prevSpawnerSpin = MathHelper.wrapAngleTo180_float(prevSpawnerSpin);
 		spawnerSpin = MathHelper.wrapAngleTo180_float(spawnerSpin);
 		if (getScale() < MAX_SCALE) {
@@ -227,7 +227,7 @@ public class LOTREntityTraderRespawn extends Entity {
 		traderHomeY = nbt.getInteger("TraderHomeY");
 		traderHomeZ = nbt.getInteger("TraderHomeZ");
 		traderHomeRadius = nbt.getFloat("TraderHomeRadius");
-		shouldTraderRespawn = nbt.hasKey("TraderShouldRespawn") ? nbt.getBoolean("TraderShouldRespawn") : true;
+		shouldTraderRespawn = !nbt.hasKey("TraderShouldRespawn") || nbt.getBoolean("TraderShouldRespawn");
 		if (nbt.hasKey("TraderLocationName")) {
 			traderLocationName = nbt.getString("TraderLocationName");
 		}

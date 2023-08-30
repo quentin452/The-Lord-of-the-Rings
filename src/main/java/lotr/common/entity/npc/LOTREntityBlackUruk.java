@@ -2,7 +2,6 @@ package lotr.common.entity.npc;
 
 import lotr.common.*;
 import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
-import lotr.common.fac.LOTRFaction;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -43,7 +42,7 @@ public class LOTREntityBlackUruk extends LOTREntityMordorOrc {
 		if (flag) {
 			int shinyShirtChance = 6000;
 			shinyShirtChance -= i * 500;
-			if (rand.nextInt(shinyShirtChance = Math.max(shinyShirtChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(shinyShirtChance, 1)) == 0) {
 				dropItem(LOTRMod.bodyMithril, 1);
 			}
 		}
@@ -52,11 +51,6 @@ public class LOTREntityBlackUruk extends LOTREntityMordorOrc {
 	@Override
 	public float getAlignmentBonus() {
 		return 2.0f;
-	}
-
-	@Override
-	public LOTRFaction getFaction() {
-		return LOTRFaction.MORDOR;
 	}
 
 	@Override
@@ -74,25 +68,25 @@ public class LOTREntityBlackUruk extends LOTREntityMordorOrc {
 		data = super.onSpawnWithEgg(data);
 		int i = rand.nextInt(7);
 		switch (i) {
-		case 0:
-		case 1:
-		case 2:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.scimitarBlackUruk));
-			break;
-		case 3:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeBlackUruk));
-			break;
-		case 4:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerBlackUruk));
-			break;
-		case 5:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerBlackUrukPoisoned));
-			break;
-		case 6:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.hammerBlackUruk));
-			break;
-		default:
-			break;
+			case 0:
+			case 1:
+			case 2:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.scimitarBlackUruk));
+				break;
+			case 3:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeBlackUruk));
+				break;
+			case 4:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerBlackUruk));
+				break;
+			case 5:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerBlackUrukPoisoned));
+				break;
+			case 6:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.hammerBlackUruk));
+				break;
+			default:
+				break;
 		}
 		if (rand.nextInt(6) == 0) {
 			npcItemsInv.setSpearBackup(npcItemsInv.getMeleeWeapon());

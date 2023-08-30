@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityDunlendingWarlord extends LOTREntityDunlendingWarrior implements LOTRUnitTradeable {
 	public LOTREntityDunlendingWarlord(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

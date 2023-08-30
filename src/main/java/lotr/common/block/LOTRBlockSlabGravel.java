@@ -15,24 +15,24 @@ public class LOTRBlockSlabGravel extends LOTRBlockSlabFalling {
 		setStepSound(Block.soundTypeGravel);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		j &= 7;
 		switch (j) {
-		case 0:
-			return Blocks.gravel.getIcon(i, 0);
-		case 1:
-			return LOTRMod.mordorGravel.getIcon(i, 0);
-		case 2:
-			return LOTRMod.obsidianGravel.getIcon(i, 0);
-		default:
-			break;
+			case 0:
+				return Blocks.gravel.getIcon(i, 0);
+			case 1:
+				return LOTRMod.mordorGravel.getIcon(i, 0);
+			case 2:
+				return LOTRMod.obsidianGravel.getIcon(i, 0);
+			default:
+				break;
 		}
 		return super.getIcon(i, j);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

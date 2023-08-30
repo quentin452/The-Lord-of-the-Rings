@@ -15,7 +15,7 @@ public class LOTRWorldGenHarnedorTower extends LOTRWorldGenHarnedorStructure {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -53,16 +53,16 @@ public class LOTRWorldGenHarnedorTower extends LOTRWorldGenHarnedorStructure {
 		associateBlockAlias("TRAPDOOR", trapdoorBlock);
 		associateBlockMetaAlias("ROOF", roofBlock, roofMeta);
 		generateStrScan(world, random, 0, 1, 0);
-		this.placeSkull(world, random, -3, 5, -3);
-		this.placeSkull(world, random, 3, 6, -3);
-		this.placeSkull(world, random, 3, 6, 3);
-		this.placeSkull(world, random, -3, 7, -2);
-		this.placeSkull(world, random, -3, 7, 2);
-		this.placeSkull(world, random, 0, 8, 3);
-		this.placeSkull(world, random, -3, 10, 3);
-		this.placeSkull(world, random, -3, 12, -3);
-		this.placeSkull(world, random, 3, 13, 2);
-		this.placeChest(world, random, -2, 11, 2, LOTRMod.chestBasket, 2, LOTRChestContents.HARNENNOR_HOUSE);
+		placeSkull(world, random, -3, 5, -3);
+		placeSkull(world, random, 3, 6, -3);
+		placeSkull(world, random, 3, 6, 3);
+		placeSkull(world, random, -3, 7, -2);
+		placeSkull(world, random, -3, 7, 2);
+		placeSkull(world, random, 0, 8, 3);
+		placeSkull(world, random, -3, 10, 3);
+		placeSkull(world, random, -3, 12, -3);
+		placeSkull(world, random, 3, 13, 2);
+		placeChest(world, random, -2, 11, 2, LOTRMod.chestBasket, 2, LOTRChestContents.HARNENNOR_HOUSE);
 		int warriors = 1 + random.nextInt(2);
 		for (int l = 0; l < warriors; ++l) {
 			LOTREntityHarnedorWarrior warrior = random.nextInt(3) == 0 ? new LOTREntityHarnedorArcher(world) : new LOTREntityHarnedorWarrior(world);

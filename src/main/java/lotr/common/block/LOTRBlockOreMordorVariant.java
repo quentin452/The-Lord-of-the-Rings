@@ -11,7 +11,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class LOTRBlockOreMordorVariant extends LOTRBlockOre {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon mordorIcon;
 	public boolean dropsBlock;
 
@@ -27,7 +27,7 @@ public class LOTRBlockOreMordorVariant extends LOTRBlockOre {
 		return super.damageDropped(i);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j == 1) {
@@ -41,7 +41,7 @@ public class LOTRBlockOreMordorVariant extends LOTRBlockOre {
 		return new ItemStack(this, 1, world.getBlockMetadata(i, j, k));
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int j = 0; j <= 1; ++j) {
@@ -49,7 +49,7 @@ public class LOTRBlockOreMordorVariant extends LOTRBlockOre {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		super.registerBlockIcons(iconregister);

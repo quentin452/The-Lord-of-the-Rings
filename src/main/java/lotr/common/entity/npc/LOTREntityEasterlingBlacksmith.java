@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityEasterlingBlacksmith extends LOTREntityEasterling implements LOTRTradeable.Smith {
 	public LOTREntityEasterlingBlacksmith(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

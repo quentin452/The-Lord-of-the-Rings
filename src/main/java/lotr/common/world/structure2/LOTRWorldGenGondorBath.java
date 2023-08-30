@@ -22,7 +22,7 @@ public class LOTRWorldGenGondorBath extends LOTRWorldGenGondorStructure {
 		int j1;
 		int i2;
 		int k2;
-		this.setOriginAndRotation(world, i, j, k, rotation, 10);
+		setOriginAndRotation(world, i, j, k, rotation, 10);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -86,11 +86,11 @@ public class LOTRWorldGenGondorBath extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i14, 5, k1, brickBlock, brickMeta);
 			}
 		}
-		int[] i14 = { -6, 6 };
+		int[] i14 = {-6, 6};
 		k1 = i14.length;
 		for (i2 = 0; i2 < k1; ++i2) {
 			int i15 = i14[i2];
-			for (int k13 : new int[] { -4, 4 }) {
+			for (int k13 : new int[]{-4, 4}) {
 				for (int j12 = 1; j12 <= 7; ++j12) {
 					setBlockAndMetadata(world, i15, j12, k13, pillarBlock, pillarMeta);
 				}

@@ -84,7 +84,7 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 		return itemstack != null && getLargestUnsmeltingResult(itemstack) != null;
 	}
 
-	public int countMatchingIngredients(ItemStack material, List ingredientList, List<IRecipe> recursiveCheckedRecipes) {
+	public int countMatchingIngredients(ItemStack material, Iterable ingredientList, List<IRecipe> recursiveCheckedRecipes) {
 		int i = 0;
 		for (Object obj : ingredientList) {
 			if (obj instanceof ItemStack) {
@@ -100,7 +100,7 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 				continue;
 			}
 			if (obj instanceof List) {
-				List<ItemStack> oreIngredients = (List<ItemStack>) obj;
+				Iterable<ItemStack> oreIngredients = (Iterable<ItemStack>) obj;
 				boolean matched = false;
 				for (ItemStack ingredient : oreIngredients) {
 					if (OreDictionary.itemMatches(material, ingredient, false)) {
@@ -124,7 +124,7 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 	}
 
 	public int determineResourcesUsed(ItemStack itemstack, ItemStack material) {
-		return determineResourcesUsed(itemstack, material, (List<IRecipe>) null);
+		return determineResourcesUsed(itemstack, material, null);
 	}
 
 	public int determineResourcesUsed(ItemStack itemstack, ItemStack material, List<IRecipe> recursiveCheckedRecipes) {
@@ -136,7 +136,7 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 			return unsmeltableCraftingCounts.get(key);
 		}
 		int count = 0;
-		List<List> allRecipeLists = new ArrayList<>();
+		Collection<List> allRecipeLists = new ArrayList<>();
 		allRecipeLists.add(CraftingManager.getInstance().getRecipeList());
 		EntityPlayer player = getProxyPlayer();
 		for (LOTRBlockCraftingTable table : LOTRBlockCraftingTable.allCraftingTables) {
@@ -150,7 +150,8 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 		if (recursiveCheckedRecipes == null) {
 			recursiveCheckedRecipes = new ArrayList<>();
 		}
-		label63: for (List recipes : allRecipeLists) {
+		label63:
+		for (List recipes : allRecipeLists) {
 			for (Object recipesObj : recipes) {
 				IRecipe irecipe = (IRecipe) recipesObj;
 				if (recursiveCheckedRecipes.contains(irecipe)) {
@@ -191,7 +192,7 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 					}
 					if (irecipe instanceof ShapelessOreRecipe) {
 						ShapelessOreRecipe shapeless = (ShapelessOreRecipe) irecipe;
-						List ingredients = shapeless.getInput();
+						List<Object> ingredients = shapeless.getInput();
 						int i = countMatchingIngredients(material, ingredients, recursiveCheckedRecipes);
 						i /= result.stackSize;
 						if (i > 0) {
@@ -201,7 +202,7 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 					}
 					if (irecipe instanceof LOTRRecipePoisonWeapon) {
 						LOTRRecipePoisonWeapon poison = (LOTRRecipePoisonWeapon) irecipe;
-						Object[] ingredients = { poison.getInputItem() };
+						Object[] ingredients = {poison.getInputItem()};
 						int i = countMatchingIngredients(material, Arrays.asList(ingredients), recursiveCheckedRecipes);
 						i /= result.stackSize;
 						if (i > 0) {
@@ -256,8 +257,8 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 		if (itemstack == null || !canBeUnsmelted(itemstack)) {
 			return null;
 		}
-		ItemStack material = LOTRTileEntityUnsmeltery.getEquipmentMaterial(itemstack);
-		int items = this.determineResourcesUsed(itemstack, material);
+		ItemStack material = getEquipmentMaterial(itemstack);
+		int items = determineResourcesUsed(itemstack, material);
 		int meta = material.getItemDamage();
 		if (meta == 32767) {
 			meta = 0;
@@ -281,9 +282,9 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 		float items = result.stackSize;
 		items *= 0.8f;
 		if (itemstack.isItemStackDamageable()) {
-			items *= (float) (itemstack.getMaxDamage() - itemstack.getItemDamage()) / (float) itemstack.getMaxDamage();
+			items *= (float) (itemstack.getMaxDamage() - itemstack.getItemDamage()) / itemstack.getMaxDamage();
 		}
-		items_int = Math.round(items *= MathHelper.randomFloatClamp(unsmeltingRand, 0.7f, 1.0f));
+		items_int = Math.round(items * MathHelper.randomFloatClamp(unsmeltingRand, 0.7f, 1.0f));
 		if (items_int <= 0) {
 			return null;
 		}
@@ -309,21 +310,15 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 
 	@Override
 	public void setupForgeSlots() {
-		inputSlots = new int[] { 0 };
+		inputSlots = new int[]{0};
 		fuelSlot = 1;
-		outputSlots = new int[] { 2 };
+		outputSlots = new int[]{2};
 	}
 
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		if (!worldObj.isRemote) {
-			prevServerActive = serverActive;
-			serverActive = isSmelting();
-			if (serverActive != prevServerActive) {
-				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			}
-		} else {
+		if (worldObj.isRemote) {
 			prevRocking = rocking;
 			prevRockingPhase = rockingPhase;
 			rockingPhase += 0.1F;
@@ -333,6 +328,12 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 				rocking -= 0.01F;
 			}
 			rocking = MathHelper.clamp_float(rocking, 0.0F, 1.0F);
+		} else {
+			prevServerActive = serverActive;
+			serverActive = isSmelting();
+			if (serverActive != prevServerActive) {
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			}
 		}
 	}
 

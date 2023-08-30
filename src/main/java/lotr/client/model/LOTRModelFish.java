@@ -40,12 +40,12 @@ public class LOTRModelFish extends ModelBase {
 
 	@Override
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-		finTop.rotateAngleX = (float) Math.toRadians(27.0);
-		finRight.rotateAngleX = (float) Math.toRadians(-15.0);
-		finRight.rotateAngleY = (float) Math.toRadians(-30.0);
-		finRight.rotateAngleY += MathHelper.cos(f2 * 0.5f + 3.1415927f) * (float) Math.toRadians(10.0);
+		finTop.rotateAngleX = 0.47123889803846897f;
+		finRight.rotateAngleX = -0.2617993877991494f;
+		finRight.rotateAngleY = -0.5235987755982988f;
+		finRight.rotateAngleY += MathHelper.cos(f2 * 0.5f + 3.1415927f) * 0.17453292519943295f;
 		finLeft.rotateAngleX = finRight.rotateAngleX;
 		finLeft.rotateAngleY = -finRight.rotateAngleY;
-		finBack.rotateAngleX = (float) Math.toRadians(-45.0);
+		finBack.rotateAngleX = -0.7853981633974483f;
 	}
 }

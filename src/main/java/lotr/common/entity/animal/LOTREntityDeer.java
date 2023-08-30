@@ -8,7 +8,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
@@ -66,7 +65,7 @@ public class LOTREntityDeer extends LOTREntityAnimalMF implements LOTRRandomSkin
 
 	@Override
 	public Class getAnimalMFBaseClass() {
-		return this.getClass();
+		return getClass();
 	}
 
 	@Override
@@ -97,11 +96,6 @@ public class LOTREntityDeer extends LOTREntityAnimalMF implements LOTRRandomSkin
 	@Override
 	public boolean isAIEnabled() {
 		return true;
-	}
-
-	@Override
-	public boolean isBreedingItem(ItemStack itemstack) {
-		return itemstack.getItem() == Items.wheat;
 	}
 
 	@Override

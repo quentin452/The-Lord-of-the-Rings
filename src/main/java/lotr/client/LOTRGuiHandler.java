@@ -1,52 +1,66 @@
 package lotr.client;
 
-import java.util.*;
-
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
 import com.google.common.collect.Lists;
-
 import cpw.mods.fml.client.GuiModList;
-import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.client.gui.*;
 import lotr.common.*;
 import lotr.common.entity.npc.LOTREntityNPCRideable;
 import lotr.common.inventory.LOTRContainerCoinExchange;
 import lotr.common.item.LOTRItemCoin;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketMountOpenInv;
+import lotr.common.network.LOTRPacketRestockPouches;
 import lotr.common.world.LOTRWorldProvider;
 import lotr.compatibility.LOTRModChecker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.inventory.*;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.InventoryEffectRenderer;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.event.HoverEvent;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCraftResult;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldProvider;
-import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
+import java.util.*;
 
 public class LOTRGuiHandler {
 	public static RenderItem itemRenderer = new RenderItem();
-	public static boolean coinCountLeftSide = false;
-	public static Set<Class<? extends Container>> coinCount_excludedContainers = new HashSet<>();
-	public static Set<Class<? extends GuiContainer>> coinCount_excludedGUIs = new HashSet<>();
-	public static Set<Class<? extends IInventory>> coinCount_excludedInvTypes = new HashSet<>();
-	public static Set<String> coinCount_excludedContainers_clsNames = new HashSet<>();
-	public static Set<String> coinCount_excludedGUIs_clsNames = new HashSet<>();
-	public static Set<String> coinCount_excludedInvTypes_clsNames = new HashSet<>();
-	public static Set<Class<? extends GuiContainer>> pouchRestock_leftPositionGUIs = new HashSet<>();
-	public static Set<Class<? extends GuiContainer>> pouchRestock_sidePositionGUIs = new HashSet<>();
+	public static boolean coinCountLeftSide;
+	public static Collection<Class<? extends Container>> coinCount_excludedContainers = new HashSet<>();
+	public static Collection<Class<? extends GuiContainer>> coinCount_excludedGUIs = new HashSet<>();
+	public static Collection<Class<? extends IInventory>> coinCount_excludedInvTypes = new HashSet<>();
+	public static Collection<String> coinCount_excludedContainers_clsNames = new HashSet<>();
+	public static Collection<String> coinCount_excludedGUIs_clsNames = new HashSet<>();
+	public static Collection<String> coinCount_excludedInvTypes_clsNames = new HashSet<>();
+	public static Collection<Class<? extends GuiContainer>> pouchRestock_leftPositionGUIs = new HashSet<>();
+	public static Collection<Class<? extends GuiContainer>> pouchRestock_sidePositionGUIs = new HashSet<>();
+
 	static {
 		coinCount_excludedInvTypes.add(LOTRContainerCoinExchange.InventoryCoinExchangeSlot.class);
 		coinCount_excludedInvTypes.add(InventoryCraftResult.class);
@@ -63,7 +77,7 @@ public class LOTRGuiHandler {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	public void addPouchRestockButton(GuiScreen gui, List buttons) {
+	public void addPouchRestockButton(GuiScreen gui, Collection buttons) {
 		if (gui instanceof GuiContainer && !(gui instanceof LOTRGuiPouch) && !(gui instanceof LOTRGuiChestWithPouch)) {
 			GuiContainer guiContainer = (GuiContainer) gui;
 			EntityClientPlayerMP thePlayer = guiContainer.mc.thePlayer;
@@ -83,17 +97,11 @@ public class LOTRGuiHandler {
 					continue;
 				}
 				containsPlayer = true;
-				boolean isTopRight = false;
-				if (topRightPlayerSlot == null || slot.yDisplayPosition < topRightPlayerSlot.yDisplayPosition || slot.yDisplayPosition == topRightPlayerSlot.yDisplayPosition && slot.xDisplayPosition > topRightPlayerSlot.xDisplayPosition) {
-					isTopRight = true;
-				}
+				boolean isTopRight = topRightPlayerSlot == null || slot.yDisplayPosition < topRightPlayerSlot.yDisplayPosition || slot.yDisplayPosition == topRightPlayerSlot.yDisplayPosition && slot.xDisplayPosition > topRightPlayerSlot.xDisplayPosition;
 				if (isTopRight) {
 					topRightPlayerSlot = slot;
 				}
-				boolean isTopLeft = false;
-				if (topLeftPlayerSlot == null || slot.yDisplayPosition < topLeftPlayerSlot.yDisplayPosition || slot.yDisplayPosition == topLeftPlayerSlot.yDisplayPosition && slot.xDisplayPosition < topLeftPlayerSlot.xDisplayPosition) {
-					isTopLeft = true;
-				}
+				boolean isTopLeft = topLeftPlayerSlot == null || slot.yDisplayPosition < topLeftPlayerSlot.yDisplayPosition || slot.yDisplayPosition == topLeftPlayerSlot.yDisplayPosition && slot.xDisplayPosition < topLeftPlayerSlot.xDisplayPosition;
 				if (!isTopLeft) {
 					continue;
 				}
@@ -120,7 +128,7 @@ public class LOTRGuiHandler {
 		}
 	}
 
-	public GuiButton getDifficultyButton(GuiOptions gui, List buttons) {
+	public GuiButton getDifficultyButton(GuiOptions gui, Iterable buttons) {
 		for (Object obj : buttons) {
 			GuiOptionButton button;
 			if (!(obj instanceof GuiOptionButton) || (button = (GuiOptionButton) obj).returnEnumOptions() != GameSettings.Options.DIFFICULTY) {
@@ -141,7 +149,7 @@ public class LOTRGuiHandler {
 			Minecraft mc = Minecraft.getMinecraft();
 			WorldProvider provider = mc.theWorld.provider;
 			if (provider instanceof LOTRWorldProvider) {
-				event.gui = (GuiScreen) (gui = new LOTRGuiDownloadTerrain(mc.thePlayer.sendQueue));
+				event.gui = new LOTRGuiDownloadTerrain(mc.thePlayer.sendQueue);
 			}
 		}
 	}
@@ -162,7 +170,7 @@ public class LOTRGuiHandler {
 			}
 		}
 		if (button instanceof LOTRGuiButtonRestockPouch && button.enabled) {
-			LOTRPacketRestockPouches packet = new LOTRPacketRestockPouches();
+			IMessage packet = new LOTRPacketRestockPouches();
 			LOTRPacketHandler.networkWrapper.sendToServer(packet);
 		}
 	}
@@ -181,16 +189,16 @@ public class LOTRGuiHandler {
 			proxyGui.setWorldAndResolution(mc, gui.width, gui.height);
 			try {
 				String unformattedText = hoverevent.getValue().getUnformattedText();
-				int splitIndex = unformattedText.indexOf("$");
+				int splitIndex = unformattedText.indexOf('$');
 				String categoryName = unformattedText.substring(0, splitIndex);
 				LOTRAchievement.Category category = LOTRAchievement.categoryForName(categoryName);
 				int achievementID = Integer.parseInt(unformattedText.substring(splitIndex + 1));
 				LOTRAchievement achievement = LOTRAchievement.achievementForCategoryAndID(category, achievementID);
-				ChatComponentTranslation name = new ChatComponentTranslation("lotr.gui.achievements.hover.name", achievement.getAchievementChatComponent(entityplayer));
-				ChatComponentTranslation subtitle = new ChatComponentTranslation("lotr.gui.achievements.hover.subtitle", achievement.getDimension().getDimensionName(), category.getDisplayName());
+				IChatComponent name = new ChatComponentTranslation("lotr.gui.achievements.hover.name", achievement.getAchievementChatComponent(entityplayer));
+				IChatComponent subtitle = new ChatComponentTranslation("lotr.gui.achievements.hover.subtitle", achievement.getDimension().getDimensionName(), category.getDisplayName());
 				subtitle.getChatStyle().setItalic(true);
 				String desc = achievement.getDescription(entityplayer);
-				ArrayList list = Lists.newArrayList((Object[]) new String[] { name.getFormattedText(), subtitle.getFormattedText() });
+				List list = Lists.newArrayList((Object[]) new String[]{name.getFormattedText(), subtitle.getFormattedText()});
 				list.addAll(mc.fontRenderer.listFormattedStringToWidth(desc, 150));
 				proxyGui.func_146283_a(list, mouseX, mouseY);
 			} catch (Exception e) {
@@ -251,7 +259,7 @@ public class LOTRGuiHandler {
 				int guiLeft = -1;
 				int guiTop = -1;
 				int guiXSize = -1;
-				ArrayList<IInventory> differentInvs = new ArrayList<>();
+				Collection<IInventory> differentInvs = new ArrayList<>();
 				HashMap<IInventory, Integer> invHighestY = new HashMap<>();
 				for (int i = 0; i < container.inventorySlots.size(); ++i) {
 					boolean excludeInv;
@@ -354,7 +362,7 @@ public class LOTRGuiHandler {
 		WorldClient world = mc.theWorld;
 		if ((gui instanceof GuiInventory || gui instanceof GuiContainerCreative) && entityplayer != null && world != null && entityplayer.ridingEntity instanceof LOTREntityNPCRideable && ((LOTREntityNPCRideable) entityplayer.ridingEntity).getMountInventory() != null) {
 			entityplayer.closeScreen();
-			LOTRPacketMountOpenInv packet = new LOTRPacketMountOpenInv();
+			IMessage packet = new LOTRPacketMountOpenInv();
 			LOTRPacketHandler.networkWrapper.sendToServer(packet);
 			event.setCanceled(true);
 		}

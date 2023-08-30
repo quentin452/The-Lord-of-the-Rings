@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
@@ -64,7 +65,7 @@ public class LOTREntityMysteryWeb extends EntityThrowable {
 				}
 			}
 			if (!spawnedSpider) {
-				InventoryBasic tempInventory = new InventoryBasic("mysteryWeb", true, 1);
+				IInventory tempInventory = new InventoryBasic("mysteryWeb", true, 1);
 				LOTRChestContents.fillInventory(tempInventory, rand, LOTRChestContents.MIRKWOOD_LOOT, 1);
 				ItemStack item = tempInventory.getStackInSlot(0);
 				if (rand.nextInt(500) == 0) {

@@ -37,7 +37,7 @@ public class LOTRPacketClientInfo implements IMessage {
 		}
 		changedRegionsSize = data.readByte();
 		if (changedRegionsSize > 0) {
-			changedRegionMap = new HashMap<>();
+			changedRegionMap = new EnumMap<>(LOTRDimension.DimensionRegion.class);
 			for (int l = 0; l < changedRegionsSize; ++l) {
 				LOTRDimension.DimensionRegion reg = LOTRDimension.DimensionRegion.forID(data.readByte());
 				LOTRFaction fac = LOTRFaction.forID(data.readByte());
@@ -90,9 +90,9 @@ public class LOTRPacketClientInfo implements IMessage {
 			}
 			changedRegionMap = packet.changedRegionMap;
 			if (changedRegionMap != null) {
-				for (LOTRDimension.DimensionRegion reg : changedRegionMap.keySet()) {
-					LOTRFaction fac = changedRegionMap.get(reg);
-					pd.setRegionLastViewedFaction(reg, fac);
+				for (Map.Entry<DimensionRegion, LOTRFaction> entry : changedRegionMap.entrySet()) {
+					LOTRFaction fac = entry.getValue();
+					pd.setRegionLastViewedFaction(entry.getKey(), fac);
 				}
 			}
 			pd.setShowWaypoints(packet.showWP);

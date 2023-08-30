@@ -24,16 +24,18 @@ public abstract class LOTRMiniQuest {
 	public static int MAX_MINIQUESTS_PER_FACTION;
 	public static double RENDER_HEAD_DISTANCE;
 	public static float defaultRewardFactor = 1.0f;
+
 	static {
-		LOTRMiniQuest.registerQuestType("Collect", LOTRMiniQuestCollect.class);
-		LOTRMiniQuest.registerQuestType("KillFaction", LOTRMiniQuestKillFaction.class);
-		LOTRMiniQuest.registerQuestType("KillEntity", LOTRMiniQuestKillEntity.class);
-		LOTRMiniQuest.registerQuestType("Bounty", LOTRMiniQuestBounty.class);
-		LOTRMiniQuest.registerQuestType("Welcome", LOTRMiniQuestWelcome.class);
-		LOTRMiniQuest.registerQuestType("Pickpocket", LOTRMiniQuestPickpocket.class);
+		registerQuestType("Collect", LOTRMiniQuestCollect.class);
+		registerQuestType("KillFaction", LOTRMiniQuestKillFaction.class);
+		registerQuestType("KillEntity", LOTRMiniQuestKillEntity.class);
+		registerQuestType("Bounty", LOTRMiniQuestBounty.class);
+		registerQuestType("Welcome", LOTRMiniQuestWelcome.class);
+		registerQuestType("Pickpocket", LOTRMiniQuestPickpocket.class);
 		MAX_MINIQUESTS_PER_FACTION = 5;
 		RENDER_HEAD_DISTANCE = 12.0;
 	}
+
 	public LOTRMiniQuestFactory questGroup;
 	public LOTRPlayerData playerData;
 	public UUID questUUID;
@@ -45,7 +47,7 @@ public abstract class LOTRMiniQuest {
 	public int dateGiven;
 	public LOTRBiome biomeGiven;
 	public float rewardFactor = 1.0f;
-	public boolean willHire = false;
+	public boolean willHire;
 	public float hiringAlignment;
 	public List<ItemStack> rewardItemTable = new ArrayList<>();
 	public boolean completed;
@@ -53,7 +55,7 @@ public abstract class LOTRMiniQuest {
 	public int coinsRewarded;
 	public float alignmentRewarded;
 	public boolean wasHired;
-	public List<ItemStack> itemsRewarded = new ArrayList<>();
+	public Collection<ItemStack> itemsRewarded = new ArrayList<>();
 	public boolean entityDead;
 	public Pair<ChunkCoordinates, Integer> lastLocation;
 	public String speechBankStart;
@@ -65,7 +67,7 @@ public abstract class LOTRMiniQuest {
 
 	public List<String> quotesStages = new ArrayList<>();
 
-	public LOTRMiniQuest(LOTRPlayerData pd) {
+	protected LOTRMiniQuest(LOTRPlayerData pd) {
 		playerData = pd;
 		questUUID = UUID.randomUUID();
 	}
@@ -88,7 +90,7 @@ public abstract class LOTRMiniQuest {
 		completed = true;
 		dateCompleted = LOTRDate.ShireReckoning.currentDay;
 		Random rand = npc.getRNG();
-		ArrayList<ItemStack> dropItems = new ArrayList<>();
+		List<ItemStack> dropItems = new ArrayList<>();
 		float alignment = getAlignmentBonus();
 		if (alignment != 0.0f) {
 			alignment *= MathHelper.randomFloatClamp(rand, 0.75f, 1.25f);
@@ -192,7 +194,7 @@ public abstract class LOTRMiniQuest {
 	}
 
 	public ChunkCoordinates getLastLocation() {
-		return lastLocation == null ? null : (ChunkCoordinates) lastLocation.getLeft();
+		return lastLocation == null ? null : lastLocation.getLeft();
 	}
 
 	public abstract String getObjectiveInSpeech();
@@ -208,7 +210,7 @@ public abstract class LOTRMiniQuest {
 	}
 
 	public float[] getQuestColorComponents() {
-		return new Color(getQuestColor()).getColorComponents(null);
+		return new Color(questColor).getColorComponents(null);
 	}
 
 	public String getQuestFailure() {
@@ -231,7 +233,7 @@ public abstract class LOTRMiniQuest {
 	}
 
 	public boolean isActive() {
-		return !isCompleted() && !isFailed();
+		return !completed && !isFailed();
 	}
 
 	public boolean isCompleted() {
@@ -272,6 +274,7 @@ public abstract class LOTRMiniQuest {
 		if (nbt.hasKey("QuestGroup") && (factory = LOTRMiniQuestFactory.forName(nbt.getString("QuestGroup"))) != null) {
 			questGroup = factory;
 		}
+		//noinspection ConstantValue
 		if (nbt.hasKey("QuestUUID") && (u = UUID.fromString(nbt.getString("QuestUUID"))) != null) {
 			questUUID = u;
 		}
@@ -291,7 +294,7 @@ public abstract class LOTRMiniQuest {
 		}
 		rewardFactor = nbt.hasKey("RewardFactor") ? nbt.getFloat("RewardFactor") : 1.0f;
 		willHire = nbt.getBoolean("WillHire");
-		hiringAlignment = nbt.hasKey("HiringAlignment") ? (float) nbt.getInteger("HiringAlignment") : nbt.getFloat("HiringAlignF");
+		hiringAlignment = nbt.hasKey("HiringAlignment") ? nbt.getInteger("HiringAlignment") : nbt.getFloat("HiringAlignF");
 		rewardItemTable.clear();
 		if (nbt.hasKey("RewardItemTable")) {
 			itemTags = nbt.getTagList("RewardItemTable", 10);
@@ -307,7 +310,7 @@ public abstract class LOTRMiniQuest {
 		completed = nbt.getBoolean("Completed");
 		dateCompleted = nbt.getInteger("DateCompleted");
 		coinsRewarded = nbt.getShort("CoinReward");
-		alignmentRewarded = nbt.hasKey("AlignmentReward") ? (float) nbt.getShort("AlignmentReward") : nbt.getFloat("AlignRewardF");
+		alignmentRewarded = nbt.hasKey("AlignmentReward") ? nbt.getShort("AlignmentReward") : nbt.getFloat("AlignRewardF");
 		wasHired = nbt.getBoolean("WasHired");
 		itemsRewarded.clear();
 		if (nbt.hasKey("ItemRewards")) {
@@ -343,9 +346,9 @@ public abstract class LOTRMiniQuest {
 		}
 		if (questGroup == null && (recovery = speechBankStart) != null) {
 			LOTRMiniQuestFactory factory2;
-			int i1 = recovery.indexOf("/", 0);
-			int i2 = recovery.indexOf("/", i1 + 1);
-			if (i1 >= 0 && i2 >= 0 && (factory2 = LOTRMiniQuestFactory.forName(recovery = recovery.substring(i1 + 1, i2))) != null) {
+			int i1 = recovery.indexOf('/');
+			int i2 = recovery.indexOf('/', i1 + 1);
+			if (i1 >= 0 && i2 >= 0 && (factory2 = LOTRMiniQuestFactory.forName(recovery.substring(i1 + 1, i2))) != null) {
 				questGroup = factory2;
 			}
 		}
@@ -410,7 +413,7 @@ public abstract class LOTRMiniQuest {
 			prevCoords = lastLocation.getLeft();
 		}
 		lastLocation = Pair.of(coords, dim);
-		boolean sendUpdate = false;
+		boolean sendUpdate;
 		if (prevCoords == null) {
 			sendUpdate = true;
 		} else {
@@ -428,7 +431,7 @@ public abstract class LOTRMiniQuest {
 	public void writeToNBT(NBTTagCompound nbt) {
 		NBTTagList itemTags;
 		NBTTagCompound itemData;
-		nbt.setString("QuestType", questToNameMapping.get(this.getClass()));
+		nbt.setString("QuestType", questToNameMapping.get(getClass()));
 		if (questGroup != null) {
 			nbt.setString("QuestGroup", questGroup.getBaseName());
 		}
@@ -499,7 +502,7 @@ public abstract class LOTRMiniQuest {
 			FMLLog.severe("Could not instantiate miniquest of type " + questTypeName);
 			return null;
 		}
-		LOTRMiniQuest quest = LOTRMiniQuest.newQuestInstance(questType, playerData);
+		LOTRMiniQuest quest = newQuestInstance(questType, playerData);
 		quest.readFromNBT(nbt);
 		if (quest.isValidQuest()) {
 			return quest;
@@ -510,8 +513,7 @@ public abstract class LOTRMiniQuest {
 
 	public static <Q extends LOTRMiniQuest> Q newQuestInstance(Class<Q> questType, LOTRPlayerData playerData) {
 		try {
-			LOTRMiniQuest quest = questType.getConstructor(LOTRPlayerData.class).newInstance(playerData);
-			return (Q) quest;
+			return questType.getConstructor(LOTRPlayerData.class).newInstance(playerData);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -523,24 +525,24 @@ public abstract class LOTRMiniQuest {
 		questToNameMapping.put(questType, name);
 	}
 
-	public static abstract class QuestFactoryBase<Q extends LOTRMiniQuest> {
+	public abstract static class QuestFactoryBase<Q extends LOTRMiniQuest> {
 		public LOTRMiniQuestFactory questFactoryGroup;
 		public String questName;
 		public float rewardFactor = 1.0f;
-		public boolean willHire = false;
+		public boolean willHire;
 		public float hiringAlignment;
 		public List<ItemStack> rewardItems;
 
-		public QuestFactoryBase(String name) {
-			this.questName = name;
+		protected QuestFactoryBase(String name) {
+			questName = name;
 		}
 
 		public Q createQuest(LOTREntityNPC npc, Random rand) {
-			LOTRMiniQuest quest = LOTRMiniQuest.newQuestInstance(this.getQuestClass(), null);
-			quest.questGroup = this.getFactoryGroup();
-			String pathName = "miniquest/" + this.getFactoryGroup().getBaseName() + "/";
-			String pathNameBaseSpeech = "miniquest/" + this.getFactoryGroup().getBaseSpeechGroup().getBaseName() + "/";
-			String questPathName = pathName + this.questName + "_";
+			Q quest = newQuestInstance(getQuestClass(), null);
+			quest.questGroup = questFactoryGroup;
+			String pathName = "miniquest/" + questFactoryGroup.getBaseName() + "/";
+			String pathNameBaseSpeech = "miniquest/" + questFactoryGroup.getBaseSpeechGroup().getBaseName() + "/";
+			String questPathName = pathName + questName + "_";
 			quest.speechBankStart = questPathName + "start";
 			quest.speechBankProgress = questPathName + "progress";
 			quest.speechBankComplete = questPathName + "complete";
@@ -548,38 +550,38 @@ public abstract class LOTRMiniQuest {
 			quest.quoteStart = LOTRSpeech.getRandomSpeech(quest.speechBankStart);
 			quest.quoteComplete = LOTRSpeech.getRandomSpeech(quest.speechBankComplete);
 			quest.setNPCInfo(npc);
-			quest.rewardFactor = this.rewardFactor;
-			quest.willHire = this.willHire;
-			quest.hiringAlignment = this.hiringAlignment;
-			if (this.rewardItems != null) {
-				quest.rewardItemTable.addAll(this.rewardItems);
+			quest.rewardFactor = rewardFactor;
+			quest.willHire = willHire;
+			quest.hiringAlignment = hiringAlignment;
+			if (rewardItems != null) {
+				quest.rewardItemTable.addAll(rewardItems);
 			}
-			return (Q) quest;
+			return quest;
 		}
 
 		public LOTRMiniQuestFactory getFactoryGroup() {
-			return this.questFactoryGroup;
+			return questFactoryGroup;
 		}
 
 		public abstract Class<Q> getQuestClass();
 
 		public void setFactoryGroup(LOTRMiniQuestFactory factory) {
-			this.questFactoryGroup = factory;
+			questFactoryGroup = factory;
 		}
 
 		public QuestFactoryBase setHiring(float f) {
-			this.willHire = true;
-			this.hiringAlignment = f;
+			willHire = true;
+			hiringAlignment = f;
 			return this;
 		}
 
 		public QuestFactoryBase setRewardFactor(float f) {
-			this.rewardFactor = f;
+			rewardFactor = f;
 			return this;
 		}
 
 		public QuestFactoryBase setRewardItems(ItemStack[] items) {
-			this.rewardItems = Arrays.asList(items);
+			rewardItems = Arrays.asList(items);
 			return this;
 		}
 	}

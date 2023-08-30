@@ -12,20 +12,20 @@ public class LOTRCommandWaypoints extends CommandBase {
 	@Override
 	public List addTabCompletionOptions(ICommandSender sender, String[] args) {
 		switch (args.length) {
-		case 1:
-			return CommandBase.getListOfStringsMatchingLastWord(args, "unlock", "lock");
-		case 2: {
-			ArrayList<String> names = new ArrayList<>();
-			for (LOTRWaypoint.Region r : LOTRWaypoint.Region.values()) {
-				names.add(r.name());
+			case 1:
+				return CommandBase.getListOfStringsMatchingLastWord(args, "unlock", "lock");
+			case 2: {
+				ArrayList<String> names = new ArrayList<>();
+				for (LOTRWaypoint.Region r : LOTRWaypoint.Region.values()) {
+					names.add(r.name());
+				}
+				names.add("all");
+				return CommandBase.getListOfStringsMatchingLastWord(args, names.toArray(new String[0]));
 			}
-			names.add("all");
-			return CommandBase.getListOfStringsMatchingLastWord(args, names.toArray(new String[0]));
-		}
-		case 3:
-			return CommandBase.getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
-		default:
-			break;
+			case 3:
+				return CommandBase.getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
+			default:
+				break;
 		}
 		return null;
 	}

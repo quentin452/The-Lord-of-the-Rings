@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class LOTREntityGondorBartender extends LOTREntityGondorMan implements LOTRTradeable.Bartender {
 	public LOTREntityGondorBartender(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcLocationName = "entity.lotr.GondorBartender.locationName";
 	}
 

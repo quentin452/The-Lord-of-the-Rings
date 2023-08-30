@@ -1,6 +1,8 @@
 package lotr.client.sound;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.zip.*;
 
@@ -29,19 +31,11 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 	public static File musicDir;
 	public static String jsonFilename = "music.json";
 	public static String musicResourcePath = "lotrmusic";
-	public static LOTRMusicResourceManager trackResourceManager;
-	public static List<LOTRMusicTrack> allTracks;
-	public static Map<LOTRMusicRegion.Sub, LOTRRegionTrackPool> regionTracks;
+	public static LOTRMusicResourceManager trackResourceManager= new LOTRMusicResourceManager();
+	public static List<LOTRMusicTrack> allTracks= new ArrayList<>();
+	public static Map<LOTRMusicRegion.Sub, LOTRRegionTrackPool> regionTracks= new HashMap<>();
 	public static boolean initSubregions;
-	public static Random musicRand;
-
-	static {
-		trackResourceManager = new LOTRMusicResourceManager();
-		allTracks = new ArrayList<>();
-		regionTracks = new HashMap<>();
-		initSubregions = false;
-		musicRand = new Random();
-	}
+	public static Random musicRand = new Random();
 
 	public LOTRMusic() {
 		((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).registerReloadListener(this);
@@ -50,13 +44,12 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 
 	@SubscribeEvent
 	public void onPlaySound(PlaySoundEvent17 event) {
-		Minecraft.getMinecraft();
 		if (!allTracks.isEmpty() && event.category == SoundCategory.MUSIC && !(event.sound instanceof LOTRMusicTrack)) {
-			if (LOTRMusic.isLOTRDimension()) {
+			if (isLOTRDimension()) {
 				event.result = null;
 				return;
 			}
-			if (LOTRMusic.isMenuMusic() && !LOTRMusic.getTracksForRegion(LOTRMusicRegion.MENU, null).isEmpty()) {
+			if (isMenuMusic() && !getTracksForRegion(LOTRMusicRegion.MENU, null).isEmpty()) {
 				event.result = null;
 			}
 		}
@@ -64,7 +57,7 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 
 	@Override
 	public void onResourceManagerReload(IResourceManager resourcemanager) {
-		LOTRMusic.loadMusicPacks(Minecraft.getMinecraft().mcDataDir, (SimpleReloadableResourceManager) resourcemanager);
+		loadMusicPacks(Minecraft.getMinecraft().mcDataDir, (SimpleReloadableResourceManager) resourcemanager);
 	}
 
 	public void update() {
@@ -75,23 +68,24 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 		allTracks.add(track);
 		for (LOTRMusicRegion region : track.getAllRegions()) {
 			if (region.hasNoSubregions()) {
-				LOTRMusic.getTracksForRegion(region, null).addTrack(track);
+				getTracksForRegion(region, null).addTrack(track);
 				continue;
 			}
 			for (String sub : track.getRegionInfo(region).getSubregions()) {
-				LOTRMusic.getTracksForRegion(region, sub).addTrack(track);
+				getTracksForRegion(region, sub).addTrack(track);
 			}
 		}
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static void generateReadme() throws IOException {
 		File readme = new File(musicDir, "readme.txt");
 		readme.createNewFile();
-		PrintStream writer = new PrintStream(new FileOutputStream(readme));
+		PrintStream writer = new PrintStream(Files.newOutputStream(readme.toPath()), true, StandardCharsets.UTF_8.name());
 		ResourceLocation template = new ResourceLocation("lotr:music/readme.txt");
 		InputStream templateIn = Minecraft.getMinecraft().getResourceManager().getResource(template).getInputStream();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(templateIn), Charsets.UTF_8.name()));
-		String line = "";
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(templateIn), Charsets.UTF_8));
+		String line;
 		while ((line = reader.readLine()) != null) {
 			if ("#REGIONS#".equals(line)) {
 				writer.println("all");
@@ -100,16 +94,16 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 					regionString.append(((LOTRMusicRegion) region).regionName);
 					List<String> subregions = ((LOTRMusicRegion) region).getAllSubregions();
 					if (!subregions.isEmpty()) {
-						String subs = "";
+						StringBuilder subs = new StringBuilder();
 						for (String s : subregions) {
 							if (subs.length() > 0) {
-								subs = subs + ", ";
+								subs.append(", ");
 							}
-							subs = subs + s;
+							subs.append(s);
 						}
 						regionString.append(": {").append(subs).append("}");
 					}
-					writer.println(regionString.toString());
+					writer.println(regionString);
 				}
 				continue;
 			}
@@ -156,7 +150,7 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 		ZipEntry entry = zip.getEntry(jsonFilename);
 		if (entry != null) {
 			InputStream stream = zip.getInputStream(entry);
-			JsonReader reader = new JsonReader(new InputStreamReader(new BOMInputStream(stream), Charsets.UTF_8.name()));
+			JsonReader reader = new JsonReader(new InputStreamReader(new BOMInputStream(stream), Charsets.UTF_8));
 			JsonParser parser = new JsonParser();
 			ArrayList<LOTRMusicTrack> packTracks = new ArrayList<>();
 			JsonObject root = parser.parse(reader).getAsJsonObject();
@@ -176,9 +170,9 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 					track.setTitle(title);
 				}
 				JsonArray regions = trackData.get("regions").getAsJsonArray();
-				for (Object r : regions) {
+				for (JsonElement r : regions) {
 					LOTRMusicRegion region;
-					JsonObject regionData = ((JsonElement) r).getAsJsonObject();
+					JsonObject regionData = r.getAsJsonObject();
 					String regionName = regionData.get("name").getAsString();
 					boolean allRegions = false;
 					if ("all".equalsIgnoreCase(regionName)) {
@@ -191,11 +185,11 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 							continue;
 						}
 					}
-					ArrayList<String> subregionNames = new ArrayList<>();
+					Collection<String> subregionNames = new ArrayList<>();
 					if (region != null && regionData.has("sub")) {
 						JsonArray subList = regionData.get("sub").getAsJsonArray();
-						for (Object s : subList) {
-							String sub = ((JsonElement) s).getAsString();
+						for (JsonElement s : subList) {
+							String sub = s.getAsString();
 							if (region.hasSubregion(sub)) {
 								subregionNames.add(sub);
 								continue;
@@ -203,7 +197,7 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 							LOTRLog.logger.warn("LOTRMusic: No subregion " + sub + " for region " + region.regionName + "!");
 						}
 					}
-					ArrayList<LOTRMusicCategory> regionCategories = new ArrayList<>();
+					Collection<LOTRMusicCategory> regionCategories = new ArrayList<>();
 					if (region != null && regionData.has("categories")) {
 						JsonArray catList = regionData.get("categories").getAsJsonArray();
 						for (JsonElement cat : catList) {
@@ -220,7 +214,7 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 					if (regionData.has("weight")) {
 						weight = regionData.get("weight").getAsDouble();
 					}
-					ArrayList<LOTRMusicRegion> regionsAdd = new ArrayList<>();
+					Collection<LOTRMusicRegion> regionsAdd = new ArrayList<>();
 					if (allRegions) {
 						regionsAdd.addAll(Arrays.asList(LOTRMusicRegion.values()));
 					} else {
@@ -262,6 +256,7 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 		}
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static void loadMusicPacks(File mcDir, SimpleReloadableResourceManager resourceMgr) {
 		musicDir = new File(mcDir, musicResourcePath);
 		if (!musicDir.exists()) {
@@ -285,17 +280,17 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 				continue;
 			}
 			try {
-				FileResourcePack resourcePack = new FileResourcePack(file);
+				IResourcePack resourcePack = new FileResourcePack(file);
 				resourceMgr.reloadResourcePack(resourcePack);
 				ZipFile zipFile = new ZipFile(file);
-				LOTRMusic.loadMusicPack(zipFile, resourceMgr);
+				loadMusicPack(zipFile, resourceMgr);
 			} catch (Exception e) {
 				LOTRLog.logger.warn("LOTRMusic: Failed to load music pack " + file.getName() + "!");
 				e.printStackTrace();
 			}
 		}
 		try {
-			LOTRMusic.generateReadme();
+			generateReadme();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -305,7 +300,7 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 		public static SoundRegistry getSoundRegistry() {
 			SoundHandler handler = Minecraft.getMinecraft().getSoundHandler();
 			try {
-				return (SoundRegistry) ObfuscationReflectionHelper.getPrivateValue(SoundHandler.class, handler, "sndRegistry", "field_147697_e");
+				return ObfuscationReflectionHelper.getPrivateValue(SoundHandler.class, handler, "sndRegistry", "field_147697_e");
 			} catch (Exception e) {
 				LOTRReflection.logFailure(e);
 				return null;
@@ -315,7 +310,7 @@ public class LOTRMusic implements IResourceManagerReloadListener {
 		public static void putDomainResourceManager(String domain, IResourceManager manager) {
 			SimpleReloadableResourceManager masterManager = (SimpleReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
 			try {
-				Map map = (Map) ObfuscationReflectionHelper.getPrivateValue(SimpleReloadableResourceManager.class, masterManager, "domainResourceManagers", "field_110548_a");
+				Map map = ObfuscationReflectionHelper.getPrivateValue(SimpleReloadableResourceManager.class, masterManager, "domainResourceManagers", "field_110548_a");
 				map.put(domain, manager);
 			} catch (Exception e) {
 				LOTRReflection.logFailure(e);

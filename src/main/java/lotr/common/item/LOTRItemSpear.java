@@ -30,14 +30,9 @@ public class LOTRItemSpear extends LOTRItemSword {
 		return 20;
 	}
 
-	@Override
-	public int getMaxItemUseDuration(ItemStack itemstack) {
-		return 72000;
-	}
-
 	public float getRangedDamageMultiplier(ItemStack itemstack, Entity shooter, Entity hit) {
 		float damage = getLOTRWeaponDamage();
-		damage = shooter instanceof EntityLivingBase && hit instanceof EntityLivingBase ? (damage += EnchantmentHelper.getEnchantmentModifierLiving((EntityLivingBase) shooter, (EntityLivingBase) hit)) : (damage += EnchantmentHelper.func_152377_a(itemstack, EnumCreatureAttribute.UNDEFINED));
+		damage = shooter instanceof EntityLivingBase && hit instanceof EntityLivingBase ? damage + EnchantmentHelper.getEnchantmentModifierLiving((EntityLivingBase) shooter, (EntityLivingBase) hit) : damage + EnchantmentHelper.func_152377_a(itemstack, EnumCreatureAttribute.UNDEFINED);
 		return damage * 0.7f;
 	}
 
@@ -47,7 +42,7 @@ public class LOTRItemSpear extends LOTRItemSword {
 			return;
 		}
 		int useTick = getMaxItemUseDuration(itemstack) - i;
-		float charge = (float) useTick / (float) getMaxDrawTime();
+		float charge = (float) useTick / getMaxDrawTime();
 		if (charge < 0.1f) {
 			return;
 		}

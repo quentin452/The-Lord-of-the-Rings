@@ -1,5 +1,6 @@
 package lotr.client.render.entity;
 
+import lotr.common.entity.LOTRRandomSkinEntity;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -41,7 +42,7 @@ public class LOTRRenderScrapTrader extends LOTRRenderBiped {
 			float s = 6.0f;
 			GL11.glScalef(1.0f, s, 1.0f);
 			GL11.glColor3f(0.0f, 0.0f, 0.0f);
-			super.doRender(entity, d, d1 /= s, d2, f, f1);
+			super.doRender(entity, d, d1 / s, d2, f, f1);
 			GL11.glPopMatrix();
 			return;
 		}
@@ -50,7 +51,7 @@ public class LOTRRenderScrapTrader extends LOTRRenderBiped {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		return traderSkins.getRandomSkin((LOTREntityScrapTrader) entity);
+		return traderSkins.getRandomSkin((LOTRRandomSkinEntity) entity);
 	}
 
 	@Override

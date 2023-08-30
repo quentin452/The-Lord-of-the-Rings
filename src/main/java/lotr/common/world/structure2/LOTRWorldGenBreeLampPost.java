@@ -15,7 +15,7 @@ public class LOTRWorldGenBreeLampPost extends LOTRWorldGenBreeStructure {
 		int i1;
 		int j1;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		if (restrictions && !isSurface(world, i1 = 0, getTopBlock(world, i1, k1 = 0) - 1, k1)) {
 			return false;

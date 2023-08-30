@@ -15,7 +15,7 @@ public class LOTREntityBreeFarmhand extends LOTREntityBreeMan implements LOTRFar
 	public LOTREntityBreeFarmhand(World world) {
 		super(world);
 		targetTasks.taskEntries.clear();
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

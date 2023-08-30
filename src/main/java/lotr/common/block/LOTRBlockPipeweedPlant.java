@@ -11,7 +11,7 @@ public class LOTRBlockPipeweedPlant extends LOTRBlockFlower {
 		setFlowerBounds(0.1f, 0.0f, 0.1f, 0.9f, 0.8f, 0.9f);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		if (random.nextInt(4) == 0) {

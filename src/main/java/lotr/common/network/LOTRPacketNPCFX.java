@@ -33,7 +33,7 @@ public class LOTRPacketNPCFX implements IMessage {
 	}
 
 	public enum FXType {
-		HEARTS, EATING, SMOKE;
+		HEARTS, EATING, SMOKE
 
 	}
 

@@ -24,7 +24,7 @@ public class LOTRBiomeVariantOrchard extends LOTRBiomeVariant {
 
 	@Override
 	public void decorateVariant(World world, Random random, int i, int k, LOTRBiome biome) {
-		for (int i1 : new int[] { i + 3, i + 11 }) {
+		for (int i1 : new int[]{i + 3, i + 11}) {
 			int k1 = k + 8;
 			int j1 = world.getHeightValue(i1, k1);
 			WorldGenAbstractTree treeGen = getRandomTree(random).create(false, random);

@@ -15,11 +15,11 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.*;
 
 public class LOTRBlockBirdCage extends LOTRBlockAnimalJar {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] sideIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] topIcons;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] baseIcons;
 	public String[] cageTypes;
 
@@ -41,7 +41,7 @@ public class LOTRBlockBirdCage extends LOTRBlockAnimalJar {
 		return entity instanceof LOTREntityBird;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j >= cageTypes.length) {
@@ -66,7 +66,7 @@ public class LOTRBlockBirdCage extends LOTRBlockAnimalJar {
 		return LOTRMod.proxy.getBirdCageRenderID();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < cageTypes.length; ++i) {
@@ -74,7 +74,7 @@ public class LOTRBlockBirdCage extends LOTRBlockAnimalJar {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		sideIcons = new IIcon[cageTypes.length];

@@ -22,28 +22,26 @@ public class LOTRGuiFastTravel extends LOTRGuiScreenBase {
 	public int tickCounter;
 	public LOTRAbstractWaypoint theWaypoint;
 	public String message;
-	public boolean chunkLoaded = false;
-	public boolean playedSound = false;
+	public boolean chunkLoaded;
+	public boolean playedSound;
 	public float zoomBase;
 	public double mapScaleFactor;
 	public float currentZoom;
 	public float prevZoom;
-	public boolean finishedZoomIn = false;
+	public boolean finishedZoomIn;
 	public double mapSpeed;
 	public double mapVelX;
 	public double mapVelY;
-	public boolean reachedWP = false;
+	public boolean reachedWP;
 
 	public LOTRGuiFastTravel(LOTRAbstractWaypoint waypoint, int x, int z) {
 		theWaypoint = waypoint;
-		int startX = x;
-		int startZ = z;
 		message = LOTRSpeech.getRandomSpeech("fastTravel");
 		mapGui = new LOTRGuiMap();
 		mapRenderer = new LOTRGuiRendererMap();
 		mapRenderer.setSepia(true);
-		mapRenderer.mapX = LOTRWaypoint.worldToMapX(startX);
-		mapRenderer.mapY = LOTRWaypoint.worldToMapZ(startZ);
+		mapRenderer.mapX = LOTRWaypoint.worldToMapX(x);
+		mapRenderer.mapY = LOTRWaypoint.worldToMapZ(z);
 		double dx = theWaypoint.getX() - mapRenderer.mapX;
 		double dy = theWaypoint.getY() - mapRenderer.mapY;
 		double distSq = dx * dx + dy * dy;
@@ -64,32 +62,32 @@ public class LOTRGuiFastTravel extends LOTRGuiScreenBase {
 		mapRenderer.renderVignettes(this, zLevel, 4);
 		GL11.glEnable(3042);
 		String title = StatCollector.translateToLocalFormatted("lotr.fastTravel.travel", theWaypoint.getDisplayName());
-		String titleExtra = new String[] { "", ".", "..", "..." }[tickCounter / 10 % 4];
+		String titleExtra = new String[]{"", ".", "..", "..."}[tickCounter / 10 % 4];
 		List messageLines = fontRendererObj.listFormattedStringToWidth(message, width - 100);
 		String skipText = StatCollector.translateToLocalFormatted("lotr.fastTravel.skip", GameSettings.getKeyDisplayString(mc.gameSettings.keyBindInventory.getKeyCode()));
 		float boxAlpha = 0.5f;
-		int boxColor = (int) (boxAlpha * 255.0f) << 24 | 0;
+		int boxColor = (int) (boxAlpha * 255.0f) << 24;
 		int fh = fontRendererObj.FONT_HEIGHT;
 		int border = fh * 2;
 		if (chunkLoaded) {
-			Gui.drawRect(0, 0, width, 0 + border + fh * 3 + border, boxColor);
+			Gui.drawRect(0, 0, width, border + fh * 3 + border, boxColor);
 		} else {
-			Gui.drawRect(0, 0, width, 0 + border + fh + border, boxColor);
+			Gui.drawRect(0, 0, width, border + fh + border, boxColor);
 		}
 		int messageY = height - border - messageLines.size() * fh;
 		Gui.drawRect(0, messageY - border, width, height, boxColor);
 		GL11.glDisable(3042);
-		fontRendererObj.drawStringWithShadow(title + titleExtra, width / 2 - fontRendererObj.getStringWidth(title) / 2, 0 + border, 16777215);
+		fontRendererObj.drawStringWithShadow(title + titleExtra, width / 2 - fontRendererObj.getStringWidth(title) / 2, border, 16777215);
 		for (Object obj : messageLines) {
 			String s1 = (String) obj;
-			this.drawCenteredString(fontRendererObj, s1, width / 2, messageY, 16777215);
+			drawCenteredString(fontRendererObj, s1, width / 2, messageY, 16777215);
 			messageY += fh;
 		}
 		if (chunkLoaded) {
 			float skipAlpha = LOTRFunctions.triangleWave(tickCounter + f, 0.3f, 1.0f, 80.0f);
 			int skipColor = 0xFFFFFF | LOTRClientProxy.getAlphaInt(skipAlpha) << 24;
 			GL11.glEnable(3042);
-			fontRendererObj.drawString(skipText, width / 2 - fontRendererObj.getStringWidth(skipText) / 2, 0 + border + fh * 2, skipColor);
+			fontRendererObj.drawString(skipText, width / 2 - fontRendererObj.getStringWidth(skipText) / 2, border + fh * 2, skipColor);
 		}
 		GL11.glDisable(3042);
 		super.drawScreen(i, j, f);
@@ -120,12 +118,18 @@ public class LOTRGuiFastTravel extends LOTRGuiScreenBase {
 		mapRenderer.updateTick();
 		++tickCounter;
 		prevZoom = currentZoom;
-		if (!reachedWP) {
+		if (reachedWP) {
+			currentZoom += 0.008333334f;
+			currentZoom = Math.min(currentZoom, zoomBase + 0.5f);
+			if (currentZoom >= zoomBase + 0.5f) {
+				finishedZoomIn = true;
+			}
+		} else {
 			double dy;
 			double dx = theWaypoint.getX() - mapRenderer.mapX;
 			double distSq = dx * dx + (dy = theWaypoint.getY() - mapRenderer.mapY) * dy;
 			double dist = Math.sqrt(distSq);
-			if (dist <= 1.0 * mapScaleFactor) {
+			if (dist <= mapScaleFactor) {
 				reachedWP = true;
 				mapSpeed = 0.0;
 				mapVelX = 0.0;
@@ -143,12 +147,6 @@ public class LOTRGuiFastTravel extends LOTRGuiScreenBase {
 			mapRenderer.mapY += mapVelY * mapScaleFactor;
 			currentZoom -= 0.008333334f;
 			currentZoom = Math.max(currentZoom, zoomBase);
-		} else {
-			currentZoom += 0.008333334f;
-			currentZoom = Math.min(currentZoom, zoomBase + 0.5f);
-			if (currentZoom >= zoomBase + 0.5f) {
-				finishedZoomIn = true;
-			}
 		}
 		if (chunkLoaded && reachedWP && finishedZoomIn) {
 			mc.displayGuiScreen(null);

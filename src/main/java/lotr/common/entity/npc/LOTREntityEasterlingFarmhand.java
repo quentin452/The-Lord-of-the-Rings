@@ -17,7 +17,7 @@ public class LOTREntityEasterlingFarmhand extends LOTREntityEasterling implement
 		super(world);
 		tasks.addTask(3, new LOTREntityAIFarm(this, 1.0, 1.0f));
 		targetTasks.taskEntries.clear();
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

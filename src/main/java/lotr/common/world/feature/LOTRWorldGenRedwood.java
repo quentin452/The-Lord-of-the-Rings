@@ -12,8 +12,8 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRWorldGenRedwood extends WorldGenAbstractTree {
-	public int trunkWidth = 0;
-	public int extraTrunkWidth = 0;
+	public int trunkWidth;
+	public int extraTrunkWidth;
 	public Block woodBlock = LOTRMod.wood8;
 	public int woodMeta = 1;
 	public Block leafBlock = LOTRMod.leaves8;
@@ -61,7 +61,7 @@ public class LOTRWorldGenRedwood extends WorldGenAbstractTree {
 			for (i1 = i - trunkWidth; i1 <= i + trunkWidth + extraTrunkWidth && canGrow; ++i1) {
 				for (k1 = k - trunkWidth; k1 <= k + trunkWidth + extraTrunkWidth && canGrow; ++k1) {
 					Block block = world.getBlock(i1, j - 1, k1);
-					if (block.canSustainPlant((IBlockAccess) world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
+					if (block.canSustainPlant(world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 						continue;
 					}
 					canGrow = false;
@@ -172,16 +172,12 @@ public class LOTRWorldGenRedwood extends WorldGenAbstractTree {
 						if (i22 != 1 && k22 != 1 || i22 == k22) {
 							continue;
 						}
-						int rootX = i14;
 						int rootY = j + fullWidth / 2 + random.nextInt(2 + fullWidth / 2);
-						int rootZ = k14;
-						while (world.getBlock(rootX, rootY, k14).isReplaceable(world, rootX, rootY, rootZ)) {
-							setBlockAndNotifyAdequately(world, rootX, rootY, rootZ, woodBlock, woodMeta | 0xC);
-							world.getBlock(rootX, rootY - 1, rootZ).onPlantGrow(world, rootX, rootY - 1, rootZ, rootX, rootY, rootZ);
+						while (world.getBlock(i14, rootY, k14).isReplaceable(world, i14, rootY, k14)) {
+							setBlockAndNotifyAdequately(world, i14, rootY, k14, woodBlock, woodMeta | 0xC);
+							world.getBlock(i14, rootY - 1, k14).onPlantGrow(world, i14, rootY - 1, k14, i14, rootY, k14);
 							rootY--;
-							if (rootY >= j - 3 - random.nextInt(3)) {
-								continue;
-							}
+							random.nextInt(3);
 						}
 					}
 				}

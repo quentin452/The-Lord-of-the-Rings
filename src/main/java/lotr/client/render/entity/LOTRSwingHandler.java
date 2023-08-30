@@ -10,7 +10,6 @@ import lotr.common.item.LOTRWeaponStats;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.*;
@@ -33,7 +32,7 @@ public class LOTRSwingHandler {
 			if (mc.theWorld == null) {
 				entitySwings.clear();
 			} else if (!mc.isGamePaused()) {
-				ArrayList<EntityLivingBase> removes = new ArrayList<>();
+				Collection<EntityLivingBase> removes = new ArrayList<>();
 				for (Map.Entry<EntityLivingBase, SwingTime> e : entitySwings.entrySet()) {
 					EntityLivingBase entity = e.getKey();
 					SwingTime swt = e.getValue();
@@ -56,9 +55,9 @@ public class LOTRSwingHandler {
 		SwingTime swt;
 		EntityLivingBase entity = event.entityLiving;
 		World world = entity.worldObj;
-		if (world.isRemote && (swt = entitySwings.get(entity)) == null && entity.isSwingInProgress && entity.swingProgressInt == 0 && LOTRWeaponStats.isMeleeWeapon(item = entity.getHeldItem())) {
+		if (world.isRemote && entitySwings.get(entity) == null && entity.isSwingInProgress && entity.swingProgressInt == 0 && LOTRWeaponStats.isMeleeWeapon(item = entity.getHeldItem())) {
 			int time;
-			time = entity instanceof EntityPlayer ? LOTRWeaponStats.getAttackTimePlayer(item) : LOTRWeaponStats.getAttackTimePlayer(item);
+			time = LOTRWeaponStats.getAttackTimePlayer(item);
 			time = Math.round(time * swingFactor);
 			swt = new SwingTime();
 			swt.swing = 1;
@@ -102,8 +101,8 @@ public class LOTRSwingHandler {
 		} else {
 			SwingTime swt = entitySwings.get(entity);
 			if (swt != null) {
-				entity.swingProgress = (float) swt.swing / (float) swt.swingMax;
-				entity.prevSwingProgress = (float) swt.swingPrev / (float) swt.swingMax;
+				entity.swingProgress = (float) swt.swing / swt.swingMax;
+				entity.prevSwingProgress = (float) swt.swingPrev / swt.swingMax;
 			}
 		}
 	}
@@ -113,8 +112,6 @@ public class LOTRSwingHandler {
 		public int swing;
 		public int swingMax;
 
-		public SwingTime() {
-		}
 	}
 
 }

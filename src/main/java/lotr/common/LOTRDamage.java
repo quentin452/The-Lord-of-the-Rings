@@ -1,5 +1,6 @@
 package lotr.common;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.network.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
@@ -10,12 +11,12 @@ public class LOTRDamage {
 	public static DamageSource plantHurt = new DamageSource("lotr.plantHurt").setDamageBypassesArmor();
 
 	public static void doBurnDamage(EntityPlayerMP entityplayer) {
-		LOTRPacketEnvironmentOverlay packet = new LOTRPacketEnvironmentOverlay(LOTRPacketEnvironmentOverlay.Overlay.BURN);
+		IMessage packet = new LOTRPacketEnvironmentOverlay(LOTRPacketEnvironmentOverlay.Overlay.BURN);
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 
 	public static void doFrostDamage(EntityPlayerMP entityplayer) {
-		LOTRPacketEnvironmentOverlay packet = new LOTRPacketEnvironmentOverlay(LOTRPacketEnvironmentOverlay.Overlay.FROST);
+		IMessage packet = new LOTRPacketEnvironmentOverlay(LOTRPacketEnvironmentOverlay.Overlay.FROST);
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 }

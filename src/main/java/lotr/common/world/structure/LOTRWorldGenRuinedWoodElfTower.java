@@ -33,21 +33,21 @@ public class LOTRWorldGenRuinedWoodElfTower extends LOTRWorldGenStructureBase {
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			k += radiusPlusOne;
-			break;
-		}
-		case 1: {
-			i -= radiusPlusOne;
-			break;
-		}
-		case 2: {
-			k -= radiusPlusOne;
-			break;
-		}
-		case 3: {
-			i += radiusPlusOne;
-		}
+			case 0: {
+				k += radiusPlusOne;
+				break;
+			}
+			case 1: {
+				i -= radiusPlusOne;
+				break;
+			}
+			case 2: {
+				k -= radiusPlusOne;
+				break;
+			}
+			case 3: {
+				i += radiusPlusOne;
+			}
 		}
 		if (restrictions) {
 			for (int i12 = i - radiusPlusOne; i12 <= i + radiusPlusOne; ++i12) {
@@ -284,9 +284,9 @@ public class LOTRWorldGenRuinedWoodElfTower extends LOTRWorldGenStructureBase {
 				setBlockAndNotifyAdequately(world, i + 3, j12, k12, LOTRMod.woodElfBars, 0);
 			}
 		}
-		this.placeSkull(world, random, i - 2, j - sectionHeight - 5, k - 5, 3, 1);
-		this.placeSkull(world, random, i + 2, j - sectionHeight - 5, k + 5, 3, 1);
-		this.placeSkull(world, random, i + 4, j - sectionHeight - 5, k - 1, 1, 3);
+		placeSkull(world, random, i - 2, j - sectionHeight - 5, k - 5, 3, 1);
+		placeSkull(world, random, i + 2, j - sectionHeight - 5, k + 5, 3, 1);
+		placeSkull(world, random, i + 4, j - sectionHeight - 5, k - 1, 1, 3);
 		for (int spiders = net.minecraft.util.MathHelper.getRandomIntegerInRange(random, 4, 6); spiders > 0; --spiders) {
 			LOTREntityMirkwoodSpider spider = new LOTREntityMirkwoodSpider(world);
 			spider.setLocationAndAngles(i - 1 + 0.5, j - sectionHeight - 5, k + 0.5, 0.0f, 0.0f);
@@ -304,44 +304,44 @@ public class LOTRWorldGenRuinedWoodElfTower extends LOTRWorldGenStructureBase {
 		setBlockAndNotifyAdequately(world, i - 5, j - sectionHeight - 1, k, Blocks.air, 0);
 		setBlockAndNotifyAdequately(world, i - 5, j - sectionHeight, k, Blocks.air, 0);
 		switch (rotation) {
-		case 0: {
-			int i16;
-			k1 = k - radius;
-			for (i16 = i - 1; i16 <= i + 1; ++i16) {
-				for (j1 = j + 1; j1 <= j + 3; ++j1) {
-					setAir(world, i16, j1, k1);
+			case 0: {
+				int i16;
+				k1 = k - radius;
+				for (i16 = i - 1; i16 <= i + 1; ++i16) {
+					for (j1 = j + 1; j1 <= j + 3; ++j1) {
+						setAir(world, i16, j1, k1);
+					}
 				}
+				break;
 			}
-			break;
-		}
-		case 1: {
-			int i16 = i + radius;
-			for (k1 = k - 1; k1 <= k + 1; ++k1) {
-				for (j1 = j + 1; j1 <= j + 3; ++j1) {
-					setAir(world, i16, j1, k1);
+			case 1: {
+				int i16 = i + radius;
+				for (k1 = k - 1; k1 <= k + 1; ++k1) {
+					for (j1 = j + 1; j1 <= j + 3; ++j1) {
+						setAir(world, i16, j1, k1);
+					}
 				}
+				break;
 			}
-			break;
-		}
-		case 2: {
-			int i16;
-			k1 = k + radius;
-			for (i16 = i - 1; i16 <= i + 1; ++i16) {
-				for (j1 = j + 1; j1 <= j + 3; ++j1) {
-					setAir(world, i16, j1, k1);
+			case 2: {
+				int i16;
+				k1 = k + radius;
+				for (i16 = i - 1; i16 <= i + 1; ++i16) {
+					for (j1 = j + 1; j1 <= j + 3; ++j1) {
+						setAir(world, i16, j1, k1);
+					}
 				}
+				break;
 			}
-			break;
-		}
-		case 3: {
-			int i16 = i - radius;
-			for (k1 = k - 1; k1 <= k + 1; ++k1) {
-				for (j1 = j + 1; j1 <= j + 3; ++j1) {
-					setAir(world, i16, j1, k1);
+			case 3: {
+				int i16 = i - radius;
+				for (k1 = k - 1; k1 <= k + 1; ++k1) {
+					for (j1 = j + 1; j1 <= j + 3; ++j1) {
+						setAir(world, i16, j1, k1);
+					}
 				}
+				break;
 			}
-			break;
-		}
 		}
 		return true;
 	}
@@ -349,17 +349,17 @@ public class LOTRWorldGenRuinedWoodElfTower extends LOTRWorldGenStructureBase {
 	public void placeDungeonBlock(World world, Random random, int i, int j, int k) {
 		int l = random.nextInt(3);
 		switch (l) {
-		case 0: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 5);
-			break;
-		}
-		case 1: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 6);
-			break;
-		}
-		case 2: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 7);
-		}
+			case 0: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 5);
+				break;
+			}
+			case 1: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 6);
+				break;
+			}
+			case 2: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 7);
+			}
 		}
 	}
 
@@ -369,17 +369,17 @@ public class LOTRWorldGenRuinedWoodElfTower extends LOTRWorldGenStructureBase {
 		}
 		int l = random.nextInt(3);
 		switch (l) {
-		case 0: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 5);
-			break;
-		}
-		case 1: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 6);
-			break;
-		}
-		case 2: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 7);
-		}
+			case 0: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 5);
+				break;
+			}
+			case 1: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 6);
+				break;
+			}
+			case 2: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.brick3, 7);
+			}
 		}
 	}
 
@@ -396,17 +396,17 @@ public class LOTRWorldGenRuinedWoodElfTower extends LOTRWorldGenStructureBase {
 		}
 		int l = random.nextInt(3);
 		switch (l) {
-		case 0: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsWoodElvenBrick, meta);
-			break;
-		}
-		case 1: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsWoodElvenBrickMossy, meta);
-			break;
-		}
-		case 2: {
-			setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsWoodElvenBrickCracked, meta);
-		}
+			case 0: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsWoodElvenBrick, meta);
+				break;
+			}
+			case 1: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsWoodElvenBrickMossy, meta);
+				break;
+			}
+			case 2: {
+				setBlockAndNotifyAdequately(world, i, j, k, LOTRMod.stairsWoodElvenBrickCracked, meta);
+			}
 		}
 	}
 
@@ -414,7 +414,7 @@ public class LOTRWorldGenRuinedWoodElfTower extends LOTRWorldGenStructureBase {
 		i += random.nextInt(xRange);
 		k += random.nextInt(zRange);
 		if (random.nextBoolean()) {
-			this.placeSkull(world, random, i, j, k);
+			placeSkull(world, random, i, j, k);
 		}
 	}
 }

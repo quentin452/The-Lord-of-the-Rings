@@ -9,7 +9,7 @@ public class LOTREnchantmentDamage extends LOTREnchantment {
 	public float baseDamageBoost;
 
 	public LOTREnchantmentDamage(String s, float boost) {
-		super(s, new LOTREnchantmentType[] { LOTREnchantmentType.MELEE, LOTREnchantmentType.THROWING_AXE });
+		super(s, new LOTREnchantmentType[]{LOTREnchantmentType.MELEE, LOTREnchantmentType.THROWING_AXE});
 		baseDamageBoost = boost;
 		if (baseDamageBoost >= 0.0f) {
 			setValueModifier((7.0f + baseDamageBoost * 5.0f) / 7.0f);
@@ -22,7 +22,7 @@ public class LOTREnchantmentDamage extends LOTREnchantment {
 	public boolean canApply(ItemStack itemstack, boolean considering) {
 		if (super.canApply(itemstack, considering)) {
 			float dmg = LOTRWeaponStats.getMeleeDamageBonus(itemstack);
-			return (dmg += baseDamageBoost) > 0.0f;
+			return dmg + baseDamageBoost > 0.0f;
 		}
 		return false;
 	}

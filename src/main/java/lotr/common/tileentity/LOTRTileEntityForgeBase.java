@@ -16,17 +16,17 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.*;
 
-public abstract class LOTRTileEntityForgeBase extends TileEntity implements IInventory, ISidedInventory {
+public abstract class LOTRTileEntityForgeBase extends TileEntity implements ISidedInventory {
 	public ItemStack[] inventory = new ItemStack[getForgeInvSize()];
 	public String specialForgeName;
-	public int forgeSmeltTime = 0;
-	public int currentItemFuelValue = 0;
-	public int currentSmeltTime = 0;
+	public int forgeSmeltTime;
+	public int currentItemFuelValue;
+	public int currentSmeltTime;
 	public int[] inputSlots;
 	public int[] outputSlots;
 	public int fuelSlot;
 
-	public LOTRTileEntityForgeBase() {
+	protected LOTRTileEntityForgeBase() {
 		setupForgeSlots();
 	}
 
@@ -107,7 +107,7 @@ public abstract class LOTRTileEntityForgeBase extends TileEntity implements IInv
 			}
 			return sortedSlots;
 		}
-		return new int[] { fuelSlot };
+		return new int[]{fuelSlot};
 	}
 
 	public abstract int getForgeInvSize();
@@ -131,12 +131,12 @@ public abstract class LOTRTileEntityForgeBase extends TileEntity implements IInv
 
 	public abstract int getSmeltingDuration();
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getSmeltProgressScaled(int i) {
 		return currentSmeltTime * i / getSmeltingDuration();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getSmeltTimeRemainingScaled(int i) {
 		if (currentItemFuelValue == 0) {
 			currentItemFuelValue = getSmeltingDuration();
@@ -161,7 +161,7 @@ public abstract class LOTRTileEntityForgeBase extends TileEntity implements IInv
 
 	@Override
 	public boolean hasCustomInventoryName() {
-		return specialForgeName != null && specialForgeName.length() > 0;
+		return specialForgeName != null && !specialForgeName.isEmpty();
 	}
 
 	@Override

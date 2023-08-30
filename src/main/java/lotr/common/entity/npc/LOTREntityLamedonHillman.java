@@ -10,9 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTREntityLamedonHillman extends LOTREntityGondorLevyman {
-	public static ItemStack[] hillmanWeapons = { new ItemStack(Items.iron_axe), new ItemStack(LOTRMod.battleaxeIron), new ItemStack(LOTRMod.pikeIron), new ItemStack(LOTRMod.axeBronze), new ItemStack(LOTRMod.battleaxeBronze) };
-	public static int[] dyedHatColors = { 6316128, 2437173, 0 };
-	public static int[] featherColors = { 16777215, 10526880, 5658198, 2179924, 798013 };
+	public static ItemStack[] hillmanWeapons = {new ItemStack(Items.iron_axe), new ItemStack(LOTRMod.battleaxeIron), new ItemStack(LOTRMod.pikeIron), new ItemStack(LOTRMod.axeBronze), new ItemStack(LOTRMod.battleaxeBronze)};
+	public static int[] dyedHatColors = {6316128, 2437173, 0};
+	public static int[] featherColors = {16777215, 10526880, 5658198, 2179924, 798013};
 
 	public LOTREntityLamedonHillman(World world) {
 		super(world);

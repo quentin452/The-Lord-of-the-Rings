@@ -56,12 +56,12 @@ public abstract class LOTRWorldGenRangerStructure extends LOTRWorldGenStructureB
 	public LOTRChestContents chestContentsHouse;
 	public LOTRChestContents chestContentsRanger;
 
-	public LOTRWorldGenRangerStructure(boolean flag) {
+	protected LOTRWorldGenRangerStructure(boolean flag) {
 		super(flag);
 	}
 
 	public ItemStack getRangerFramedItem(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.helmetRanger), new ItemStack(LOTRMod.bodyRanger), new ItemStack(LOTRMod.legsRanger), new ItemStack(LOTRMod.bootsRanger), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.daggerBronze), new ItemStack(LOTRMod.rangerBow), new ItemStack(Items.bow), new ItemStack(Items.arrow) };
+		ItemStack[] items = {new ItemStack(LOTRMod.helmetRanger), new ItemStack(LOTRMod.bodyRanger), new ItemStack(LOTRMod.legsRanger), new ItemStack(LOTRMod.bootsRanger), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.daggerBronze), new ItemStack(LOTRMod.rangerBow), new ItemStack(Items.bow), new ItemStack(Items.arrow)};
 		return items[random.nextInt(items.length)].copy();
 	}
 
@@ -95,90 +95,90 @@ public abstract class LOTRWorldGenRangerStructure extends LOTRWorldGenStructureB
 		cobbleStairBlock = Blocks.stone_stairs;
 		int randomWood = random.nextInt(7);
 		switch (randomWood) {
-		case 0:
-		case 1:
-		case 2:
-			logBlock = Blocks.log;
-			logMeta = 0;
-			plankBlock = Blocks.planks;
-			plankMeta = 0;
-			plankSlabBlock = Blocks.wooden_slab;
-			plankSlabMeta = 0;
-			plankStairBlock = Blocks.oak_stairs;
-			fenceBlock = Blocks.fence;
-			fenceMeta = 0;
-			fenceGateBlock = Blocks.fence_gate;
-			woodBeamBlock = LOTRMod.woodBeamV1;
-			woodBeamMeta = 0;
-			doorBlock = Blocks.wooden_door;
-			trapdoorBlock = Blocks.trapdoor;
-			break;
-		case 3:
-			logBlock = LOTRMod.wood2;
-			logMeta = 1;
-			plankBlock = LOTRMod.planks;
-			plankMeta = 9;
-			plankSlabBlock = LOTRMod.woodSlabSingle2;
-			plankSlabMeta = 1;
-			plankStairBlock = LOTRMod.stairsBeech;
-			fenceBlock = LOTRMod.fence;
-			fenceMeta = 9;
-			fenceGateBlock = LOTRMod.fenceGateBeech;
-			woodBeamBlock = LOTRMod.woodBeam2;
-			woodBeamMeta = 1;
-			doorBlock = LOTRMod.doorBeech;
-			trapdoorBlock = LOTRMod.trapdoorBeech;
-			break;
-		case 4:
-			logBlock = Blocks.log;
-			logMeta = 1;
-			plankBlock = Blocks.planks;
-			plankMeta = 1;
-			plankSlabBlock = Blocks.wooden_slab;
-			plankSlabMeta = 1;
-			plankStairBlock = Blocks.spruce_stairs;
-			fenceBlock = Blocks.fence;
-			fenceMeta = 1;
-			fenceGateBlock = LOTRMod.fenceGateSpruce;
-			woodBeamBlock = LOTRMod.woodBeamV1;
-			woodBeamMeta = 1;
-			doorBlock = LOTRMod.doorSpruce;
-			trapdoorBlock = LOTRMod.trapdoorSpruce;
-			break;
-		case 5:
-			logBlock = LOTRMod.wood5;
-			logMeta = 0;
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 4;
-			plankSlabBlock = LOTRMod.woodSlabSingle3;
-			plankSlabMeta = 4;
-			plankStairBlock = LOTRMod.stairsPine;
-			fenceBlock = LOTRMod.fence2;
-			fenceMeta = 4;
-			fenceGateBlock = LOTRMod.fenceGatePine;
-			woodBeamBlock = LOTRMod.woodBeam5;
-			woodBeamMeta = 0;
-			doorBlock = LOTRMod.doorPine;
-			trapdoorBlock = LOTRMod.trapdoorPine;
-			break;
-		case 6:
-			logBlock = LOTRMod.wood4;
-			logMeta = 0;
-			plankBlock = LOTRMod.planks2;
-			plankMeta = 0;
-			plankSlabBlock = LOTRMod.woodSlabSingle3;
-			plankSlabMeta = 0;
-			plankStairBlock = LOTRMod.stairsChestnut;
-			fenceBlock = LOTRMod.fence2;
-			fenceMeta = 0;
-			fenceGateBlock = LOTRMod.fenceGateChestnut;
-			woodBeamBlock = LOTRMod.woodBeam4;
-			woodBeamMeta = 0;
-			doorBlock = LOTRMod.doorChestnut;
-			trapdoorBlock = LOTRMod.trapdoorChestnut;
-			break;
-		default:
-			break;
+			case 0:
+			case 1:
+			case 2:
+				logBlock = Blocks.log;
+				logMeta = 0;
+				plankBlock = Blocks.planks;
+				plankMeta = 0;
+				plankSlabBlock = Blocks.wooden_slab;
+				plankSlabMeta = 0;
+				plankStairBlock = Blocks.oak_stairs;
+				fenceBlock = Blocks.fence;
+				fenceMeta = 0;
+				fenceGateBlock = Blocks.fence_gate;
+				woodBeamBlock = LOTRMod.woodBeamV1;
+				woodBeamMeta = 0;
+				doorBlock = Blocks.wooden_door;
+				trapdoorBlock = Blocks.trapdoor;
+				break;
+			case 3:
+				logBlock = LOTRMod.wood2;
+				logMeta = 1;
+				plankBlock = LOTRMod.planks;
+				plankMeta = 9;
+				plankSlabBlock = LOTRMod.woodSlabSingle2;
+				plankSlabMeta = 1;
+				plankStairBlock = LOTRMod.stairsBeech;
+				fenceBlock = LOTRMod.fence;
+				fenceMeta = 9;
+				fenceGateBlock = LOTRMod.fenceGateBeech;
+				woodBeamBlock = LOTRMod.woodBeam2;
+				woodBeamMeta = 1;
+				doorBlock = LOTRMod.doorBeech;
+				trapdoorBlock = LOTRMod.trapdoorBeech;
+				break;
+			case 4:
+				logBlock = Blocks.log;
+				logMeta = 1;
+				plankBlock = Blocks.planks;
+				plankMeta = 1;
+				plankSlabBlock = Blocks.wooden_slab;
+				plankSlabMeta = 1;
+				plankStairBlock = Blocks.spruce_stairs;
+				fenceBlock = Blocks.fence;
+				fenceMeta = 1;
+				fenceGateBlock = LOTRMod.fenceGateSpruce;
+				woodBeamBlock = LOTRMod.woodBeamV1;
+				woodBeamMeta = 1;
+				doorBlock = LOTRMod.doorSpruce;
+				trapdoorBlock = LOTRMod.trapdoorSpruce;
+				break;
+			case 5:
+				logBlock = LOTRMod.wood5;
+				logMeta = 0;
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 4;
+				plankSlabBlock = LOTRMod.woodSlabSingle3;
+				plankSlabMeta = 4;
+				plankStairBlock = LOTRMod.stairsPine;
+				fenceBlock = LOTRMod.fence2;
+				fenceMeta = 4;
+				fenceGateBlock = LOTRMod.fenceGatePine;
+				woodBeamBlock = LOTRMod.woodBeam5;
+				woodBeamMeta = 0;
+				doorBlock = LOTRMod.doorPine;
+				trapdoorBlock = LOTRMod.trapdoorPine;
+				break;
+			case 6:
+				logBlock = LOTRMod.wood4;
+				logMeta = 0;
+				plankBlock = LOTRMod.planks2;
+				plankMeta = 0;
+				plankSlabBlock = LOTRMod.woodSlabSingle3;
+				plankSlabMeta = 0;
+				plankStairBlock = LOTRMod.stairsChestnut;
+				fenceBlock = LOTRMod.fence2;
+				fenceMeta = 0;
+				fenceGateBlock = LOTRMod.fenceGateChestnut;
+				woodBeamBlock = LOTRMod.woodBeam4;
+				woodBeamMeta = 0;
+				doorBlock = LOTRMod.doorChestnut;
+				trapdoorBlock = LOTRMod.trapdoorChestnut;
+				break;
+			default:
+				break;
 		}
 		if (random.nextBoolean()) {
 			wallBlock = LOTRMod.daub;
@@ -203,33 +203,33 @@ public abstract class LOTRWorldGenRangerStructure extends LOTRWorldGenStructureB
 		} else {
 			int randomCrop = random.nextInt(5);
 			switch (randomCrop) {
-			case 0:
-				cropBlock = Blocks.carrots;
-				cropMeta = 7;
-				seedItem = Items.carrot;
-				break;
-			case 1:
-				cropBlock = Blocks.potatoes;
-				cropMeta = 7;
-				seedItem = Items.potato;
-				break;
-			case 2:
-				cropBlock = LOTRMod.lettuceCrop;
-				cropMeta = 7;
-				seedItem = LOTRMod.lettuce;
-				break;
-			case 3:
-				cropBlock = LOTRMod.leekCrop;
-				cropMeta = 7;
-				seedItem = LOTRMod.leek;
-				break;
-			case 4:
-				cropBlock = LOTRMod.turnipCrop;
-				cropMeta = 7;
-				seedItem = LOTRMod.turnip;
-				break;
-			default:
-				break;
+				case 0:
+					cropBlock = Blocks.carrots;
+					cropMeta = 7;
+					seedItem = Items.carrot;
+					break;
+				case 1:
+					cropBlock = Blocks.potatoes;
+					cropMeta = 7;
+					seedItem = Items.potato;
+					break;
+				case 2:
+					cropBlock = LOTRMod.lettuceCrop;
+					cropMeta = 7;
+					seedItem = LOTRMod.lettuce;
+					break;
+				case 3:
+					cropBlock = LOTRMod.leekCrop;
+					cropMeta = 7;
+					seedItem = LOTRMod.leek;
+					break;
+				case 4:
+					cropBlock = LOTRMod.turnipCrop;
+					cropMeta = 7;
+					seedItem = LOTRMod.turnip;
+					break;
+				default:
+					break;
 			}
 		}
 		bannerType = LOTRItemBanner.BannerType.RANGER_NORTH;

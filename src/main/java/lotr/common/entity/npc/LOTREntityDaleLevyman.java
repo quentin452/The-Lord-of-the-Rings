@@ -10,12 +10,12 @@ import net.minecraft.item.*;
 import net.minecraft.world.World;
 
 public class LOTREntityDaleLevyman extends LOTREntityDaleMan {
-	public static ItemStack[] militiaWeapons = { new ItemStack(LOTRMod.swordDale), new ItemStack(LOTRMod.battleaxeDale), new ItemStack(LOTRMod.pikeDale), new ItemStack(Items.iron_sword), new ItemStack(Items.iron_axe), new ItemStack(LOTRMod.battleaxeIron), new ItemStack(LOTRMod.pikeIron), new ItemStack(LOTRMod.swordBronze), new ItemStack(LOTRMod.axeBronze), new ItemStack(LOTRMod.battleaxeBronze) };
-	public static int[] leatherDyes = { 7034184, 5650986, 7039851, 5331051, 2305612, 2698291, 1973790 };
+	public static ItemStack[] militiaWeapons = {new ItemStack(LOTRMod.swordDale), new ItemStack(LOTRMod.battleaxeDale), new ItemStack(LOTRMod.pikeDale), new ItemStack(Items.iron_sword), new ItemStack(Items.iron_axe), new ItemStack(LOTRMod.battleaxeIron), new ItemStack(LOTRMod.pikeIron), new ItemStack(LOTRMod.swordBronze), new ItemStack(LOTRMod.axeBronze), new ItemStack(LOTRMod.battleaxeBronze)};
+	public static int[] leatherDyes = {7034184, 5650986, 7039851, 5331051, 2305612, 2698291, 1973790};
 
 	public LOTREntityDaleLevyman(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 	}
 
 	@Override
@@ -55,23 +55,23 @@ public class LOTREntityDaleLevyman extends LOTREntityDaleMan {
 		setCurrentItemOrArmor(1, dyeLeather(new ItemStack(Items.leather_boots)));
 		setCurrentItemOrArmor(2, dyeLeather(new ItemStack(Items.leather_leggings)));
 		setCurrentItemOrArmor(3, new ItemStack(LOTRMod.bodyDaleGambeson));
-		if (rand.nextInt(3) != 0) {
-			setCurrentItemOrArmor(4, null);
-		} else {
+		if (rand.nextInt(3) == 0) {
 			i = rand.nextInt(3);
 			switch (i) {
-			case 0:
-				setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetDale));
-				break;
-			case 1:
-				setCurrentItemOrArmor(4, new ItemStack(Items.iron_helmet));
-				break;
-			case 2:
-				setCurrentItemOrArmor(4, dyeLeather(new ItemStack(Items.leather_helmet)));
-				break;
-			default:
-				break;
+				case 0:
+					setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetDale));
+					break;
+				case 1:
+					setCurrentItemOrArmor(4, new ItemStack(Items.iron_helmet));
+					break;
+				case 2:
+					setCurrentItemOrArmor(4, dyeLeather(new ItemStack(Items.leather_helmet)));
+					break;
+				default:
+					break;
 			}
+		} else {
+			setCurrentItemOrArmor(4, null);
 		}
 		return data;
 	}

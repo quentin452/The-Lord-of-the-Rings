@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class LOTREntityHarnedorFarmer extends LOTREntityHarnedhrim implements LOTRTradeable, LOTRUnitTradeable {
 	public LOTREntityHarnedorFarmer(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

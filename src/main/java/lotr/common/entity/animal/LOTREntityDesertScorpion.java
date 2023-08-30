@@ -4,7 +4,7 @@ import lotr.common.world.biome.LOTRBiomeGenNearHarad;
 import net.minecraft.world.World;
 
 public class LOTREntityDesertScorpion extends LOTREntityScorpion implements LOTRBiomeGenNearHarad.ImmuneToHeat {
-	public boolean pyramidSpawned = false;
+	public boolean pyramidSpawned;
 
 	public LOTREntityDesertScorpion(World world) {
 		super(world);

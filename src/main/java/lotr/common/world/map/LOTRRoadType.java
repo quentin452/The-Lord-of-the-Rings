@@ -497,7 +497,7 @@ public abstract class LOTRRoadType {
 		};
 	}
 
-	public static abstract class BridgeType {
+	public abstract static class BridgeType {
 		public static BridgeType DEFAULT = new BridgeType() {
 
 			@Override
@@ -558,9 +558,6 @@ public abstract class LOTRRoadType {
 				return new RoadBlock(LOTRMod.fence, 3);
 			}
 		};
-
-		public BridgeType() {
-		}
 
 		public abstract RoadBlock getBlock(Random var1, boolean var2);
 

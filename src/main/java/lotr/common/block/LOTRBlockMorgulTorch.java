@@ -8,6 +8,6 @@ public class LOTRBlockMorgulTorch extends LOTRBlockTorch {
 		double d3 = -0.05 + random.nextFloat() * 0.1;
 		double d4 = 0.1 + random.nextFloat() * 0.1;
 		double d5 = -0.05 + random.nextFloat() * 0.1;
-		return new LOTRBlockTorch.TorchParticle("morgulPortal", 0.0, 0.0, 0.0, d3, d4, d5);
+		return new TorchParticle("morgulPortal", 0.0, 0.0, 0.0, d3, d4, d5);
 	}
 }

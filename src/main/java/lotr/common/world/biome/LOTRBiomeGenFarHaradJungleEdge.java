@@ -10,8 +10,8 @@ public class LOTRBiomeGenFarHaradJungleEdge extends LOTRBiomeGenFarHaradJungle {
 		super(i, major);
 		obsidianGravelRarity = 200;
 		clearBiomeVariants();
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
 		decorator.treesPerChunk = 4;
 		decorator.vinesPerChunk = 10;
 		decorator.melonPerChunk = 0.03f;

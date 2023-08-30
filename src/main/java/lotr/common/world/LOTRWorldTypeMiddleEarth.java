@@ -8,7 +8,7 @@ public class LOTRWorldTypeMiddleEarth extends WorldType {
 		super(name);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean showWorldInfoNotice() {
 		return true;

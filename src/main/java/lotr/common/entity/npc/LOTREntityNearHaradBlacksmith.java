@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class LOTREntityNearHaradBlacksmith extends LOTREntityNearHaradrim implements LOTRTradeable.Smith {
 	public LOTREntityNearHaradBlacksmith(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

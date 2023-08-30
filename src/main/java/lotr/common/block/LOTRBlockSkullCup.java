@@ -11,7 +11,7 @@ public class LOTRBlockSkullCup extends LOTRBlockMug {
 		setStepSound(Block.soundTypeStone);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return Blocks.skull.getIcon(i, 0);

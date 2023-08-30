@@ -34,11 +34,11 @@ public class LOTRBiomeGenRhunLandSteppe extends LOTRBiomeGenRhunLand {
 		clearBiomeVariants();
 		variantChance = 0.3f;
 		addBiomeVariantSet(LOTRBiomeVariant.SET_NORMAL_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.SCRUBLAND);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS_SCRUBLAND);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.SCRUBLAND);
+		addBiomeVariant(LOTRBiomeVariant.HILLS_SCRUBLAND);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.3f);
 		decorator.resetTreeCluster();
 		decorator.willowPerChunk = 1;
 		decorator.flowersPerChunk = 3;

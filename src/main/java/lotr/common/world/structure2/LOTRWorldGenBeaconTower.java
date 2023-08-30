@@ -30,7 +30,7 @@ public class LOTRWorldGenBeaconTower extends LOTRWorldGenGondorStructure {
 		int i2;
 		int j12;
 		int doorBase = j - 1;
-		this.setOriginAndRotation(world, i, j += height, k, rotation, 3);
+		setOriginAndRotation(world, i, j + height, k, rotation, 3);
 		doorBase -= getY(0);
 		setupRandomBlocks(random);
 		if (restrictions) {
@@ -88,11 +88,11 @@ public class LOTRWorldGenBeaconTower extends LOTRWorldGenGondorStructure {
 				}
 			}
 		}
-		for (int i13 : new int[] { -1, 1 }) {
+		for (int i13 : new int[]{-1, 1}) {
 			setBlockAndMetadata(world, i13, 5, -3, brickStairBlock, 2);
 			setBlockAndMetadata(world, i13, 5, 3, brickStairBlock, 3);
 		}
-		int[] i14 = { -1, 1 };
+		int[] i14 = {-1, 1};
 		k1 = i14.length;
 		for (i2 = 0; i2 < k1; ++i2) {
 			int k12 = i14[i2];
@@ -139,12 +139,12 @@ public class LOTRWorldGenBeaconTower extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i1, 14, k1, brickBlock, brickMeta);
 			}
 		}
-		int[] i15 = { -2, 2 };
+		int[] i15 = {-2, 2};
 		k1 = i15.length;
 		for (i2 = 0; i2 < k1; ++i2) {
 			int i13;
 			i13 = i15[i2];
-			for (int k13 : new int[] { -2, 2 }) {
+			for (int k13 : new int[]{-2, 2}) {
 				setBlockAndMetadata(world, i13, 13, k13 - 1, brickStairBlock, 6);
 				setBlockAndMetadata(world, i13, 13, k13 + 1, brickStairBlock, 7);
 				setBlockAndMetadata(world, i13 - 1, 13, k13, brickStairBlock, 5);
@@ -166,14 +166,14 @@ public class LOTRWorldGenBeaconTower extends LOTRWorldGenGondorStructure {
 			setBlockAndMetadata(world, 0, doorBase + 3, -1, Blocks.torch, 3);
 			setBlockAndMetadata(world, 1, doorBase + 1, -1, tableBlock, 0);
 			placeWallBanner(world, 2, doorBase + 4, -1, bannerType, 3);
-			this.placeChest(world, random, -1, doorBase + 1, -1, LOTRMod.chestLebethron, 3, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES);
+			placeChest(world, random, -1, doorBase + 1, -1, LOTRMod.chestLebethron, 3, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES);
 			for (j1 = doorBase + 1; j1 <= doorBase + 4; ++j1) {
 				setBlockAndMetadata(world, 1, j1, 1, brickBlock, brickMeta);
 				setBlockAndMetadata(world, 1, j1, 0, Blocks.ladder, 2);
 			}
 			setBlockAndMetadata(world, -1, doorBase + 2, 1, brickSlabBlock, brickSlabMeta | 8);
 			setBlockAndMetadata(world, 0, doorBase + 2, 1, brickSlabBlock, brickSlabMeta | 8);
-			for (int j14 : new int[] { doorBase + 1, doorBase + 3 }) {
+			for (int j14 : new int[]{doorBase + 1, doorBase + 3}) {
 				setBlockAndMetadata(world, -1, j14, 1, bedBlock, 1);
 				setBlockAndMetadata(world, 0, j14, 1, bedBlock, 9);
 			}

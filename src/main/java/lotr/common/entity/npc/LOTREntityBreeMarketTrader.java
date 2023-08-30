@@ -6,9 +6,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityBreeMarketTrader extends LOTREntityBreeMan implements LOTRTradeable {
-	public LOTREntityBreeMarketTrader(World world) {
+	protected LOTREntityBreeMarketTrader(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

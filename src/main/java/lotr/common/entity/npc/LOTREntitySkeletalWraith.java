@@ -11,7 +11,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public abstract class LOTREntitySkeletalWraith extends LOTREntityNPC {
-	public LOTREntitySkeletalWraith(World world) {
+	protected LOTREntitySkeletalWraith(World world) {
 		super(world);
 		setSize(0.6f, 1.8f);
 		isImmuneToFire = true;
@@ -22,7 +22,7 @@ public abstract class LOTREntitySkeletalWraith extends LOTREntityNPC {
 		tasks.addTask(4, new EntityAIWander(this, 1.0));
 		tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0f, 0.02f));
 		tasks.addTask(6, new EntityAILookIdle(this));
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 	}
 
 	@Override

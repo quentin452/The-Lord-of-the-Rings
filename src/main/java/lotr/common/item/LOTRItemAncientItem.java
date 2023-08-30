@@ -9,15 +9,16 @@ import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class LOTRItemAncientItem extends Item {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] icons;
-	public String[] itemNames = { "sword", "dagger", "helmet", "body", "legs", "boots" };
+	public String[] itemNames = {"sword", "dagger", "helmet", "body", "legs", "boots"};
 
 	public LOTRItemAncientItem() {
 		setMaxStackSize(1);
@@ -26,7 +27,7 @@ public class LOTRItemAncientItem extends Item {
 		setCreativeTab(LOTRCreativeTabs.tabMisc);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIconFromDamage(int i) {
 		if (i >= icons.length) {
@@ -35,7 +36,7 @@ public class LOTRItemAncientItem extends Item {
 		return icons[i];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i <= 5; ++i) {
@@ -45,13 +46,13 @@ public class LOTRItemAncientItem extends Item {
 
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
-		return super.getUnlocalizedName() + "." + itemstack.getItemDamage();
+		return getUnlocalizedName() + "." + itemstack.getItemDamage();
 	}
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		if (!world.isRemote) {
-			ItemStack ancientItem = LOTRItemAncientItem.getRandomItem(itemstack);
+			ItemStack ancientItem = getRandomItem(itemstack);
 			LOTRLevelData.getData(entityplayer).addAchievement(LOTRAchievement.craftAncientItem);
 			world.playSoundAtEntity(entityplayer, "random.pop", 0.2f, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7f + 1.0f) * 2.0f);
 			return ancientItem;
@@ -59,7 +60,7 @@ public class LOTRItemAncientItem extends Item {
 		return itemstack;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerIcons(IIconRegister iconregister) {
 		icons = new IIcon[itemNames.length];
@@ -70,7 +71,7 @@ public class LOTRItemAncientItem extends Item {
 
 	public static ItemStack getRandomItem(ItemStack itemstack) {
 		ItemStack randomItem;
-		InventoryBasic randomItemInv = new InventoryBasic("ancientItem", true, 1);
+		IInventory randomItemInv = new InventoryBasic("ancientItem", true, 1);
 		LOTRChestContents itemPool = null;
 		if (itemstack.getItemDamage() == 0) {
 			itemPool = LOTRChestContents.ANCIENT_SWORD;

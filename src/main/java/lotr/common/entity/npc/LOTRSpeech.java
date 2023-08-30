@@ -1,16 +1,18 @@
 package lotr.common.entity.npc;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.zip.*;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import net.minecraft.command.ICommandSender;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.BOMInputStream;
 
 import com.google.common.base.Charsets;
 
 import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.*;
 import lotr.common.network.*;
 import net.minecraft.entity.player.*;
@@ -22,7 +24,7 @@ public class LOTRSpeech {
 	public static Map<String, SpeechBank> allSpeechBanks = new HashMap<>();
 	public static Random rand = new Random();
 
-	public static String formatSpeech(String speech, EntityPlayer entityplayer, String location, String objective) {
+	public static String formatSpeech(String speech, ICommandSender entityplayer, CharSequence location, CharSequence objective) {
 		if (entityplayer != null) {
 			speech = speech.replace("#", entityplayer.getCommandSenderName());
 		}
@@ -36,16 +38,16 @@ public class LOTRSpeech {
 	}
 
 	public static String getRandomSpeech(String bankName) {
-		return LOTRSpeech.getSpeechBank(bankName).getRandomSpeech(rand);
+		return getSpeechBank(bankName).getRandomSpeech(rand);
 	}
 
-	public static String getRandomSpeechForPlayer(LOTREntityNPC entity, String speechBankName, EntityPlayer entityplayer) {
-		return LOTRSpeech.getRandomSpeechForPlayer(entity, speechBankName, entityplayer, null, null);
+	public static String getRandomSpeechForPlayer(LOTREntityNPC entity, String speechBankName, ICommandSender entityplayer) {
+		return getRandomSpeechForPlayer(entity, speechBankName, entityplayer, null, null);
 	}
 
-	public static String getRandomSpeechForPlayer(LOTREntityNPC entity, String speechBankName, EntityPlayer entityplayer, String location, String objective) {
-		String s = LOTRSpeech.getRandomSpeech(speechBankName);
-		s = LOTRSpeech.formatSpeech(s, entityplayer, location, objective);
+	public static String getRandomSpeechForPlayer(LOTREntityNPC entity, String speechBankName, ICommandSender entityplayer, CharSequence location, CharSequence objective) {
+		String s = getRandomSpeech(speechBankName);
+		s = formatSpeech(s, entityplayer, location, objective);
 		if (entity.isDrunkard()) {
 			float f = entity.getDrunkenSpeechFactor();
 			s = LOTRDrunkenSpeech.getDrunkenSpeech(s, f);
@@ -54,7 +56,7 @@ public class LOTRSpeech {
 	}
 
 	public static String getSpeechAtLine(String bankName, int i) {
-		return LOTRSpeech.getSpeechBank(bankName).getSpeechAtLine(i);
+		return getSpeechBank(bankName).getSpeechAtLine(i);
 	}
 
 	public static SpeechBank getSpeechBank(String name) {
@@ -62,16 +64,16 @@ public class LOTRSpeech {
 		if (bank != null) {
 			return bank;
 		}
-		return new SpeechBank("dummy_" + name, true, Arrays.asList("Speech bank " + name + " could not be found!"));
+		return new SpeechBank("dummy_" + name, true, Collections.singletonList("Speech bank " + name + " could not be found!"));
 	}
 
-	public static String getSpeechLineForPlayer(LOTREntityNPC entity, String speechBankName, int i, EntityPlayer entityplayer) {
-		return LOTRSpeech.getSpeechLineForPlayer(entity, speechBankName, i, entityplayer, null, null);
+	public static String getSpeechLineForPlayer(LOTREntityNPC entity, String speechBankName, int i, ICommandSender entityplayer) {
+		return getSpeechLineForPlayer(entity, speechBankName, i, entityplayer, null, null);
 	}
 
-	public static String getSpeechLineForPlayer(LOTREntityNPC entity, String speechBankName, int i, EntityPlayer entityplayer, String location, String objective) {
-		String s = LOTRSpeech.getSpeechAtLine(speechBankName, i);
-		s = LOTRSpeech.formatSpeech(s, entityplayer, location, objective);
+	public static String getSpeechLineForPlayer(LOTREntityNPC entity, String speechBankName, int i, ICommandSender entityplayer, CharSequence location, CharSequence objective) {
+		String s = getSpeechAtLine(speechBankName, i);
+		s = formatSpeech(s, entityplayer, location, objective);
 		if (entity.isDrunkard()) {
 			float f = entity.getDrunkenSpeechFactor();
 			s = LOTRDrunkenSpeech.getDrunkenSpeech(s, f);
@@ -80,7 +82,7 @@ public class LOTRSpeech {
 	}
 
 	public static void loadAllSpeechBanks() {
-		HashMap<String, BufferedReader> speechBankNamesAndReaders = new HashMap<>();
+		Map<String, BufferedReader> speechBankNamesAndReaders = new HashMap<>();
 		ZipFile zip = null;
 		try {
 			ModContainer mc = LOTRMod.getModContainer();
@@ -98,7 +100,7 @@ public class LOTRSpeech {
 					int i = s.indexOf(".txt");
 					try {
 						s = s.substring(0, i);
-						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(zip.getInputStream(entry)), Charsets.UTF_8.name()));
+						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(zip.getInputStream(entry)), Charsets.UTF_8));
 						speechBankNamesAndReaders.put(s, reader);
 					} catch (Exception e) {
 						FMLLog.severe("Failed to load LOTR speech bank " + s + "from zip file");
@@ -118,7 +120,7 @@ public class LOTRSpeech {
 					}
 					try {
 						s = s.substring(0, i);
-						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(new FileInputStream(subfile)), Charsets.UTF_8.name()));
+						BufferedReader reader = new BufferedReader(new InputStreamReader(new BOMInputStream(Files.newInputStream(subfile.toPath())), Charsets.UTF_8));
 						speechBankNamesAndReaders.put(s, reader);
 					} catch (Exception e) {
 						FMLLog.severe("Failed to load LOTR speech bank " + s + " from MCP folder");
@@ -130,8 +132,9 @@ public class LOTRSpeech {
 			FMLLog.severe("Failed to load LOTR speech banks");
 			e.printStackTrace();
 		}
-		for (String speechBankName : speechBankNamesAndReaders.keySet()) {
-			BufferedReader reader = speechBankNamesAndReaders.get(speechBankName);
+		for (Map.Entry<String, BufferedReader> entry : speechBankNamesAndReaders.entrySet()) {
+			String speechBankName = entry.getKey();
+			BufferedReader reader = entry.getValue();
 			try {
 				String line;
 				ArrayList<String> speeches = new ArrayList<>();
@@ -150,7 +153,7 @@ public class LOTRSpeech {
 					FMLLog.severe("LOTR speech bank " + speechBankName + " is empty!");
 					continue;
 				}
-				SpeechBank bank = random ? new SpeechBank(speechBankName, random, speeches) : new SpeechBank(speechBankName, random, allLines);
+				SpeechBank bank = random ? new SpeechBank(speechBankName, true, speeches) : new SpeechBank(speechBankName, false, allLines);
 				allSpeechBanks.put(speechBankName, bank);
 			} catch (Exception e) {
 				FMLLog.severe("Failed to load LOTR speech bank " + speechBankName);
@@ -171,37 +174,37 @@ public class LOTRSpeech {
 			return;
 		}
 		for (Object player : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
-			((EntityPlayer) player).addChatMessage(message);
+			((ICommandSender) player).addChatMessage(message);
 		}
 	}
 
 	public static void messageAllPlayersInWorld(World world, IChatComponent message) {
 		for (Object player : world.playerEntities) {
-			((EntityPlayer) player).addChatMessage(message);
+			((ICommandSender) player).addChatMessage(message);
 		}
 	}
 
 	public static void sendSpeech(EntityPlayer entityplayer, LOTREntityNPC entity, String speech) {
-		LOTRSpeech.sendSpeech(entityplayer, entity, speech, false);
+		sendSpeech(entityplayer, entity, speech, false);
 	}
 
 	public static void sendSpeech(EntityPlayer entityplayer, LOTREntityNPC entity, String speech, boolean forceChatMsg) {
-		LOTRPacketNPCSpeech packet = new LOTRPacketNPCSpeech(entity.getEntityId(), speech, forceChatMsg);
-		LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+		IMessage packet = new LOTRPacketNPCSpeech(entity.getEntityId(), speech, forceChatMsg);
+		LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 	}
 
 	public static void sendSpeechAndChatMessage(EntityPlayer entityplayer, LOTREntityNPC entity, String speechBankName) {
 		String name = entity.getCommandSenderName();
-		String speech = LOTRSpeech.getRandomSpeechForPlayer(entity, speechBankName, entityplayer, null, null);
+		String speech = getRandomSpeechForPlayer(entity, speechBankName, entityplayer, null, null);
 		String message = EnumChatFormatting.YELLOW + "<" + name + ">" + EnumChatFormatting.WHITE + " " + speech;
-		ChatComponentText component = new ChatComponentText(message);
+		IChatComponent component = new ChatComponentText(message);
 		entityplayer.addChatMessage(component);
-		LOTRSpeech.sendSpeech(entityplayer, entity, speech);
+		sendSpeech(entityplayer, entity, speech);
 	}
 
 	public static void sendSpeechBankWithChatMsg(EntityPlayer entityplayer, LOTREntityNPC entity, String speechBankName) {
-		String speech = LOTRSpeech.getRandomSpeechForPlayer(entity, speechBankName, entityplayer, null, null);
-		LOTRSpeech.sendSpeech(entityplayer, entity, speech, true);
+		String speech = getRandomSpeechForPlayer(entity, speechBankName, entityplayer, null, null);
+		sendSpeech(entityplayer, entity, speech, true);
 	}
 
 	public static class SpeechBank {
@@ -237,7 +240,7 @@ public class LOTRSpeech {
 
 		public String internalFormatSpeech(String s) {
 			if (LOTRMod.isAprilFools() || rand.nextInt(2000) == 0) {
-				s = "Tbh, " + s.substring(0, 1).toLowerCase() + s.substring(1, s.length() - 1) + ", tbh.";
+				s = "Tbh, " + s.substring(0, 1).toLowerCase(Locale.ROOT) + s.substring(1, s.length() - 1) + ", tbh.";
 			}
 			return s;
 		}

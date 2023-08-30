@@ -11,23 +11,23 @@ public class LOTRCommandAchievement extends CommandBase {
 	@Override
 	public List addTabCompletionOptions(ICommandSender sender, String[] args) {
 		switch (args.length) {
-		case 1:
-			return CommandBase.getListOfStringsMatchingLastWord(args, "give", "remove");
-		case 2: {
-			List<LOTRAchievement> achievements = LOTRAchievement.getAllAchievements();
-			ArrayList<String> names = new ArrayList<>();
-			for (LOTRAchievement a : achievements) {
-				names.add(a.getCodeName());
+			case 1:
+				return CommandBase.getListOfStringsMatchingLastWord(args, "give", "remove");
+			case 2: {
+				List<LOTRAchievement> achievements = LOTRAchievement.getAllAchievements();
+				ArrayList<String> names = new ArrayList<>();
+				for (LOTRAchievement a : achievements) {
+					names.add(a.getCodeName());
+				}
+				if ("remove".equals(args[0])) {
+					names.add("all");
+				}
+				return CommandBase.getListOfStringsMatchingLastWord(args, names.toArray(new String[0]));
 			}
-			if ("remove".equals(args[0])) {
-				names.add("all");
-			}
-			return CommandBase.getListOfStringsMatchingLastWord(args, names.toArray(new String[0]));
-		}
-		case 3:
-			return CommandBase.getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
-		default:
-			break;
+			case 3:
+				return CommandBase.getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
+			default:
+				break;
 		}
 		return null;
 	}
@@ -77,7 +77,7 @@ public class LOTRCommandAchievement extends CommandBase {
 			}
 			if ("remove".equalsIgnoreCase(args[0])) {
 				if ("all".equalsIgnoreCase(achName)) {
-					ArrayList<LOTRAchievement> allAchievements = new ArrayList<>(playerData.getAchievements());
+					Iterable<LOTRAchievement> allAchievements = new ArrayList<>(playerData.getAchievements());
 					for (LOTRAchievement ach : allAchievements) {
 						playerData.removeAchievement(ach);
 					}

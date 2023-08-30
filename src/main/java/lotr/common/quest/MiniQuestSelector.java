@@ -9,7 +9,7 @@ import lotr.common.fac.LOTRFaction;
 public interface MiniQuestSelector {
 	boolean include(LOTRMiniQuest var1);
 
-	public static class BountyActiveAnyFaction extends OptionalActive {
+	class BountyActiveAnyFaction extends OptionalActive {
 		public BountyActiveAnyFaction() {
 			setActiveOnly();
 		}
@@ -24,7 +24,7 @@ public interface MiniQuestSelector {
 		}
 	}
 
-	public static class BountyActiveFaction extends BountyActiveAnyFaction {
+	class BountyActiveFaction extends BountyActiveAnyFaction {
 		public Supplier<LOTRFaction> factionGet;
 
 		public BountyActiveFaction(Supplier<LOTRFaction> sup) {
@@ -37,7 +37,7 @@ public interface MiniQuestSelector {
 		}
 	}
 
-	public static class EntityId extends OptionalActive {
+	class EntityId extends OptionalActive {
 		public UUID entityID;
 
 		public EntityId(UUID id) {
@@ -50,7 +50,7 @@ public interface MiniQuestSelector {
 		}
 	}
 
-	public static class Faction extends OptionalActive {
+	class Faction extends OptionalActive {
 		public Supplier<LOTRFaction> factionGet;
 
 		public Faction(Supplier<LOTRFaction> sup) {
@@ -63,8 +63,8 @@ public interface MiniQuestSelector {
 		}
 	}
 
-	public static class OptionalActive implements MiniQuestSelector {
-		public boolean activeOnly = false;
+	class OptionalActive implements MiniQuestSelector {
+		public boolean activeOnly;
 
 		@Override
 		public boolean include(LOTRMiniQuest quest) {

@@ -17,7 +17,7 @@ public class LOTREntityHobbitFarmer extends LOTREntityHobbit implements LOTRTrad
 		super(world);
 		LOTREntityUtils.removeAITask(this, EntityAIPanic.class);
 		tasks.addTask(2, new LOTREntityAIAttackOnCollide(this, 1.2, false));
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

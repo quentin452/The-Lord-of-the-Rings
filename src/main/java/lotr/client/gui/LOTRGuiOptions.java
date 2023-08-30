@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.lwjgl.opengl.GL11;
 
 import lotr.common.*;
@@ -19,7 +20,7 @@ public class LOTRGuiOptions extends LOTRGuiMenuBase {
 	public void actionPerformed(GuiButton button) {
 		if (button.enabled) {
 			if (button instanceof LOTRGuiButtonOptions) {
-				LOTRPacketSetOption packet = new LOTRPacketSetOption(button.id);
+				IMessage packet = new LOTRPacketSetOption(button.id);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 			} else {
 				super.actionPerformed(button);

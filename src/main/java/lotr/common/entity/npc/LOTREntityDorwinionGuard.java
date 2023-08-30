@@ -21,13 +21,13 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTREntityDorwinionGuard extends LOTREntityDorwinionMan {
-	public static ItemStack[] guardWeapons = { new ItemStack(Items.iron_sword), new ItemStack(LOTRMod.battleaxeIron), new ItemStack(LOTRMod.pikeIron) };
+	public static ItemStack[] guardWeapons = {new ItemStack(Items.iron_sword), new ItemStack(LOTRMod.battleaxeIron), new ItemStack(LOTRMod.pikeIron)};
 	public static int MAX_GRAPE_ALERT = 3;
 	public int grapeAlert;
 
 	public LOTREntityDorwinionGuard(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		npcShield = LOTRShields.ALIGNMENT_DORWINION;
 	}
 
@@ -84,10 +84,10 @@ public class LOTREntityDorwinionGuard extends LOTREntityDorwinionMan {
 		setCurrentItemOrArmor(1, new ItemStack(LOTRMod.bootsDorwinion));
 		setCurrentItemOrArmor(2, new ItemStack(LOTRMod.legsDorwinion));
 		setCurrentItemOrArmor(3, new ItemStack(LOTRMod.bodyDorwinion));
-		if (rand.nextInt(4) != 0) {
-			setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetDorwinion));
-		} else {
+		if (rand.nextInt(4) == 0) {
 			setCurrentItemOrArmor(4, null);
+		} else {
+			setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetDorwinion));
 		}
 		return data;
 	}
@@ -136,7 +136,8 @@ public class LOTREntityDorwinionGuard extends LOTREntityDorwinionMan {
 					}
 					if (nearbyGuards < 8) {
 						int guardSpawns = 1 + world.rand.nextInt(6);
-						block1: for (int l = 0; l < guardSpawns; ++l) {
+						block1:
+						for (int l = 0; l < guardSpawns; ++l) {
 							guard = new LOTREntityDorwinionGuard(world);
 							if (world.rand.nextBoolean()) {
 								guard = new LOTREntityDorwinionCrossbower(world);

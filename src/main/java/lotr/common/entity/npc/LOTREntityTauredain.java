@@ -34,7 +34,7 @@ public class LOTREntityTauredain extends LOTREntityMan {
 		tasks.addTask(7, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 5.0f, 0.02f));
 		tasks.addTask(8, new EntityAIWatchClosest(this, EntityLiving.class, 8.0f, 0.02f));
 		tasks.addTask(9, new EntityAILookIdle(this));
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -100,9 +100,7 @@ public class LOTREntityTauredain extends LOTREntityMan {
 			int k = MathHelper.floor_double(posZ);
 			BiomeGenBase biome = worldObj.getBiomeGenForCoords(i, k);
 			Block block = worldObj.getBlock(i, j - 1, k);
-			if (j > 62 && block == biome.topBlock) {
-				return true;
-			}
+			return j > 62 && block == biome.topBlock;
 		}
 		return false;
 	}
@@ -119,7 +117,7 @@ public class LOTREntityTauredain extends LOTREntityMan {
 
 	@Override
 	public String getNPCFormattedName(String npcName, String entityName) {
-		if (this.getClass() == LOTREntityTauredain.class) {
+		if (getClass() == LOTREntityTauredain.class) {
 			return StatCollector.translateToLocalFormatted("entity.lotr.Tauredain.entityName", npcName);
 		}
 		return super.getNPCFormattedName(npcName, entityName);

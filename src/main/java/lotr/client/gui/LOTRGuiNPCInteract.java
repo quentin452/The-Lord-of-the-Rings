@@ -5,7 +5,7 @@ import lotr.common.entity.npc.LOTREntityNPC;
 public abstract class LOTRGuiNPCInteract extends LOTRGuiScreenBase {
 	public LOTREntityNPC theEntity;
 
-	public LOTRGuiNPCInteract(LOTREntityNPC entity) {
+	protected LOTRGuiNPCInteract(LOTREntityNPC entity) {
 		theEntity = entity;
 	}
 

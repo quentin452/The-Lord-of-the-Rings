@@ -12,7 +12,7 @@ public class LOTRItemTallGrass extends LOTRItemBlockMetadata {
 		super(block);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getColorFromItemStack(ItemStack itemstack, int pass) {
 		if (pass > 0) {
@@ -21,7 +21,7 @@ public class LOTRItemTallGrass extends LOTRItemBlockMetadata {
 		return super.getColorFromItemStack(itemstack, pass);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIconFromDamageForRenderPass(int meta, int pass) {
 		if (pass > 0) {

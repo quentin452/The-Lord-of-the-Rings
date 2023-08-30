@@ -5,11 +5,11 @@ import net.minecraft.util.DamageSource;
 public abstract class LOTREnchantmentProtectionSpecial extends LOTREnchantment {
 	public int protectLevel;
 
-	public LOTREnchantmentProtectionSpecial(String s, int level) {
+	protected LOTREnchantmentProtectionSpecial(String s, int level) {
 		this(s, LOTREnchantmentType.ARMOR, level);
 	}
 
-	public LOTREnchantmentProtectionSpecial(String s, LOTREnchantmentType type, int level) {
+	protected LOTREnchantmentProtectionSpecial(String s, LOTREnchantmentType type, int level) {
 		super(s, type);
 		protectLevel = level;
 		setValueModifier((2.0f + protectLevel) / 2.0f);

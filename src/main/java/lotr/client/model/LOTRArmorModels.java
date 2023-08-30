@@ -248,7 +248,7 @@ public class LOTRArmorModels {
 			model.bipedHeadwear.showModel = ((LOTREntityNPC) entity).shouldRenderNPCHair();
 		}
 		if (entity instanceof EntityPlayer) {
-			ItemStack heldRight = entity == null ? null : entity.getHeldItem();
+			ItemStack heldRight = entity.getHeldItem();
 			model.aimedBow = mainModel.aimedBow;
 			setupHeldItem(model, entity, heldRight, true);
 		} else {

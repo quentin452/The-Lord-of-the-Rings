@@ -19,19 +19,14 @@ public class LOTRItemMobSpawner extends ItemBlock {
 		setHasSubtypes(true);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
 		String entityName = LOTREntities.getStringFromID(itemstack.getItemDamage());
 		list.add(entityName);
 	}
 
-	@Override
-	public int getMetadata(int i) {
-		return 0;
-	}
-
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (LOTREntities.SpawnEggInfo info : LOTREntities.spawnEggs.values()) {

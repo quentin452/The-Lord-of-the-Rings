@@ -64,14 +64,14 @@ public class LOTRVillageGenDunedain extends LOTRVillageGen {
 			if (random.nextInt(3) == 0) {
 				int i = random.nextInt(3);
 				switch (i) {
-				case 0:
-					return new LOTRWorldGenRangerSmithy(false);
-				case 1:
-					return new LOTRWorldGenRangerStables(false);
-				case 2:
-					return new LOTRWorldGenRangerLodge(false);
-				default:
-					break;
+					case 0:
+						return new LOTRWorldGenRangerSmithy(false);
+					case 1:
+						return new LOTRWorldGenRangerStables(false);
+					case 2:
+						return new LOTRWorldGenRangerLodge(false);
+					default:
+						break;
 				}
 			}
 			return new LOTRWorldGenRangerHouse(false);
@@ -88,7 +88,7 @@ public class LOTRVillageGenDunedain extends LOTRVillageGen {
 		}
 
 		public void setupVillage(Random random) {
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -98,7 +98,7 @@ public class LOTRVillageGenDunedain extends LOTRVillageGen {
 					spawner.setBlockEnemySpawnRange(60);
 				}
 			}, 0, 0, 0);
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -108,11 +108,11 @@ public class LOTRVillageGenDunedain extends LOTRVillageGen {
 					spawner.setBlockEnemySpawnRange(60);
 				}
 			}, 0, 0, 0);
-			this.addStructure(new LOTRWorldGenRangerWell(false), 0, -2, 0, true);
+			addStructure(new LOTRWorldGenRangerWell(false), 0, -2, 0, true);
 			int lampX = 8;
-			for (int i : new int[] { -lampX, lampX }) {
-				for (int k : new int[] { -lampX, lampX }) {
-					this.addStructure(new LOTRWorldGenRangerVillageLight(false), i, k, 0);
+			for (int i : new int[]{-lampX, lampX}) {
+				for (int k : new int[]{-lampX, lampX}) {
+					addStructure(new LOTRWorldGenRangerVillageLight(false), i, k, 0);
 				}
 			}
 			int houses = 20;
@@ -146,7 +146,7 @@ public class LOTRVillageGenDunedain extends LOTRVillageGen {
 					}
 					i = Math.round(l * cos);
 					k = Math.round(l * sin);
-					this.addStructure(getRandomHouse(random), i, k, r);
+					addStructure(getRandomHouse(random), i, k, r);
 					continue;
 				}
 				if (random.nextInt(4) != 0) {
@@ -158,7 +158,7 @@ public class LOTRVillageGenDunedain extends LOTRVillageGen {
 				}
 				i = Math.round(l * cos);
 				k = Math.round(l * sin);
-				this.addStructure(new LOTRWorldGenHayBales(false), i, k, r);
+				addStructure(new LOTRWorldGenHayBales(false), i, k, r);
 			}
 			if (palisade) {
 				int rPalisade = innerSize + 12 + 16;
@@ -171,7 +171,7 @@ public class LOTRVillageGenDunedain extends LOTRVillageGen {
 						if (Math.abs(i) <= 5 && k < 0 || (dSq = i * i + k * k) < rSq || dSq >= rSqMax) {
 							continue;
 						}
-						this.addStructure(new LOTRWorldGenRangerVillagePalisade(false), i, k, 0);
+						addStructure(new LOTRWorldGenRangerVillagePalisade(false), i, k, 0);
 					}
 				}
 			}
@@ -187,7 +187,7 @@ public class LOTRVillageGenDunedain extends LOTRVillageGen {
 	}
 
 	public enum VillageType {
-		VILLAGE;
+		VILLAGE
 
 	}
 

@@ -33,7 +33,7 @@ public class LOTRWorldGenSouthronTownGate extends LOTRWorldGenSouthronStructure 
 		int k12;
 		int step;
 		int i12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 4);
+		setOriginAndRotation(world, i, j, k, rotation, 4);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i12 = -8; i12 <= 8; ++i12) {

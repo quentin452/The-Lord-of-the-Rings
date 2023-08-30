@@ -6,6 +6,7 @@ import java.util.*;
 
 import javax.imageio.ImageIO;
 
+import lotr.common.entity.npc.LOTRNPCMount;
 import org.lwjgl.opengl.GL11;
 
 import lotr.client.model.LOTRModelCamel;
@@ -32,7 +33,7 @@ public class LOTRRenderCamel extends RenderLiving {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityCamel camel = (LOTREntityCamel) entity;
+		LOTRNPCMount camel = (LOTRNPCMount) entity;
 		return LOTRRenderHorse.getLayeredMountTexture(camel, camelSkin);
 	}
 
@@ -52,7 +53,7 @@ public class LOTRRenderCamel extends RenderLiving {
 		if (pass == 1 && camel.isCamelWearingCarpet()) {
 			setRenderPassModel(modelCarpet);
 			int color = camel.getCamelCarpetColor();
-			ResourceLocation carpet = LOTRRenderCamel.getColoredCarpetTexture(color);
+			ResourceLocation carpet = getColoredCarpetTexture(color);
 			bindTexture(carpet);
 			return 1;
 		}

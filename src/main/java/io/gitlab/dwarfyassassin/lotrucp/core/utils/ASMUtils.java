@@ -18,7 +18,7 @@ public class ASMUtils {
 	}
 
 	public static MethodNode findMethod(ClassNode classNode, String targetMethodName, String obfTargetMethodName, String targetMethodDesc) {
-		return ASMUtils.findMethod(classNode, FMLForgePlugin.RUNTIME_DEOBF ? obfTargetMethodName : targetMethodName, targetMethodDesc);
+		return findMethod(classNode, FMLForgePlugin.RUNTIME_DEOBF ? obfTargetMethodName : targetMethodName, targetMethodDesc);
 	}
 
 	public static void removePreviousNodes(InsnList list, AbstractInsnNode start, int amount) {

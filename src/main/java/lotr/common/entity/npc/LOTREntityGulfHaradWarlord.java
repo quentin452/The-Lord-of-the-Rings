@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityGulfHaradWarlord extends LOTREntityGulfHaradWarrior implements LOTRUnitTradeable {
 	public LOTREntityGulfHaradWarlord(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.GULF_HARAD;
 	}
 

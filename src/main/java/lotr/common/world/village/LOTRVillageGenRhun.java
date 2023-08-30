@@ -118,7 +118,7 @@ public class LOTRVillageGenRhun extends LOTRVillageGen {
 		}
 
 		public void setupFort(Random random) {
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -128,9 +128,9 @@ public class LOTRVillageGenRhun extends LOTRVillageGen {
 					spawner.setBlockEnemySpawnRange(60);
 				}
 			}, 0, 0, 0);
-			for (int i1 : new int[] { -48, 48 }) {
-				for (int k1 : new int[] { -48, 48 }) {
-					this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			for (int i1 : new int[]{-48, 48}) {
+				for (int k1 : new int[]{-48, 48}) {
+					addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 						@Override
 						public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -142,68 +142,66 @@ public class LOTRVillageGenRhun extends LOTRVillageGen {
 					}, i1, k1, 0);
 				}
 			}
-			this.addStructure(new LOTRWorldGenEasterlingFortress(false), 0, 13, 2, true);
+			addStructure(new LOTRWorldGenEasterlingFortress(false), 0, 13, 2, true);
 			int stableX = 26;
 			int stableZ = 0;
-			this.addStructure(new LOTRWorldGenEasterlingStables(false), -stableX, stableZ, 1, true);
-			this.addStructure(new LOTRWorldGenEasterlingStables(false), stableX, stableZ, 3, true);
-			int wellX = stableX;
+			addStructure(new LOTRWorldGenEasterlingStables(false), -stableX, stableZ, 1, true);
+			addStructure(new LOTRWorldGenEasterlingStables(false), stableX, stableZ, 3, true);
 			int wellZ = 18;
-			this.addStructure(new LOTRWorldGenEasterlingWell(false), -wellX, wellZ, 1, true);
-			this.addStructure(new LOTRWorldGenEasterlingWell(false), wellX, wellZ, 3, true);
+			addStructure(new LOTRWorldGenEasterlingWell(false), -stableX, wellZ, 1, true);
+			addStructure(new LOTRWorldGenEasterlingWell(false), stableX, wellZ, 3, true);
 			int farmZ = 27;
 			for (int l = -3; l <= 3; ++l) {
 				int farmX = l * 10;
 				if (random.nextInt(3) == 0) {
-					this.addStructure(new LOTRWorldGenHayBales(false), farmX, -farmZ - 5, 2);
+					addStructure(new LOTRWorldGenHayBales(false), farmX, -farmZ - 5, 2);
 					continue;
 				}
-				this.addStructure(getRandomVillageFarm(random), farmX, -farmZ, 2);
+				addStructure(getRandomVillageFarm(random), farmX, -farmZ, 2);
 			}
 			int statueX = 6;
 			int statueZ = 36;
-			this.addStructure(new LOTRWorldGenEasterlingStatue(false), -statueX, statueZ, 1, true);
-			this.addStructure(new LOTRWorldGenEasterlingStatue(false), statueX, statueZ, 3, true);
-			this.addStructure(new LOTRWorldGenEasterlingGatehouse(false).disableSigns(), 0, 62, 2, true);
+			addStructure(new LOTRWorldGenEasterlingStatue(false), -statueX, statueZ, 1, true);
+			addStructure(new LOTRWorldGenEasterlingStatue(false), statueX, statueZ, 3, true);
+			addStructure(new LOTRWorldGenEasterlingGatehouse(false).disableSigns(), 0, 62, 2, true);
 			int towerX = 58;
-			this.addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setLeftLadder(), -towerX, -towerX - 3, 0, true);
-			this.addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setRightLadder(), towerX, -towerX - 3, 0, true);
-			this.addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setRightLadder(), -towerX, towerX + 3, 2, true);
-			this.addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setLeftLadder(), towerX, towerX + 3, 2, true);
-			int wallZ = towerX;
-			this.addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), 0, -wallZ, 0);
-			this.addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), wallZ, 0, 1);
-			this.addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), -wallZ, 0, 3);
+			addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setLeftLadder(), -towerX, -towerX - 3, 0, true);
+			addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setRightLadder(), towerX, -towerX - 3, 0, true);
+			addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setRightLadder(), -towerX, towerX + 3, 2, true);
+			addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setLeftLadder(), towerX, towerX + 3, 2, true);
+			addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), 0, -towerX, 0);
+			addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), towerX, 0, 1);
+			addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), -towerX, 0, 3);
 			for (int l = 0; l <= 5; ++l) {
 				int wallX = 11 + l * 8;
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Left(false), wallX, -wallZ, 0);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Right(false), -wallX, -wallZ, 0);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Left(false), wallZ, wallX, 1);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Right(false), wallZ, -wallX, 1);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Left(false), -wallX, wallZ, 2);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Right(false), wallX, wallZ, 2);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Left(false), -wallZ, -wallX, 3);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Right(false), -wallZ, wallX, 3);
+				addStructure(LOTRWorldGenEasterlingTownWall.Left(false), wallX, -towerX, 0);
+				addStructure(LOTRWorldGenEasterlingTownWall.Right(false), -wallX, -towerX, 0);
+				addStructure(LOTRWorldGenEasterlingTownWall.Left(false), towerX, wallX, 1);
+				addStructure(LOTRWorldGenEasterlingTownWall.Right(false), towerX, -wallX, 1);
+				addStructure(LOTRWorldGenEasterlingTownWall.Left(false), -wallX, towerX, 2);
+				addStructure(LOTRWorldGenEasterlingTownWall.Right(false), wallX, towerX, 2);
+				addStructure(LOTRWorldGenEasterlingTownWall.Left(false), -towerX, -wallX, 3);
+				addStructure(LOTRWorldGenEasterlingTownWall.Right(false), -towerX, wallX, 3);
 			}
 			int lampX = 17;
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, -lampX, 2, false);
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, -lampX, 2, false);
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, lampX, 0, false);
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, lampX, 0, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, -lampX, 2, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, -lampX, 2, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, lampX, 0, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, lampX, 0, false);
 			lampX = 45;
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, -lampX, 2, false);
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, -lampX, 2, false);
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, lampX, 0, false);
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, lampX, 0, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, -lampX, 2, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, -lampX, 2, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, lampX, 0, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, lampX, 0, false);
 			lampX = 7;
 			int lampZ = 64;
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, lampZ, 2, false);
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, lampZ, 2, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, lampZ, 2, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, lampZ, 2, false);
 		}
 
 		public void setupTown(Random random) {
 			int marketZ;
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -214,9 +212,9 @@ public class LOTRVillageGenRhun extends LOTRVillageGen {
 				}
 			}, 0, 0, 0);
 			int spawnerX = 60;
-			for (int i1 : new int[] { -spawnerX, spawnerX }) {
-				for (int k1 : new int[] { -spawnerX, spawnerX }) {
-					this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			for (int i1 : new int[]{-spawnerX, spawnerX}) {
+				for (int k1 : new int[]{-spawnerX, spawnerX}) {
+					addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 						@Override
 						public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -229,116 +227,115 @@ public class LOTRVillageGenRhun extends LOTRVillageGen {
 				}
 			}
 			if (random.nextBoolean()) {
-				this.addStructure(new LOTRWorldGenEasterlingGarden(false), 0, 10, 2, true);
+				addStructure(new LOTRWorldGenEasterlingGarden(false), 0, 10, 2, true);
 			} else {
-				this.addStructure(new LOTRWorldGenEasterlingStatue(false), 0, 6, 2, true);
+				addStructure(new LOTRWorldGenEasterlingStatue(false), 0, 6, 2, true);
 			}
 			int mansionX = 12;
 			int mansionZ = 20;
-			this.addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), -mansionX, -mansionZ, 2, true);
-			this.addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), mansionX, -mansionZ, 2, true);
-			this.addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), -mansionX, mansionZ, 0, true);
-			this.addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), mansionX, mansionZ, 0, true);
-			this.addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), -mansionZ, -mansionX, 1, true);
-			this.addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), -mansionZ, mansionX, 1, true);
-			this.addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), mansionZ, -mansionX, 3, true);
-			this.addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), mansionZ, mansionX, 3, true);
+			addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), -mansionX, -mansionZ, 2, true);
+			addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), mansionX, -mansionZ, 2, true);
+			addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), -mansionX, mansionZ, 0, true);
+			addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), mansionX, mansionZ, 0, true);
+			addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), -mansionZ, -mansionX, 1, true);
+			addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), -mansionZ, mansionX, 1, true);
+			addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), mansionZ, -mansionX, 3, true);
+			addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), mansionZ, mansionX, 3, true);
 			for (int l = 0; l <= 3; ++l) {
 				int houseX = 10 + 14 * l;
 				int houseZ1 = 58;
 				int houseZ2 = 68;
 				if (l <= 2) {
-					if (l >= 1 && l <= 2) {
+					if (l >= 1) {
 						if (l == 1) {
-							this.addStructure(new LOTRWorldGenEasterlingTavernTown(false), -houseX - 7, -houseZ1, 0, true);
+							addStructure(new LOTRWorldGenEasterlingTavernTown(false), -houseX - 7, -houseZ1, 0, true);
 						}
 					} else {
-						this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseX, -houseZ1, 0, true);
+						addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseX, -houseZ1, 0, true);
 					}
-					this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseX, -houseZ1, 0, true);
+					addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseX, -houseZ1, 0, true);
 					if (l >= 1) {
-						this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseX, houseZ1, 2, true);
-						this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseX, houseZ1, 2, true);
+						addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseX, houseZ1, 2, true);
+						addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseX, houseZ1, 2, true);
 					}
-					this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseZ1, -houseX, 3, true);
-					this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseZ1, houseX, 3, true);
-					this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseZ1, -houseX, 1, true);
-					this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseZ1, houseX, 1, true);
+					addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseZ1, -houseX, 3, true);
+					addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseZ1, houseX, 3, true);
+					addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseZ1, -houseX, 1, true);
+					addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseZ1, houseX, 1, true);
 				}
 				if (l == 1) {
-					this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -houseX, -houseZ2, 2, true);
-					this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), houseX, -houseZ2, 2, true);
-					this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -houseX, houseZ2, 0, true);
-					this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), houseX, houseZ2, 0, true);
-					this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -houseZ2, -houseX, 1, true);
-					this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -houseZ2, houseX, 1, true);
-					this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), houseZ2, -houseX, 3, true);
-					this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), houseZ2, houseX, 3, true);
+					addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -houseX, -houseZ2, 2, true);
+					addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), houseX, -houseZ2, 2, true);
+					addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -houseX, houseZ2, 0, true);
+					addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), houseX, houseZ2, 0, true);
+					addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -houseZ2, -houseX, 1, true);
+					addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -houseZ2, houseX, 1, true);
+					addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), houseZ2, -houseX, 3, true);
+					addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), houseZ2, houseX, 3, true);
 					continue;
 				}
-				this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseX, -houseZ2, 2, true);
-				this.addStructure(l == 3 ? new LOTRWorldGenEasterlingSmithy(false) : new LOTRWorldGenEasterlingTownHouse(false), houseX, -houseZ2, 2, true);
-				this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseX, houseZ2, 0, true);
-				this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseX, houseZ2, 0, true);
-				this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseZ2, -houseX, 1, true);
-				this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseZ2, houseX, 1, true);
-				this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseZ2, -houseX, 3, true);
-				this.addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseZ2, houseX, 3, true);
+				addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseX, -houseZ2, 2, true);
+				addStructure(l == 3 ? new LOTRWorldGenEasterlingSmithy(false) : new LOTRWorldGenEasterlingTownHouse(false), houseX, -houseZ2, 2, true);
+				addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseX, houseZ2, 0, true);
+				addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseX, houseZ2, 0, true);
+				addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseZ2, -houseX, 1, true);
+				addStructure(new LOTRWorldGenEasterlingTownHouse(false), -houseZ2, houseX, 1, true);
+				addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseZ2, -houseX, 3, true);
+				addStructure(new LOTRWorldGenEasterlingTownHouse(false), houseZ2, houseX, 3, true);
 			}
 			int marketX = 4;
 			for (int l = 0; l <= 2; ++l) {
 				marketZ = 56 - l * 7;
-				this.addStructure(LOTRWorldGenEasterlingMarketStall.getRandomStall(random, false), -marketX, marketZ, 1, true);
-				this.addStructure(LOTRWorldGenEasterlingMarketStall.getRandomStall(random, false), marketX, marketZ, 3, true);
+				addStructure(LOTRWorldGenEasterlingMarketStall.getRandomStall(random, false), -marketX, marketZ, 1, true);
+				addStructure(LOTRWorldGenEasterlingMarketStall.getRandomStall(random, false), marketX, marketZ, 3, true);
 			}
 			marketX = 14;
 			marketZ = 59;
-			this.addStructure(LOTRWorldGenEasterlingMarketStall.getRandomStall(random, false), -marketX, marketZ, 2, true);
-			this.addStructure(LOTRWorldGenEasterlingMarketStall.getRandomStall(random, false), marketX, marketZ, 2, true);
+			addStructure(LOTRWorldGenEasterlingMarketStall.getRandomStall(random, false), -marketX, marketZ, 2, true);
+			addStructure(LOTRWorldGenEasterlingMarketStall.getRandomStall(random, false), marketX, marketZ, 2, true);
 			int gardenX = 58;
-			this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -gardenX + 5, -gardenX, 0, true);
-			this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), gardenX - 5, -gardenX, 0, true);
-			this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -gardenX + 5, gardenX, 2, true);
-			this.addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), gardenX - 5, gardenX, 2, true);
+			addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -gardenX + 5, -gardenX, 0, true);
+			addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), gardenX - 5, -gardenX, 0, true);
+			addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), -gardenX + 5, gardenX, 2, true);
+			addStructure(new LOTRWorldGenEasterlingVillageFarm.Tree(false), gardenX - 5, gardenX, 2, true);
 			int wellX = 69;
 			int wellZ = 63;
-			this.addStructure(new LOTRWorldGenEasterlingWell(false), -wellX, -wellZ, 1, true);
-			this.addStructure(new LOTRWorldGenEasterlingWell(false), -wellZ, -wellX, 2, true);
-			this.addStructure(new LOTRWorldGenEasterlingWell(false), wellX, -wellZ, 3, true);
-			this.addStructure(new LOTRWorldGenEasterlingWell(false), wellZ, -wellX, 2, true);
-			this.addStructure(new LOTRWorldGenEasterlingWell(false), -wellX, wellZ, 1, true);
-			this.addStructure(new LOTRWorldGenEasterlingWell(false), -wellZ, wellX, 0, true);
-			this.addStructure(new LOTRWorldGenEasterlingWell(false), wellX, wellZ, 3, true);
-			this.addStructure(new LOTRWorldGenEasterlingWell(false), wellZ, wellX, 0, true);
-			this.addStructure(new LOTRWorldGenEasterlingGatehouse(false).setSignText(villageName), 0, 94, 2, true);
+			addStructure(new LOTRWorldGenEasterlingWell(false), -wellX, -wellZ, 1, true);
+			addStructure(new LOTRWorldGenEasterlingWell(false), -wellZ, -wellX, 2, true);
+			addStructure(new LOTRWorldGenEasterlingWell(false), wellX, -wellZ, 3, true);
+			addStructure(new LOTRWorldGenEasterlingWell(false), wellZ, -wellX, 2, true);
+			addStructure(new LOTRWorldGenEasterlingWell(false), -wellX, wellZ, 1, true);
+			addStructure(new LOTRWorldGenEasterlingWell(false), -wellZ, wellX, 0, true);
+			addStructure(new LOTRWorldGenEasterlingWell(false), wellX, wellZ, 3, true);
+			addStructure(new LOTRWorldGenEasterlingWell(false), wellZ, wellX, 0, true);
+			addStructure(new LOTRWorldGenEasterlingGatehouse(false).setSignText(villageName), 0, 94, 2, true);
 			int towerX = 90;
-			this.addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setLeftLadder(), -towerX, -towerX - 3, 0, true);
-			this.addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setRightLadder(), towerX, -towerX - 3, 0, true);
-			this.addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setRightLadder(), -towerX, towerX + 3, 2, true);
-			this.addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setLeftLadder(), towerX, towerX + 3, 2, true);
-			int wallZ = towerX;
-			this.addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), 0, -wallZ, 0);
-			this.addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), wallZ, 0, 1);
-			this.addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), -wallZ, 0, 3);
+			addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setLeftLadder(), -towerX, -towerX - 3, 0, true);
+			addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setRightLadder(), towerX, -towerX - 3, 0, true);
+			addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setRightLadder(), -towerX, towerX + 3, 2, true);
+			addStructure(new LOTRWorldGenEasterlingTower(false).disableDoor().setBackLadder().setLeftLadder(), towerX, towerX + 3, 2, true);
+			addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), 0, -towerX, 0);
+			addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), towerX, 0, 1);
+			addStructure(LOTRWorldGenEasterlingTownWall.Centre(false), -towerX, 0, 3);
 			for (int l = 0; l <= 9; ++l) {
 				int wallX = 11 + l * 8;
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Left(false), wallX, -wallZ, 0);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Right(false), -wallX, -wallZ, 0);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Left(false), wallZ, wallX, 1);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Right(false), wallZ, -wallX, 1);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Left(false), -wallX, wallZ, 2);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Right(false), wallX, wallZ, 2);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Left(false), -wallZ, -wallX, 3);
-				this.addStructure(LOTRWorldGenEasterlingTownWall.Right(false), -wallZ, wallX, 3);
+				addStructure(LOTRWorldGenEasterlingTownWall.Left(false), wallX, -towerX, 0);
+				addStructure(LOTRWorldGenEasterlingTownWall.Right(false), -wallX, -towerX, 0);
+				addStructure(LOTRWorldGenEasterlingTownWall.Left(false), towerX, wallX, 1);
+				addStructure(LOTRWorldGenEasterlingTownWall.Right(false), towerX, -wallX, 1);
+				addStructure(LOTRWorldGenEasterlingTownWall.Left(false), -wallX, towerX, 2);
+				addStructure(LOTRWorldGenEasterlingTownWall.Right(false), wallX, towerX, 2);
+				addStructure(LOTRWorldGenEasterlingTownWall.Left(false), -towerX, -wallX, 3);
+				addStructure(LOTRWorldGenEasterlingTownWall.Right(false), -towerX, wallX, 3);
 			}
 			int lampX = 7;
 			int lampZ = 96;
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, lampZ, 2, false);
-			this.addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, lampZ, 2, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), -lampX, lampZ, 2, false);
+			addStructure(new LOTRWorldGenEasterlingLamp(false), lampX, lampZ, 2, false);
 		}
 
 		public void setupVillage(Random random) {
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -348,7 +345,7 @@ public class LOTRVillageGenRhun extends LOTRVillageGen {
 					spawner.setBlockEnemySpawnRange(60);
 				}
 			}, 0, 0, 0);
-			this.addStructure(new LOTRWorldGenNPCRespawner(false) {
+			addStructure(new LOTRWorldGenNPCRespawner(false) {
 
 				@Override
 				public void setupRespawner(LOTREntityNPCRespawner spawner) {
@@ -361,17 +358,17 @@ public class LOTRVillageGenRhun extends LOTRVillageGen {
 			int pathEnd = 68;
 			int pathSide = 7;
 			int centreSide = 19;
-			this.addStructure(new LOTRWorldGenEasterlingWell(false), 0, -2, 0, true);
+			addStructure(new LOTRWorldGenEasterlingWell(false), 0, -2, 0, true);
 			int signX = 12;
-			this.addStructure(new LOTRWorldGenEasterlingVillageSign(false).setSignText(villageName), -signX, 0, 1, true);
-			this.addStructure(new LOTRWorldGenEasterlingVillageSign(false).setSignText(villageName), signX, 0, 3, true);
-			this.addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), 0, -centreSide, 2, true);
+			addStructure(new LOTRWorldGenEasterlingVillageSign(false).setSignText(villageName), -signX, 0, 1, true);
+			addStructure(new LOTRWorldGenEasterlingVillageSign(false).setSignText(villageName), signX, 0, 3, true);
+			addStructure(new LOTRWorldGenEasterlingLargeTownHouse(false), 0, -centreSide, 2, true);
 			if (random.nextBoolean()) {
-				this.addStructure(new LOTRWorldGenEasterlingTavern(false), -pathEnd, 0, 1, true);
-				this.addStructure(getOtherVillageStructure(random), pathEnd, 0, 3, true);
+				addStructure(new LOTRWorldGenEasterlingTavern(false), -pathEnd, 0, 1, true);
+				addStructure(getOtherVillageStructure(random), pathEnd, 0, 3, true);
 			} else {
-				this.addStructure(getOtherVillageStructure(random), -pathEnd, 0, 1, true);
-				this.addStructure(new LOTRWorldGenEasterlingTavern(false), pathEnd, 0, 3, true);
+				addStructure(getOtherVillageStructure(random), -pathEnd, 0, 1, true);
+				addStructure(new LOTRWorldGenEasterlingTavern(false), pathEnd, 0, 3, true);
 			}
 			int rowHouses = 3;
 			for (int l = -rowHouses; l <= rowHouses; ++l) {
@@ -381,22 +378,22 @@ public class LOTRVillageGenRhun extends LOTRVillageGen {
 					k1 += 15 - pathSide;
 				}
 				if (Math.abs(l) >= 1) {
-					this.addStructure(getRandomHouse(random), i1, -k1, 2);
+					addStructure(getRandomHouse(random), i1, -k1, 2);
 				}
-				this.addStructure(getRandomHouse(random), i1, k1, 0);
+				addStructure(getRandomHouse(random), i1, k1, 0);
 				int k2 = k1 + 20;
 				if (l != 0) {
 					if (random.nextInt(3) == 0) {
-						this.addStructure(getRandomVillageFarm(random), i1, -k2, 2);
+						addStructure(getRandomVillageFarm(random), i1, -k2, 2);
 					} else {
-						this.addStructure(new LOTRWorldGenHayBales(false), i1, -k2, 2);
+						addStructure(new LOTRWorldGenHayBales(false), i1, -k2, 2);
 					}
 				}
 				if (random.nextInt(3) == 0) {
-					this.addStructure(getRandomVillageFarm(random), i1, k2, 0);
+					addStructure(getRandomVillageFarm(random), i1, k2, 0);
 					continue;
 				}
-				this.addStructure(new LOTRWorldGenHayBales(false), i1, k2, 0);
+				addStructure(new LOTRWorldGenHayBales(false), i1, k2, 0);
 			}
 		}
 
@@ -409,7 +406,7 @@ public class LOTRVillageGenRhun extends LOTRVillageGen {
 	}
 
 	public enum VillageType {
-		VILLAGE, TOWN, FORT;
+		VILLAGE, TOWN, FORT
 
 	}
 

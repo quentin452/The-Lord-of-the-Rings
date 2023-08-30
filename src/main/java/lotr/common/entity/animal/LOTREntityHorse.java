@@ -74,7 +74,7 @@ public class LOTREntityHorse extends EntityHorse implements LOTRNPCMount {
 			for (Object element : list) {
 				LOTREntityHorse mount;
 				Entity entity = (Entity) element;
-				if (entity.getClass() != this.getClass() || (mount = (LOTREntityHorse) entity).isChild() || mount.isTame()) {
+				if (entity.getClass() != getClass() || (mount = (LOTREntityHorse) entity).isChild() || mount.isTame()) {
 					continue;
 				}
 				mount.setAttackTarget((EntityLivingBase) attacker);
@@ -103,7 +103,7 @@ public class LOTREntityHorse extends EntityHorse implements LOTRNPCMount {
 	@Override
 	public EntityAgeable createChild(EntityAgeable otherParent) {
 		EntityHorse superChild = (EntityHorse) super.createChild(otherParent);
-		LOTREntityHorse child = (LOTREntityHorse) EntityList.createEntityByName(LOTREntities.getStringFromClass(this.getClass()), worldObj);
+		LOTREntityHorse child = (LOTREntityHorse) EntityList.createEntityByName(LOTREntities.getStringFromClass(getClass()), worldObj);
 		child.setHorseType(superChild.getHorseType());
 		child.setHorseVariant(superChild.getHorseVariant());
 		double maxHealth = getChildAttribute(this, otherParent, SharedMonsterAttributes.maxHealth, 3.0);
@@ -116,7 +116,7 @@ public class LOTREntityHorse extends EntityHorse implements LOTRNPCMount {
 		double moveSpeed = getChildAttribute(this, otherParent, SharedMonsterAttributes.movementSpeed, 0.03);
 		moveSpeed = clampChildSpeed(moveSpeed);
 		child.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(moveSpeed);
-		if (isTame() && ((LOTREntityHorse) otherParent).isTame()) {
+		if (isTame() && ((EntityHorse) otherParent).isTame()) {
 			child.setHorseTamed(true);
 		}
 		return child;
@@ -144,7 +144,7 @@ public class LOTREntityHorse extends EntityHorse implements LOTRNPCMount {
 	@Override
 	public float getBlockPathWeight(int i, int j, int k) {
 		if (getBelongsToNPC() && riddenByEntity instanceof LOTREntityNPC) {
-			return ((LOTREntityNPC) riddenByEntity).getBlockPathWeight(i, j, k);
+			return ((EntityCreature) riddenByEntity).getBlockPathWeight(i, j, k);
 		}
 		return super.getBlockPathWeight(i, j, k);
 	}
@@ -161,7 +161,7 @@ public class LOTREntityHorse extends EntityHorse implements LOTRNPCMount {
 
 	@Override
 	public String getCommandSenderName() {
-		if (this.getClass() == LOTREntityHorse.class) {
+		if (getClass() == LOTREntityHorse.class) {
 			return super.getCommandSenderName();
 		}
 		if (hasCustomNameTag()) {
@@ -355,7 +355,7 @@ public class LOTREntityHorse extends EntityHorse implements LOTRNPCMount {
 		int i = MathHelper.floor_double(posX);
 		int k = MathHelper.floor_double(posZ);
 		BiomeGenBase biome = worldObj.getBiomeGenForCoords(i, k);
-		if (this.getClass() == LOTREntityHorse.class) {
+		if (getClass() == LOTREntityHorse.class) {
 			float healthBoost = 0.0f;
 			float speedBoost = 0.0f;
 			float jumpAdd = 0.0f;
@@ -371,12 +371,12 @@ public class LOTREntityHorse extends EntityHorse implements LOTRNPCMount {
 			}
 			if (healthBoost > 0.0f) {
 				double maxHealth = getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue();
-				getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHealth *= 1.0f + rand.nextFloat() * healthBoost);
+				getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHealth * (1.0f + rand.nextFloat() * healthBoost));
 				setHealth(getMaxHealth());
 			}
 			if (speedBoost > 0.0f) {
 				double movementSpeed = getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
-				getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(movementSpeed *= 1.0f + rand.nextFloat() * speedBoost);
+				getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(movementSpeed * (1.0f + rand.nextFloat() * speedBoost));
 			}
 			double jumpStrength = getEntityAttribute(LOTRReflection.getHorseJumpStrength()).getAttributeValue();
 			double jumpLimit = Math.max(jumpStrength, 1.0);
@@ -455,7 +455,7 @@ public class LOTREntityHorse extends EntityHorse implements LOTRNPCMount {
 			if (getGrowingAge() < 0) {
 				setGrowingAge(0);
 			}
-			if (this.getClass() == LOTREntityHorse.class) {
+			if (getClass() == LOTREntityHorse.class) {
 				setHorseType(0);
 			}
 		}

@@ -17,7 +17,7 @@ public class LOTRTileEntityCommandTable extends TileEntity {
 		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, data);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
 		return AxisAlignedBB.getBoundingBox(xCoord - 1, yCoord, zCoord - 1, xCoord + 2, yCoord + 2, zCoord + 2);

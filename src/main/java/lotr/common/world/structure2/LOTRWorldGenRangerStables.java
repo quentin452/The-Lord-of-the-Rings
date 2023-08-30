@@ -25,7 +25,7 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 		int k12;
 		int i2;
 		int i132;
-		this.setOriginAndRotation(world, i, j, k, rotation, 1, -2);
+		setOriginAndRotation(world, i, j, k, rotation, 1, -2);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -62,10 +62,7 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 				if (k1 > 4 || k1 != 0 && k1 != 4 && i2 != 4) {
 					continue;
 				}
-				boolean beam = false;
-				if ((k1 == 0 || k1 == 4) && (i2 == 0 || i2 == 4)) {
-					beam = true;
-				}
+				boolean beam = (k1 == 0 || k1 == 4) && (i2 == 0 || i2 == 4);
 				if (beam) {
 					for (j12 = 1; j12 <= 3; ++j12) {
 						setBlockAndMetadata(world, i15, j12, k1, woodBeamBlock, woodBeamMeta);
@@ -74,7 +71,7 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 				}
 				if (k1 == 4) {
 					for (j12 = 1; j12 <= 3; ++j12) {
-						setBlockAndMetadata(world, i15, j12, k1, plankBlock, plankMeta);
+						setBlockAndMetadata(world, i15, j12, 4, plankBlock, plankMeta);
 					}
 					continue;
 				}
@@ -83,7 +80,7 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 				}
 			}
 		}
-		for (int k13 : new int[] { 0, 4 }) {
+		for (int k13 : new int[]{0, 4}) {
 			for (int i16 = -3; i16 <= 3; ++i16) {
 				if (i16 == 0) {
 					continue;
@@ -91,7 +88,7 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 				setBlockAndMetadata(world, i16, 3, k13, woodBeamBlock, woodBeamMeta | 4);
 			}
 		}
-		for (int i1321 : new int[] { -4, 0, 4 }) {
+		for (int i1321 : new int[]{-4, 0, 4}) {
 			for (k12 = 0; k12 <= 3; ++k12) {
 				setBlockAndMetadata(world, i1321, 4, k12, woodBeamBlock, woodBeamMeta | 8);
 			}
@@ -102,7 +99,7 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 		for (int i17 = -4; i17 <= 4; ++i17) {
 			setBlockAndMetadata(world, i17, 7, 4, woodBeamBlock, woodBeamMeta | 4);
 		}
-		int[] i17 = { -4, 4 };
+		int[] i17 = {-4, 4};
 		k1 = i17.length;
 		for (i2 = 0; i2 < k1; ++i2) {
 			i132 = i17[i2];
@@ -127,7 +124,7 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 			}
 			setBlockAndMetadata(world, i18, 4, 4, plankBlock, plankMeta);
 		}
-		for (int i1321 : new int[] { -4, 0, 4 }) {
+		for (int i1321 : new int[]{-4, 0, 4}) {
 			for (j12 = 1; j12 <= 3; ++j12) {
 				setBlockAndMetadata(world, i1321, j12, 9, woodBeamBlock, woodBeamMeta);
 			}
@@ -141,7 +138,7 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 			setBlockAndMetadata(world, i1321, 2, 5, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, i1321, 2, 8, fenceBlock, fenceMeta);
 		}
-		int[] i18 = { -4, 4 };
+		int[] i18 = {-4, 4};
 		k1 = i18.length;
 		for (i2 = 0; i2 < k1; ++i2) {
 			i132 = i18[i2];
@@ -160,17 +157,17 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 			for (k1 = 5; k1 <= 8; ++k1) {
 				int randomFloor = random.nextInt(3);
 				switch (randomFloor) {
-				case 0:
-					setBlockAndMetadata(world, i1, 0, k1, Blocks.grass, 0);
-					break;
-				case 1:
-					setBlockAndMetadata(world, i1, 0, k1, Blocks.dirt, 1);
-					break;
-				case 2:
-					setBlockAndMetadata(world, i1, 0, k1, LOTRMod.dirtPath, 0);
-					break;
-				default:
-					break;
+					case 0:
+						setBlockAndMetadata(world, i1, 0, k1, Blocks.grass, 0);
+						break;
+					case 1:
+						setBlockAndMetadata(world, i1, 0, k1, Blocks.dirt, 1);
+						break;
+					case 2:
+						setBlockAndMetadata(world, i1, 0, k1, LOTRMod.dirtPath, 0);
+						break;
+					default:
+						break;
 				}
 				if (!random.nextBoolean()) {
 					continue;
@@ -207,22 +204,22 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 				setBlockAndMetadata(world, i1, 4 + l, 8 - l, roofStairBlock, 6);
 			}
 		}
-		for (int i1321 : new int[] { -4, 0, 4 }) {
+		for (int i1321 : new int[]{-4, 0, 4}) {
 			setBlockAndMetadata(world, i1321, 3, -1, Blocks.torch, 4);
 			setBlockAndMetadata(world, i1321, 3, 10, Blocks.torch, 3);
 		}
 		setBlockAndMetadata(world, -5, 3, 4, Blocks.torch, 1);
 		setBlockAndMetadata(world, 5, 3, 4, Blocks.torch, 2);
 		setBlockAndMetadata(world, -3, 1, 3, Blocks.crafting_table, 0);
-		this.placeChest(world, random, -2, 1, 3, 2, chestContentsHouse);
+		placeChest(world, random, -2, 1, 3, 2, chestContentsHouse);
 		setBlockAndMetadata(world, -1, 1, 3, plankBlock, plankMeta);
 		placePlateWithCertainty(world, random, -1, 2, 3, plateBlock, LOTRFoods.RANGER);
 		setBlockAndMetadata(world, 0, 1, 3, plankBlock, plankMeta);
-		this.placeBarrel(world, random, 0, 2, 3, 2, LOTRFoods.RANGER_DRINK);
+		placeBarrel(world, random, 0, 2, 3, 2, LOTRFoods.RANGER_DRINK);
 		setBlockAndMetadata(world, 1, 1, 3, plankBlock, plankMeta);
-		this.placeMug(world, random, 1, 2, 3, 0, LOTRFoods.RANGER_DRINK);
+		placeMug(world, random, 1, 2, 3, 0, LOTRFoods.RANGER_DRINK);
 		setBlockAndMetadata(world, 3, 1, 3, plankBlock, plankMeta);
-		this.placeMug(world, random, 3, 2, 3, 1, LOTRFoods.RANGER_DRINK);
+		placeMug(world, random, 3, 2, 3, 1, LOTRFoods.RANGER_DRINK);
 		setBlockAndMetadata(world, 2, 1, 1, bedBlock, 1);
 		setBlockAndMetadata(world, 3, 1, 1, bedBlock, 9);
 		setBlockAndMetadata(world, -3, 3, 2, Blocks.torch, 2);
@@ -249,7 +246,7 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 				setBlockAndMetadata(world, i12, j1, 6, Blocks.hay_block, 0);
 			}
 		}
-		for (int i1321 : new int[] { -3, 3 }) {
+		for (int i1321 : new int[]{-3, 3}) {
 			for (k12 = 3; k12 <= 5; ++k12) {
 				if (random.nextInt(3) == 0) {
 					continue;
@@ -263,7 +260,7 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 		}
 		setBlockAndMetadata(world, -2, 5, 3, bedBlock, 3);
 		setBlockAndMetadata(world, -3, 5, 3, bedBlock, 11);
-		this.placeChest(world, random, -3, 5, 5, 4, chestContentsHouse);
+		placeChest(world, random, -3, 5, 5, 4, chestContentsHouse);
 		setBlockAndMetadata(world, -3, 6, 4, Blocks.torch, 2);
 		setBlockAndMetadata(world, 3, 6, 4, Blocks.torch, 1);
 		int men = 1;
@@ -271,7 +268,7 @@ public class LOTRWorldGenRangerStables extends LOTRWorldGenRangerStructure {
 			LOTREntityDunedain dunedain = new LOTREntityDunedain(world);
 			spawnNPCAndSetHome(dunedain, world, 0, 1, 2, 8);
 		}
-		for (int i16 : new int[] { -2, 2 }) {
+		for (int i16 : new int[]{-2, 2}) {
 			LOTREntityHorse horse = new LOTREntityHorse(world);
 			spawnNPCAndSetHome(horse, world, i16, 1, 7, 0);
 			horse.setHorseType(0);

@@ -70,11 +70,6 @@ public class LOTRBiomeGenFarHaradMangrove extends LOTRBiomeGenFarHarad {
 	}
 
 	@Override
-	public boolean getEnableRiver() {
-		return true;
-	}
-
-	@Override
 	public float getTreeIncreaseChance() {
 		return 0.15f;
 	}

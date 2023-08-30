@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRBlockHearth extends Block {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] blockIcons;
 
 	public LOTRBlockHearth() {
@@ -21,7 +21,7 @@ public class LOTRBlockHearth extends Block {
 		setCreativeTab(LOTRCreativeTabs.tabBlock);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (i == 0) {
@@ -53,7 +53,7 @@ public class LOTRBlockHearth extends Block {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		blockIcons = new IIcon[3];

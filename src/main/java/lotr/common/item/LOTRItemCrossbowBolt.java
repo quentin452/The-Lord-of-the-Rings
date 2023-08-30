@@ -6,7 +6,7 @@ import net.minecraft.block.BlockDispenser;
 import net.minecraft.item.Item;
 
 public class LOTRItemCrossbowBolt extends Item {
-	public boolean isPoisoned = false;
+	public boolean isPoisoned;
 
 	public LOTRItemCrossbowBolt() {
 		setCreativeTab(LOTRCreativeTabs.tabCombat);

@@ -32,7 +32,8 @@ public class LOTRWorldGenRammasEchor extends LOTRWorldGenStructureBase2 {
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		if (isPosInWall(i + 8, k + 8) < wallThick * 3.0) {
 			for (int i1 = i; i1 <= i + 15; ++i1) {
-				block1: for (int k1 = k; k1 <= k + 15; ++k1) {
+				block1:
+				for (int k1 = k; k1 <= k + 15; ++k1) {
 					double circleDist = isPosInWall(i1, k1);
 					if (circleDist >= wallThick) {
 						continue;
@@ -61,9 +62,6 @@ public class LOTRWorldGenRammasEchor extends LOTRWorldGenStructureBase2 {
 									setBlockAndMetadata(world, i1, j1 + 2, k1, Blocks.fence, 0);
 									setBlockAndMetadata(world, i1, j1 + 3, k1, Blocks.torch, 5);
 								}
-							}
-							if (ladder) {
-								setBlockAndMetadata(world, i1, j1, k1 - 1, Blocks.ladder, 2);
 							}
 						}
 						Block below = getBlock(world, i1, j1 - 1, k1);
@@ -114,7 +112,7 @@ public class LOTRWorldGenRammasEchor extends LOTRWorldGenStructureBase2 {
 		int dx = i - centreX;
 		int dz = k - centreZ;
 		int distSq = dx * dx + dz * dz;
-		return Math.abs((double) distSq / (double) radiusSq - 1.0);
+		return Math.abs((double) distSq / radiusSq - 1.0);
 	}
 
 	public boolean isTorchAt(int i, int k) {

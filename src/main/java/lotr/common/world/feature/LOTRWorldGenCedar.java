@@ -18,7 +18,7 @@ public class LOTRWorldGenCedar extends WorldGenAbstractTree {
 	public int leafMeta = 2;
 	public int minHeight = 10;
 	public int maxHeight = 16;
-	public boolean hangingLeaves = false;
+	public boolean hangingLeaves;
 
 	public LOTRWorldGenCedar(boolean flag) {
 		super(flag);
@@ -52,7 +52,7 @@ public class LOTRWorldGenCedar extends WorldGenAbstractTree {
 		} else {
 			flag = false;
 		}
-		if (!(below = world.getBlock(i, j - 1, k)).canSustainPlant((IBlockAccess) world, i, j - 1, k, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
+		if (!(below = world.getBlock(i, j - 1, k)).canSustainPlant(world, i, j - 1, k, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 			flag = false;
 		}
 		if (!flag) {
@@ -77,7 +77,8 @@ public class LOTRWorldGenCedar extends WorldGenAbstractTree {
 		}
 		for (j1 = j + height - 1; j1 > j + height / 2; j1 -= 1 + random.nextInt(3)) {
 			int branches = 1 + random.nextInt(3);
-			block7: for (int l = 0; l < branches; ++l) {
+			block7:
+			for (int l = 0; l < branches; ++l) {
 				float angle = random.nextFloat() * 3.1415927f * 2.0f;
 				int i1 = i;
 				int k1 = k;
@@ -121,18 +122,14 @@ public class LOTRWorldGenCedar extends WorldGenAbstractTree {
 				if (Math.abs(i2) == Math.abs(k2)) {
 					continue;
 				}
-				int rootX = i1;
 				int rootY = j + random.nextInt(2);
-				int rootZ = k1;
 				int roots = 0;
-				while (world.getBlock(rootX, rootY, k1).isReplaceable(world, rootX, rootY, rootZ)) {
-					setBlockAndNotifyAdequately(world, rootX, rootY, rootZ, woodBlock, woodMeta | 0xC);
-					world.getBlock(rootX, rootY - 1, rootZ).onPlantGrow(world, rootX, rootY - 1, rootZ, rootX, rootY, rootZ);
+				while (world.getBlock(i1, rootY, k1).isReplaceable(world, i1, rootY, k1)) {
+					setBlockAndNotifyAdequately(world, i1, rootY, k1, woodBlock, woodMeta | 0xC);
+					world.getBlock(i1, rootY - 1, k1).onPlantGrow(world, i1, rootY - 1, k1, i1, rootY, k1);
 					--rootY;
 					roots++;
-					if (roots <= 4 + random.nextInt(3)) {
-						continue;
-					}
+					random.nextInt(3);
 				}
 			}
 		}

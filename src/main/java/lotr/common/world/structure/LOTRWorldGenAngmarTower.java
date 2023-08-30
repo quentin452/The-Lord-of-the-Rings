@@ -37,21 +37,21 @@ public class LOTRWorldGenAngmarTower extends LOTRWorldGenStructureBase {
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			k += 7;
-			break;
-		}
-		case 1: {
-			i -= 7;
-			break;
-		}
-		case 2: {
-			k -= 7;
-			break;
-		}
-		case 3: {
-			i += 7;
-		}
+			case 0: {
+				k += 7;
+				break;
+			}
+			case 1: {
+				i -= 7;
+				break;
+			}
+			case 2: {
+				k -= 7;
+				break;
+			}
+			case 3: {
+				i += 7;
+			}
 		}
 		int sections = 2 + random.nextInt(3);
 		if (restrictions) {
@@ -118,49 +118,49 @@ public class LOTRWorldGenAngmarTower extends LOTRWorldGenStructureBase {
 		trader.setHomeArea(i, j + (sections + 1) * 8, k, 24);
 		world.spawnEntityInWorld(trader);
 		switch (rotation) {
-		case 0: {
-			for (i1 = i - 1; i1 <= i + 1; ++i1) {
-				setBlockAndNotifyAdequately(world, i1, j, k - 6, Blocks.stonebrick, 0);
-				for (j1 = j + 1; j1 <= j + 4; ++j1) {
-					setBlockAndNotifyAdequately(world, i1, j1, k - 6, Blocks.air, 0);
+			case 0: {
+				for (i1 = i - 1; i1 <= i + 1; ++i1) {
+					setBlockAndNotifyAdequately(world, i1, j, k - 6, Blocks.stonebrick, 0);
+					for (j1 = j + 1; j1 <= j + 4; ++j1) {
+						setBlockAndNotifyAdequately(world, i1, j1, k - 6, Blocks.air, 0);
+					}
 				}
+				setBlockAndNotifyAdequately(world, i, j + 7, k - 6, LOTRMod.brick2, 0);
+				placeWallBanner(world, i, j + 7, k - 6, 2, LOTRItemBanner.BannerType.ANGMAR);
+				break;
 			}
-			setBlockAndNotifyAdequately(world, i, j + 7, k - 6, LOTRMod.brick2, 0);
-			placeWallBanner(world, i, j + 7, k - 6, 2, LOTRItemBanner.BannerType.ANGMAR);
-			break;
-		}
-		case 1: {
-			for (k12 = k - 1; k12 <= k + 1; ++k12) {
-				setBlockAndNotifyAdequately(world, i + 6, j, k12, Blocks.stonebrick, 0);
-				for (j1 = j + 1; j1 <= j + 4; ++j1) {
-					setBlockAndNotifyAdequately(world, i + 6, j1, k12, Blocks.air, 0);
+			case 1: {
+				for (k12 = k - 1; k12 <= k + 1; ++k12) {
+					setBlockAndNotifyAdequately(world, i + 6, j, k12, Blocks.stonebrick, 0);
+					for (j1 = j + 1; j1 <= j + 4; ++j1) {
+						setBlockAndNotifyAdequately(world, i + 6, j1, k12, Blocks.air, 0);
+					}
 				}
+				setBlockAndNotifyAdequately(world, i + 6, j + 7, k, LOTRMod.brick2, 0);
+				placeWallBanner(world, i + 6, j + 7, k, 3, LOTRItemBanner.BannerType.ANGMAR);
+				break;
 			}
-			setBlockAndNotifyAdequately(world, i + 6, j + 7, k, LOTRMod.brick2, 0);
-			placeWallBanner(world, i + 6, j + 7, k, 3, LOTRItemBanner.BannerType.ANGMAR);
-			break;
-		}
-		case 2: {
-			for (i1 = i - 1; i1 <= i + 1; ++i1) {
-				setBlockAndNotifyAdequately(world, i1, j, k + 6, Blocks.stonebrick, 0);
-				for (j1 = j + 1; j1 <= j + 4; ++j1) {
-					setBlockAndNotifyAdequately(world, i1, j1, k + 6, Blocks.air, 0);
+			case 2: {
+				for (i1 = i - 1; i1 <= i + 1; ++i1) {
+					setBlockAndNotifyAdequately(world, i1, j, k + 6, Blocks.stonebrick, 0);
+					for (j1 = j + 1; j1 <= j + 4; ++j1) {
+						setBlockAndNotifyAdequately(world, i1, j1, k + 6, Blocks.air, 0);
+					}
 				}
+				setBlockAndNotifyAdequately(world, i, j + 7, k + 6, LOTRMod.brick2, 0);
+				placeWallBanner(world, i, j + 7, k + 6, 0, LOTRItemBanner.BannerType.ANGMAR);
+				break;
 			}
-			setBlockAndNotifyAdequately(world, i, j + 7, k + 6, LOTRMod.brick2, 0);
-			placeWallBanner(world, i, j + 7, k + 6, 0, LOTRItemBanner.BannerType.ANGMAR);
-			break;
-		}
-		case 3: {
-			for (k12 = k - 1; k12 <= k + 1; ++k12) {
-				setBlockAndNotifyAdequately(world, i - 6, j, k12, Blocks.stonebrick, 0);
-				for (j1 = j + 1; j1 <= j + 4; ++j1) {
-					setBlockAndNotifyAdequately(world, i - 6, j1, k12, Blocks.air, 0);
+			case 3: {
+				for (k12 = k - 1; k12 <= k + 1; ++k12) {
+					setBlockAndNotifyAdequately(world, i - 6, j, k12, Blocks.stonebrick, 0);
+					for (j1 = j + 1; j1 <= j + 4; ++j1) {
+						setBlockAndNotifyAdequately(world, i - 6, j1, k12, Blocks.air, 0);
+					}
 				}
+				setBlockAndNotifyAdequately(world, i - 6, j + 7, k, LOTRMod.brick2, 0);
+				placeWallBanner(world, i - 6, j + 7, k, 1, LOTRItemBanner.BannerType.ANGMAR);
 			}
-			setBlockAndNotifyAdequately(world, i - 6, j + 7, k, LOTRMod.brick2, 0);
-			placeWallBanner(world, i - 6, j + 7, k, 1, LOTRItemBanner.BannerType.ANGMAR);
-		}
 		}
 		int radius = 6;
 		for (int l = 0; l < 16; ++l) {
@@ -210,7 +210,7 @@ public class LOTRWorldGenAngmarTower extends LOTRWorldGenStructureBase {
 		for (j1 = section == 0 ? j : (j += section * 8) + 1; j1 <= (isTop ? j + 10 : j + 8); ++j1) {
 			int k1;
 			int i12;
-			Block fillBlock = Blocks.air;
+			Block fillBlock;
 			int fillMeta = 0;
 			if (j1 == j) {
 				fillBlock = Blocks.stonebrick;
@@ -284,10 +284,10 @@ public class LOTRWorldGenAngmarTower extends LOTRWorldGenStructureBase {
 		if (!isTop) {
 			for (j1 = j + 2; j1 <= j + 4; ++j1) {
 				for (int k1 = k - 1; k1 <= k + 1; ++k1) {
-					if (random.nextInt(3) != 0) {
-						setBlockAndNotifyAdequately(world, i - 6, j1, k1, LOTRMod.orcSteelBars, 0);
-					} else {
+					if (random.nextInt(3) == 0) {
 						setBlockAndNotifyAdequately(world, i - 6, j1, k1, Blocks.air, 0);
+					} else {
+						setBlockAndNotifyAdequately(world, i - 6, j1, k1, LOTRMod.orcSteelBars, 0);
 					}
 					if (random.nextInt(3) != 0) {
 						setBlockAndNotifyAdequately(world, i + 6, j1, k1, LOTRMod.orcSteelBars, 0);
@@ -296,10 +296,10 @@ public class LOTRWorldGenAngmarTower extends LOTRWorldGenStructureBase {
 					setBlockAndNotifyAdequately(world, i + 6, j1, k1, Blocks.air, 0);
 				}
 				for (int i14 = i - 1; i14 <= i + 1; ++i14) {
-					if (random.nextInt(3) != 0) {
-						setBlockAndNotifyAdequately(world, i14, j1, k - 6, LOTRMod.orcSteelBars, 0);
-					} else {
+					if (random.nextInt(3) == 0) {
 						setBlockAndNotifyAdequately(world, i14, j1, k - 6, Blocks.air, 0);
+					} else {
+						setBlockAndNotifyAdequately(world, i14, j1, k - 6, LOTRMod.orcSteelBars, 0);
 					}
 					if (random.nextInt(3) != 0) {
 						setBlockAndNotifyAdequately(world, i14, j1, k + 6, LOTRMod.orcSteelBars, 0);

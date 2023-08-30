@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityDorwinionElfCaptain extends LOTREntityDorwinionElfWarrior implements LOTRUnitTradeable {
 	public LOTREntityDorwinionElfCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.DORWINION_ELF_CAPTAIN;
 	}
 

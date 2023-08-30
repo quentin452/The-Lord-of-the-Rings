@@ -14,15 +14,15 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.ForgeHooks;
 
 public abstract class LOTREntityTree extends LOTREntityNPC {
-	public static Block[] WOOD_BLOCKS = { Blocks.log, LOTRMod.wood2, Blocks.log };
-	public static Block[] LEAF_BLOCKS = { Blocks.leaves, LOTRMod.leaves2, Blocks.leaves };
-	public static Block[] SAPLING_BLOCKS = { Blocks.sapling, LOTRMod.sapling2, Blocks.sapling };
-	public static int[] WOOD_META = { 0, 1, 2 };
-	public static int[] LEAF_META = { 0, 1, 2 };
-	public static int[] SAPLING_META = { 0, 1, 2 };
-	public static String[] TYPES = { "oak", "beech", "birch" };
+	public static Block[] WOOD_BLOCKS = {Blocks.log, LOTRMod.wood2, Blocks.log};
+	public static Block[] LEAF_BLOCKS = {Blocks.leaves, LOTRMod.leaves2, Blocks.leaves};
+	public static Block[] SAPLING_BLOCKS = {Blocks.sapling, LOTRMod.sapling2, Blocks.sapling};
+	public static int[] WOOD_META = {0, 1, 2};
+	public static int[] LEAF_META = {0, 1, 2};
+	public static int[] SAPLING_META = {0, 1, 2};
+	public static String[] TYPES = {"oak", "beech", "birch"};
 
-	public LOTREntityTree(World world) {
+	protected LOTREntityTree(World world) {
 		super(world);
 	}
 

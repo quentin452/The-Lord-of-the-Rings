@@ -106,16 +106,16 @@ public class LOTRWorldGenMoredainHutTrader extends LOTRWorldGenMoredainHut {
 		setBlockAndMetadata(world, 2, 1, -1, stainedClayBlock, stainedClayMeta);
 		setBlockAndMetadata(world, 2, 1, 0, stainedClayBlock, stainedClayMeta);
 		setBlockAndMetadata(world, 2, 1, 1, LOTRMod.chestBasket, 5);
-		for (int f : new int[] { -1, 1 }) {
+		for (int f : new int[]{-1, 1}) {
 			setBlockAndMetadata(world, 2 * f, 1, 2, plankBlock, plankMeta);
-			setBlockAndMetadata(world, 1 * f, 1, 2, plankSlabBlock, plankSlabMeta | 8);
-			setBlockAndMetadata(world, 0 * f, 1, 2, LOTRMod.moredainTable, 0);
+			setBlockAndMetadata(world, f, 1, 2, plankSlabBlock, plankSlabMeta | 8);
+			setBlockAndMetadata(world, 0, 1, 2, LOTRMod.moredainTable, 0);
 			setBlockAndMetadata(world, 2 * f, 2, 2, plankBlock, plankMeta);
-			setBlockAndMetadata(world, 1 * f, 2, 2, LOTRMod.chestBasket, 2);
-			setBlockAndMetadata(world, 0 * f, 2, 2, fenceBlock, fenceMeta);
+			setBlockAndMetadata(world, f, 2, 2, LOTRMod.chestBasket, 2);
+			setBlockAndMetadata(world, 0, 2, 2, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, 2 * f, 3, 2, plankBlock, plankMeta);
-			setBlockAndMetadata(world, 1 * f, 3, 2, plankSlabBlock, plankSlabMeta);
-			setBlockAndMetadata(world, 0 * f, 3, 2, plankSlabBlock, plankSlabMeta);
+			setBlockAndMetadata(world, f, 3, 2, plankSlabBlock, plankSlabMeta);
+			setBlockAndMetadata(world, 0, 3, 2, plankSlabBlock, plankSlabMeta);
 		}
 		setBlockAndMetadata(world, -2, 2, -4, Blocks.torch, 4);
 		setBlockAndMetadata(world, 2, 2, -4, Blocks.torch, 4);

@@ -21,7 +21,7 @@ public class LOTRWorldGenHobbitBurrow extends LOTRWorldGenHobbitStructure {
 		int i1;
 		int j1;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 8);
+		setOriginAndRotation(world, i, j, k, rotation, 8);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -9; i1 <= 9; ++i1) {
@@ -65,13 +65,13 @@ public class LOTRWorldGenHobbitBurrow extends LOTRWorldGenHobbitStructure {
 		setBlockAndMetadata(world, -3, 1, -2, bedBlock, 11);
 		setBlockAndMetadata(world, -2, 1, -1, bedBlock, 3);
 		setBlockAndMetadata(world, -3, 1, -1, bedBlock, 11);
-		this.placeChest(world, random, -3, 1, 0, 4, burrowLoot, MathHelper.getRandomIntegerInRange(random, 1, 3));
-		this.placeChest(world, random, 1, 1, 2, 2, burrowLoot, MathHelper.getRandomIntegerInRange(random, 1, 3));
-		this.placeChest(world, random, 0, 1, 2, 2, burrowLoot, MathHelper.getRandomIntegerInRange(random, 1, 3));
+		placeChest(world, random, -3, 1, 0, 4, burrowLoot, MathHelper.getRandomIntegerInRange(random, 1, 3));
+		placeChest(world, random, 1, 1, 2, 2, burrowLoot, MathHelper.getRandomIntegerInRange(random, 1, 3));
+		placeChest(world, random, 0, 1, 2, 2, burrowLoot, MathHelper.getRandomIntegerInRange(random, 1, 3));
 		placePlateWithCertainty(world, random, 3, 2, -1, plateBlock, foodPool);
 		placeRandomFlowerPot(world, random, -3, 2, -5);
 		placeRandomFlowerPot(world, random, -1, 4, -4);
-		placeSign(world, 0, 2, -4, Blocks.wall_sign, 2, new String[] { "", homeName1, homeName2, "" });
+		placeSign(world, 0, 2, -4, Blocks.wall_sign, 2, new String[]{"", homeName1, homeName2, ""});
 		for (i1 = -8; i1 <= 8; ++i1) {
 			for (k1 = -6; k1 <= 8; ++k1) {
 				j1 = getTopBlock(world, i1, k1);

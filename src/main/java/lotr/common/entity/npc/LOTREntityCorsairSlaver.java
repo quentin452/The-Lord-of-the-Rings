@@ -10,17 +10,12 @@ import net.minecraft.world.World;
 public class LOTREntityCorsairSlaver extends LOTREntityCorsair implements LOTRUnitTradeable {
 	public LOTREntityCorsairSlaver(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
 	public boolean canTradeWith(EntityPlayer entityplayer) {
 		return LOTRLevelData.getData(entityplayer).getAlignment(getFaction()) >= 0.0f && isFriendly(entityplayer);
-	}
-
-	@Override
-	public float getAlignmentBonus() {
-		return 2.0f;
 	}
 
 	@Override

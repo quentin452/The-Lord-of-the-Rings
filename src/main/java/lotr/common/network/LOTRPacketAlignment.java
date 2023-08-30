@@ -9,7 +9,7 @@ import lotr.common.fac.LOTRFaction;
 
 public class LOTRPacketAlignment implements IMessage {
 	public UUID player;
-	public Map<LOTRFaction, Float> alignmentMap = new HashMap<>();
+	public Map<LOTRFaction, Float> alignmentMap = new EnumMap<>(LOTRFaction.class);
 	public boolean hideAlignment;
 
 	public LOTRPacketAlignment() {
@@ -28,7 +28,7 @@ public class LOTRPacketAlignment implements IMessage {
 	@Override
 	public void fromBytes(ByteBuf data) {
 		player = new UUID(data.readLong(), data.readLong());
-		byte factionID = 0;
+		byte factionID;
 		while ((factionID = data.readByte()) >= 0) {
 			LOTRFaction f = LOTRFaction.forID(factionID);
 			float alignment = data.readFloat();

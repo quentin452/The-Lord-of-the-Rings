@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityNomadTrader extends LOTREntityNomad implements LOTRTradeable {
-	public LOTREntityNomadTrader(World world) {
+	protected LOTREntityNomadTrader(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override
@@ -28,15 +28,6 @@ public abstract class LOTREntityNomadTrader extends LOTREntityNomad implements L
 			return "nearHarad/nomad/bazaarTrader/friendly";
 		}
 		return "nearHarad/nomad/bazaarTrader/hostile";
-	}
-
-	@Override
-	public void onAttackModeChange(LOTREntityNPC.AttackMode mode, boolean mounted) {
-		if (mode == LOTREntityNPC.AttackMode.IDLE) {
-			setCurrentItemOrArmor(0, npcItemsInv.getIdleItem());
-		} else {
-			setCurrentItemOrArmor(0, npcItemsInv.getMeleeWeapon());
-		}
 	}
 
 	@Override

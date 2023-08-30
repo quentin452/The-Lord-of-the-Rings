@@ -22,7 +22,7 @@ public class LOTRWorldGenRivendellHouse extends LOTRWorldGenHighElfHouse {
 
 	@Override
 	public ItemStack getElfFramedItem(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.helmetRivendell), new ItemStack(LOTRMod.bodyRivendell), new ItemStack(LOTRMod.legsRivendell), new ItemStack(LOTRMod.bootsRivendell), new ItemStack(LOTRMod.daggerRivendell), new ItemStack(LOTRMod.swordRivendell), new ItemStack(LOTRMod.spearRivendell), new ItemStack(LOTRMod.longspearRivendell), new ItemStack(LOTRMod.rivendellBow), new ItemStack(Items.arrow), new ItemStack(Items.feather), new ItemStack(LOTRMod.swanFeather), new ItemStack(LOTRMod.quenditeCrystal), new ItemStack(LOTRMod.goldRing), new ItemStack(LOTRMod.silverRing) };
+		ItemStack[] items = {new ItemStack(LOTRMod.helmetRivendell), new ItemStack(LOTRMod.bodyRivendell), new ItemStack(LOTRMod.legsRivendell), new ItemStack(LOTRMod.bootsRivendell), new ItemStack(LOTRMod.daggerRivendell), new ItemStack(LOTRMod.swordRivendell), new ItemStack(LOTRMod.spearRivendell), new ItemStack(LOTRMod.longspearRivendell), new ItemStack(LOTRMod.rivendellBow), new ItemStack(Items.arrow), new ItemStack(Items.feather), new ItemStack(LOTRMod.swanFeather), new ItemStack(LOTRMod.quenditeCrystal), new ItemStack(LOTRMod.goldRing), new ItemStack(LOTRMod.silverRing)};
 		return items[random.nextInt(items.length)].copy();
 	}
 

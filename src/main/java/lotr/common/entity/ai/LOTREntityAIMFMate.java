@@ -12,10 +12,10 @@ import net.minecraft.world.World;
 
 public class LOTREntityAIMFMate extends EntityAIBase {
 	public LOTREntityAnimalMF theAnimal;
-	World theWorld;
+	public World theWorld;
 	public LOTREntityAnimalMF targetMate;
-	int breeding = 0;
-	double moveSpeed;
+	public int breeding;
+	public double moveSpeed;
 
 	public LOTREntityAIMFMate(LOTREntityAnimalMF animal, double d) {
 		theAnimal = animal;

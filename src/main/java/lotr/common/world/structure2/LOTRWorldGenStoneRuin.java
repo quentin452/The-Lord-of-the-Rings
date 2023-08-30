@@ -11,7 +11,7 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 	public int minWidth;
 	public int maxWidth;
 
-	public LOTRWorldGenStoneRuin(int i, int j) {
+	protected LOTRWorldGenStoneRuin(int i, int j) {
 		super(false);
 		minWidth = i;
 		maxWidth = j;
@@ -20,16 +20,17 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		boolean generateColumn;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		int width = MathHelper.getRandomIntegerInRange(random, minWidth, maxWidth);
 		generateColumn = random.nextInt(3) > 0;
 		if (generateColumn) {
 			int minHeight = 0;
 			int maxHeight = 0;
-			int columnX = 0 - width / 2;
-			int columnZ = 0 - width / 2;
+			int columnX = -width / 2;
+			int columnZ = -width / 2;
 			if (restrictions) {
-				block0: for (int i1 = columnX; i1 < columnX + width; ++i1) {
+				block0:
+				for (int i1 = columnX; i1 < columnX + width; ++i1) {
 					for (int k1 = columnZ; k1 < columnZ + width; ++k1) {
 						int j1 = getTopBlock(world, i1, k1);
 						if (j1 < minHeight) {
@@ -109,13 +110,13 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(2);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 0);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 1);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 0);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 1);
+				}
 			}
 		}
 
@@ -138,17 +139,17 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(3);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 3);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 4);
-				break;
-			}
-			case 2: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 5);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 3);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 4);
+					break;
+				}
+				case 2: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 5);
+				}
 			}
 		}
 
@@ -171,13 +172,13 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(2);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 8);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 9);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 8);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick2, 9);
+				}
 			}
 		}
 
@@ -216,13 +217,13 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(2);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 6);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick4, 5);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 6);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick4, 5);
+				}
 			}
 		}
 
@@ -245,17 +246,17 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(3);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 11);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 12);
-				break;
-			}
-			case 2: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 13);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 11);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 12);
+					break;
+				}
+				case 2: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 13);
+				}
 			}
 		}
 
@@ -278,24 +279,24 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(3);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick3, 2);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick3, 3);
-				break;
-			}
-			case 2: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick3, 4);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick3, 2);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick3, 3);
+					break;
+				}
+				case 2: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick3, 4);
+				}
 			}
 		}
 
 		@Override
 		public void placeRandomSlab(World world, Random random, int i, int j, int k) {
 			if (random.nextInt(4) == 0) {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle6, 0 + random.nextInt(2));
+				setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle6, random.nextInt(2));
 			} else {
 				setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle5, 5 + random.nextInt(3));
 			}
@@ -311,13 +312,13 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(2);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 0);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 7);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 0);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 7);
+				}
 			}
 		}
 
@@ -340,13 +341,13 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(2);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 15);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick3, 11);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick, 15);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick3, 11);
+				}
 			}
 		}
 
@@ -385,17 +386,17 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(3);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick5, 11);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick5, 13);
-				break;
-			}
-			case 2: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick5, 14);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick5, 11);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick5, 13);
+					break;
+				}
+				case 2: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick5, 14);
+				}
 			}
 		}
 
@@ -406,17 +407,17 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 			} else {
 				int l = random.nextInt(3);
 				switch (l) {
-				case 0: {
-					setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle12, 0);
-					break;
-				}
-				case 1: {
-					setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle12, 1);
-					break;
-				}
-				case 2: {
-					setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle12, 2);
-				}
+					case 0: {
+						setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle12, 0);
+						break;
+					}
+					case 1: {
+						setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle12, 1);
+						break;
+					}
+					case 2: {
+						setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle12, 2);
+					}
 				}
 			}
 		}
@@ -431,17 +432,17 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(3);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 0);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 1);
-				break;
-			}
-			case 2: {
-				setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 2);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 0);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 1);
+					break;
+				}
+				case 2: {
+					setBlockAndMetadata(world, i, j, k, Blocks.stonebrick, 2);
+				}
 			}
 		}
 
@@ -464,17 +465,17 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(3);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick4, 0);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick4, 1);
-				break;
-			}
-			case 2: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick4, 2);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick4, 0);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick4, 1);
+					break;
+				}
+				case 2: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick4, 2);
+				}
 			}
 		}
 
@@ -485,17 +486,17 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 			} else {
 				int l = random.nextInt(3);
 				switch (l) {
-				case 0: {
-					setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle8, 0);
-					break;
-				}
-				case 1: {
-					setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle8, 1);
-					break;
-				}
-				case 2: {
-					setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle8, 2);
-				}
+					case 0: {
+						setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle8, 0);
+						break;
+					}
+					case 1: {
+						setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle8, 1);
+						break;
+					}
+					case 2: {
+						setBlockAndMetadata(world, i, j, k, LOTRMod.slabSingle8, 2);
+					}
 				}
 			}
 		}
@@ -510,13 +511,13 @@ public abstract class LOTRWorldGenStoneRuin extends LOTRWorldGenStructureBase2 {
 		public void placeRandomBrick(World world, Random random, int i, int j, int k) {
 			int l = random.nextInt(2);
 			switch (l) {
-			case 0: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick6, 6);
-				break;
-			}
-			case 1: {
-				setBlockAndMetadata(world, i, j, k, LOTRMod.brick6, 7);
-			}
+				case 0: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick6, 6);
+					break;
+				}
+				case 1: {
+					setBlockAndMetadata(world, i, j, k, LOTRMod.brick6, 7);
+				}
 			}
 		}
 

@@ -18,11 +18,6 @@ public class LOTREntitySwordCommandMarker extends Entity {
 	}
 
 	@Override
-	public boolean canBePushed() {
-		return false;
-	}
-
-	@Override
 	public boolean canTriggerWalking() {
 		return false;
 	}

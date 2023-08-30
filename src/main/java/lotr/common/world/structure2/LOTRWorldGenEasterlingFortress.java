@@ -36,7 +36,7 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 		int k132;
 		int i15;
 		int k14;
-		this.setOriginAndRotation(world, i, j, k, rotation, 13);
+		setOriginAndRotation(world, i, j, k, rotation, 13);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -74,17 +74,17 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 					}
 					int randomGround = random.nextInt(3);
 					switch (randomGround) {
-					case 0:
-						setBlockAndMetadata(world, i14, 0, k12, Blocks.grass, 0);
-						break;
-					case 1:
-						setBlockAndMetadata(world, i14, 0, k12, Blocks.dirt, 1);
-						break;
-					case 2:
-						setBlockAndMetadata(world, i14, 0, k12, LOTRMod.dirtPath, 0);
-						break;
-					default:
-						break;
+						case 0:
+							setBlockAndMetadata(world, i14, 0, k12, Blocks.grass, 0);
+							break;
+						case 1:
+							setBlockAndMetadata(world, i14, 0, k12, Blocks.dirt, 1);
+							break;
+						case 2:
+							setBlockAndMetadata(world, i14, 0, k12, LOTRMod.dirtPath, 0);
+							break;
+						default:
+							break;
 					}
 					if (random.nextInt(3) == 0) {
 						setBlockAndMetadata(world, i14, 1, k12, LOTRMod.thatchFloor, 0);
@@ -123,13 +123,13 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 					setBlockAndMetadata(world, i14, 6, k12, brickRedWallBlock, brickRedWallMeta);
 				}
 				if (i14 == -9 && k2 <= 8) {
-					setBlockAndMetadata(world, i14, 5, k12, brickStairBlock, 4);
+					setBlockAndMetadata(world, -9, 5, k12, brickStairBlock, 4);
 				}
 				if (i14 == 9 && k2 <= 8) {
-					setBlockAndMetadata(world, i14, 5, k12, brickStairBlock, 5);
+					setBlockAndMetadata(world, 9, 5, k12, brickStairBlock, 5);
 				}
 				if (k12 == -9 && i22 <= 8) {
-					setBlockAndMetadata(world, i14, 5, k12, brickStairBlock, 7);
+					setBlockAndMetadata(world, i14, 5, -9, brickStairBlock, 7);
 				}
 				if (k12 != 9 || i22 > 8) {
 					continue;
@@ -144,7 +144,7 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 				setGrassToDirt(world, i14, j12 - 1, k12);
 			}
 		}
-		for (int i17 : new int[] { -6, 0, 6 }) {
+		for (int i17 : new int[]{-6, 0, 6}) {
 			int i23;
 			if (i17 != 0) {
 				setBlockAndMetadata(world, i17 - 1, 0, -12, pillarBlock, pillarMeta);
@@ -174,7 +174,7 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 			setBlockAndMetadata(world, i17 + 1, 3, 12, brickStairBlock, 5);
 			setBlockAndMetadata(world, i17, 4, 12, brickStairBlock, 7);
 		}
-		int[] i18 = { -6, 0, 6 };
+		int[] i18 = {-6, 0, 6};
 		k12 = i18.length;
 		for (j12 = 0; j12 < k12; ++j12) {
 			int k22;
@@ -226,21 +226,21 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 		setBlockAndMetadata(world, -1, 4, -10, brickStairBlock, 4);
 		setBlockAndMetadata(world, 0, 4, -10, brickStairBlock, 7);
 		setBlockAndMetadata(world, 1, 4, -10, brickStairBlock, 5);
-		for (int i17 : new int[] { -3, 3 }) {
+		for (int i17 : new int[]{-3, 3}) {
 			placeWallBanner(world, i17, 4, -12, bannerType, 2);
 			placeWallBanner(world, i17, 4, 12, bannerType, 0);
 		}
-		for (int k1321 : new int[] { -3, 3 }) {
+		for (int k1321 : new int[]{-3, 3}) {
 			placeWallBanner(world, -12, 4, k1321, bannerType, 3);
 			placeWallBanner(world, 12, 4, k1321, bannerType, 1);
 		}
 		placeWallBanner(world, 0, 6, -12, bannerType, 2);
-		int[] i19 = { -12, 9 };
+		int[] i19 = {-12, 9};
 		j1 = i19.length;
 		for (j12 = 0; j12 < j1; ++j12) {
 			int i17;
 			i17 = i19[j12];
-			for (int k15 : new int[] { -12, 9 }) {
+			for (int k15 : new int[]{-12, 9}) {
 				setBlockAndMetadata(world, i17 + 1, 8, k15, brickStairBlock, 0);
 				setBlockAndMetadata(world, i17 + 2, 8, k15, brickStairBlock, 1);
 				setBlockAndMetadata(world, i17 + 1, 8, k15 + 3, brickStairBlock, 0);
@@ -267,16 +267,16 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 					setBlockAndMetadata(world, i17 + 3, 10, k24, roofStairBlock, 0);
 				}
 				if (k15 == -12) {
-					setBlockAndMetadata(world, i17 + 1, 6, k15, brickStairBlock, 0);
-					setBlockAndMetadata(world, i17 + 2, 6, k15, brickStairBlock, 1);
+					setBlockAndMetadata(world, i17 + 1, 6, -12, brickStairBlock, 0);
+					setBlockAndMetadata(world, i17 + 2, 6, -12, brickStairBlock, 1);
 				}
 				if (k15 == 9) {
-					setBlockAndMetadata(world, i17 + 1, 6, k15 + 3, brickStairBlock, 0);
-					setBlockAndMetadata(world, i17 + 2, 6, k15 + 3, brickStairBlock, 1);
+					setBlockAndMetadata(world, i17 + 1, 6, 9 + 3, brickStairBlock, 0);
+					setBlockAndMetadata(world, i17 + 2, 6, 9 + 3, brickStairBlock, 1);
 				}
 				if (i17 == -12) {
-					setBlockAndMetadata(world, i17, 6, k15 + 1, brickStairBlock, 3);
-					setBlockAndMetadata(world, i17, 6, k15 + 2, brickStairBlock, 2);
+					setBlockAndMetadata(world, -12, 6, k15 + 1, brickStairBlock, 3);
+					setBlockAndMetadata(world, -12, 6, k15 + 2, brickStairBlock, 2);
 				}
 				if (i17 != 9) {
 					continue;
@@ -296,7 +296,7 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 		for (i13 = -1; i13 <= 1; ++i13) {
 			for (k12 = -12; k12 <= -4; ++k12) {
 				if (i13 == 0) {
-					setBlockAndMetadata(world, i13, 0, k12, pillarRedBlock, pillarRedMeta);
+					setBlockAndMetadata(world, 0, 0, k12, pillarRedBlock, pillarRedMeta);
 					continue;
 				}
 				setBlockAndMetadata(world, i13, 0, k12, pillarBlock, pillarMeta);
@@ -308,7 +308,7 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 					continue;
 				}
 				if (k14 == 0) {
-					setBlockAndMetadata(world, i15, 0, k14, pillarRedBlock, pillarRedMeta);
+					setBlockAndMetadata(world, i15, 0, 0, pillarRedBlock, pillarRedMeta);
 					continue;
 				}
 				setBlockAndMetadata(world, i15, 0, k14, pillarBlock, pillarMeta);
@@ -341,7 +341,7 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 				if (i22 == 2 || k2 == 2) {
 					for (j13 = 6; j13 <= 11; ++j13) {
 						if (j13 == 11) {
-							setBlockAndMetadata(world, i13, j13, k12, brickGoldBlock, brickGoldMeta);
+							setBlockAndMetadata(world, i13, 11, k12, brickGoldBlock, brickGoldMeta);
 							continue;
 						}
 						setBlockAndMetadata(world, i13, j13, k12, brickBlock, brickMeta);
@@ -493,7 +493,7 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 		setBlockAndMetadata(world, -1, 2, 2, plankSlabBlock, plankSlabMeta | 8);
 		setBlockAndMetadata(world, 1, 2, 2, plankSlabBlock, plankSlabMeta | 8);
 		setBlockAndMetadata(world, 2, 2, 2, plankSlabBlock, plankSlabMeta | 8);
-		int[] j17 = { 1, 3 };
+		int[] j17 = {1, 3};
 		k12 = j17.length;
 		for (i22 = 0; i22 < k12; ++i22) {
 			j16 = j17[i22];
@@ -587,7 +587,7 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 			setBlockAndMetadata(world, 6, 4, k12, plankStairBlock, 1);
 		}
 		for (i15 = 7; i15 <= 8; ++i15) {
-			this.placeChest(world, random, i15, 1, -9, 3, LOTRChestContents.EASTERLING_TOWER);
+			placeChest(world, random, i15, 1, -9, 3, LOTRChestContents.EASTERLING_TOWER);
 		}
 		setBlockAndMetadata(world, 9, 1, -8, tableBlock, 0);
 		setBlockAndMetadata(world, 9, 1, -7, Blocks.crafting_table, 0);
@@ -621,7 +621,7 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 		setAir(world, 0, 5, 9);
 		setAir(world, 0, 6, 9);
 		setBlockAndMetadata(world, 0, 5, 10, brickStairBlock, 2);
-		int[] j3 = { -6, 6 };
+		int[] j3 = {-6, 6};
 		k1 = j3.length;
 		for (j16 = 0; j16 < k1; ++j16) {
 			int i110 = j3[j16];
@@ -662,7 +662,7 @@ public class LOTRWorldGenEasterlingFortress extends LOTRWorldGenEasterlingStruct
 			}
 		}
 		setBlockAndMetadata(world, 4, 1, 7, Blocks.cauldron, 3);
-		for (int i110 : new int[] { -2, 2 }) {
+		for (int i110 : new int[]{-2, 2}) {
 			setBlockAndMetadata(world, i110, 1, 6, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, i110, 2, 6, fenceBlock, fenceMeta);
 			LOTREntityHorse horse = new LOTREntityHorse(world);

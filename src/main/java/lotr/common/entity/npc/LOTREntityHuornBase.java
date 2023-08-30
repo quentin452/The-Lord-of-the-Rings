@@ -5,6 +5,7 @@ import lotr.client.LOTRTickHandlerClient;
 import lotr.common.entity.ai.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.culling.Frustrum;
+import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.init.Blocks;
@@ -12,9 +13,9 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityHuornBase extends LOTREntityTree {
-	public boolean ignoringFrustumForRender = false;
+	public boolean ignoringFrustumForRender;
 
-	public LOTREntityHuornBase(World world) {
+	protected LOTREntityHuornBase(World world) {
 		super(world);
 		setSize(1.5f, 4.0f);
 		getNavigator().setAvoidsWater(true);
@@ -102,7 +103,7 @@ public abstract class LOTREntityHuornBase extends LOTREntityTree {
 		return dataWatcher.getWatchableObjectByte(17) == 1;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean isInRangeToRender3d(double d, double d1, double d2) {
 		EntityLivingBase viewer = Minecraft.getMinecraft().renderViewEntity;
@@ -110,7 +111,7 @@ public abstract class LOTREntityHuornBase extends LOTREntityTree {
 		double viewX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * f;
 		double viewY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * f;
 		double viewZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * f;
-		Frustrum camera = new Frustrum();
+		ICamera camera = new Frustrum();
 		camera.setPosition(viewX, viewY, viewZ);
 		AxisAlignedBB expandedBB = boundingBox.expand(2.0, 3.0, 2.0);
 		if (camera.isBoundingBoxInFrustum(expandedBB)) {

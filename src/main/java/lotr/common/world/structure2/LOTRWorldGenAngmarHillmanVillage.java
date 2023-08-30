@@ -12,7 +12,7 @@ public class LOTRWorldGenAngmarHillmanVillage extends LOTRWorldGenStructureBase2
 		super(flag);
 	}
 
-	public boolean attemptHouseSpawn(LOTRWorldGenStructureBase2 structure, World world, Random random) {
+	public void attemptHouseSpawn(LOTRWorldGenStructureBase2 structure, World world, Random random) {
 		structure.restrictions = restrictions;
 		structure.usingPlayer = usingPlayer;
 		for (int l = 0; l < 16; ++l) {
@@ -24,16 +24,15 @@ public class LOTRWorldGenAngmarHillmanVillage extends LOTRWorldGenStructureBase2
 			if (!structure.generateWithSetRotation(world, random, spawnX, spawnY, spawnZ, random.nextInt(4))) {
 				continue;
 			}
-			return true;
+			return;
 		}
-		return false;
 	}
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		LOTRWorldGenStructureBase2 structure;
 		int l;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		if (restrictions) {
 			boolean suitableSpawn = true;
 			world.getBiomeGenForCoords(originX, originZ);

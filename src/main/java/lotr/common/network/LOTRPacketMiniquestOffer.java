@@ -53,7 +53,7 @@ public class LOTRPacketMiniquestOffer implements IMessage {
 			FMLLog.warning("LOTR Warning: Tried to send miniquest offer close packet, but player == null");
 			return;
 		}
-		LOTRPacketMiniquestOfferClose packet = new LOTRPacketMiniquestOfferClose(npc.getEntityId(), accept);
+		IMessage packet = new LOTRPacketMiniquestOfferClose(npc.getEntityId(), accept);
 		LOTRPacketHandler.networkWrapper.sendToServer(packet);
 	}
 
@@ -70,7 +70,7 @@ public class LOTRPacketMiniquestOffer implements IMessage {
 				if (quest != null) {
 					LOTRMod.proxy.displayMiniquestOffer(quest, npc);
 				} else {
-					LOTRPacketMiniquestOffer.sendClosePacket(entityplayer, npc, false);
+					sendClosePacket(entityplayer, npc, false);
 				}
 			}
 			return null;

@@ -17,7 +17,7 @@ public class LOTRPacketFTBounceClient implements IMessage {
 		@Override
 		public IMessage onMessage(LOTRPacketFTBounceClient packet, MessageContext context) {
 			LOTRMod.proxy.getClientPlayer();
-			LOTRPacketFTBounceServer packetResponse = new LOTRPacketFTBounceServer();
+			IMessage packetResponse = new LOTRPacketFTBounceServer();
 			LOTRPacketHandler.networkWrapper.sendToServer(packetResponse);
 			return null;
 		}

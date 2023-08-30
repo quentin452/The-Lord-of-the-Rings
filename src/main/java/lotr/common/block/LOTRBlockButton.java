@@ -14,7 +14,7 @@ public class LOTRBlockButton extends BlockButton {
 		setCreativeTab(LOTRCreativeTabs.tabMisc);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		blockIcon = iconregister.registerIcon(iconPath);

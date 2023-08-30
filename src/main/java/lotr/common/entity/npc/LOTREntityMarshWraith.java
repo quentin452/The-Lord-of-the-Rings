@@ -171,7 +171,7 @@ public class LOTREntityMarshWraith extends LOTREntityNPC {
 					if (!(entity instanceof EntityLiving) || !entity.getUniqueID().equals(attackTargetUUID)) {
 						continue;
 					}
-					this.setAttackTarget((EntityLiving) entity);
+					setAttackTarget((EntityLivingBase) entity);
 					break;
 				}
 				checkedForAttackTarget = true;
@@ -197,7 +197,7 @@ public class LOTREntityMarshWraith extends LOTREntityNPC {
 						--timeUntilDespawn;
 					} else {
 						setDeathFadeTime(30);
-						this.setAttackTarget(null);
+						setAttackTarget(null);
 					}
 				}
 			}

@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class LOTRItemBerry extends LOTRItemFood {
-	public static List<Item> allBerries = new ArrayList<>();
-	public boolean isPoisonous = false;
+	public static Collection<Item> allBerries = new ArrayList<>();
+	public boolean isPoisonous;
 
 	public LOTRItemBerry() {
 		super(2, 0.2f, false);

@@ -23,7 +23,7 @@ public class LOTRWorldGenBreeStable extends LOTRWorldGenBreeStructure {
 		int i12;
 		int j2;
 		int k12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i12 = -9; i12 <= 9; ++i12) {
@@ -63,7 +63,7 @@ public class LOTRWorldGenBreeStable extends LOTRWorldGenBreeStructure {
 			if (i13 == 0) {
 				continue;
 			}
-			for (int step = 0; step < 12 && !isOpaque(world, i13, j1 = 0 - step, k1 = -5 - step); ++step) {
+			for (int step = 0; step < 12 && !isOpaque(world, i13, j1 = -step, k1 = -5 - step); ++step) {
 				setBlockAndMetadata(world, i13, j1, k1, Blocks.grass, 0);
 				setGrassToDirt(world, i13, j1 - 1, k1);
 				j2 = j1 - 1;
@@ -77,7 +77,7 @@ public class LOTRWorldGenBreeStable extends LOTRWorldGenBreeStructure {
 		for (int j13 = 1; j13 <= 2; ++j13) {
 			setAir(world, 5, j13, 6);
 		}
-		for (int step = 0; step < 12 && !isOpaque(world, i1 = 5 + step, j1 = 0 - step, k1 = 6); ++step) {
+		for (int step = 0; step < 12 && !isOpaque(world, i1 = 5 + step, j1 = -step, k1 = 6); ++step) {
 			setBlockAndMetadata(world, i1, j1, k1, Blocks.stone_stairs, 0);
 			setGrassToDirt(world, i1, j1 - 1, k1);
 			j2 = j1 - 1;
@@ -115,9 +115,9 @@ public class LOTRWorldGenBreeStable extends LOTRWorldGenBreeStructure {
 		setBlockAndMetadata(world, -3, 1, 5, bedBlock, 10);
 		placeRandomFlowerPot(world, random, 3, 2, 5);
 		placePlateWithCertainty(world, random, 1, 2, 7, LOTRMod.ceramicPlateBlock, LOTRFoods.BREE);
-		this.placeMug(world, random, 0, 2, 7, 3, LOTRFoods.BREE_DRINK);
-		this.placeBarrel(world, random, -1, 2, 7, 2, LOTRFoods.BREE_DRINK);
-		this.placeChest(world, random, -3, 1, 7, 4, LOTRChestContents.BREE_HOUSE);
+		placeMug(world, random, 0, 2, 7, 3, LOTRFoods.BREE_DRINK);
+		placeBarrel(world, random, -1, 2, 7, 2, LOTRFoods.BREE_DRINK);
+		placeChest(world, random, -3, 1, 7, 4, LOTRChestContents.BREE_HOUSE);
 		placeWeaponRack(world, 0, 2, 3, 6, getRandomBreeWeapon(random));
 		LOTREntityBreeMan stabler = new LOTREntityBreeMan(world);
 		spawnNPCAndSetHome(stabler, world, 0, 1, -1, 16);

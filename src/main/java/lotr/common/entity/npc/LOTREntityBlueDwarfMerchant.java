@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public class LOTREntityBlueDwarfMerchant extends LOTREntityBlueDwarf implements LOTRTravellingTrader {
 	public LOTREntityBlueDwarfMerchant(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class LOTRWorldGenSouthronSmithy extends LOTRWorldGenSouthronStructure {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 5, -1);
+		setOriginAndRotation(world, i, j, k, rotation, 5, -1);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -48,7 +48,7 @@ public class LOTRWorldGenSouthronSmithy extends LOTRWorldGenSouthronStructure {
 		for (int i1 = -4; i1 <= 4; ++i1) {
 			for (int k1 = -5; k1 <= 13; ++k1) {
 				int i2 = Math.abs(i1);
-				if ((i2 > 3 || k1 < -4 || k1 > 6) && (i2 > 4 || k1 < 7 || k1 > 12)) {
+				if ((i2 > 3 || k1 < -4 || k1 > 6) && (k1 < 7 || k1 > 12)) {
 					continue;
 				}
 				int j1 = 0;
@@ -89,10 +89,10 @@ public class LOTRWorldGenSouthronSmithy extends LOTRWorldGenSouthronStructure {
 		setBlockAndMetadata(world, -2, 5, -2, bedBlock, 2);
 		setBlockAndMetadata(world, -1, 5, -3, bedBlock, 10);
 		setBlockAndMetadata(world, -2, 5, -3, bedBlock, 10);
-		this.placeChest(world, random, 3, 1, 6, LOTRMod.chestBasket, 5, LOTRChestContents.NEAR_HARAD_HOUSE);
-		this.placeChest(world, random, 2, 5, -3, LOTRMod.chestBasket, 5, LOTRChestContents.NEAR_HARAD_HOUSE);
+		placeChest(world, random, 3, 1, 6, LOTRMod.chestBasket, 5, LOTRChestContents.NEAR_HARAD_HOUSE);
+		placeChest(world, random, 2, 5, -3, LOTRMod.chestBasket, 5, LOTRChestContents.NEAR_HARAD_HOUSE);
 		placePlateWithCertainty(world, random, -1, 6, 3, LOTRMod.ceramicPlateBlock, LOTRFoods.SOUTHRON);
-		this.placeMug(world, random, -2, 6, 3, 0, LOTRFoods.SOUTHRON_DRINK);
+		placeMug(world, random, -2, 6, 3, 0, LOTRFoods.SOUTHRON_DRINK);
 		placeWeaponRack(world, -3, 1, 8, 1, getRandomHaradWeapon(random));
 		placeWeaponRack(world, 3, 1, 8, 3, getRandomHaradWeapon(random));
 		LOTREntityNearHaradrimBase smith = createSmith(world);

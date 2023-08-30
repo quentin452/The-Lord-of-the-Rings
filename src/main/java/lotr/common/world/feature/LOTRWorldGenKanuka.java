@@ -8,6 +8,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRWorldGenKanuka extends WorldGenAbstractTree {
@@ -61,7 +62,7 @@ public class LOTRWorldGenKanuka extends WorldGenAbstractTree {
 			for (int i1 = i - trunkWidth; i1 <= i + trunkWidth && flag; ++i1) {
 				for (int k1 = k - trunkWidth; k1 <= k + trunkWidth && flag; ++k1) {
 					Block block = world.getBlock(i1, j - 1, k1);
-					boolean isSoil = block.canSustainPlant(world, i1, j - 1, k1, ForgeDirection.UP, (BlockSapling) Blocks.sapling);
+					boolean isSoil = block.canSustainPlant(world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling);
 					if (isSoil) {
 						continue;
 					}
@@ -83,8 +84,7 @@ public class LOTRWorldGenKanuka extends WorldGenAbstractTree {
 				int trunkZ = k;
 				int trunkY = j;
 				ArrayList<int[]> trunkCoords = new ArrayList<>();
-				int trunkHeight = height;
-				for (int l = 0; l < trunkHeight; ++l) {
+				for (int l = 0; l < height; ++l) {
 					if (l > 0) {
 						if (Math.floor(trunkCos * l) != Math.floor(trunkCos * (l + 1))) {
 							trunkX = (int) (trunkX + Math.signum(trunkCos));
@@ -106,7 +106,7 @@ public class LOTRWorldGenKanuka extends WorldGenAbstractTree {
 								continue;
 							}
 							setBlockAndNotifyAdequately(world, i1, j1, k1, woodBlock, woodMeta | 0xC);
-							trunkCoords.add(new int[] { i1, j1, k1 });
+							trunkCoords.add(new int[]{i1, j1, k1});
 						}
 					}
 				}

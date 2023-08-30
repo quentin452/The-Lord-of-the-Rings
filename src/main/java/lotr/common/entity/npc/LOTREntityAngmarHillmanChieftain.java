@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityAngmarHillmanChieftain extends LOTREntityAngmarHillmanWarrior implements LOTRUnitTradeable {
 	public LOTREntityAngmarHillmanChieftain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

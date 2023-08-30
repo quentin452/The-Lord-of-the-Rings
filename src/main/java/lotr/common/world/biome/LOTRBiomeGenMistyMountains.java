@@ -42,9 +42,9 @@ public class LOTRBiomeGenMistyMountains extends LOTRBiome {
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer5);
 		variantChance = 0.1f;
 		addBiomeVariantSet(LOTRBiomeVariant.SET_MOUNTAINS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.3f);
 		decorator.biomeGemFactor = 1.0f;
 		decorator.addOre(new WorldGenMinable(LOTRMod.oreMithril, 6), 0.25f, 0, 16);
 		decorator.addOre(new WorldGenMinable(LOTRMod.oreGlowstone, 4), 8.0f, 0, 48);

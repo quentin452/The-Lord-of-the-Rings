@@ -32,16 +32,16 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 	}
 
 	public void renderBarrel(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
-		int ao = LOTRRenderBlocks.getAO();
-		LOTRRenderBlocks.setAO(0);
+		int ao = getAO();
+		setAO(0);
 		renderblocks.renderAllFaces = true;
 		renderblocks.setRenderBounds(0.15625, 0.0625, 0.15625, 0.84375, 0.75, 0.84375);
 		renderblocks.renderStandardBlock(block, i, j, k);
-		for (float f : new float[] { 0.25f, 0.5f }) {
+		for (float f : new float[]{0.25f, 0.5f}) {
 			renderblocks.setRenderBounds(0.125, f, 0.125, 0.875, f + 0.0625f, 0.875);
 			renderblocks.renderStandardBlock(block, i, j, k);
 		}
-		for (float f : new float[] { 0.0f, 0.6875f }) {
+		for (float f : new float[]{0.0f, 0.6875f}) {
 			renderblocks.setRenderBounds(0.125, f, 0.125, 0.25, f + 0.125f, 0.875);
 			renderblocks.renderStandardBlock(block, i, j, k);
 			renderblocks.setRenderBounds(0.75, f, 0.125, 0.875, f + 0.125f, 0.875);
@@ -54,36 +54,36 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		renderblocks.setOverrideBlockTexture(block.getBlockTextureFromSide(-1));
 		int meta = world.getBlockMetadata(i, j, k);
 		switch (meta) {
-		case 2:
-			renderblocks.setRenderBounds(0.4375, 0.25, 0.0, 0.5625, 0.375, 0.125);
-			renderblocks.renderStandardBlock(block, i, j, k);
-			renderblocks.setRenderBounds(0.46875, 0.125, 0.0, 0.53125, 0.25, 0.0625);
-			renderblocks.renderStandardBlock(block, i, j, k);
-			break;
-		case 3:
-			renderblocks.setRenderBounds(0.4375, 0.25, 0.875, 0.5625, 0.375, 1.0);
-			renderblocks.renderStandardBlock(block, i, j, k);
-			renderblocks.setRenderBounds(0.46875, 0.125, 0.9375, 0.53125, 0.25, 1.0);
-			renderblocks.renderStandardBlock(block, i, j, k);
-			break;
-		case 4:
-			renderblocks.setRenderBounds(0.0, 0.25, 0.4375, 0.125, 0.375, 0.5625);
-			renderblocks.renderStandardBlock(block, i, j, k);
-			renderblocks.setRenderBounds(0.0, 0.125, 0.46875, 0.0625, 0.25, 0.53125);
-			renderblocks.renderStandardBlock(block, i, j, k);
-			break;
-		case 5:
-			renderblocks.setRenderBounds(0.875, 0.25, 0.4375, 1.0, 0.375, 0.5625);
-			renderblocks.renderStandardBlock(block, i, j, k);
-			renderblocks.setRenderBounds(0.9375, 0.125, 0.46875, 1.0, 0.25, 0.53125);
-			renderblocks.renderStandardBlock(block, i, j, k);
-			break;
-		default:
-			break;
+			case 2:
+				renderblocks.setRenderBounds(0.4375, 0.25, 0.0, 0.5625, 0.375, 0.125);
+				renderblocks.renderStandardBlock(block, i, j, k);
+				renderblocks.setRenderBounds(0.46875, 0.125, 0.0, 0.53125, 0.25, 0.0625);
+				renderblocks.renderStandardBlock(block, i, j, k);
+				break;
+			case 3:
+				renderblocks.setRenderBounds(0.4375, 0.25, 0.875, 0.5625, 0.375, 1.0);
+				renderblocks.renderStandardBlock(block, i, j, k);
+				renderblocks.setRenderBounds(0.46875, 0.125, 0.9375, 0.53125, 0.25, 1.0);
+				renderblocks.renderStandardBlock(block, i, j, k);
+				break;
+			case 4:
+				renderblocks.setRenderBounds(0.0, 0.25, 0.4375, 0.125, 0.375, 0.5625);
+				renderblocks.renderStandardBlock(block, i, j, k);
+				renderblocks.setRenderBounds(0.0, 0.125, 0.46875, 0.0625, 0.25, 0.53125);
+				renderblocks.renderStandardBlock(block, i, j, k);
+				break;
+			case 5:
+				renderblocks.setRenderBounds(0.875, 0.25, 0.4375, 1.0, 0.375, 0.5625);
+				renderblocks.renderStandardBlock(block, i, j, k);
+				renderblocks.setRenderBounds(0.9375, 0.125, 0.46875, 1.0, 0.25, 0.53125);
+				renderblocks.renderStandardBlock(block, i, j, k);
+				break;
+			default:
+				break;
 		}
 		renderblocks.clearOverrideBlockTexture();
 		renderblocks.renderAllFaces = false;
-		LOTRRenderBlocks.setAO(ao);
+		setAO(ao);
 	}
 
 	public void renderBeacon(IBlockAccess world, int i, int j, int k, RenderBlocks renderblocks) {
@@ -96,22 +96,22 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		int meta = world.getBlockMetadata(i, j, k);
 		int dir = meta & 0xC;
 		switch (dir) {
-		case 0:
-			renderblocks.uvRotateEast = 3;
-			renderblocks.uvRotateNorth = 3;
-			break;
-		case 4:
-			renderblocks.uvRotateEast = 1;
-			renderblocks.uvRotateWest = 2;
-			renderblocks.uvRotateTop = 2;
-			renderblocks.uvRotateBottom = 1;
-			break;
-		case 8:
-			renderblocks.uvRotateSouth = 1;
-			renderblocks.uvRotateNorth = 2;
-			break;
-		default:
-			break;
+			case 0:
+				renderblocks.uvRotateEast = 3;
+				renderblocks.uvRotateNorth = 3;
+				break;
+			case 4:
+				renderblocks.uvRotateEast = 1;
+				renderblocks.uvRotateWest = 2;
+				renderblocks.uvRotateTop = 2;
+				renderblocks.uvRotateBottom = 1;
+				break;
+			case 8:
+				renderblocks.uvRotateSouth = 1;
+				renderblocks.uvRotateNorth = 2;
+				break;
+			default:
+				break;
 		}
 		renderblocks.renderStandardBlock(block, i, j, k);
 		renderblocks.uvRotateSouth = 0;
@@ -123,8 +123,8 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 	}
 
 	public void renderBirdCage(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
-		int ao = LOTRRenderBlocks.getAO();
-		LOTRRenderBlocks.setAO(0);
+		int ao = getAO();
+		setAO(0);
 		renderblocks.renderAllFaces = true;
 		int meta = world.getBlockMetadata(i, j, k);
 		float d = 0.001f;
@@ -159,14 +159,14 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		}
 		renderblocks.clearOverrideBlockTexture();
 		renderblocks.renderAllFaces = false;
-		LOTRRenderBlocks.setAO(ao);
+		setAO(ao);
 	}
 
 	public void renderBlockRandomRotated(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks, boolean rotateSides) {
 		int[] sides = new int[6];
 		for (int l = 0; l < sides.length; ++l) {
 			int hash = i * 234890405 ^ k * 37383934 ^ j;
-			blockRand.setSeed(hash += l * 285502);
+			blockRand.setSeed(hash + l * 285502);
 			blockRand.setSeed(blockRand.nextLong());
 			sides[l] = blockRand.nextInt(4);
 		}
@@ -190,8 +190,8 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 	}
 
 	public void renderButterflyJar(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
-		int ao = LOTRRenderBlocks.getAO();
-		LOTRRenderBlocks.setAO(0);
+		int ao = getAO();
+		setAO(0);
 		renderblocks.renderAllFaces = true;
 		renderblocks.setRenderBounds(0.1875, 0.0, 0.1875, 0.8125, 0.5625, 0.8125);
 		renderblocks.renderStandardBlock(block, i, j, k);
@@ -204,12 +204,12 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		renderblocks.renderStandardBlock(block, i, j, k);
 		renderblocks.clearOverrideBlockTexture();
 		renderblocks.renderAllFaces = false;
-		LOTRRenderBlocks.setAO(ao);
+		setAO(ao);
 	}
 
 	public void renderCommandTable(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
-		int ao = LOTRRenderBlocks.getAO();
-		LOTRRenderBlocks.setAO(0);
+		int ao = getAO();
+		setAO(0);
 		renderblocks.renderAllFaces = true;
 		renderblocks.setRenderBoundsFromBlock(block);
 		renderblocks.renderStandardBlock(block, i, j, k);
@@ -224,7 +224,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		renderblocks.renderStandardBlock(block, i, j, k);
 		renderblocks.clearOverrideBlockTexture();
 		renderblocks.renderAllFaces = false;
-		LOTRRenderBlocks.setAO(ao);
+		setAO(ao);
 	}
 
 	public void renderCoral(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
@@ -254,39 +254,33 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			tessellator.setBrightness(renderblocks.renderMinY > 0.0 ? light : block.getMixedBrightnessForBlock(world, i, j - 1, k));
 			tessellator.setColorOpaque_F(f, f, f);
 			renderblocks.renderFaceYNeg(block, i, j, k, renderblocks.getBlockIcon(block, world, i, j, k, 0));
-			flag = true;
 		}
 		if (topDoor || world.getBlock(i, j + 1, k) != block) {
 			tessellator.setBrightness(renderblocks.renderMaxY < 1.0 ? light : block.getMixedBrightnessForBlock(world, i, j + 1, k));
 			tessellator.setColorOpaque_F(f1, f1, f1);
 			renderblocks.renderFaceYPos(block, i, j, k, renderblocks.getBlockIcon(block, world, i, j, k, 1));
-			flag = true;
 		}
 		tessellator.setBrightness(renderblocks.renderMinZ > 0.0 ? light : block.getMixedBrightnessForBlock(world, i, j, k - 1));
 		tessellator.setColorOpaque_F(f2, f2, f2);
 		IIcon iicon = renderblocks.getBlockIcon(block, world, i, j, k, 2);
 		renderblocks.renderFaceZNeg(block, i, j, k, iicon);
-		flag = true;
 		renderblocks.flipTexture = false;
 		tessellator.setBrightness(renderblocks.renderMaxZ < 1.0 ? light : block.getMixedBrightnessForBlock(world, i, j, k + 1));
 		tessellator.setColorOpaque_F(f2, f2, f2);
 		iicon = renderblocks.getBlockIcon(block, world, i, j, k, 3);
 		renderblocks.renderFaceZPos(block, i, j, k, iicon);
-		flag = true;
 		renderblocks.flipTexture = false;
 		tessellator.setBrightness(renderblocks.renderMinX > 0.0 ? light : block.getMixedBrightnessForBlock(world, i - 1, j, k));
 		tessellator.setColorOpaque_F(f3, f3, f3);
 		iicon = renderblocks.getBlockIcon(block, world, i, j, k, 4);
 		renderblocks.renderFaceXNeg(block, i, j, k, iicon);
-		flag = true;
 		renderblocks.flipTexture = false;
 		tessellator.setBrightness(renderblocks.renderMaxX < 1.0 ? light : block.getMixedBrightnessForBlock(world, i + 1, j, k));
 		tessellator.setColorOpaque_F(f3, f3, f3);
 		iicon = renderblocks.getBlockIcon(block, world, i, j, k, 5);
 		renderblocks.renderFaceXPos(block, i, j, k, iicon);
-		flag = true;
 		renderblocks.flipTexture = false;
-		return flag;
+		return true;
 	}
 
 	public void renderDoublePlant(IBlockAccess world, int i, int j, int k, BlockDoublePlant block, RenderBlocks renderblocks) {
@@ -307,9 +301,8 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		}
 		tessellator.setColorOpaque_F(r, g, b);
 		double d = i;
-		double d1 = j;
 		double d2 = k;
-		long seed = i * 3129871 ^ k * 116129781L;
+		long seed = i * 3129871L ^ k * 116129781L;
 		seed = seed * seed * 42317861L + seed * 11L;
 		d += ((seed >> 16 & 0xFL) / 15.0f - 0.5) * 0.3;
 		d2 += ((seed >> 24 & 0xFL) / 15.0f - 0.5) * 0.3;
@@ -324,7 +317,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			plantType = BlockDoublePlant.func_149890_d(meta);
 		}
 		IIcon icon = block.func_149888_a(isTop, plantType);
-		renderblocks.drawCrossedSquares(icon, d, d1, d2, 1.0f);
+		renderblocks.drawCrossedSquares(icon, d, j, d2, 1.0f);
 	}
 
 	public void renderDoubleTorch(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
@@ -334,8 +327,8 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 	}
 
 	public void renderEntJar(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
-		int ao = LOTRRenderBlocks.getAO();
-		LOTRRenderBlocks.setAO(0);
+		int ao = getAO();
+		setAO(0);
 		renderblocks.renderAllFaces = true;
 		renderblocks.setRenderBounds(0.25, 0.0, 0.25, 0.75, 0.0625, 0.75);
 		renderblocks.renderStandardBlock(block, i, j, k);
@@ -348,7 +341,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		renderblocks.setRenderBounds(0.6875, 0.0625, 0.3125, 0.75, 0.875, 0.6875);
 		renderblocks.renderStandardBlock(block, i, j, k);
 		renderblocks.renderAllFaces = false;
-		LOTRRenderBlocks.setAO(ao);
+		setAO(ao);
 	}
 
 	public void renderFallenLeaves(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks, int[] minMaxLeaves, int[] minMaxXSize, int[] minMaxZSize, float shade) {
@@ -376,7 +369,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		for (int l = 0; l < leaves; ++l) {
 			double posX = i + blockRand.nextFloat();
 			double posZ = k + blockRand.nextFloat();
-			double posY = j + 0.01f + (float) l / (float) leaves * 0.1f;
+			double posY = j + 0.01f + (float) l / leaves * 0.1f;
 			float rotation = blockRand.nextFloat() * 3.1415927f * 2.0f;
 			int xSize = MathHelper.getRandomIntegerInRange(blockRand, minMaxXSize[0], minMaxXSize[1]);
 			int zSize = MathHelper.getRandomIntegerInRange(blockRand, minMaxZSize[0], minMaxZSize[1]);
@@ -390,13 +383,12 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			double maxV = icon.getInterpolatedV(intMinV + zSize);
 			double x2 = xSizeD / 2.0;
 			double z2 = zSizeD / 2.0;
-			Vec3[] vecs = { Vec3.createVectorHelper(-x2, 0.0, -z2), Vec3.createVectorHelper(-x2, 0.0, z2), Vec3.createVectorHelper(x2, 0.0, z2), Vec3.createVectorHelper(x2, 0.0, -z2) };
+			Vec3[] vecs = {Vec3.createVectorHelper(-x2, 0.0, -z2), Vec3.createVectorHelper(-x2, 0.0, z2), Vec3.createVectorHelper(x2, 0.0, z2), Vec3.createVectorHelper(x2, 0.0, -z2)};
 			for (Vec3 vec2 : vecs) {
-				Vec3 vec = vec2;
-				vec.rotateAroundY(rotation);
-				vec.xCoord += posX;
-				vec.yCoord += posY;
-				vec.zCoord += posZ;
+				vec2.rotateAroundY(rotation);
+				vec2.xCoord += posX;
+				vec2.yCoord += posY;
+				vec2.zCoord += posZ;
 			}
 			tessellator.addVertexWithUV(vecs[0].xCoord, vecs[0].yCoord, vecs[0].zCoord, minU, minV);
 			tessellator.addVertexWithUV(vecs[1].xCoord, vecs[1].yCoord, vecs[1].zCoord, minU, maxV);
@@ -421,13 +413,10 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			b = f5;
 		}
 		tessellator.setColorOpaque_F(r, g, b);
-		double d = i;
-		double d1 = j;
-		double d2 = k;
-		long seed = i * 3129871 ^ k * 116129781L ^ j;
+		long seed = i * 3129871L ^ k * 116129781L ^ j;
 		seed = seed * seed * 42317861L + seed * 11L;
 		IIcon iicon = renderblocks.getBlockIconFromSideAndMetadata(block, 0, world.getBlockMetadata(i, j, k));
-		renderblocks.drawCrossedSquares(iicon, d += ((seed >> 16 & 0xFL) / 15.0f - 0.5) * 0.3, d1, d2 += ((seed >> 24 & 0xFL) / 15.0f - 0.5) * 0.3, 1.0f);
+		renderblocks.drawCrossedSquares(iicon, i + ((seed >> 16 & 0xFL) / 15.0f - 0.5) * 0.3, j, k + ((seed >> 24 & 0xFL) / 15.0f - 0.5) * 0.3, 1.0f);
 	}
 
 	public void renderFlowerPot(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
@@ -471,9 +460,9 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			if (plantBlock == LOTRMod.shireHeather) {
 				renderblocks.drawCrossedSquares(plantBlock.getIcon(2, plantMeta), i, j, k, 0.6f);
 			} else if (plantBlock == LOTRMod.clover) {
-				LOTRRenderBlocks.renderClover(world, i, j, k, plantBlock, renderblocks, plantMeta == 1 ? 4 : 3, false);
+				renderClover(world, i, j, k, plantBlock, renderblocks, plantMeta == 1 ? 4 : 3, false);
 			} else if (plantBlock instanceof LOTRBlockGrass) {
-				LOTRRenderBlocks.renderGrass(world, i, j, k, plantBlock, renderblocks, false);
+				renderGrass(world, i, j, k, plantBlock, renderblocks, false);
 			} else if (plantBlock instanceof LOTRBlockFlower || plantBlock.getRenderType() == 1) {
 				renderblocks.drawCrossedSquares(plantBlock.getIcon(2, plantMeta), i, j, k, 0.75f);
 			} else {
@@ -500,19 +489,19 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 
 	public void renderInvBarrel(Block block, RenderBlocks renderblocks) {
 		renderblocks.renderAllFaces = true;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.15625, 0.0625, 0.15625, 0.84375, 0.75, 0.84375);
-		for (float f : new float[] { 0.25f, 0.5f }) {
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.125, f, 0.125, 0.875, f + 0.0625f, 0.875);
+		renderStandardInvBlock(renderblocks, block, 0.15625, 0.0625, 0.15625, 0.84375, 0.75, 0.84375);
+		for (float f : new float[]{0.25f, 0.5f}) {
+			renderStandardInvBlock(renderblocks, block, 0.125, f, 0.125, 0.875, f + 0.0625f, 0.875);
 		}
-		for (float f : new float[] { 0.0f, 0.6875f }) {
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.125, f, 0.125, 0.25, f + 0.125f, 0.875);
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.75, f, 0.125, 0.875, f + 0.125f, 0.875);
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, f, 0.125, 0.75, f + 0.125f, 0.25);
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, f, 0.75, 0.75, f + 0.125f, 0.875);
+		for (float f : new float[]{0.0f, 0.6875f}) {
+			renderStandardInvBlock(renderblocks, block, 0.125, f, 0.125, 0.25, f + 0.125f, 0.875);
+			renderStandardInvBlock(renderblocks, block, 0.75, f, 0.125, 0.875, f + 0.125f, 0.875);
+			renderStandardInvBlock(renderblocks, block, 0.25, f, 0.125, 0.75, f + 0.125f, 0.25);
+			renderStandardInvBlock(renderblocks, block, 0.25, f, 0.75, 0.75, f + 0.125f, 0.875);
 		}
 		renderblocks.setOverrideBlockTexture(block.getBlockTextureFromSide(-1));
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.875, 0.25, 0.4375, 1.0, 0.375, 0.5625);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.9375, 0.125, 0.46875, 1.0, 0.25, 0.53125);
+		renderStandardInvBlock(renderblocks, block, 0.875, 0.25, 0.4375, 1.0, 0.375, 0.5625);
+		renderStandardInvBlock(renderblocks, block, 0.9375, 0.125, 0.46875, 1.0, 0.25, 0.53125);
 		renderblocks.clearOverrideBlockTexture();
 		renderblocks.renderAllFaces = false;
 	}
@@ -520,46 +509,46 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 	public void renderInvBirdCage(Block block, RenderBlocks renderblocks, int meta) {
 		renderblocks.renderAllFaces = true;
 		float d = 0.001f;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0, 0.0625, 0.0, 0.0f + d, 1.0, 1.0, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 1.0f - d, 0.0625, 0.0, 1.0, 1.0, 1.0, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0, 0.0625, 0.0, 1.0, 1.0, 0.0f + d, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0, 0.0625, 1.0f - d, 1.0, 1.0, 1.0, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0, 1.0f - d, 0.0, 1.0, 1.0, 1.0, meta);
+		renderStandardInvBlock(renderblocks, block, 0.0, 0.0625, 0.0, 0.0f + d, 1.0, 1.0, meta);
+		renderStandardInvBlock(renderblocks, block, 1.0f - d, 0.0625, 0.0, 1.0, 1.0, 1.0, meta);
+		renderStandardInvBlock(renderblocks, block, 0.0, 0.0625, 0.0, 1.0, 1.0, 0.0f + d, meta);
+		renderStandardInvBlock(renderblocks, block, 0.0, 0.0625, 1.0f - d, 1.0, 1.0, 1.0, meta);
+		renderStandardInvBlock(renderblocks, block, 0.0, 1.0f - d, 0.0, 1.0, 1.0, 1.0, meta);
 		renderblocks.setOverrideBlockTexture(block.getIcon(-1, meta));
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0, 0.0, 0.0, 1.0, 0.0625, 1.0, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.375, 1.0, 0.375, 0.625, 1.0625, 0.625, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.46875, 1.0625, 0.46875, 0.53125, 1.1875, 0.53125, meta);
+		renderStandardInvBlock(renderblocks, block, 0.0, 0.0, 0.0, 1.0, 0.0625, 1.0, meta);
+		renderStandardInvBlock(renderblocks, block, 0.375, 1.0, 0.375, 0.625, 1.0625, 0.625, meta);
+		renderStandardInvBlock(renderblocks, block, 0.46875, 1.0625, 0.46875, 0.53125, 1.1875, 0.53125, meta);
 		renderblocks.clearOverrideBlockTexture();
 		renderblocks.renderAllFaces = false;
 	}
 
 	public void renderInvButterflyJar(Block block, RenderBlocks renderblocks) {
 		renderblocks.renderAllFaces = true;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.1875, 0.0, 0.1875, 0.8125, 0.5625, 0.8125);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.1875, 0.0, 0.1875, 0.8125, 0.0625, 0.8125);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, 0.5625, 0.25, 0.75, 0.6875, 0.75);
+		renderStandardInvBlock(renderblocks, block, 0.1875, 0.0, 0.1875, 0.8125, 0.5625, 0.8125);
+		renderStandardInvBlock(renderblocks, block, 0.1875, 0.0, 0.1875, 0.8125, 0.0625, 0.8125);
+		renderStandardInvBlock(renderblocks, block, 0.25, 0.5625, 0.25, 0.75, 0.6875, 0.75);
 		renderblocks.setOverrideBlockTexture(block.getIcon(-1, 0));
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.1875, 0.6875, 0.1875, 0.8125, 0.75, 0.8125);
+		renderStandardInvBlock(renderblocks, block, 0.1875, 0.6875, 0.1875, 0.8125, 0.75, 0.8125);
 		renderblocks.clearOverrideBlockTexture();
 		renderblocks.renderAllFaces = false;
 	}
 
 	public void renderInvCommandTable(Block block, RenderBlocks renderblocks) {
 		renderblocks.renderAllFaces = true;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+		renderStandardInvBlock(renderblocks, block, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
 		renderblocks.setOverrideBlockTexture(Blocks.planks.getIcon(0, 0));
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, -0.5, 1.0, -0.5, 1.5, 1.0625, 1.5);
+		renderStandardInvBlock(renderblocks, block, -0.5, 1.0, -0.5, 1.5, 1.0625, 1.5);
 		renderblocks.clearOverrideBlockTexture();
 		renderblocks.renderAllFaces = false;
 	}
 
 	public void renderInvEntJar(Block block, RenderBlocks renderblocks) {
 		renderblocks.renderAllFaces = true;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, 0.0, 0.25, 0.75, 0.0625, 0.75);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, 0.0625, 0.25, 0.75, 0.875, 0.3125);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, 0.0625, 0.6875, 0.75, 0.875, 0.75);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, 0.0625, 0.3125, 0.31255000829696655, 0.875, 0.6875);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.6875, 0.0625, 0.3125, 0.75, 0.875, 0.6875);
+		renderStandardInvBlock(renderblocks, block, 0.25, 0.0, 0.25, 0.75, 0.0625, 0.75);
+		renderStandardInvBlock(renderblocks, block, 0.25, 0.0625, 0.25, 0.75, 0.875, 0.3125);
+		renderStandardInvBlock(renderblocks, block, 0.25, 0.0625, 0.6875, 0.75, 0.875, 0.75);
+		renderStandardInvBlock(renderblocks, block, 0.25, 0.0625, 0.3125, 0.31255000829696655, 0.875, 0.6875);
+		renderStandardInvBlock(renderblocks, block, 0.6875, 0.0625, 0.3125, 0.75, 0.875, 0.6875);
 		renderblocks.renderAllFaces = false;
 	}
 
@@ -575,14 +564,14 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			renderInvOrcBomb(block, meta, renderblocks);
 		}
 		if (id == LOTRMod.proxy.getMobSpawnerRenderID()) {
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+			renderStandardInvBlock(renderblocks, block, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
 			((LOTRTileEntityMobSpawnerRenderer) TileEntityRendererDispatcher.instance.getSpecialRendererByClass(LOTRTileEntityMobSpawner.class)).renderInvMobSpawner(meta);
 		}
 		if (id == LOTRMod.proxy.getStalactiteRenderID()) {
 			renderInvStalactite(block, meta, renderblocks);
 		}
 		if (id == LOTRMod.proxy.getCloverRenderID()) {
-			LOTRRenderBlocks.renderInvClover(block, renderblocks, meta == 1 ? 4 : 3);
+			renderInvClover(block, renderblocks, meta == 1 ? 4 : 3);
 		}
 		if (id == LOTRMod.proxy.getEntJarRenderID()) {
 			renderInvEntJar(block, renderblocks);
@@ -607,16 +596,16 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			((LOTRRenderChest) TileEntityRendererDispatcher.instance.getSpecialRendererByClass(LOTRTileEntityChest.class)).renderInvChest(block, meta);
 		}
 		if (id == LOTRMod.proxy.getWasteRenderID()) {
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, meta);
+			renderStandardInvBlock(renderblocks, block, meta);
 		}
 		if (id == LOTRMod.proxy.getBeamRenderID()) {
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, meta);
+			renderStandardInvBlock(renderblocks, block, meta);
 		}
 		if (id == LOTRMod.proxy.getTreasureRenderID()) {
 			LOTRBlockTreasurePile.setTreasureBlockBounds(block, meta);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.lockBlockBounds = true;
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, meta);
+			renderStandardInvBlock(renderblocks, block, meta);
 			renderblocks.unlockBlockBounds();
 		}
 		if (id == LOTRMod.proxy.getBirdCageRenderID()) {
@@ -626,17 +615,17 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			renderInvRhunFireJar(block, renderblocks, meta);
 		}
 		if (id == LOTRMod.proxy.getCoralRenderID()) {
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, meta);
+			renderStandardInvBlock(renderblocks, block, meta);
 		}
 		if (id == LOTRMod.proxy.getGuldurilRenderID()) {
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, meta);
+			renderStandardInvBlock(renderblocks, block, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, meta);
 			((LOTRRenderGuldurilGlow) TileEntityRendererDispatcher.instance.getSpecialRendererByClass(LOTRTileEntityGulduril.class)).renderInvGlow();
 		}
 		if (id == LOTRMod.proxy.getOrcPlatingRenderID()) {
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, meta);
+			renderStandardInvBlock(renderblocks, block, meta);
 		}
 		if (id == LOTRMod.proxy.getTrapdoorRenderID()) {
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, meta);
+			renderStandardInvBlock(renderblocks, block, meta);
 		}
 	}
 
@@ -689,33 +678,33 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 
 	public void renderInvOrcBomb(Block block, int meta, RenderBlocks renderblocks) {
 		renderblocks.renderAllFaces = true;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.125, 0.1875, 0.125, 0.875, 0.9375, 0.875, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.375, 0.9375, 0.375, 0.625, 1.0, 0.625, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, 0.9375, 0.375, 0.3125, 1.0, 0.4375, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, 0.9375, 0.5625, 0.3125, 1.0, 0.625, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.6875, 0.9375, 0.375, 0.75, 1.0, 0.4375, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.6875, 0.9375, 0.5625, 0.75, 1.0, 0.625, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.375, 0.9375, 0.25, 0.4375, 1.0, 0.3125, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.5625, 0.9375, 0.25, 0.625, 1.0, 0.3125, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.375, 0.9375, 0.6875, 0.4375, 1.0, 0.75, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.5625, 0.9375, 0.6875, 0.625, 1.0, 0.75, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.125, 0.0, 0.25, 0.1875, 0.1875, 0.75, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.8125, 0.0, 0.25, 0.875, 0.1875, 0.75, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, 0.0, 0.125, 0.75, 0.1875, 0.1875, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, 0.0, 0.8125, 0.75, 0.1875, 0.875, meta);
+		renderStandardInvBlock(renderblocks, block, 0.125, 0.1875, 0.125, 0.875, 0.9375, 0.875, meta);
+		renderStandardInvBlock(renderblocks, block, 0.375, 0.9375, 0.375, 0.625, 1.0, 0.625, meta);
+		renderStandardInvBlock(renderblocks, block, 0.25, 0.9375, 0.375, 0.3125, 1.0, 0.4375, meta);
+		renderStandardInvBlock(renderblocks, block, 0.25, 0.9375, 0.5625, 0.3125, 1.0, 0.625, meta);
+		renderStandardInvBlock(renderblocks, block, 0.6875, 0.9375, 0.375, 0.75, 1.0, 0.4375, meta);
+		renderStandardInvBlock(renderblocks, block, 0.6875, 0.9375, 0.5625, 0.75, 1.0, 0.625, meta);
+		renderStandardInvBlock(renderblocks, block, 0.375, 0.9375, 0.25, 0.4375, 1.0, 0.3125, meta);
+		renderStandardInvBlock(renderblocks, block, 0.5625, 0.9375, 0.25, 0.625, 1.0, 0.3125, meta);
+		renderStandardInvBlock(renderblocks, block, 0.375, 0.9375, 0.6875, 0.4375, 1.0, 0.75, meta);
+		renderStandardInvBlock(renderblocks, block, 0.5625, 0.9375, 0.6875, 0.625, 1.0, 0.75, meta);
+		renderStandardInvBlock(renderblocks, block, 0.125, 0.0, 0.25, 0.1875, 0.1875, 0.75, meta);
+		renderStandardInvBlock(renderblocks, block, 0.8125, 0.0, 0.25, 0.875, 0.1875, 0.75, meta);
+		renderStandardInvBlock(renderblocks, block, 0.25, 0.0, 0.125, 0.75, 0.1875, 0.1875, meta);
+		renderStandardInvBlock(renderblocks, block, 0.25, 0.0, 0.8125, 0.75, 0.1875, 0.875, meta);
 		renderblocks.setOverrideBlockTexture(block.getIcon(-1, meta));
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0, 0.625, 0.3125, 0.0625, 0.6875, 0.6875, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0625, 0.625, 0.3125, 0.125, 0.6875, 0.375, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0625, 0.625, 0.625, 0.125, 0.6875, 0.6875, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.9375, 0.625, 0.3125, 1.0, 0.6875, 0.6875, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.875, 0.625, 0.3125, 0.9375, 0.6875, 0.375, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.875, 0.625, 0.625, 0.9375, 0.6875, 0.6875, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.3125, 0.625, 0.0, 0.6875, 0.6875, 0.0625, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.3125, 0.625, 0.0625, 0.375, 0.6875, 0.125, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.625, 0.625, 0.0625, 0.6875, 0.6875, 0.125, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.3125, 0.625, 0.9375, 0.6875, 0.6875, 1.0, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.3125, 0.625, 0.875, 0.375, 0.6875, 0.9375, meta);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.625, 0.625, 0.875, 0.6875, 0.6875, 0.9375, meta);
+		renderStandardInvBlock(renderblocks, block, 0.0, 0.625, 0.3125, 0.0625, 0.6875, 0.6875, meta);
+		renderStandardInvBlock(renderblocks, block, 0.0625, 0.625, 0.3125, 0.125, 0.6875, 0.375, meta);
+		renderStandardInvBlock(renderblocks, block, 0.0625, 0.625, 0.625, 0.125, 0.6875, 0.6875, meta);
+		renderStandardInvBlock(renderblocks, block, 0.9375, 0.625, 0.3125, 1.0, 0.6875, 0.6875, meta);
+		renderStandardInvBlock(renderblocks, block, 0.875, 0.625, 0.3125, 0.9375, 0.6875, 0.375, meta);
+		renderStandardInvBlock(renderblocks, block, 0.875, 0.625, 0.625, 0.9375, 0.6875, 0.6875, meta);
+		renderStandardInvBlock(renderblocks, block, 0.3125, 0.625, 0.0, 0.6875, 0.6875, 0.0625, meta);
+		renderStandardInvBlock(renderblocks, block, 0.3125, 0.625, 0.0625, 0.375, 0.6875, 0.125, meta);
+		renderStandardInvBlock(renderblocks, block, 0.625, 0.625, 0.0625, 0.6875, 0.6875, 0.125, meta);
+		renderStandardInvBlock(renderblocks, block, 0.3125, 0.625, 0.9375, 0.6875, 0.6875, 1.0, meta);
+		renderStandardInvBlock(renderblocks, block, 0.3125, 0.625, 0.875, 0.375, 0.6875, 0.9375, meta);
+		renderStandardInvBlock(renderblocks, block, 0.625, 0.625, 0.875, 0.6875, 0.6875, 0.9375, meta);
 		renderblocks.clearOverrideBlockTexture();
 		renderblocks.renderAllFaces = false;
 	}
@@ -723,19 +712,19 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 	public void renderInvRhunFireJar(Block block, RenderBlocks renderblocks, int meta) {
 		renderblocks.renderAllFaces = true;
 		LOTRBlockRhunFireJar.renderingStage = 1;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.125, 0.0, 0.125, 0.875, 0.5, 0.875);
+		renderStandardInvBlock(renderblocks, block, 0.125, 0.0, 0.125, 0.875, 0.5, 0.875);
 		LOTRBlockRhunFireJar.renderingStage = 2;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.3125, 0.5, 0.3125, 0.6875, 0.6875, 0.6875);
+		renderStandardInvBlock(renderblocks, block, 0.3125, 0.5, 0.3125, 0.6875, 0.6875, 0.6875);
 		LOTRBlockRhunFireJar.renderingStage = 3;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25, 0.6875, 0.25, 0.75, 0.8125, 0.75);
+		renderStandardInvBlock(renderblocks, block, 0.25, 0.6875, 0.25, 0.75, 0.8125, 0.75);
 		LOTRBlockRhunFireJar.renderingStage = 4;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.3125, 0.8125, 0.3125, 0.6875, 0.875, 0.6875);
+		renderStandardInvBlock(renderblocks, block, 0.3125, 0.8125, 0.3125, 0.6875, 0.875, 0.6875);
 		LOTRBlockRhunFireJar.renderingStage = 5;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.375, 0.875, 0.5, 0.625, 1.0, 0.5);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.5, 0.875, 0.375, 0.5, 1.0, 0.625);
+		renderStandardInvBlock(renderblocks, block, 0.375, 0.875, 0.5, 0.625, 1.0, 0.5);
+		renderStandardInvBlock(renderblocks, block, 0.5, 0.875, 0.375, 0.5, 1.0, 0.625);
 		LOTRBlockRhunFireJar.renderingStage = 6;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.0, 0.0, 0.5, 1.0, 1.0, 0.5);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.5, 0.0, 0.0, 0.5, 1.0, 1.0);
+		renderStandardInvBlock(renderblocks, block, 0.0, 0.0, 0.5, 1.0, 1.0, 0.5);
+		renderStandardInvBlock(renderblocks, block, 0.5, 0.0, 0.0, 0.5, 1.0, 1.0);
 		LOTRBlockRhunFireJar.renderingStage = 0;
 		renderblocks.renderAllFaces = false;
 	}
@@ -744,20 +733,20 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		renderblocks.renderAllFaces = true;
 		for (int l = 0; l < 16; ++l) {
 			if (metadata == 0) {
-				LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.5f - l / 16.0f * 0.25f, l / 16.0f, 0.5f - l / 16.0f * 0.25f, 0.5f + l / 16.0f * 0.25f, (l + 1) / 16.0f, 0.5f + l / 16.0f * 0.25f);
+				renderStandardInvBlock(renderblocks, block, 0.5f - l / 16.0f * 0.25f, l / 16.0f, 0.5f - l / 16.0f * 0.25f, 0.5f + l / 16.0f * 0.25f, (l + 1) / 16.0f, 0.5f + l / 16.0f * 0.25f);
 				continue;
 			}
 			if (metadata != 1) {
 				continue;
 			}
-			LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.25f + l / 16.0f * 0.25f, l / 16.0f, 0.25f + l / 16.0f * 0.25f, 0.75f - l / 16.0f * 0.25f, (l + 1) / 16.0f, 0.75f - l / 16.0f * 0.25f);
+			renderStandardInvBlock(renderblocks, block, 0.25f + l / 16.0f * 0.25f, l / 16.0f, 0.25f + l / 16.0f * 0.25f, 0.75f - l / 16.0f * 0.25f, (l + 1) / 16.0f, 0.75f - l / 16.0f * 0.25f);
 		}
 		renderblocks.renderAllFaces = false;
 	}
 
 	public void renderOrcBomb(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
-		int ao = LOTRRenderBlocks.getAO();
-		LOTRRenderBlocks.setAO(0);
+		int ao = getAO();
+		setAO(0);
 		renderblocks.renderAllFaces = true;
 		renderblocks.setRenderBounds(0.125, 0.1875, 0.125, 0.875, 0.9375, 0.875);
 		renderblocks.renderStandardBlock(block, i, j, k);
@@ -814,19 +803,19 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		renderblocks.renderStandardBlock(block, i, j, k);
 		renderblocks.clearOverrideBlockTexture();
 		renderblocks.renderAllFaces = false;
-		LOTRRenderBlocks.setAO(ao);
+		setAO(ao);
 	}
 
 	public void renderPlate(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
-		int ao = LOTRRenderBlocks.getAO();
-		LOTRRenderBlocks.setAO(0);
+		int ao = getAO();
+		setAO(0);
 		renderblocks.renderAllFaces = true;
 		renderblocks.setRenderBounds(0.1875, 0.0, 0.1875, 0.8125, 0.0625, 0.8125);
 		renderblocks.renderStandardBlock(block, i, j, k);
 		renderblocks.setRenderBounds(0.125, 0.0625, 0.125, 0.875, 0.125, 0.875);
 		renderblocks.renderStandardBlock(block, i, j, k);
 		renderblocks.renderAllFaces = false;
-		LOTRRenderBlocks.setAO(ao);
+		setAO(ao);
 	}
 
 	public void renderReeds(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
@@ -847,33 +836,31 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			b = b1;
 		}
 		tessellator.setColorOpaque_F(r, g, b);
-		double d = i;
 		double d1 = j;
-		double d2 = k;
 		if (world.getBlock(i, j - 1, k) == block) {
 			IIcon iicon = renderblocks.getBlockIcon(block, world, i, j, k, 0);
-			renderblocks.drawCrossedSquares(iicon, d, d1, d2, 1.0f);
+			renderblocks.drawCrossedSquares(iicon, i, d1, k, 1.0f);
 		} else {
 			IIcon iicon = renderblocks.getBlockIcon(block, world, i, j, k, 0);
-			renderblocks.drawCrossedSquares(iicon, d, d1, d2, 1.0f);
+			renderblocks.drawCrossedSquares(iicon, i, d1, k, 1.0f);
 			for (int j1 = j - 1; j1 > 0; --j1) {
 				d1 -= 1.0;
 				tessellator.setBrightness(block.getMixedBrightnessForBlock(world, i, j1, k));
 				boolean lower = world.getBlock(i, j1 - 1, k).isOpaqueCube();
 				if (lower) {
 					iicon = renderblocks.getBlockIcon(block, world, i, j, k, -2);
-					renderblocks.drawCrossedSquares(iicon, d, d1, d2, 1.0f);
+					renderblocks.drawCrossedSquares(iicon, i, d1, k, 1.0f);
 					break;
 				}
 				iicon = renderblocks.getBlockIcon(block, world, i, j, k, -1);
-				renderblocks.drawCrossedSquares(iicon, d, d1, d2, 1.0f);
+				renderblocks.drawCrossedSquares(iicon, i, d1, k, 1.0f);
 			}
 		}
 	}
 
 	public void renderRhunFireJar(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
-		int ao = LOTRRenderBlocks.getAO();
-		LOTRRenderBlocks.setAO(0);
+		int ao = getAO();
+		setAO(0);
 		renderblocks.renderAllFaces = true;
 		LOTRBlockRhunFireJar.renderingStage = 1;
 		renderblocks.setRenderBounds(0.125, 0.0, 0.125, 0.875, 0.5, 0.875);
@@ -899,7 +886,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		renderblocks.renderStandardBlock(block, i, j, k);
 		LOTRBlockRhunFireJar.renderingStage = 0;
 		renderblocks.renderAllFaces = false;
-		LOTRRenderBlocks.setAO(ao);
+		setAO(ao);
 	}
 
 	public void renderRope(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
@@ -915,14 +902,13 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		double knotWidth = 0.25;
 		double knotMinX = 0.5 - knotWidth / 2.0;
 		double knotMaxX = 1.0 - knotMinX;
-		double knotOffset = knotWidth;
 		ropeTop = top ? 1.0 - knotHeight : 1.0;
 		if (meta == 5) {
 			renderblocks.setRenderBounds(0.0, 0.0, ropeMinX, ropeOffset, ropeTop, ropeMaxX);
 			renderblocks.renderStandardBlock(block, i, j, k);
 			if (top) {
 				renderblocks.setRenderAllFaces(true);
-				renderblocks.setRenderBounds(0.0, knotBottom, knotMinX, knotOffset, 1.0, knotMaxX);
+				renderblocks.setRenderBounds(0.0, knotBottom, knotMinX, knotWidth, 1.0, knotMaxX);
 				renderblocks.renderStandardBlock(block, i, j, k);
 				renderblocks.setRenderAllFaces(false);
 			}
@@ -932,7 +918,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			renderblocks.renderStandardBlock(block, i, j, k);
 			if (top) {
 				renderblocks.setRenderAllFaces(true);
-				renderblocks.setRenderBounds(1.0 - knotOffset, knotBottom, knotMinX, 1.0, 1.0, knotMaxX);
+				renderblocks.setRenderBounds(1.0 - knotWidth, knotBottom, knotMinX, 1.0, 1.0, knotMaxX);
 				renderblocks.renderStandardBlock(block, i, j, k);
 				renderblocks.setRenderAllFaces(false);
 			}
@@ -942,7 +928,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			renderblocks.renderStandardBlock(block, i, j, k);
 			if (top) {
 				renderblocks.setRenderAllFaces(true);
-				renderblocks.setRenderBounds(knotMinX, knotBottom, 0.0, knotMaxX, 1.0, knotOffset);
+				renderblocks.setRenderBounds(knotMinX, knotBottom, 0.0, knotMaxX, 1.0, knotWidth);
 				renderblocks.renderStandardBlock(block, i, j, k);
 				renderblocks.setRenderAllFaces(false);
 			}
@@ -952,7 +938,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			renderblocks.renderStandardBlock(block, i, j, k);
 			if (top) {
 				renderblocks.setRenderAllFaces(true);
-				renderblocks.setRenderBounds(knotMinX, knotBottom, 1.0 - knotOffset, knotMaxX, 1.0, 1.0);
+				renderblocks.setRenderBounds(knotMinX, knotBottom, 1.0 - knotWidth, knotMaxX, 1.0, 1.0);
 				renderblocks.renderStandardBlock(block, i, j, k);
 				renderblocks.setRenderAllFaces(false);
 			}
@@ -960,8 +946,8 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 	}
 
 	public void renderStalactite(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
-		int ao = LOTRRenderBlocks.getAO();
-		LOTRRenderBlocks.setAO(0);
+		int ao = getAO();
+		setAO(0);
 		renderblocks.renderAllFaces = true;
 		int metadata = world.getBlockMetadata(i, j, k);
 		for (int l = 0; l < 16; ++l) {
@@ -977,7 +963,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			renderblocks.renderStandardBlock(block, i, j, k);
 		}
 		renderblocks.renderAllFaces = false;
-		LOTRRenderBlocks.setAO(ao);
+		setAO(ao);
 	}
 
 	public void renderTrapdoor(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
@@ -985,24 +971,24 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		if (!BlockTrapDoor.func_150118_d(meta)) {
 			int dir = meta & 3;
 			switch (dir) {
-			case 0:
-				renderblocks.uvRotateTop = 3;
-				renderblocks.uvRotateBottom = 3;
-				break;
-			case 1:
-				renderblocks.uvRotateTop = 0;
-				renderblocks.uvRotateBottom = 0;
-				break;
-			case 2:
-				renderblocks.uvRotateTop = 1;
-				renderblocks.uvRotateBottom = 2;
-				break;
-			case 3:
-				renderblocks.uvRotateTop = 2;
-				renderblocks.uvRotateBottom = 1;
-				break;
-			default:
-				break;
+				case 0:
+					renderblocks.uvRotateTop = 3;
+					renderblocks.uvRotateBottom = 3;
+					break;
+				case 1:
+					renderblocks.uvRotateTop = 0;
+					renderblocks.uvRotateBottom = 0;
+					break;
+				case 2:
+					renderblocks.uvRotateTop = 1;
+					renderblocks.uvRotateBottom = 2;
+					break;
+				case 3:
+					renderblocks.uvRotateTop = 2;
+					renderblocks.uvRotateBottom = 1;
+					break;
+				default:
+					break;
 			}
 		}
 		renderblocks.renderStandardBlock(block, i, j, k);
@@ -1083,7 +1069,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			return true;
 		}
 		if (id == LOTRMod.proxy.getCloverRenderID()) {
-			LOTRRenderBlocks.renderClover(world, i, j, k, block, renderblocks, world.getBlockMetadata(i, j, k) == 1 ? 4 : 3, true);
+			renderClover(world, i, j, k, block, renderblocks, world.getBlockMetadata(i, j, k) == 1 ? 4 : 3, true);
 			return true;
 		}
 		if (id == LOTRMod.proxy.getEntJarRenderID()) {
@@ -1094,12 +1080,12 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			return renderblocks.renderBlockFence((BlockFence) block, i, j, k);
 		}
 		if (id == LOTRMod.proxy.getGrassRenderID()) {
-			LOTRRenderBlocks.renderGrass(world, i, j, k, block, renderblocks, true);
+			renderGrass(world, i, j, k, block, renderblocks, true);
 			return true;
 		}
 		if (id == LOTRMod.proxy.getFallenLeavesRenderID()) {
 			if (fancyGraphics) {
-				renderFallenLeaves(world, i, j, k, block, renderblocks, new int[] { 6, 10 }, new int[] { 2, 6 }, new int[] { 2, 6 }, 0.7f);
+				renderFallenLeaves(world, i, j, k, block, renderblocks, new int[]{6, 10}, new int[]{2, 6}, new int[]{2, 6}, 0.7f);
 				return true;
 			}
 			return renderblocks.renderStandardBlock(block, i, j, k);
@@ -1137,7 +1123,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		}
 		if (id == LOTRMod.proxy.getThatchFloorRenderID()) {
 			if (fancyGraphics) {
-				renderFallenLeaves(world, i, j, k, block, renderblocks, new int[] { 10, 16 }, new int[] { 6, 12 }, new int[] { 1, 1 }, 1.0f);
+				renderFallenLeaves(world, i, j, k, block, renderblocks, new int[]{10, 16}, new int[]{6, 12}, new int[]{1, 1}, 1.0f);
 				return true;
 			}
 			return renderblocks.renderStandardBlock(block, i, j, k);
@@ -1223,32 +1209,31 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		tessellator.setColorOpaque_F(f * f1, f * f2, f * f3);
 		renderblocks.setOverrideBlockTexture(LOTRBlockClover.stemIcon);
 		double posX = i;
-		double posY = j;
 		double posZ = k;
 		if (randomTranslation) {
-			long seed = i * 3129871 ^ k * 116129781L ^ j;
+			long seed = i * 3129871L ^ k * 116129781L ^ j;
 			seed = seed * seed * 42317861L + seed * 11L;
 			posX += ((seed >> 16 & 0xFL) / 15.0f - 0.5) * 0.5;
 			posZ += ((seed >> 24 & 0xFL) / 15.0f - 0.5) * 0.5;
 		}
-		renderblocks.drawCrossedSquares(block.getIcon(2, 0), posX, posY, posZ, (float) scale);
+		renderblocks.drawCrossedSquares(block.getIcon(2, 0), posX, j, posZ, (float) scale);
 		renderblocks.clearOverrideBlockTexture();
 		for (int petal = 0; petal < petalCount; ++petal) {
-			float rotation = (float) petal / (float) petalCount * 3.1415927f * 2.0f;
+			float rotation = (float) petal / petalCount * 3.1415927f * 2.0f;
 			IIcon icon = LOTRBlockClover.petalIcon;
 			double d = icon.getMinU();
 			double d1 = icon.getMinV();
 			double d2 = icon.getMaxU();
 			double d3 = icon.getMaxV();
 			double d4 = posX + 0.5;
-			double d5 = posY + 0.5 * scale + petal * 0.0025;
+			double d5 = j + 0.5 * scale + petal * 0.0025;
 			double d6 = posZ + 0.5;
-			Vec3[] vecs = { Vec3.createVectorHelper(0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, 0.5 * scale), Vec3.createVectorHelper(0.5 * scale, 0.0, 0.5 * scale) };
-			for (int l1 = 0; l1 < vecs.length; ++l1) {
-				vecs[l1].rotateAroundY(rotation);
-				vecs[l1].xCoord += d4;
-				vecs[l1].yCoord += d5;
-				vecs[l1].zCoord += d6;
+			Vec3[] vecs = {Vec3.createVectorHelper(0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, 0.5 * scale), Vec3.createVectorHelper(0.5 * scale, 0.0, 0.5 * scale)};
+			for (Vec3 vec : vecs) {
+				vec.rotateAroundY(rotation);
+				vec.xCoord += d4;
+				vec.yCoord += d5;
+				vec.zCoord += d6;
 			}
 			tessellator.addVertexWithUV(vecs[0].xCoord, vecs[0].yCoord, vecs[0].zCoord, d, d1);
 			tessellator.addVertexWithUV(vecs[1].xCoord, vecs[1].yCoord, vecs[1].zCoord, d, d3);
@@ -1312,8 +1297,8 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 
 	public static void renderEntityPlate(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
 		renderblocks.renderAllFaces = true;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.1875, 0.0, 0.1875, 0.8125, 0.0625, 0.8125);
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, 0.125, 0.0625, 0.125, 0.875, 0.125, 0.875);
+		renderStandardInvBlock(renderblocks, block, 0.1875, 0.0, 0.1875, 0.8125, 0.0625, 0.8125);
+		renderStandardInvBlock(renderblocks, block, 0.125, 0.0625, 0.125, 0.875, 0.125, 0.875);
 		renderblocks.renderAllFaces = false;
 	}
 
@@ -1339,7 +1324,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		double posY = j;
 		double posZ = k;
 		if (randomTranslation) {
-			long seed = i * 3129871 ^ k * 116129781L ^ j;
+			long seed = i * 3129871L ^ k * 116129781L ^ j;
 			seed = seed * seed * 42317861L + seed * 11L;
 			posX += ((seed >> 16 & 0xFL) / 15.0f - 0.5) * 0.5;
 			posY += ((seed >> 20 & 0xFL) / 15.0f - 1.0) * 0.2;
@@ -1378,7 +1363,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		tessellator.draw();
 		renderblocks.clearOverrideBlockTexture();
 		for (int petal = 0; petal < petalCount; ++petal) {
-			float rotation = (float) petal / (float) petalCount * 3.1415927f * 2.0f;
+			float rotation = (float) petal / petalCount * 3.1415927f * 2.0f;
 			IIcon icon = LOTRBlockClover.petalIcon;
 			double d = icon.getMinU();
 			double d1 = icon.getMinV();
@@ -1387,12 +1372,12 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 			double d4 = 0.0;
 			double d5 = petal * 0.0025;
 			double d6 = 0.0;
-			Vec3[] vecs = { Vec3.createVectorHelper(0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, 0.5 * scale), Vec3.createVectorHelper(0.5 * scale, 0.0, 0.5 * scale) };
-			for (int l1 = 0; l1 < vecs.length; ++l1) {
-				vecs[l1].rotateAroundY(rotation);
-				vecs[l1].xCoord += d4;
-				vecs[l1].yCoord += d5;
-				vecs[l1].zCoord += d6;
+			Vec3[] vecs = {Vec3.createVectorHelper(0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, 0.5 * scale), Vec3.createVectorHelper(0.5 * scale, 0.0, 0.5 * scale)};
+			for (Vec3 vec : vecs) {
+				vec.rotateAroundY(rotation);
+				vec.xCoord += d4;
+				vec.yCoord += d5;
+				vec.zCoord += d6;
 			}
 			tessellator.startDrawingQuads();
 			tessellator.addVertexWithUV(vecs[0].xCoord, vecs[0].yCoord, vecs[0].zCoord, d, d1);
@@ -1409,7 +1394,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 	}
 
 	public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, double d, double d1, double d2, double d3, double d4, double d5) {
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, d, d1, d2, d3, d4, d5, 0);
+		renderStandardInvBlock(renderblocks, block, d, d1, d2, d3, d4, d5, 0);
 	}
 
 	public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, double d, double d1, double d2, double d3, double d4, double d5, int metadata) {
@@ -1452,7 +1437,7 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 		double d3 = renderblocks.renderMaxX;
 		double d4 = renderblocks.renderMaxY;
 		double d5 = renderblocks.renderMaxZ;
-		LOTRRenderBlocks.renderStandardInvBlock(renderblocks, block, d, d1, d2, d3, d4, d5, meta);
+		renderStandardInvBlock(renderblocks, block, d, d1, d2, d3, d4, d5, meta);
 	}
 
 	public static void setAO(int i) {

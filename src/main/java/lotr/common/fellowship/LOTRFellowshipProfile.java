@@ -1,5 +1,6 @@
 package lotr.common.fellowship;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
@@ -27,7 +28,7 @@ public class LOTRFellowshipProfile extends GameProfile {
 
 	@Override
 	public String getName() {
-		return LOTRFellowshipProfile.addFellowshipCode(super.getName());
+		return addFellowshipCode(super.getName());
 	}
 
 	public static String addFellowshipCode(String s) {
@@ -39,7 +40,7 @@ public class LOTRFellowshipProfile extends GameProfile {
 	}
 
 	public static boolean hasFellowshipCode(String s) {
-		return s.toLowerCase().startsWith(fellowshipPrefix.toLowerCase());
+		return s.toLowerCase(Locale.ROOT).startsWith(fellowshipPrefix.toLowerCase(Locale.ROOT));
 	}
 
 	public static String stripFellowshipCode(String s) {

@@ -1,7 +1,5 @@
 package lotr.common.entity.npc;
 
-import com.google.common.base.Predicate;
-
 import lotr.common.*;
 import lotr.common.entity.ai.*;
 import lotr.common.inventory.LOTRInventoryNPC;
@@ -21,35 +19,27 @@ public class LOTREntityRuffianSpy extends LOTREntityBreeRuffian implements IBand
 
 	public LOTREntityRuffianSpy(World world) {
 		super(world);
-		questInfo.setBountyHelpPredicate(new Predicate<EntityPlayer>() {
-
-			@Override
-			public boolean apply(EntityPlayer player) {
-				ItemStack itemstack = player.getHeldItem();
-				if (LOTRItemCoin.getStackValue(itemstack, true) > 0) {
-					return true;
-				}
-				if (itemstack != null) {
-					Item item = itemstack.getItem();
-					return item == Items.gold_ingot || item == LOTRMod.silver || item instanceof LOTRItemGem || item instanceof LOTRItemRing;
-				}
-				return false;
-			}
-		});
-		questInfo.setBountyHelpConsumer(new Predicate<EntityPlayer>() {
-
-			@Override
-			public boolean apply(EntityPlayer player) {
-				ItemStack itemstack;
-				if (!player.capabilities.isCreativeMode && (itemstack = player.getHeldItem()) != null) {
-					--itemstack.stackSize;
-					if (itemstack.stackSize <= 0) {
-						player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-					}
-				}
-				LOTREntityRuffianSpy.this.playTradeSound();
+		questInfo.setBountyHelpPredicate(player -> {
+			ItemStack itemstack = player.getHeldItem();
+			if (LOTRItemCoin.getStackValue(itemstack, true) > 0) {
 				return true;
 			}
+			if (itemstack != null) {
+				Item item = itemstack.getItem();
+				return item == Items.gold_ingot || item == LOTRMod.silver || item instanceof LOTRItemGem || item instanceof LOTRItemRing;
+			}
+			return false;
+		});
+		questInfo.setBountyHelpConsumer(player -> {
+			ItemStack itemstack;
+			if (!player.capabilities.isCreativeMode && (itemstack = player.getHeldItem()) != null) {
+				--itemstack.stackSize;
+				if (itemstack.stackSize <= 0) {
+					player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+				}
+			}
+			playTradeSound();
+			return true;
 		});
 		questInfo.setActiveBountySelector(new MiniQuestSelector.BountyActiveAnyFaction());
 	}

@@ -58,7 +58,7 @@ public class LOTRPacketBlockFX implements IMessage {
 	}
 
 	public enum Type {
-		UTUMNO_EVAPORATE;
+		UTUMNO_EVAPORATE
 
 	}
 

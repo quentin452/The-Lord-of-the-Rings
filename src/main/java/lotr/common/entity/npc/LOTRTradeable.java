@@ -19,10 +19,10 @@ public interface LOTRTradeable {
 
 	boolean shouldTraderRespawn();
 
-	public interface Bartender extends LOTRTradeable {
+	interface Bartender extends LOTRTradeable {
 	}
 
-	public interface Smith extends LOTRTradeable {
+	interface Smith extends LOTRTradeable {
 	}
 
 }

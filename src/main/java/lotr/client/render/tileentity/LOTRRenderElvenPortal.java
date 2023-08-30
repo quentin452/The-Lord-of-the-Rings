@@ -56,7 +56,7 @@ public class LOTRRenderElvenPortal extends TileEntitySpecialRenderer {
 			float f9 = f8 + ActiveRenderInfo.objectY;
 			float f10 = f8 + f5 + ActiveRenderInfo.objectY;
 			float f11 = f9 / f10;
-			GL11.glTranslatef(f1, f11 += (float) (d1 + f4), f3);
+			GL11.glTranslatef(f1, f11 + (float) (d1 + f4), f3);
 			GL11.glTexGeni(8192, 9472, 9217);
 			GL11.glTexGeni(8193, 9472, 9217);
 			GL11.glTexGeni(8194, 9472, 9217);

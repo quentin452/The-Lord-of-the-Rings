@@ -26,7 +26,7 @@ public class LOTRWorldGenBDBarrow extends LOTRWorldGenStructureBase2 {
 		int radius = 12;
 		int height = 7;
 		int base = -4;
-		this.setOriginAndRotation(world, i, j, k, rotation, usingPlayer != null ? radius : 0);
+		setOriginAndRotation(world, i, j, k, rotation, usingPlayer != null ? radius : 0);
 		if (restrictions) {
 			int minHeight = 0;
 			int maxHeight = 0;
@@ -96,7 +96,7 @@ public class LOTRWorldGenBDBarrow extends LOTRWorldGenStructureBase2 {
 				placeRandomBrick(world, random, i12, innerB, k14);
 			}
 		}
-		this.placeSpawnerChest(world, random, 0, innerB + 1, 0, LOTRMod.spawnerChestStone, 0, LOTREntityBarrowWight.class, LOTRChestContents.BARROW_DOWNS);
+		placeSpawnerChest(world, random, 0, innerB + 1, 0, LOTRMod.spawnerChestStone, 0, LOTREntityBarrowWight.class, LOTRChestContents.BARROW_DOWNS);
 		setBlockAndMetadata(world, 1, innerB + 1, 0, Blocks.stone_stairs, 0);
 		setBlockAndMetadata(world, -1, innerB + 1, 0, Blocks.stone_stairs, 1);
 		setBlockAndMetadata(world, 0, innerB + 1, -1, Blocks.stone_stairs, 2);
@@ -116,15 +116,15 @@ public class LOTRWorldGenBDBarrow extends LOTRWorldGenStructureBase2 {
 		}
 		for (i12 = -1; i12 <= 1; ++i12) {
 			setBlockAndMetadata(world, i12, innerB + 1, -innerR + 1, Blocks.stone_stairs, 3);
-			for (j1 = innerB + 2; j1 <= 3; ++j1) {
+			for (j1 = 0; j1 <= 3; ++j1) {
 				setAir(world, i12, j1, -innerR + 1);
 				setAir(world, i12, j1, -innerR + 2);
 			}
-			setBlockAndMetadata(world, i12, innerB + 2, -innerR + 0, Blocks.stone_stairs, 3);
+			setBlockAndMetadata(world, i12, 0, -innerR, Blocks.stone_stairs, 3);
 		}
 		placeRandomBrick(world, random, -2, innerB + 1, -innerR + 1);
 		placeRandomBrick(world, random, 2, innerB + 1, -innerR + 1);
-		for (int i15 : new int[] { -3, 3 }) {
+		for (int i15 : new int[]{-3, 3}) {
 			placeRandomBrick(world, random, i15, 1, -radius + 1);
 			placeRandomBrick(world, random, i15, 0, -radius + 1);
 			placeRandomBrick(world, random, i15, -1, -radius + 1);

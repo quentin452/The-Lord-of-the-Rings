@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public class LOTREntityEasterlingWarrior extends LOTREntityEasterlingLevyman {
 	public LOTREntityEasterlingWarrior(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		spawnRidingHorse = rand.nextInt(6) == 0;
 	}
 
@@ -23,30 +23,30 @@ public class LOTREntityEasterlingWarrior extends LOTREntityEasterlingLevyman {
 		data = super.onSpawnWithEgg(data);
 		int i = rand.nextInt(10);
 		switch (i) {
-		case 0:
-		case 1:
-		case 2:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordRhun));
-			break;
-		case 3:
-		case 4:
-		case 5:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeRhun));
-			break;
-		case 6:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.polearmRhun));
-			break;
-		case 7:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerRhun));
-			break;
-		case 8:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerRhunPoisoned));
-			break;
-		case 9:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pikeRhun));
-			break;
-		default:
-			break;
+			case 0:
+			case 1:
+			case 2:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordRhun));
+				break;
+			case 3:
+			case 4:
+			case 5:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeRhun));
+				break;
+			case 6:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.polearmRhun));
+				break;
+			case 7:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerRhun));
+				break;
+			case 8:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerRhunPoisoned));
+				break;
+			case 9:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pikeRhun));
+				break;
+			default:
+				break;
 		}
 		if (rand.nextInt(5) == 0) {
 			npcItemsInv.setSpearBackup(npcItemsInv.getMeleeWeapon());

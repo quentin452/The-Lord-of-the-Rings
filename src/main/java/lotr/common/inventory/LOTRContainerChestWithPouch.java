@@ -73,7 +73,7 @@ public class LOTRContainerChestWithPouch extends ContainerChest {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			if (i < numChestRows * 9 ? aPouchSlot.isItemValid(itemstack1) && !mergeItemStack(itemstack1, numChestRows * 9, (numChestRows + numPouchRows) * 9, true) : i < (numChestRows + numPouchRows) * 9 ? !mergeItemStack(itemstack1, 0, numChestRows * 9, false) : !mergeItemStack(itemstack1, 0, numChestRows * 9, false)) {
+			if (i < numChestRows * 9 ? aPouchSlot.isItemValid(itemstack1) && !mergeItemStack(itemstack1, numChestRows * 9, (numChestRows + numPouchRows) * 9, true) : !mergeItemStack(itemstack1, 0, numChestRows * 9, false)) {
 				return null;
 			}
 			if (itemstack1.stackSize == 0) {

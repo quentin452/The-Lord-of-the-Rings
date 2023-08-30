@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class LOTREntityHobbitShirriff extends LOTREntityHobbitBounder implements LOTRUnitTradeable {
 	public LOTREntityHobbitShirriff(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

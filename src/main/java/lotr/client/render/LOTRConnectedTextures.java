@@ -23,8 +23,8 @@ public class LOTRConnectedTextures {
 		Minecraft mc = Minecraft.getMinecraft();
 		mc.getResourceManager();
 		TextureMap textureMap = (TextureMap) iconregister;
-		String baseIconName = LOTRConnectedTextures.getBaseIconName(blockName);
-		String modID = LOTRConnectedTextures.getModID(blockName);
+		String baseIconName = getBaseIconName(blockName);
+		String modID = getModID(blockName);
 		BufferedImage iconElementBase = iconElementMap.get(IconElement.BASE);
 		int iconWidth = iconElementBase.getWidth();
 		int iconHeight = iconElementBase.getHeight();
@@ -45,7 +45,7 @@ public class LOTRConnectedTextures {
 			}
 			entry.setValue(errored);
 		}
-		HashMap<Integer, IIcon> iconsMap = new HashMap<>();
+		Map<Integer, IIcon> iconsMap = new HashMap<>();
 		for (Map.Entry<Integer, Set<IconElement>> entry : IconElement.allCombos.entrySet()) {
 			int key = entry.getKey();
 			Set<IconElement> set = entry.getValue();
@@ -83,7 +83,7 @@ public class LOTRConnectedTextures {
 
 	public static String getBaseIconName(String blockName) {
 		String s = blockName;
-		int pathIndex = s.indexOf(":");
+		int pathIndex = s.indexOf(':');
 		if (pathIndex >= 0) {
 			s = s.substring(pathIndex + 1);
 		}
@@ -94,7 +94,7 @@ public class LOTRConnectedTextures {
 		if (!blockIconsMap.containsKey(blockName) || blockIconsMap.get(blockName).isEmpty()) {
 			return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("");
 		}
-		HashSet<IconElement> set = new HashSet<>();
+		Collection<IconElement> set = EnumSet.noneOf(IconElement.class);
 		if (!noBase) {
 			set.add(IconElement.BASE);
 		}
@@ -154,7 +154,7 @@ public class LOTRConnectedTextures {
 		boolean[][] flags = new boolean[3][3];
 		for (int x = -1; x <= 1; ++x) {
 			for (int y = -1; y <= 1; ++y) {
-				boolean match = false;
+				boolean match;
 				if (x == 0 && y == 0) {
 					match = true;
 				} else {
@@ -162,47 +162,44 @@ public class LOTRConnectedTextures {
 					int j1 = j;
 					int k1 = k;
 					switch (side) {
-					case 0:
-						i1 += x;
-						k1 += y;
-						break;
-					case 1:
-						i1 += x;
-						k1 += y;
-						break;
-					case 2:
-						i1 -= x;
-						j1 -= y;
-						break;
-					case 3:
-						i1 += x;
-						j1 -= y;
-						break;
-					case 4:
-						k1 += x;
-						j1 -= y;
-						break;
-					case 5:
-						k1 -= x;
-						j1 -= y;
-						break;
-					default:
-						break;
+						case 0:
+						case 1:
+							i1 += x;
+							k1 += y;
+							break;
+						case 2:
+							i1 -= x;
+							j1 -= y;
+							break;
+						case 3:
+							i1 += x;
+							j1 -= y;
+							break;
+						case 4:
+							k1 += x;
+							j1 -= y;
+							break;
+						case 5:
+							k1 -= x;
+							j1 -= y;
+							break;
+						default:
+							break;
 					}
 					match = block.areBlocksConnected(world, i, j, k, i1, j1, k1);
 				}
 				flags[y + 1][x + 1] = match;
 			}
 		}
-		return LOTRConnectedTextures.getConnectedIcon(blockName, flags, noBase);
+		return getConnectedIcon(blockName, flags, noBase);
 	}
 
 	public static Map<IconElement, BufferedImage> getConnectedIconElements(String iconName) {
 		Minecraft mc = Minecraft.getMinecraft();
 		IResourceManager resourceManager = mc.getResourceManager();
-		String baseIconName = LOTRConnectedTextures.getBaseIconName(iconName);
-		String modID = LOTRConnectedTextures.getModID(iconName);
-		HashMap<IconElement, BufferedImage> iconElementMap = new HashMap<>();
+		String baseIconName = getBaseIconName(iconName);
+		String modID = getModID(iconName);
+		Map<IconElement, BufferedImage> iconElementMap = new EnumMap<>(IconElement.class);
 		try {
 			for (IconElement e : IconElement.values()) {
 				ResourceLocation res = new ResourceLocation(modID, "textures/blocks/" + baseIconName + "_" + e.iconName + ".png");
@@ -217,20 +214,19 @@ public class LOTRConnectedTextures {
 	}
 
 	public static IIcon getConnectedIconItem(LOTRConnectedBlock block, int meta) {
-		boolean[][] adjacentFlags = { { false, false, false }, { false, true, false }, { false, false, false } };
-		return LOTRConnectedTextures.getConnectedIconItem(block, meta, adjacentFlags);
+		boolean[][] adjacentFlags = {{false, false, false}, {false, true, false}, {false, false, false}};
+		return getConnectedIconItem(block, meta, adjacentFlags);
 	}
 
 	public static IIcon getConnectedIconItem(LOTRConnectedBlock block, int meta, boolean[][] adjacentFlags) {
 		String blockName = block.getConnectedName(meta);
-		return LOTRConnectedTextures.getConnectedIcon(blockName, adjacentFlags, false);
+		return getConnectedIcon(blockName, adjacentFlags, false);
 	}
 
 	public static String getModID(String blockName) {
-		String s = blockName;
-		int pathIndex = s.indexOf(":");
+		int pathIndex = blockName.indexOf(':');
 		if (pathIndex >= 0) {
-			return s.substring(0, pathIndex);
+			return blockName.substring(0, pathIndex);
 		}
 		return "";
 	}
@@ -248,20 +244,20 @@ public class LOTRConnectedTextures {
 
 	public static void registerConnectedIcons(IIconRegister iconregister, LOTRConnectedBlock block, int meta, boolean includeNoBase) {
 		String iconName = block.getConnectedName(meta);
-		Map<IconElement, BufferedImage> iconElementMap = LOTRConnectedTextures.getConnectedIconElements(iconName);
-		LOTRConnectedTextures.createConnectedIcons(iconregister, block, meta, includeNoBase, iconElementMap);
+		Map<IconElement, BufferedImage> iconElementMap = getConnectedIconElements(iconName);
+		createConnectedIcons(iconregister, block, meta, includeNoBase, iconElementMap);
 	}
 
 	public static void registerNonConnectedGateIcons(IIconRegister iconregister, LOTRConnectedBlock block, int meta) {
-		LOTRConnectedTextures.registerNonConnectedGateIcons(iconregister, block, meta, block.getConnectedName(meta));
+		registerNonConnectedGateIcons(iconregister, block, meta, block.getConnectedName(meta));
 	}
 
 	public static void registerNonConnectedGateIcons(IIconRegister iconregister, LOTRConnectedBlock block, int meta, String iconName) {
 		Minecraft mc = Minecraft.getMinecraft();
 		IResourceManager resourceManager = mc.getResourceManager();
-		String baseIconName = LOTRConnectedTextures.getBaseIconName(iconName);
-		String modID = LOTRConnectedTextures.getModID(iconName);
-		HashMap<IconElement, BufferedImage> iconElementMap = new HashMap<>();
+		String baseIconName = getBaseIconName(iconName);
+		String modID = getModID(iconName);
+		Map<IconElement, BufferedImage> iconElementMap = new EnumMap<>(IconElement.class);
 		try {
 			ResourceLocation res = new ResourceLocation(modID, "textures/blocks/" + baseIconName + ".png");
 			BufferedImage blockIconImage = ImageIO.read(resourceManager.getResource(res).getInputStream());
@@ -271,14 +267,14 @@ public class LOTRConnectedTextures {
 			int sideHeight = Math.max(Math.round(iconHeight / 16.0f * 3.0f), 1);
 			BufferedImage emptyBase = new BufferedImage(iconWidth, iconHeight, 2);
 			iconElementMap.put(IconElement.BASE, emptyBase);
-			iconElementMap.put(IconElement.SIDE_LEFT, LOTRConnectedTextures.getSubImageIcon(blockIconImage, 0, 0, sideWidth, iconHeight));
-			iconElementMap.put(IconElement.SIDE_RIGHT, LOTRConnectedTextures.getSubImageIcon(blockIconImage, iconWidth - sideWidth, 0, sideWidth, iconHeight));
-			iconElementMap.put(IconElement.SIDE_TOP, LOTRConnectedTextures.getSubImageIcon(blockIconImage, 0, 0, iconWidth, sideHeight));
-			iconElementMap.put(IconElement.SIDE_BOTTOM, LOTRConnectedTextures.getSubImageIcon(blockIconImage, 0, iconHeight - sideHeight, iconWidth, sideHeight));
-			iconElementMap.put(IconElement.CORNER_TOPLEFT, LOTRConnectedTextures.getSubImageIcon(blockIconImage, 0, 0, sideWidth, sideHeight));
-			iconElementMap.put(IconElement.CORNER_TOPRIGHT, LOTRConnectedTextures.getSubImageIcon(blockIconImage, iconWidth - sideWidth, 0, sideWidth, sideHeight));
-			iconElementMap.put(IconElement.CORNER_BOTTOMLEFT, LOTRConnectedTextures.getSubImageIcon(blockIconImage, 0, iconHeight - sideHeight, sideWidth, sideHeight));
-			iconElementMap.put(IconElement.CORNER_BOTTOMRIGHT, LOTRConnectedTextures.getSubImageIcon(blockIconImage, iconWidth - sideWidth, iconHeight - sideHeight, sideWidth, sideHeight));
+			iconElementMap.put(IconElement.SIDE_LEFT, getSubImageIcon(blockIconImage, 0, 0, sideWidth, iconHeight));
+			iconElementMap.put(IconElement.SIDE_RIGHT, getSubImageIcon(blockIconImage, iconWidth - sideWidth, 0, sideWidth, iconHeight));
+			iconElementMap.put(IconElement.SIDE_TOP, getSubImageIcon(blockIconImage, 0, 0, iconWidth, sideHeight));
+			iconElementMap.put(IconElement.SIDE_BOTTOM, getSubImageIcon(blockIconImage, 0, iconHeight - sideHeight, iconWidth, sideHeight));
+			iconElementMap.put(IconElement.CORNER_TOPLEFT, getSubImageIcon(blockIconImage, 0, 0, sideWidth, sideHeight));
+			iconElementMap.put(IconElement.CORNER_TOPRIGHT, getSubImageIcon(blockIconImage, iconWidth - sideWidth, 0, sideWidth, sideHeight));
+			iconElementMap.put(IconElement.CORNER_BOTTOMLEFT, getSubImageIcon(blockIconImage, 0, iconHeight - sideHeight, sideWidth, sideHeight));
+			iconElementMap.put(IconElement.CORNER_BOTTOMRIGHT, getSubImageIcon(blockIconImage, iconWidth - sideWidth, iconHeight - sideHeight, sideWidth, sideHeight));
 			iconElementMap.put(IconElement.INVCORNER_TOPLEFT, iconElementMap.get(IconElement.CORNER_TOPLEFT));
 			iconElementMap.put(IconElement.INVCORNER_TOPRIGHT, iconElementMap.get(IconElement.CORNER_TOPRIGHT));
 			iconElementMap.put(IconElement.INVCORNER_BOTTOMLEFT, iconElementMap.get(IconElement.CORNER_BOTTOMLEFT));
@@ -287,7 +283,7 @@ public class LOTRConnectedTextures {
 			FMLLog.severe("Failed to load connected textures for %s", modID + ":" + baseIconName);
 			e.printStackTrace();
 		}
-		LOTRConnectedTextures.createConnectedIcons(iconregister, block, meta, false, iconElementMap);
+		createConnectedIcons(iconregister, block, meta, false, iconElementMap);
 	}
 
 	public enum IconElement {
@@ -295,10 +291,11 @@ public class LOTRConnectedTextures {
 
 		public static Map<Integer, Set<IconElement>> allCombos;
 		public static Comparator<IconElement> comparator;
+
 		static {
 			allCombos = new HashMap<>();
-			ArrayList<Set<IconElement>> permutations = new ArrayList<>();
-			boolean[] trueOrFalse = { false, true };
+			Collection<Set<IconElement>> permutations = new ArrayList<>();
+			boolean[] trueOrFalse = {false, true};
 			for (boolean base : trueOrFalse) {
 				for (boolean left : trueOrFalse) {
 					for (boolean right : trueOrFalse) {
@@ -313,7 +310,7 @@ public class LOTRConnectedTextures {
 														for (boolean bottomLeftInv : trueOrFalse) {
 															for (boolean bottomRightInv : trueOrFalse) {
 																boolean addBottom;
-																HashSet<IconElement> set = new HashSet<>();
+																Set<IconElement> set = EnumSet.noneOf(IconElement.class);
 																if (base) {
 																	set.add(BASE);
 																}
@@ -372,23 +369,20 @@ public class LOTRConnectedTextures {
 				}
 			}
 			for (Set<IconElement> iconSet : permutations) {
-				int key = IconElement.getIconSetKey(iconSet);
+				int key = getIconSetKey(iconSet);
 				if (allCombos.containsKey(key)) {
 					continue;
 				}
 				allCombos.put(key, iconSet);
 			}
-			comparator = new Comparator<IconElement>() {
-
-				@Override
-				public int compare(IconElement e1, IconElement e2) {
-					if (e1.priority == e2.priority) {
-						return e1.compareTo(e2);
-					}
-					return Integer.compare(e1.priority, e2.priority);
+			comparator = (e1, e2) -> {
+				if (e1.priority == e2.priority) {
+					return e1.compareTo(e2);
 				}
+				return Integer.compare(e1.priority, e2.priority);
 			};
 		}
+
 		public String iconName;
 		public int bitFlag;
 
@@ -400,9 +394,9 @@ public class LOTRConnectedTextures {
 			priority = i;
 		}
 
-		public static int getIconSetKey(Set<IconElement> set) {
+		public static int getIconSetKey(Collection<IconElement> set) {
 			int i = 0;
-			for (IconElement e : IconElement.values()) {
+			for (IconElement e : values()) {
 				if (!set.contains(e)) {
 					continue;
 				}
@@ -412,8 +406,8 @@ public class LOTRConnectedTextures {
 		}
 
 		public static List<IconElement> sortIconSet(Set<IconElement> set) {
-			ArrayList<IconElement> list = new ArrayList<>(set);
-			Collections.sort(list, comparator);
+			List<IconElement> list = new ArrayList<>(set);
+			list.sort(comparator);
 			return list;
 		}
 

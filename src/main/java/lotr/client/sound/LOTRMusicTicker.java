@@ -1,10 +1,9 @@
 package lotr.client.sound;
 
-import java.util.Random;
-
 import lotr.client.LOTRClientProxy;
 import lotr.common.LOTRConfig;
-import lotr.common.world.biome.*;
+import lotr.common.world.biome.LOTRBiome;
+import lotr.common.world.biome.LOTRMusicRegion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.entity.EntityClientPlayerMP;
@@ -12,14 +11,12 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.biome.BiomeGenBase;
 
+import java.util.Random;
+
 public class LOTRMusicTicker {
 	public static LOTRMusicTrack currentTrack;
-	public static boolean wasPlayingMenu;
-	public static int timing;
-	static {
-		wasPlayingMenu = true;
-		timing = 100;
-	}
+	public static boolean wasPlayingMenu = true;
+	public static int timing = 100;
 
 	public static LOTRMusicCategory getCurrentCategory(Minecraft mc, Random rand) {
 		WorldClient world = mc.theWorld;
@@ -54,8 +51,8 @@ public class LOTRMusicTicker {
 	}
 
 	public static LOTRMusicTrack getNewTrack(Minecraft mc, Random rand) {
-		LOTRMusicRegion.Sub regionSub = LOTRMusicTicker.getCurrentRegion(mc, rand);
-		LOTRMusicCategory category = LOTRMusicTicker.getCurrentCategory(mc, rand);
+		LOTRMusicRegion.Sub regionSub = getCurrentRegion(mc, rand);
+		LOTRMusicCategory category = getCurrentCategory(mc, rand);
 		if (regionSub != null) {
 			LOTRMusicRegion region = regionSub.region;
 			String sub = regionSub.subregion;
@@ -88,18 +85,18 @@ public class LOTRMusicTicker {
 			}
 			if (!mc.getSoundHandler().isSoundPlaying(currentTrack)) {
 				currentTrack = null;
-				LOTRMusicTicker.resetTiming(rand);
+				resetTiming(rand);
 			}
 		}
 		if (!noMusic) {
-			boolean update = false;
+			boolean update;
 			if (menu) {
 				update = true;
 			} else {
 				update = LOTRMusic.isLOTRDimension() && !Minecraft.getMinecraft().isGamePaused();
 			}
 			if (update && currentTrack == null && --timing <= 0) {
-				currentTrack = LOTRMusicTicker.getNewTrack(mc, rand);
+				currentTrack = getNewTrack(mc, rand);
 				if (currentTrack != null) {
 					wasPlayingMenu = menu;
 					mc.getSoundHandler().playSound(currentTrack);

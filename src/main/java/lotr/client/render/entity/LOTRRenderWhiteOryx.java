@@ -1,8 +1,8 @@
 package lotr.client.render.entity;
 
+import lotr.common.entity.LOTRRandomSkinEntity;
 import org.lwjgl.opengl.GL11;
 
-import lotr.common.entity.animal.LOTREntityWhiteOryx;
 import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
 
@@ -11,7 +11,7 @@ public class LOTRRenderWhiteOryx extends LOTRRenderGemsbok {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		return oryxSkins.getRandomSkin((LOTREntityWhiteOryx) entity);
+		return oryxSkins.getRandomSkin((LOTRRandomSkinEntity) entity);
 	}
 
 	@Override

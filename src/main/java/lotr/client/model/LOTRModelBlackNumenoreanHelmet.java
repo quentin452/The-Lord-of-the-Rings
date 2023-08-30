@@ -15,13 +15,13 @@ public class LOTRModelBlackNumenoreanHelmet extends LOTRModelBiped {
 		ModelRenderer wingLeft = new ModelRenderer(this, 33, 0);
 		wingLeft.setRotationPoint(-4.0f - f, -8.0f - f, 0.0f);
 		wingLeft.addBox(-6.0f, -6.0f, 0.0f, 6, 16, 0, 0.0f);
-		wingLeft.rotateAngleY = (float) Math.toRadians(25.0);
+		wingLeft.rotateAngleY = 0.4363323129985824f;
 		bipedHead.addChild(wingLeft);
 		ModelRenderer wingRight = new ModelRenderer(this, 33, 0);
 		wingRight.mirror = true;
 		wingRight.setRotationPoint(4.0f + f, -8.0f - f, 0.0f);
 		wingRight.addBox(0.0f, -6.0f, 0.0f, 6, 16, 0, 0.0f);
-		wingRight.rotateAngleY = (float) Math.toRadians(-25.0);
+		wingRight.rotateAngleY = -0.4363323129985824f;
 		bipedHead.addChild(wingRight);
 		bipedHeadwear.cubeList.clear();
 		bipedBody.cubeList.clear();

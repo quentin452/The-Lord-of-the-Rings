@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 
 public class LOTRContainerBarrel extends Container {
 	public LOTRTileEntityBarrel theBarrel;
-	public int barrelMode = 0;
-	public int brewingTime = 0;
+	public int barrelMode;
+	public int brewingTime;
 
 	public LOTRContainerBarrel(InventoryPlayer inv, LOTRTileEntityBarrel barrel) {
 		int i;
@@ -93,7 +93,7 @@ public class LOTRContainerBarrel extends Container {
 				if (aBarrelSlot.isItemValid(itemstack1)) {
 					flag = LOTRBrewingRecipes.isWaterSource(itemstack1) ? mergeItemStack(itemstack1, 6, 9, false) : mergeItemStack(itemstack1, 0, 6, false);
 				}
-				if (!flag && (i >= 10 && i < 37 ? !mergeItemStack(itemstack1, 37, 46, false) : !mergeItemStack(itemstack1, 10, 37, false))) {
+				if (!flag && (i < 37 ? !mergeItemStack(itemstack1, 37, 46, false) : !mergeItemStack(itemstack1, 10, 37, false))) {
 					return null;
 				}
 			}
@@ -111,7 +111,7 @@ public class LOTRContainerBarrel extends Container {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int i, int j) {
 		if (i == 0) {
 			theBarrel.barrelMode = j;

@@ -2,6 +2,7 @@ package lotr.client.gui;
 
 import java.util.*;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -24,7 +25,7 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/quest/redBook.png");
 	public static ResourceLocation guiTexture_miniquests = new ResourceLocation("lotr:gui/quest/redBook_miniquests.png");
 	public static RenderItem renderItem = new RenderItem();
-	public static boolean viewCompleted = false;
+	public static boolean viewCompleted;
 	public static int textColor = 8019267;
 	public static int textColorDark = 5521198;
 	public static int textColorFaded = 9666921;
@@ -48,8 +49,8 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 	public int scrollBarActiveXBorder = 1;
 	public int scrollWidgetWidth = 10;
 	public int scrollWidgetHeight = 17;
-	public boolean isScrolling = false;
-	public float currentScroll = 0.0f;
+	public boolean isScrolling;
+	public float currentScroll;
 	public Map<LOTRMiniQuest, Pair<Integer, Integer>> displayedMiniQuests = new HashMap<>();
 	public int maxDisplayedMiniQuests = 4;
 	public int qPanelWidth = 170;
@@ -65,8 +66,8 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 	public int diaryX = xSize / 2 - pageBorder - pageWidth / 2 - diaryWidth / 2;
 	public int diaryY = ySize / 2 - diaryHeight / 2 - 1;
 	public int diaryBorder = 6;
-	public boolean mouseInDiary = false;
-	public boolean isDiaryScrolling = false;
+	public boolean mouseInDiary;
+	public boolean isDiaryScrolling;
 	public float diaryScroll;
 	public LOTRMiniQuest selectedMiniquest;
 	public LOTRMiniQuest deletingMiniquest;
@@ -86,7 +87,7 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 				viewCompleted = true;
 			}
 			if (button == buttonQuestDelete && deletingMiniquest != null) {
-				LOTRPacketDeleteMiniquest packet = new LOTRPacketDeleteMiniquest(deletingMiniquest);
+				IMessage packet = new LOTRPacketDeleteMiniquest(deletingMiniquest);
 				LOTRPacketHandler.networkWrapper.sendToServer(packet);
 				deletingMiniquest = null;
 				selectedMiniquest = null;
@@ -111,7 +112,7 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 		drawDefaultBackground();
 		mc.getTextureManager().bindTexture(guiTexture);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize, 512);
+		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize, 512);
 		int x = guiLeft + xSize / 2 - pageBorder - pageWidth / 2;
 		int y = guiTop + 30;
 		if (page == Page.MINIQUESTS && selectedMiniquest == null) {
@@ -120,21 +121,21 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 			x = (int) (x * invScale);
 			y = (int) (y * invScale);
 			GL11.glScalef(scale, scale, scale);
-			this.drawCenteredString(page.getTitle(), x, y, 8019267);
+			drawCenteredString(page.getTitle(), x, y, 8019267);
 			GL11.glScalef(invScale, invScale, invScale);
 			x = guiLeft + xSize / 2 - pageBorder - pageWidth / 2;
 			y = guiTop + 50;
 			if (viewCompleted) {
-				this.drawCenteredString(StatCollector.translateToLocal("lotr.gui.redBook.mq.viewComplete"), x, y, 8019267);
+				drawCenteredString(StatCollector.translateToLocal("lotr.gui.redBook.mq.viewComplete"), x, y, 8019267);
 			} else {
-				this.drawCenteredString(StatCollector.translateToLocal("lotr.gui.redBook.mq.viewActive"), x, y, 8019267);
+				drawCenteredString(StatCollector.translateToLocal("lotr.gui.redBook.mq.viewActive"), x, y, 8019267);
 			}
 		}
 		if (page == Page.MINIQUESTS) {
 			if (selectedMiniquest == null) {
-				this.drawCenteredString(LOTRDate.ShireReckoning.getShireDate().getDateName(false), guiLeft + xSize / 2 - pageBorder - pageWidth / 2, guiTop + ySize - 30, 8019267);
-				this.drawCenteredString(StatCollector.translateToLocalFormatted("lotr.gui.redBook.mq.numActive", getPlayerData().getActiveMiniQuests().size()), x, guiTop + 120, 8019267);
-				this.drawCenteredString(StatCollector.translateToLocalFormatted("lotr.gui.redBook.mq.numComplete", getPlayerData().getCompletedMiniQuestsTotal()), x, guiTop + 140, 8019267);
+				drawCenteredString(LOTRDate.ShireReckoning.getShireDate().getDateName(false), guiLeft + xSize / 2 - pageBorder - pageWidth / 2, guiTop + ySize - 30, 8019267);
+				drawCenteredString(StatCollector.translateToLocalFormatted("lotr.gui.redBook.mq.numActive", getPlayerData().getActiveMiniQuests().size()), x, guiTop + 120, 8019267);
+				drawCenteredString(StatCollector.translateToLocalFormatted("lotr.gui.redBook.mq.numComplete", getPlayerData().getCompletedMiniQuestsTotal()), x, guiTop + 140, 8019267);
 			} else {
 				LOTRMiniQuest quest = selectedMiniquest;
 				mc.getTextureManager().bindTexture(guiTexture);
@@ -142,7 +143,7 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 				GL11.glColor4f(questRGB[0], questRGB[1], questRGB[2], 1.0f);
 				x = guiLeft + diaryX;
 				y = guiTop + diaryY;
-				this.drawTexturedModalRect(x, y, 0, 256, diaryWidth, diaryHeight, 512);
+				drawTexturedModalRect(x, y, 0, 256, diaryWidth, diaryHeight, 512);
 				GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 				int textW = diaryWidth - diaryBorder * 2;
 				int textBottom = y + diaryHeight - diaryBorder;
@@ -237,20 +238,20 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 				diaryScroll = pageText.renderAndReturnScroll(fontRendererObj, x, y, textBottom, diaryScroll);
 			}
 			if (deletingMiniquest == null) {
-				List miniquests = getMiniQuests();
-				if (!(miniquests = new ArrayList<LOTRMiniQuest>(miniquests)).isEmpty()) {
+				List<LOTRMiniQuest> miniquests = getMiniQuests();
+				if (!(miniquests = new ArrayList<>(miniquests)).isEmpty()) {
 					if (viewCompleted) {
 						miniquests = Lists.reverse(miniquests);
 					} else {
-						Collections.sort(miniquests, new LOTRMiniQuest.SorterAlphabetical());
+						miniquests.sort(new LOTRMiniQuest.SorterAlphabetical());
 					}
 					int size = miniquests.size();
-					int min = 0 + Math.round(currentScroll * (size - maxDisplayedMiniQuests));
+					int min = Math.round(currentScroll * (size - maxDisplayedMiniQuests));
 					int max = maxDisplayedMiniQuests - 1 + Math.round(currentScroll * (size - maxDisplayedMiniQuests));
 					min = Math.max(min, 0);
 					max = Math.min(max, size - 1);
 					for (int index = min; index <= max; ++index) {
-						LOTRMiniQuest quest = (LOTRMiniQuest) miniquests.get(index);
+						LOTRMiniQuest quest = miniquests.get(index);
 						int displayIndex = index - min;
 						int questX = guiLeft + xSize / 2 + pageBorder;
 						int questY = guiTop + pageTop + displayIndex * (4 + qPanelHeight);
@@ -265,7 +266,7 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 				int lineY = guiTop + 50;
 				for (Object obj : deleteTextLines) {
 					String line = (String) obj;
-					this.drawCenteredString(line, lineX, lineY, 8019267);
+					drawCenteredString(line, lineX, lineY, 8019267);
 					lineY += fontRendererObj.FONT_HEIGHT;
 				}
 				int questX = guiLeft + xSize / 2 + pageBorder + pageWidth / 2 - qPanelWidth / 2;
@@ -276,12 +277,12 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 		if (hasScrollBar()) {
 			mc.getTextureManager().bindTexture(guiTexture_miniquests);
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-			this.drawTexturedModalRect(guiLeft + scrollBarX, guiTop + scrollBarY, 244, 0, scrollBarWidth, scrollBarHeight);
+			drawTexturedModalRect(guiLeft + scrollBarX, guiTop + scrollBarY, 244, 0, scrollBarWidth, scrollBarHeight);
 			if (canScroll()) {
 				int scroll = (int) (currentScroll * (scrollBarActiveHeight - scrollWidgetHeight));
-				this.drawTexturedModalRect(guiLeft + scrollBarX + scrollBarActiveXBorder, guiTop + scrollBarY + scrollBarActiveYOffset + scroll, 224, 0, scrollWidgetWidth, scrollWidgetHeight);
+				drawTexturedModalRect(guiLeft + scrollBarX + scrollBarActiveXBorder, guiTop + scrollBarY + scrollBarActiveYOffset + scroll, 224, 0, scrollWidgetWidth, scrollWidgetHeight);
 			} else {
-				this.drawTexturedModalRect(guiLeft + scrollBarX + scrollBarActiveXBorder, guiTop + scrollBarY + scrollBarActiveYOffset, 234, 0, scrollWidgetWidth, scrollWidgetHeight);
+				drawTexturedModalRect(guiLeft + scrollBarX + scrollBarActiveXBorder, guiTop + scrollBarY + scrollBarActiveYOffset, 234, 0, scrollWidgetWidth, scrollWidgetHeight);
 			}
 		}
 		buttonViewActive.enabled = buttonViewActive.visible = hasQuestViewButtons = page == Page.MINIQUESTS && selectedMiniquest == null;
@@ -324,7 +325,7 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 				diaryScroll += i;
 			} else {
 				int j = getMiniQuests().size() - maxDisplayedMiniQuests;
-				currentScroll -= (float) i / (float) j;
+				currentScroll -= (float) i / j;
 				currentScroll = Math.max(currentScroll, 0.0f);
 				currentScroll = Math.min(currentScroll, 1.0f);
 			}
@@ -443,14 +444,14 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 		mc.getTextureManager().bindTexture(guiTexture_miniquests);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		if (mouseInPanel || quest == selectedMiniquest) {
-			this.drawTexturedModalRect(questX, questY, 0, qPanelHeight, qPanelWidth, qPanelHeight);
+			drawTexturedModalRect(questX, questY, 0, qPanelHeight, qPanelWidth, qPanelHeight);
 		} else {
-			this.drawTexturedModalRect(questX, questY, 0, 0, qPanelWidth, qPanelHeight);
+			drawTexturedModalRect(questX, questY, 0, 0, qPanelWidth, qPanelHeight);
 		}
 		float[] questRGB = quest.getQuestColorComponents();
 		GL11.glColor4f(questRGB[0], questRGB[1], questRGB[2], 1.0f);
 		GL11.glEnable(3008);
-		this.drawTexturedModalRect(questX, questY, 0, qPanelHeight * 2, qPanelWidth, qPanelHeight);
+		drawTexturedModalRect(questX, questY, 0, qPanelHeight * 2, qPanelWidth, qPanelHeight);
 		GL11.glDisable(3008);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		String questName = quest.entityName;
@@ -493,7 +494,7 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 			if (mouseInDelete) {
 				delV += qWidgetSize;
 			}
-			this.drawTexturedModalRect(questX + qDelX, questY + qDelY, delU, delV, qWidgetSize, qWidgetSize);
+			drawTexturedModalRect(questX + qDelX, questY + qDelY, delU, delV, qWidgetSize, qWidgetSize);
 			if (!viewCompleted) {
 				int trackU = qPanelWidth + qWidgetSize;
 				int trackV = 0;
@@ -503,7 +504,7 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 				if (isTracking) {
 					trackU += qWidgetSize;
 				}
-				this.drawTexturedModalRect(questX + qTrackX, questY + qTrackY, trackU, trackV, qWidgetSize, qWidgetSize);
+				drawTexturedModalRect(questX + qTrackX, questY + qTrackY, trackU, trackV, qWidgetSize, qWidgetSize);
 			}
 		}
 		RenderHelper.enableGUIStandardItemLighting();
@@ -523,7 +524,7 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 		boolean isMouseDown = Mouse.isButtonDown(0);
 		int i1 = i - guiLeft;
 		int j1 = j - guiTop;
-		mouseInDiary = selectedMiniquest != null ? i1 >= diaryX && i1 < diaryX + diaryWidth && j1 >= diaryY && j1 < diaryY + diaryHeight : false;
+		mouseInDiary = selectedMiniquest != null && i1 >= diaryX && i1 < diaryX + diaryWidth && j1 >= diaryY && j1 < diaryY + diaryHeight;
 		boolean mouseInScrollBar = i1 >= scrollBarX + scrollBarActiveXBorder && i1 < scrollBarX + scrollBarWidth - scrollBarActiveXBorder * 2 && j1 >= scrollBarY + scrollBarActiveYOffset && j1 < scrollBarY + scrollBarActiveYOffset + scrollBarActiveHeight;
 		if (!wasMouseDown && isMouseDown) {
 			if (mouseInScrollBar) {
@@ -538,11 +539,11 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 		}
 		wasMouseDown = isMouseDown;
 		if (isScrolling) {
-			currentScroll = (j - (guiTop + scrollBarY + scrollBarActiveYOffset) - scrollWidgetHeight / 2.0f) / ((float) scrollBarActiveHeight - (float) scrollWidgetHeight);
+			currentScroll = (j - (guiTop + scrollBarY + scrollBarActiveYOffset) - scrollWidgetHeight / 2.0f) / ((float) scrollBarActiveHeight - scrollWidgetHeight);
 			currentScroll = Math.max(currentScroll, 0.0f);
 			currentScroll = Math.min(currentScroll, 1.0f);
 		} else if (isDiaryScrolling) {
-			float d = (float) (lastMouseY - j) / (float) fontRendererObj.FONT_HEIGHT;
+			float d = (float) (lastMouseY - j) / fontRendererObj.FONT_HEIGHT;
 			diaryScroll -= d;
 		}
 		lastMouseY = j;
@@ -552,7 +553,7 @@ public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 		LOTRMiniQuest tracking = getPlayerData().getTrackingMiniQuest();
 		LOTRMiniQuest newTracking;
 		newTracking = quest == tracking ? null : quest;
-		LOTRPacketMiniquestTrack packet = new LOTRPacketMiniquestTrack(newTracking);
+		IMessage packet = new LOTRPacketMiniquestTrack(newTracking);
 		LOTRPacketHandler.networkWrapper.sendToServer(packet);
 		getPlayerData().setTrackingMiniQuest(newTracking);
 		trackTicks = 40;

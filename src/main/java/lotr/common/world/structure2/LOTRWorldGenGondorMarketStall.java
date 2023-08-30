@@ -9,9 +9,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public abstract class LOTRWorldGenGondorMarketStall extends LOTRWorldGenGondorStructure {
-	public static Class[] allStallTypes = { Greengrocer.class, Lumber.class, Mason.class, Brewer.class, Flowers.class, Butcher.class, Fish.class, Farmer.class, Blacksmith.class, Baker.class };
+	public static Class[] allStallTypes = {Greengrocer.class, Lumber.class, Mason.class, Brewer.class, Flowers.class, Butcher.class, Fish.class, Farmer.class, Blacksmith.class, Baker.class};
 
-	public LOTRWorldGenGondorMarketStall(boolean flag) {
+	protected LOTRWorldGenGondorMarketStall(boolean flag) {
 		super(flag);
 	}
 
@@ -22,7 +22,7 @@ public abstract class LOTRWorldGenGondorMarketStall extends LOTRWorldGenGondorSt
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 3);
+		setOriginAndRotation(world, i, j, k, rotation, 3);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -98,7 +98,6 @@ public abstract class LOTRWorldGenGondorMarketStall extends LOTRWorldGenGondorSt
 
 		@Override
 		public void generateRoof(World world, Random random, int i1, int j1, int k1) {
-			Math.abs(i1);
 			int k2 = Math.abs(k1);
 			if (k2 % 2 == 0) {
 				setBlockAndMetadata(world, i1, j1, k1, Blocks.wool, 1);
@@ -142,7 +141,6 @@ public abstract class LOTRWorldGenGondorMarketStall extends LOTRWorldGenGondorSt
 		@Override
 		public void generateRoof(World world, Random random, int i1, int j1, int k1) {
 			int i2 = Math.abs(i1);
-			Math.abs(k1);
 			if (i2 % 2 == 0) {
 				setBlockAndMetadata(world, i1, j1, k1, Blocks.wool, 12);
 			} else {

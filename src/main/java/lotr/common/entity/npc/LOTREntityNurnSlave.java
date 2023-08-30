@@ -14,7 +14,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.IPlantable;
 
 public class LOTREntityNurnSlave extends LOTREntityMan implements LOTRFarmhand {
-	public boolean isFree = false;
+	public boolean isFree;
 
 	public LOTREntityNurnSlave(World world) {
 		super(world);

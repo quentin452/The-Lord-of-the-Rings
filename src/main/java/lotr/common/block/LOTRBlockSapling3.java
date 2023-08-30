@@ -23,35 +23,35 @@ public class LOTRBlockSapling3 extends LOTRBlockSaplingBase {
 		int xOffset = 0;
 		int zOffset = 0;
 		switch (meta) {
-		case 0: {
-			int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta);
-			if (partyTree != null) {
-				treeGen = LOTRTreeType.MAPLE_PARTY.create(true, random);
-				trunkPos = 1;
-				trunkNeg = 1;
-				xOffset = partyTree[0];
-				zOffset = partyTree[1];
+			case 0: {
+				int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta);
+				if (partyTree != null) {
+					treeGen = LOTRTreeType.MAPLE_PARTY.create(true, random);
+					trunkPos = 1;
+					trunkNeg = 1;
+					xOffset = partyTree[0];
+					zOffset = partyTree[1];
+				}
+				if (treeGen == null) {
+					treeGen = random.nextInt(10) == 0 ? LOTRTreeType.MAPLE_LARGE.create(true, random) : LOTRTreeType.MAPLE.create(true, random);
+					trunkPos = 0;
+					trunkNeg = 0;
+					xOffset = 0;
+					zOffset = 0;
+				}
+				break;
 			}
-			if (treeGen == null) {
-				treeGen = random.nextInt(10) == 0 ? LOTRTreeType.MAPLE_LARGE.create(true, random) : LOTRTreeType.MAPLE.create(true, random);
-				trunkPos = 0;
-				trunkNeg = 0;
-				xOffset = 0;
-				zOffset = 0;
-			}
-			break;
-		}
-		case 1:
-			treeGen = LOTRTreeType.LARCH.create(true, random);
-			break;
-		case 2:
-			treeGen = LOTRTreeType.DATE_PALM.create(true, random);
-			break;
-		case 3:
-			treeGen = LOTRTreeType.MANGROVE.create(true, random);
-			break;
-		default:
-			break;
+			case 1:
+				treeGen = LOTRTreeType.LARCH.create(true, random);
+				break;
+			case 2:
+				treeGen = LOTRTreeType.DATE_PALM.create(true, random);
+				break;
+			case 3:
+				treeGen = LOTRTreeType.MANGROVE.create(true, random);
+				break;
+			default:
+				break;
 		}
 		for (i1 = -trunkNeg; i1 <= trunkPos; ++i1) {
 			for (k1 = -trunkNeg; k1 <= trunkPos; ++k1) {

@@ -21,7 +21,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 public class LOTREntityTroll extends LOTREntityNPC {
 	public int sneeze;
 	public int sniffTime;
-	public boolean trollImmuneToSun = false;
+	public boolean trollImmuneToSun;
 
 	public LOTREntityTroll(World world) {
 		super(world);
@@ -39,7 +39,7 @@ public class LOTREntityTroll extends LOTREntityNPC {
 		tasks.addTask(7, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 8.0f, 0.02f));
 		tasks.addTask(8, new EntityAIWatchClosest(this, EntityLiving.class, 12.0f, 0.01f));
 		tasks.addTask(9, new EntityAILookIdle(this));
-		this.addTargetTasks(true, LOTREntityAINearestAttackableTargetTroll.class);
+		addTargetTasks(true, LOTREntityAINearestAttackableTargetTroll.class);
 		spawnsInDarkness = true;
 	}
 
@@ -95,48 +95,48 @@ public class LOTREntityTroll extends LOTREntityNPC {
 			}
 		}
 		int animalDrops = 1 + rand.nextInt(3) + rand.nextInt(i + 1);
-		block13: for (int l = 0; l < animalDrops; ++l) {
+		for (int l = 0; l < animalDrops; ++l) {
 			int drop = rand.nextInt(10);
 			switch (drop) {
-			case 0: {
-				entityDropItem(new ItemStack(Items.leather, 1 + rand.nextInt(3)), 0.0f);
-				continue block13;
-			}
-			case 1: {
-				entityDropItem(new ItemStack(Items.beef, 1 + rand.nextInt(2)), 0.0f);
-				continue block13;
-			}
-			case 2: {
-				entityDropItem(new ItemStack(Items.chicken, 1 + rand.nextInt(2)), 0.0f);
-				continue block13;
-			}
-			case 3: {
-				entityDropItem(new ItemStack(Items.feather, 1 + rand.nextInt(3)), 0.0f);
-				continue block13;
-			}
-			case 4: {
-				entityDropItem(new ItemStack(Items.porkchop, 1 + rand.nextInt(2)), 0.0f);
-				continue block13;
-			}
-			case 5: {
-				entityDropItem(new ItemStack(Blocks.wool, 1 + rand.nextInt(3)), 0.0f);
-				continue block13;
-			}
-			case 6: {
-				entityDropItem(new ItemStack(Items.rotten_flesh, 1 + rand.nextInt(3)), 0.0f);
-				continue block13;
-			}
-			case 7: {
-				entityDropItem(new ItemStack(LOTRMod.rabbitRaw, 1 + rand.nextInt(2)), 0.0f);
-				continue block13;
-			}
-			case 8: {
-				entityDropItem(new ItemStack(LOTRMod.muttonRaw, 1 + rand.nextInt(2)), 0.0f);
-				continue block13;
-			}
-			case 9: {
-				entityDropItem(new ItemStack(LOTRMod.deerRaw, 1 + rand.nextInt(2)), 0.0f);
-			}
+				case 0: {
+					entityDropItem(new ItemStack(Items.leather, 1 + rand.nextInt(3)), 0.0f);
+					continue;
+				}
+				case 1: {
+					entityDropItem(new ItemStack(Items.beef, 1 + rand.nextInt(2)), 0.0f);
+					continue;
+				}
+				case 2: {
+					entityDropItem(new ItemStack(Items.chicken, 1 + rand.nextInt(2)), 0.0f);
+					continue;
+				}
+				case 3: {
+					entityDropItem(new ItemStack(Items.feather, 1 + rand.nextInt(3)), 0.0f);
+					continue;
+				}
+				case 4: {
+					entityDropItem(new ItemStack(Items.porkchop, 1 + rand.nextInt(2)), 0.0f);
+					continue;
+				}
+				case 5: {
+					entityDropItem(new ItemStack(Blocks.wool, 1 + rand.nextInt(3)), 0.0f);
+					continue;
+				}
+				case 6: {
+					entityDropItem(new ItemStack(Items.rotten_flesh, 1 + rand.nextInt(3)), 0.0f);
+					continue;
+				}
+				case 7: {
+					entityDropItem(new ItemStack(LOTRMod.rabbitRaw, 1 + rand.nextInt(2)), 0.0f);
+					continue;
+				}
+				case 8: {
+					entityDropItem(new ItemStack(LOTRMod.muttonRaw, 1 + rand.nextInt(2)), 0.0f);
+					continue;
+				}
+				case 9: {
+					entityDropItem(new ItemStack(LOTRMod.deerRaw, 1 + rand.nextInt(2)), 0.0f);
+				}
 			}
 		}
 	}
@@ -242,7 +242,7 @@ public class LOTREntityTroll extends LOTREntityNPC {
 		return 1.0f;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
 		if (b == 15) {
@@ -308,7 +308,9 @@ public class LOTREntityTroll extends LOTREntityNPC {
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		if (getTrollBurnTime() >= 0 && isEntityAlive()) {
-			if (!worldObj.isRemote) {
+			if (worldObj.isRemote) {
+				worldObj.spawnParticle("largesmoke", posX + (rand.nextDouble() - 0.5) * width, posY + rand.nextDouble() * height, posZ + (rand.nextDouble() - 0.5) * width, 0.0, 0.0, 0.0);
+			} else {
 				BiomeGenBase biome = worldObj.getBiomeGenForCoords(MathHelper.floor_double(posX), MathHelper.floor_double(posZ));
 				if (trollImmuneToSun || biome instanceof LOTRBiome && ((LOTRBiome) biome).canSpawnHostilesInDay() || !worldObj.isDaytime() || !worldObj.canBlockSeeTheSky(MathHelper.floor_double(posX), (int) boundingBox.minY, MathHelper.floor_double(posZ))) {
 					setTrollBurnTime(-1);
@@ -321,8 +323,6 @@ public class LOTREntityTroll extends LOTREntityNPC {
 						}
 					}
 				}
-			} else {
-				worldObj.spawnParticle("largesmoke", posX + (rand.nextDouble() - 0.5) * width, posY + rand.nextDouble() * height, posZ + (rand.nextDouble() - 0.5) * width, 0.0, 0.0, 0.0);
 			}
 		}
 		if (sniffTime > 0) {
@@ -362,12 +362,12 @@ public class LOTREntityTroll extends LOTREntityNPC {
 		if (rand.nextInt(10) == 0) {
 			setHasTwoHeads(true);
 			double maxHealth = getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue();
-			getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHealth *= 1.5);
+			getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHealth * 1.5);
 			setHealth(getMaxHealth());
 			double attack = getEntityAttribute(npcAttackDamage).getBaseValue();
-			getEntityAttribute(npcAttackDamage).setBaseValue(attack += 3.0);
+			getEntityAttribute(npcAttackDamage).setBaseValue(attack + 3.0);
 			double speed = getEntityAttribute(SharedMonsterAttributes.movementSpeed).getBaseValue();
-			getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(speed *= 1.4);
+			getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(speed * 1.4);
 		}
 		return data;
 	}

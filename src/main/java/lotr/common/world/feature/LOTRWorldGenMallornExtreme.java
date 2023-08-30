@@ -33,7 +33,7 @@ public class LOTRWorldGenMallornExtreme extends WorldGenAbstractTree {
 	public static float HOUSE_CHANCE = 0.7f;
 	public static float HOUSE_ELFLORD_CHANCE = 0.15f;
 	public boolean notify;
-	public boolean saplingGrowth = false;
+	public boolean saplingGrowth;
 
 	public LOTRWorldGenMallornExtreme(boolean flag) {
 		super(flag);
@@ -89,7 +89,7 @@ public class LOTRWorldGenMallornExtreme extends WorldGenAbstractTree {
 							if (block == LOTRMod.quenditeGrass) {
 								correctBlock = true;
 							}
-						} else if (block.canSustainPlant((IBlockAccess) world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) LOTRMod.sapling)) {
+						} else if (block.canSustainPlant(world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) LOTRMod.sapling)) {
 							correctBlock = true;
 						}
 						if (correctBlock) {
@@ -125,8 +125,8 @@ public class LOTRWorldGenMallornExtreme extends WorldGenAbstractTree {
 				for (int l = 0; l < boughLength; ++l) {
 					int i12 = i + Math.round(sin * l);
 					int k12 = k + Math.round(cos * l);
-					int j1 = boughBaseHeight + Math.round((float) l / (float) boughLength * boughHeight);
-					int range = boughThickness - Math.round((float) l / (float) boughLength * boughThickness * 0.5f);
+					int j1 = boughBaseHeight + Math.round((float) l / boughLength * boughHeight);
+					int range = boughThickness - Math.round((float) l / boughLength * boughThickness * 0.5f);
 					for (int i2 = i12 - range; i2 <= i12 + range; ++i2) {
 						for (int j2 = j1 - range; j2 <= j1 + range; ++j2) {
 							for (int k2 = k12 - range; k2 <= k12 + range; ++k2) {
@@ -151,7 +151,7 @@ public class LOTRWorldGenMallornExtreme extends WorldGenAbstractTree {
 						for (int b1 = 0; b1 < branchLength; ++b1) {
 							int i2 = i12 + Math.round(branch_sin * b1);
 							int k2 = k12 + Math.round(branch_cos * b1);
-							int j2 = j1 + Math.round((float) b1 / (float) branchLength * branchHeight);
+							int j2 = j1 + Math.round((float) b1 / branchLength * branchHeight);
 							Block block = world.getBlock(i2, j2, k2);
 							if (block.isReplaceable(world, i2, j2, k2) || block.isLeaves(world, i2, j2, k2)) {
 								setBlockAndNotifyAdequately(world, i2, j2, k2, LOTRMod.wood, 13);
@@ -164,87 +164,80 @@ public class LOTRWorldGenMallornExtreme extends WorldGenAbstractTree {
 					}
 				}
 			}
-			if (trunkWidth > 0) {
-				for (int j1 = j + (int) (height * BOUGH_BASE_HEIGHT_MIN); j1 > j + (int) (height * 0.67f); j1 -= 1 + random.nextInt(3)) {
-					int branches = 1 + random.nextInt(5);
-					for (int b = 0; b < branches; ++b) {
-						float branchAngle = random.nextFloat() * 3.1415927f * 2.0f;
-						int i13 = i + (int) (1.5f + MathHelper.cos(branchAngle) * 4.0f);
-						int k13 = k + (int) (1.5f + MathHelper.sin(branchAngle) * 4.0f);
-						int j2 = j1;
-						int length = MathHelper.getRandomIntegerInRange(random, 10, 20);
-						for (int l = 0; l < length && isReplaceable(world, i13 = i + (int) (1.5f + MathHelper.cos(branchAngle) * l), j2 = j1 - 3 + l / 2, k13 = k + (int) (1.5f + MathHelper.sin(branchAngle) * l)); ++l) {
-							setBlockAndNotifyAdequately(world, i13, j2, k13, LOTRMod.wood, 13);
-						}
-						spawnLeafLayer(world, random, i13, j2 + 1, k13, 2);
-						spawnLeafLayer(world, random, i13, j2, k13, 3);
-						spawnLeafLayer(world, random, i13, j2 - 1, k13, 1);
+			for (int j1 = j + (int) (height * BOUGH_BASE_HEIGHT_MIN); j1 > j + (int) (height * 0.67f); j1 -= 1 + random.nextInt(3)) {
+				int branches = 1 + random.nextInt(5);
+				for (int b = 0; b < branches; ++b) {
+					float branchAngle = random.nextFloat() * 3.1415927f * 2.0f;
+					int i13 = i + (int) (1.5f + MathHelper.cos(branchAngle) * 4.0f);
+					int k13 = k + (int) (1.5f + MathHelper.sin(branchAngle) * 4.0f);
+					int j2 = j1;
+					int length = MathHelper.getRandomIntegerInRange(random, 10, 20);
+					for (int l = 0; l < length && isReplaceable(world, i13 = i + (int) (1.5f + MathHelper.cos(branchAngle) * l), j2 = j1 - 3 + l / 2, k13 = k + (int) (1.5f + MathHelper.sin(branchAngle) * l)); ++l) {
+						setBlockAndNotifyAdequately(world, i13, j2, k13, LOTRMod.wood, 13);
 					}
+					spawnLeafLayer(world, random, i13, j2 + 1, k13, 2);
+					spawnLeafLayer(world, random, i13, j2, k13, 3);
+					spawnLeafLayer(world, random, i13, j2 - 1, k13, 1);
 				}
 			}
-			if (trunkWidth > 0) {
-				int roots = MathHelper.getRandomIntegerInRange(random, 6, 10);
-				for (int l = 0; l < roots; ++l) {
-					int i14 = i;
-					int j1 = j + 1 + random.nextInt(5);
-					int k14 = k;
-					int xDirection = 0;
-					int zDirection = 0;
-					int rootLength = 1 + random.nextInt(4);
+			int roots = MathHelper.getRandomIntegerInRange(random, 6, 10);
+			for (int l = 0; l < roots; ++l) {
+				int i14 = i;
+				int j1 = j + 1 + random.nextInt(5);
+				int k14 = k;
+				int xDirection = 0;
+				int zDirection = 0;
+				int rootLength = 1 + random.nextInt(4);
+				if (random.nextBoolean()) {
 					if (random.nextBoolean()) {
-						if (random.nextBoolean()) {
-							i14 -= trunkWidth + 1;
-							xDirection = -1;
-						} else {
-							i14 += trunkWidth + 1;
-							xDirection = 1;
-						}
-						k14 -= trunkWidth + 1;
-						k14 += random.nextInt(trunkWidth * 2 + 2);
-					} else {
-						if (random.nextBoolean()) {
-							k14 -= trunkWidth + 1;
-							zDirection = -1;
-						} else {
-							k14 += trunkWidth + 1;
-							zDirection = 1;
-						}
 						i14 -= trunkWidth + 1;
-						i14 += random.nextInt(trunkWidth * 2 + 2);
+						xDirection = -1;
+					} else {
+						i14 += trunkWidth + 1;
+						xDirection = 1;
 					}
-					for (int l1 = 0; l1 < rootLength; ++l1) {
-						int rootBlocks = 0;
-						int j2 = j1;
-						while (!LOTRMod.isOpaque(world, i14, j2, k14)) {
-							setBlockAndNotifyAdequately(world, i14, j2, k14, LOTRMod.wood, 13);
-							world.getBlock(i14, j2 - 1, k14).onPlantGrow(world, i14, j2 - 1, k14, i14, j2, k14);
-							rootBlocks++;
-							if (rootBlocks > 5) {
-								break;
-							}
-							--j2;
-						}
-						--j1;
-						if (!random.nextBoolean()) {
-							continue;
-						}
-						if (xDirection == -1) {
-							--i14;
-							continue;
-						}
-						if (xDirection == 1) {
-							++i14;
-							continue;
-						}
-						if (zDirection == -1) {
-							--k14;
-							continue;
-						}
-						if (zDirection != 1) {
-							continue;
-						}
-						++k14;
+					k14 -= trunkWidth + 1;
+					k14 += random.nextInt(trunkWidth * 2 + 2);
+				} else {
+					if (random.nextBoolean()) {
+						k14 -= trunkWidth + 1;
+						zDirection = -1;
+					} else {
+						k14 += trunkWidth + 1;
+						zDirection = 1;
 					}
+					i14 -= trunkWidth + 1;
+					i14 += random.nextInt(trunkWidth * 2 + 2);
+				}
+				for (int l1 = 0; l1 < rootLength; ++l1) {
+					int rootBlocks = 0;
+					int j2 = j1;
+					while (!LOTRMod.isOpaque(world, i14, j2, k14)) {
+						setBlockAndNotifyAdequately(world, i14, j2, k14, LOTRMod.wood, 13);
+						world.getBlock(i14, j2 - 1, k14).onPlantGrow(world, i14, j2 - 1, k14, i14, j2, k14);
+						rootBlocks++;
+						if (rootBlocks > 5) {
+							break;
+						}
+						--j2;
+					}
+					--j1;
+					if (!random.nextBoolean()) {
+						continue;
+					}
+					if (xDirection == -1) {
+						--i14;
+						continue;
+					}
+					if (xDirection == 1) {
+						++i14;
+						continue;
+					}
+					if (zDirection == -1) {
+						--k14;
+						continue;
+					}
+					++k14;
 				}
 			}
 			if (!saplingGrowth && !notify && !forceGeneration && random.nextFloat() < HOUSE_CHANCE) {

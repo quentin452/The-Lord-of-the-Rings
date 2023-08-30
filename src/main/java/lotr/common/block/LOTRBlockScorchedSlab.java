@@ -11,13 +11,13 @@ public class LOTRBlockScorchedSlab extends LOTRBlockSlabBase {
 		super(flag, Material.rock, 1);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return LOTRMod.scorchedStone.getIcon(i, j);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

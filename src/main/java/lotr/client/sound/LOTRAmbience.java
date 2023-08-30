@@ -26,8 +26,8 @@ import net.minecraftforge.common.MinecraftForge;
 public class LOTRAmbience {
 	public static ResourceLocation jazzMusicPath = new ResourceLocation("lotr:music.jazzelf");
 	public int ticksSinceWight;
-	public List<ISound> playingWindSounds = new ArrayList<>();
-	public List<ISound> playingSeaSounds = new ArrayList<>();
+	public Collection<ISound> playingWindSounds = new ArrayList<>();
+	public Collection<ISound> playingSeaSounds = new ArrayList<>();
 	public ISound playingJazzMusic;
 	public int jazzPlayerID;
 
@@ -45,13 +45,12 @@ public class LOTRAmbience {
 		String name = event.name;
 		ISound sound = event.sound;
 		if (LOTRConfig.newWeather && sound instanceof PositionedSound) {
-			PositionedSound ps = (PositionedSound) sound;
 			WorldClient world = Minecraft.getMinecraft().theWorld;
 			if (world != null && world.provider instanceof LOTRWorldProvider) {
 				if ("ambient.weather.rain".equals(name)) {
-					event.result = new PositionedSoundRecord(new ResourceLocation("lotr:ambient.weather.rain"), ps.getVolume(), ps.getPitch(), ps.getXPosF(), ps.getYPosF(), ps.getZPosF());
+					event.result = new PositionedSoundRecord(new ResourceLocation("lotr:ambient.weather.rain"), sound.getVolume(), sound.getPitch(), sound.getXPosF(), sound.getYPosF(), sound.getZPosF());
 				} else if ("ambient.weather.thunder".equals(name)) {
-					event.result = new PositionedSoundRecord(new ResourceLocation("lotr:ambient.weather.thunder"), ps.getVolume(), ps.getPitch(), ps.getXPosF(), ps.getYPosF(), ps.getZPosF());
+					event.result = new PositionedSoundRecord(new ResourceLocation("lotr:ambient.weather.thunder"), sound.getVolume(), sound.getPitch(), sound.getXPosF(), sound.getYPosF(), sound.getZPosF());
 				}
 			}
 		}
@@ -132,13 +131,13 @@ public class LOTRAmbience {
 					int k1 = k + MathHelper.getRandomIntegerInRange(rand, -xzRange, xzRange);
 					int j1 = j + MathHelper.getRandomIntegerInRange(rand, -16, 16);
 					if (j1 >= minWindHeight && world.canBlockSeeTheSky(i1, j1, k1)) {
-						float windiness = (j1 - minWindHeight) / (fullWindHeight - minWindHeight);
+						float windiness = (float) (j1 - minWindHeight) / (fullWindHeight - minWindHeight);
 						windiness = MathHelper.clamp_float(windiness, 0.0F, 1.0F);
 						if (windiness >= rand.nextFloat()) {
 							float x1 = i1 + 0.5F;
 							float y1 = j1 + 0.5F;
 							float z1 = k1 + 0.5F;
-							float vol = 1.0F * Math.max(0.25F, windiness);
+							float vol = Math.max(0.25F, windiness);
 							float pitch = 0.8F + rand.nextFloat() * 0.4F;
 							AmbientSoundNoAttentuation ambientSoundNoAttentuation = new AmbientSoundNoAttentuation(new ResourceLocation("lotr:ambient.weather.wind"), vol, pitch, x1, y1, z1).calcAmbientVolume(entityplayer, xzRange);
 							mc.getSoundHandler().playSound(ambientSoundNoAttentuation);
@@ -148,7 +147,7 @@ public class LOTRAmbience {
 					}
 				}
 			} else {
-				Set<ISound> removes = new HashSet<>();
+				Collection<ISound> removes = new HashSet<>();
 				for (ISound wind : playingWindSounds) {
 					if (!mc.getSoundHandler().isSoundPlaying(wind)) {
 						removes.add(wind);
@@ -159,9 +158,9 @@ public class LOTRAmbience {
 		}
 		if (enableAmbience) {
 			if (playingSeaSounds.size() < 3) {
-				if (biome instanceof LOTRBiomeGenOcean || biome instanceof LOTRBiomeGenBeach || biome instanceof LOTRBiomeGenLindonCoast || biome instanceof LOTRBiomeGenFarHaradCoast) {
+				if (biome instanceof LOTRBiomeGenOcean || biome instanceof LOTRBiomeGenLindonCoast || biome instanceof LOTRBiomeGenFarHaradCoast) {
 					int xzRange = 64;
-					float[] rangeChecks = { 0.25F, 0.5F, 0.75F, 1.0F };
+					float[] rangeChecks = {0.25F, 0.5F, 0.75F, 1.0F};
 					for (float fr : rangeChecks) {
 						int range = (int) (xzRange * fr);
 						for (int l = 0; l < 8; l++) {
@@ -185,7 +184,7 @@ public class LOTRAmbience {
 									float angle = (float) Math.atan2(dz, dx);
 									float cos = MathHelper.cos(angle);
 									float sin = MathHelper.sin(angle);
-									float angle90 = angle + (float) Math.toRadians(-90.0D);
+									float angle90 = angle - 1.5707963267948966f;
 									float cos90 = MathHelper.cos(angle90);
 									float sin90 = MathHelper.sin(angle90);
 									float waveSpeed = MathHelper.randomFloatClamp(rand, 0.3F, 0.5F);
@@ -210,7 +209,7 @@ public class LOTRAmbience {
 					}
 				}
 			} else {
-				Set<ISound> removes = new HashSet<>();
+				Collection<ISound> removes = new HashSet<>();
 				for (ISound sea : playingSeaSounds) {
 					if (!mc.getSoundHandler().isSoundPlaying(sea)) {
 						removes.add(sea);

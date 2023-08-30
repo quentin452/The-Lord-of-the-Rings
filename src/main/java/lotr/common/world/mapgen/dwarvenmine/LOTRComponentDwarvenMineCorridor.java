@@ -35,7 +35,7 @@ public class LOTRComponentDwarvenMineCorridor extends StructureComponent {
 		fillWithBlocks(world, structureBoundingBox, 0, 0, 0, 2, 2, length, Blocks.air, Blocks.air, false);
 		for (int l = 0; l < sectionCount; ++l) {
 			int k = 2 + l * 4;
-			for (int i : new int[] { 0, 2 }) {
+			for (int i : new int[]{0, 2}) {
 				int wallHeight = ruined ? random.nextInt(3) : 2;
 				for (int j = 0; j <= wallHeight; ++j) {
 					placeBlockAtCurrentPosition(world, LOTRMod.wall, 7, i, j, k, structureBoundingBox);
@@ -96,57 +96,58 @@ public class LOTRComponentDwarvenMineCorridor extends StructureComponent {
 
 	@Override
 	public void buildComponent(StructureComponent component, List list, Random random) {
-		block24: {
+		block24:
+		{
 			int i = getComponentType();
 			int j = random.nextInt(4);
 			switch (coordBaseMode) {
-			case 0: {
-				if (j <= 1) {
-					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY - 1 + random.nextInt(3), boundingBox.maxZ + 1, coordBaseMode, i, ruined);
+				case 0: {
+					if (j <= 1) {
+						LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY - 1 + random.nextInt(3), boundingBox.maxZ + 1, coordBaseMode, i, ruined);
+						break;
+					}
+					if (j == 2) {
+						LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.maxZ - 3, 1, i, ruined);
+						break;
+					}
+					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.maxZ - 3, 3, i, ruined);
 					break;
 				}
-				if (j == 2) {
-					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.maxZ - 3, 1, i, ruined);
+				case 1: {
+					if (j <= 1) {
+						LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ, coordBaseMode, i, ruined);
+						break;
+					}
+					if (j == 2) {
+						LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ - 1, 2, i, ruined);
+						break;
+					}
+					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY - 1 + random.nextInt(3), boundingBox.maxZ + 1, 0, i, ruined);
 					break;
 				}
-				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.maxZ - 3, 3, i, ruined);
-				break;
-			}
-			case 1: {
-				if (j <= 1) {
-					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ, coordBaseMode, i, ruined);
+				case 2: {
+					if (j <= 1) {
+						LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ - 1, coordBaseMode, i, ruined);
+						break;
+					}
+					if (j == 2) {
+						LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ, 1, i, ruined);
+						break;
+					}
+					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ, 3, i, ruined);
 					break;
 				}
-				if (j == 2) {
-					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ - 1, 2, i, ruined);
-					break;
+				case 3: {
+					if (j <= 1) {
+						LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ, coordBaseMode, i, ruined);
+						break;
+					}
+					if (j == 2) {
+						LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX - 3, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ - 1, 2, i, ruined);
+						break;
+					}
+					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX - 3, boundingBox.minY - 1 + random.nextInt(3), boundingBox.maxZ + 1, 0, i, ruined);
 				}
-				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY - 1 + random.nextInt(3), boundingBox.maxZ + 1, 0, i, ruined);
-				break;
-			}
-			case 2: {
-				if (j <= 1) {
-					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ - 1, coordBaseMode, i, ruined);
-					break;
-				}
-				if (j == 2) {
-					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ, 1, i, ruined);
-					break;
-				}
-				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ, 3, i, ruined);
-				break;
-			}
-			case 3: {
-				if (j <= 1) {
-					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ, coordBaseMode, i, ruined);
-					break;
-				}
-				if (j == 2) {
-					LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX - 3, boundingBox.minY - 1 + random.nextInt(3), boundingBox.minZ - 1, 2, i, ruined);
-					break;
-				}
-				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX - 3, boundingBox.minY - 1 + random.nextInt(3), boundingBox.maxZ + 1, 0, i, ruined);
-			}
 			}
 			if (i >= 12) {
 				break block24;
@@ -195,25 +196,25 @@ public class LOTRComponentDwarvenMineCorridor extends StructureComponent {
 		for (i1 = random.nextInt(3) + 2; i1 > 0; --i1) {
 			int j1 = i1 * 4;
 			switch (l) {
-			case 0: {
-				structureboundingbox.maxX = i + 2;
-				structureboundingbox.maxZ = k + j1 - 1;
-				break;
-			}
-			case 1: {
-				structureboundingbox.minX = i - (j1 - 1);
-				structureboundingbox.maxZ = k + 2;
-				break;
-			}
-			case 2: {
-				structureboundingbox.maxX = i + 2;
-				structureboundingbox.minZ = k - (j1 - 1);
-				break;
-			}
-			case 3: {
-				structureboundingbox.maxX = i + j1 - 1;
-				structureboundingbox.maxZ = k + 2;
-			}
+				case 0: {
+					structureboundingbox.maxX = i + 2;
+					structureboundingbox.maxZ = k + j1 - 1;
+					break;
+				}
+				case 1: {
+					structureboundingbox.minX = i - (j1 - 1);
+					structureboundingbox.maxZ = k + 2;
+					break;
+				}
+				case 2: {
+					structureboundingbox.maxX = i + 2;
+					structureboundingbox.minZ = k - (j1 - 1);
+					break;
+				}
+				case 3: {
+					structureboundingbox.maxX = i + j1 - 1;
+					structureboundingbox.maxZ = k + 2;
+				}
 			}
 			if (StructureComponent.findIntersecting(list, structureboundingbox) == null) {
 				break;

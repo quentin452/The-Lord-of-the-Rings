@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityEasterlingWarlord extends LOTREntityEasterlingGoldWarrior implements LOTRUnitTradeable {
 	public LOTREntityEasterlingWarlord(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

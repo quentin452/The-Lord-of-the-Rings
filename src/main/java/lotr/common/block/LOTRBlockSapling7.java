@@ -23,9 +23,10 @@ public class LOTRBlockSapling7 extends LOTRBlockSaplingBase {
 		int xOffset = 0;
 		int zOffset = 0;
 		if (meta == 0) {
-			block0: for (i1 = 0; i1 >= -1; --i1) {
+			block0:
+			for (i1 = 0; i1 >= -1; --i1) {
 				for (k1 = 0; k1 >= -1; --k1) {
-					if (!this.isSameSapling(world, i + i1, j, k + k1, meta) || !this.isSameSapling(world, i + i1 + 1, j, k + k1, meta) || !this.isSameSapling(world, i + i1, j, k + k1 + 1, meta) || !this.isSameSapling(world, i + i1 + 1, j, k + k1 + 1, meta)) {
+					if (!isSameSapling(world, i + i1, j, k + k1, 0) || !isSameSapling(world, i + i1 + 1, j, k + k1, 0) || !isSameSapling(world, i + i1, j, k + k1 + 1, 0) || !isSameSapling(world, i + i1 + 1, j, k + k1 + 1, 0)) {
 						continue;
 					}
 					treeGen = LOTRTreeType.ASPEN_LARGE.create(true, random);
@@ -45,7 +46,7 @@ public class LOTRBlockSapling7 extends LOTRBlockSaplingBase {
 			}
 		}
 		if (meta == 1) {
-			int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, meta);
+			int[] partyTree = LOTRBlockSaplingBase.findPartyTree(world, i, j, k, this, 1);
 			if (partyTree != null) {
 				treeGen = LOTRTreeType.GREEN_OAK_LARGE.create(true, random);
 				trunkPos = 1;
@@ -62,9 +63,10 @@ public class LOTRBlockSapling7 extends LOTRBlockSaplingBase {
 			}
 		}
 		if (meta == 2) {
-			block2: for (i1 = 0; i1 >= -1; --i1) {
+			block2:
+			for (i1 = 0; i1 >= -1; --i1) {
 				for (k1 = 0; k1 >= -1; --k1) {
-					if (!this.isSameSapling(world, i + i1, j, k + k1, meta) || !this.isSameSapling(world, i + i1 + 1, j, k + k1, meta) || !this.isSameSapling(world, i + i1, j, k + k1 + 1, meta) || !this.isSameSapling(world, i + i1 + 1, j, k + k1 + 1, meta)) {
+					if (!isSameSapling(world, i + i1, j, k + k1, 2) || !isSameSapling(world, i + i1 + 1, j, k + k1, 2) || !isSameSapling(world, i + i1, j, k + k1 + 1, 2) || !isSameSapling(world, i + i1 + 1, j, k + k1 + 1, 2)) {
 						continue;
 					}
 					treeGen = LOTRTreeType.LAIRELOSSE_LARGE.create(true, random);

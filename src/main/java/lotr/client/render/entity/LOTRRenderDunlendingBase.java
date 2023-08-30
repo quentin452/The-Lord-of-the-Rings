@@ -36,7 +36,7 @@ public class LOTRRenderDunlendingBase extends LOTRRenderBiped {
 			int i = entity.getBrightnessForRender(f1);
 			int j = i % 65536;
 			int k = i / 65536;
-			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j / 1.0f, k / 1.0f);
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j, k);
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			LOTRRenderOrcBomb bombRenderer = (LOTRRenderOrcBomb) RenderManager.instance.getEntityClassRenderObject(LOTREntityOrcBomb.class);

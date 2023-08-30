@@ -9,7 +9,7 @@ public class LOTRBlockWallClayTileDyed extends LOTRBlockWallBase {
 		super(LOTRMod.clayTileDyed, 16);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return LOTRMod.clayTileDyed.getIcon(i, j);

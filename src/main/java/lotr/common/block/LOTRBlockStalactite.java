@@ -72,7 +72,7 @@ public class LOTRBlockStalactite extends Block {
 		return modelBlock.getExplosionResistance(entity);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return modelBlock.getIcon(i, modelMeta);
@@ -83,7 +83,7 @@ public class LOTRBlockStalactite extends Block {
 		return LOTRMod.proxy.getStalactiteRenderID();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int j = 0; j <= 1; ++j) {
@@ -107,7 +107,7 @@ public class LOTRBlockStalactite extends Block {
 	@Override
 	public void onNeighborBlockChange(World world, int i, int j, int k, Block block) {
 		if (!canBlockStay(world, i, j, k)) {
-			this.dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
+			dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
 			world.setBlockToAir(i, j, k);
 		}
 	}
@@ -117,7 +117,7 @@ public class LOTRBlockStalactite extends Block {
 		return modelBlock.quantityDropped(random);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		Block above;
@@ -126,7 +126,7 @@ public class LOTRBlockStalactite extends Block {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

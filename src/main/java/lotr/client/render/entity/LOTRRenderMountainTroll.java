@@ -1,5 +1,6 @@
 package lotr.client.render.entity;
 
+import lotr.common.entity.LOTRRandomSkinEntity;
 import org.lwjgl.opengl.GL11;
 
 import lotr.client.model.LOTRModelTroll;
@@ -18,14 +19,14 @@ public class LOTRRenderMountainTroll extends LOTRRenderTroll {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		return mountainTrollSkins.getRandomSkin((LOTREntityTroll) entity);
+		return mountainTrollSkins.getRandomSkin((LOTRRandomSkinEntity) entity);
 	}
 
 	@Override
 	public void renderTrollWeapon(EntityLivingBase entity, float f) {
 		LOTREntityMountainTroll troll = (LOTREntityMountainTroll) entity;
 		if (troll.isThrowingRocks()) {
-			if (((LOTRModelTroll) mainModel).onGround <= 0.0f) {
+			if (mainModel.onGround <= 0.0f) {
 				if (heldRock == null) {
 					heldRock = new LOTREntityThrownRock(troll.worldObj);
 				}

@@ -28,28 +28,23 @@ public class LOTREntityDaleSoldier extends LOTREntityDaleLevyman {
 	}
 
 	@Override
-	public float getAlignmentBonus() {
-		return 2.0f;
-	}
-
-	@Override
 	public IEntityLivingData onSpawnWithEgg(IEntityLivingData data) {
 		data = super.onSpawnWithEgg(data);
 		int i = rand.nextInt(5);
 		switch (i) {
-		case 0:
-		case 1:
-		case 2:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordDale));
-			break;
-		case 3:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeDale));
-			break;
-		case 4:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pikeDale));
-			break;
-		default:
-			break;
+			case 0:
+			case 1:
+			case 2:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordDale));
+				break;
+			case 3:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.battleaxeDale));
+				break;
+			case 4:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.pikeDale));
+				break;
+			default:
+				break;
 		}
 		if (rand.nextInt(6) == 0) {
 			npcItemsInv.setSpearBackup(npcItemsInv.getMeleeWeapon());
@@ -59,10 +54,10 @@ public class LOTREntityDaleSoldier extends LOTREntityDaleLevyman {
 		setCurrentItemOrArmor(1, new ItemStack(LOTRMod.bootsDale));
 		setCurrentItemOrArmor(2, new ItemStack(LOTRMod.legsDale));
 		setCurrentItemOrArmor(3, new ItemStack(LOTRMod.bodyDale));
-		if (rand.nextInt(10) != 0) {
-			setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetDale));
-		} else {
+		if (rand.nextInt(10) == 0) {
 			setCurrentItemOrArmor(4, null);
+		} else {
+			setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetDale));
 		}
 		return data;
 	}

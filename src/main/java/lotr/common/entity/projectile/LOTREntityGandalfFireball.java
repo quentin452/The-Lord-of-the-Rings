@@ -2,6 +2,7 @@ package lotr.common.entity.projectile;
 
 import java.util.List;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.*;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.network.*;
@@ -39,7 +40,7 @@ public class LOTREntityGandalfFireball extends EntityThrowable {
 			return;
 		}
 		worldObj.playSoundAtEntity(this, "lotr:item.gandalfFireball", 4.0f, (rand.nextFloat() - rand.nextFloat()) * 0.2f + 1.0f);
-		LOTRPacketWeaponFX packet = new LOTRPacketWeaponFX(LOTRPacketWeaponFX.Type.FIREBALL_GANDALF_WHITE, this);
+		IMessage packet = new LOTRPacketWeaponFX(LOTRPacketWeaponFX.Type.FIREBALL_GANDALF_WHITE, this);
 		LOTRPacketHandler.networkWrapper.sendToAllAround(packet, LOTRPacketHandler.nearEntity(this, 64.0));
 		if (target != null && isEntityVulnerable(target)) {
 			target.attackEntityFrom(DamageSource.causeMobDamage(getThrower()), 10.0f);

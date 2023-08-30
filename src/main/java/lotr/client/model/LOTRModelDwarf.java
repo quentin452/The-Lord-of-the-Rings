@@ -60,7 +60,7 @@ public class LOTRModelDwarf extends LOTRModelBiped {
 			bipedRightArm.render(f5);
 			GL11.glPopMatrix();
 			GL11.glPushMatrix();
-			GL11.glTranslatef(1.0f * f5, 0.0f, 0.0f);
+			GL11.glTranslatef(f5, 0.0f, 0.0f);
 			bipedLeftArm.render(f5);
 			GL11.glPopMatrix();
 			GL11.glPushMatrix();

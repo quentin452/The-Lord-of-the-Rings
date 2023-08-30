@@ -2,6 +2,7 @@ package lotr.common.entity.npc;
 
 import java.util.*;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.*;
 import lotr.common.network.*;
 import net.minecraft.entity.Entity;
@@ -28,7 +29,7 @@ public class LOTRFamilyInfo {
 	public UUID maleParentID;
 	public UUID femaleParentID;
 	public UUID ringGivingPlayer;
-	public boolean doneFirstUpdate = false;
+	public boolean doneFirstUpdate;
 	public boolean resendData = true;
 	public int age;
 	public boolean male;
@@ -41,10 +42,10 @@ public class LOTRFamilyInfo {
 	}
 
 	public boolean canMarryNPC(LOTREntityNPC npc) {
-		if (npc.getClass() != theEntity.getClass() || npc.familyInfo.spouseUniqueID != null || npc.familyInfo.getAge() != 0 || npc.getEquipmentInSlot(4) != null) {
+		if (npc.getClass() != theEntity.getClass() || npc.familyInfo.spouseUniqueID != null || npc.familyInfo.age != 0 || npc.getEquipmentInSlot(4) != null) {
 			return false;
 		}
-		if (npc == theEntity || npc.familyInfo.isMale() == isMale() || maleParentID != null && maleParentID == npc.familyInfo.maleParentID || femaleParentID != null && femaleParentID == npc.familyInfo.femaleParentID) {
+		if (npc == theEntity || npc.familyInfo.male == male || maleParentID != null && maleParentID == npc.familyInfo.maleParentID || femaleParentID != null && femaleParentID == npc.familyInfo.femaleParentID) {
 			return false;
 		}
 		ItemStack heldItem = npc.getEquipmentInSlot(0);
@@ -60,7 +61,7 @@ public class LOTRFamilyInfo {
 	}
 
 	public LOTREntityNPC getParentToFollow() {
-		UUID parentToFollowID = isMale() ? maleParentID : femaleParentID;
+		UUID parentToFollowID = male ? maleParentID : femaleParentID;
 		List list = theEntity.worldObj.getEntitiesWithinAABB(theEntity.getClass(), theEntity.boundingBox.expand(16.0, 8.0, 16.0));
 		for (Object element : list) {
 			Entity entity = (Entity) element;
@@ -113,7 +114,7 @@ public class LOTRFamilyInfo {
 			return false;
 		}
 		ItemStack itemstack = entityplayer.inventory.getCurrentItem();
-		if (itemstack != null && itemstack.getItem() == marriageRing && LOTRLevelData.getData(entityplayer).getAlignment(theEntity.getFaction()) >= marriageAlignmentRequired && theEntity.getClass() == marriageEntityClass && getAge() == 0 && theEntity.getEquipmentInSlot(0) == null && theEntity.getEquipmentInSlot(4) == null && spouseUniqueID == null) {
+		if (itemstack != null && itemstack.getItem() == marriageRing && LOTRLevelData.getData(entityplayer).getAlignment(theEntity.getFaction()) >= marriageAlignmentRequired && theEntity.getClass() == marriageEntityClass && age == 0 && theEntity.getEquipmentInSlot(0) == null && theEntity.getEquipmentInSlot(4) == null && spouseUniqueID == null) {
 			if (!entityplayer.capabilities.isCreativeMode) {
 				--itemstack.stackSize;
 				if (itemstack.stackSize <= 0) {
@@ -157,10 +158,10 @@ public class LOTRFamilyInfo {
 				sendDataToAllWatchers();
 				resendData = false;
 			}
-			if (getAge() < 0) {
-				setAge(getAge() + 1);
-			} else if (getAge() > 0) {
-				setAge(getAge() - 1);
+			if (age < 0) {
+				setAge(age + 1);
+			} else if (age > 0) {
+				setAge(age - 1);
 			}
 			if (drunkTime > 0) {
 				setDrunkTime(drunkTime - 1);
@@ -224,7 +225,7 @@ public class LOTRFamilyInfo {
 	}
 
 	public void sendData(EntityPlayerMP entityplayer) {
-		LOTRPacketFamilyInfo packet = new LOTRPacketFamilyInfo(theEntity.getEntityId(), getAge(), isMale(), getName(), isDrunk());
+		IMessage packet = new LOTRPacketFamilyInfo(theEntity.getEntityId(), age, male, name, isDrunk());
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 
@@ -266,7 +267,7 @@ public class LOTRFamilyInfo {
 
 	public void setMaxBreedingDelay() {
 		float f = breedingDelay;
-		setAge((int) (f *= 0.5f + theEntity.getRNG().nextFloat() * 0.5f));
+		setAge((int) (f * (0.5f + theEntity.getRNG().nextFloat() * 0.5f)));
 	}
 
 	public void setName(String s) {
@@ -275,10 +276,10 @@ public class LOTRFamilyInfo {
 	}
 
 	public void writeToNBT(NBTTagCompound nbt) {
-		nbt.setInteger("NPCAge", getAge());
-		nbt.setBoolean("NPCMale", isMale());
-		if (getName() != null) {
-			nbt.setString("NPCName", getName());
+		nbt.setInteger("NPCAge", age);
+		nbt.setBoolean("NPCMale", male);
+		if (name != null) {
+			nbt.setString("NPCName", name);
 		}
 		nbt.setInteger("NPCDrunkTime", drunkTime);
 		if (spouseUniqueID != null) {

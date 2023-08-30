@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -33,7 +34,7 @@ public class LOTRGuiBrandingIron extends LOTRGuiScreenBase {
 		drawDefaultBackground();
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		mc.getTextureManager().bindTexture(guiTexture);
-		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		String s = StatCollector.translateToLocal("lotr.gui.brandingIron.title");
 		fontRendererObj.drawString(s, guiLeft + xSize / 2 - fontRendererObj.getStringWidth(s) / 2, guiTop + 11, 4210752);
 		s = StatCollector.translateToLocal("lotr.gui.brandingIron.naming");
@@ -83,7 +84,7 @@ public class LOTRGuiBrandingIron extends LOTRGuiScreenBase {
 		super.onGuiClosed();
 		String brandName = brandNameField.getText();
 		if (!StringUtils.isBlank(brandName)) {
-			LOTRPacketBrandingIron packet = new LOTRPacketBrandingIron(brandName);
+			IMessage packet = new LOTRPacketBrandingIron(brandName);
 			LOTRPacketHandler.networkWrapper.sendToServer(packet);
 		}
 	}

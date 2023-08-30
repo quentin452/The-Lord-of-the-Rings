@@ -12,13 +12,13 @@ public class LOTRItemLeaves extends ItemBlock {
 		setHasSubtypes(true);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int getColorFromItemStack(ItemStack itemstack, int i) {
 		return 16777215;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIconFromDamage(int i) {
 		return field_150939_a.getIcon(0, i);
@@ -31,6 +31,6 @@ public class LOTRItemLeaves extends ItemBlock {
 
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
-		return super.getUnlocalizedName() + "." + itemstack.getItemDamage();
+		return getUnlocalizedName() + "." + itemstack.getItemDamage();
 	}
 }

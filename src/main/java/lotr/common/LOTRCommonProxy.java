@@ -5,6 +5,7 @@ import java.util.*;
 import com.mojang.authlib.GameProfile;
 
 import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.client.gui.*;
 import lotr.common.block.LOTRBlockFlowerPot;
 import lotr.common.entity.LOTREntityNPCRespawner;
@@ -29,11 +30,12 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.*;
 
 public class LOTRCommonProxy implements IGuiHandler {
-	public static int GUI_ID_HOBBIT_OVEN = 0;
+	public static int GUI_ID_HOBBIT_OVEN;
 	public static int GUI_ID_MORGUL_TABLE = 1;
 	public static int GUI_ID_ELVEN_TABLE = 2;
 	public static int GUI_ID_TRADE = 3;
@@ -213,18 +215,18 @@ public class LOTRCommonProxy implements IGuiHandler {
 			return new LOTRGuiGollum(entityplayer.inventory, (LOTREntityGollum) entity);
 		}
 		switch (ID) {
-		case 11:
-			return LOTRGuiMenu.openMenu(entityplayer);
-		case 12:
-			return new LOTRGuiCraftingTable.WoodElven(entityplayer.inventory, world, i, j, k);
-		case 13:
-			return new LOTRGuiCraftingTable.Gondorian(entityplayer.inventory, world, i, j, k);
-		case 14:
-			return new LOTRGuiCraftingTable.Rohirric(entityplayer.inventory, world, i, j, k);
-		case 15:
-			return new LOTRGuiPouch(entityplayer, i);
-		default:
-			break;
+			case 11:
+				return LOTRGuiMenu.openMenu(entityplayer);
+			case 12:
+				return new LOTRGuiCraftingTable.WoodElven(entityplayer.inventory, world, i, j, k);
+			case 13:
+				return new LOTRGuiCraftingTable.Gondorian(entityplayer.inventory, world, i, j, k);
+			case 14:
+				return new LOTRGuiCraftingTable.Rohirric(entityplayer.inventory, world, i, j, k);
+			case 15:
+				return new LOTRGuiPouch(entityplayer, i);
+			default:
+				break;
 		}
 		if (ID == 16 && (barrel = world.getTileEntity(i, j, k)) instanceof LOTRTileEntityBarrel) {
 			return new LOTRGuiBarrel(entityplayer.inventory, (LOTRTileEntityBarrel) barrel);
@@ -257,43 +259,42 @@ public class LOTRCommonProxy implements IGuiHandler {
 			return new LOTRGuiTradeUnitTradeInteract((LOTREntityNPC) entity);
 		}
 		switch (ID) {
-		case 25:
-			return new LOTRGuiCraftingTable.NearHarad(entityplayer.inventory, world, i, j, k);
-		case 26:
-			return new LOTRGuiCraftingTable.HighElven(entityplayer.inventory, world, i, j, k);
-		case 27:
-			return new LOTRGuiCraftingTable.BlueDwarven(entityplayer.inventory, world, i, j, k);
-		case 28:
-			return new LOTRGuiCraftingTable.Ranger(entityplayer.inventory, world, i, j, k);
-		case 29: {
-			LOTREntityNPCRideable npc2;
-			entity = world.getEntityByID(i);
-			int invSize = j;
-			if (entity instanceof LOTREntityHorse) {
-				LOTREntityHorse horse = (LOTREntityHorse) entity;
-				return new LOTRGuiMountInventory(entityplayer.inventory, new AnimalChest(horse.getCommandSenderName(), invSize), horse);
+			case 25:
+				return new LOTRGuiCraftingTable.NearHarad(entityplayer.inventory, world, i, j, k);
+			case 26:
+				return new LOTRGuiCraftingTable.HighElven(entityplayer.inventory, world, i, j, k);
+			case 27:
+				return new LOTRGuiCraftingTable.BlueDwarven(entityplayer.inventory, world, i, j, k);
+			case 28:
+				return new LOTRGuiCraftingTable.Ranger(entityplayer.inventory, world, i, j, k);
+			case 29: {
+				LOTREntityNPCRideable npc2;
+				entity = world.getEntityByID(i);
+				if (entity instanceof LOTREntityHorse) {
+					LOTREntityHorse horse = (LOTREntityHorse) entity;
+					return new LOTRGuiMountInventory(entityplayer.inventory, new AnimalChest(horse.getCommandSenderName(), j), horse);
+				}
+				if (entity instanceof LOTREntityNPCRideable && (npc2 = (LOTREntityNPCRideable) entity).getMountInventory() != null) {
+					return new LOTRGuiNPCMountInventory(entityplayer.inventory, new AnimalChest(npc2.getCommandSenderName(), j), npc2);
+				}
+				break;
 			}
-			if (entity instanceof LOTREntityNPCRideable && (npc2 = (LOTREntityNPCRideable) entity).getMountInventory() != null) {
-				return new LOTRGuiNPCMountInventory(entityplayer.inventory, new AnimalChest(npc2.getCommandSenderName(), invSize), npc2);
-			}
-			break;
-		}
-		default:
-			break;
+			default:
+				break;
 		}
 		switch (ID) {
-		case 30:
-			return new LOTRGuiCraftingTable.DolGuldur(entityplayer.inventory, world, i, j, k);
-		case 31:
-			return new LOTRGuiCraftingTable.Gundabad(entityplayer.inventory, world, i, j, k);
-		case 32:
-			return new LOTRGuiRedBook();
-		case 33:
-			return new LOTRGuiSquadronItem();
-		case 34:
-			return new LOTRGuiCraftingTable.HalfTroll(entityplayer.inventory, world, i, j, k);
-		default:
-			break;
+			case 30:
+				return new LOTRGuiCraftingTable.DolGuldur(entityplayer.inventory, world, i, j, k);
+			case 31:
+				return new LOTRGuiCraftingTable.Gundabad(entityplayer.inventory, world, i, j, k);
+			case 32:
+				return new LOTRGuiRedBook();
+			case 33:
+				return new LOTRGuiSquadronItem();
+			case 34:
+				return new LOTRGuiCraftingTable.HalfTroll(entityplayer.inventory, world, i, j, k);
+			default:
+				break;
 		}
 		if (ID == 35 && (entity = world.getEntityByID(i)) instanceof LOTREntityNPC) {
 			npc = (LOTREntityNPC) entity;
@@ -312,20 +313,20 @@ public class LOTRCommonProxy implements IGuiHandler {
 			return new LOTRGuiCraftingTable.Tauredain(entityplayer.inventory, world, i, j, k);
 		}
 		if (ID == 40 && (trap = world.getTileEntity(i, j, k)) instanceof LOTRTileEntityDartTrap) {
-			return new GuiDispenser(entityplayer.inventory, (LOTRTileEntityDartTrap) trap);
+			return new GuiDispenser(entityplayer.inventory, (TileEntityDispenser) trap);
 		}
 		if (ID == 41 && (chest = world.getTileEntity(i, j, k)) instanceof LOTRTileEntityChest) {
-			return new GuiChest(entityplayer.inventory, (LOTRTileEntityChest) chest);
+			return new GuiChest(entityplayer.inventory, (IInventory) chest);
 		}
 		switch (ID) {
-		case 42:
-			return new LOTRGuiCraftingTable.Dale(entityplayer.inventory, world, i, j, k);
-		case 43:
-			return new LOTRGuiCraftingTable.Dorwinion(entityplayer.inventory, world, i, j, k);
-		case 44:
-			return new LOTRGuiCraftingTable.Hobbit(entityplayer.inventory, world, i, j, k);
-		default:
-			break;
+			case 42:
+				return new LOTRGuiCraftingTable.Dale(entityplayer.inventory, world, i, j, k);
+			case 43:
+				return new LOTRGuiCraftingTable.Dorwinion(entityplayer.inventory, world, i, j, k);
+			case 44:
+				return new LOTRGuiCraftingTable.Hobbit(entityplayer.inventory, world, i, j, k);
+			default:
+				break;
 		}
 		if (ID == 45 && (entity = world.getEntityByID(i)) instanceof LOTREntityNPCRespawner) {
 			return new LOTRGuiNPCRespawner((LOTREntityNPCRespawner) entity);
@@ -374,7 +375,7 @@ public class LOTRCommonProxy implements IGuiHandler {
 				world.setBlock(i, j, k, LOTRMod.bookshelfStorage, 0, 3);
 			}
 			if ((bookshelf = world.getTileEntity(i, j, k)) instanceof LOTRTileEntityBookshelf) {
-				return new LOTRGuiBookshelf((IInventory) entityplayer.inventory, (LOTRTileEntityBookshelf) bookshelf);
+				return new LOTRGuiBookshelf(entityplayer.inventory, (LOTRTileEntityBookshelf) bookshelf);
 			}
 		}
 		if (ID == 56) {
@@ -390,27 +391,27 @@ public class LOTRCommonProxy implements IGuiHandler {
 			return new LOTRGuiMercenaryHire(entityplayer, (LOTRMercenary) entity, world);
 		}
 		switch (ID) {
-		case 60:
-			return new LOTRGuiMap().setConquestGrid();
-		case 61:
-			return new LOTRGuiBrandingIron();
-		case 62:
-			return new LOTRGuiCraftingTable.Bree(entityplayer.inventory, world, i, j, k);
-		default:
-			break;
+			case 60:
+				return new LOTRGuiMap().setConquestGrid();
+			case 61:
+				return new LOTRGuiBrandingIron();
+			case 62:
+				return new LOTRGuiCraftingTable.Bree(entityplayer.inventory, world, i, j, k);
+			default:
+				break;
 		}
-		if (LOTRCommonProxy.testForSlotPackedGuiID(ID, 63)) {
-			int slot = LOTRCommonProxy.unpackSlot(ID);
+		if (testForSlotPackedGuiID(ID, 63)) {
+			int slot = unpackSlot(ID);
 			IInventory chest2 = LOTRItemPouch.getChestInvAt(entityplayer, world, i, j, k);
 			if (chest2 != null) {
 				return new LOTRGuiChestWithPouch(entityplayer, slot, chest2);
 			}
 		}
-		if (LOTRCommonProxy.testForSlotPackedGuiID(ID, 64)) {
-			int slot = LOTRCommonProxy.unpackSlot(ID);
+		if (testForSlotPackedGuiID(ID, 64)) {
+			int slot = unpackSlot(ID);
 			Entity minecart = world.getEntityByID(i);
 			if (minecart instanceof EntityMinecartContainer) {
-				return new LOTRGuiChestWithPouch(entityplayer, slot, (EntityMinecartContainer) minecart);
+				return new LOTRGuiChestWithPouch(entityplayer, slot, (IInventory) minecart);
 			}
 		}
 		return null;
@@ -548,7 +549,7 @@ public class LOTRCommonProxy implements IGuiHandler {
 			return new LOTRContainerAlloyForge(entityplayer.inventory, (LOTRTileEntityAlloyForgeBase) forge);
 		}
 		if (ID == 7 && (entity = world.getEntityByID(i)) instanceof LOTRUnitTradeable) {
-			return new LOTRContainerUnitTrade(entityplayer, (LOTRUnitTradeable) entity, world);
+			return new LOTRContainerUnitTrade(entityplayer, (LOTRHireableBase) entity, world);
 		}
 		if (ID == 8) {
 			return new LOTRContainerCraftingTable.Uruk(entityplayer.inventory, world, i, j, k);
@@ -557,14 +558,14 @@ public class LOTRCommonProxy implements IGuiHandler {
 			return new LOTRContainerGollum(entityplayer.inventory, (LOTREntityGollum) entity);
 		}
 		switch (ID) {
-		case 12:
-			return new LOTRContainerCraftingTable.WoodElven(entityplayer.inventory, world, i, j, k);
-		case 13:
-			return new LOTRContainerCraftingTable.Gondorian(entityplayer.inventory, world, i, j, k);
-		case 14:
-			return new LOTRContainerCraftingTable.Rohirric(entityplayer.inventory, world, i, j, k);
-		default:
-			break;
+			case 12:
+				return new LOTRContainerCraftingTable.WoodElven(entityplayer.inventory, world, i, j, k);
+			case 13:
+				return new LOTRContainerCraftingTable.Gondorian(entityplayer.inventory, world, i, j, k);
+			case 14:
+				return new LOTRContainerCraftingTable.Rohirric(entityplayer.inventory, world, i, j, k);
+			default:
+				break;
 		}
 		if (ID == 15 && LOTRItemPouch.isHoldingPouch(entityplayer, i)) {
 			return new LOTRContainerPouch(entityplayer, i);
@@ -585,38 +586,38 @@ public class LOTRCommonProxy implements IGuiHandler {
 			}
 		}
 		switch (ID) {
-		case 23:
-			return new LOTRContainerCraftingTable.Angmar(entityplayer.inventory, world, i, j, k);
-		case 25:
-			return new LOTRContainerCraftingTable.NearHarad(entityplayer.inventory, world, i, j, k);
-		case 26:
-			return new LOTRContainerCraftingTable.HighElven(entityplayer.inventory, world, i, j, k);
-		case 27:
-			return new LOTRContainerCraftingTable.BlueDwarven(entityplayer.inventory, world, i, j, k);
-		case 28:
-			return new LOTRContainerCraftingTable.Ranger(entityplayer.inventory, world, i, j, k);
-		case 29:
-			entity = world.getEntityByID(i);
-			if (entity instanceof LOTREntityHorse) {
-				LOTREntityHorse horse = (LOTREntityHorse) entity;
-				return new LOTRContainerMountInventory(entityplayer.inventory, LOTRReflection.getHorseInv(horse), horse);
-			}
-			if (entity instanceof LOTREntityNPCRideable && ((LOTREntityNPCRideable) (npc = (LOTREntityNPCRideable) entity)).getMountInventory() != null) {
-				return new LOTRContainerNPCMountInventory((IInventory) entityplayer.inventory, ((LOTREntityNPCRideable) npc).getMountInventory(), (LOTREntityNPCRideable) npc);
-			}
-			break;
-		default:
-			break;
+			case 23:
+				return new LOTRContainerCraftingTable.Angmar(entityplayer.inventory, world, i, j, k);
+			case 25:
+				return new LOTRContainerCraftingTable.NearHarad(entityplayer.inventory, world, i, j, k);
+			case 26:
+				return new LOTRContainerCraftingTable.HighElven(entityplayer.inventory, world, i, j, k);
+			case 27:
+				return new LOTRContainerCraftingTable.BlueDwarven(entityplayer.inventory, world, i, j, k);
+			case 28:
+				return new LOTRContainerCraftingTable.Ranger(entityplayer.inventory, world, i, j, k);
+			case 29:
+				entity = world.getEntityByID(i);
+				if (entity instanceof LOTREntityHorse) {
+					LOTREntityHorse horse = (LOTREntityHorse) entity;
+					return new LOTRContainerMountInventory(entityplayer.inventory, LOTRReflection.getHorseInv(horse), horse);
+				}
+				if (entity instanceof LOTREntityNPCRideable && ((LOTREntityNPCRideable) (npc = (LOTREntityNPC) entity)).getMountInventory() != null) {
+					return new LOTRContainerNPCMountInventory(entityplayer.inventory, ((LOTREntityNPCRideable) npc).getMountInventory(), (LOTREntityNPCRideable) npc);
+				}
+				break;
+			default:
+				break;
 		}
 		switch (ID) {
-		case 30:
-			return new LOTRContainerCraftingTable.DolGuldur(entityplayer.inventory, world, i, j, k);
-		case 31:
-			return new LOTRContainerCraftingTable.Gundabad(entityplayer.inventory, world, i, j, k);
-		case 34:
-			return new LOTRContainerCraftingTable.HalfTroll(entityplayer.inventory, world, i, j, k);
-		default:
-			break;
+			case 30:
+				return new LOTRContainerCraftingTable.DolGuldur(entityplayer.inventory, world, i, j, k);
+			case 31:
+				return new LOTRContainerCraftingTable.Gundabad(entityplayer.inventory, world, i, j, k);
+			case 34:
+				return new LOTRContainerCraftingTable.HalfTroll(entityplayer.inventory, world, i, j, k);
+			default:
+				break;
 		}
 		if (ID == 35 && (entity = world.getEntityByID(i)) instanceof LOTREntityNPC) {
 			npc = (LOTREntityNPC) entity;
@@ -635,20 +636,20 @@ public class LOTRCommonProxy implements IGuiHandler {
 			return new LOTRContainerCraftingTable.Tauredain(entityplayer.inventory, world, i, j, k);
 		}
 		if (ID == 40 && (trap = world.getTileEntity(i, j, k)) instanceof LOTRTileEntityDartTrap) {
-			return new ContainerDispenser(entityplayer.inventory, (LOTRTileEntityDartTrap) trap);
+			return new ContainerDispenser(entityplayer.inventory, (TileEntityDispenser) trap);
 		}
 		if (ID == 41 && (chest = world.getTileEntity(i, j, k)) instanceof LOTRTileEntityChest) {
-			return new ContainerChest(entityplayer.inventory, (LOTRTileEntityChest) chest);
+			return new ContainerChest(entityplayer.inventory, (IInventory) chest);
 		}
 		switch (ID) {
-		case 42:
-			return new LOTRContainerCraftingTable.Dale(entityplayer.inventory, world, i, j, k);
-		case 43:
-			return new LOTRContainerCraftingTable.Dorwinion(entityplayer.inventory, world, i, j, k);
-		case 44:
-			return new LOTRContainerCraftingTable.Hobbit(entityplayer.inventory, world, i, j, k);
-		default:
-			break;
+			case 42:
+				return new LOTRContainerCraftingTable.Dale(entityplayer.inventory, world, i, j, k);
+			case 43:
+				return new LOTRContainerCraftingTable.Dorwinion(entityplayer.inventory, world, i, j, k);
+			case 44:
+				return new LOTRContainerCraftingTable.Hobbit(entityplayer.inventory, world, i, j, k);
+			default:
+				break;
 		}
 		if (ID == 46 && (entity = world.getEntityByID(i)) instanceof LOTREntityNPC) {
 			npc = (LOTREntityNPC) entity;
@@ -678,7 +679,7 @@ public class LOTRCommonProxy implements IGuiHandler {
 			return new LOTRContainerAnvil(entityplayer, (LOTREntityNPC) entity);
 		}
 		if (ID == 55 && (bookshelf = world.getTileEntity(i, j, k)) instanceof LOTRTileEntityBookshelf) {
-			return new LOTRContainerBookshelf((IInventory) entityplayer.inventory, (LOTRTileEntityBookshelf) bookshelf);
+			return new LOTRContainerBookshelf(entityplayer.inventory, (LOTRTileEntityBookshelf) bookshelf);
 		}
 		if (ID == 56) {
 			return new LOTRContainerCraftingTable.Umbar(entityplayer.inventory, world, i, j, k);
@@ -687,16 +688,16 @@ public class LOTRCommonProxy implements IGuiHandler {
 			return new LOTRContainerCraftingTable.Gulf(entityplayer.inventory, world, i, j, k);
 		}
 		if (ID == 59 && (entity = world.getEntityByID(i)) instanceof LOTRMercenary) {
-			return new LOTRContainerUnitTrade(entityplayer, (LOTRMercenary) entity, world);
+			return new LOTRContainerUnitTrade(entityplayer, (LOTRHireableBase) entity, world);
 		}
 		if (ID == 62) {
 			return new LOTRContainerCraftingTable.Bree(entityplayer.inventory, world, i, j, k);
 		}
-		if (LOTRCommonProxy.testForSlotPackedGuiID(ID, 63) && LOTRItemPouch.isHoldingPouch(entityplayer, slot = LOTRCommonProxy.unpackSlot(ID)) && (chest2 = LOTRItemPouch.getChestInvAt(entityplayer, world, i, j, k)) != null) {
+		if (testForSlotPackedGuiID(ID, 63) && LOTRItemPouch.isHoldingPouch(entityplayer, slot = unpackSlot(ID)) && (chest2 = LOTRItemPouch.getChestInvAt(entityplayer, world, i, j, k)) != null) {
 			return new LOTRContainerChestWithPouch(entityplayer, slot, chest2);
 		}
-		if (LOTRCommonProxy.testForSlotPackedGuiID(ID, 64) && LOTRItemPouch.isHoldingPouch(entityplayer, slot = LOTRCommonProxy.unpackSlot(ID)) && (minecart = world.getEntityByID(i)) instanceof EntityMinecartContainer) {
-			return new LOTRContainerChestWithPouch(entityplayer, slot, (EntityMinecartContainer) minecart);
+		if (testForSlotPackedGuiID(ID, 64) && LOTRItemPouch.isHoldingPouch(entityplayer, slot = unpackSlot(ID)) && (minecart = world.getEntityByID(i)) instanceof EntityMinecartContainer) {
+			return new LOTRContainerChestWithPouch(entityplayer, slot, (IInventory) minecart);
 		}
 		return null;
 	}
@@ -836,7 +837,7 @@ public class LOTRCommonProxy implements IGuiHandler {
 	}
 
 	public void usePouchOnChest(EntityPlayer entityplayer, World world, int i, int j, int k, int side, ItemStack itemstack, int pouchSlot) {
-		entityplayer.openGui(LOTRMod.instance, LOTRCommonProxy.packGuiIDWithSlot(63, pouchSlot), world, i, j, k);
+		entityplayer.openGui(LOTRMod.instance, packGuiIDWithSlot(63, pouchSlot), world, i, j, k);
 	}
 
 	public void validateBannerUsername(LOTREntityBanner banner, int slot, String prevText, boolean valid) {
@@ -847,7 +848,7 @@ public class LOTRCommonProxy implements IGuiHandler {
 	}
 
 	public static void sendClientsideGUI(EntityPlayerMP entityplayer, int guiID, int x, int y, int z) {
-		LOTRPacketClientsideGUI packet = new LOTRPacketClientsideGUI(guiID, x, y, z);
+		IMessage packet = new LOTRPacketClientsideGUI(guiID, x, y, z);
 		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 	}
 

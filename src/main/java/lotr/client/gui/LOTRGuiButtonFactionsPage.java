@@ -20,7 +20,7 @@ public class LOTRGuiButtonFactionsPage extends GuiButton {
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			field_146123_n = i >= xPosition && j >= yPosition && i < xPosition + width && j < yPosition + height;
 			int k = getHoverState(field_146123_n);
-			drawTexturedModalRect(xPosition, yPosition, 0 + k * 16, leftOrRight ? 176 : 160, width, height);
+			drawTexturedModalRect(xPosition, yPosition, k * 16, leftOrRight ? 176 : 160, width, height);
 			mouseDragged(mc, i, j);
 			if (enabled) {
 				FontRenderer fr = mc.fontRenderer;

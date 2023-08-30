@@ -9,6 +9,7 @@ import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class LOTRWorldGenHighElfHouse extends LOTRWorldGenStructureBase2 {
@@ -75,7 +76,7 @@ public class LOTRWorldGenHighElfHouse extends LOTRWorldGenStructureBase2 {
 		int k13;
 		int i22;
 		int meta;
-		this.setOriginAndRotation(world, i, j, k, rotation, 1);
+		setOriginAndRotation(world, i, j, k, rotation, 1);
 		setupRandomBlocks(random);
 		boolean leafy = random.nextBoolean();
 		if (restrictions) {
@@ -149,7 +150,7 @@ public class LOTRWorldGenHighElfHouse extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, -2, 5, 0, brickStairBlock, 4);
 		setBlockAndMetadata(world, 0, 5, 0, brickStairBlock, 6);
 		setBlockAndMetadata(world, 2, 5, 0, brickStairBlock, 5);
-		int[] i15 = { -3, 3 };
+		int[] i15 = {-3, 3};
 		i22 = i15.length;
 		for (j1 = 0; j1 < i22; ++j1) {
 			int i16 = i15[j1];
@@ -195,30 +196,30 @@ public class LOTRWorldGenHighElfHouse extends LOTRWorldGenStructureBase2 {
 		for (i1 = -2; i1 <= 2; ++i1) {
 			i22 = Math.abs(i1);
 			switch (i22) {
-			case 0:
-				for (j1 = 1; j1 <= 6; ++j1) {
-					setBlockAndMetadata(world, i1, j1, 13, pillarBlock, pillarMeta);
-				}
-				for (j1 = 7; j1 <= 9; ++j1) {
-					setBlockAndMetadata(world, i1, j1, 13, brickWallBlock, brickWallMeta);
-				}
-				for (j1 = 10; j1 <= 11; ++j1) {
-					setBlockAndMetadata(world, i1, j1, 13, pillarBlock, pillarMeta);
-				}
-				break;
-			case 1:
-				setBlockAndMetadata(world, i1, 1, 13, brickStairBlock, 7);
-				setBlockAndMetadata(world, i1, 3, 13, barsBlock, 0);
-				setBlockAndMetadata(world, i1, 4, 13, plankStairBlock, 7);
-				break;
-			case 2:
-				setBlockAndMetadata(world, i1, 1, 13, brickBlock, brickMeta);
-				setBlockAndMetadata(world, i1, 2, 13, plankBlock, plankMeta);
-				setBlockAndMetadata(world, i1, 3, 13, plankBlock, plankMeta);
-				setBlockAndMetadata(world, i1, 4, 13, plankStairBlock, i1 > 0 ? 0 : 1);
-				break;
-			default:
-				break;
+				case 0:
+					for (j1 = 1; j1 <= 6; ++j1) {
+						setBlockAndMetadata(world, i1, j1, 13, pillarBlock, pillarMeta);
+					}
+					for (j1 = 7; j1 <= 9; ++j1) {
+						setBlockAndMetadata(world, i1, j1, 13, brickWallBlock, brickWallMeta);
+					}
+					for (j1 = 10; j1 <= 11; ++j1) {
+						setBlockAndMetadata(world, i1, j1, 13, pillarBlock, pillarMeta);
+					}
+					break;
+				case 1:
+					setBlockAndMetadata(world, i1, 1, 13, brickStairBlock, 7);
+					setBlockAndMetadata(world, i1, 3, 13, barsBlock, 0);
+					setBlockAndMetadata(world, i1, 4, 13, plankStairBlock, 7);
+					break;
+				case 2:
+					setBlockAndMetadata(world, i1, 1, 13, brickBlock, brickMeta);
+					setBlockAndMetadata(world, i1, 2, 13, plankBlock, plankMeta);
+					setBlockAndMetadata(world, i1, 3, 13, plankBlock, plankMeta);
+					setBlockAndMetadata(world, i1, 4, 13, plankStairBlock, i1 > 0 ? 0 : 1);
+					break;
+				default:
+					break;
 			}
 			if (i22 < 1 || i22 > 2) {
 				continue;
@@ -275,13 +276,13 @@ public class LOTRWorldGenHighElfHouse extends LOTRWorldGenStructureBase2 {
 				continue;
 			}
 			if (k12 == 5) {
-				setBlockAndMetadata(world, -1, 11, k12, stairBlock, 3);
-				setBlockAndMetadata(world, 1, 11, k12, stairBlock, 3);
+				setBlockAndMetadata(world, -1, 11, 5, stairBlock, 3);
+				setBlockAndMetadata(world, 1, 11, 5, stairBlock, 3);
 				continue;
 			}
 			if (k12 == 8) {
-				setBlockAndMetadata(world, -1, 11, k12, stairBlock, 2);
-				setBlockAndMetadata(world, 1, 11, k12, stairBlock, 2);
+				setBlockAndMetadata(world, -1, 11, 8, stairBlock, 2);
+				setBlockAndMetadata(world, 1, 11, 8, stairBlock, 2);
 				continue;
 			}
 			setBlockAndMetadata(world, -1, 11, k12, slabBlock, slabMeta);
@@ -327,7 +328,7 @@ public class LOTRWorldGenHighElfHouse extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, -2, 4, 4, leafBlock, leafMeta);
 		setBlockAndMetadata(world, 2, 4, 1, brickStairBlock, 5);
 		setBlockAndMetadata(world, 2, 1, 2, brickStairBlock, 5);
-		this.placeMug(world, random, 2, 2, 2, 1, LOTRFoods.ELF_DRINK);
+		placeMug(world, random, 2, 2, 2, 1, LOTRFoods.ELF_DRINK);
 		setBlockAndMetadata(world, 2, 1, 3, tableBlock, 0);
 		setBlockAndMetadata(world, 2, 4, 3, stoneSlabBlock, stoneSlabMeta | 8);
 		for (j13 = 1; j13 <= 4; ++j13) {
@@ -338,7 +339,7 @@ public class LOTRWorldGenHighElfHouse extends LOTRWorldGenStructureBase2 {
 				setBlockAndMetadata(world, i1, 1, k13, Blocks.carpet, 3);
 			}
 		}
-		int[] i17 = { 5, 8 };
+		int[] i17 = {5, 8};
 		k13 = i17.length;
 		for (meta = 0; meta < k13; ++meta) {
 			int k15 = i17[meta];
@@ -465,7 +466,7 @@ public class LOTRWorldGenHighElfHouse extends LOTRWorldGenStructureBase2 {
 				setBlockAndMetadata(world, i13, 6, k13, Blocks.carpet, 11);
 			}
 		}
-		int[] i19 = { -2, 2 };
+		int[] i19 = {-2, 2};
 		k13 = i19.length;
 		for (i2 = 0; i2 < k13; ++i2) {
 			int i110 = i19[i2];
@@ -473,13 +474,13 @@ public class LOTRWorldGenHighElfHouse extends LOTRWorldGenStructureBase2 {
 			setBlockAndMetadata(world, i110, 6, 2, bedBlock, 10);
 		}
 		setBlockAndMetadata(world, -2, 6, 5, plankStairBlock, 4);
-		this.placeMug(world, random, -2, 7, 5, 3, LOTRFoods.ELF_DRINK);
+		placeMug(world, random, -2, 7, 5, 3, LOTRFoods.ELF_DRINK);
 		setBlockAndMetadata(world, 2, 6, 5, plankStairBlock, 7);
 		setBlockAndMetadata(world, 2, 6, 6, plankSlabBlock, plankSlabMeta | 8);
 		setBlockAndMetadata(world, 2, 6, 7, plankStairBlock, 6);
-		this.placeChest(world, random, 2, 7, 5, 5, chestContents);
+		placeChest(world, random, 2, 7, 5, 5, chestContents);
 		placePlateWithCertainty(world, random, 2, 7, 6, plateBlock, LOTRFoods.ELF);
-		this.placeBarrel(world, random, 2, 7, 7, 5, LOTRFoods.ELF_DRINK);
+		placeBarrel(world, random, 2, 7, 7, 5, LOTRFoods.ELF_DRINK);
 		if (leafy) {
 			for (int i111 = -4; i111 <= 4; ++i111) {
 				for (k13 = 0; k13 <= 13; ++k13) {
@@ -501,11 +502,11 @@ public class LOTRWorldGenHighElfHouse extends LOTRWorldGenStructureBase2 {
 	}
 
 	public ItemStack getElfFramedItem(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.helmetHighElven), new ItemStack(LOTRMod.bodyHighElven), new ItemStack(LOTRMod.legsHighElven), new ItemStack(LOTRMod.bootsHighElven), new ItemStack(LOTRMod.daggerHighElven), new ItemStack(LOTRMod.swordHighElven), new ItemStack(LOTRMod.spearHighElven), new ItemStack(LOTRMod.longspearHighElven), new ItemStack(LOTRMod.highElvenBow), new ItemStack(Items.arrow), new ItemStack(Items.feather), new ItemStack(LOTRMod.swanFeather), new ItemStack(LOTRMod.quenditeCrystal), new ItemStack(LOTRMod.goldRing), new ItemStack(LOTRMod.silverRing) };
+		ItemStack[] items = {new ItemStack(LOTRMod.helmetHighElven), new ItemStack(LOTRMod.bodyHighElven), new ItemStack(LOTRMod.legsHighElven), new ItemStack(LOTRMod.bootsHighElven), new ItemStack(LOTRMod.daggerHighElven), new ItemStack(LOTRMod.swordHighElven), new ItemStack(LOTRMod.spearHighElven), new ItemStack(LOTRMod.longspearHighElven), new ItemStack(LOTRMod.highElvenBow), new ItemStack(Items.arrow), new ItemStack(Items.feather), new ItemStack(LOTRMod.swanFeather), new ItemStack(LOTRMod.quenditeCrystal), new ItemStack(LOTRMod.goldRing), new ItemStack(LOTRMod.silverRing)};
 		return items[random.nextInt(items.length)].copy();
 	}
 
-	public boolean isSolidRoofBlock(World world, int i, int j, int k) {
+	public boolean isSolidRoofBlock(IBlockAccess world, int i, int j, int k) {
 		return getBlock(world, i, j, k).getMaterial().isOpaque();
 	}
 
@@ -528,105 +529,105 @@ public class LOTRWorldGenHighElfHouse extends LOTRWorldGenStructureBase2 {
 		stoneSlabMeta = 0;
 		int randomRoof = random.nextInt(5);
 		switch (randomRoof) {
-		case 0:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 11;
-			roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
-			roofSlabMeta = 3;
-			roofStairBlock = LOTRMod.stairsClayTileDyedBlue;
-			break;
-		case 1:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 3;
-			roofSlabBlock = LOTRMod.slabClayTileDyedSingle;
-			roofSlabMeta = 3;
-			roofStairBlock = LOTRMod.stairsClayTileDyedLightBlue;
-			break;
-		case 2:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 9;
-			roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
-			roofSlabMeta = 1;
-			roofStairBlock = LOTRMod.stairsClayTileDyedCyan;
-			break;
-		case 3:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 8;
-			roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
-			roofSlabMeta = 0;
-			roofStairBlock = LOTRMod.stairsClayTileDyedLightGray;
-			break;
-		case 4:
-			roofBlock = LOTRMod.clayTileDyed;
-			roofMeta = 7;
-			roofSlabBlock = LOTRMod.slabClayTileDyedSingle;
-			roofSlabMeta = 7;
-			roofStairBlock = LOTRMod.stairsClayTileDyedGray;
-			break;
-		default:
-			break;
+			case 0:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 11;
+				roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
+				roofSlabMeta = 3;
+				roofStairBlock = LOTRMod.stairsClayTileDyedBlue;
+				break;
+			case 1:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 3;
+				roofSlabBlock = LOTRMod.slabClayTileDyedSingle;
+				roofSlabMeta = 3;
+				roofStairBlock = LOTRMod.stairsClayTileDyedLightBlue;
+				break;
+			case 2:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 9;
+				roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
+				roofSlabMeta = 1;
+				roofStairBlock = LOTRMod.stairsClayTileDyedCyan;
+				break;
+			case 3:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 8;
+				roofSlabBlock = LOTRMod.slabClayTileDyedSingle2;
+				roofSlabMeta = 0;
+				roofStairBlock = LOTRMod.stairsClayTileDyedLightGray;
+				break;
+			case 4:
+				roofBlock = LOTRMod.clayTileDyed;
+				roofMeta = 7;
+				roofSlabBlock = LOTRMod.slabClayTileDyedSingle;
+				roofSlabMeta = 7;
+				roofStairBlock = LOTRMod.stairsClayTileDyedGray;
+				break;
+			default:
+				break;
 		}
 		int randomWood = random.nextInt(4);
 		switch (randomWood) {
-		case 0:
-			plankBlock = Blocks.planks;
-			plankMeta = 0;
-			plankSlabBlock = Blocks.wooden_slab;
-			plankSlabMeta = 0;
-			plankStairBlock = Blocks.oak_stairs;
-			fenceBlock = Blocks.fence;
-			fenceMeta = 0;
-			trapdoorBlock = Blocks.trapdoor;
-			break;
-		case 1:
-			plankBlock = Blocks.planks;
-			plankMeta = 2;
-			plankSlabBlock = Blocks.wooden_slab;
-			plankSlabMeta = 2;
-			plankStairBlock = Blocks.birch_stairs;
-			fenceBlock = Blocks.fence;
-			fenceMeta = 2;
-			trapdoorBlock = LOTRMod.trapdoorBirch;
-			break;
-		case 2:
-			plankBlock = LOTRMod.planks;
-			plankMeta = 9;
-			plankSlabBlock = LOTRMod.woodSlabSingle2;
-			plankSlabMeta = 1;
-			plankStairBlock = LOTRMod.stairsBeech;
-			fenceBlock = LOTRMod.fence;
-			fenceMeta = 9;
-			trapdoorBlock = LOTRMod.trapdoorBeech;
-			break;
-		case 3:
-			plankBlock = LOTRMod.planks;
-			plankMeta = 4;
-			plankSlabBlock = LOTRMod.woodSlabSingle;
-			plankSlabMeta = 4;
-			plankStairBlock = LOTRMod.stairsApple;
-			fenceBlock = LOTRMod.fence;
-			fenceMeta = 4;
-			trapdoorBlock = LOTRMod.trapdoorApple;
-			break;
-		default:
-			break;
+			case 0:
+				plankBlock = Blocks.planks;
+				plankMeta = 0;
+				plankSlabBlock = Blocks.wooden_slab;
+				plankSlabMeta = 0;
+				plankStairBlock = Blocks.oak_stairs;
+				fenceBlock = Blocks.fence;
+				fenceMeta = 0;
+				trapdoorBlock = Blocks.trapdoor;
+				break;
+			case 1:
+				plankBlock = Blocks.planks;
+				plankMeta = 2;
+				plankSlabBlock = Blocks.wooden_slab;
+				plankSlabMeta = 2;
+				plankStairBlock = Blocks.birch_stairs;
+				fenceBlock = Blocks.fence;
+				fenceMeta = 2;
+				trapdoorBlock = LOTRMod.trapdoorBirch;
+				break;
+			case 2:
+				plankBlock = LOTRMod.planks;
+				plankMeta = 9;
+				plankSlabBlock = LOTRMod.woodSlabSingle2;
+				plankSlabMeta = 1;
+				plankStairBlock = LOTRMod.stairsBeech;
+				fenceBlock = LOTRMod.fence;
+				fenceMeta = 9;
+				trapdoorBlock = LOTRMod.trapdoorBeech;
+				break;
+			case 3:
+				plankBlock = LOTRMod.planks;
+				plankMeta = 4;
+				plankSlabBlock = LOTRMod.woodSlabSingle;
+				plankSlabMeta = 4;
+				plankStairBlock = LOTRMod.stairsApple;
+				fenceBlock = LOTRMod.fence;
+				fenceMeta = 4;
+				trapdoorBlock = LOTRMod.trapdoorApple;
+				break;
+			default:
+				break;
 		}
 		int randomLeaf = random.nextInt(3);
 		switch (randomLeaf) {
-		case 0:
-			leafBlock = Blocks.leaves;
-			leafMeta = 4;
-			break;
-		case 1:
-			leafBlock = Blocks.leaves;
-			leafMeta = 6;
-			break;
-		case 2:
-			leafBlock = LOTRMod.leaves2;
-			leafMeta = 5;
-			break;
-		default:
-			break;
+			case 0:
+				leafBlock = Blocks.leaves;
+				leafMeta = 4;
+				break;
+			case 1:
+				leafBlock = Blocks.leaves;
+				leafMeta = 6;
+				break;
+			case 2:
+				leafBlock = LOTRMod.leaves2;
+				leafMeta = 5;
+				break;
+			default:
+				break;
 		}
 		tableBlock = LOTRMod.highElvenTable;
 		bedBlock = LOTRMod.highElvenBed;

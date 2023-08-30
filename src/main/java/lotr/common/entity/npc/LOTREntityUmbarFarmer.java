@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityUmbarFarmer extends LOTREntityUmbarian implements LOTRTradeable {
 	public LOTREntityUmbarFarmer(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

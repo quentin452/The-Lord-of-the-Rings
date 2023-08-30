@@ -192,7 +192,7 @@ public class LOTREntityHaradSlave extends LOTREntityMan implements LOTRFarmhand 
 		}
 
 		public static SlaveType forName(String s) {
-			for (SlaveType type : SlaveType.values()) {
+			for (SlaveType type : values()) {
 				if (!type.saveName().equals(s)) {
 					continue;
 				}

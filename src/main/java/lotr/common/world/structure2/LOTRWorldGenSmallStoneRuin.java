@@ -25,7 +25,8 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		block218: {
+		block218:
+		{
 			int width;
 			int height;
 			int i1;
@@ -37,34 +38,44 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 			int i22;
 			int k2;
 			int k12;
-			block227: {
+			block227:
+			{
 				int k13;
-				block226: {
-					block225: {
+				block226:
+				{
+					block225:
+					{
 						int j1;
 						int centreWidth;
 						int j12;
 						int radius;
-						block224: {
+						block224:
+						{
 							int j2;
 							int d;
 							int i23;
 							int i14;
-							block223: {
-								block222: {
+							block223:
+							{
+								block222:
+								{
 									int pitDepth;
-									block221: {
+									block221:
+									{
 										int k14;
 										int height2;
 										int k22;
 										int i24;
-										block220: {
+										block220:
+										{
 											int j13;
 											int j14;
-											block219: {
-												block217: {
+											block219:
+											{
+												block217:
+												{
 													ruinType = RuinType.getRandomType(random);
-													this.setOriginAndRotation(world, i, j, k, rotation, ruinType.centreShift);
+													setOriginAndRotation(world, i, j, k, rotation, ruinType.centreShift);
 													radius = ruinType.checkRadius;
 													if (restrictions) {
 														int minHeight = 0;
@@ -135,7 +146,7 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 												if (random.nextInt(4) != 0) {
 													break block218;
 												}
-												this.placeChest(world, random, 0, 1, 1, LOTRMod.chestStone, 2, LOTRChestContents.RUINED_HOUSE);
+												placeChest(world, random, 0, 1, 1, LOTRMod.chestStone, 2, LOTRChestContents.RUINED_HOUSE);
 												break block218;
 											}
 											if (ruinType != RuinType.BAR_TOWER) {
@@ -168,13 +179,13 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 												setBlockAndMetadata(world, 2, j14, 0, barsBlock, 0);
 											}
 											setBlockAndMetadata(world, 0, 3, -2, Blocks.stone_slab, 8);
-											for (int i1321 : new int[] { -1, 1 }) {
+											for (int i1321 : new int[]{-1, 1}) {
 												int k15 = 1;
 												j13 = getTopBlock(world, i1321, k15);
 												if (random.nextInt(10) != 0) {
 													continue;
 												}
-												this.placeChest(world, random, i1321, j13, k15, LOTRMod.chestStone, 2, LOTRChestContents.RUINED_HOUSE);
+												placeChest(world, random, i1321, j13, k15, LOTRMod.chestStone, 2, LOTRChestContents.RUINED_HOUSE);
 											}
 											break block218;
 										}
@@ -226,23 +237,23 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 												k22 = Math.abs(k14);
 												int randomFloor = random.nextInt(5);
 												switch (randomFloor) {
-												case 0:
-													placeRandomStoneBrick(world, random, i132, pitBottom, k14);
-													break;
-												case 1:
-													setBlockAndMetadata(world, i132, pitBottom, k14, Blocks.cobblestone, 0);
-													break;
-												case 2:
-													setBlockAndMetadata(world, i132, pitBottom, k14, Blocks.stone, 0);
-													break;
-												case 3:
-													setBlockAndMetadata(world, i132, pitBottom, k14, Blocks.gravel, 0);
-													break;
-												case 4:
-													setBlockAndMetadata(world, i132, pitBottom, k14, Blocks.dirt, 0);
-													break;
-												default:
-													break;
+													case 0:
+														placeRandomStoneBrick(world, random, i132, pitBottom, k14);
+														break;
+													case 1:
+														setBlockAndMetadata(world, i132, pitBottom, k14, Blocks.cobblestone, 0);
+														break;
+													case 2:
+														setBlockAndMetadata(world, i132, pitBottom, k14, Blocks.stone, 0);
+														break;
+													case 3:
+														setBlockAndMetadata(world, i132, pitBottom, k14, Blocks.gravel, 0);
+														break;
+													case 4:
+														setBlockAndMetadata(world, i132, pitBottom, k14, Blocks.dirt, 0);
+														break;
+													default:
+														break;
 												}
 												for (j18 = pitBottom + 1; j18 <= pitBottom + pitHeight; ++j18) {
 													setAir(world, i132, j18, k14);
@@ -261,14 +272,14 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 													continue;
 												}
 												if (random.nextInt(60) == 0) {
-													this.placeSkull(world, random, i132, pitBottom + 1, k14);
+													placeSkull(world, random, i132, pitBottom + 1, k14);
 													continue;
 												}
 												if (random.nextInt(120) != 0) {
 													continue;
 												}
 												int chestMeta = Direction.directionToFacing[random.nextInt(4)];
-												this.placeChest(world, random, i132, pitBottom + 1, k14, chestMeta, LOTRChestContents.RUINED_HOUSE);
+												placeChest(world, random, i132, pitBottom + 1, k14, chestMeta, LOTRChestContents.RUINED_HOUSE);
 											}
 										}
 										break block218;
@@ -286,13 +297,13 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 											placeRandomStoneBrick(world, random, i1, 1, k1);
 										}
 									}
-									for (int i15 : new int[] { -3, 2 }) {
+									for (int i15 : new int[]{-3, 2}) {
 										setBlockAndMetadata(world, i15, 1, -2, Blocks.stone_brick_stairs, 2);
 										setBlockAndMetadata(world, i15, 1, -1, Blocks.stone_slab, 8);
 										setBlockAndMetadata(world, i15, 1, 0, Blocks.stone_slab, 8);
 										setBlockAndMetadata(world, i15, 1, 1, Blocks.stone_brick_stairs, 3);
 									}
-									int[] i16 = { -3, 2 };
+									int[] i16 = {-3, 2};
 									k1 = i16.length;
 									for (pitDepth = 0; pitDepth < k1; ++pitDepth) {
 										k12 = i16[pitDepth];
@@ -358,7 +369,7 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 									}
 								}
 								setBlockAndMetadata(world, 0, 1, 0, Blocks.stonebrick, 3);
-								this.placeChest(world, random, 0, 0, 0, LOTRMod.chestStone, 2, LOTRChestContents.RUINED_HOUSE);
+								placeChest(world, random, 0, 0, 0, LOTRMod.chestStone, 2, LOTRChestContents.RUINED_HOUSE);
 								break block218;
 							}
 							if (ruinType != RuinType.QUARRY) {
@@ -368,7 +379,7 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 							for (i14 = -r; i14 <= r; ++i14) {
 								for (k13 = -r; k13 <= r; ++k13) {
 									for (j1 = r; j1 >= 1; --j1) {
-										j2 = j1 - -5;
+										j2 = j1 + 5;
 										d = i14 * i14 + j2 * j2 + k13 * k13;
 										if (d >= r * r) {
 											continue;
@@ -467,7 +478,6 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 							break block225;
 						}
 						width = radius;
-						centreWidth = 2;
 						for (i12 = -width; i12 <= width; ++i12) {
 							for (k12 = -width; k12 <= width; ++k12) {
 								j12 = getTopBlock(world, i12, k12) - 1;
@@ -568,7 +578,7 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 							}
 							if (random.nextInt(8) == 0) {
 								int chestMeta = Direction.directionToFacing[random.nextInt(4)];
-								this.placeChest(world, random, i132, wellBottom + 1, k17, LOTRMod.chestStone, chestMeta, LOTRChestContents.RUINED_HOUSE);
+								placeChest(world, random, i132, wellBottom + 1, k17, LOTRMod.chestStone, chestMeta, LOTRChestContents.RUINED_HOUSE);
 							}
 							if (random.nextInt(3) != 0) {
 								continue;
@@ -587,32 +597,32 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 				}
 				int randomWood = random.nextInt(3);
 				switch (randomWood) {
-				case 0:
-					plankBlock = Blocks.planks;
-					plankMeta = 0;
-					plankSlabBlock = Blocks.wooden_slab;
-					plankSlabMeta = 0;
-					woodBeamBlock = LOTRMod.woodBeamV1;
-					woodBeamMeta = 0;
-					break;
-				case 1:
-					plankBlock = Blocks.planks;
-					plankMeta = 1;
-					plankSlabBlock = Blocks.wooden_slab;
-					plankSlabMeta = 1;
-					woodBeamBlock = LOTRMod.woodBeamV1;
-					woodBeamMeta = 1;
-					break;
-				case 2:
-					plankBlock = LOTRMod.planksRotten;
-					plankMeta = 0;
-					plankSlabBlock = LOTRMod.rottenSlabSingle;
-					plankSlabMeta = 0;
-					woodBeamBlock = LOTRMod.woodBeamRotten;
-					woodBeamMeta = 0;
-					break;
-				default:
-					break;
+					case 0:
+						plankBlock = Blocks.planks;
+						plankMeta = 0;
+						plankSlabBlock = Blocks.wooden_slab;
+						plankSlabMeta = 0;
+						woodBeamBlock = LOTRMod.woodBeamV1;
+						woodBeamMeta = 0;
+						break;
+					case 1:
+						plankBlock = Blocks.planks;
+						plankMeta = 1;
+						plankSlabBlock = Blocks.wooden_slab;
+						plankSlabMeta = 1;
+						woodBeamBlock = LOTRMod.woodBeamV1;
+						woodBeamMeta = 1;
+						break;
+					case 2:
+						plankBlock = LOTRMod.planksRotten;
+						plankMeta = 0;
+						plankSlabBlock = LOTRMod.rottenSlabSingle;
+						plankSlabMeta = 0;
+						woodBeamBlock = LOTRMod.woodBeamRotten;
+						woodBeamMeta = 0;
+						break;
+					default:
+						break;
 				}
 				int randomBar = random.nextInt(2);
 				if (randomBar == 0) {
@@ -699,13 +709,13 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 				}
 				if (random.nextInt(3) == 0) {
 					setBlockAndMetadata(world, 0, 1, 2, plankBlock, plankMeta);
-					this.placeChest(world, random, 0, 2, 2, 2, LOTRChestContents.RUINED_HOUSE);
+					placeChest(world, random, 0, 2, 2, 2, LOTRChestContents.RUINED_HOUSE);
 				}
 				if (random.nextInt(3) != 0) {
 					break block218;
 				}
 				placeRandomStoneBrick(world, random, 0, 6, 3);
-				this.placeChest(world, random, 0, 7, 3, 2, LOTRChestContents.RUINED_HOUSE);
+				placeChest(world, random, 0, 7, 3, 2, LOTRChestContents.RUINED_HOUSE);
 				break block218;
 			}
 			if (ruinType == RuinType.WALLS) {
@@ -714,7 +724,8 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 				height = 2 + random.nextInt(6);
 				int gravelChance = 2 + random.nextInt(7);
 				for (i132 = -width2; i132 <= width2; ++i132) {
-					block66: for (int k18 = -length; k18 <= length; ++k18) {
+					block66:
+					for (int k18 = -length; k18 <= length; ++k18) {
 						int h;
 						int i26 = Math.abs(i132);
 						int k28 = Math.abs(k18);
@@ -727,7 +738,7 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 							if (random.nextInt(8) == 0) {
 								h = random.nextInt(3);
 							}
-							float factor = (float) k28 / (float) length;
+							float factor = (float) k28 / length;
 							factor = 1.0f / (factor + 0.01f);
 							factor *= 0.5f + random.nextFloat() * 0.5f;
 							factor = Math.min(factor, 1.0f);
@@ -804,13 +815,13 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 						}
 						if (random.nextInt(5) != 0) {
 							if (i1 == -4) {
-								setBlockAndMetadata(world, i1, 1, k1, Blocks.stone_brick_stairs, 1);
+								setBlockAndMetadata(world, -4, 1, k1, Blocks.stone_brick_stairs, 1);
 							} else if (i1 == 4) {
-								setBlockAndMetadata(world, i1, 1, k1, Blocks.stone_brick_stairs, 0);
+								setBlockAndMetadata(world, 4, 1, k1, Blocks.stone_brick_stairs, 0);
 							} else if (k1 == -4) {
-								setBlockAndMetadata(world, i1, 1, k1, Blocks.stone_brick_stairs, 2);
+								setBlockAndMetadata(world, i1, 1, -4, Blocks.stone_brick_stairs, 2);
 							} else if (k1 == 4) {
-								setBlockAndMetadata(world, i1, 1, k1, Blocks.stone_brick_stairs, 3);
+								setBlockAndMetadata(world, i1, 1, 4, Blocks.stone_brick_stairs, 3);
 							}
 						}
 						if (i22 == 3 && k2 == 3) {
@@ -839,42 +850,73 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 					}
 				}
 				setBlockAndMetadata(world, 0, 2, 0, Blocks.stonebrick, 3);
-				this.placeChest(world, random, 0, 1, 0, LOTRMod.chestStone, 2, LOTRChestContents.RUINED_HOUSE);
+				placeChest(world, random, 0, 1, 0, LOTRMod.chestStone, 2, LOTRChestContents.RUINED_HOUSE);
 			} else if (ruinType == RuinType.BRICK_HOUSE) {
 				width = MathHelper.getRandomIntegerInRange(random, 3, 5);
 				int height6 = MathHelper.getRandomIntegerInRange(random, 1, 4);
 				for (i12 = -width; i12 <= width; ++i12) {
-					block74: for (k12 = -width; k12 <= width; ++k12) {
+					block74:
+					for (k12 = -width; k12 <= width; ++k12) {
 						int randomWall;
 						i2 = Math.abs(i12);
 						int k29 = Math.abs(k12);
 						layFoundation(world, i12, 0, k12, Blocks.cobblestone, 0);
 						int randomFloor = random.nextInt(5);
 						switch (randomFloor) {
-						case 0:
-							setBlockAndMetadata(world, i12, 0, k12, Blocks.cobblestone, 0);
-							break;
-						case 1:
-							setBlockAndMetadata(world, i12, 0, k12, Blocks.mossy_cobblestone, 0);
-							break;
-						case 2:
-							setBlockAndMetadata(world, i12, 0, k12, Blocks.gravel, 0);
-							break;
-						case 3:
-							setBlockAndMetadata(world, i12, 0, k12, Blocks.dirt, 1);
-							break;
-						case 4:
-							setBlockAndMetadata(world, i12, 0, k12, Blocks.brick_block, 0);
-							break;
-						default:
-							break;
+							case 0:
+								setBlockAndMetadata(world, i12, 0, k12, Blocks.cobblestone, 0);
+								break;
+							case 1:
+								setBlockAndMetadata(world, i12, 0, k12, Blocks.mossy_cobblestone, 0);
+								break;
+							case 2:
+								setBlockAndMetadata(world, i12, 0, k12, Blocks.gravel, 0);
+								break;
+							case 3:
+								setBlockAndMetadata(world, i12, 0, k12, Blocks.dirt, 1);
+								break;
+							case 4:
+								setBlockAndMetadata(world, i12, 0, k12, Blocks.brick_block, 0);
+								break;
+							default:
+								break;
 						}
 						if (i2 == width || k29 == width) {
 							if (random.nextInt(10) == 0) {
 								continue;
 							}
 							for (int j1 = 1; j1 <= height6; ++j1) {
-								if (random.nextInt(6) != 0) {
+								if (random.nextInt(6) == 0) {
+									int stairDir;
+									int randomWall2 = random.nextInt(7);
+									switch (randomWall2) {
+										case 0:
+											setBlockAndMetadata(world, i12, j1, k12, Blocks.double_stone_slab, 0);
+											break;
+										case 1:
+											setBlockAndMetadata(world, i12, j1, k12, LOTRMod.pillar2, 3);
+											break;
+										case 2:
+											setBlockAndMetadata(world, i12, j1, k12, LOTRMod.clayTile, 0);
+											break;
+										case 3:
+											stairDir = random.nextInt(8);
+											setBlockAndMetadata(world, i12, j1, k12, Blocks.brick_stairs, stairDir);
+											break;
+										case 4:
+											stairDir = random.nextInt(8);
+											setBlockAndMetadata(world, i12, j1, k12, LOTRMod.stairsClayTile, stairDir);
+											break;
+										case 5:
+											setBlockAndMetadata(world, i12, j1, k12, Blocks.cobblestone, 0);
+											break;
+										case 6:
+											setBlockAndMetadata(world, i12, j1, k12, LOTRMod.wallStoneV, 6);
+											break;
+										default:
+											break;
+									}
+								} else {
 									if (random.nextInt(3) == 0) {
 										if (random.nextBoolean()) {
 											setBlockAndMetadata(world, i12, j1, k12, LOTRMod.redBrick, 0);
@@ -883,36 +925,6 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 										}
 									} else {
 										setBlockAndMetadata(world, i12, j1, k12, Blocks.brick_block, 0);
-									}
-								} else {
-									int stairDir;
-									int randomWall2 = random.nextInt(7);
-									switch (randomWall2) {
-									case 0:
-										setBlockAndMetadata(world, i12, j1, k12, Blocks.double_stone_slab, 0);
-										break;
-									case 1:
-										setBlockAndMetadata(world, i12, j1, k12, LOTRMod.pillar2, 3);
-										break;
-									case 2:
-										setBlockAndMetadata(world, i12, j1, k12, LOTRMod.clayTile, 0);
-										break;
-									case 3:
-										stairDir = random.nextInt(8);
-										setBlockAndMetadata(world, i12, j1, k12, Blocks.brick_stairs, stairDir);
-										break;
-									case 4:
-										stairDir = random.nextInt(8);
-										setBlockAndMetadata(world, i12, j1, k12, LOTRMod.stairsClayTile, stairDir);
-										break;
-									case 5:
-										setBlockAndMetadata(world, i12, j1, k12, Blocks.cobblestone, 0);
-										break;
-									case 6:
-										setBlockAndMetadata(world, i12, j1, k12, LOTRMod.wallStoneV, 6);
-										break;
-									default:
-										break;
 									}
 								}
 								if (random.nextInt(6) == 0) {
@@ -927,19 +939,19 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 							}
 							randomWall = random.nextInt(4);
 							switch (randomWall) {
-							case 0:
-								setBlockAndMetadata(world, i12, 1, k12, Blocks.brick_block, 0);
-								continue;
-							case 1: {
-								int stairDir = random.nextInt(8);
-								setBlockAndMetadata(world, i12, 1, k12, Blocks.brick_stairs, stairDir);
-								continue;
-							}
-							case 2:
-								setBlockAndMetadata(world, i12, 1, k12, LOTRMod.planksRotten, 0);
-								continue;
-							default:
-								break;
+								case 0:
+									setBlockAndMetadata(world, i12, 1, k12, Blocks.brick_block, 0);
+									continue;
+								case 1: {
+									int stairDir = random.nextInt(8);
+									setBlockAndMetadata(world, i12, 1, k12, Blocks.brick_stairs, stairDir);
+									continue;
+								}
+								case 2:
+									setBlockAndMetadata(world, i12, 1, k12, LOTRMod.planksRotten, 0);
+									continue;
+								default:
+									break;
 							}
 							if (randomWall != 3) {
 								continue;
@@ -1013,7 +1025,7 @@ public class LOTRWorldGenSmallStoneRuin extends LOTRWorldGenStructureBase2 {
 		}
 
 		public static RuinType getRandomType(Random random) {
-			return RuinType.values()[random.nextInt(RuinType.values().length)];
+			return values()[random.nextInt(values().length)];
 		}
 	}
 

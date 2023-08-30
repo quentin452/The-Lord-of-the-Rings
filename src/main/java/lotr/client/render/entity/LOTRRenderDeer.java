@@ -1,7 +1,7 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelDeer;
-import lotr.common.entity.animal.LOTREntityDeer;
+import lotr.common.entity.LOTRRandomSkinEntity;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +16,7 @@ public class LOTRRenderDeer extends RenderLiving {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityDeer deer = (LOTREntityDeer) entity;
+		LOTRRandomSkinEntity deer = (LOTRRandomSkinEntity) entity;
 		return deerSkins.getRandomSkin(deer);
 	}
 }

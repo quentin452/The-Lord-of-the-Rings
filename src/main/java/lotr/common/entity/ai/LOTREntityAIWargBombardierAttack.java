@@ -62,6 +62,7 @@ public class LOTREntityAIWargBombardierAttack extends EntityAIBase {
 		if (theWarg.getDistanceSq(entityTarget.posX, entityTarget.boundingBox.minY, entityTarget.posZ) <= 16.0) {
 			if (theWarg.getBombFuse() > 20) {
 				int i;
+				//noinspection StatementWithEmptyBody
 				for (i = theWarg.getBombFuse(); i > 20; i -= 10) {
 				}
 				theWarg.setBombFuse(i);
@@ -73,6 +74,7 @@ public class LOTREntityAIWargBombardierAttack extends EntityAIBase {
 			}
 		} else if (theWarg.getBombFuse() <= 20) {
 			int i;
+			//noinspection StatementWithEmptyBody
 			for (i = theWarg.getBombFuse(); i <= 20; i += 10) {
 			}
 			theWarg.setBombFuse(i);

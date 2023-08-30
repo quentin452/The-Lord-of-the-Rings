@@ -19,7 +19,7 @@ public class LOTREntityAINearestAttackableTargetOrc extends LOTREntityAINearestA
 	public boolean isPlayerSuitableAlignmentTarget(EntityPlayer entityplayer) {
 		LOTRFaction faction = LOTRMod.getNPCFaction(taskOwner);
 		if (faction == LOTRFaction.MORDOR) {
-			float alignment = LOTRLevelData.getData(entityplayer).getAlignment(faction);
+			float alignment = LOTRLevelData.getData(entityplayer).getAlignment(LOTRFaction.MORDOR);
 			if (alignment >= 100.0f) {
 				return false;
 			}

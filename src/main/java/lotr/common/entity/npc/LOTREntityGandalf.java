@@ -5,7 +5,6 @@ import java.util.*;
 import cpw.mods.fml.relauncher.*;
 import lotr.common.*;
 import lotr.common.entity.ai.*;
-import lotr.common.fac.LOTRFaction;
 import lotr.common.quest.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
@@ -29,7 +28,7 @@ public class LOTREntityGandalf extends LOTREntityNPC {
 		tasks.addTask(5, new EntityAIWatchClosest2(this, LOTREntityNPC.class, 5.0f, 0.05f));
 		tasks.addTask(5, new EntityAIWatchClosest(this, EntityLiving.class, 8.0f, 0.02f));
 		tasks.addTask(6, new EntityAILookIdle(this));
-		int target = this.addTargetTasks(false);
+		int target = addTargetTasks(false);
 		targetTasks.addTask(target + 1, new LOTREntityAINearestAttackableTargetBasic(this, LOTREntityBalrog.class, 0, true));
 		targetTasks.addTask(target + 2, new LOTREntityAINearestAttackableTargetBasic(this, LOTREntitySaruman.class, 0, true));
 		npcCape = LOTRCapes.GANDALF;
@@ -54,7 +53,7 @@ public class LOTREntityGandalf extends LOTREntityNPC {
 	}
 
 	public void arriveAt(EntityPlayer entityplayer) {
-		ArrayList<EntityPlayer> msgPlayers = new ArrayList<>();
+		Collection<EntityPlayer> msgPlayers = new ArrayList<>();
 		if (entityplayer != null) {
 			msgPlayers.add(entityplayer);
 		}
@@ -93,7 +92,7 @@ public class LOTREntityGandalf extends LOTREntityNPC {
 	}
 
 	public void depart() {
-		ArrayList<EntityPlayer> msgPlayers = new ArrayList<>();
+		Collection<EntityPlayer> msgPlayers = new ArrayList<>();
 		List worldPlayers = worldObj.playerEntities;
 		for (Object obj : worldPlayers) {
 			EntityPlayer player = (EntityPlayer) obj;
@@ -120,11 +119,6 @@ public class LOTREntityGandalf extends LOTREntityNPC {
 	}
 
 	@Override
-	public LOTRFaction getFaction() {
-		return LOTRFaction.UNALIGNED;
-	}
-
-	@Override
 	public ItemStack getHeldItemLeft() {
 		ItemStack heldItem = getHeldItem();
 		if (heldItem != null && heldItem.getItem() == LOTRMod.glamdring) {
@@ -141,7 +135,7 @@ public class LOTREntityGandalf extends LOTREntityNPC {
 		return "char/gandalf/hostile";
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
 		if (b == 16) {
@@ -199,7 +193,7 @@ public class LOTREntityGandalf extends LOTREntityNPC {
 			if (addMQOfferFor(entityplayer)) {
 				LOTRGreyWandererTracker.setWandererActive(getUniqueID());
 				String speechBank = "char/gandalf/welcome";
-				this.sendSpeechBank(entityplayer, speechBank);
+				sendSpeechBank(entityplayer, speechBank);
 				return true;
 			}
 		}

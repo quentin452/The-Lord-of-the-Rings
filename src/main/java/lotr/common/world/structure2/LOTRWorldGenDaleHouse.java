@@ -29,7 +29,7 @@ public class LOTRWorldGenDaleHouse extends LOTRWorldGenDaleStructure {
 		int k12;
 		int k13;
 		int fillBlock22;
-		this.setOriginAndRotation(world, i, j, k, rotation, 1);
+		setOriginAndRotation(world, i, j, k, rotation, 1);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -63,8 +63,8 @@ public class LOTRWorldGenDaleHouse extends LOTRWorldGenDaleStructure {
 				for (int j13 = 1; j13 <= 10; ++j13) {
 					setAir(world, i17, j13, k1);
 				}
-				Block fillBlock221 = null;
-				int fillMeta = 0;
+				Block fillBlock221;
+				int fillMeta;
 				if ((i17 == -2 || i17 == 2) && (k1 == 0 || k1 == 4 || k1 == 8)) {
 					fillBlock221 = brickBlock;
 					fillMeta = brickMeta;
@@ -85,12 +85,12 @@ public class LOTRWorldGenDaleHouse extends LOTRWorldGenDaleStructure {
 					fillBlock221 = brickBlock;
 					fillMeta = brickMeta;
 					for (j12 = 1; j12 <= 4; ++j12) {
-						setBlockAndMetadata(world, i17, j12, k1, brickBlock, brickMeta);
+						setBlockAndMetadata(world, -7, j12, k1, brickBlock, brickMeta);
 					}
 					for (j12 = 5; j12 <= 6; ++j12) {
-						setBlockAndMetadata(world, i17, j12, k1, plankBlock, plankMeta);
+						setBlockAndMetadata(world, -7, j12, k1, plankBlock, plankMeta);
 					}
-					setBlockAndMetadata(world, i17, 7, k1, woodBeamBlock, woodBeamMeta | 8);
+					setBlockAndMetadata(world, -7, 7, k1, woodBeamBlock, woodBeamMeta | 8);
 				} else if ((k1 == 0 || k1 == 4) && (i17 == -7 || i17 == -3)) {
 					fillBlock221 = woodBlock;
 					fillMeta = woodMeta;
@@ -107,18 +107,18 @@ public class LOTRWorldGenDaleHouse extends LOTRWorldGenDaleStructure {
 				}
 			}
 		}
-		for (int[] pos : new int[][] { { -3, -1 }, { -7, -1 }, { -8, 0 }, { -8, 4 }, { -7, 5 } }) {
+		for (int[] pos : new int[][]{{-3, -1}, {-7, -1}, {-8, 0}, {-8, 4}, {-7, 5}}) {
 			i1 = pos[0];
 			int k15 = pos[1];
 			for (int j14 = 7; (j14 >= 4 || !isOpaque(world, i1, j14, k15)) && getY(j14) >= 0; --j14) {
 				setBlockAndMetadata(world, i1, j14, k15, fenceBlock, fenceMeta);
 			}
 		}
-		for (int k16 : new int[] { 0, 4, 8 }) {
+		for (int k16 : new int[]{0, 4, 8}) {
 			setBlockAndMetadata(world, -1, 3, k16, brickStairBlock, 4);
 			setBlockAndMetadata(world, 1, 3, k16, brickStairBlock, 5);
 		}
-		int[] i17 = { -2, 2 };
+		int[] i17 = {-2, 2};
 		k1 = i17.length;
 		for (fillBlock22 = 0; fillBlock22 < k1; ++fillBlock22) {
 			int i132 = i17[fillBlock22];
@@ -186,7 +186,7 @@ public class LOTRWorldGenDaleHouse extends LOTRWorldGenDaleStructure {
 			setBlockAndMetadata(world, i18, 4, -1, brickStairBlock, 6);
 		}
 		setBlockAndMetadata(world, -3, 4, -1, brickBlock, brickMeta);
-		for (int k14 : new int[] { 0, 4, 8 }) {
+		for (int k14 : new int[]{0, 4, 8}) {
 			for (i1 = -1; i1 <= 1; ++i1) {
 				setBlockAndMetadata(world, i1, 4, k14, brickBlock, brickMeta);
 				if (k14 != 0 && k14 != 8) {
@@ -197,7 +197,7 @@ public class LOTRWorldGenDaleHouse extends LOTRWorldGenDaleStructure {
 				setBlockAndMetadata(world, i1, 7, k14, woodBeamBlock, woodBeamMeta | 4);
 			}
 		}
-		int[] i18 = { -2, 2 };
+		int[] i18 = {-2, 2};
 		j1 = i18.length;
 		for (fillBlock22 = 0; fillBlock22 < j1; ++fillBlock22) {
 			int i15 = i18[fillBlock22];
@@ -254,7 +254,7 @@ public class LOTRWorldGenDaleHouse extends LOTRWorldGenDaleStructure {
 			setBlockAndMetadata(world, i14, 10, 0, roofStairBlock, 2);
 			setBlockAndMetadata(world, i14, 11, 1, roofStairBlock, 2);
 			setBlockAndMetadata(world, i14, 11, 2, roofBlock, roofMeta);
-			if (i14 <= -1 || i14 >= 1) {
+			if (i14 != 0) {
 				setBlockAndMetadata(world, i14, 11, 3, roofStairBlock, 3);
 			}
 			if (i14 <= -2 || i14 >= 2) {
@@ -280,7 +280,7 @@ public class LOTRWorldGenDaleHouse extends LOTRWorldGenDaleStructure {
 			}
 			setBlockAndMetadata(world, 0, 11, k17, roofBlock, roofMeta);
 		}
-		for (int i15 : new int[] { -7, 2 }) {
+		for (int i15 : new int[]{-7, 2}) {
 			for (k12 = 0; k12 <= 4; ++k12) {
 				setBlockAndMetadata(world, i15, 9, k12, brickBlock, brickMeta);
 			}
@@ -288,7 +288,7 @@ public class LOTRWorldGenDaleHouse extends LOTRWorldGenDaleStructure {
 				setBlockAndMetadata(world, i15, 10, k12, brickBlock, brickMeta);
 			}
 		}
-		for (int i15 : new int[] { -8, 3 }) {
+		for (int i15 : new int[]{-8, 3}) {
 			setBlockAndMetadata(world, i15, 9, 0, roofStairBlock, 7);
 			setBlockAndMetadata(world, i15, 10, 1, roofStairBlock, 7);
 			setBlockAndMetadata(world, i15, 10, 3, roofStairBlock, 6);
@@ -353,8 +353,8 @@ public class LOTRWorldGenDaleHouse extends LOTRWorldGenDaleStructure {
 		setBlockAndMetadata(world, 0, 5, 1, LOTRMod.strawBed, 1);
 		setBlockAndMetadata(world, 1, 5, 1, LOTRMod.strawBed, 9);
 		setBlockAndMetadata(world, 1, 5, 2, woodBeamBlock, woodBeamMeta);
-		this.placeMug(world, random, 1, 6, 2, 1, LOTRFoods.DALE_DRINK);
-		this.placeChest(world, random, 1, 5, 3, 5, LOTRChestContents.DALE_HOUSE);
+		placeMug(world, random, 1, 6, 2, 1, LOTRFoods.DALE_DRINK);
+		placeChest(world, random, 1, 5, 3, 5, LOTRChestContents.DALE_HOUSE);
 		spawnItemFrame(world, 2, 7, 1, 3, new ItemStack(Items.clock));
 		setBlockAndMetadata(world, 1, 5, 4, brickBlock, brickMeta);
 		setBlockAndMetadata(world, 1, 6, 4, brickBlock, brickMeta);
@@ -378,7 +378,7 @@ public class LOTRWorldGenDaleHouse extends LOTRWorldGenDaleStructure {
 			i12 = MathHelper.getRandomIntegerInRange(random, -6, 1);
 			k1 = MathHelper.getRandomIntegerInRange(random, 0, 4);
 			int chestDir = Direction.directionToFacing[random.nextInt(4)];
-			this.placeChest(world, random, i12, 9, k1, chestDir, LOTRChestContents.DALE_HOUSE_TREASURE);
+			placeChest(world, random, i12, 9, k1, chestDir, LOTRChestContents.DALE_HOUSE_TREASURE);
 		}
 		LOTREntityDaleMan daleMan = new LOTREntityDaleMan(world);
 		spawnNPCAndSetHome(daleMan, world, -1, 5, 2, 16);

@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityBlackrootCaptain extends LOTREntityBlackrootArcher implements LOTRUnitTradeable {
 	public LOTREntityBlackrootCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.BLACKROOT;
 	}
 

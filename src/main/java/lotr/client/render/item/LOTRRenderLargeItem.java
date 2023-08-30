@@ -19,16 +19,18 @@ import net.minecraftforge.client.IItemRenderer;
 
 public class LOTRRenderLargeItem implements IItemRenderer {
 	public static Map<String, Float> sizeFolders = new HashMap<>();
+
 	static {
 		sizeFolders.put("large", 2.0f);
 		sizeFolders.put("large2", 3.0f);
 	}
+
 	public Item theItem;
 	public String folderName;
 	public float largeIconScale;
 	public IIcon largeIcon;
 
-	public List<ExtraLargeIconToken> extraTokens = new ArrayList<>();
+	public Collection<ExtraLargeIconToken> extraTokens = new ArrayList<>();
 
 	public LOTRRenderLargeItem(Item item, String dir, float f) {
 		theItem = item;
@@ -95,7 +97,7 @@ public class LOTRRenderLargeItem implements IItemRenderer {
 				GL11.glRotatef(40.0f, 0.0f, 0.0f, 1.0f);
 			}
 		}
-		if (item instanceof LOTRItemLance && holder instanceof EntityLivingBase && (entityliving = (EntityLivingBase) holder).getHeldItem() == itemstack) {
+		if (item instanceof LOTRItemLance && holder instanceof EntityLivingBase && ((EntityLivingBase) holder).getHeldItem() == itemstack) {
 			if (isFirstPerson) {
 				GL11.glRotatef(260.0f, 0.0f, 0.0f, 1.0f);
 			} else {
@@ -104,19 +106,19 @@ public class LOTRRenderLargeItem implements IItemRenderer {
 			}
 			GL11.glTranslatef(-1.0f, 0.0f, 0.0f);
 		}
-		this.renderLargeItem();
-		if (itemstack != null && itemstack.hasEffect(0)) {
+		renderLargeItem();
+		if (itemstack.hasEffect(0)) {
 			LOTRClientProxy.renderEnchantmentEffect();
 		}
 		GL11.glPopMatrix();
 	}
 
 	public void renderLargeItem() {
-		this.renderLargeItem(largeIcon);
+		renderLargeItem(largeIcon);
 	}
 
 	public void renderLargeItem(ExtraLargeIconToken token) {
-		this.renderLargeItem(token.icon);
+		renderLargeItem(token.icon);
 	}
 
 	public void renderLargeItem(IIcon icon) {
@@ -136,16 +138,17 @@ public class LOTRRenderLargeItem implements IItemRenderer {
 		String prefix = "lotr:";
 		String itemName = item.getUnlocalizedName();
 		itemName = itemName.substring(itemName.indexOf(prefix) + prefix.length());
-		StringBuilder s = new StringBuilder().append(prefix).append("textures/items/").append(folder).append("/").append(itemName);
-		s.append(".png");
-		return new ResourceLocation(s.toString());
+		String s = prefix + "textures/items/" + folder + "/" + itemName +
+				".png";
+		return new ResourceLocation(s);
 	}
 
 	public static LOTRRenderLargeItem getRendererIfLarge(Item item) {
-		for (String folder : sizeFolders.keySet()) {
-			float iconScale = sizeFolders.get(folder);
+		for (Map.Entry<String, Float> entry : sizeFolders.entrySet()) {
+			String folder = entry.getKey();
+			float iconScale = entry.getValue();
 			try {
-				ResourceLocation resLoc = LOTRRenderLargeItem.getLargeTexturePath(item, folder);
+				ResourceLocation resLoc = getLargeTexturePath(item, folder);
 				IResource res = Minecraft.getMinecraft().getResourceManager().getResource(resLoc);
 				if (res == null) {
 					continue;

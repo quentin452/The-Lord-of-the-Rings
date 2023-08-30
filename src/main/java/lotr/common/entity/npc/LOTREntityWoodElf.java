@@ -20,7 +20,7 @@ public class LOTREntityWoodElf extends LOTREntityElf {
 	public LOTREntityWoodElf(World world) {
 		super(world);
 		tasks.addTask(2, rangedAttackAI);
-		this.addTargetTasks(true, LOTREntityAINearestAttackableTargetWoodElf.class);
+		addTargetTasks(true, LOTREntityAINearestAttackableTargetWoodElf.class);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class LOTREntityWoodElf extends LOTREntityElf {
 		super.dropElfItems(flag, i);
 		if (flag) {
 			int dropChance = 20 - i * 4;
-			if (rand.nextInt(dropChance = Math.max(dropChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(dropChance, 1)) == 0) {
 				ItemStack elfDrink = new ItemStack(LOTRMod.mugRedWine);
 				elfDrink.setItemDamage(1 + rand.nextInt(3));
 				LOTRItemMug.setVessel(elfDrink, LOTRFoods.ELF_DRINK.getRandomVessel(rand), true);
@@ -104,7 +104,7 @@ public class LOTREntityWoodElf extends LOTREntityElf {
 			if (hiredNPCInfo.getHiringPlayer() == entityplayer) {
 				return "woodElf/elf/hired";
 			}
-			if (LOTRLevelData.getData(entityplayer).getAlignment(getFaction()) >= LOTREntityWoodElf.getWoodlandTrustLevel()) {
+			if (LOTRLevelData.getData(entityplayer).getAlignment(getFaction()) >= getWoodlandTrustLevel()) {
 				return "woodElf/elf/friendly";
 			}
 			return "woodElf/elf/neutral";

@@ -18,7 +18,7 @@ public class LOTRTileEntityDartTrap extends TileEntityDispenser {
 		return hasCustomInventoryName() ? field_146020_a : "container.lotr.dartTrap";
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
 		return getTriggerRange();

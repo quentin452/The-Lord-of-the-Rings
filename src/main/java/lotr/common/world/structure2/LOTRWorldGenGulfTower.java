@@ -19,7 +19,7 @@ public class LOTRWorldGenGulfTower extends LOTRWorldGenGulfStructure {
 		int j1;
 		int k1;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 4);
+		setOriginAndRotation(world, i, j, k, rotation, 4);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -3; i1 <= 3; ++i1) {
@@ -55,10 +55,10 @@ public class LOTRWorldGenGulfTower extends LOTRWorldGenGulfStructure {
 		associateBlockMetaAlias("FLAG", flagBlock, flagMeta);
 		associateBlockMetaAlias("BONE", boneBlock, boneMeta);
 		generateStrScan(world, random, 0, 0, 0);
-		this.placeChest(world, random, -2, 1, 0, LOTRMod.chestBasket, 4, LOTRChestContents.GULF_HOUSE);
-		this.placeSkull(world, random, 2, 2, 1);
-		this.placeBarrel(world, random, -2, 2, -1, 4, LOTRFoods.GULF_HARAD_DRINK);
-		this.placeMug(world, random, 2, 2, -1, 2, LOTRFoods.GULF_HARAD_DRINK);
+		placeChest(world, random, -2, 1, 0, LOTRMod.chestBasket, 4, LOTRChestContents.GULF_HOUSE);
+		placeSkull(world, random, 2, 2, 1);
+		placeBarrel(world, random, -2, 2, -1, 4, LOTRFoods.GULF_HARAD_DRINK);
+		placeMug(world, random, 2, 2, -1, 2, LOTRFoods.GULF_HARAD_DRINK);
 		placePlate(world, random, 2, 2, 0, LOTRMod.woodPlateBlock, LOTRFoods.GULF_HARAD);
 		placePlate(world, random, -2, 2, 1, LOTRMod.woodPlateBlock, LOTRFoods.GULF_HARAD);
 		placeWallBanner(world, 0, 8, -3, LOTRItemBanner.BannerType.HARAD_GULF, 2);

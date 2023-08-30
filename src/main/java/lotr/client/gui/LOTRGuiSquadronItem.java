@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.lwjgl.opengl.GL11;
 
 import lotr.common.LOTRSquadrons;
@@ -85,7 +86,7 @@ public class LOTRGuiSquadronItem extends LOTRGuiScreenBase {
 	public void onGuiClosed() {
 		super.onGuiClosed();
 		String squadron = squadronNameField.getText();
-		LOTRPacketItemSquadron packet = new LOTRPacketItemSquadron(squadron);
+		IMessage packet = new LOTRPacketItemSquadron(squadron);
 		LOTRPacketHandler.networkWrapper.sendToServer(packet);
 	}
 

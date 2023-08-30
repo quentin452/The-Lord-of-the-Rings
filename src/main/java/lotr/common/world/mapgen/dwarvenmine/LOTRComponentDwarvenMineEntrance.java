@@ -10,9 +10,11 @@ import net.minecraft.world.gen.structure.*;
 
 public class LOTRComponentDwarvenMineEntrance extends StructureComponent {
 	public static LOTRWorldGenDwarvenMineEntrance entranceGen = new LOTRWorldGenDwarvenMineEntrance(false);
+
 	static {
-		LOTRComponentDwarvenMineEntrance.entranceGen.restrictions = false;
+		entranceGen.restrictions = false;
 	}
+
 	public int posX;
 	public int posY = -1;
 	public int posZ;
@@ -39,7 +41,7 @@ public class LOTRComponentDwarvenMineEntrance extends StructureComponent {
 		if (world.getBlock(posX, posY - 1, posZ) != Blocks.grass) {
 			return false;
 		}
-		LOTRComponentDwarvenMineEntrance.entranceGen.isRuined = ruined;
+		entranceGen.isRuined = ruined;
 		entranceGen.generateWithSetRotation(world, random, posX, posY, posZ, direction);
 		return true;
 	}
@@ -49,21 +51,21 @@ public class LOTRComponentDwarvenMineEntrance extends StructureComponent {
 		StructureBoundingBox structureBoundingBox = null;
 		direction = random.nextInt(4);
 		switch (direction) {
-		case 0: {
-			structureBoundingBox = new StructureBoundingBox(posX - 1, boundingBox.minY + 1, posZ + 4, posX + 1, boundingBox.minY + 4, posZ + 15);
-			break;
-		}
-		case 1: {
-			structureBoundingBox = new StructureBoundingBox(posX - 15, boundingBox.minY + 1, posZ - 1, posX - 4, boundingBox.minY + 4, posZ + 1);
-			break;
-		}
-		case 2: {
-			structureBoundingBox = new StructureBoundingBox(posX - 1, boundingBox.minY + 1, posZ - 15, posX + 1, boundingBox.minY + 4, posZ - 4);
-			break;
-		}
-		case 3: {
-			structureBoundingBox = new StructureBoundingBox(posX + 4, boundingBox.minY + 1, posZ - 1, posX + 15, boundingBox.minY + 4, posZ + 1);
-		}
+			case 0: {
+				structureBoundingBox = new StructureBoundingBox(posX - 1, boundingBox.minY + 1, posZ + 4, posX + 1, boundingBox.minY + 4, posZ + 15);
+				break;
+			}
+			case 1: {
+				structureBoundingBox = new StructureBoundingBox(posX - 15, boundingBox.minY + 1, posZ - 1, posX - 4, boundingBox.minY + 4, posZ + 1);
+				break;
+			}
+			case 2: {
+				structureBoundingBox = new StructureBoundingBox(posX - 1, boundingBox.minY + 1, posZ - 15, posX + 1, boundingBox.minY + 4, posZ - 4);
+				break;
+			}
+			case 3: {
+				structureBoundingBox = new StructureBoundingBox(posX + 4, boundingBox.minY + 1, posZ - 1, posX + 15, boundingBox.minY + 4, posZ + 1);
+			}
 		}
 		LOTRComponentDwarvenMineCorridor corridor = new LOTRComponentDwarvenMineCorridor(0, random, structureBoundingBox, direction, ruined);
 		list.add(corridor);

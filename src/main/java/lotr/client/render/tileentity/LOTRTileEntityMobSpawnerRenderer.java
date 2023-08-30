@@ -66,9 +66,9 @@ public class LOTRTileEntityMobSpawnerRenderer extends TileEntitySpecialRenderer 
 		}
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) d + 0.5f, (float) d1, (float) d2 + 0.5f);
-		Entity entity = null;
-		double yaw = 0.0;
-		double prevYaw = 0.0;
+		Entity entity;
+		double yaw;
+		double prevYaw;
 		if (mobSpawner != null) {
 			entity = mobSpawner.getMobEntity(world);
 			yaw = mobSpawner.yaw;

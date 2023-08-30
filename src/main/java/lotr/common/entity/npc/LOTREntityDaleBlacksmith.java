@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityDaleBlacksmith extends LOTREntityDaleMan implements LOTRTradeable.Smith {
 	public LOTREntityDaleBlacksmith(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

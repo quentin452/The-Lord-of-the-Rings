@@ -69,7 +69,7 @@ public class LOTRBiomeGenFarHaradJungleMountains extends LOTRBiomeGenFarHaradJun
 		for (int j = ySize - 1; j >= stoneHeight; --j) {
 			int index = xzIndex * ySize + j;
 			Block block = blocks[index];
-			if (block != topBlock && block != fillerBlock || generateMud && muds < 4 + random.nextInt(2)) {
+			if (block != topBlock && block != fillerBlock || generateMud) {
 				continue;
 			}
 			blocks[index] = Blocks.stone;

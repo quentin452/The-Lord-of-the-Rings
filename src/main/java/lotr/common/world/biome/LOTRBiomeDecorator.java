@@ -21,9 +21,9 @@ public class LOTRBiomeDecorator {
 	public int chunkX;
 	public int chunkZ;
 	public LOTRBiome biome;
-	public List<OreGenerant> biomeSoils = new ArrayList<>();
-	public List<OreGenerant> biomeOres = new ArrayList<>();
-	public List<OreGenerant> biomeGems = new ArrayList<>();
+	public Collection<OreGenerant> biomeSoils = new ArrayList<>();
+	public Collection<OreGenerant> biomeOres = new ArrayList<>();
+	public Collection<OreGenerant> biomeGems = new ArrayList<>();
 	public float biomeOreFactor = 1.0f;
 	public float biomeGemFactor = 0.5f;
 	public WorldGenerator clayGen = new LOTRWorldGenSand(Blocks.clay, 5, 1);
@@ -48,42 +48,42 @@ public class LOTRBiomeDecorator {
 	public WorldGenerator melonGen = new WorldGenMelon();
 	public int sandPerChunk = 4;
 	public int clayPerChunk = 3;
-	public int quagmirePerChunk = 0;
-	public int treesPerChunk = 0;
-	public int willowPerChunk = 0;
-	public int logsPerChunk = 0;
-	public int vinesPerChunk = 0;
+	public int quagmirePerChunk;
+	public int treesPerChunk;
+	public int willowPerChunk;
+	public int logsPerChunk;
+	public int vinesPerChunk;
 	public int flowersPerChunk = 2;
-	public int doubleFlowersPerChunk = 0;
+	public int doubleFlowersPerChunk;
 	public int grassPerChunk = 1;
-	public int doubleGrassPerChunk = 0;
-	public boolean enableFern = false;
+	public int doubleGrassPerChunk;
+	public boolean enableFern;
 	public boolean enableSpecialGrasses = true;
-	public int deadBushPerChunk = 0;
-	public int waterlilyPerChunk = 0;
-	public int mushroomsPerChunk = 0;
+	public int deadBushPerChunk;
+	public int waterlilyPerChunk;
+	public int mushroomsPerChunk;
 	public boolean enableRandomMushroom = true;
-	public int canePerChunk = 0;
+	public int canePerChunk;
 	public int reedPerChunk = 1;
 	public float dryReedChance = 0.1f;
-	public int cornPerChunk = 0;
-	public int cactiPerChunk = 0;
-	public float melonPerChunk = 0.0f;
+	public int cornPerChunk;
+	public int cactiPerChunk;
+	public float melonPerChunk;
 	public boolean generateWater = true;
 	public boolean generateLava = true;
 	public boolean generateCobwebs = true;
-	public boolean generateAthelas = false;
-	public boolean whiteSand = false;
+	public boolean generateAthelas;
+	public boolean whiteSand;
 	public int treeClusterSize;
 	public int treeClusterChance = -1;
 	public WorldGenerator orcDungeonGen = new LOTRWorldGenOrcDungeon(false);
 	public WorldGenerator trollHoardGen = new LOTRWorldGenTrollHoard();
-	public boolean generateOrcDungeon = false;
-	public boolean generateTrollHoard = false;
-	public List<LOTRTreeType.WeightedTreeType> treeTypes = new ArrayList<>();
+	public boolean generateOrcDungeon;
+	public boolean generateTrollHoard;
+	public Collection<LOTRTreeType.WeightedTreeType> treeTypes = new ArrayList<>();
 	public Random structureRand = new Random();
-	public List<RandomStructure> randomStructures = new ArrayList<>();
-	public List<LOTRVillageGen> villages = new ArrayList<>();
+	public Collection<RandomStructure> randomStructures = new ArrayList<>();
+	public Collection<LOTRVillageGen> villages = new ArrayList<>();
 
 	public LOTRBiomeDecorator(LOTRBiome lotrbiome) {
 		biome = lotrbiome;
@@ -250,7 +250,7 @@ public class LOTRBiomeDecorator {
 		}
 		if (!biomeVariant.disableStructures && Math.abs(chunkX) > 32 && Math.abs(chunkZ) > 32) {
 			boolean roadNear;
-			long seed = chunkX * 1879267 ^ chunkZ * 67209689L;
+			long seed = chunkX * 1879267L ^ chunkZ * 67209689L;
 			seed = seed * seed * 5829687L + seed * 2876L;
 			structureRand.setSeed(seed);
 			roadNear = LOTRRoads.isRoadNear(chunkX + 8, chunkZ + 8, 16) >= 0.0f;
@@ -300,7 +300,7 @@ public class LOTRBiomeDecorator {
 		cluster = Math.round(treeClusterChance * (1.0f / Math.max(biomeVariant.treeFactor, 0.001f)));
 		if (cluster > 0) {
 			Random chunkRand = new Random();
-			long seed = chunkX / treeClusterSize * 3129871 ^ chunkZ / treeClusterSize * 116129781L;
+			long seed = chunkX / treeClusterSize * 3129871L ^ chunkZ / treeClusterSize * 116129781L;
 			seed = seed * seed * 42317861L + seed * 11L;
 			chunkRand.setSeed(seed);
 			if (chunkRand.nextInt(cluster) == 0) {
@@ -405,6 +405,7 @@ public class LOTRBiomeDecorator {
 			int j11;
 			i2 = chunkX + rand.nextInt(16) + 8;
 			int k14 = chunkZ + rand.nextInt(16) + 8;
+			//noinspection StatementWithEmptyBody
 			for (j11 = rand.nextInt(128); j11 > 0 && worldObj.getBlock(i2, j11 - 1, k14) == Blocks.air; --j11) {
 			}
 			waterlilyGen.generate(worldObj, rand, i2, j11, k14);
@@ -454,6 +455,7 @@ public class LOTRBiomeDecorator {
 			int j13;
 			i2 = chunkX + rand.nextInt(16) + 8;
 			k4 = chunkZ + rand.nextInt(16) + 8;
+			//noinspection StatementWithEmptyBody
 			for (j13 = rand.nextInt(128); j13 > 0 && worldObj.getBlock(i2, j13 - 1, k4) == Blocks.air; --j13) {
 			}
 			if (rand.nextFloat() < dryReedChance) {
@@ -570,7 +572,7 @@ public class LOTRBiomeDecorator {
 		rand = random;
 		chunkX = i;
 		chunkZ = k;
-		this.decorate();
+		decorate();
 	}
 
 	public void generateOres() {
@@ -590,7 +592,7 @@ public class LOTRBiomeDecorator {
 
 	public void genStandardOre(float ores, WorldGenerator oreGen, int minHeight, int maxHeight) {
 		while (ores > 0.0f) {
-			boolean generate = ores >= 1.0f ? true : rand.nextFloat() < ores;
+			boolean generate = ores >= 1.0f || rand.nextFloat() < ores;
 			ores -= 1.0f;
 			if (!generate) {
 				continue;

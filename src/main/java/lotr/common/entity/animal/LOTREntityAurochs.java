@@ -61,7 +61,7 @@ public class LOTREntityAurochs extends EntityCow implements LOTRRandomSkinEntity
 			for (Object element : list) {
 				LOTREntityAurochs aurochs;
 				Entity entity = (Entity) element;
-				if (entity.getClass() != this.getClass() || (aurochs = (LOTREntityAurochs) entity).isChild()) {
+				if (entity.getClass() != getClass() || (aurochs = (LOTREntityAurochs) entity).isChild()) {
 					continue;
 				}
 				aurochs.setAttackTarget((EntityLivingBase) attacker);

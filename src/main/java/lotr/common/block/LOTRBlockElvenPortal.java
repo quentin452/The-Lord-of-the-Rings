@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class LOTRBlockElvenPortal extends LOTRBlockPortal {
 	public LOTRBlockElvenPortal() {
-		super(new LOTRFaction[] { LOTRFaction.LOTHLORIEN, LOTRFaction.HIGH_ELF }, LOTRTeleporterElvenPortal.class);
+		super(new LOTRFaction[]{LOTRFaction.LOTHLORIEN, LOTRFaction.HIGH_ELF}, LOTRTeleporterElvenPortal.class);
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class LOTRBlockElvenPortal extends LOTRBlockPortal {
 	public boolean isValidPortalLocation(World world, int i, int j, int k, boolean portalAlreadyMade) {
 		for (int i1 = i - 2; i1 <= i + 2; ++i1) {
 			for (int k1 = k - 2; k1 <= k + 2; ++k1) {
-				if (Math.abs(i1 - i) == 2 && Math.abs(k1 - k) == 2 || !(Math.abs(i1 - i) == 2 || Math.abs(k1 - k) == 2 ? world.getBlock(i1, j, k1) != LOTRMod.quenditeGrass : world.getBlock(i1, j, k1) != (portalAlreadyMade ? LOTRMod.elvenPortal : Blocks.water) || !LOTRMod.isOpaque(world, i1, j - 1, k1))) {
+				if (Math.abs(i1 - i) == 2 && Math.abs(k1 - k) == 2 || (Math.abs(i1 - i) == 2 || Math.abs(k1 - k) == 2 ? world.getBlock(i1, j, k1) == LOTRMod.quenditeGrass : world.getBlock(i1, j, k1) == (portalAlreadyMade ? LOTRMod.elvenPortal : Blocks.water) && LOTRMod.isOpaque(world, i1, j - 1, k1))) {
 					continue;
 				}
 				return false;
@@ -35,7 +35,7 @@ public class LOTRBlockElvenPortal extends LOTRBlockPortal {
 		return true;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		if (random.nextInt(3) == 0) {

@@ -18,7 +18,7 @@ public class LOTRWorldGenGondorSmithy extends LOTRWorldGenGondorStructure {
 		int i1;
 		int i12;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -117,8 +117,8 @@ public class LOTRWorldGenGondorSmithy extends LOTRWorldGenGondorStructure {
 		for (k1 = 2; k1 <= 6; k1 += 2) {
 			setBlockAndMetadata(world, 3, 1, k1, Blocks.anvil, 0);
 		}
-		this.placeChest(world, random, 3, 1, 8, Blocks.chest, 5, LOTRChestContents.GONDOR_SMITHY);
-		this.placeChest(world, random, 3, 1, 9, Blocks.chest, 5, LOTRChestContents.GONDOR_SMITHY);
+		placeChest(world, random, 3, 1, 8, Blocks.chest, 5, LOTRChestContents.GONDOR_SMITHY);
+		placeChest(world, random, 3, 1, 9, Blocks.chest, 5, LOTRChestContents.GONDOR_SMITHY);
 		setBlockAndMetadata(world, -1, 2, 2, Blocks.torch, 3);
 		setBlockAndMetadata(world, 1, 2, 2, Blocks.torch, 3);
 		setBlockAndMetadata(world, -3, 2, 6, Blocks.torch, 2);

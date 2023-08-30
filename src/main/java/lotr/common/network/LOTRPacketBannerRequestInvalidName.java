@@ -65,7 +65,7 @@ public class LOTRPacketBannerRequestInvalidName implements IMessage {
 						valid = true;
 					}
 				}
-				LOTRPacketBannerValidate packetResponse = new LOTRPacketBannerValidate(banner.getEntityId(), packet.slot, packet.username, valid);
+				IMessage packetResponse = new LOTRPacketBannerValidate(banner.getEntityId(), packet.slot, packet.username, valid);
 				LOTRPacketHandler.networkWrapper.sendTo(packetResponse, entityplayer);
 			}
 			return null;

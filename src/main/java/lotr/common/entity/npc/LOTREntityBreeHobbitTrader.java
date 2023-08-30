@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class LOTREntityBreeHobbitTrader extends LOTREntityBreeHobbit implements LOTRTradeable {
-	public LOTREntityBreeHobbitTrader(World world) {
+	protected LOTREntityBreeHobbitTrader(World world) {
 		super(world);
 	}
 

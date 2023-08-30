@@ -28,7 +28,7 @@ public class LOTRWorldGenRangerCamp extends LOTRWorldGenCampBase {
 		respawner.setSpawnClass(LOTREntityRangerNorth.class);
 		respawner.setCheckRanges(24, -12, 12, 12);
 		respawner.setSpawnRanges(8, -4, 4, 16);
-		this.placeNPCRespawner(respawner, world, i, j, k);
+		placeNPCRespawner(respawner, world, i, j, k);
 	}
 
 	@Override

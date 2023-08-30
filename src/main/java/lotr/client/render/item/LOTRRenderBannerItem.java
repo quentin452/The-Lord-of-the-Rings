@@ -36,9 +36,6 @@ public class LOTRRenderBannerItem implements IItemRenderer {
 		GL11.glScalef(1.0f, -1.0f, 1.0f);
 		LOTRItemBanner.BannerType bannerType = LOTRItemBanner.getBannerType(itemstack);
 		textureManager.bindTexture(LOTRRenderBanner.getStandTexture(bannerType));
-		if (renderStand) {
-			model.renderStand(0.0625f);
-		}
 		model.renderPost(0.0625f);
 		model.renderLowerPost(0.0625f);
 		textureManager.bindTexture(LOTRRenderBanner.getBannerTexture(bannerType));

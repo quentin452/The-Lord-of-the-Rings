@@ -10,7 +10,7 @@ public class LOTRModelLionRug extends ModelBase {
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-		this.setRotationAngles();
+		setRotationAngles();
 		GL11.glTranslatef(0.0f, -0.4f, 0.0f);
 		GL11.glPushMatrix();
 		GL11.glScalef(1.5f, 0.4f, 1.0f);
@@ -39,13 +39,13 @@ public class LOTRModelLionRug extends ModelBase {
 	}
 
 	public void setRotationAngles() {
-		lionModel.leg1.rotateAngleX = (float) Math.toRadians(30.0);
-		lionModel.leg1.rotateAngleZ = (float) Math.toRadians(90.0);
-		lionModel.leg2.rotateAngleX = (float) Math.toRadians(30.0);
-		lionModel.leg2.rotateAngleZ = (float) Math.toRadians(-90.0);
-		lionModel.leg3.rotateAngleX = (float) Math.toRadians(-20.0);
-		lionModel.leg3.rotateAngleZ = (float) Math.toRadians(90.0);
-		lionModel.leg4.rotateAngleX = (float) Math.toRadians(-20.0);
-		lionModel.leg4.rotateAngleZ = (float) Math.toRadians(-90.0);
+		lionModel.leg1.rotateAngleX = 0.5235987755982988f;
+		lionModel.leg1.rotateAngleZ = 1.5707963267948966f;
+		lionModel.leg2.rotateAngleX = 0.5235987755982988f;
+		lionModel.leg2.rotateAngleZ = -1.5707963267948966f;
+		lionModel.leg3.rotateAngleX = -0.3490658503988659f;
+		lionModel.leg3.rotateAngleZ = 1.5707963267948966f;
+		lionModel.leg4.rotateAngleX = -0.3490658503988659f;
+		lionModel.leg4.rotateAngleZ = -1.5707963267948966f;
 	}
 }

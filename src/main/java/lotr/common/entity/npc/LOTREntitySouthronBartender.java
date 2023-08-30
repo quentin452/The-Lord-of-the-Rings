@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class LOTREntitySouthronBartender extends LOTREntityNearHaradrim implements LOTRTradeable.Bartender {
 	public LOTREntitySouthronBartender(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcLocationName = "entity.lotr.SouthronBartender.locationName";
 	}
 

@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntitySouthronFarmer extends LOTREntityNearHaradrim implements LOTRTradeable {
 	public LOTREntitySouthronFarmer(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

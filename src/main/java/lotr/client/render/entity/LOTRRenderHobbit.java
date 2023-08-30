@@ -14,10 +14,7 @@ public class LOTRRenderHobbit extends LOTRRenderBiped {
 	public static LOTRRandomSkins hobbitSkinsFemale;
 	public static LOTRRandomSkins hobbitSkinsMaleChild;
 	public static LOTRRandomSkins hobbitSkinsFemaleChild;
-	public static ResourceLocation ringTexture;
-	static {
-		ringTexture = new ResourceLocation("lotr:mob/hobbit/ring.png");
-	}
+	public static ResourceLocation ringTexture  = new ResourceLocation("lotr:mob/hobbit/ring.png");
 
 	public ModelBiped outfitModel = new LOTRModelHobbit(0.5f, 64, 64);
 

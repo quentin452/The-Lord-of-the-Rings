@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public class LOTREntityGaladhrimSmith extends LOTREntityGaladhrimElf implements LOTRTradeable.Smith {
 	public LOTREntityGaladhrimSmith(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

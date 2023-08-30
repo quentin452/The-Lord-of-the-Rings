@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityLossarnachCaptain extends LOTREntityLossarnachAxeman implements LOTRUnitTradeable {
 	public LOTREntityLossarnachCaptain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.LOSSARNACH;
 	}
 

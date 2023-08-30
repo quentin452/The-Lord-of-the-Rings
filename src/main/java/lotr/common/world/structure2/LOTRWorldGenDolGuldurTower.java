@@ -32,7 +32,7 @@ public class LOTRWorldGenDolGuldurTower extends LOTRWorldGenStructureBase2 {
 		int j13;
 		int radius = 6;
 		int radiusPlusOne = radius + 1;
-		this.setOriginAndRotation(world, i, j, k, rotation, radiusPlusOne);
+		setOriginAndRotation(world, i, j, k, rotation, radiusPlusOne);
 		int sections = 3 + random.nextInt(3);
 		int sectionHeight = 6;
 		int topHeight = sections * sectionHeight;
@@ -127,7 +127,7 @@ public class LOTRWorldGenDolGuldurTower extends LOTRWorldGenStructureBase2 {
 							continue;
 						}
 						setBlockAndMetadata(world, i1, sectionBase + 2, k12, LOTRMod.wall2, 8);
-						this.placeSkull(world, random, i1, sectionBase + 2, k12);
+						placeSkull(world, random, i1, sectionBase + 2, k12);
 					}
 				}
 			} else {
@@ -148,7 +148,7 @@ public class LOTRWorldGenDolGuldurTower extends LOTRWorldGenStructureBase2 {
 				}
 				setBlockAndMetadata(world, 0, sectionBase + 1, 0, LOTRMod.guldurilBrick, 4);
 				setBlockAndMetadata(world, 0, sectionBase + 2, 0, LOTRMod.wall2, 8);
-				this.placeSkull(world, random, 0, sectionBase + 3, 0);
+				placeSkull(world, random, 0, sectionBase + 3, 0);
 			}
 			for (j12 = sectionBase + 1; j12 <= sectionBase + 5; ++j12) {
 				setBlockAndMetadata(world, -2, j12, -5, LOTRMod.wood, 2);
@@ -203,7 +203,7 @@ public class LOTRWorldGenDolGuldurTower extends LOTRWorldGenStructureBase2 {
 			}
 			setBlockAndMetadata(world, 2, sectionBase + 5, 5, Blocks.stone_brick_stairs, 4);
 		}
-		this.placeChest(world, random, -1, 1, 5, 0, LOTRChestContents.DOL_GULDUR_TOWER);
+		placeChest(world, random, -1, 1, 5, 0, LOTRChestContents.DOL_GULDUR_TOWER);
 		for (k1 = -3; k1 <= 3; k1 += 6) {
 			for (step = 0; step <= 3; ++step) {
 				placeBrickSupports(world, random, -9 + step, k1);

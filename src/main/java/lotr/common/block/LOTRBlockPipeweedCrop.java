@@ -12,7 +12,7 @@ import net.minecraft.world.*;
 import net.minecraftforge.common.EnumPlantType;
 
 public class LOTRBlockPipeweedCrop extends BlockCrops {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] pipeweedIcons;
 
 	@Override
@@ -25,7 +25,7 @@ public class LOTRBlockPipeweedCrop extends BlockCrops {
 		return LOTRMod.pipeweedSeeds;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j < 7) {
@@ -42,7 +42,7 @@ public class LOTRBlockPipeweedCrop extends BlockCrops {
 		return EnumPlantType.Crop;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		if (world.getBlockMetadata(i, j, k) == 7) {
@@ -50,7 +50,7 @@ public class LOTRBlockPipeweedCrop extends BlockCrops {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		pipeweedIcons = new IIcon[4];

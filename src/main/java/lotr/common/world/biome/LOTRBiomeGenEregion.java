@@ -41,11 +41,11 @@ public class LOTRBiomeGenEregion extends LOTRBiome {
 		arrspawnListContainer4[0] = LOTRBiomeSpawnList.entry(LOTRSpawnList.RIVENDELL_WARRIORS, 10);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer4);
 		addBiomeVariantSet(LOTRBiomeVariant.SET_FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.3f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.3f);
 		decorator.treesPerChunk = 1;
 		decorator.willowPerChunk = 1;
 		decorator.flowersPerChunk = 3;

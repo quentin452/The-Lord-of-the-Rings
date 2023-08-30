@@ -15,7 +15,7 @@ public class LOTRWorldGenMoredainCamp extends LOTRWorldGenStructureBase2 {
 		super(flag);
 	}
 
-	public boolean attemptHutSpawn(LOTRWorldGenStructureBase2 structure, World world, Random random) {
+	public void attemptHutSpawn(LOTRWorldGenStructureBase2 structure, World world, Random random) {
 		structure.restrictions = restrictions;
 		structure.usingPlayer = usingPlayer;
 		for (int l = 0; l < 16; ++l) {
@@ -27,14 +27,13 @@ public class LOTRWorldGenMoredainCamp extends LOTRWorldGenStructureBase2 {
 			if (!structure.generateWithSetRotation(world, random, spawnX, spawnY, spawnZ, random.nextInt(4))) {
 				continue;
 			}
-			return true;
+			return;
 		}
-		return false;
 	}
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		if (restrictions) {
 			boolean suitableSpawn = false;
 			BiomeGenBase biome = world.getBiomeGenForCoords(originX, originZ);
@@ -74,7 +73,7 @@ public class LOTRWorldGenMoredainCamp extends LOTRWorldGenStructureBase2 {
 					setGrassToDirt(world, i1, j1 - 1, k1);
 				}
 				if (i1 == 0 && k1 == 0) {
-					setBlockAndMetadata(world, i1, 1, k1, LOTRMod.moredainTable, 0);
+					setBlockAndMetadata(world, 0, 1, 0, LOTRMod.moredainTable, 0);
 					continue;
 				}
 				setBlockAndMetadata(world, i1, 1, k1, LOTRMod.slabSingle7, 0);

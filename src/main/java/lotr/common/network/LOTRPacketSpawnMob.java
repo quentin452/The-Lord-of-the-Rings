@@ -30,8 +30,6 @@ public class LOTRPacketSpawnMob implements IMessage {
 	}
 
 	public static class AdhocEntitySpawnHandler extends EntitySpawnHandler {
-		public AdhocEntitySpawnHandler() {
-		}
 
 		@Override
 		public void channelRead0(ChannelHandlerContext ctx, FMLMessage.EntityMessage msg) throws Exception {
@@ -49,10 +47,10 @@ public class LOTRPacketSpawnMob implements IMessage {
 			double y = 999.0;
 			double z = 999.0;
 			try {
-				modEntityID = (Integer) ObfuscationReflectionHelper.getPrivateValue(FMLMessage.EntitySpawnMessage.class, msg, "modEntityTypeId");
-				x = (Double) ObfuscationReflectionHelper.getPrivateValue(FMLMessage.EntitySpawnMessage.class, msg, "scaledX");
-				y = (Double) ObfuscationReflectionHelper.getPrivateValue(FMLMessage.EntitySpawnMessage.class, msg, "scaledY");
-				z = (Double) ObfuscationReflectionHelper.getPrivateValue(FMLMessage.EntitySpawnMessage.class, msg, "scaledZ");
+				modEntityID = ObfuscationReflectionHelper.getPrivateValue(FMLMessage.EntitySpawnMessage.class, msg, "modEntityTypeId");
+				x = ObfuscationReflectionHelper.getPrivateValue(FMLMessage.EntitySpawnMessage.class, msg, "scaledX");
+				y = ObfuscationReflectionHelper.getPrivateValue(FMLMessage.EntitySpawnMessage.class, msg, "scaledY");
+				z = ObfuscationReflectionHelper.getPrivateValue(FMLMessage.EntitySpawnMessage.class, msg, "scaledZ");
 			} catch (Exception exception) {
 			}
 			LOTRLog.logger.info("LOTR: Received mob spawn packet: " + modEntityID + "[" + x + ", " + y + ", " + z + "]");

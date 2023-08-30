@@ -9,7 +9,7 @@ import net.minecraft.item.*;
 import net.minecraft.world.World;
 
 public class LOTRItemDart extends Item {
-	public boolean isPoisoned = false;
+	public boolean isPoisoned;
 
 	public LOTRItemDart() {
 		setCreativeTab(LOTRCreativeTabs.tabCombat);

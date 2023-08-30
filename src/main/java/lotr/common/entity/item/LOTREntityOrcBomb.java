@@ -87,10 +87,6 @@ public class LOTREntityOrcBomb extends EntityTNTPrimed {
 		orcBombFuse = worldObj.rand.nextInt(orcBombFuse / 4) + orcBombFuse / 8;
 	}
 
-	public void setFuseFromHiredUnit() {
-		LOTRBlockOrcBomb.getBombStrengthLevel(getBombStrengthLevel());
-	}
-
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);

@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityTauredainChieftain extends LOTREntityTauredainWarrior implements LOTRUnitTradeable {
 	public LOTREntityTauredainChieftain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.TAURETHRIM;
 	}
 

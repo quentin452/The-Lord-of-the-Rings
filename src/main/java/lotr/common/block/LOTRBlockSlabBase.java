@@ -17,7 +17,7 @@ public abstract class LOTRBlockSlabBase extends BlockSlab {
 	public Block doubleSlab;
 	public int subtypes;
 
-	public LOTRBlockSlabBase(boolean flag, Material material, int n) {
+	protected LOTRBlockSlabBase(boolean flag, Material material, int n) {
 		super(flag, material);
 		subtypes = n;
 		setCreativeTab(LOTRCreativeTabs.tabBlock);
@@ -42,11 +42,11 @@ public abstract class LOTRBlockSlabBase extends BlockSlab {
 
 	@Override
 	public String func_150002_b(int i) {
-		return super.getUnlocalizedName() + "." + i;
+		return getUnlocalizedName() + "." + i;
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public Item getItem(World world, int i, int j, int k) {
 		return Item.getItemFromBlock(singleSlab);
 	}
@@ -57,7 +57,7 @@ public abstract class LOTRBlockSlabBase extends BlockSlab {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		if (item != Item.getItemFromBlock(doubleSlab)) {
 			for (int j = 0; j < subtypes; ++j) {
@@ -72,7 +72,7 @@ public abstract class LOTRBlockSlabBase extends BlockSlab {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess world, int i, int j, int k, int l) {
 		boolean flag;
 		if (this == doubleSlab) {
@@ -85,7 +85,7 @@ public abstract class LOTRBlockSlabBase extends BlockSlab {
 		int j1 = j + Facing.offsetsYForSide[Facing.oppositeSide[l]];
 		int k1 = k + Facing.offsetsZForSide[Facing.oppositeSide[l]];
 		flag = (world.getBlockMetadata(i1, j1, k1) & 8) != 0;
-		return flag ? l == 0 ? true : l == 1 && super.shouldSideBeRendered(world, i, j, k, l) ? true : world.getBlock(i, j, k) != singleSlab || (world.getBlockMetadata(i, j, k) & 8) == 0 : l == 1 ? true : l == 0 && super.shouldSideBeRendered(world, i, j, k, l) ? true : world.getBlock(i, j, k) != singleSlab || (world.getBlockMetadata(i, j, k) & 8) != 0;
+		return flag ? l == 0 || l == 1 && super.shouldSideBeRendered(world, i, j, k, l) || world.getBlock(i, j, k) != singleSlab || (world.getBlockMetadata(i, j, k) & 8) == 0 : l == 1 || l == 0 && super.shouldSideBeRendered(world, i, j, k, l) || world.getBlock(i, j, k) != singleSlab || (world.getBlockMetadata(i, j, k) & 8) != 0;
 	}
 
 	public static void registerSlabs(Block block, Block block1) {

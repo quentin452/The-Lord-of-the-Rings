@@ -14,10 +14,7 @@ public class LOTRRenderDwarf extends LOTRRenderBiped {
 	public static LOTRRandomSkins dwarfSkinsFemale;
 	public static LOTRRandomSkins blueDwarfSkinsMale;
 	public static LOTRRandomSkins blueDwarfSkinsFemale;
-	public static ResourceLocation ringTexture;
-	static {
-		ringTexture = new ResourceLocation("lotr:mob/dwarf/ring.png");
-	}
+	public static ResourceLocation ringTexture  = new ResourceLocation("lotr:mob/dwarf/ring.png");
 
 	public ModelBiped standardRenderPassModel = new LOTRModelDwarf(0.5f, 64, 64);
 

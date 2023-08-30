@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityNearHaradrim extends LOTREntityNearHaradrimBase {
 	public LOTREntityNearHaradrim(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

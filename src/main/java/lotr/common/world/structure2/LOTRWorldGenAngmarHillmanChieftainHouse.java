@@ -37,7 +37,7 @@ public class LOTRWorldGenAngmarHillmanChieftainHouse extends LOTRWorldGenStructu
 		int j16;
 		int k13;
 		int k14;
-		this.setOriginAndRotation(world, i, j, k, rotation, 5);
+		setOriginAndRotation(world, i, j, k, rotation, 5);
 		if (restrictions) {
 			int minHeight = 0;
 			int maxHeight = 0;
@@ -97,7 +97,7 @@ public class LOTRWorldGenAngmarHillmanChieftainHouse extends LOTRWorldGenStructu
 				setBlockAndMetadata(world, i12, 1, k1, LOTRMod.thatchFloor, 0);
 			}
 		}
-		for (int i14 : new int[] { -4, 4 }) {
+		for (int i14 : new int[]{-4, 4}) {
 			for (k12 = -4; k12 <= 4; ++k12) {
 				setBlockAndMetadata(world, i14, 1, k12, woodBlock, woodMeta | 8);
 				setBlockAndMetadata(world, i14, 4, k12, woodBlock, woodMeta | 8);
@@ -108,7 +108,7 @@ public class LOTRWorldGenAngmarHillmanChieftainHouse extends LOTRWorldGenStructu
 				setBlockAndMetadata(world, i14, j13, 5, woodBlock, woodMeta);
 			}
 		}
-		for (int i14 : new int[] { -3, 3 }) {
+		for (int i14 : new int[]{-3, 3}) {
 			for (k12 = -4; k12 <= 4; ++k12) {
 				setBlockAndMetadata(world, i14, 1, k12, plankBlock, plankMeta);
 			}
@@ -130,7 +130,7 @@ public class LOTRWorldGenAngmarHillmanChieftainHouse extends LOTRWorldGenStructu
 			setBlockAndMetadata(world, i14, 3, -5, stairBlock, 6);
 			setBlockAndMetadata(world, i14, 4, -5, slabBlock, slabMeta);
 		}
-		int[] i15 = { -2, 2 };
+		int[] i15 = {-2, 2};
 		k1 = i15.length;
 		for (j12 = 0; j12 < k1; ++j12) {
 			int i14;
@@ -196,7 +196,7 @@ public class LOTRWorldGenAngmarHillmanChieftainHouse extends LOTRWorldGenStructu
 				setBlockAndMetadata(world, i1, j1, 5, plankBlock, plankMeta);
 			}
 		}
-		for (int i14 : new int[] { -2, 2 }) {
+		for (int i14 : new int[]{-2, 2}) {
 			for (j13 = 1; j13 <= 4; ++j13) {
 				setBlockAndMetadata(world, i14, j13, 4, plankBlock, plankMeta);
 			}
@@ -254,7 +254,7 @@ public class LOTRWorldGenAngmarHillmanChieftainHouse extends LOTRWorldGenStructu
 			setBlockAndMetadata(world, 4, 5, k13, stairBlock, 0);
 			setBlockAndMetadata(world, 5, 4, k13, slabBlock, slabMeta | 8);
 		}
-		for (int k15 : new int[] { -6, 6 }) {
+		for (int k15 : new int[]{-6, 6}) {
 			setBlockAndMetadata(world, -4, 4, k15, slabBlock, slabMeta | 8);
 			setBlockAndMetadata(world, -3, 5, k15, stairBlock, 4);
 			setBlockAndMetadata(world, -2, 6, k15, stairBlock, 4);
@@ -298,7 +298,7 @@ public class LOTRWorldGenAngmarHillmanChieftainHouse extends LOTRWorldGenStructu
 			setBlockAndMetadata(world, -1, 8, k14, stairBlock, 4);
 			setBlockAndMetadata(world, 1, 8, k14, stairBlock, 5);
 		}
-		for (int i14 : new int[] { -1, 1 }) {
+		for (int i14 : new int[]{-1, 1}) {
 			setBlockAndMetadata(world, i14, 8, -5, plankBlock, plankMeta);
 			setBlockAndMetadata(world, i14, 8, -4, plankBlock, plankMeta);
 			setBlockAndMetadata(world, i14, 8, 4, plankBlock, plankMeta);
@@ -312,7 +312,7 @@ public class LOTRWorldGenAngmarHillmanChieftainHouse extends LOTRWorldGenStructu
 			for (int i16 = -1; i16 <= 1; ++i16) {
 				for (int k16 = -1; k16 <= 1; ++k16) {
 					if (i16 == 0 && k16 == 0) {
-						setAir(world, i16, j16, k16);
+						setAir(world, 0, j16, 0);
 						continue;
 					}
 					setBlockAndMetadata(world, i16, j16, k16, Blocks.cobblestone, 0);
@@ -332,7 +332,7 @@ public class LOTRWorldGenAngmarHillmanChieftainHouse extends LOTRWorldGenStructu
 		setBlockAndMetadata(world, -2, 1, 3, LOTRMod.angmarTable, 0);
 		setBlockAndMetadata(world, -2, 1, 2, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, 2, 1, 3, Blocks.furnace, 5);
-		this.placeChest(world, random, 2, 1, 2, 5, LOTRChestContents.ANGMAR_HILLMAN_HOUSE);
+		placeChest(world, random, 2, 1, 2, 5, LOTRChestContents.ANGMAR_HILLMAN_HOUSE);
 		LOTREntityAngmarHillmanChieftain chieftain = new LOTREntityAngmarHillmanChieftain(world);
 		spawnNPCAndSetHome(chieftain, world, 0, 1, 0, 8);
 		return true;

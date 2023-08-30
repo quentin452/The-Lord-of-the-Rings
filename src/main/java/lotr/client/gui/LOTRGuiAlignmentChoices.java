@@ -2,6 +2,7 @@ package lotr.client.gui;
 
 import java.util.*;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.lwjgl.opengl.GL11;
 
 import lotr.client.LOTRClientProxy;
@@ -18,11 +19,11 @@ public class LOTRGuiAlignmentChoices extends LOTRGuiScreenBase {
 	public int ySize = 250;
 	public int guiLeft;
 	public int guiTop;
-	public int page = 0;
+	public int page;
 	public GuiButton buttonConfirm;
-	public Map<LOTRFaction, LOTRGuiButtonRedBook> facButtons = new HashMap<>();
+	public Map<LOTRFaction, LOTRGuiButtonRedBook> facButtons = new EnumMap<>(LOTRFaction.class);
 	public Map<LOTRGuiButtonRedBook, LOTRFaction> buttonFacs = new HashMap<>();
-	public Set<LOTRFaction> setZeroFacs = new HashSet<>();
+	public Set<LOTRFaction> setZeroFacs = EnumSet.noneOf(LOTRFaction.class);
 
 	@Override
 	public void actionPerformed(GuiButton button) {
@@ -31,7 +32,7 @@ public class LOTRGuiAlignmentChoices extends LOTRGuiScreenBase {
 				if (page == 0) {
 					page = 1;
 				} else if (page == 1) {
-					LOTRPacketAlignmentChoices packet = new LOTRPacketAlignmentChoices(setZeroFacs);
+					IMessage packet = new LOTRPacketAlignmentChoices(setZeroFacs);
 					LOTRPacketHandler.networkWrapper.sendToServer(packet);
 					mc.thePlayer.closeScreen();
 				}
@@ -57,8 +58,8 @@ public class LOTRGuiAlignmentChoices extends LOTRGuiScreenBase {
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		mc.getTextureManager().bindTexture(LOTRClientProxy.alignmentTexture);
 		int warnIconSize = 32;
-		this.drawTexturedModalRect(guiLeft - warnIconSize, guiTop, 16, 128, warnIconSize, warnIconSize);
-		this.drawTexturedModalRect(guiLeft + xSize, guiTop, 16, 128, warnIconSize, warnIconSize);
+		drawTexturedModalRect(guiLeft - warnIconSize, guiTop, 16, 128, warnIconSize, warnIconSize);
+		drawTexturedModalRect(guiLeft + xSize, guiTop, 16, 128, warnIconSize, warnIconSize);
 		LOTRPlayerData pd = LOTRLevelData.getData(mc.thePlayer);
 		int textColor = 8019267;
 		int border = 7;
@@ -79,8 +80,7 @@ public class LOTRGuiAlignmentChoices extends LOTRGuiScreenBase {
 			fontRendererObj.drawSplitString(s, x, y += fontRendererObj.FONT_HEIGHT, lineWidth, textColor);
 			y += fontRendererObj.FONT_HEIGHT * fontRendererObj.listFormattedStringToWidth(s, lineWidth).size();
 			s = "Note that if you are a server admin or playing in singleplayer you can toggle this feature in the LOTR mod config. However, players who wish to Pledge will still need to reduce Mortal Enemy alignments to zero.";
-			fontRendererObj.drawSplitString(EnumChatFormatting.ITALIC + s, x, y += fontRendererObj.FONT_HEIGHT, lineWidth, textColor);
-			y += fontRendererObj.FONT_HEIGHT * fontRendererObj.listFormattedStringToWidth(s, lineWidth).size();
+			fontRendererObj.drawSplitString(EnumChatFormatting.ITALIC + s, x, y + fontRendererObj.FONT_HEIGHT, lineWidth, textColor);
 			buttonConfirm.displayString = "View your alignments";
 		} else if (page == 1) {
 			String s = "Choose which alignments to set to zero. You can choose as many or as few as you like, but you can only choose once. Alignments which will drain due to a conflict are in RED - this will update as you select unwanted factions.";
@@ -90,7 +90,7 @@ public class LOTRGuiAlignmentChoices extends LOTRGuiScreenBase {
 			fontRendererObj.drawSplitString(s, x, y += fontRendererObj.FONT_HEIGHT, lineWidth, textColor);
 			y += fontRendererObj.FONT_HEIGHT * fontRendererObj.listFormattedStringToWidth(s, lineWidth).size();
 			int buttonX = guiLeft + border;
-			int buttonY = y += fontRendererObj.FONT_HEIGHT;
+			int buttonY = y + fontRendererObj.FONT_HEIGHT;
 			for (LOTRFaction fac : LOTRFaction.getPlayableAlignmentFactions()) {
 				LOTRGuiButtonRedBook button = facButtons.get(fac);
 				button.visible = true;
@@ -132,9 +132,9 @@ public class LOTRGuiAlignmentChoices extends LOTRGuiScreenBase {
 				GL11.glScalef(buttonTextScale, buttonTextScale, 1.0f);
 				int buttonTextX = (int) ((button.xPosition + button.width / 2) / buttonTextScale);
 				int buttonTextY = (int) (button.yPosition / buttonTextScale) + 4;
-				this.drawCenteredString(facName, buttonTextX, buttonTextY, textColor);
-				this.drawCenteredString(alignS, buttonTextX, buttonTextY += fontRendererObj.FONT_HEIGHT, textColor);
-				this.drawCenteredString(status, buttonTextX, buttonTextY += fontRendererObj.FONT_HEIGHT, textColor);
+				drawCenteredString(facName, buttonTextX, buttonTextY, textColor);
+				drawCenteredString(alignS, buttonTextX, buttonTextY += fontRendererObj.FONT_HEIGHT, textColor);
+				drawCenteredString(status, buttonTextX, buttonTextY + fontRendererObj.FONT_HEIGHT, textColor);
 				GL11.glPopMatrix();
 				if (!button.func_146115_a() || align <= 0.0f || setZeroFacs.contains(fac) || !isFactionConflicting(pd, fac, true)) {
 					continue;

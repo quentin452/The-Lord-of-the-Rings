@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class LOTREntityRohirrimWarrior extends LOTREntityRohanMan {
 	public LOTREntityRohirrimWarrior(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		spawnRidingHorse = rand.nextInt(3) == 0;
 		npcShield = LOTRShields.ALIGNMENT_ROHAN;
 	}

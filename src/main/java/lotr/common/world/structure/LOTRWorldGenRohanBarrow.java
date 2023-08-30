@@ -30,21 +30,21 @@ public class LOTRWorldGenRohanBarrow extends LOTRWorldGenStructureBase {
 		if (!restrictions && usingPlayer != null) {
 			int playerRotation = usingPlayerRotation();
 			switch (playerRotation) {
-			case 0: {
-				k += radius;
-				break;
-			}
-			case 1: {
-				i -= radius;
-				break;
-			}
-			case 2: {
-				k -= radius;
-				break;
-			}
-			case 3: {
-				i += radius;
-			}
+				case 0: {
+					k += radius;
+					break;
+				}
+				case 1: {
+					i -= radius;
+					break;
+				}
+				case 2: {
+					k -= radius;
+					break;
+				}
+				case 3: {
+					i += radius;
+				}
 			}
 		}
 		if (restrictions) {

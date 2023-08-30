@@ -17,7 +17,7 @@ public class LOTRWorldGenBreeGarden extends LOTRWorldGenBreeStructure {
 		int i1;
 		int j1;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 8);
+		setOriginAndRotation(world, i, j, k, rotation, 8);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -6; i1 <= 6; ++i1) {
@@ -79,7 +79,7 @@ public class LOTRWorldGenBreeGarden extends LOTRWorldGenBreeStructure {
 		for (i1 = -5; i1 <= 5; ++i1) {
 			for (k1 = -3; k1 <= 2; ++k1) {
 				j1 = 1;
-				Block below = getBlock(world, i1, j1 - 1, k1);
+				Block below = getBlock(world, i1, 0, k1);
 				if (below != Blocks.grass || !isAir(world, i1, j1, k1) || random.nextInt(5) != 0) {
 					continue;
 				}

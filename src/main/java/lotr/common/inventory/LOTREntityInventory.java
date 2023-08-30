@@ -17,7 +17,7 @@ public class LOTREntityInventory extends InventoryBasic {
 
 	public boolean addItemToInventory(ItemStack itemstack) {
 		int origStack = itemstack.stackSize;
-		if (itemstack != null && itemstack.stackSize > 0) {
+		if (itemstack.stackSize > 0) {
 			for (int i = 0; i < getSizeInventory() && itemstack.stackSize > 0; ++i) {
 				ItemStack itemInSlot = getStackInSlot(i);
 				if (itemInSlot != null && (itemInSlot.stackSize >= itemInSlot.getMaxStackSize() || !itemstack.isItemEqual(itemInSlot) || !ItemStack.areItemStackTagsEqual(itemInSlot, itemstack))) {
@@ -39,7 +39,7 @@ public class LOTREntityInventory extends InventoryBasic {
 				setInventorySlotContents(i, itemInSlot);
 			}
 		}
-		return itemstack != null && itemstack.stackSize < origStack;
+		return itemstack.stackSize < origStack;
 	}
 
 	public void dropAllItems() {

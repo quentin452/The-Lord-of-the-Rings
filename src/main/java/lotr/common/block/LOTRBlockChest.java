@@ -32,7 +32,7 @@ public class LOTRBlockChest extends BlockContainer {
 
 	@Override
 	public void breakBlock(World world, int i, int j, int k, Block block, int meta) {
-		LOTRTileEntityChest chest = (LOTRTileEntityChest) world.getTileEntity(i, j, k);
+		IInventory chest = (IInventory) world.getTileEntity(i, j, k);
 		if (chest != null) {
 			LOTRMod.dropContainerItems(chest, world, i, j, k);
 			world.func_147453_f(i, j, k, block);
@@ -43,7 +43,7 @@ public class LOTRBlockChest extends BlockContainer {
 	@Override
 	public TileEntity createNewTileEntity(World world, int i) {
 		LOTRTileEntityChest chest = new LOTRTileEntityChest();
-		chest.textureName = getChestTextureName();
+		chest.textureName = chestTextureName;
 		return chest;
 	}
 
@@ -57,7 +57,7 @@ public class LOTRBlockChest extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int i, int j) {
 		return baseBlock.getIcon(i, baseMeta);
 	}
@@ -121,7 +121,7 @@ public class LOTRBlockChest extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}
 

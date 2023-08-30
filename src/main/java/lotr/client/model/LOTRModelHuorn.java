@@ -14,7 +14,7 @@ public class LOTRModelHuorn extends ModelBase {
 	public List leafBlocks = new ArrayList();
 	public ModelRenderer face;
 	public int baseX = 2;
-	public int baseY = 0;
+	public int baseY;
 	public int baseZ = 2;
 	public Random rand = new Random();
 
@@ -24,6 +24,7 @@ public class LOTRModelHuorn extends ModelBase {
 		int height = 6;
 		int leafStart = 3;
 		int leafRangeMin = 0;
+		baseY = 0;
 		for (j = baseY - leafStart + height; j <= baseY + height; ++j) {
 			int j1 = j - (baseY + height);
 			int leafRange = leafRangeMin + 1 - j1 / 2;

@@ -9,13 +9,13 @@ public class LOTRBlockOreStorage2 extends LOTRBlockOreStorageBase {
 		setOreStorageNames("blackUrukSteel", "elfSteel", "gildedIron", "salt");
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return super.getIcon(i, j);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		super.registerBlockIcons(iconregister);

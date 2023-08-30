@@ -17,7 +17,7 @@ public class LOTRGlowingEyes {
 		int light = 15728880;
 		int lx = light % 65536;
 		int ly = light / 65536;
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lx / 1.0f, ly / 1.0f);
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lx, ly);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(eyesTexture);
 		model.renderGlowingEyes(entity, f, f1, f2, f3, f4, f5);

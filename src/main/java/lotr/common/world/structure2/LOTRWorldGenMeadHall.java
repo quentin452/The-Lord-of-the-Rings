@@ -33,7 +33,7 @@ public class LOTRWorldGenMeadHall extends LOTRWorldGenRohanStructure {
 		int j14;
 		int k12;
 		int k13;
-		this.setOriginAndRotation(world, i, j, k, rotation, 1);
+		setOriginAndRotation(world, i, j, k, rotation, 1);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -107,22 +107,22 @@ public class LOTRWorldGenMeadHall extends LOTRWorldGenRohanStructure {
 						setBlockAndMetadata(world, i13, j12, k1, woodBeamRohanBlock, woodBeamRohanMeta);
 					}
 				} else {
-					if (i22 == 5 && k1 >= 3 && k1 <= 25) {
+					if (i22 == 5 && k1 >= 3) {
 						setBlockAndMetadata(world, i13, 2, k1, brickBlock, brickMeta);
 						setBlockAndMetadata(world, i13, 3, k1, plank2Block, plank2Meta);
 						setBlockAndMetadata(world, i13, 4, k1, plankBlock, plankMeta);
 					}
 					if (i22 <= 4 && k1 == 3) {
 						for (j12 = 2; j12 <= 4; ++j12) {
-							setBlockAndMetadata(world, i13, j12, k1, plankBlock, plankMeta);
+							setBlockAndMetadata(world, i13, j12, 3, plankBlock, plankMeta);
 						}
-						setBlockAndMetadata(world, i13, 5, k1, woodBeamBlock, woodBeamMeta | 4);
+						setBlockAndMetadata(world, i13, 5, 3, woodBeamBlock, woodBeamMeta | 4);
 					}
 					if (i22 <= 4 && k1 == 25) {
-						setBlockAndMetadata(world, i13, 2, k1, brickBlock, brickMeta);
-						setBlockAndMetadata(world, i13, 3, k1, plank2Block, plank2Meta);
-						setBlockAndMetadata(world, i13, 4, k1, plankBlock, plankMeta);
-						setBlockAndMetadata(world, i13, 5, k1, woodBeamBlock, woodBeamMeta | 4);
+						setBlockAndMetadata(world, i13, 2, 25, brickBlock, brickMeta);
+						setBlockAndMetadata(world, i13, 3, 25, plank2Block, plank2Meta);
+						setBlockAndMetadata(world, i13, 4, 25, plankBlock, plankMeta);
+						setBlockAndMetadata(world, i13, 5, 25, woodBeamBlock, woodBeamMeta | 4);
 					}
 				}
 				if (k1 < 3 || k1 > 25) {
@@ -180,7 +180,7 @@ public class LOTRWorldGenMeadHall extends LOTRWorldGenRohanStructure {
 			for (step = 0; step <= 6; ++step) {
 				i12 = 1 + step;
 				j12 = 8 - (step + 1) / 2;
-				for (int i23 : new int[] { -i12, i12 }) {
+				for (int i23 : new int[]{-i12, i12}) {
 					if (step % 2 == 0) {
 						setBlockAndMetadata(world, i23, j12, k12, plank2SlabBlock, plank2SlabMeta);
 						setBlockAndMetadata(world, i23, j12 - 1, k12, plank2SlabBlock, plank2SlabMeta | 8);
@@ -282,7 +282,7 @@ public class LOTRWorldGenMeadHall extends LOTRWorldGenRohanStructure {
 			}
 			setBlockAndMetadata(world, i13, 3, 26, brickBlock, brickMeta);
 		}
-		for (int k14 : new int[] { 2, 26 }) {
+		for (int k14 : new int[]{2, 26}) {
 			for (int i14 = -5; i14 <= 5; ++i14) {
 				int i24 = Math.abs(i14);
 				if (i24 == 2 || i24 == 5) {
@@ -294,7 +294,7 @@ public class LOTRWorldGenMeadHall extends LOTRWorldGenRohanStructure {
 				setBlockAndMetadata(world, i14, 5, k14, plank2SlabBlock, plank2SlabMeta | 8);
 			}
 		}
-		for (int i15 : new int[] { -4, 3 }) {
+		for (int i15 : new int[]{-4, 3}) {
 			setBlockAndMetadata(world, i15, 2, 2, plank2StairBlock, 4);
 			setBlockAndMetadata(world, i15 + 1, 2, 2, plank2StairBlock, 5);
 			for (int i25 = i15; i25 <= i15 + 1; ++i25) {
@@ -309,12 +309,12 @@ public class LOTRWorldGenMeadHall extends LOTRWorldGenRohanStructure {
 		setBlockAndMetadata(world, -1, 3, 2, Blocks.torch, 4);
 		setBlockAndMetadata(world, 1, 3, 2, Blocks.torch, 4);
 		placeSign(world, 0, 4, 2, Blocks.wall_sign, 2, meadNameSign);
-		for (int i15 : new int[] { -2, 2 }) {
+		for (int i15 : new int[]{-2, 2}) {
 			for (j14 = 2; j14 <= 4; ++j14) {
 				setBlockAndMetadata(world, i15, j14, 3, woodBeamRohanGoldBlock, woodBeamRohanGoldMeta);
 			}
 		}
-		for (int i15 : new int[] { -3, 3 }) {
+		for (int i15 : new int[]{-3, 3}) {
 			setBlockAndMetadata(world, i15, 3, 3, plankStairBlock, 2);
 			setBlockAndMetadata(world, i15, 4, 3, fenceBlock, fenceMeta);
 		}
@@ -362,14 +362,14 @@ public class LOTRWorldGenMeadHall extends LOTRWorldGenRohanStructure {
 				}
 				if (i16 == 0 && random.nextBoolean()) {
 					if (random.nextBoolean()) {
-						this.placeBarrel(world, random, i16, 3, k13, random.nextBoolean() ? 4 : 5, LOTRFoods.ROHAN_DRINK);
+						placeBarrel(world, random, 0, 3, k13, random.nextBoolean() ? 4 : 5, LOTRFoods.ROHAN_DRINK);
 						continue;
 					}
-					setBlockAndMetadata(world, i16, 3, k13, getRandomCakeBlock(random), 0);
+					setBlockAndMetadata(world, 0, 3, k13, getRandomCakeBlock(random), 0);
 					continue;
 				}
 				if (random.nextInt(3) == 0) {
-					this.placeMug(world, random, i16, 3, k13, random.nextInt(4), LOTRFoods.ROHAN_DRINK);
+					placeMug(world, random, i16, 3, k13, random.nextInt(4), LOTRFoods.ROHAN_DRINK);
 					continue;
 				}
 				placePlate(world, random, i16, 3, k13, plateBlock, LOTRFoods.ROHAN);
@@ -392,19 +392,19 @@ public class LOTRWorldGenMeadHall extends LOTRWorldGenRohanStructure {
 		setBlockAndMetadata(world, -4, 2, 4, plankBlock, plankMeta);
 		setBlockAndMetadata(world, -4, 2, 5, plankSlabBlock, plankSlabMeta | 8);
 		setBlockAndMetadata(world, -4, 2, 6, plankBlock, plankMeta);
-		this.placeMug(world, random, -2, 3, 4, 2, LOTRFoods.ROHAN_DRINK);
-		this.placeBarrel(world, random, -3, 3, 4, 3, LOTRFoods.ROHAN_DRINK);
-		this.placeBarrel(world, random, -4, 3, 5, 4, LOTRFoods.ROHAN_DRINK);
-		this.placeMug(world, random, -4, 3, 6, 3, LOTRFoods.ROHAN_DRINK);
+		placeMug(world, random, -2, 3, 4, 2, LOTRFoods.ROHAN_DRINK);
+		placeBarrel(world, random, -3, 3, 4, 3, LOTRFoods.ROHAN_DRINK);
+		placeBarrel(world, random, -4, 3, 5, 4, LOTRFoods.ROHAN_DRINK);
+		placeMug(world, random, -4, 3, 6, 3, LOTRFoods.ROHAN_DRINK);
 		setBlockAndMetadata(world, 2, 2, 4, plankBlock, plankMeta);
 		setBlockAndMetadata(world, 3, 2, 4, plankSlabBlock, plankSlabMeta | 8);
 		setBlockAndMetadata(world, 4, 2, 4, plankBlock, plankMeta);
 		setBlockAndMetadata(world, 4, 2, 5, plankSlabBlock, plankSlabMeta | 8);
 		setBlockAndMetadata(world, 4, 2, 6, plankBlock, plankMeta);
-		this.placeMug(world, random, 2, 3, 4, 2, LOTRFoods.ROHAN_DRINK);
-		this.placeBarrel(world, random, 3, 3, 4, 3, LOTRFoods.ROHAN_DRINK);
-		this.placeBarrel(world, random, 4, 3, 5, 5, LOTRFoods.ROHAN_DRINK);
-		this.placeMug(world, random, 4, 3, 6, 1, LOTRFoods.ROHAN_DRINK);
+		placeMug(world, random, 2, 3, 4, 2, LOTRFoods.ROHAN_DRINK);
+		placeBarrel(world, random, 3, 3, 4, 3, LOTRFoods.ROHAN_DRINK);
+		placeBarrel(world, random, 4, 3, 5, 5, LOTRFoods.ROHAN_DRINK);
+		placeMug(world, random, 4, 3, 6, 1, LOTRFoods.ROHAN_DRINK);
 		for (i1 = -1; i1 <= 1; ++i1) {
 			setBlockAndMetadata(world, i1, 1, 24, LOTRMod.hearth, 0);
 			setBlockAndMetadata(world, i1, 2, 24, Blocks.fire, 0);
@@ -462,6 +462,6 @@ public class LOTRWorldGenMeadHall extends LOTRWorldGenRohanStructure {
 	public void setupRandomBlocks(Random random) {
 		super.setupRandomBlocks(random);
 		meadHallName = LOTRNames.getRohanMeadHallName(random);
-		meadNameSign = new String[] { "", meadHallName[0], meadHallName[1], "" };
+		meadNameSign = new String[]{"", meadHallName[0], meadHallName[1], ""};
 	}
 }

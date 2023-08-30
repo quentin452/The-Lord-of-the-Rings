@@ -21,10 +21,10 @@ public abstract class LOTRWorldGenCampBase extends LOTRWorldGenStructureBase2 {
 	public int farmBaseMeta;
 	public Block farmCropBlock;
 	public int farmCropMeta;
-	public boolean hasOrcTorches = false;
-	public boolean hasSkulls = false;
+	public boolean hasOrcTorches;
+	public boolean hasSkulls;
 
-	public LOTRWorldGenCampBase(boolean flag) {
+	protected LOTRWorldGenCampBase(boolean flag) {
 		super(flag);
 	}
 
@@ -57,7 +57,7 @@ public abstract class LOTRWorldGenCampBase extends LOTRWorldGenStructureBase2 {
 		if (restrictions && (!LOTRWorldGenStructureBase2.isSurfaceStatic(world, i, j - 1, k) || world.getBlock(i, j, k).getMaterial().isLiquid())) {
 			return false;
 		}
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		int groundRange = 12;
 		for (int i12 = -groundRange; i12 <= groundRange; ++i12) {
@@ -94,33 +94,32 @@ public abstract class LOTRWorldGenCampBase extends LOTRWorldGenStructureBase2 {
 			int tentZ = MathHelper.getRandomIntegerInRange(random, 6, 12);
 			i14 = 0;
 			int k1 = 0;
-			int rot = l;
-			switch (rot) {
-			case 0:
-				i14 = tentX;
-				k1 = tentZ;
-				break;
-			case 1:
-				i14 = tentZ;
-				k1 = -tentX;
-				break;
-			case 2:
-				i14 = -tentX;
-				k1 = -tentZ;
-				break;
-			case 3:
-				i14 = -tentZ;
-				k1 = tentX;
-				break;
-			default:
-				break;
+			switch (l) {
+				case 0:
+					i14 = tentX;
+					k1 = tentZ;
+					break;
+				case 1:
+					i14 = tentZ;
+					k1 = -tentX;
+					break;
+				case 2:
+					i14 = -tentX;
+					k1 = -tentZ;
+					break;
+				case 3:
+					i14 = -tentZ;
+					k1 = tentX;
+					break;
+				default:
+					break;
 			}
 			int j1 = getTopBlock(world, i14, k1);
-			generateSubstructure(createTent(notifyChanges, random), world, random, i14, j1, k1, rot);
+			generateSubstructure(createTent(notifyChanges, random), world, random, i14, j1, k1, l);
 		}
 		if (hasOrcTorches) {
-			for (int i141 : new int[] { -2, 2 }) {
-				for (int k1 : new int[] { -2, 2 }) {
+			for (int i141 : new int[]{-2, 2}) {
+				for (int k1 : new int[]{-2, 2}) {
 					int j1 = getTopBlock(world, i141, k1);
 					placeOrcTorch(world, i141, j1, k1);
 				}
@@ -130,7 +129,8 @@ public abstract class LOTRWorldGenCampBase extends LOTRWorldGenStructureBase2 {
 			int[] farmCoords = null;
 			int farmRange = 12;
 			int minFarmRange = 5;
-			block7: for (int l2 = 0; l2 < 32; ++l2) {
+			block7:
+			for (int l2 = 0; l2 < 32; ++l2) {
 				int k1;
 				int i15 = MathHelper.getRandomIntegerInRange(random, -farmRange, farmRange);
 				int dSq = i15 * i15 + (k1 = MathHelper.getRandomIntegerInRange(random, -farmRange, farmRange)) * k1;
@@ -145,7 +145,7 @@ public abstract class LOTRWorldGenCampBase extends LOTRWorldGenStructureBase2 {
 						}
 					}
 				}
-				farmCoords = new int[] { i15, k1 };
+				farmCoords = new int[]{i15, k1};
 				break;
 			}
 			if (farmCoords != null) {
@@ -189,27 +189,27 @@ public abstract class LOTRWorldGenCampBase extends LOTRWorldGenStructureBase2 {
 				}
 				int gate = random.nextInt(4);
 				switch (gate) {
-				case 0:
-					setBlockAndMetadata(world, i14, highestFarmHeight, k1 + 2, fenceGateBlock, 0);
-					break;
-				case 1:
-					setBlockAndMetadata(world, i14 - 2, highestFarmHeight, k1, fenceGateBlock, 1);
-					break;
-				case 2:
-					setBlockAndMetadata(world, i14, highestFarmHeight, k1 - 2, fenceGateBlock, 2);
-					break;
-				case 3:
-					setBlockAndMetadata(world, i14 + 2, highestFarmHeight, k1, fenceGateBlock, 3);
-					break;
-				default:
-					break;
+					case 0:
+						setBlockAndMetadata(world, i14, highestFarmHeight, k1 + 2, fenceGateBlock, 0);
+						break;
+					case 1:
+						setBlockAndMetadata(world, i14 - 2, highestFarmHeight, k1, fenceGateBlock, 1);
+						break;
+					case 2:
+						setBlockAndMetadata(world, i14, highestFarmHeight, k1 - 2, fenceGateBlock, 2);
+						break;
+					case 3:
+						setBlockAndMetadata(world, i14 + 2, highestFarmHeight, k1, fenceGateBlock, 3);
+						break;
+					default:
+						break;
 				}
 				int scarecrowX = i14 + (random.nextBoolean() ? -2 : 2);
 				int scarecrowZ = k1 + (random.nextBoolean() ? -2 : 2);
 				setBlockAndMetadata(world, scarecrowX, highestFarmHeight + 1, scarecrowZ, fenceBlock, fenceMeta);
 				if (hasOrcTorches) {
 					setBlockAndMetadata(world, scarecrowX, highestFarmHeight + 2, scarecrowZ, Blocks.wool, 12);
-					this.placeSkull(world, random, scarecrowX, highestFarmHeight + 3, scarecrowZ);
+					placeSkull(world, random, scarecrowX, highestFarmHeight + 3, scarecrowZ);
 				} else {
 					setBlockAndMetadata(world, scarecrowX, highestFarmHeight + 2, scarecrowZ, Blocks.hay_block, 0);
 					setBlockAndMetadata(world, scarecrowX, highestFarmHeight + 3, scarecrowZ, Blocks.pumpkin, random.nextInt(4));
@@ -229,7 +229,7 @@ public abstract class LOTRWorldGenCampBase extends LOTRWorldGenStructureBase2 {
 					continue;
 				}
 				setBlockAndMetadata(world, i16, j1, k1, fenceBlock, fenceMeta);
-				this.placeSkull(world, random, i16, j1 + 1, k1);
+				placeSkull(world, random, i16, j1 + 1, k1);
 			}
 			for (l = 0; l < 6; ++l) {
 				range = 12;
@@ -238,10 +238,10 @@ public abstract class LOTRWorldGenCampBase extends LOTRWorldGenStructureBase2 {
 				if (i16 * i16 + k1 * k1 <= 20 || !isSurface(world, i16, (j1 = getTopBlock(world, i16, k1)) - 1, k1) || !isReplaceable(world, i16, j1, k1) || !isAir(world, i16, j1 + 1, k1)) {
 					continue;
 				}
-				this.placeSkull(world, random, i16, j1, k1);
+				placeSkull(world, random, i16, j1, k1);
 			}
 		}
-		this.placeNPCRespawner(world, random, 0, 0, 0);
+		placeNPCRespawner(world, random, 0, 0, 0);
 		return true;
 	}
 

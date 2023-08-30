@@ -8,26 +8,26 @@ public class CentredSquareArray<T> {
 	public Object[] array;
 
 	public CentredSquareArray(int r) {
-		this.radius = r;
-		this.width = this.radius * 2 + 1;
-		this.array = new Object[this.width * this.width];
+		radius = r;
+		width = radius * 2 + 1;
+		array = new Object[width * width];
 	}
 
 	public void fill(T val) {
-		Arrays.fill(this.array, val);
+		Arrays.fill(array, val);
 	}
 
 	public T get(int x, int y) {
-		int index = this.getIndex(x, y);
-		return (T) this.array[index];
+		int index = getIndex(x, y);
+		return (T) array[index];
 	}
 
 	public int getIndex(int x, int y) {
-		return (y + this.radius) * this.width + x + this.radius;
+		return (y + radius) * width + x + radius;
 	}
 
 	public void set(int x, int y, T val) {
-		int index = this.getIndex(x, y);
-		this.array[index] = val;
+		int index = getIndex(x, y);
+		array[index] = val;
 	}
 }

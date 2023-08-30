@@ -7,7 +7,6 @@ import com.google.common.base.*;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.*;
-import lotr.common.fac.LOTRFaction;
 import lotr.common.network.*;
 import lotr.common.quest.*;
 import lotr.common.world.biome.LOTRBiome;
@@ -22,15 +21,15 @@ public class LOTREntityQuestInfo {
 	public static int maxOfferTime = 24000;
 	public LOTREntityNPC theNPC;
 	public LOTRMiniQuest miniquestOffer;
-	public int offerTime = 0;
+	public int offerTime;
 	public int offerChance;
 	public float minAlignment;
 	public Map<UUID, LOTRMiniQuest> playerSpecificOffers = new HashMap<>();
-	public List<EntityPlayer> openOfferPlayers = new ArrayList<>();
+	public Collection<EntityPlayer> openOfferPlayers = new ArrayList<>();
 	public Map<UUID, Boolean> playerPacketCache = new HashMap<>();
 	public boolean clientIsOffering;
 	public int clientOfferColor;
-	public List<UUID> activeQuestPlayers = new ArrayList<>();
+	public Collection<UUID> activeQuestPlayers = new ArrayList<>();
 	public Predicate<EntityPlayer> bountyHelpPredicate;
 	public Predicate<EntityPlayer> bountyHelpConsumer;
 	public MiniQuestSelector.BountyActiveAnyFaction activeBountySelector;
@@ -39,27 +38,9 @@ public class LOTREntityQuestInfo {
 		theNPC = npc;
 		offerChance = 20000;
 		minAlignment = 0.0f;
-		bountyHelpPredicate = new Predicate<EntityPlayer>() {
-
-			@Override
-			public boolean apply(EntityPlayer player) {
-				return theNPC.getRNG().nextInt(3) == 0;
-			}
-		};
-		bountyHelpConsumer = new Predicate<EntityPlayer>() {
-
-			@Override
-			public boolean apply(EntityPlayer player) {
-				return true;
-			}
-		};
-		activeBountySelector = new MiniQuestSelector.BountyActiveFaction(new Supplier<LOTRFaction>() {
-
-			@Override
-			public LOTRFaction get() {
-				return theNPC.getFaction();
-			}
-		});
+		bountyHelpPredicate = player -> theNPC.getRNG().nextInt(3) == 0;
+		bountyHelpConsumer = player -> true;
+		activeBountySelector = new MiniQuestSelector.BountyActiveFaction(() -> theNPC.getFaction());
 	}
 
 	public void addActiveQuestPlayer(EntityPlayer entityplayer) {
@@ -117,7 +98,7 @@ public class LOTREntityQuestInfo {
 	}
 
 	public LOTRMiniQuest getOfferFor(EntityPlayer entityplayer) {
-		return this.getOfferFor(entityplayer, null);
+		return getOfferFor(entityplayer, null);
 	}
 
 	public LOTRMiniQuest getOfferFor(EntityPlayer entityplayer, boolean[] isSpecific) {
@@ -157,7 +138,7 @@ public class LOTREntityQuestInfo {
 				}
 				return true;
 			}
-			LOTRMiniQuest offer = this.getOfferFor(entityplayer);
+			LOTRMiniQuest offer = getOfferFor(entityplayer);
 			if (offer != null && offer.isValidQuest() && offer.canPlayerAccept(entityplayer)) {
 				List<LOTRMiniQuest> questsForFaction = playerData.getMiniQuestsForFaction(theNPC.getFaction(), true);
 				if (questsForFaction.size() < LOTRMiniQuest.MAX_MINIQUESTS_PER_FACTION) {
@@ -238,7 +219,7 @@ public class LOTREntityQuestInfo {
 
 	public void pruneActiveQuestPlayers() {
 		if (!activeQuestPlayers.isEmpty()) {
-			HashSet<UUID> removes = new HashSet<>();
+			Collection<UUID> removes = new HashSet<>();
 			for (UUID player : activeQuestPlayers) {
 				List<LOTRMiniQuest> playerQuests = LOTRLevelData.getData(player).getMiniQuestsForEntity(theNPC, true);
 				if (playerQuests.isEmpty()) {
@@ -273,7 +254,6 @@ public class LOTREntityQuestInfo {
 						continue;
 					}
 					playerSpecificOffers.put(playerID, offer);
-					continue;
 				} catch (Exception e) {
 					FMLLog.warning("Error loading NPC player-specific miniquest offer");
 					e.printStackTrace();
@@ -285,11 +265,9 @@ public class LOTREntityQuestInfo {
 		for (i = 0; i < activeQuestTags.tagCount(); ++i) {
 			String s = activeQuestTags.getStringTagAt(i);
 			UUID player2 = UUID.fromString(s);
-			if (player2 == null) {
-				continue;
-			}
 			activeQuestPlayers.add(player2);
 		}
+		//noinspection ConstantValue
 		if (nbt.hasKey("NPCMiniQuestPlayer") && (player = UUID.fromString(nbt.getString("NPCMiniQuestPlayer"))) != null) {
 			activeQuestPlayers.add(player);
 		}
@@ -304,7 +282,7 @@ public class LOTREntityQuestInfo {
 		removeOpenOfferPlayer(entityplayer);
 		if (accept) {
 			boolean[] container = new boolean[1];
-			LOTRMiniQuest quest = this.getOfferFor(entityplayer, container);
+			LOTRMiniQuest quest = getOfferFor(entityplayer, container);
 			boolean isSpecific = container[0];
 			if (quest != null && quest.isValidQuest() && canOfferQuestsTo(entityplayer)) {
 				quest.setPlayerData(LOTRLevelData.getData(entityplayer));
@@ -327,7 +305,7 @@ public class LOTREntityQuestInfo {
 	}
 
 	public void sendData(EntityPlayerMP entityplayer) {
-		LOTRMiniQuest questOffer = this.getOfferFor(entityplayer);
+		LOTRMiniQuest questOffer = getOfferFor(entityplayer);
 		boolean isOffering = questOffer != null && canOfferQuestsTo(entityplayer);
 		int color = questOffer != null ? questOffer.getQuestColor() : 0;
 		boolean prevOffering = false;
@@ -337,7 +315,7 @@ public class LOTREntityQuestInfo {
 		}
 		playerPacketCache.put(uuid, isOffering);
 		if (isOffering != prevOffering) {
-			LOTRPacketNPCIsOfferingQuest packet = new LOTRPacketNPCIsOfferingQuest(theNPC.getEntityId(), isOffering, color);
+			IMessage packet = new LOTRPacketNPCIsOfferingQuest(theNPC.getEntityId(), isOffering, color);
 			LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
 		}
 	}
@@ -359,8 +337,8 @@ public class LOTREntityQuestInfo {
 	public void sendMiniquestOffer(EntityPlayer entityplayer, LOTRMiniQuest quest) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		quest.writeToNBT(nbt);
-		LOTRPacketMiniquestOffer packet = new LOTRPacketMiniquestOffer(theNPC.getEntityId(), nbt);
-		LOTRPacketHandler.networkWrapper.sendTo((IMessage) packet, (EntityPlayerMP) entityplayer);
+		IMessage packet = new LOTRPacketMiniquestOffer(theNPC.getEntityId(), nbt);
+		LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
 		addOpenOfferPlayer(entityplayer);
 	}
 

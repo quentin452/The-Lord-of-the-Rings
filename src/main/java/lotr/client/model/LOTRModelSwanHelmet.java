@@ -37,8 +37,8 @@ public class LOTRModelSwanHelmet extends LOTRModelBiped {
 	@Override
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		float wingYaw = (float) Math.toRadians(-25.0);
-		float wingPitch = (float) Math.toRadians(20.0);
+		float wingYaw = -0.4363323129985824f;
+		float wingPitch = 0.3490658503988659f;
 		wingRight.rotateAngleY = wingYaw;
 		wingLeft.rotateAngleY = -wingYaw;
 		wingRight.rotateAngleX = wingPitch;

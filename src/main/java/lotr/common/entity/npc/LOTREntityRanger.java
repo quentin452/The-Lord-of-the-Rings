@@ -13,12 +13,12 @@ import net.minecraft.world.World;
 public abstract class LOTREntityRanger extends LOTREntityDunedain {
 	public EntityAIBase rangedAttackAI = createDunedainRangedAI();
 	public EntityAIBase meleeAttackAI;
-	public int sneakCooldown = 0;
+	public int sneakCooldown;
 	public EntityLivingBase prevRangerTarget;
 
-	public LOTREntityRanger(World world) {
+	protected LOTREntityRanger(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 		npcCape = LOTRCapes.RANGER;
 	}
 

@@ -180,7 +180,7 @@ public class LOTREntityHobbit extends LOTREntityMan {
 
 	@Override
 	public void onArtificalSpawn() {
-		if (this.getClass() == familyInfo.marriageEntityClass && rand.nextInt(10) == 0) {
+		if (getClass() == familyInfo.marriageEntityClass && rand.nextInt(10) == 0) {
 			familyInfo.setChild();
 		}
 	}

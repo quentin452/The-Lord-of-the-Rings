@@ -30,11 +30,6 @@ public class LOTREntityElk extends LOTREntityHorse implements LOTRRandomSkinEnti
 	}
 
 	@Override
-	public double clampChildJump(double jump) {
-		return MathHelper.clamp_double(jump, 0.3, 1.0);
-	}
-
-	@Override
 	public double clampChildSpeed(double speed) {
 		return MathHelper.clamp_double(speed, 0.08, 0.34);
 	}
@@ -96,7 +91,7 @@ public class LOTREntityElk extends LOTREntityHorse implements LOTRRandomSkinEnti
 	@Override
 	public void onLOTRHorseSpawn() {
 		double maxHealth = getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue();
-		getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHealth *= 1.0f + rand.nextFloat() * 0.5f);
+		getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHealth * (1.0f + rand.nextFloat() * 0.5f));
 	}
 
 	@Override

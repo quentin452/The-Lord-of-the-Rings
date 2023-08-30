@@ -14,7 +14,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRBlockWaste extends Block {
 	public static Random wasteRand = new Random();
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] randomIcons;
 
 	public LOTRBlockWaste() {
@@ -31,16 +31,16 @@ public class LOTRBlockWaste extends Block {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess world, int i, int j, int k, int side) {
 		int hash = i * 25799626 ^ k * 6879038 ^ j;
-		wasteRand.setSeed(hash += side);
+		wasteRand.setSeed(hash + side);
 		wasteRand.setSeed(wasteRand.nextLong());
 		return randomIcons[wasteRand.nextInt(randomIcons.length)];
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int i, int j) {
 		int hash = i * 334224425 ^ i;
 		hash = hash * hash * 245256 + hash * 113549945;
@@ -67,7 +67,7 @@ public class LOTRBlockWaste extends Block {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconregister) {
 		randomIcons = new IIcon[8];
 		for (int l = 0; l < randomIcons.length; ++l) {

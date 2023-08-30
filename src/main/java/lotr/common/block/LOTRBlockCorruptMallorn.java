@@ -42,7 +42,7 @@ public class LOTRBlockCorruptMallorn extends LOTRBlockFlower {
 		return true;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		for (int l = 0; l < 2; ++l) {

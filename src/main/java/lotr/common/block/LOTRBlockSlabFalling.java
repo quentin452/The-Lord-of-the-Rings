@@ -8,7 +8,7 @@ import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.world.World;
 
 public abstract class LOTRBlockSlabFalling extends LOTRBlockSlabBase {
-	public LOTRBlockSlabFalling(boolean flag, Material material, int n) {
+	protected LOTRBlockSlabFalling(boolean flag, Material material, int n) {
 		super(flag, material, n);
 	}
 

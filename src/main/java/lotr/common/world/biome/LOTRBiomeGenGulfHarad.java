@@ -46,23 +46,23 @@ public class LOTRBiomeGenGulfHarad extends LOTRBiome {
 		LOTRBiomeSpawnList.SpawnListContainer[] arrspawnListContainer3 = new LOTRBiomeSpawnList.SpawnListContainer[1];
 		arrspawnListContainer3[0] = LOTRBiomeSpawnList.entry(LOTRSpawnList.GONDOR_SOLDIERS, 10);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer3);
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE);
-		this.addBiomeVariant(LOTRBiomeVariant.STEPPE_BARREN);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.SHRUBLAND_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_ORANGE, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_LEMON, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_LIME, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_OLIVE, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_ALMOND, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_DATE, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.SCRUBLAND_SAND);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS_SCRUBLAND_SAND);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE);
+		addBiomeVariant(LOTRBiomeVariant.STEPPE_BARREN);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
+		addBiomeVariant(LOTRBiomeVariant.SHRUBLAND_OAK);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_ORANGE, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_LEMON, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_LIME, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_OLIVE, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_ALMOND, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_DATE, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.SCRUBLAND_SAND);
+		addBiomeVariant(LOTRBiomeVariant.HILLS_SCRUBLAND_SAND);
 		decorator.addOre(new WorldGenMinable(Blocks.lapis_ore, 6), 1.0f, 0, 48);
 		decorator.grassPerChunk = 8;
 		decorator.doubleGrassPerChunk = 2;
@@ -168,10 +168,10 @@ public class LOTRBiomeGenGulfHarad extends LOTRBiome {
 	@Override
 	public WorldGenerator getRandomWorldGenForDoubleFlower(Random random) {
 		LOTRWorldGenDoubleFlower doubleFlowerGen = new LOTRWorldGenDoubleFlower();
-		if (random.nextInt(3) != 0) {
-			doubleFlowerGen.setFlowerType(3);
-		} else {
+		if (random.nextInt(3) == 0) {
 			doubleFlowerGen.setFlowerType(2);
+		} else {
+			doubleFlowerGen.setFlowerType(3);
 		}
 		return doubleFlowerGen;
 	}

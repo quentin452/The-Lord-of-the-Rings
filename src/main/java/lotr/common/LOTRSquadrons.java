@@ -10,7 +10,7 @@ public class LOTRSquadrons {
 
 	public static boolean areSquadronsCompatible(LOTREntityNPC npc, ItemStack itemstack) {
 		String npcSquadron = npc.hiredNPCInfo.getSquadron();
-		String itemSquadron = LOTRSquadrons.getSquadron(itemstack);
+		String itemSquadron = getSquadron(itemstack);
 		if (StringUtils.isNullOrEmpty(npcSquadron)) {
 			return StringUtils.isNullOrEmpty(itemSquadron);
 		}

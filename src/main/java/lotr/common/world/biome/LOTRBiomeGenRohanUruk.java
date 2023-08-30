@@ -34,9 +34,9 @@ public class LOTRBiomeGenRohanUruk extends LOTRBiomeGenRohan {
 		arrspawnListContainer4[1] = LOTRBiomeSpawnList.entry(LOTRSpawnList.HUORNS, 20);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer4);
 		clearBiomeVariants();
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
 		decorator.resetTreeCluster();
 		decorator.willowPerChunk = 0;
 		decorator.flowersPerChunk = 1;
@@ -104,8 +104,4 @@ public class LOTRBiomeGenRohanUruk extends LOTRBiomeGenRohan {
 		return false;
 	}
 
-	@Override
-	public int spawnCountMultiplier() {
-		return 3;
-	}
 }

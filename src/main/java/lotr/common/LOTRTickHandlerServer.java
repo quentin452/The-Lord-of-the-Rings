@@ -103,7 +103,7 @@ public class LOTRTickHandlerServer {
 										continue;
 									}
 									foundPortalLocation = true;
-									portalLocation = new int[] { i1, j, k1 };
+									portalLocation = new int[]{i1, j, k1};
 								}
 							}
 							if (foundPortalLocation) {
@@ -126,7 +126,7 @@ public class LOTRTickHandlerServer {
 									continue;
 								}
 								foundPortalLocation = true;
-								portalLocation = new int[] { i1, j, k1 };
+								portalLocation = new int[]{i1, j, k1};
 							}
 						}
 						if (!foundPortalLocation) {
@@ -163,9 +163,7 @@ public class LOTRTickHandlerServer {
 							} else if (entityplayer.dimension == LOTRDimension.MIDDLE_EARTH.dimensionID) {
 								dimension = 0;
 							}
-							if (world instanceof WorldServer) {
-								MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(entityplayer, dimension, new LOTRTeleporter(DimensionManager.getWorld(dimension), true));
-							}
+							MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(entityplayer, dimension, new LOTRTeleporter(DimensionManager.getWorld(dimension), true));
 							playersInPortals.remove(entityplayer);
 						}
 					} else {
@@ -213,7 +211,6 @@ public class LOTRTickHandlerServer {
 			return;
 		}
 		if (event.phase == TickEvent.Phase.START && world == DimensionManager.getWorld(0)) {
-			World overworld = world;
 			if (LOTRLevelData.needsLoad) {
 				LOTRLevelData.load();
 			}
@@ -237,7 +234,7 @@ public class LOTRTickHandlerServer {
 				if (!(dimWorld.provider instanceof LOTRWorldProvider) || (prevWorldInfo = dimWorld.getWorldInfo()).getClass() == LOTRWorldInfo.class) {
 					continue;
 				}
-				LOTRWorldInfo newWorldInfo = new LOTRWorldInfo(overworld.getWorldInfo());
+				LOTRWorldInfo newWorldInfo = new LOTRWorldInfo(world.getWorldInfo());
 				newWorldInfo.setWorldName(prevWorldInfo.getWorldName());
 				LOTRReflection.setWorldInfo(dimWorld, newWorldInfo);
 				FMLLog.info("LOTR: Successfully replaced world info in %s", LOTRDimension.getCurrentDimensionWithFallback(dimWorld).dimensionName);

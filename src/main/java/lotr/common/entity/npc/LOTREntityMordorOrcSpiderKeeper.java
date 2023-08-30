@@ -11,7 +11,7 @@ public class LOTREntityMordorOrcSpiderKeeper extends LOTREntityMordorOrc impleme
 	public LOTREntityMordorOrcSpiderKeeper(World world) {
 		super(world);
 		setSize(0.6f, 1.8f);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		isWeakOrc = false;
 	}
 

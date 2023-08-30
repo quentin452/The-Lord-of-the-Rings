@@ -9,9 +9,9 @@ import net.minecraft.tileentity.TileEntityFurnace;
 
 public class LOTRContainerAlloyForge extends Container {
 	public LOTRTileEntityAlloyForgeBase theForge;
-	public int currentSmeltTime = 0;
-	public int forgeSmeltTime = 0;
-	public int currentItemFuelValue = 0;
+	public int currentSmeltTime;
+	public int forgeSmeltTime;
+	public int currentItemFuelValue;
 
 	public LOTRContainerAlloyForge(InventoryPlayer inv, LOTRTileEntityAlloyForgeBase forge) {
 		int i;
@@ -82,7 +82,7 @@ public class LOTRContainerAlloyForge extends Container {
 					return null;
 				}
 				slot.onSlotChange(itemstack1, itemstack);
-			} else if (i >= 8 && i != 12 ? theForge.getSmeltingResult(itemstack1) != null ? !mergeItemStack(itemstack1, 4, 8, false) : TileEntityFurnace.isItemFuel(itemstack1) ? !mergeItemStack(itemstack1, 12, 13, false) : i >= 13 && i < 40 ? !mergeItemStack(itemstack1, 40, 49, false) : i >= 40 && i < 49 && !mergeItemStack(itemstack1, 13, 40, false) : !mergeItemStack(itemstack1, 13, 49, false)) {
+			} else if (i >= 8 && i != 12 ? theForge.getSmeltingResult(itemstack1) != null ? !mergeItemStack(itemstack1, 4, 8, false) : TileEntityFurnace.isItemFuel(itemstack1) ? !mergeItemStack(itemstack1, 12, 13, false) : i < 40 ? !mergeItemStack(itemstack1, 40, 49, false) : i < 49 && !mergeItemStack(itemstack1, 13, 40, false) : !mergeItemStack(itemstack1, 13, 49, false)) {
 				return null;
 			}
 			if (itemstack1.stackSize == 0) {
@@ -98,7 +98,7 @@ public class LOTRContainerAlloyForge extends Container {
 		return itemstack;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void updateProgressBar(int i, int j) {
 		if (i == 0) {

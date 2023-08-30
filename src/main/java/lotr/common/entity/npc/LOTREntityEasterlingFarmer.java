@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class LOTREntityEasterlingFarmer extends LOTREntityEasterling implements LOTRTradeable, LOTRUnitTradeable {
 	public LOTREntityEasterlingFarmer(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

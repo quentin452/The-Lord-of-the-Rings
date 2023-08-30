@@ -88,7 +88,7 @@ public class LOTRTileEntityBookshelf extends TileEntity implements IInventory {
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		return LOTRTileEntityBookshelf.isBookItem(itemstack);
+		return isBookItem(itemstack);
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class LOTRTileEntityBookshelf extends TileEntity implements IInventory {
 		for (int i = 0; i < itemTags.tagCount(); ++i) {
 			NBTTagCompound slotData = itemTags.getCompoundTagAt(i);
 			int slot = slotData.getByte("Slot") & 0xFF;
-			if (slot < 0 || slot >= chestContents.length) {
+			if (slot >= chestContents.length) {
 				continue;
 			}
 			chestContents[slot] = ItemStack.loadItemStackFromNBT(slotData);
@@ -171,9 +171,7 @@ public class LOTRTileEntityBookshelf extends TileEntity implements IInventory {
 			if (item instanceof LOTRItemRedBook || item == LOTRMod.mithrilBook || item instanceof ItemEnchantedBook || item instanceof ItemMapBase) {
 				return true;
 			}
-			if (item == Items.paper || item instanceof LOTRItemModifierTemplate) {
-				return true;
-			}
+			return item == Items.paper || item instanceof LOTRItemModifierTemplate;
 		}
 		return false;
 	}

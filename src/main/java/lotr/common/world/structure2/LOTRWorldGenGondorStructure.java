@@ -90,12 +90,12 @@ public abstract class LOTRWorldGenGondorStructure extends LOTRWorldGenStructureB
 	public LOTRItemBanner.BannerType bannerType2;
 	public LOTRChestContents chestContents;
 
-	public LOTRWorldGenGondorStructure(boolean flag) {
+	protected LOTRWorldGenGondorStructure(boolean flag) {
 		super(flag);
 	}
 
 	public ItemStack getGondorFramedItem(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.helmetGondor), new ItemStack(LOTRMod.bodyGondor), new ItemStack(LOTRMod.daggerGondor), new ItemStack(LOTRMod.spearGondor), new ItemStack(LOTRMod.gondorBow), new ItemStack(Items.arrow), new ItemStack(Items.iron_sword), new ItemStack(Items.iron_axe), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.pikeIron), new ItemStack(LOTRMod.ironCrossbow), new ItemStack(LOTRMod.goldRing), new ItemStack(LOTRMod.silverRing) };
+		ItemStack[] items = {new ItemStack(LOTRMod.helmetGondor), new ItemStack(LOTRMod.bodyGondor), new ItemStack(LOTRMod.daggerGondor), new ItemStack(LOTRMod.spearGondor), new ItemStack(LOTRMod.gondorBow), new ItemStack(Items.arrow), new ItemStack(Items.iron_sword), new ItemStack(Items.iron_axe), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.pikeIron), new ItemStack(LOTRMod.ironCrossbow), new ItemStack(LOTRMod.goldRing), new ItemStack(LOTRMod.silverRing)};
 		return items[random.nextInt(items.length)].copy();
 	}
 
@@ -261,80 +261,80 @@ public abstract class LOTRWorldGenGondorStructure extends LOTRWorldGenStructureB
 		} else {
 			int randomWood = random.nextInt(7);
 			switch (randomWood) {
-			case 0:
-			case 1:
-			case 2:
-				plankBlock = Blocks.planks;
-				plankMeta = 0;
-				plankSlabBlock = Blocks.wooden_slab;
-				plankSlabMeta = 0;
-				plankStairBlock = Blocks.oak_stairs;
-				fenceBlock = Blocks.fence;
-				fenceMeta = 0;
-				fenceGateBlock = Blocks.fence_gate;
-				woodBeamBlock = LOTRMod.woodBeamV1;
-				woodBeamMeta = 0;
-				doorBlock = Blocks.wooden_door;
-				trapdoorBlock = Blocks.trapdoor;
-				break;
-			case 3:
-				plankBlock = LOTRMod.planks;
-				plankMeta = 9;
-				plankSlabBlock = LOTRMod.woodSlabSingle2;
-				plankSlabMeta = 1;
-				plankStairBlock = LOTRMod.stairsBeech;
-				fenceBlock = LOTRMod.fence;
-				fenceMeta = 9;
-				fenceGateBlock = LOTRMod.fenceGateBeech;
-				woodBeamBlock = LOTRMod.woodBeam2;
-				woodBeamMeta = 1;
-				doorBlock = LOTRMod.doorBeech;
-				trapdoorBlock = LOTRMod.trapdoorBeech;
-				break;
-			case 4:
-				plankBlock = LOTRMod.planks2;
-				plankMeta = 2;
-				plankSlabBlock = LOTRMod.woodSlabSingle3;
-				plankSlabMeta = 2;
-				plankStairBlock = LOTRMod.stairsCedar;
-				fenceBlock = LOTRMod.fence2;
-				fenceMeta = 2;
-				fenceGateBlock = LOTRMod.fenceGateCedar;
-				woodBeamBlock = LOTRMod.woodBeam4;
-				woodBeamMeta = 2;
-				doorBlock = LOTRMod.doorCedar;
-				trapdoorBlock = LOTRMod.trapdoorCedar;
-				break;
-			case 5:
-				plankBlock = LOTRMod.planks;
-				plankMeta = 8;
-				plankSlabBlock = LOTRMod.woodSlabSingle2;
-				plankSlabMeta = 0;
-				plankStairBlock = LOTRMod.stairsLebethron;
-				fenceBlock = LOTRMod.fence;
-				fenceMeta = 8;
-				fenceGateBlock = LOTRMod.fenceGateLebethron;
-				woodBeamBlock = LOTRMod.woodBeam2;
-				woodBeamMeta = 0;
-				doorBlock = LOTRMod.doorLebethron;
-				trapdoorBlock = LOTRMod.trapdoorLebethron;
-				break;
-			case 6:
-				plankBlock = Blocks.planks;
-				plankMeta = 2;
-				plankSlabBlock = Blocks.wooden_slab;
-				plankSlabMeta = 2;
-				plankStairBlock = Blocks.birch_stairs;
-				fenceBlock = Blocks.fence;
-				fenceMeta = 2;
-				fenceGateBlock = LOTRMod.fenceGateBirch;
-				woodBeamBlock = LOTRMod.woodBeamV1;
-				woodBeamMeta = 2;
-				doorBlock = LOTRMod.doorBirch;
-				trapdoorBlock = LOTRMod.trapdoorBirch;
-				break;
-			default:
-				break;
+				case 0:
+				case 1:
+				case 2:
+					plankBlock = Blocks.planks;
+					plankMeta = 0;
+					plankSlabBlock = Blocks.wooden_slab;
+					plankSlabMeta = 0;
+					plankStairBlock = Blocks.oak_stairs;
+					fenceBlock = Blocks.fence;
+					fenceMeta = 0;
+					fenceGateBlock = Blocks.fence_gate;
+					woodBeamBlock = LOTRMod.woodBeamV1;
+					woodBeamMeta = 0;
+					doorBlock = Blocks.wooden_door;
+					trapdoorBlock = Blocks.trapdoor;
+					break;
+				case 3:
+					plankBlock = LOTRMod.planks;
+					plankMeta = 9;
+					plankSlabBlock = LOTRMod.woodSlabSingle2;
+					plankSlabMeta = 1;
+					plankStairBlock = LOTRMod.stairsBeech;
+					fenceBlock = LOTRMod.fence;
+					fenceMeta = 9;
+					fenceGateBlock = LOTRMod.fenceGateBeech;
+					woodBeamBlock = LOTRMod.woodBeam2;
+					woodBeamMeta = 1;
+					doorBlock = LOTRMod.doorBeech;
+					trapdoorBlock = LOTRMod.trapdoorBeech;
+					break;
+				case 4:
+					plankBlock = LOTRMod.planks2;
+					plankMeta = 2;
+					plankSlabBlock = LOTRMod.woodSlabSingle3;
+					plankSlabMeta = 2;
+					plankStairBlock = LOTRMod.stairsCedar;
+					fenceBlock = LOTRMod.fence2;
+					fenceMeta = 2;
+					fenceGateBlock = LOTRMod.fenceGateCedar;
+					woodBeamBlock = LOTRMod.woodBeam4;
+					woodBeamMeta = 2;
+					doorBlock = LOTRMod.doorCedar;
+					trapdoorBlock = LOTRMod.trapdoorCedar;
+					break;
+				case 5:
+					plankBlock = LOTRMod.planks;
+					plankMeta = 8;
+					plankSlabBlock = LOTRMod.woodSlabSingle2;
+					plankSlabMeta = 0;
+					plankStairBlock = LOTRMod.stairsLebethron;
+					fenceBlock = LOTRMod.fence;
+					fenceMeta = 8;
+					fenceGateBlock = LOTRMod.fenceGateLebethron;
+					woodBeamBlock = LOTRMod.woodBeam2;
+					woodBeamMeta = 0;
+					doorBlock = LOTRMod.doorLebethron;
+					trapdoorBlock = LOTRMod.trapdoorLebethron;
+					break;
+				case 6:
+					plankBlock = Blocks.planks;
+					plankMeta = 2;
+					plankSlabBlock = Blocks.wooden_slab;
+					plankSlabMeta = 2;
+					plankStairBlock = Blocks.birch_stairs;
+					fenceBlock = Blocks.fence;
+					fenceMeta = 2;
+					fenceGateBlock = LOTRMod.fenceGateBirch;
+					woodBeamBlock = LOTRMod.woodBeamV1;
+					woodBeamMeta = 2;
+					doorBlock = LOTRMod.doorBirch;
+					trapdoorBlock = LOTRMod.trapdoorBirch;
+					break;
+				default:
+					break;
 			}
 		}
 		if (strFief == GondorFiefdom.LOSSARNACH) {
@@ -374,38 +374,38 @@ public abstract class LOTRWorldGenGondorStructure extends LOTRWorldGenStructureB
 		} else {
 			int randomCrop = random.nextInt(6);
 			switch (randomCrop) {
-			case 0:
-				cropBlock = Blocks.carrots;
-				cropMeta = 7;
-				seedItem = Items.carrot;
-				break;
-			case 1:
-				cropBlock = Blocks.potatoes;
-				cropMeta = 7;
-				seedItem = Items.potato;
-				break;
-			case 2:
-				cropBlock = LOTRMod.lettuceCrop;
-				cropMeta = 7;
-				seedItem = LOTRMod.lettuce;
-				break;
-			case 3:
-				cropBlock = LOTRMod.cornStalk;
-				cropMeta = 0;
-				seedItem = Item.getItemFromBlock(LOTRMod.cornStalk);
-				break;
-			case 4:
-				cropBlock = LOTRMod.leekCrop;
-				cropMeta = 7;
-				seedItem = LOTRMod.leek;
-				break;
-			case 5:
-				cropBlock = LOTRMod.turnipCrop;
-				cropMeta = 7;
-				seedItem = LOTRMod.turnip;
-				break;
-			default:
-				break;
+				case 0:
+					cropBlock = Blocks.carrots;
+					cropMeta = 7;
+					seedItem = Items.carrot;
+					break;
+				case 1:
+					cropBlock = Blocks.potatoes;
+					cropMeta = 7;
+					seedItem = Items.potato;
+					break;
+				case 2:
+					cropBlock = LOTRMod.lettuceCrop;
+					cropMeta = 7;
+					seedItem = LOTRMod.lettuce;
+					break;
+				case 3:
+					cropBlock = LOTRMod.cornStalk;
+					cropMeta = 0;
+					seedItem = Item.getItemFromBlock(LOTRMod.cornStalk);
+					break;
+				case 4:
+					cropBlock = LOTRMod.leekCrop;
+					cropMeta = 7;
+					seedItem = LOTRMod.leek;
+					break;
+				case 5:
+					cropBlock = LOTRMod.turnipCrop;
+					cropMeta = 7;
+					seedItem = LOTRMod.turnip;
+					break;
+				default:
+					break;
 			}
 		}
 		if (strFief == GondorFiefdom.GONDOR) {
@@ -462,84 +462,84 @@ public abstract class LOTRWorldGenGondorStructure extends LOTRWorldGenStructureB
 
 		public ItemStack[] getFiefdomArmor() {
 			if (this == GONDOR) {
-				return new ItemStack[] { new ItemStack(LOTRMod.helmetGondor), new ItemStack(LOTRMod.bodyGondor), new ItemStack(LOTRMod.legsGondor), new ItemStack(LOTRMod.bootsGondor) };
+				return new ItemStack[]{new ItemStack(LOTRMod.helmetGondor), new ItemStack(LOTRMod.bodyGondor), new ItemStack(LOTRMod.legsGondor), new ItemStack(LOTRMod.bootsGondor)};
 			}
 			if (this == LOSSARNACH) {
-				return new ItemStack[] { new ItemStack(LOTRMod.helmetLossarnach), new ItemStack(LOTRMod.bodyLossarnach), new ItemStack(LOTRMod.legsLossarnach), new ItemStack(LOTRMod.bootsLossarnach) };
+				return new ItemStack[]{new ItemStack(LOTRMod.helmetLossarnach), new ItemStack(LOTRMod.bodyLossarnach), new ItemStack(LOTRMod.legsLossarnach), new ItemStack(LOTRMod.bootsLossarnach)};
 			}
 			if (this == LEBENNIN) {
-				return new ItemStack[] { new ItemStack(LOTRMod.helmetGondor), new ItemStack(LOTRMod.bodyGondor), new ItemStack(LOTRMod.legsGondor), new ItemStack(LOTRMod.bootsGondor) };
+				return new ItemStack[]{new ItemStack(LOTRMod.helmetGondor), new ItemStack(LOTRMod.bodyGondor), new ItemStack(LOTRMod.legsGondor), new ItemStack(LOTRMod.bootsGondor)};
 			}
 			if (this == PELARGIR) {
-				return new ItemStack[] { new ItemStack(LOTRMod.helmetPelargir), new ItemStack(LOTRMod.bodyPelargir), new ItemStack(LOTRMod.legsPelargir), new ItemStack(LOTRMod.bootsPelargir) };
+				return new ItemStack[]{new ItemStack(LOTRMod.helmetPelargir), new ItemStack(LOTRMod.bodyPelargir), new ItemStack(LOTRMod.legsPelargir), new ItemStack(LOTRMod.bootsPelargir)};
 			}
 			if (this == PINNATH_GELIN) {
-				return new ItemStack[] { new ItemStack(LOTRMod.helmetPinnathGelin), new ItemStack(LOTRMod.bodyPinnathGelin), new ItemStack(LOTRMod.legsPinnathGelin), new ItemStack(LOTRMod.bootsPinnathGelin) };
+				return new ItemStack[]{new ItemStack(LOTRMod.helmetPinnathGelin), new ItemStack(LOTRMod.bodyPinnathGelin), new ItemStack(LOTRMod.legsPinnathGelin), new ItemStack(LOTRMod.bootsPinnathGelin)};
 			}
 			if (this == BLACKROOT_VALE) {
-				return new ItemStack[] { new ItemStack(LOTRMod.helmetBlackroot), new ItemStack(LOTRMod.bodyBlackroot), new ItemStack(LOTRMod.legsBlackroot), new ItemStack(LOTRMod.bootsBlackroot) };
+				return new ItemStack[]{new ItemStack(LOTRMod.helmetBlackroot), new ItemStack(LOTRMod.bodyBlackroot), new ItemStack(LOTRMod.legsBlackroot), new ItemStack(LOTRMod.bootsBlackroot)};
 			}
 			if (this == LAMEDON) {
-				return new ItemStack[] { new ItemStack(LOTRMod.helmetLamedon), new ItemStack(LOTRMod.bodyLamedon), new ItemStack(LOTRMod.legsLamedon), new ItemStack(LOTRMod.bootsLamedon) };
+				return new ItemStack[]{new ItemStack(LOTRMod.helmetLamedon), new ItemStack(LOTRMod.bodyLamedon), new ItemStack(LOTRMod.legsLamedon), new ItemStack(LOTRMod.bootsLamedon)};
 			}
 			if (this == DOL_AMROTH) {
-				return new ItemStack[] { new ItemStack(LOTRMod.helmetDolAmroth), new ItemStack(LOTRMod.bodyDolAmroth), new ItemStack(LOTRMod.legsDolAmroth), new ItemStack(LOTRMod.bootsDolAmroth) };
+				return new ItemStack[]{new ItemStack(LOTRMod.helmetDolAmroth), new ItemStack(LOTRMod.bodyDolAmroth), new ItemStack(LOTRMod.legsDolAmroth), new ItemStack(LOTRMod.bootsDolAmroth)};
 			}
 			return null;
 		}
 
 		public Class[] getLevyClasses() {
 			if (this == GONDOR) {
-				return new Class[] { LOTREntityGondorLevyman.class, LOTREntityGondorSoldier.class };
+				return new Class[]{LOTREntityGondorLevyman.class, LOTREntityGondorSoldier.class};
 			}
 			if (this == LOSSARNACH) {
-				return new Class[] { LOTREntityGondorLevyman.class, LOTREntityLossarnachAxeman.class };
+				return new Class[]{LOTREntityGondorLevyman.class, LOTREntityLossarnachAxeman.class};
 			}
 			if (this == LEBENNIN) {
-				return new Class[] { LOTREntityLebenninLevyman.class, LOTREntityGondorSoldier.class };
+				return new Class[]{LOTREntityLebenninLevyman.class, LOTREntityGondorSoldier.class};
 			}
 			if (this == PELARGIR) {
-				return new Class[] { LOTREntityLebenninLevyman.class, LOTREntityPelargirMarine.class };
+				return new Class[]{LOTREntityLebenninLevyman.class, LOTREntityPelargirMarine.class};
 			}
 			if (this == PINNATH_GELIN) {
-				return new Class[] { LOTREntityGondorLevyman.class, LOTREntityPinnathGelinSoldier.class };
+				return new Class[]{LOTREntityGondorLevyman.class, LOTREntityPinnathGelinSoldier.class};
 			}
 			if (this == BLACKROOT_VALE) {
-				return new Class[] { LOTREntityGondorLevyman.class, LOTREntityBlackrootArcher.class };
+				return new Class[]{LOTREntityGondorLevyman.class, LOTREntityBlackrootArcher.class};
 			}
 			if (this == LAMEDON) {
-				return new Class[] { LOTREntityLamedonHillman.class, LOTREntityLamedonSoldier.class };
+				return new Class[]{LOTREntityLamedonHillman.class, LOTREntityLamedonSoldier.class};
 			}
 			if (this == DOL_AMROTH) {
-				return new Class[] { LOTREntityDolAmrothSoldier.class, LOTREntitySwanKnight.class };
+				return new Class[]{LOTREntityDolAmrothSoldier.class, LOTREntitySwanKnight.class};
 			}
 			return null;
 		}
 
 		public Class[] getSoldierClasses() {
 			if (this == GONDOR) {
-				return new Class[] { LOTREntityGondorSoldier.class, LOTREntityGondorArcher.class };
+				return new Class[]{LOTREntityGondorSoldier.class, LOTREntityGondorArcher.class};
 			}
 			if (this == LOSSARNACH) {
-				return new Class[] { LOTREntityLossarnachAxeman.class, LOTREntityLossarnachAxeman.class };
+				return new Class[]{LOTREntityLossarnachAxeman.class, LOTREntityLossarnachAxeman.class};
 			}
 			if (this == LEBENNIN) {
-				return new Class[] { LOTREntityLebenninLevyman.class, LOTREntityGondorSoldier.class };
+				return new Class[]{LOTREntityLebenninLevyman.class, LOTREntityGondorSoldier.class};
 			}
 			if (this == PELARGIR) {
-				return new Class[] { LOTREntityPelargirMarine.class, LOTREntityPelargirMarine.class };
+				return new Class[]{LOTREntityPelargirMarine.class, LOTREntityPelargirMarine.class};
 			}
 			if (this == PINNATH_GELIN) {
-				return new Class[] { LOTREntityPinnathGelinSoldier.class, LOTREntityPinnathGelinSoldier.class };
+				return new Class[]{LOTREntityPinnathGelinSoldier.class, LOTREntityPinnathGelinSoldier.class};
 			}
 			if (this == BLACKROOT_VALE) {
-				return new Class[] { LOTREntityBlackrootArcher.class, LOTREntityBlackrootSoldier.class };
+				return new Class[]{LOTREntityBlackrootArcher.class, LOTREntityBlackrootSoldier.class};
 			}
 			if (this == LAMEDON) {
-				return new Class[] { LOTREntityLamedonSoldier.class, LOTREntityLamedonArcher.class };
+				return new Class[]{LOTREntityLamedonSoldier.class, LOTREntityLamedonArcher.class};
 			}
 			if (this == DOL_AMROTH) {
-				return new Class[] { LOTREntityDolAmrothSoldier.class, LOTREntitySwanKnight.class };
+				return new Class[]{LOTREntityDolAmrothSoldier.class, LOTREntitySwanKnight.class};
 			}
 			return null;
 		}

@@ -12,7 +12,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 
 public class LOTRStructureTimelapse {
-	public static List<ThreadTimelapse> allThreads = Collections.synchronizedList(new ArrayList());
+	public static List<ThreadTimelapse> allThreads = Collections.synchronizedList(new ArrayList<>());
 
 	public LOTRStructureTimelapse() {
 		FMLCommonHandler.instance().bus().register(this);

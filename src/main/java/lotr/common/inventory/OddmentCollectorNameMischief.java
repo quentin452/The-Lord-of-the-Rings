@@ -10,17 +10,16 @@ public class OddmentCollectorNameMischief {
 		int deletes = rand.nextInt(3);
 		for (int l = 0; l < deletes; ++l) {
 			int x;
-			if (name.length() <= 3 || OddmentCollectorNameMischief.isFormattingCharacter(name, x = rand.nextInt(name.length()))) {
+			if (name.length() <= 3 || isFormattingCharacter(name, x = rand.nextInt(name.length()))) {
 				continue;
 			}
-			name.charAt(x);
 			name = name.substring(0, x) + name.substring(x + 1);
 		}
 		int replaces = rand.nextInt(3);
 		for (int l = 0; l < replaces; ++l) {
 			char cNew;
 			int x = rand.nextInt(name.length());
-			if (OddmentCollectorNameMischief.isFormattingCharacter(name, x)) {
+			if (isFormattingCharacter(name, x)) {
 				continue;
 			}
 			char c = name.charAt(x);
@@ -43,7 +42,7 @@ public class OddmentCollectorNameMischief {
 		for (int l = 0; l < dupes; ++l) {
 			char c;
 			int x = rand.nextInt(name.length());
-			if (OddmentCollectorNameMischief.isFormattingCharacter(name, x) || !Character.isAlphabetic(c = name.charAt(x))) {
+			if (isFormattingCharacter(name, x) || !Character.isAlphabetic(c = name.charAt(x))) {
 				continue;
 			}
 			name = name.substring(0, x) + c + c + name.substring(x + 1);
@@ -51,7 +50,7 @@ public class OddmentCollectorNameMischief {
 		return name;
 	}
 
-	public static boolean isFormattingCharacter(String s, int index) {
+	public static boolean isFormattingCharacter(CharSequence s, int index) {
 		char charAt = s.charAt(index);
 		if (charAt == '\u00a7') {
 			return true;

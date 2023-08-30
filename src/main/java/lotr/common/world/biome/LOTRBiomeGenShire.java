@@ -42,15 +42,15 @@ public class LOTRBiomeGenShire extends LOTRBiome {
 		arrspawnListContainer5[0] = LOTRBiomeSpawnList.entry(LOTRSpawnList.HOBBITS_ORCHARD);
 		orcharderSpawnList.newFactionList(100).add(arrspawnListContainer5);
 		variantChance = 0.25f;
-		this.addBiomeVariant(LOTRBiomeVariant.FLOWERS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.5f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.5f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_SHIRE, 1.0f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.3f);
+		addBiomeVariant(LOTRBiomeVariant.FLOWERS);
+		addBiomeVariant(LOTRBiomeVariant.FOREST);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.HILLS_FOREST);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_SHIRE, 1.0f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.3f);
 		decorator.willowPerChunk = 1;
 		decorator.flowersPerChunk = 3;
 		decorator.doubleFlowersPerChunk = 1;
@@ -72,7 +72,7 @@ public class LOTRBiomeGenShire extends LOTRBiome {
 		registerPlainsFlowers();
 		biomeColors.setGrass(8111137);
 		if (hasShireStructures()) {
-			if (this.getClass() == LOTRBiomeGenShire.class) {
+			if (getClass() == LOTRBiomeGenShire.class) {
 				decorator.addRandomStructure(new LOTRWorldGenHobbitHole(false), 90);
 				decorator.addRandomStructure(new LOTRWorldGenHobbitBurrow(false), 45);
 				decorator.addRandomStructure(new LOTRWorldGenHobbitHouse(false), 45);

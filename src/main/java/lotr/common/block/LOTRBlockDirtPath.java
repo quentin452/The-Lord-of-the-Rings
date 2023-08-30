@@ -12,9 +12,9 @@ import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 
 public class LOTRBlockDirtPath extends Block {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] pathIcons;
-	public String[] pathNames = { "dirt", "mud" };
+	public String[] pathNames = {"dirt", "mud"};
 
 	public LOTRBlockDirtPath() {
 		super(Material.ground);
@@ -28,7 +28,7 @@ public class LOTRBlockDirtPath extends Block {
 		return i;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j >= pathNames.length) {
@@ -37,7 +37,7 @@ public class LOTRBlockDirtPath extends Block {
 		return pathIcons[j];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < pathNames.length; ++i) {
@@ -45,7 +45,7 @@ public class LOTRBlockDirtPath extends Block {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		pathIcons = new IIcon[pathNames.length];

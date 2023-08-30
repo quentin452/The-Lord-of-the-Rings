@@ -15,14 +15,14 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
 
 public class LOTRRenderBow implements IItemRenderer {
-	public static boolean renderingWeaponRack = false;
+	public static boolean renderingWeaponRack;
 	public LOTRRenderLargeItem largeItemRenderer;
 	public Map<LOTRItemBow.BowState, LOTRRenderLargeItem.ExtraLargeIconToken> tokensPullStates;
 
 	public LOTRRenderBow(LOTRRenderLargeItem large) {
 		largeItemRenderer = large;
 		if (largeItemRenderer != null) {
-			tokensPullStates = new HashMap<>();
+			tokensPullStates = new EnumMap<>(LOTRItemBow.BowState.class);
 			for (LOTRItemBow.BowState state : LOTRItemBow.BowState.values()) {
 				if (state == LOTRItemBow.BowState.HELD) {
 					continue;
@@ -74,7 +74,7 @@ public class LOTRRenderBow implements IItemRenderer {
 				throw new RuntimeException("Attempting to render a large bow which is not a bow");
 			}
 			LOTRItemBow bow = (LOTRItemBow) item;
-			LOTRItemBow.BowState bowState = LOTRItemBow.BowState.HELD;
+			LOTRItemBow.BowState bowState;
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer entityplayer = (EntityPlayer) entity;
 				ItemStack usingItem = entityplayer.getItemInUse();

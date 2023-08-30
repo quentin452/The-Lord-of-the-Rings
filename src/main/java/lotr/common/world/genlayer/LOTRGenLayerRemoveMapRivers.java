@@ -44,14 +44,14 @@ public class LOTRGenLayerRemoveMapRivers extends LOTRGenLayer {
 								boolean wateryAdjacent = subBiome.isWateryBiome() && range == 1;
 								HashMap<Integer, Integer> srcMap = wateryAdjacent ? viableBiomesWateryAdjacent : viableBiomes;
 								int count2 = 0;
-								if (srcMap.containsKey(Integer.valueOf(subBiomeID))) {
-									count2 = srcMap.get(Integer.valueOf(subBiomeID));
+								if (srcMap.containsKey(subBiomeID)) {
+									count2 = srcMap.get(subBiomeID);
 								}
 								count2++;
 								srcMap.put(subBiomeID, count2);
 							}
 						}
-						HashMap<Integer, Integer> priorityMap = viableBiomes;
+						Map<Integer, Integer> priorityMap = viableBiomes;
 						if (!viableBiomesWateryAdjacent.isEmpty()) {
 							priorityMap = viableBiomesWateryAdjacent;
 						}
@@ -61,16 +61,13 @@ public class LOTRGenLayerRemoveMapRivers extends LOTRGenLayer {
 						ArrayList<Integer> maxCountBiomes = new ArrayList<>();
 						int maxCount = 0;
 						for (Entry<Integer, Integer> e : priorityMap.entrySet()) {
-							id = e.getKey();
 							count = e.getValue();
 							if (count <= maxCount) {
 								continue;
 							}
 							maxCount = count;
 						}
-						Iterator<Entry<Integer, Integer>> subBiomeID1 = priorityMap.entrySet().iterator();
-						while (subBiomeID1.hasNext()) {
-							Map.Entry e = subBiomeID1.next();
+						for (Entry e : priorityMap.entrySet()) {
 							id = (Integer) e.getKey();
 							count = (Integer) e.getValue();
 							if (count != maxCount) {

@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class LOTRItemCrossbow extends ItemBow {
 	public double boltDamageFactor;
 	public Item.ToolMaterial crossbowMaterial;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] crossbowPullIcons;
 
 	public LOTRItemCrossbow(Item.ToolMaterial material) {
@@ -33,10 +33,10 @@ public class LOTRItemCrossbow extends ItemBow {
 		this(material.toToolMaterial());
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-		ItemStack ammo = LOTRItemCrossbow.getLoaded(itemstack);
+		ItemStack ammo = getLoaded(itemstack);
 		if (ammo != null) {
 			String ammoName = ammo.getDisplayName();
 			list.add(StatCollector.translateToLocalFormatted("item.lotr.crossbow.loadedItem", ammoName));
@@ -52,15 +52,15 @@ public class LOTRItemCrossbow extends ItemBow {
 		return getIconIndex(itemstack);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(ItemStack itemstack, int renderPass, EntityPlayer entityplayer, ItemStack usingItem, int useRemaining) {
-		if (LOTRItemCrossbow.isLoaded(itemstack)) {
+		if (isLoaded(itemstack)) {
 			return crossbowPullIcons[2];
 		}
 		if (usingItem != null && usingItem.getItem() == this) {
 			int ticksInUse = usingItem.getMaxItemUseDuration() - useRemaining;
-			double useAmount = (double) ticksInUse / (double) getMaxDrawTime();
+			double useAmount = (double) ticksInUse / getMaxDrawTime();
 			if (useAmount >= 1.0) {
 				return crossbowPullIcons[2];
 			}
@@ -74,10 +74,10 @@ public class LOTRItemCrossbow extends ItemBow {
 		return itemIcon;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIconIndex(ItemStack itemstack) {
-		if (LOTRItemCrossbow.isLoaded(itemstack)) {
+		if (isLoaded(itemstack)) {
 			return crossbowPullIcons[2];
 		}
 		return itemIcon;
@@ -110,7 +110,7 @@ public class LOTRItemCrossbow extends ItemBow {
 	@Override
 	public String getItemStackDisplayName(ItemStack itemstack) {
 		String name = super.getItemStackDisplayName(itemstack);
-		if (LOTRItemCrossbow.isLoaded(itemstack)) {
+		if (isLoaded(itemstack)) {
 			name = StatCollector.translateToLocalFormatted("item.lotr.crossbow.loaded", name);
 		}
 		return name;
@@ -121,26 +121,19 @@ public class LOTRItemCrossbow extends ItemBow {
 	}
 
 	@Override
-	public int getMaxItemUseDuration(ItemStack itemstack) {
-		return 72000;
-	}
-
-	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		if (LOTRItemCrossbow.isLoaded(itemstack)) {
-			ItemStack boltItem = LOTRItemCrossbow.getLoaded(itemstack);
+		if (isLoaded(itemstack)) {
+			ItemStack boltItem = getLoaded(itemstack);
 			if (boltItem != null) {
 				float charge = 1.0f;
 				ItemStack shotBolt = boltItem.copy();
 				shotBolt.stackSize = 1;
-				LOTREntityCrossbowBolt bolt = new LOTREntityCrossbowBolt(world, entityplayer, shotBolt, charge * 2.0f * LOTRItemCrossbow.getCrossbowLaunchSpeedFactor(itemstack));
+				LOTREntityCrossbowBolt bolt = new LOTREntityCrossbowBolt(world, entityplayer, shotBolt, charge * 2.0f * getCrossbowLaunchSpeedFactor(itemstack));
 				if (bolt.boltDamageFactor < 1.0) {
 					bolt.boltDamageFactor = 1.0;
 				}
-				if (charge >= 1.0f) {
-					bolt.setIsCritical(true);
-				}
-				LOTRItemCrossbow.applyCrossbowModifiers(bolt, itemstack);
+				bolt.setIsCritical(true);
+				applyCrossbowModifiers(bolt, itemstack);
 				if (!shouldConsumeBolt(itemstack, entityplayer)) {
 					bolt.canBePickedUp = 2;
 				}
@@ -162,7 +155,7 @@ public class LOTRItemCrossbow extends ItemBow {
 	@Override
 	public void onPlayerStoppedUsing(ItemStack itemstack, World world, EntityPlayer entityplayer, int useTick) {
 		int ticksInUse = getMaxItemUseDuration(itemstack) - useTick;
-		if (ticksInUse >= getMaxDrawTime() && !LOTRItemCrossbow.isLoaded(itemstack)) {
+		if (ticksInUse >= getMaxDrawTime() && !isLoaded(itemstack)) {
 			ItemStack boltItem = null;
 			int boltSlot = getInvBoltSlot(entityplayer);
 			if (boltSlot >= 0) {
@@ -173,7 +166,7 @@ public class LOTRItemCrossbow extends ItemBow {
 				boltItem = new ItemStack(LOTRMod.crossbowBolt);
 			}
 			if (boltItem != null) {
-				if (shouldConsume && boltSlot >= 0) {
+				if (shouldConsume) {
 					--boltItem.stackSize;
 					if (boltItem.stackSize <= 0) {
 						entityplayer.inventory.mainInventory[boltSlot] = null;
@@ -190,12 +183,12 @@ public class LOTRItemCrossbow extends ItemBow {
 	@Override
 	public void onUsingTick(ItemStack itemstack, EntityPlayer entityplayer, int count) {
 		World world = entityplayer.worldObj;
-		if (!world.isRemote && !LOTRItemCrossbow.isLoaded(itemstack) && getMaxItemUseDuration(itemstack) - count == getMaxDrawTime()) {
+		if (!world.isRemote && !isLoaded(itemstack) && getMaxItemUseDuration(itemstack) - count == getMaxDrawTime()) {
 			world.playSoundAtEntity(entityplayer, "lotr:item.crossbowLoad", 1.0f, 1.5f + world.rand.nextFloat() * 0.2f);
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerIcons(IIconRegister iconregister) {
 		itemIcon = iconregister.registerIcon(getIconString());
@@ -279,6 +272,6 @@ public class LOTRItemCrossbow extends ItemBow {
 	}
 
 	public static boolean isLoaded(ItemStack itemstack) {
-		return LOTRItemCrossbow.getLoaded(itemstack) != null;
+		return getLoaded(itemstack) != null;
 	}
 }

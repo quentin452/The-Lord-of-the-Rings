@@ -60,7 +60,7 @@ public class LOTRPacketFellowshipDoPlayer extends LOTRPacketFellowshipDo {
 	}
 
 	public enum PlayerFunction {
-		REMOVE, TRANSFER, OP, DEOP;
+		REMOVE, TRANSFER, OP, DEOP
 
 	}
 

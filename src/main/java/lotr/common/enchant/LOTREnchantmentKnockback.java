@@ -8,7 +8,7 @@ public class LOTREnchantmentKnockback extends LOTREnchantment {
 	public int knockback;
 
 	public LOTREnchantmentKnockback(String s, int i) {
-		super(s, new LOTREnchantmentType[] { LOTREnchantmentType.MELEE, LOTREnchantmentType.THROWING_AXE });
+		super(s, new LOTREnchantmentType[]{LOTREnchantmentType.MELEE, LOTREnchantmentType.THROWING_AXE});
 		knockback = i;
 		setValueModifier((knockback + 2) / 2.0f);
 	}

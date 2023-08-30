@@ -98,7 +98,7 @@ public class LOTREntityGollum extends LOTREntityNPC implements LOTRCharacter {
 	public EntityPlayer getGollumOwner() {
 		try {
 			UUID uuid = UUID.fromString(getGollumOwnerUUID());
-			return uuid == null ? null : worldObj.func_152378_a(uuid);
+			return worldObj.func_152378_a(uuid);
 		} catch (IllegalArgumentException e) {
 			return null;
 		}
@@ -131,7 +131,7 @@ public class LOTREntityGollum extends LOTREntityNPC implements LOTRCharacter {
 		return super.getSplashSound();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
 		if (b == 15) {
@@ -267,7 +267,7 @@ public class LOTREntityGollum extends LOTREntityNPC implements LOTRCharacter {
 			for (EntityPlayer entityplayer : nearbyPlayers) {
 				double d2 = getDistanceToEntity(entityplayer);
 				int chance = (int) (d2 / 8.0);
-				if (rand.nextInt(chance = Math.max(2, chance)) != 0) {
+				if (rand.nextInt(Math.max(2, chance)) != 0) {
 					continue;
 				}
 				worldObj.playSoundAtEntity(entityplayer, getLivingSound(), getSoundVolume(), getSoundPitch());

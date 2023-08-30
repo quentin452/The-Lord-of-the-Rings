@@ -20,7 +20,7 @@ public class LOTRModelTroll extends ModelBase {
 	public ModelRenderer woodenClubSpikes;
 	public ModelRenderer warhammer;
 	public ModelRenderer battleaxe;
-	public boolean isOutiftModel = false;
+	public boolean isOutiftModel;
 
 	public LOTRModelTroll() {
 		this(0.0f);
@@ -93,40 +93,40 @@ public class LOTRModelTroll extends ModelBase {
 		this(f);
 		isOutiftModel = true;
 		switch (i) {
-		case 0:
-			head.showModel = true;
-			body.showModel = true;
-			rightArm.showModel = true;
-			leftArm.showModel = true;
-			rightLeg.showModel = false;
-			leftLeg.showModel = false;
-			break;
-		case 1:
-			head.showModel = false;
-			body.showModel = false;
-			rightArm.showModel = false;
-			leftArm.showModel = false;
-			rightLeg.showModel = true;
-			leftLeg.showModel = true;
-			break;
-		case 2:
-			head.showModel = true;
-			body.showModel = false;
-			rightArm.showModel = false;
-			leftArm.showModel = false;
-			rightLeg.showModel = false;
-			leftLeg.showModel = false;
-			break;
-		case 3:
-			head.showModel = false;
-			body.showModel = true;
-			rightArm.showModel = true;
-			leftArm.showModel = true;
-			rightLeg.showModel = false;
-			leftLeg.showModel = false;
-			break;
-		default:
-			break;
+			case 0:
+				head.showModel = true;
+				body.showModel = true;
+				rightArm.showModel = true;
+				leftArm.showModel = true;
+				rightLeg.showModel = false;
+				leftLeg.showModel = false;
+				break;
+			case 1:
+				head.showModel = false;
+				body.showModel = false;
+				rightArm.showModel = false;
+				leftArm.showModel = false;
+				rightLeg.showModel = true;
+				leftLeg.showModel = true;
+				break;
+			case 2:
+				head.showModel = true;
+				body.showModel = false;
+				rightArm.showModel = false;
+				leftArm.showModel = false;
+				rightLeg.showModel = false;
+				leftLeg.showModel = false;
+				break;
+			case 3:
+				head.showModel = false;
+				body.showModel = true;
+				rightArm.showModel = true;
+				leftArm.showModel = true;
+				rightLeg.showModel = false;
+				leftLeg.showModel = false;
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -227,15 +227,13 @@ public class LOTRModelTroll extends ModelBase {
 		body.rotateAngleZ = 0.0f;
 		rightArm.rotationPointX = -12.0f;
 		rightArm.rotationPointY = -23.0f;
-		rightArm.rotateAngleZ = 0.0f;
 		leftArm.rotationPointX = 12.0f;
 		leftArm.rotationPointY = -23.0f;
-		leftArm.rotateAngleZ = 0.0f;
 		head.rotateAngleY = f3 / 57.295776f;
 		head.rotateAngleX = f4 / 57.295776f;
 		if (entity instanceof LOTREntityTroll && ((LOTREntityTroll) entity).sniffTime > 0) {
 			f6 = (((LOTREntityTroll) entity).sniffTime - (f2 - entity.ticksExisted)) / 8.0f;
-			head.rotateAngleY = MathHelper.sin(f6 *= 6.2831855f) * 0.5f;
+			head.rotateAngleY = MathHelper.sin(f6 * 6.2831855f) * 0.5f;
 		}
 		rightArm.rotateAngleX = MathHelper.cos(f * 0.6662f + 3.1415927f) * 2.0f * f1 * 0.5f;
 		leftArm.rotateAngleX = MathHelper.cos(f * 0.6662f) * 2.0f * f1 * 0.5f;
@@ -251,8 +249,6 @@ public class LOTRModelTroll extends ModelBase {
 			rightArm.rotationPointX = -MathHelper.cos(body.rotateAngleY) * 12.0f;
 			leftArm.rotationPointZ = -MathHelper.sin(body.rotateAngleY) * 5.0f;
 			leftArm.rotationPointX = MathHelper.cos(body.rotateAngleY) * 12.0f;
-			rightArm.rotateAngleY += body.rotateAngleY;
-			leftArm.rotateAngleY += body.rotateAngleY;
 			leftArm.rotateAngleX += body.rotateAngleY;
 			f6 = 1.0f - onGround;
 			f6 *= f6;
@@ -261,7 +257,6 @@ public class LOTRModelTroll extends ModelBase {
 			float f7 = MathHelper.sin(f6 * 3.1415927f);
 			float f8 = MathHelper.sin(onGround * 3.1415927f) * -(head.rotateAngleX - 0.7f) * 0.75f;
 			rightArm.rotateAngleX = (float) (rightArm.rotateAngleX - (f7 * 1.2 + f8));
-			rightArm.rotateAngleY += body.rotateAngleY * 2.0f;
 			rightArm.rotateAngleZ = MathHelper.sin(onGround * 3.1415927f) * -0.4f;
 		}
 		rightLeg.rotateAngleX = MathHelper.cos(f * 0.6662f) * 1.4f * f1;
@@ -274,10 +269,7 @@ public class LOTRModelTroll extends ModelBase {
 		leftArm.rotateAngleZ -= MathHelper.cos(f2 * 0.09f) * 0.05f + 0.05f;
 		rightArm.rotateAngleX += MathHelper.sin(f2 * 0.067f) * 0.05f;
 		leftArm.rotateAngleX -= MathHelper.sin(f2 * 0.067f) * 0.05f;
-		boolean throwing = false;
-		if (entity instanceof LOTREntityMountainTroll && ((LOTREntityMountainTroll) entity).isThrowingRocks()) {
-			throwing = true;
-		}
+		boolean throwing = entity instanceof LOTREntityMountainTroll && ((LOTREntityMountainTroll) entity).isThrowingRocks();
 		if (entity instanceof LOTREntitySnowTroll && ((LOTREntitySnowTroll) entity).isThrowingSnow()) {
 			throwing = true;
 		}
@@ -297,7 +289,7 @@ public class LOTRModelTroll extends ModelBase {
 			float armRotationOffsetX = MathHelper.sin(f62) * 23.0f + MathHelper.cos(f62) * 12.0f - 12.0f;
 			float armRotationOffsetY = MathHelper.cos(f62) * -23.0f + MathHelper.sin(f62) * 12.0f + 23.0f;
 			rightArm.rotationPointX += armRotationOffsetX;
-			rightArm.rotationPointY += -armRotationOffsetY;
+			rightArm.rotationPointY -= armRotationOffsetY;
 			rightArm.rotateAngleZ += f62;
 			leftArm.rotationPointX += armRotationOffsetX;
 			leftArm.rotationPointY += armRotationOffsetY;

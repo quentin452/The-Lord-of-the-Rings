@@ -17,7 +17,7 @@ public class LOTRWorldGenRohanVillagePasture extends LOTRWorldGenRohanStructure 
 		int i1;
 		int j1;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 5);
+		setOriginAndRotation(world, i, j, k, rotation, 5);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -49,17 +49,17 @@ public class LOTRWorldGenRohanVillagePasture extends LOTRWorldGenRohanStructure 
 					if (j1 == 0) {
 						int randomFloor = random.nextInt(3);
 						switch (randomFloor) {
-						case 0:
-							setBlockAndMetadata(world, i1, j1, k1, Blocks.grass, 0);
-							break;
-						case 1:
-							setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 1);
-							break;
-						case 2:
-							setBlockAndMetadata(world, i1, j1, k1, LOTRMod.dirtPath, 0);
-							break;
-						default:
-							break;
+							case 0:
+								setBlockAndMetadata(world, i1, 0, k1, Blocks.grass, 0);
+								break;
+							case 1:
+								setBlockAndMetadata(world, i1, 0, k1, Blocks.dirt, 1);
+								break;
+							case 2:
+								setBlockAndMetadata(world, i1, 0, k1, LOTRMod.dirtPath, 0);
+								break;
+							default:
+								break;
 						}
 					} else {
 						setBlockAndMetadata(world, i1, j1, k1, Blocks.dirt, 0);

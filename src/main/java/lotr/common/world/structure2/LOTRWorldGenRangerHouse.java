@@ -7,6 +7,7 @@ import com.google.common.math.IntMath;
 import lotr.common.*;
 import lotr.common.entity.npc.LOTREntityDunedain;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class LOTRWorldGenRangerHouse extends LOTRWorldGenRangerStructure {
@@ -23,12 +24,13 @@ public class LOTRWorldGenRangerHouse extends LOTRWorldGenRangerStructure {
 		int gateX;
 		int k12;
 		int i122;
-		block54: {
+		block54:
+		{
 			int k13;
 			int i13;
 			int k2;
 			int j1;
-			this.setOriginAndRotation(world, i, j, k, rotation, 4);
+			setOriginAndRotation(world, i, j, k, rotation, 4);
 			setupRandomBlocks(random);
 			if (restrictions) {
 				int minHeight = 0;
@@ -120,7 +122,7 @@ public class LOTRWorldGenRangerHouse extends LOTRWorldGenRangerStructure {
 			setBlockAndMetadata(world, 0, 2, -3, doorBlock, 8);
 			setBlockAndMetadata(world, -2, 2, -1, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, -2, 2, 1, fenceBlock, fenceMeta);
-			int[] i15 = { -3, 3 };
+			int[] i15 = {-3, 3};
 			k13 = i15.length;
 			for (k2 = 0; k2 < k13; ++k2) {
 				k15 = i15[k2];
@@ -167,12 +169,12 @@ public class LOTRWorldGenRangerHouse extends LOTRWorldGenRangerStructure {
 					setBlockAndMetadata(world, i13, 6, k13, roofSlabBlock, roofSlabMeta);
 				}
 			}
-			for (int k151 : new int[] { -2, 2 }) {
+			for (int k151 : new int[]{-2, 2}) {
 				for (i1 = -1; i1 <= 4; ++i1) {
 					setBlockAndMetadata(world, i1, 5, k151, roofBlock, roofMeta);
 				}
 			}
-			for (int i1221 : new int[] { -1, 4 }) {
+			for (int i1221 : new int[]{-1, 4}) {
 				for (k12 = -1; k12 <= 1; ++k12) {
 					setBlockAndMetadata(world, i1221, 5, k12, fenceBlock, fenceMeta);
 				}
@@ -194,11 +196,11 @@ public class LOTRWorldGenRangerHouse extends LOTRWorldGenRangerStructure {
 			placePlateWithCertainty(world, random, -1, 2, 0, plateBlock, LOTRFoods.RANGER);
 			setBlockAndMetadata(world, -1, 1, 1, Blocks.crafting_table, 0);
 			setBlockAndMetadata(world, -1, 1, 2, plankBlock, plankMeta);
-			this.placeMug(world, random, -1, 2, 2, random.nextInt(3), LOTRFoods.RANGER_DRINK);
-			this.placeChest(world, random, 0, 1, 2, 2, chestContentsHouse);
+			placeMug(world, random, -1, 2, 2, random.nextInt(3), LOTRFoods.RANGER_DRINK);
+			placeChest(world, random, 0, 1, 2, 2, chestContentsHouse);
 			setBlockAndMetadata(world, 1, 1, 2, plankBlock, plankMeta);
-			this.placeBarrel(world, random, 1, 2, 2, 2, LOTRFoods.RANGER_DRINK);
-			for (int k151 : new int[] { -2, 2 }) {
+			placeBarrel(world, random, 1, 2, 2, 2, LOTRFoods.RANGER_DRINK);
+			for (int k151 : new int[]{-2, 2}) {
 				setBlockAndMetadata(world, 3, 1, k151, bedBlock, 1);
 				setBlockAndMetadata(world, 4, 1, k151, bedBlock, 9);
 				setBlockAndMetadata(world, 5, 1, k151, plankBlock, plankMeta);
@@ -255,7 +257,7 @@ public class LOTRWorldGenRangerHouse extends LOTRWorldGenRangerStructure {
 					}
 					for (j1 = 0; (j1 >= 0 || !isOpaque(world, i122, j1, k12)) && getY(j1) >= 0; --j1) {
 						if (j1 == 0) {
-							setBlockAndMetadata(world, i122, j1, k12, Blocks.grass, 0);
+							setBlockAndMetadata(world, i122, 0, k12, Blocks.grass, 0);
 						} else {
 							setBlockAndMetadata(world, i122, j1, k12, Blocks.dirt, 0);
 						}
@@ -296,7 +298,7 @@ public class LOTRWorldGenRangerHouse extends LOTRWorldGenRangerStructure {
 		return true;
 	}
 
-	public boolean isValidGatePos(World world, int i, int j, int k) {
+	public boolean isValidGatePos(IBlockAccess world, int i, int j, int k) {
 		return isOpaque(world, i, j - 1, k) && isAir(world, i, j, k) && isAir(world, i, j + 1, k);
 	}
 }

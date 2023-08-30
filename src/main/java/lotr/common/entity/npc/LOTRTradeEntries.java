@@ -216,10 +216,12 @@ public class LOTRTradeEntries {
 	public static LOTRTradeEntries BREE_FLORIST_SELL;
 	public static LOTRTradeEntries BREE_FARMER_BUY;
 	public static LOTRTradeEntries BREE_FARMER_SELL;
+
 	static {
-		LOTRTradeEntries.setupTrades1();
-		LOTRTradeEntries.setupTrades2();
+		setupTrades1();
+		setupTrades2();
 	}
+
 	public TradeType tradeType;
 	public LOTRTradeEntry[] tradeEntries;
 	public LOTRItemMug.Vessel[] drinkVessels;
@@ -268,7 +270,7 @@ public class LOTRTradeEntries {
 	}
 
 	public LOTRTradeEntries setVessels(LOTRFoods foods) {
-		return this.setVessels(foods.getDrinkVessels());
+		return setVessels(foods.getDrinkVessels());
 	}
 
 	public LOTRTradeEntries setVessels(LOTRItemMug.Vessel... v) {
@@ -506,7 +508,7 @@ public class LOTRTradeEntries {
 	}
 
 	public enum TradeType {
-		BUY, SELL;
+		BUY, SELL
 
 	}
 

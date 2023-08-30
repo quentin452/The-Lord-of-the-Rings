@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public abstract class LOTRBlockWallBase extends BlockWall {
 	public int subtypes;
 
-	public LOTRBlockWallBase(Block block, int i) {
+	protected LOTRBlockWallBase(Block block, int i) {
 		super(block);
 		setCreativeTab(LOTRCreativeTabs.tabBlock);
 		subtypes = i;
@@ -23,7 +23,7 @@ public abstract class LOTRBlockWallBase extends BlockWall {
 		return true;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int j = 0; j < subtypes; ++j) {

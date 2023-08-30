@@ -17,7 +17,7 @@ public class LOTREnchantmentMeleeSpeed extends LOTREnchantment {
 	public boolean canApply(ItemStack itemstack, boolean considering) {
 		if (super.canApply(itemstack, considering)) {
 			float speed = LOTRWeaponStats.getMeleeSpeed(itemstack);
-			return (speed *= speedFactor) <= LOTRWeaponStats.MAX_MODIFIABLE_SPEED;
+			return speed * speedFactor <= LOTRWeaponStats.MAX_MODIFIABLE_SPEED;
 		}
 		return false;
 	}

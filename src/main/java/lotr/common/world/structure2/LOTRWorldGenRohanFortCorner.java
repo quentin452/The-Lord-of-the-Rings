@@ -11,14 +11,12 @@ public class LOTRWorldGenRohanFortCorner extends LOTRWorldGenRohanStructure {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 0);
+		setOriginAndRotation(world, i, j, k, rotation, 0);
 		setupRandomBlocks(random);
 		int width = 1;
 		for (int i1 = -width; i1 <= width; ++i1) {
 			for (int k1 = -width; k1 <= width; ++k1) {
 				int j1;
-				Math.abs(i1);
-				Math.abs(k1);
 				for (j1 = 1; (j1 >= 0 || !isOpaque(world, i1, j1, k1)) && getY(j1) >= 0; --j1) {
 					setBlockAndMetadata(world, i1, j1, k1, rockSlabDoubleBlock, rockSlabDoubleMeta);
 					setGrassToDirt(world, i1, j1 - 1, k1);

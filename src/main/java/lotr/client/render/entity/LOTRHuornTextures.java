@@ -19,9 +19,11 @@ import net.minecraft.util.*;
 
 public class LOTRHuornTextures implements IResourceManagerReloadListener {
 	public static LOTRHuornTextures INSTANCE = new LOTRHuornTextures();
+
 	static {
 		((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).registerReloadListener(INSTANCE);
 	}
+
 	public RenderManager renderManager = RenderManager.instance;
 	public HashMap woodTextures = new HashMap();
 	public HashMap leafTexturesFast = new HashMap();

@@ -1,5 +1,6 @@
 package lotr.common.world.structure;
 
+import java.util.Locale;
 import java.util.Random;
 
 import lotr.common.LOTRMod;
@@ -120,9 +121,9 @@ public class LOTRWorldGenMarshHut extends LOTRWorldGenStructureBase {
 		tileentity = world.getTileEntity(i, j + 1, k + radius - 1);
 		if (tileentity instanceof TileEntitySign) {
 			TileEntitySign sign = (TileEntitySign) tileentity;
-			sign.signText[0] = troll.familyInfo.getName().toUpperCase();
+			sign.signText[0] = troll.familyInfo.getName().toUpperCase(Locale.ROOT);
 			sign.signText[1] = "IS";
-			sign.signText[2] = troll2.familyInfo.getName().toUpperCase();
+			sign.signText[2] = troll2.familyInfo.getName().toUpperCase(Locale.ROOT);
 		}
 		return true;
 	}

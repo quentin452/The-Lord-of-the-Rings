@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class LOTREntityNomadChieftain extends LOTREntityNomadWarrior implements LOTRUnitTradeable {
 	public LOTREntityNomadChieftain(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 		npcCape = LOTRCapes.NEAR_HARAD;
 	}
 

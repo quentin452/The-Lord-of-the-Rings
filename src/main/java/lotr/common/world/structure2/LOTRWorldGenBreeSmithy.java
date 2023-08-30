@@ -19,7 +19,7 @@ public class LOTRWorldGenBreeSmithy extends LOTRWorldGenBreeStructure {
 		int j1;
 		int i1;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 11);
+		setOriginAndRotation(world, i, j, k, rotation, 11);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -5; i1 <= 5; ++i1) {
@@ -76,7 +76,7 @@ public class LOTRWorldGenBreeSmithy extends LOTRWorldGenBreeStructure {
 		generateStrScan(world, random, 0, 0, 0);
 		setBlockAndMetadata(world, -2, 1, 3, bedBlock, 3);
 		setBlockAndMetadata(world, -3, 1, 3, bedBlock, 11);
-		this.placeChest(world, random, 3, 1, 0, 5, LOTRChestContents.BREE_HOUSE);
+		placeChest(world, random, 3, 1, 0, 5, LOTRChestContents.BREE_HOUSE);
 		placeArmorStand(world, 3, 1, -8, 1, getDisplayArmorOrNull(world, random));
 		placeArmorStand(world, 3, 1, -6, 1, getDisplayArmorOrNull(world, random));
 		placeArmorStand(world, 1, 1, 1, 3, getDisplayArmorOrNull(world, random));
@@ -84,8 +84,8 @@ public class LOTRWorldGenBreeSmithy extends LOTRWorldGenBreeStructure {
 		placeWeaponRack(world, 3, 2, 3, 2, getDisplayWeaponOrNull(random));
 		placeWeaponRack(world, 0, 3, -5, 6, getRandomBreeWeapon(random));
 		placeWeaponRack(world, -2, 3, -2, 4, getDisplayWeaponOrNull(random));
-		this.placeMug(world, random, -2, 2, 1, 2, LOTRFoods.BREE_DRINK);
-		this.placeBarrel(world, random, -3, 2, 1, 3, LOTRFoods.BREE_DRINK);
+		placeMug(world, random, -2, 2, 1, 2, LOTRFoods.BREE_DRINK);
+		placeBarrel(world, random, -3, 2, 1, 3, LOTRFoods.BREE_DRINK);
 		placePlateWithCertainty(world, random, 0, 2, -3, LOTRMod.ceramicPlateBlock, LOTRFoods.BREE);
 		LOTREntityBreeBlacksmith blacksmith = new LOTREntityBreeBlacksmith(world);
 		spawnNPCAndSetHome(blacksmith, world, 0, 1, -1, 8);
@@ -96,7 +96,7 @@ public class LOTRWorldGenBreeSmithy extends LOTRWorldGenBreeStructure {
 		if (random.nextBoolean()) {
 			LOTREntityBreeGuard armorGuard = new LOTREntityBreeGuard(world);
 			armorGuard.onSpawnWithEgg(null);
-			return new ItemStack[] { armorGuard.getEquipmentInSlot(4), armorGuard.getEquipmentInSlot(3), null, null };
+			return new ItemStack[]{armorGuard.getEquipmentInSlot(4), armorGuard.getEquipmentInSlot(3), null, null};
 		}
 		return null;
 	}

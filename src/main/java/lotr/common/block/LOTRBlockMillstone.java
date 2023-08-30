@@ -17,13 +17,13 @@ import net.minecraft.util.*;
 import net.minecraft.world.*;
 
 public class LOTRBlockMillstone extends BlockContainer {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconSide;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconTop;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconSideActive;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon iconTopActive;
 
 	public LOTRBlockMillstone() {
@@ -35,7 +35,7 @@ public class LOTRBlockMillstone extends BlockContainer {
 
 	@Override
 	public void breakBlock(World world, int i, int j, int k, Block block, int meta) {
-		LOTRTileEntityMillstone millstone = (LOTRTileEntityMillstone) world.getTileEntity(i, j, k);
+		IInventory millstone = (IInventory) world.getTileEntity(i, j, k);
 		if (millstone != null) {
 			LOTRMod.dropContainerItems(millstone, world, i, j, k);
 			world.func_147453_f(i, j, k, block);
@@ -53,17 +53,17 @@ public class LOTRBlockMillstone extends BlockContainer {
 		return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(i, j, k));
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(IBlockAccess world, int i, int j, int k, int side) {
-		boolean active = LOTRBlockMillstone.isMillstoneActive(world, i, j, k);
+		boolean active = isMillstoneActive(world, i, j, k);
 		if (side == 1 || side == 0) {
 			return active ? iconTopActive : iconTop;
 		}
 		return active ? iconSideActive : iconSide;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return i == 1 || i == 0 ? iconTop : iconSide;
@@ -89,10 +89,10 @@ public class LOTRBlockMillstone extends BlockContainer {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
-		if (LOTRBlockMillstone.isMillstoneActive(world, i, j, k)) {
+		if (isMillstoneActive(world, i, j, k)) {
 			for (int l = 0; l < 6; ++l) {
 				float f10 = 0.5f + MathHelper.randomFloatClamp(random, -0.2f, 0.2f);
 				float f11 = 0.5f + MathHelper.randomFloatClamp(random, -0.2f, 0.2f);
@@ -102,7 +102,7 @@ public class LOTRBlockMillstone extends BlockContainer {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		iconSide = iconregister.registerIcon(getTextureName() + "_side");

@@ -50,7 +50,7 @@ public class LOTREntityFallingTreasure extends Entity implements IEntityAddition
 		return !isDead;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean canRenderOnFire() {
 		return false;
@@ -65,7 +65,7 @@ public class LOTREntityFallingTreasure extends Entity implements IEntityAddition
 	public void entityInit() {
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public float getShadowSize() {
 		return 0.0f;

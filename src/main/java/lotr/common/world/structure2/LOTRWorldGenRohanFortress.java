@@ -32,7 +32,7 @@ public class LOTRWorldGenRohanFortress extends LOTRWorldGenRohanStructure {
 		int k13;
 		int i15;
 		int k2;
-		this.setOriginAndRotation(world, i, j, k, rotation, 13);
+		setOriginAndRotation(world, i, j, k, rotation, 13);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i12 = -12; i12 <= 12; ++i12) {
@@ -54,27 +54,27 @@ public class LOTRWorldGenRohanFortress extends LOTRWorldGenRohanStructure {
 					setAir(world, i12, j14, k12);
 				}
 				for (j14 = 0; (j14 >= 0 || !isOpaque(world, i12, j14, k12)) && getY(j14) >= 0; --j14) {
-					if (i2 == 12 && (k2 == 12 || k2 == 9 || k2 == 2) || k2 == 12 && (i2 == 12 || i2 == 9 || i2 == 2)) {
+					if (i2 == 12 && (k2 == 12 || k2 == 9 || k2 == 2) || k2 == 12 && (i2 == 9 || i2 == 2)) {
 						setBlockAndMetadata(world, i12, j14, k12, woodBeam2Block, woodBeam2Meta);
 					} else if (i2 > 9 || k2 > 9) {
 						setBlockAndMetadata(world, i12, j14, k12, plankBlock, plankMeta);
 					} else if (j14 == 0) {
 						int randomGround = random.nextInt(3);
 						switch (randomGround) {
-						case 0:
-							setBlockAndMetadata(world, i12, j14, k12, Blocks.grass, 0);
-							break;
-						case 1:
-							setBlockAndMetadata(world, i12, j14, k12, Blocks.dirt, 1);
-							break;
-						case 2:
-							setBlockAndMetadata(world, i12, j14, k12, LOTRMod.dirtPath, 0);
-							break;
-						default:
-							break;
+							case 0:
+								setBlockAndMetadata(world, i12, 0, k12, Blocks.grass, 0);
+								break;
+							case 1:
+								setBlockAndMetadata(world, i12, 0, k12, Blocks.dirt, 1);
+								break;
+							case 2:
+								setBlockAndMetadata(world, i12, 0, k12, LOTRMod.dirtPath, 0);
+								break;
+							default:
+								break;
 						}
 						if (random.nextInt(3) == 0) {
-							setBlockAndMetadata(world, i12, j14 + 1, k12, LOTRMod.thatchFloor, 0);
+							setBlockAndMetadata(world, i12, 1, k12, LOTRMod.thatchFloor, 0);
 						}
 					} else {
 						setBlockAndMetadata(world, i12, j14, k12, Blocks.dirt, 0);
@@ -133,15 +133,15 @@ public class LOTRWorldGenRohanFortress extends LOTRWorldGenRohanStructure {
 					setBlockAndMetadata(world, i12, 6 + yBoost, k12, Blocks.torch, 5);
 				}
 				if (k12 == -9) {
-					setBlockAndMetadata(world, i12, 4 + yBoost, k12, plank2StairBlock, 7);
+					setBlockAndMetadata(world, i12, 4 + yBoost, -9, plank2StairBlock, 7);
 					continue;
 				}
 				if (k12 == 9) {
-					setBlockAndMetadata(world, i12, 4 + yBoost, k12, plank2StairBlock, 6);
+					setBlockAndMetadata(world, i12, 4 + yBoost, 9, plank2StairBlock, 6);
 					continue;
 				}
 				if (i12 == -9) {
-					setBlockAndMetadata(world, i12, 4 + yBoost, k12, plank2StairBlock, 4);
+					setBlockAndMetadata(world, -9, 4 + yBoost, k12, plank2StairBlock, 4);
 					continue;
 				}
 				if (i12 != 9) {
@@ -150,11 +150,11 @@ public class LOTRWorldGenRohanFortress extends LOTRWorldGenRohanStructure {
 				setBlockAndMetadata(world, i12, 4 + yBoost, k12, plank2StairBlock, 5);
 			}
 		}
-		int[] i16 = { -12, 9 };
+		int[] i16 = {-12, 9};
 		k12 = i16.length;
 		for (i2 = 0; i2 < k12; ++i2) {
 			i13 = i16[i2];
-			for (int k14 : new int[] { -12, 9 }) {
+			for (int k14 : new int[]{-12, 9}) {
 				int i22;
 				setBlockAndMetadata(world, i13 + 1, 8, k14, plank2StairBlock, 4);
 				setBlockAndMetadata(world, i13 + 2, 8, k14, plank2StairBlock, 5);
@@ -206,7 +206,7 @@ public class LOTRWorldGenRohanFortress extends LOTRWorldGenRohanStructure {
 				setBlockAndMetadata(world, i14, 4, k13, plank2Block, plank2Meta);
 				setBlockAndMetadata(world, i14, 5, k13, woodBeam2Block, woodBeam2Meta | 4);
 				setBlockAndMetadata(world, i14, 6, k13, fenceBlock, fenceMeta);
-				setBlockAndMetadata(world, i14, 5, k13 - 1 * Integer.signum(k13), plankSlabBlock, plankSlabMeta);
+				setBlockAndMetadata(world, i14, 5, k13 - Integer.signum(k13), plankSlabBlock, plankSlabMeta);
 			}
 			setBlockAndMetadata(world, -2, 7, k13, plankSlabBlock, plankSlabMeta);
 			setBlockAndMetadata(world, 2, 7, k13, plankSlabBlock, plankSlabMeta);
@@ -239,7 +239,7 @@ public class LOTRWorldGenRohanFortress extends LOTRWorldGenRohanStructure {
 				setBlockAndMetadata(world, i1, 4, k1, plank2Block, plank2Meta);
 				setBlockAndMetadata(world, i1, 5, k1, woodBeam2Block, woodBeam2Meta | 8);
 				setBlockAndMetadata(world, i1, 6, k1, fenceBlock, fenceMeta);
-				setBlockAndMetadata(world, i1 - 1 * Integer.signum(i1), 5, k1, plankSlabBlock, plankSlabMeta);
+				setBlockAndMetadata(world, i1 - Integer.signum(i1), 5, k1, plankSlabBlock, plankSlabMeta);
 			}
 			setBlockAndMetadata(world, i1, 7, -2, plankSlabBlock, plankSlabMeta);
 			setBlockAndMetadata(world, i1, 7, 2, plankSlabBlock, plankSlabMeta);
@@ -326,7 +326,7 @@ public class LOTRWorldGenRohanFortress extends LOTRWorldGenRohanStructure {
 		}
 		setBlockAndMetadata(world, -2, 3, 9, Blocks.torch, 4);
 		setBlockAndMetadata(world, 2, 3, 9, Blocks.torch, 4);
-		int[] j16 = { -7, 7 };
+		int[] j16 = {-7, 7};
 		i15 = j16.length;
 		for (j12 = 0; j12 < i15; ++j12) {
 			i13 = j16[j12];
@@ -351,8 +351,8 @@ public class LOTRWorldGenRohanFortress extends LOTRWorldGenRohanStructure {
 		setBlockAndMetadata(world, -6, 3, -9, plank2Block, plank2Meta);
 		for (int j17 = 1; j17 <= 2; ++j17) {
 			if (j17 == 1) {
-				setBlockAndMetadata(world, -7, j17, -9, Blocks.furnace, 3);
-				setBlockAndMetadata(world, -9, j17, -7, Blocks.furnace, 4);
+				setBlockAndMetadata(world, -7, 1, -9, Blocks.furnace, 3);
+				setBlockAndMetadata(world, -9, 1, -7, Blocks.furnace, 4);
 			} else {
 				setBlockAndMetadata(world, -7, j17, -9, LOTRMod.alloyForge, 3);
 				setBlockAndMetadata(world, -9, j17, -7, LOTRMod.alloyForge, 4);
@@ -388,8 +388,8 @@ public class LOTRWorldGenRohanFortress extends LOTRWorldGenRohanStructure {
 		setBlockAndMetadata(world, -5, 2, 9, fenceBlock, fenceMeta);
 		setBlockAndMetadata(world, -6, 1, 9, plankBlock, plankMeta);
 		setBlockAndMetadata(world, -6, 2, 9, Blocks.torch, 4);
-		this.placeChest(world, random, -7, 1, 9, 2, LOTRChestContents.ROHAN_WATCHTOWER);
-		this.placeChest(world, random, -8, 1, 9, 2, LOTRChestContents.ROHAN_WATCHTOWER);
+		placeChest(world, random, -7, 1, 9, 2, LOTRChestContents.ROHAN_WATCHTOWER);
+		placeChest(world, random, -8, 1, 9, 2, LOTRChestContents.ROHAN_WATCHTOWER);
 		setBlockAndMetadata(world, -9, 1, 8, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, -9, 1, 7, tableBlock, 0);
 		setBlockAndMetadata(world, -9, 1, 6, plankBlock, plankMeta);
@@ -435,18 +435,18 @@ public class LOTRWorldGenRohanFortress extends LOTRWorldGenRohanStructure {
 				setBlockAndMetadata(world, i15, 1, k1, LOTRMod.thatchFloor, 0);
 			}
 		}
-		for (int k16 : new int[] { 6, 10 }) {
+		for (int k16 : new int[]{6, 10}) {
 			setBlockAndMetadata(world, 7, 1, k16, bedBlock, 3);
 			setBlockAndMetadata(world, 6, 1, k16, bedBlock, 11);
 			setBlockAndMetadata(world, 9, 1, k16, bedBlock, 1);
 			setBlockAndMetadata(world, 10, 1, k16, bedBlock, 9);
 		}
-		this.placeChest(world, random, 8, 1, 6, 3, chestContents);
-		this.placeChest(world, random, 8, 1, 10, 2, chestContents);
+		placeChest(world, random, 8, 1, 6, 3, chestContents);
+		placeChest(world, random, 8, 1, 10, 2, chestContents);
 		setBlockAndMetadata(world, 7, 1, 8, carpetBlock, carpetMeta);
 		setBlockAndMetadata(world, 8, 1, 8, carpetBlock, carpetMeta);
 		setBlockAndMetadata(world, 10, 1, 8, plankBlock, plankMeta);
-		this.placeBarrel(world, random, 10, 2, 8, 5, LOTRFoods.ROHAN_DRINK);
+		placeBarrel(world, random, 10, 2, 8, 5, LOTRFoods.ROHAN_DRINK);
 		for (int j18 = 1; j18 <= 4; ++j18) {
 			setBlockAndMetadata(world, 6, j18, -9, woodBeam2Block, woodBeam2Meta);
 			setBlockAndMetadata(world, 7, j18, -9, plank2Block, plank2Meta);

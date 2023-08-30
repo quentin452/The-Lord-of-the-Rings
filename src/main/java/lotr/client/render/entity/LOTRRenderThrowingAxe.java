@@ -21,11 +21,11 @@ public class LOTRRenderThrowingAxe extends Render {
 			GL11.glTranslatef(0.0f, 0.5f, 0.0f);
 		}
 		GL11.glRotatef(axe.prevRotationYaw + (axe.rotationYaw - axe.prevRotationYaw) * f1 - 90.0f, 0.0f, 1.0f, 0.0f);
-		if (!axe.inGround) {
-			GL11.glRotatef(axe.rotationPitch + (axe.inGround ? 0.0f : 45.0f * f1), 0.0f, 0.0f, -1.0f);
-		} else {
+		if (axe.inGround) {
 			GL11.glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
 			GL11.glTranslatef(0.0f, 0.75f, 0.0f);
+		} else {
+			GL11.glRotatef(axe.rotationPitch + 45.0f * f1, 0.0f, 0.0f, -1.0f);
 		}
 		GL11.glEnable(32826);
 		float f2 = axe.shake - f1;
@@ -37,7 +37,7 @@ public class LOTRRenderThrowingAxe extends Render {
 		ItemStack axeItem = axe.getProjectileItem();
 		IIcon icon = axeItem.getIconIndex();
 		if (icon == null) {
-			FMLLog.severe("Error rendering throwing axe: no icon for " + axeItem.toString());
+			FMLLog.severe("Error rendering throwing axe: no icon for " + axeItem);
 			GL11.glPopMatrix();
 			return;
 		}

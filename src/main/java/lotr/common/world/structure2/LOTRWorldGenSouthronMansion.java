@@ -16,7 +16,7 @@ public class LOTRWorldGenSouthronMansion extends LOTRWorldGenSouthronStructure {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 9);
+		setOriginAndRotation(world, i, j, k, rotation, 9);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -98,10 +98,10 @@ public class LOTRWorldGenSouthronMansion extends LOTRWorldGenSouthronStructure {
 		plantFlower(world, random, 1, 1, -5);
 		plantFlower(world, random, 2, 1, -5);
 		placeWallBanner(world, 3, 3, -4, bannerType, 0);
-		this.placeChest(world, random, -3, 1, 3, LOTRMod.chestBasket, 2, LOTRChestContents.NEAR_HARAD_HOUSE);
-		this.placeBarrel(world, random, 6, 2, 2, 4, LOTRFoods.SOUTHRON_DRINK);
+		placeChest(world, random, -3, 1, 3, LOTRMod.chestBasket, 2, LOTRChestContents.NEAR_HARAD_HOUSE);
+		placeBarrel(world, random, 6, 2, 2, 4, LOTRFoods.SOUTHRON_DRINK);
 		placePlateWithCertainty(world, random, 6, 2, 1, LOTRMod.ceramicPlateBlock, LOTRFoods.SOUTHRON);
-		this.placeMug(world, random, 6, 2, 3, 3, LOTRFoods.SOUTHRON_DRINK);
+		placeMug(world, random, 6, 2, 3, 3, LOTRFoods.SOUTHRON_DRINK);
 		placeWeaponRack(world, 10, 2, -2, 7, getRandomHaradWeapon(random));
 		setBlockAndMetadata(world, 8, 5, -1, bedBlock, 1);
 		setBlockAndMetadata(world, 9, 5, -1, bedBlock, 9);

@@ -37,13 +37,13 @@ public abstract class LOTRWorldGenTauredainHouse extends LOTRWorldGenStructureBa
 	public Block bedBlock;
 	public Block plateBlock;
 
-	public LOTRWorldGenTauredainHouse(boolean flag) {
+	protected LOTRWorldGenTauredainHouse(boolean flag) {
 		super(flag);
 	}
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, getOffset());
+		setOriginAndRotation(world, i, j, k, rotation, getOffset());
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -87,26 +87,26 @@ public abstract class LOTRWorldGenTauredainHouse extends LOTRWorldGenStructureBa
 		} else {
 			int l = random.nextInt(6);
 			switch (l) {
-			case 0:
-				plant = new ItemStack(Blocks.sapling, 1, 3);
-				break;
-			case 1:
-				plant = new ItemStack(LOTRMod.sapling6, 1, 0);
-				break;
-			case 2:
-				plant = new ItemStack(LOTRMod.fruitSapling, 1, 3);
-				break;
-			case 3:
-				plant = new ItemStack(Blocks.tallgrass, 1, 2);
-				break;
-			case 4:
-				plant = new ItemStack(Blocks.tallgrass, 1, 1);
-				break;
-			case 5:
-				plant = new ItemStack(LOTRMod.tallGrass, 1, 5);
-				break;
-			default:
-				break;
+				case 0:
+					plant = new ItemStack(Blocks.sapling, 1, 3);
+					break;
+				case 1:
+					plant = new ItemStack(LOTRMod.sapling6, 1, 0);
+					break;
+				case 2:
+					plant = new ItemStack(LOTRMod.fruitSapling, 1, 3);
+					break;
+				case 3:
+					plant = new ItemStack(Blocks.tallgrass, 1, 2);
+					break;
+				case 4:
+					plant = new ItemStack(Blocks.tallgrass, 1, 1);
+					break;
+				case 5:
+					plant = new ItemStack(LOTRMod.tallGrass, 1, 5);
+					break;
+				default:
+					break;
 			}
 		}
 		placeFlowerPot(world, i, j, k, plant);

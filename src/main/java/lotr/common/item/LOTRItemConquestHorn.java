@@ -16,9 +16,9 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class LOTRItemConquestHorn extends Item {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon baseIcon;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon overlayIcon;
 
 	public LOTRItemConquestHorn() {
@@ -27,9 +27,9 @@ public class LOTRItemConquestHorn extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-		LOTRInvasions type = LOTRItemConquestHorn.getInvasionType(itemstack);
+		LOTRInvasions type = getInvasionType(itemstack);
 		list.add(type.invasionName());
 	}
 
@@ -40,14 +40,11 @@ public class LOTRItemConquestHorn extends Item {
 			}
 			return false;
 		}
-		LOTRInvasions invasionType = LOTRItemConquestHorn.getInvasionType(itemstack);
+		LOTRInvasions invasionType = getInvasionType(itemstack);
 		LOTRFaction invasionFaction = invasionType.invasionFaction;
 		float alignmentRequired = 1500.0f;
 		if (LOTRLevelData.getData(entityplayer).getAlignment(invasionFaction) >= alignmentRequired) {
-			boolean blocked = false;
-			if (LOTRBannerProtection.isProtected(world, entityplayer, LOTRBannerProtection.forFaction(invasionFaction), false)) {
-				blocked = true;
-			}
+			boolean blocked = LOTRBannerProtection.isProtected(world, entityplayer, LOTRBannerProtection.forFaction(invasionFaction), false);
 			if (LOTREntityNPCRespawner.isSpawnBlocked(entityplayer, invasionFaction)) {
 				blocked = true;
 			}
@@ -66,24 +63,24 @@ public class LOTRItemConquestHorn extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack itemstack, int pass) {
 		if (pass == 0) {
-			LOTRFaction faction = LOTRItemConquestHorn.getInvasionType(itemstack).invasionFaction;
+			LOTRFaction faction = getInvasionType(itemstack).invasionFaction;
 			return faction.getFactionColor();
 		}
 		return 16777215;
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamageForRenderPass(int i, int pass) {
 		return pass > 0 ? overlayIcon : baseIcon;
 	}
 
 	@Override
 	public String getItemStackDisplayName(ItemStack itemstack) {
-		LOTRInvasions type = LOTRItemConquestHorn.getInvasionType(itemstack);
+		LOTRInvasions type = getInvasionType(itemstack);
 		if (type != null) {
 			return StatCollector.translateToLocal(type.codeNameHorn());
 		}
@@ -101,18 +98,18 @@ public class LOTRItemConquestHorn extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (LOTRInvasions type : LOTRInvasions.values()) {
 			ItemStack itemstack = new ItemStack(item);
-			LOTRItemConquestHorn.setInvasionType(itemstack, type);
+			setInvasionType(itemstack, type);
 			list.add(itemstack);
 		}
 	}
 
 	@Override
 	public ItemStack onEaten(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		LOTRInvasions invasionType = LOTRItemConquestHorn.getInvasionType(itemstack);
+		LOTRInvasions invasionType = getInvasionType(itemstack);
 		if (canUseHorn(itemstack, world, entityplayer, true)) {
 			if (!world.isRemote) {
 				LOTREntityInvasionSpawner invasion = new LOTREntityInvasionSpawner(world);
@@ -138,21 +135,21 @@ public class LOTRItemConquestHorn extends Item {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconregister) {
 		baseIcon = iconregister.registerIcon(getIconString() + "_base");
 		overlayIcon = iconregister.registerIcon(getIconString() + "_overlay");
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public boolean requiresMultipleRenderPasses() {
 		return true;
 	}
 
 	public static ItemStack createHorn(LOTRInvasions type) {
 		ItemStack itemstack = new ItemStack(LOTRMod.conquestHorn);
-		LOTRItemConquestHorn.setInvasionType(itemstack, type);
+		setInvasionType(itemstack, type);
 		return itemstack;
 	}
 

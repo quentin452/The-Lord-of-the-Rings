@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mojang.authlib.GameProfile;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.*;
 import lotr.common.network.*;
 import net.minecraft.command.*;
@@ -51,7 +52,7 @@ public class LOTRCommandAlignmentSee extends CommandBase {
 			}
 			if (sender instanceof EntityPlayerMP) {
 				LOTRPlayerData playerData = LOTRLevelData.getData(profile.getId());
-				LOTRPacketAlignmentSee packet = new LOTRPacketAlignmentSee(username, playerData);
+				IMessage packet = new LOTRPacketAlignmentSee(username, playerData);
 				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) sender);
 				return;
 			}

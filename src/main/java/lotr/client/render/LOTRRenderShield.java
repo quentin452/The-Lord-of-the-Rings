@@ -4,7 +4,6 @@ import org.lwjgl.opengl.GL11;
 
 import lotr.common.*;
 import lotr.common.entity.npc.LOTREntityNPC;
-import lotr.common.item.LOTRItemArmor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.Tessellator;
@@ -51,7 +50,7 @@ public class LOTRRenderShield {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(-1.0f, 0.0f, 0.0f);
 		for (k = 0; k < width; ++k) {
-			f7 = (float) k / (float) width;
+			f7 = (float) k / width;
 			f8 = maxU + (minU - maxU) * f7 - f5;
 			tessellator.addVertexWithUV(f7, 0.0, depth2, f8, maxV);
 			tessellator.addVertexWithUV(f7, 0.0, depth1, f8, maxV);
@@ -62,7 +61,7 @@ public class LOTRRenderShield {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(1.0f, 0.0f, 0.0f);
 		for (k = 0; k < width; ++k) {
-			f7 = (float) k / (float) width;
+			f7 = (float) k / width;
 			f8 = maxU + (minU - maxU) * f7 - f5;
 			f9 = f7 + 1.0f / width;
 			tessellator.addVertexWithUV(f9, 1.0, depth2, f8, minV);
@@ -74,7 +73,7 @@ public class LOTRRenderShield {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0f, 1.0f, 0.0f);
 		for (k = 0; k < height; ++k) {
-			f7 = (float) k / (float) height;
+			f7 = (float) k / height;
 			f8 = maxV + (minV - maxV) * f7 - f6;
 			f9 = f7 + 1.0f / height;
 			tessellator.addVertexWithUV(0.0, f9, depth1, maxU, f8);
@@ -86,7 +85,7 @@ public class LOTRRenderShield {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0f, -1.0f, 0.0f);
 		for (k = 0; k < height; ++k) {
-			f7 = (float) k / (float) height;
+			f7 = (float) k / height;
 			f8 = maxV + (minV - maxV) * f7 - f6;
 			tessellator.addVertexWithUV(1.0, f7, depth1, minU, f8);
 			tessellator.addVertexWithUV(0.0, f7, depth1, maxU, f8);
@@ -104,17 +103,17 @@ public class LOTRRenderShield {
 		ItemStack held = entity == null ? null : entity.getHeldItem();
 		ItemStack heldLeft = entity instanceof LOTREntityNPC ? ((LOTREntityNPC) entity).getHeldItemLeft() : null;
 		inUse = entity instanceof EntityPlayer ? ((EntityPlayer) entity).getItemInUse() : null;
-		boolean holdingSword = entity == null ? true : held != null && (held.getItem() instanceof ItemSword || held.getItem() instanceof ItemTool) && (inUse == null || inUse.getItemUseAction() != EnumAction.bow);
+		boolean holdingSword = entity == null || held != null && (held.getItem() instanceof ItemSword || held.getItem() instanceof ItemTool) && (inUse == null || inUse.getItemUseAction() != EnumAction.bow);
 		blocking = holdingSword && inUse != null && inUse.getItemUseAction() == EnumAction.block;
-		if (heldLeft != null && entity instanceof LOTREntityNPC) {
+		if (heldLeft != null) {
 			LOTREntityNPC npc = (LOTREntityNPC) entity;
 			if (npc.npcCape != null) {
 				return;
 			}
 		}
 		ItemStack chestplate = entity == null ? null : entity.getEquipmentInSlot(3);
-		boolean wearingChestplate = chestplate != null && chestplate.getItem().isValidArmor(chestplate, ((LOTRItemArmor) LOTRMod.bodyMithril).armorType, entity);
-		boolean renderOnBack = !holdingSword || holdingSword && heldLeft != null;
+		boolean wearingChestplate = chestplate != null && chestplate.getItem().isValidArmor(chestplate, ((ItemArmor) LOTRMod.bodyMithril).armorType, entity);
+		boolean renderOnBack = !holdingSword || heldLeft != null;
 		GL11.glPushMatrix();
 		if (renderOnBack) {
 			model.bipedBody.postRender(MODELSCALE);
@@ -145,10 +144,10 @@ public class LOTRRenderShield {
 		}
 		mc.getTextureManager().bindTexture(shieldTexture);
 		GL11.glEnable(3008);
-		LOTRRenderShield.doRenderShield(0.0f);
+		doRenderShield(0.0f);
 		GL11.glTranslatef(1.0f, 0.0f, 0.0f);
 		GL11.glScalef(-1.0f, 1.0f, 1.0f);
-		LOTRRenderShield.doRenderShield(0.5f);
+		doRenderShield(0.5f);
 		GL11.glPopMatrix();
 	}
 }

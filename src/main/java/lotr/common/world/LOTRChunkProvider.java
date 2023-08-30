@@ -98,13 +98,13 @@ public class LOTRChunkProvider implements IChunkProvider {
 			for (int j1 = 0; j1 < byte0; ++j1) {
 				for (int k1 = 0; k1 < byte1; ++k1) {
 					double d = 0.125;
-					double d1 = heightNoise[((i1 + 0) * l + j1 + 0) * byte3 + k1 + 0];
-					double d2 = heightNoise[((i1 + 0) * l + j1 + 1) * byte3 + k1 + 0];
-					double d3 = heightNoise[((i1 + 1) * l + j1 + 0) * byte3 + k1 + 0];
-					double d4 = heightNoise[((i1 + 1) * l + j1 + 1) * byte3 + k1 + 0];
-					double d5 = (heightNoise[((i1 + 0) * l + j1 + 0) * byte3 + k1 + 1] - d1) * d;
-					double d6 = (heightNoise[((i1 + 0) * l + j1 + 1) * byte3 + k1 + 1] - d2) * d;
-					double d7 = (heightNoise[((i1 + 1) * l + j1 + 0) * byte3 + k1 + 1] - d3) * d;
+					double d1 = heightNoise[((i1) * l + j1) * byte3 + k1];
+					double d2 = heightNoise[((i1) * l + j1 + 1) * byte3 + k1];
+					double d3 = heightNoise[((i1 + 1) * l + j1) * byte3 + k1];
+					double d4 = heightNoise[((i1 + 1) * l + j1 + 1) * byte3 + k1];
+					double d5 = (heightNoise[((i1) * l + j1) * byte3 + k1 + 1] - d1) * d;
+					double d6 = (heightNoise[((i1) * l + j1 + 1) * byte3 + k1 + 1] - d2) * d;
+					double d7 = (heightNoise[((i1 + 1) * l + j1) * byte3 + k1 + 1] - d3) * d;
 					double d8 = (heightNoise[((i1 + 1) * l + j1 + 1) * byte3 + k1 + 1] - d4) * d;
 					for (int l1 = 0; l1 < 8; ++l1) {
 						double d9 = 0.25;
@@ -113,7 +113,7 @@ public class LOTRChunkProvider implements IChunkProvider {
 						double d12 = (d3 - d1) * d9;
 						double d13 = (d4 - d2) * d9;
 						for (int i2 = 0; i2 < 4; ++i2) {
-							int j2 = i2 + i1 * 4 << 12 | 0 + j1 * 4 << 8 | k1 * 8 + l1;
+							int j2 = i2 + i1 * 4 << 12 | j1 * 4 << 8 | k1 * 8 + l1;
 							double d14 = 0.25;
 							double d15 = (d11 - d10) * d14;
 							for (int k2 = 0; k2 < 4; ++k2) {
@@ -232,9 +232,8 @@ public class LOTRChunkProvider implements IChunkProvider {
 					float mountain;
 					float roadNear = LOTRRoads.isRoadNear(xPos, zPos, 32);
 					if (roadNear >= 0.0f) {
-						float interpFactor = roadNear;
-						avgBaseHeight = avgFlatBiomeHeight + (avgBaseHeight - avgFlatBiomeHeight) * interpFactor;
-						avgHeightVariation *= interpFactor;
+						avgBaseHeight = avgFlatBiomeHeight + (avgBaseHeight - avgFlatBiomeHeight) * roadNear;
+						avgHeightVariation *= roadNear;
 					}
 					mountain = LOTRMountains.getTotalHeightBoost(xPos, zPos);
 					if (mountain > 0.005f) {
@@ -277,12 +276,11 @@ public class LOTRChunkProvider implements IChunkProvider {
 				++noiseIndexXZ;
 				for (int j1 = 0; j1 < ySize; ++j1) {
 					double baseHeight = avgBaseHeight;
-					double heightVariation = avgHeightVariation;
 					baseHeight += heightNoise * 0.2 * avgVariantHillFactor;
 					baseHeight = baseHeight * ySize / 16.0;
 					double var28 = ySize / 2.0 + baseHeight * 4.0;
 					double totalNoise;
-					double var32 = (j1 - var28) * heightStretch * 128.0 / 256.0 / heightVariation;
+					double var32 = (j1 - var28) * heightStretch * 128.0 / 256.0 / avgHeightVariation;
 					if (var32 < 0.0) {
 						var32 *= 4.0;
 					}
@@ -484,12 +482,10 @@ public class LOTRChunkProvider implements IChunkProvider {
 	}
 
 	public static class ChunkFlags {
-		public boolean isVillage = false;
-		public boolean isFlatVillage = false;
+		public boolean isVillage;
+		public boolean isFlatVillage;
 		public boolean[] roadFlags = new boolean[256];
 
-		public ChunkFlags() {
-		}
 	}
 
 }

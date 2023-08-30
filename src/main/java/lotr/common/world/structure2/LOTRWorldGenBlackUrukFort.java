@@ -17,7 +17,7 @@ public class LOTRWorldGenBlackUrukFort extends LOTRWorldGenMordorStructure {
 
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
-		this.setOriginAndRotation(world, i, j, k, rotation, 19);
+		setOriginAndRotation(world, i, j, k, rotation, 19);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -123,39 +123,39 @@ public class LOTRWorldGenBlackUrukFort extends LOTRWorldGenMordorStructure {
 		placeWeaponRack(world, 1, 6, 10, 4, getRandomUrukWeapon(random));
 		placeWeaponRack(world, 10, 6, 12, 4, getRandomUrukWeapon(random));
 		placeWeaponRack(world, -3, 6, 12, 4, getRandomUrukWeapon(random));
-		placeArmorStand(world, 15, 1, -9, 2, new ItemStack[] { new ItemStack(LOTRMod.helmetGondor), new ItemStack(LOTRMod.bodyGondorGambeson), null, null });
+		placeArmorStand(world, 15, 1, -9, 2, new ItemStack[]{new ItemStack(LOTRMod.helmetGondor), new ItemStack(LOTRMod.bodyGondorGambeson), null, null});
 		placeUrukArmor(world, random, 8, 4, 10, 2);
 		placeUrukArmor(world, random, -1, 4, 10, 2);
 		placeUrukArmor(world, random, 7, 4, 12, 3);
 		placeUrukArmor(world, random, 0, 4, 12, 1);
 		placeUrukArmor(world, random, 6, 4, 13, 2);
 		placeUrukArmor(world, random, 1, 4, 13, 2);
-		this.placeChest(world, random, 15, 1, 7, 2, LOTRChestContents.BLACK_URUK_FORT);
-		this.placeChest(world, random, 9, 4, 11, 3, LOTRChestContents.BLACK_URUK_FORT);
-		this.placeChest(world, random, -2, 4, 11, 3, LOTRChestContents.BLACK_URUK_FORT);
-		this.placeChest(world, random, 12, 4, 13, 5, LOTRChestContents.BLACK_URUK_FORT);
-		this.placeChest(world, random, -5, 4, 13, 4, LOTRChestContents.BLACK_URUK_FORT);
-		this.placeChest(world, random, 12, 4, 17, 5, LOTRChestContents.BLACK_URUK_FORT);
-		this.placeChest(world, random, -5, 4, 17, 4, LOTRChestContents.BLACK_URUK_FORT);
+		placeChest(world, random, 15, 1, 7, 2, LOTRChestContents.BLACK_URUK_FORT);
+		placeChest(world, random, 9, 4, 11, 3, LOTRChestContents.BLACK_URUK_FORT);
+		placeChest(world, random, -2, 4, 11, 3, LOTRChestContents.BLACK_URUK_FORT);
+		placeChest(world, random, 12, 4, 13, 5, LOTRChestContents.BLACK_URUK_FORT);
+		placeChest(world, random, -5, 4, 13, 4, LOTRChestContents.BLACK_URUK_FORT);
+		placeChest(world, random, 12, 4, 17, 5, LOTRChestContents.BLACK_URUK_FORT);
+		placeChest(world, random, -5, 4, 17, 4, LOTRChestContents.BLACK_URUK_FORT);
 		for (int j1 = 4; j1 <= 5; ++j1) {
-			for (int i1 : new int[] { -3, -1, 1 }) {
+			for (int i1 : new int[]{-3, -1, 1}) {
 				setBlockAndMetadata(world, i1, j1, 17, bedBlock, 0);
 				setBlockAndMetadata(world, i1, j1, 18, bedBlock, 8);
 			}
-			for (int i1 : new int[] { 6, 8, 10 }) {
+			for (int i1 : new int[]{6, 8, 10}) {
 				setBlockAndMetadata(world, i1, j1, 17, bedBlock, 0);
 				setBlockAndMetadata(world, i1, j1, 18, bedBlock, 8);
 			}
 		}
-		this.placeBarrel(world, random, -11, 5, -3, 3, LOTRFoods.ORC_DRINK);
-		this.placeBarrel(world, random, -13, 5, -3, 3, LOTRFoods.ORC_DRINK);
+		placeBarrel(world, random, -11, 5, -3, 3, LOTRFoods.ORC_DRINK);
+		placeBarrel(world, random, -13, 5, -3, 3, LOTRFoods.ORC_DRINK);
 		for (int k1 = -7; k1 <= -4; ++k1) {
-			for (int i1 : new int[] { -13, -11 }) {
+			for (int i1 : new int[]{-13, -11}) {
 				if (random.nextBoolean()) {
 					placePlate(world, random, i1, 5, k1, LOTRMod.woodPlateBlock, LOTRFoods.ORC);
 					continue;
 				}
-				this.placeMug(world, random, i1, 5, k1, random.nextInt(4), LOTRFoods.ORC_DRINK);
+				placeMug(world, random, i1, 5, k1, random.nextInt(4), LOTRFoods.ORC_DRINK);
 			}
 		}
 		LOTREntityBlackUrukCaptain captain = new LOTREntityBlackUrukCaptain(world);
@@ -176,12 +176,12 @@ public class LOTRWorldGenBlackUrukFort extends LOTRWorldGenMordorStructure {
 	}
 
 	public ItemStack getRandomUrukWeapon(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.scimitarBlackUruk), new ItemStack(LOTRMod.daggerBlackUruk), new ItemStack(LOTRMod.daggerBlackUrukPoisoned), new ItemStack(LOTRMod.spearBlackUruk), new ItemStack(LOTRMod.battleaxeBlackUruk), new ItemStack(LOTRMod.hammerBlackUruk), new ItemStack(LOTRMod.blackUrukBow) };
+		ItemStack[] items = {new ItemStack(LOTRMod.scimitarBlackUruk), new ItemStack(LOTRMod.daggerBlackUruk), new ItemStack(LOTRMod.daggerBlackUrukPoisoned), new ItemStack(LOTRMod.spearBlackUruk), new ItemStack(LOTRMod.battleaxeBlackUruk), new ItemStack(LOTRMod.hammerBlackUruk), new ItemStack(LOTRMod.blackUrukBow)};
 		return items[random.nextInt(items.length)].copy();
 	}
 
 	public void placeUrukArmor(World world, Random random, int i, int j, int k, int meta) {
-		ItemStack[] armor = random.nextInt(4) != 0 ? new ItemStack[] { null, null, null, null } : new ItemStack[] { new ItemStack(LOTRMod.helmetBlackUruk), new ItemStack(LOTRMod.bodyBlackUruk), new ItemStack(LOTRMod.legsBlackUruk), new ItemStack(LOTRMod.bootsBlackUruk) };
+		ItemStack[] armor = random.nextInt(4) != 0 ? new ItemStack[]{null, null, null, null} : new ItemStack[]{new ItemStack(LOTRMod.helmetBlackUruk), new ItemStack(LOTRMod.bodyBlackUruk), new ItemStack(LOTRMod.legsBlackUruk), new ItemStack(LOTRMod.bootsBlackUruk)};
 		placeArmorStand(world, i, j, k, meta, armor);
 	}
 }

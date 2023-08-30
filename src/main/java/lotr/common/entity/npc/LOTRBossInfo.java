@@ -82,7 +82,7 @@ public class LOTRBossInfo {
 	}
 
 	public List getNearbyEnemies() {
-		ArrayList<EntityPlayer> enemies = new ArrayList<>();
+		List<EntityPlayer> enemies = new ArrayList<>();
 		List players = theNPC.worldObj.getEntitiesWithinAABB(EntityPlayer.class, theNPC.boundingBox.expand(12.0, 6.0, 12.0));
 		for (Object player : players) {
 			EntityPlayer entityplayer = (EntityPlayer) player;
@@ -156,7 +156,7 @@ public class LOTRBossInfo {
 			lastAttackingPlayer = null;
 		}
 		if (!theNPC.worldObj.isRemote) {
-			HashMap<UUID, Pair<Integer, Float>> playerHurtTimes_new = new HashMap<>();
+			Map<UUID, Pair<Integer, Float>> playerHurtTimes_new = new HashMap<>();
 			for (Map.Entry<UUID, Pair<Integer, Float>> entry : playerHurtTimes.entrySet()) {
 				UUID player = entry.getKey();
 				int time = entry.getValue().getLeft();
@@ -181,9 +181,6 @@ public class LOTRBossInfo {
 			for (int i = 0; i < playerHurtTags.tagCount(); ++i) {
 				NBTTagCompound playerTag = playerHurtTags.getCompoundTagAt(i);
 				UUID player = UUID.fromString(playerTag.getString("UUID"));
-				if (player == null) {
-					continue;
-				}
 				int time = playerTag.getInteger("Time");
 				float damage = playerTag.getFloat("Damage");
 				playerHurtTimes.put(player, Pair.of(time, damage));

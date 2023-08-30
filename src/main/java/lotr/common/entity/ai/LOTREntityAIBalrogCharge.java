@@ -10,7 +10,7 @@ public class LOTREntityAIBalrogCharge extends LOTREntityAIAttackOnCollide {
 	public LOTREntityBalrog theBalrog;
 	public float chargeDist;
 	public int frustrationTime;
-	public boolean hitChargeTarget = false;
+	public boolean hitChargeTarget;
 	public int chargingTick;
 
 	public LOTREntityAIBalrogCharge(LOTREntityBalrog balrog, double speed, float dist, int fr) {

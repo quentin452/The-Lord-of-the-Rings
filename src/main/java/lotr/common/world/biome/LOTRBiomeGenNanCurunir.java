@@ -49,9 +49,9 @@ public class LOTRBiomeGenNanCurunir extends LOTRBiome {
 		arrspawnListContainer6[0] = LOTRBiomeSpawnList.entry(LOTRSpawnList.GONDOR_SOLDIERS, 10);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer6);
 		npcSpawnList.conquestGainRate = 0.2f;
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
-		this.addBiomeVariant(LOTRBiomeVariant.HILLS);
-		this.addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LIGHT);
+		addBiomeVariant(LOTRBiomeVariant.HILLS);
+		addBiomeVariant(LOTRBiomeVariant.DEADFOREST_OAK);
 		decorator.treesPerChunk = 0;
 		decorator.willowPerChunk = 1;
 		decorator.logsPerChunk = 1;

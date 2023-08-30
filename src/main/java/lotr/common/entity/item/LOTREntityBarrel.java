@@ -140,7 +140,7 @@ public class LOTREntityBarrel extends Entity {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public float getShadowSize() {
 		return 0.0f;
 	}
@@ -180,7 +180,7 @@ public class LOTREntityBarrel extends Entity {
 		int b0 = 5;
 		double d0 = 0.0;
 		for (int i2 = 0; i2 < b0; ++i2) {
-			double d1 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (i2 + 0) / b0 - 0.125;
+			double d1 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (i2) / b0 - 0.125;
 			double d2 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (i2 + 1) / b0 - 0.125;
 			AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(boundingBox.minX, d1, boundingBox.minZ, boundingBox.maxX, d2, boundingBox.maxZ);
 			if (!worldObj.isAABBInMaterial(axisalignedbb, Material.water)) {
@@ -246,7 +246,7 @@ public class LOTREntityBarrel extends Entity {
 				}
 				motionY += 0.007;
 			}
-			if (riddenByEntity instanceof EntityLivingBase && (d4 = ((EntityLivingBase) riddenByEntity).moveForward) > 0.0) {
+			if (riddenByEntity instanceof EntityLivingBase && ((EntityLivingBase) riddenByEntity).moveForward > 0.0) {
 				d5 = -Math.sin(riddenByEntity.rotationYaw * 3.1415927f / 180.0f);
 				d11 = Math.cos(riddenByEntity.rotationYaw * 3.1415927f / 180.0f);
 				motionX += d5 * speedMultiplier * 0.05;
@@ -317,7 +317,7 @@ public class LOTREntityBarrel extends Entity {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void performHurtAnimation() {
 		setForwardDirection(-getForwardDirection());
 		setTimeSinceHit(10);
@@ -344,7 +344,7 @@ public class LOTREntityBarrel extends Entity {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void setPositionAndRotation2(double d, double d1, double d2, float f, float f1, int i) {
 		if (isBoatEmpty) {
 			boatPosRotationIncrements = i + 5;
@@ -373,7 +373,7 @@ public class LOTREntityBarrel extends Entity {
 	}
 
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public void setVelocity(double par1, double par3, double par5) {
 		velocityX = motionX = par1;
 		velocityY = motionY = par3;

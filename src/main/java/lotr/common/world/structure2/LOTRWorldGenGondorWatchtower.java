@@ -25,7 +25,7 @@ public class LOTRWorldGenGondorWatchtower extends LOTRWorldGenGondorStructure {
 		int j12;
 		int k12;
 		int i2;
-		this.setOriginAndRotation(world, i, j, k, rotation, 4);
+		setOriginAndRotation(world, i, j, k, rotation, 4);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -125,8 +125,8 @@ public class LOTRWorldGenGondorWatchtower extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 0, 10, 2, trapdoorBlock, 9);
 		for (k12 = -2; k12 <= 2; ++k12) {
 			if (IntMath.mod(k12, 2) == 0) {
-				this.placeChest(world, random, -2, 1, k12, 4, LOTRChestContents.GONDOR_FORTRESS_DRINKS);
-				this.placeChest(world, random, 2, 1, k12, 5, LOTRChestContents.GONDOR_FORTRESS_DRINKS);
+				placeChest(world, random, -2, 1, k12, 4, LOTRChestContents.GONDOR_FORTRESS_DRINKS);
+				placeChest(world, random, 2, 1, k12, 5, LOTRChestContents.GONDOR_FORTRESS_DRINKS);
 				continue;
 			}
 			setBlockAndMetadata(world, -1, 1, k12, bedBlock, 3);
@@ -137,7 +137,7 @@ public class LOTRWorldGenGondorWatchtower extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, -2, 3, 0, Blocks.torch, 2);
 		setBlockAndMetadata(world, 2, 3, 0, Blocks.torch, 1);
 		setBlockAndMetadata(world, 0, 5, 0, LOTRMod.chandelier, 1);
-		this.placeChest(world, random, -2, 7, -2, LOTRMod.chestLebethron, 4, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES);
+		placeChest(world, random, -2, 7, -2, LOTRMod.chestLebethron, 4, LOTRChestContents.GONDOR_FORTRESS_SUPPLIES);
 		setBlockAndMetadata(world, -2, 7, 0, LOTRMod.armorStand, 3);
 		setBlockAndMetadata(world, -2, 8, 0, LOTRMod.armorStand, 7);
 		setBlockAndMetadata(world, -2, 7, 2, Blocks.anvil, 0);
@@ -148,9 +148,9 @@ public class LOTRWorldGenGondorWatchtower extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 2, 7, 0, Blocks.stone_slab, 8);
 		setBlockAndMetadata(world, 2, 7, 1, Blocks.stone_slab, 8);
 		setBlockAndMetadata(world, 2, 7, 2, Blocks.stone_slab, 8);
-		this.placeMug(world, random, 2, 8, 0, 1, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, 2, 8, 0, 1, LOTRFoods.GONDOR_DRINK);
 		placePlateWithCertainty(world, random, 2, 8, 1, plateBlock, LOTRFoods.GONDOR);
-		this.placeBarrel(world, random, 2, 8, 2, 5, LOTRFoods.GONDOR_DRINK);
+		placeBarrel(world, random, 2, 8, 2, 5, LOTRFoods.GONDOR_DRINK);
 		setBlockAndMetadata(world, 0, 9, 0, LOTRMod.chandelier, 1);
 		for (i1 = -4; i1 <= 4; ++i1) {
 			for (k1 = -4; k1 <= 4; ++k1) {
@@ -175,7 +175,7 @@ public class LOTRWorldGenGondorWatchtower extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 0, 11, 0, pillarBlock, pillarMeta);
 		setBlockAndMetadata(world, 0, 12, 0, pillarBlock, pillarMeta);
 		setBlockAndMetadata(world, 0, 13, 0, LOTRMod.brick, 5);
-		this.placeBanner(world, 0, 14, 0, bannerType, 2);
+		placeBanner(world, 0, 14, 0, bannerType, 2);
 		setBlockAndMetadata(world, 0, 11, -3, Blocks.torch, 3);
 		setBlockAndMetadata(world, 0, 11, 3, Blocks.torch, 4);
 		setBlockAndMetadata(world, -3, 11, 0, Blocks.torch, 2);

@@ -16,13 +16,13 @@ public class LOTRBlockSlabClayTileDyed extends LOTRBlockSlabBase {
 		setStepSound(Block.soundTypeStone);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
-		return LOTRMod.clayTileDyed.getIcon(i, j &= 7);
+		return LOTRMod.clayTileDyed.getIcon(i, j & 7);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

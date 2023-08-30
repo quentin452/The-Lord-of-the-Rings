@@ -57,7 +57,7 @@ public class LOTREntityUtumnoTroll extends LOTREntityTroll {
 		return 1.5f;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
 		if (b == 15) {

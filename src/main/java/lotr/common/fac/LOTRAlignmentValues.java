@@ -3,7 +3,7 @@ package lotr.common.fac;
 import java.text.*;
 
 import lotr.common.util.LOTRLog;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.util.*;
 
 public class LOTRAlignmentValues {
@@ -26,48 +26,48 @@ public class LOTRAlignmentValues {
 	}
 
 	public static String formatAlignForDisplay(float alignment) {
-		return LOTRAlignmentValues.formatAlignForDisplay(alignment, alignFormat, true);
+		return formatAlignForDisplay(alignment, alignFormat, true);
 	}
 
 	public static String formatAlignForDisplay(float alignment, DecimalFormat dFormat, boolean prefixPlus) {
-		LOTRAlignmentValues.setupDecimalFormat(dFormat);
+		setupDecimalFormat(dFormat);
 		String s = dFormat.format(alignment);
-		if (prefixPlus && !s.startsWith("-")) {
+		if (prefixPlus && !(!s.isEmpty() && s.charAt(0) == '-')) {
 			s = "+" + s;
 		}
 		return s;
 	}
 
 	public static String formatConqForDisplay(float conq, boolean prefixPlus) {
-		return LOTRAlignmentValues.formatAlignForDisplay(conq, conqFormat, prefixPlus);
+		return formatAlignForDisplay(conq, conqFormat, prefixPlus);
 	}
 
-	public static void notifyAlignmentNotHighEnough(EntityPlayer entityplayer, float alignmentRequired, LOTRFaction faction) {
-		ChatComponentText componentAlignReq = new ChatComponentText(LOTRAlignmentValues.formatAlignForDisplay(alignmentRequired));
+	public static void notifyAlignmentNotHighEnough(ICommandSender entityplayer, float alignmentRequired, LOTRFaction faction) {
+		ChatComponentText componentAlignReq = new ChatComponentText(formatAlignForDisplay(alignmentRequired));
 		componentAlignReq.getChatStyle().setColor(EnumChatFormatting.YELLOW);
 		entityplayer.addChatMessage(new ChatComponentTranslation("chat.lotr.insufficientAlignment", componentAlignReq, faction.factionName()));
 	}
 
-	public static void notifyAlignmentNotHighEnough(EntityPlayer entityplayer, float alignmentRequired, LOTRFaction faction1, LOTRFaction faction2) {
-		ChatComponentText componentAlignReq = new ChatComponentText(LOTRAlignmentValues.formatAlignForDisplay(alignmentRequired));
+	public static void notifyAlignmentNotHighEnough(ICommandSender entityplayer, float alignmentRequired, LOTRFaction faction1, LOTRFaction faction2) {
+		ChatComponentText componentAlignReq = new ChatComponentText(formatAlignForDisplay(alignmentRequired));
 		componentAlignReq.getChatStyle().setColor(EnumChatFormatting.YELLOW);
 		entityplayer.addChatMessage(new ChatComponentTranslation("chat.lotr.insufficientAlignment2", componentAlignReq, faction1.factionName(), faction2.factionName()));
 	}
 
-	public static void notifyAlignmentNotHighEnough(EntityPlayer entityplayer, float alignmentRequired, LOTRFaction faction1, LOTRFaction faction2, LOTRFaction faction3) {
-		ChatComponentText componentAlignReq = new ChatComponentText(LOTRAlignmentValues.formatAlignForDisplay(alignmentRequired));
+	public static void notifyAlignmentNotHighEnough(ICommandSender entityplayer, float alignmentRequired, LOTRFaction faction1, LOTRFaction faction2, LOTRFaction faction3) {
+		ChatComponentText componentAlignReq = new ChatComponentText(formatAlignForDisplay(alignmentRequired));
 		componentAlignReq.getChatStyle().setColor(EnumChatFormatting.YELLOW);
 		entityplayer.addChatMessage(new ChatComponentTranslation("chat.lotr.insufficientAlignment3", componentAlignReq, faction1.factionName(), faction2.factionName(), faction3.factionName()));
 	}
 
-	public static void notifyMiniQuestsNeeded(EntityPlayer entityplayer, LOTRFaction faction) {
+	public static void notifyMiniQuestsNeeded(ICommandSender entityplayer, LOTRFaction faction) {
 		entityplayer.addChatMessage(new ChatComponentTranslation("chat.lotr.requireMiniQuest", faction.factionName()));
 	}
 
 	public static float parseDisplayedAlign(String alignmentText) {
 		DecimalFormat dFormat = alignFormat;
-		LOTRAlignmentValues.setupDecimalFormat(dFormat);
-		if (alignmentText.startsWith("+")) {
+		setupDecimalFormat(dFormat);
+		if (!alignmentText.isEmpty() && alignmentText.charAt(0) == '+') {
 			alignmentText = alignmentText.substring("+".length());
 		}
 		try {
@@ -79,7 +79,7 @@ public class LOTRAlignmentValues {
 		}
 	}
 
-	public static DecimalFormat setupDecimalFormat(DecimalFormat dFormat) {
+	public static void setupDecimalFormat(DecimalFormat dFormat) {
 		String groupSeparator;
 		char decimalSeparatorChar = '.';
 		char groupSeparatorChar = ',';
@@ -93,16 +93,15 @@ public class LOTRAlignmentValues {
 		alignFormatSymbols.setDecimalSeparator(decimalSeparatorChar);
 		alignFormatSymbols.setGroupingSeparator(groupSeparatorChar);
 		dFormat.setDecimalFormatSymbols(alignFormatSymbols);
-		return dFormat;
 	}
 
 	public static class AlignmentBonus {
 		public float bonus;
 		public String name;
 		public boolean needsTranslation = true;
-		public boolean isKill = false;
-		public boolean killByHiredUnit = false;
-		public boolean isCivilianKill = false;
+		public boolean isKill;
+		public boolean killByHiredUnit;
+		public boolean isCivilianKill;
 
 		public AlignmentBonus(float f, String s) {
 			bonus = f;
@@ -283,16 +282,16 @@ public class LOTRAlignmentValues {
 		public static float HOBBIT_CHILD_FOLLOW = 200.0f;
 		public static float HOBBIT_SHIRRIFF_TRADE = 50.0f;
 		public static float HOBBIT_FLEE = -100.0f;
-		public static float HOBBIT_FARMER_TRADE = 0.0f;
+		public static float HOBBIT_FARMER_TRADE;
 		public static float BREE_CAPTAIN_TRADE = 100.0f;
 		public static float BREE_BLACKSMITH_TRADE = 50.0f;
-		public static float BREE_MARKET_TRADE = 0.0f;
-		public static float BREE_FARMER_TRADE = 0.0f;
+		public static float BREE_MARKET_TRADE;
+		public static float BREE_FARMER_TRADE;
 		public static float RANGER_NORTH_CAPTAIN_TRADE = 300.0f;
 		public static float DUNEDAIN_BLACKSMITH_TRADE = 50.0f;
 		public static float BLUE_DWARF_MINER_TRADE = 100.0f;
 		public static float BLUE_DWARF_COMMANDER_TRADE = 200.0f;
-		public static float BLUE_DWARF_MERCHANT_TRADE = 0.0f;
+		public static float BLUE_DWARF_MERCHANT_TRADE;
 		public static float BLUE_DWARF_SMITH_TRADE = 100.0f;
 		public static float HIGH_ELF_LORD_TRADE = 300.0f;
 		public static float HIGH_ELF_SMITH_TRADE = 100.0f;
@@ -302,12 +301,12 @@ public class LOTRAlignmentValues {
 		public static float WOOD_ELF_SMITH_TRADE = 100.0f;
 		public static float DALE_CAPTAIN_TRADE = 100.0f;
 		public static float DALE_BLACKSMITH_TRADE = 50.0f;
-		public static float DALE_BAKER_TRADE = 0.0f;
-		public static float DALE_MERCHANT_TRADE = 0.0f;
+		public static float DALE_BAKER_TRADE;
+		public static float DALE_MERCHANT_TRADE;
 		public static float DWARF_MINER_TRADE = 100.0f;
 		public static float DWARF_COMMANDER_TRADE = 200.0f;
 		public static float DWARF_MARRY = 200.0f;
-		public static float DWARF_MERCHANT_TRADE = 0.0f;
+		public static float DWARF_MERCHANT_TRADE;
 		public static float DWARF_SMITH_TRADE = 100.0f;
 		public static float GALADHRIM_TRADER_TRADE = 75.0f;
 		public static float GALADHRIM_LORD_TRADE = 300.0f;
@@ -315,8 +314,8 @@ public class LOTRAlignmentValues {
 		public static float ROHIRRIM_MARSHAL_TRADE = 150.0f;
 		public static float ROHAN_BLACKSMITH_TRADE = 50.0f;
 		public static float ROHAN_SHIELDMAIDEN = 150.0f;
-		public static float ROHAN_FARMER_TRADE = 0.0f;
-		public static float ROHAN_MARKET_TRADE = 0.0f;
+		public static float ROHAN_FARMER_TRADE;
+		public static float ROHAN_MARKET_TRADE;
 		public static float ROHAN_STABLE_TRADE = 50.0f;
 		public static float DUNLENDING_WARLORD_TRADE = 100.0f;
 		public static float SPAWN_HUORN = 500.0f;
@@ -328,9 +327,9 @@ public class LOTRAlignmentValues {
 		public static float PELARGIR_CAPTAIN_TRADE = 200.0f;
 		public static float PINNATH_GELIN_CPTAIN_TRADE = 200.0f;
 		public static float BLACKROOT_CAPTAIN_TRADE = 150.0f;
-		public static float GONDOR_FARMER_TRADE = 0.0f;
+		public static float GONDOR_FARMER_TRADE;
 		public static float LEBENNIN_CAPTAIN_TRADE = 150.0f;
-		public static float GONDOR_MARKET_TRADE = 0.0f;
+		public static float GONDOR_MARKET_TRADE;
 		public static float LAMEDON_CAPTAIN_TRADE = 200.0f;
 		public static float ORC_FLEE = -500.0f;
 		public static float ORC_FRIENDLY = 100.0f;
@@ -356,32 +355,32 @@ public class LOTRAlignmentValues {
 		public static float DORWINION_CAPTAIN_TRADE = 150.0f;
 		public static float DORWINION_ELF_CAPTAIN_TRADE = 250.0f;
 		public static float DORWINION_ELF_VINTNER_TRADE = 50.0f;
-		public static float DORWINION_VINEKEEPER_TRADE = 0.0f;
+		public static float DORWINION_VINEKEEPER_TRADE;
 		public static float DORWINION_VINEYARD_ALLOW = 2000.0f;
-		public static float DORWINION_MERCHANT_TRADE = 0.0f;
+		public static float DORWINION_MERCHANT_TRADE;
 		public static float EASTERLING_BLACKSMITH_TRADE = 50.0f;
 		public static float EASTERLING_WARLORD_TRADE = 150.0f;
-		public static float EASTERLING_MARKET_TRADE = 0.0f;
-		public static float EASTERLING_FARMER_TRADE = 0.0f;
+		public static float EASTERLING_MARKET_TRADE;
+		public static float EASTERLING_FARMER_TRADE;
 		public static float NEAR_HARADRIM_WARLORD_TRADE = 150.0f;
 		public static float HARNEDOR_WARLORD_TRADE = 150.0f;
 		public static float UMBAR_CAPTAIN_TRADE = 150.0f;
 		public static float CORSAIR_CAPTAIN_TRADE = 150.0f;
-		public static float CORSAIR_SLAVER_TRADE = 0.0f;
+		public static float CORSAIR_SLAVER_TRADE;
 		public static float NOMAD_WARLORD_TRADE = 150.0f;
 		public static float GULF_WARLORD_TRADE = 150.0f;
-		public static float NEAR_HARAD_MERCHANT_TRADE = 0.0f;
-		public static float NOMAD_MERCHANT_TRADE = 0.0f;
-		public static float NEAR_HARAD_BAZAAR_TRADE = 0.0f;
+		public static float NEAR_HARAD_MERCHANT_TRADE;
+		public static float NOMAD_MERCHANT_TRADE;
+		public static float NEAR_HARAD_BAZAAR_TRADE;
 		public static float NEAR_HARAD_BLACKSMITH_TRADE = 50.0f;
-		public static float MOREDAIN_MERCENARY_TRADE = 0.0f;
+		public static float MOREDAIN_MERCENARY_TRADE;
 		public static float GONDOR_RENEGADE = 50.0f;
-		public static float NEAR_HARAD_FARMER_TRADE = 0.0f;
+		public static float NEAR_HARAD_FARMER_TRADE;
 		public static float MOREDAIN_CHIEFTAIN_TRADE = 150.0f;
-		public static float MOREDAIN_VILLAGE_TRADE = 0.0f;
+		public static float MOREDAIN_VILLAGE_TRADE;
 		public static float TAUREDAIN_CHIEFTAIN_TRADE = 200.0f;
 		public static float TAUREDAIN_SHAMAN_TRADE = 100.0f;
-		public static float TAUREDAIN_FARMER_TRADE = 0.0f;
+		public static float TAUREDAIN_FARMER_TRADE;
 		public static float TAUREDAIN_SMITH_TRADE = 50.0f;
 		public static float HALF_TROLL_WARLORD_TRADE = 200.0f;
 		public static float HALF_TROLL_SCAVENGER_TRADE = 50.0f;

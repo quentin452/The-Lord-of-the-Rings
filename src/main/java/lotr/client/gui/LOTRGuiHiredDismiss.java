@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.network.*;
 import net.minecraft.client.gui.GuiButton;
@@ -18,7 +19,7 @@ public class LOTRGuiHiredDismiss extends LOTRGuiNPCInteract {
 				mc.displayGuiScreen(new LOTRGuiHiredInteract(theEntity));
 				return;
 			}
-			LOTRPacketHiredUnitDismiss packet = new LOTRPacketHiredUnitDismiss(theEntity.getEntityId(), button.id);
+			IMessage packet = new LOTRPacketHiredUnitDismiss(theEntity.getEntityId(), button.id);
 			LOTRPacketHandler.networkWrapper.sendToServer(packet);
 		}
 	}
@@ -45,7 +46,6 @@ public class LOTRGuiHiredDismiss extends LOTRGuiNPCInteract {
 		if (hasRider) {
 			s = StatCollector.translateToLocal("lotr.gui.dismiss.rider");
 			fontRendererObj.drawString(s, (width - fontRendererObj.getStringWidth(s)) / 2, y, 11184810);
-			y += fontRendererObj.FONT_HEIGHT;
 		}
 	}
 

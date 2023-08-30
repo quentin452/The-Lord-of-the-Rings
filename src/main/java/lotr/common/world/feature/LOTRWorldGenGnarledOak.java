@@ -12,9 +12,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRWorldGenGnarledOak extends WorldGenAbstractTree {
 	public Block woodBlock = Blocks.log;
-	public int woodMeta = 0;
+	public int woodMeta;
 	public Block leafBlock = Blocks.leaves;
-	public int leafMeta = 0;
+	public int leafMeta;
 	public int minHeight = 4;
 	public int maxHeight = 9;
 
@@ -49,7 +49,7 @@ public class LOTRWorldGenGnarledOak extends WorldGenAbstractTree {
 		}
 		boolean canGrow = true;
 		Block below = world.getBlock(i, j - 1, k);
-		if (!below.canSustainPlant((IBlockAccess) world, i, j - 1, k, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
+		if (!below.canSustainPlant(world, i, j - 1, k, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 			canGrow = false;
 		}
 		if (!canGrow) {
@@ -66,8 +66,7 @@ public class LOTRWorldGenGnarledOak extends WorldGenAbstractTree {
 			float angle = random.nextFloat() * 3.1415927f * 2.0f;
 			float cos = MathHelper.cos(angle);
 			float sin = MathHelper.sin(angle);
-			float angleY = random.nextFloat() * (float) Math.toRadians(40.0);
-			MathHelper.cos(angleY);
+			float angleY = random.nextFloat() * 0.6981317007977318f;
 			float sinY = MathHelper.sin(angleY);
 			int length = 2 + random.nextInt(3);
 			int i1 = i;
@@ -117,18 +116,14 @@ public class LOTRWorldGenGnarledOak extends WorldGenAbstractTree {
 				if (i1 == i && k1 == k || random.nextInt(4) > 0) {
 					continue;
 				}
-				int rootX = i1;
 				int rootY = j + random.nextInt(2);
-				int rootZ = k1;
 				int roots = 0;
-				while (world.getBlock(rootX, rootY, k1).isReplaceable(world, rootX, rootY, rootZ)) {
-					setBlockAndNotifyAdequately(world, rootX, rootY, rootZ, woodBlock, woodMeta | 0xC);
-					world.getBlock(rootX, rootY - 1, rootZ).onPlantGrow(world, rootX, rootY - 1, rootZ, rootX, rootY, rootZ);
+				while (world.getBlock(i1, rootY, k1).isReplaceable(world, i1, rootY, k1)) {
+					setBlockAndNotifyAdequately(world, i1, rootY, k1, woodBlock, woodMeta | 0xC);
+					world.getBlock(i1, rootY - 1, k1).onPlantGrow(world, i1, rootY - 1, k1, i1, rootY, k1);
 					--rootY;
 					roots++;
-					if (roots <= 4 + random.nextInt(3)) {
-						continue;
-					}
+					random.nextInt(3);
 				}
 			}
 		}

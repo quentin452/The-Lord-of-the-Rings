@@ -1,7 +1,7 @@
 package lotr.common.world.structure2;
 
 public abstract class LOTRWorldGenUmbarTownWall extends LOTRWorldGenSouthronTownWall {
-	public LOTRWorldGenUmbarTownWall(boolean flag) {
+	protected LOTRWorldGenUmbarTownWall(boolean flag) {
 		super(flag);
 	}
 

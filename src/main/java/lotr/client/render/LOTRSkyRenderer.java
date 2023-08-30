@@ -34,10 +34,10 @@ public class LOTRSkyRenderer extends IRenderHandler {
 			int k;
 			for (k = -b2 * i; k <= b2 * i; k += b2) {
 				tessellator.startDrawingQuads();
-				tessellator.addVertex(j + 0, f, k + 0);
-				tessellator.addVertex(j + b2, f, k + 0);
+				tessellator.addVertex(j, f, k);
+				tessellator.addVertex(j + b2, f, k);
 				tessellator.addVertex(j + b2, f, k + b2);
-				tessellator.addVertex(j + 0, f, k + b2);
+				tessellator.addVertex(j, f, k + b2);
 				tessellator.draw();
 			}
 		}
@@ -49,9 +49,9 @@ public class LOTRSkyRenderer extends IRenderHandler {
 		for (j = -b2 * i; j <= b2 * i; j += b2) {
 			int k;
 			for (k = -b2 * i; k <= b2 * i; k += b2) {
-				tessellator.addVertex(j + b2, f, k + 0);
-				tessellator.addVertex(j + 0, f, k + 0);
-				tessellator.addVertex(j + 0, f, k + b2);
+				tessellator.addVertex(j + b2, f, k);
+				tessellator.addVertex(j, f, k);
+				tessellator.addVertex(j, f, k + b2);
 				tessellator.addVertex(j + b2, f, k + b2);
 			}
 		}
@@ -177,7 +177,7 @@ public class LOTRSkyRenderer extends IRenderHandler {
 			for (int pass = 0; pass <= 1; pass++) {
 				if (pass == 0) {
 					GL11.glColor4f(1.0F, 1.0F, 1.0F, rainBrightness);
-				} else if (pass == 1) {
+				} else {
 					if (sunrise == null) {
 						continue;
 					}
@@ -191,7 +191,6 @@ public class LOTRSkyRenderer extends IRenderHandler {
 				tessellator.addVertexWithUV(rSun, 100.0D, rSun, 1.0D, 1.0D);
 				tessellator.addVertexWithUV(-rSun, 100.0D, rSun, 0.0D, 1.0D);
 				tessellator.draw();
-				continue;
 			}
 			GL11.glBlendFunc(770, 1);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, rainBrightness);
@@ -203,9 +202,9 @@ public class LOTRSkyRenderer extends IRenderHandler {
 			}
 			mc.renderEngine.bindTexture(moonTexture);
 			float rMoon = 10.0F;
-			float f14 = moonPhase / phases;
+			float f14 = (float) moonPhase / phases;
 			float f15 = 0.0F;
-			float f16 = (moonPhase + 1) / phases;
+			float f16 = (float) (moonPhase + 1) / phases;
 			float f17 = 1.0F;
 			tessellator.startDrawingQuads();
 			tessellator.addVertexWithUV(-rMoon, -100.0D, rMoon, f16, f17);
@@ -297,7 +296,7 @@ public class LOTRSkyRenderer extends IRenderHandler {
 
 	public void renderSkyboxSide(Tessellator tessellator, int side) {
 		double u = side % 3 / 3.0D;
-		double v = side / 3 / 2.0D;
+		double v = (double) side / 3 / 2.0D;
 		tessellator.startDrawingQuads();
 		tessellator.addVertexWithUV(-100.0D, -100.0D, -100.0D, u, v);
 		tessellator.addVertexWithUV(-100.0D, -100.0D, 100.0D, u, v + 0.5D);

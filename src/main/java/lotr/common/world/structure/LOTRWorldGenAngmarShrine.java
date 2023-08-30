@@ -25,21 +25,21 @@ public class LOTRWorldGenAngmarShrine extends LOTRWorldGenStructureBase {
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			k += 4;
-			break;
-		}
-		case 1: {
-			i -= 4;
-			break;
-		}
-		case 2: {
-			k -= 4;
-			break;
-		}
-		case 3: {
-			i += 4;
-		}
+			case 0: {
+				k += 4;
+				break;
+			}
+			case 1: {
+				i -= 4;
+				break;
+			}
+			case 2: {
+				k -= 4;
+				break;
+			}
+			case 3: {
+				i += 4;
+			}
 		}
 		if (restrictions) {
 			int minHeight = j;

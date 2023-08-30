@@ -10,13 +10,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStructure {
-	public static Class[] allStallTypes = { Baker.class, Butcher.class, Brewer.class, Mason.class, Lumber.class, Smith.class, Florist.class, Farmer.class };
+	public static Class[] allStallTypes = {Baker.class, Butcher.class, Brewer.class, Mason.class, Lumber.class, Smith.class, Florist.class, Farmer.class};
 	public Block wool1Block;
 	public int wool1Meta;
 	public Block wool2Block;
 	public int wool2Meta;
 
-	public LOTRWorldGenBreeMarketStall(boolean flag) {
+	protected LOTRWorldGenBreeMarketStall(boolean flag) {
 		super(flag);
 	}
 
@@ -36,7 +36,7 @@ public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStruct
 		int j2;
 		int k12;
 		int j12;
-		this.setOriginAndRotation(world, i, j, k, rotation, 3);
+		setOriginAndRotation(world, i, j, k, rotation, 3);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -135,7 +135,7 @@ public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStruct
 		} else {
 			setBlockAndMetadata(world, 1, 1, 1, LOTRMod.chestBasket, 2);
 		}
-		for (step = 0; step < 12 && !isOpaque(world, i1 = 3 + step, j1 = 0 - step, k1 = -1); ++step) {
+		for (step = 0; step < 12 && !isOpaque(world, i1 = 3 + step, j1 = -step, k1 = -1); ++step) {
 			placeRandomFloor(world, random, i1, j1, k1);
 			setGrassToDirt(world, i1, j1 - 1, k1);
 			j2 = j1 - 1;
@@ -145,7 +145,7 @@ public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStruct
 				--j2;
 			}
 		}
-		for (step = 0; step < 12 && !isOpaque(world, i1 = -1, j1 = 0 - step, k1 = 3 + step); ++step) {
+		for (step = 0; step < 12 && !isOpaque(world, i1 = -1, j1 = -step, k1 = 3 + step); ++step) {
 			placeRandomFloor(world, random, i1, j1, k1);
 			setGrassToDirt(world, i1, j1 - 1, k1);
 			j2 = j1 - 1;
@@ -189,7 +189,6 @@ public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStruct
 			Class cls = types.get(listIndex);
 			try {
 				ret[i] = (LOTRWorldGenBreeMarketStall) cls.getConstructor(Boolean.TYPE).newInstance(flag);
-				continue;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -218,7 +217,7 @@ public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStruct
 		}
 
 		public ItemStack getRandomBakeryItem(Random random) {
-			ItemStack[] foods = { new ItemStack(Items.bread), new ItemStack(LOTRMod.cornBread), new ItemStack(LOTRMod.hobbitPancake), new ItemStack(LOTRMod.hobbitPancakeMapleSyrup) };
+			ItemStack[] foods = {new ItemStack(Items.bread), new ItemStack(LOTRMod.cornBread), new ItemStack(LOTRMod.hobbitPancake), new ItemStack(LOTRMod.hobbitPancakeMapleSyrup)};
 			ItemStack ret = foods[random.nextInt(foods.length)].copy();
 			ret.stackSize = 1 + random.nextInt(3);
 			return ret;
@@ -244,9 +243,9 @@ public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStruct
 
 		@Override
 		public void decorateStall(World world, Random random) {
-			this.placeMug(world, random, -1, 2, -2, 0, LOTRFoods.BREE_DRINK);
-			this.placeMug(world, random, 1, 2, -2, 0, LOTRFoods.BREE_DRINK);
-			this.placeMug(world, random, 1, 2, 2, 2, LOTRFoods.BREE_DRINK);
+			placeMug(world, random, -1, 2, -2, 0, LOTRFoods.BREE_DRINK);
+			placeMug(world, random, 1, 2, -2, 0, LOTRFoods.BREE_DRINK);
+			placeMug(world, random, 1, 2, 2, 2, LOTRFoods.BREE_DRINK);
 			setBlockAndMetadata(world, -1, 1, -1, LOTRMod.barrel, 3);
 			setBlockAndMetadata(world, -2, 2, 1, LOTRMod.barrel, 2);
 			setBlockAndMetadata(world, 2, 2, 1, LOTRMod.barrel, 5);
@@ -280,7 +279,7 @@ public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStruct
 		}
 
 		public ItemStack getRandomButcherItem(Random random) {
-			ItemStack[] foods = { new ItemStack(Items.beef), new ItemStack(Items.porkchop), new ItemStack(LOTRMod.gammon), new ItemStack(Items.chicken), new ItemStack(LOTRMod.muttonRaw), new ItemStack(LOTRMod.rabbitRaw), new ItemStack(LOTRMod.deerRaw) };
+			ItemStack[] foods = {new ItemStack(Items.beef), new ItemStack(Items.porkchop), new ItemStack(LOTRMod.gammon), new ItemStack(Items.chicken), new ItemStack(LOTRMod.muttonRaw), new ItemStack(LOTRMod.rabbitRaw), new ItemStack(LOTRMod.deerRaw)};
 			ItemStack ret = foods[random.nextInt(foods.length)].copy();
 			ret.stackSize = 1 + random.nextInt(3);
 			return ret;
@@ -316,7 +315,7 @@ public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStruct
 		}
 
 		public ItemStack getRandomFarmerItem(Random random) {
-			ItemStack[] foods = { new ItemStack(Items.carrot), new ItemStack(Items.potato), new ItemStack(LOTRMod.lettuce), new ItemStack(LOTRMod.turnip), new ItemStack(LOTRMod.leek), new ItemStack(Items.apple), new ItemStack(LOTRMod.appleGreen), new ItemStack(LOTRMod.pear), new ItemStack(LOTRMod.plum) };
+			ItemStack[] foods = {new ItemStack(Items.carrot), new ItemStack(Items.potato), new ItemStack(LOTRMod.lettuce), new ItemStack(LOTRMod.turnip), new ItemStack(LOTRMod.leek), new ItemStack(Items.apple), new ItemStack(LOTRMod.appleGreen), new ItemStack(LOTRMod.pear), new ItemStack(LOTRMod.plum)};
 			ItemStack ret = foods[random.nextInt(foods.length)].copy();
 			ret.stackSize = 1 + random.nextInt(3);
 			return ret;
@@ -430,7 +429,7 @@ public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStruct
 			placeWeaponRack(world, 2, 2, 1, 1, new ItemStack(Items.iron_sword));
 			LOTREntityBreeGuard armorGuard = new LOTREntityBreeGuard(world);
 			armorGuard.onSpawnWithEgg(null);
-			placeArmorStand(world, 0, 1, 1, 0, new ItemStack[] { armorGuard.getEquipmentInSlot(4), armorGuard.getEquipmentInSlot(3), null, null });
+			placeArmorStand(world, 0, 1, 1, 0, new ItemStack[]{armorGuard.getEquipmentInSlot(4), armorGuard.getEquipmentInSlot(3), null, null});
 		}
 
 		@Override

@@ -73,7 +73,7 @@ public class LOTRItemBlowgun extends Item {
 		}
 		if (dartItem != null) {
 			int useTick = getMaxItemUseDuration(itemstack) - i;
-			float charge = (float) useTick / (float) getMaxDrawTime();
+			float charge = (float) useTick / getMaxDrawTime();
 			if (charge < 0.65f) {
 				return;
 			}
@@ -90,14 +90,14 @@ public class LOTRItemBlowgun extends Item {
 			if (!world.isRemote) {
 				ItemStack shotDart = dartItem.copy();
 				shotDart.stackSize = 1;
-				LOTREntityDart dart = ((LOTRItemDart) shotDart.getItem()).createDart(world, entityplayer, shotDart, charge * 2.0f * LOTRItemBlowgun.getBlowgunLaunchSpeedFactor(itemstack));
+				LOTREntityDart dart = ((LOTRItemDart) shotDart.getItem()).createDart(world, entityplayer, shotDart, charge * 2.0f * getBlowgunLaunchSpeedFactor(itemstack));
 				if (dart.dartDamageFactor < 1.0f) {
 					dart.dartDamageFactor = 1.0f;
 				}
 				if (charge >= 1.0f) {
 					dart.setIsCritical(true);
 				}
-				LOTRItemBlowgun.applyBlowgunModifiers(dart, itemstack);
+				applyBlowgunModifiers(dart, itemstack);
 				if (entityplayer.capabilities.isCreativeMode) {
 					dart.canBePickedUp = 2;
 				}

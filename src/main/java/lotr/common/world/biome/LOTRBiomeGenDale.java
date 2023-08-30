@@ -53,11 +53,11 @@ public class LOTRBiomeGenDale extends LOTRBiome {
 		arrspawnListContainer6[3] = LOTRBiomeSpawnList.entry(LOTRSpawnList.EASTERLINGS, 5).setConquestThreshold(200.0f);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer6);
 		addBiomeVariantSet(LOTRBiomeVariant.SET_NORMAL_OAK_SPRUCE);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.4f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.4f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.4f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.5f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.4f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.4f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_MAPLE, 0.4f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.5f);
 		decorator.setTreeCluster(8, 20);
 		decorator.willowPerChunk = 1;
 		decorator.flowersPerChunk = 2;

@@ -9,7 +9,7 @@ public class LOTRBlockScorchedWall extends LOTRBlockWallBase {
 		super(LOTRMod.scorchedStone, 1);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return LOTRMod.scorchedStone.getIcon(i, j);

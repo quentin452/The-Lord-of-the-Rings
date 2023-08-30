@@ -86,6 +86,7 @@ public class LOTRBlockGateDwarvenIthildin extends LOTRBlockGateDwarven {
 		return true;
 	}
 
+	@SuppressWarnings("ComparatorResultComparison")
 	@Override
 	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLivingBase entity, ItemStack itemstack) {
 		super.onBlockPlacedBy(world, i, j, k, entity, itemstack);
@@ -111,7 +112,8 @@ public class LOTRBlockGateDwarvenIthildin extends LOTRBlockGateDwarven {
 							boolean connected = true;
 							boolean canReplaceSize = true;
 							int y1;
-							label75: for (y1 = 0; y1 <= rangeY; y1++) {
+							label75:
+							for (y1 = 0; y1 <= rangeY; y1++) {
 								for (int xz1 = 0; xz1 <= rangeXZ; xz1++) {
 									int j2 = j1 + y1;
 									int i2 = i1 + xz1 * xzFactorX;
@@ -160,7 +162,7 @@ public class LOTRBlockGateDwarvenIthildin extends LOTRBlockGateDwarven {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		super.registerBlockIcons(iconregister);
@@ -178,27 +180,25 @@ public class LOTRBlockGateDwarvenIthildin extends LOTRBlockGateDwarven {
 
 		public static Comparator<DoorSize> compareLarger;
 		public static List<DoorSize> orderedSizes;
-		static {
-			compareLarger = new Comparator<DoorSize>() {
 
-				@Override
-				public int compare(DoorSize s1, DoorSize s2) {
-					if (s1 == s2) {
-						return 0;
-					}
-					if (s1.area != s2.area) {
-						return -Integer.compare(s1.area, s2.area);
-					}
-					if (s1.height != s2.height) {
-						return -Integer.compare(s1.height, s2.height);
-					}
-					return -Integer.compare(s1.width, s2.width);
+		static {
+			compareLarger = (s1, s2) -> {
+				if (s1 == s2) {
+					return 0;
 				}
+				if (s1.area != s2.area) {
+					return -Integer.compare(s1.area, s2.area);
+				}
+				if (s1.height != s2.height) {
+					return -Integer.compare(s1.height, s2.height);
+				}
+				return -Integer.compare(s1.width, s2.width);
 			};
 			orderedSizes = new ArrayList<>();
-			Collections.addAll(orderedSizes, DoorSize.values());
-			Collections.sort(orderedSizes, compareLarger);
+			Collections.addAll(orderedSizes, values());
+			orderedSizes.sort(compareLarger);
 		}
+
 		public String doorName;
 		public int width;
 		public int height;
@@ -215,7 +215,7 @@ public class LOTRBlockGateDwarvenIthildin extends LOTRBlockGateDwarven {
 		}
 
 		public static DoorSize forName(String s) {
-			for (DoorSize size : DoorSize.values()) {
+			for (DoorSize size : values()) {
 				if (!size.doorName.equals(s)) {
 					continue;
 				}

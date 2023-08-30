@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public class LOTREntityHuorn extends LOTREntityHuornBase {
 	public LOTREntityHuorn(World world) {
 		super(world);
-		this.addTargetTasks(true, LOTREntityAINearestAttackableTargetHuorn.class);
+		addTargetTasks(true, LOTREntityAINearestAttackableTargetHuorn.class);
 	}
 
 	@Override

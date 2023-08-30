@@ -19,7 +19,7 @@ public class LOTRModelHighElvenHelmet extends LOTRModelBiped {
 		crest = new ModelRenderer(this, 32, 0);
 		crest.addBox(-1.0f, -11.0f, -8.0f, 2, 1, 11, 0.0f);
 		crest.setTextureOffset(32, 12).addBox(-1.0f, -10.0f, -8.0f, 2, 1, 1, 0.0f);
-		crest.rotateAngleX = (float) Math.toRadians(-16.0);
+		crest.rotateAngleX = -0.2792526803190927f;
 		bipedHead.addChild(crest);
 		bipedHeadwear.cubeList.clear();
 		bipedBody.cubeList.clear();

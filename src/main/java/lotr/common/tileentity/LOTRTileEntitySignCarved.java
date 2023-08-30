@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class LOTRTileEntitySignCarved extends LOTRTileEntitySign {
 	@Override
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public double getMaxRenderDistanceSquared() {
 		return 1600.0;
 	}
@@ -28,8 +28,7 @@ public class LOTRTileEntitySignCarved extends LOTRTileEntitySign {
 			int i = xCoord;
 			int j = yCoord;
 			int k = zCoord;
-			int onSide = meta;
-			return signBlock.getOnBlockIcon(world, i, j, k, onSide);
+			return signBlock.getOnBlockIcon(world, i, j, k, meta);
 		}
 		return Blocks.stone.getIcon(0, 0);
 	}

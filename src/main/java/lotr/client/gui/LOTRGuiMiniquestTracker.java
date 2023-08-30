@@ -31,7 +31,6 @@ public class LOTRGuiMiniquestTracker extends Gui {
 	public void drawTracker(Minecraft mc, EntityPlayer entityplayer) {
 		ScaledResolution resolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 		int width = resolution.getScaledWidth();
-		resolution.getScaledHeight();
 		FontRenderer fr = mc.fontRenderer;
 		boolean flip = LOTRConfig.trackingQuestRight;
 		if (entityplayer != null && trackedQuest != null) {
@@ -60,7 +59,7 @@ public class LOTRGuiMiniquestTracker extends Gui {
 			drawTexturedModalRect(x, y, 0, 0, iconWidth, iconHeight);
 			int iconX = x + (iconWidth - 16) / 2;
 			int iconY = y + (iconHeight - 16) / 2;
-			x = flip ? (x -= barWidth + gap) : (x += iconWidth + gap);
+			x = flip ? x - (barWidth + gap) : x + (iconWidth + gap);
 			int meterWidth = barWidth - barEdge * 2;
 			meterWidth = Math.round(meterWidth * completion);
 			mc.getTextureManager().bindTexture(guiTexture);
@@ -69,7 +68,7 @@ public class LOTRGuiMiniquestTracker extends Gui {
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			drawTexturedModalRect(x, y, iconWidth, 0, barWidth, barHeight);
 			LOTRTickHandlerClient.drawAlignmentText(fr, x + barWidth / 2 - fr.getStringWidth(progress) / 2, y + barHeight - barHeight / 2 - fr.FONT_HEIGHT / 2, progress, 1.0f);
-			fr.drawSplitString(objective, x, y += barHeight + gap, barWidth, 16777215);
+			fr.drawSplitString(objective, x, y + (barHeight + gap), barWidth, 16777215);
 			GL11.glDisable(3042);
 			GL11.glDisable(3008);
 			if (itemstack != null) {

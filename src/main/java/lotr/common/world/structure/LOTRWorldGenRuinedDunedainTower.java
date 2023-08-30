@@ -25,21 +25,21 @@ public class LOTRWorldGenRuinedDunedainTower extends LOTRWorldGenStructureBase {
 		if (!restrictions && usingPlayer != null) {
 			rotation = usingPlayerRotation();
 			switch (rotation) {
-			case 0: {
-				k += radius;
-				break;
-			}
-			case 1: {
-				i -= radius;
-				break;
-			}
-			case 2: {
-				k -= radius;
-				break;
-			}
-			case 3: {
-				i += radius;
-			}
+				case 0: {
+					k += radius;
+					break;
+				}
+				case 1: {
+					i -= radius;
+					break;
+				}
+				case 2: {
+					k -= radius;
+					break;
+				}
+				case 3: {
+					i += radius;
+				}
 			}
 		}
 		int sections = 4 + random.nextInt(3);
@@ -103,52 +103,52 @@ public class LOTRWorldGenRuinedDunedainTower extends LOTRWorldGenStructureBase {
 		setBlockAndNotifyAdequately(world, i, j + maxHeight + 1, k, LOTRMod.chestStone, rotation + 2);
 		LOTRChestContents.fillChest(world, random, i, j + maxHeight + 1, k, LOTRChestContents.DUNEDAIN_TOWER);
 		switch (rotation) {
-		case 0: {
-			int j1;
-			int height;
-			for (i1 = i - 1; i1 <= i + 1; ++i1) {
-				height = j + 1 + random.nextInt(3);
-				for (j1 = j; j1 <= height; ++j1) {
-					setBlockAndNotifyAdequately(world, i1, j1, k - radius, Blocks.air, 0);
+			case 0: {
+				int j1;
+				int height;
+				for (i1 = i - 1; i1 <= i + 1; ++i1) {
+					height = j + 1 + random.nextInt(3);
+					for (j1 = j; j1 <= height; ++j1) {
+						setBlockAndNotifyAdequately(world, i1, j1, k - radius, Blocks.air, 0);
+					}
 				}
+				break;
 			}
-			break;
-		}
-		case 1: {
-			int j1;
-			int k13;
-			int height;
-			for (k13 = k - 1; k13 <= k + 1; ++k13) {
-				height = j + 1 + random.nextInt(3);
-				for (j1 = j; j1 <= height; ++j1) {
-					setBlockAndNotifyAdequately(world, i + radius, j1, k13, Blocks.air, 0);
+			case 1: {
+				int j1;
+				int k13;
+				int height;
+				for (k13 = k - 1; k13 <= k + 1; ++k13) {
+					height = j + 1 + random.nextInt(3);
+					for (j1 = j; j1 <= height; ++j1) {
+						setBlockAndNotifyAdequately(world, i + radius, j1, k13, Blocks.air, 0);
+					}
 				}
+				break;
 			}
-			break;
-		}
-		case 2: {
-			int j1;
-			int height;
-			for (i1 = i - 1; i1 <= i + 1; ++i1) {
-				height = j + 1 + random.nextInt(3);
-				for (j1 = j; j1 <= height; ++j1) {
-					setBlockAndNotifyAdequately(world, i1, j1, k + radius, Blocks.air, 0);
+			case 2: {
+				int j1;
+				int height;
+				for (i1 = i - 1; i1 <= i + 1; ++i1) {
+					height = j + 1 + random.nextInt(3);
+					for (j1 = j; j1 <= height; ++j1) {
+						setBlockAndNotifyAdequately(world, i1, j1, k + radius, Blocks.air, 0);
+					}
 				}
+				break;
 			}
-			break;
-		}
-		case 3: {
-			int j1;
-			int k13;
-			int height;
-			for (k13 = k - 1; k13 <= k + 1; ++k13) {
-				height = j + 1 + random.nextInt(3);
-				for (j1 = j; j1 <= height; ++j1) {
-					setBlockAndNotifyAdequately(world, i - radius, j1, k13, Blocks.air, 0);
+			case 3: {
+				int j1;
+				int k13;
+				int height;
+				for (k13 = k - 1; k13 <= k + 1; ++k13) {
+					height = j + 1 + random.nextInt(3);
+					for (j1 = j; j1 <= height; ++j1) {
+						setBlockAndNotifyAdequately(world, i - radius, j1, k13, Blocks.air, 0);
+					}
 				}
+				break;
 			}
-			break;
-		}
 		}
 		for (int l = 0; l < 16; ++l) {
 			int j1;

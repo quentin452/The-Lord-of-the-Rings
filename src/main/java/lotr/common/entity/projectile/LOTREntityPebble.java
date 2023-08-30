@@ -9,7 +9,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class LOTREntityPebble extends EntityThrowable {
-	public boolean isSling = false;
+	public boolean isSling;
 
 	public LOTREntityPebble(World world) {
 		super(world);

@@ -1,9 +1,7 @@
 package lotr.common.entity.npc;
 
 import lotr.common.*;
-import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -19,11 +17,6 @@ public class LOTREntityDorwinionElfWarrior extends LOTREntityDorwinionElf {
 	public void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(24.0);
-	}
-
-	@Override
-	public EntityAIBase createElfMeleeAttackAI() {
-		return new LOTREntityAIAttackOnCollide(this, 1.5, false);
 	}
 
 	@Override
@@ -52,7 +45,7 @@ public class LOTREntityDorwinionElfWarrior extends LOTREntityDorwinionElf {
 				npcItemsInv.setSpearBackup(npcItemsInv.getMeleeWeapon());
 				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.spearBladorthin));
 			}
-		} else if (i == 1) {
+		} else {
 			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.spearBladorthin));
 			npcItemsInv.setSpearBackup(null);
 		}

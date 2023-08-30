@@ -9,13 +9,7 @@ import io.gitlab.dwarfyassassin.lotrucp.core.utils.ASMUtils;
 public class BotaniaPatcher extends ModPatcher {
 	public BotaniaPatcher() {
 		super("Botania", "Botania");
-		classes.put("vazkii.botania.common.block.subtile.generating.SubTileKekimurus", new Patcher.ConsumerImplBecauseNoLambdas<ClassNode>() {
-
-			@Override
-			public void accept(ClassNode node) {
-				BotaniaPatcher.this.patchKekimurus(node);
-			}
-		});
+		classes.put("vazkii.botania.common.block.subtile.generating.SubTileKekimurus", this::patchKekimurus);
 	}
 
 	public void patchKekimurus(ClassNode classNode) {

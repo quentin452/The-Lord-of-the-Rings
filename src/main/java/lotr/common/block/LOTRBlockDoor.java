@@ -21,7 +21,7 @@ public class LOTRBlockDoor extends BlockDoor {
 		setCreativeTab(LOTRCreativeTabs.tabUtil);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public Item getItem(World world, int i, int j, int k) {
 		return Item.getItemFromBlock(this);
@@ -32,7 +32,7 @@ public class LOTRBlockDoor extends BlockDoor {
 		return (i & 8) != 0 ? null : Item.getItemFromBlock(this);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public String getItemIconName() {
 		return getTextureName();

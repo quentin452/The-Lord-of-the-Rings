@@ -1,7 +1,7 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelHalfTroll;
-import lotr.common.entity.npc.LOTREntityHalfTroll;
+import lotr.common.entity.LOTRRandomSkinEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
@@ -21,7 +21,7 @@ public class LOTRRenderHalfTroll extends LOTRRenderBiped {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		LOTREntityHalfTroll halfTroll = (LOTREntityHalfTroll) entity;
+		LOTRRandomSkinEntity halfTroll = (LOTRRandomSkinEntity) entity;
 		return halfTrollSkins.getRandomSkin(halfTroll);
 	}
 

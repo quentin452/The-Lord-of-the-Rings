@@ -9,16 +9,16 @@ import net.minecraft.world.World;
 
 public class LOTRWorldGenRuinedHouse extends LOTRWorldGenStructureBase2 {
 	public Block woodBlock = Blocks.log;
-	public int woodMeta = 0;
+	public int woodMeta;
 	public Block plankBlock = Blocks.planks;
-	public int plankMeta = 0;
+	public int plankMeta;
 	public Block fenceBlock = Blocks.fence;
-	public int fenceMeta = 0;
+	public int fenceMeta;
 	public Block stairBlock = Blocks.oak_stairs;
 	public Block stoneBlock = Blocks.cobblestone;
-	public int stoneMeta = 0;
+	public int stoneMeta;
 	public Block stoneVariantBlock = Blocks.mossy_cobblestone;
-	public int stoneVariantMeta = 0;
+	public int stoneVariantMeta;
 
 	public LOTRWorldGenRuinedHouse(boolean flag) {
 		super(flag);
@@ -28,7 +28,7 @@ public class LOTRWorldGenRuinedHouse extends LOTRWorldGenStructureBase2 {
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int i1;
 		int width = 4 + random.nextInt(3);
-		this.setOriginAndRotation(world, i, j, k, rotation, width + 1);
+		setOriginAndRotation(world, i, j, k, rotation, width + 1);
 		if (restrictions) {
 			int minHeight = 1;
 			int maxHeight = 1;
@@ -102,9 +102,9 @@ public class LOTRWorldGenRuinedHouse extends LOTRWorldGenStructureBase2 {
 			setBlockAndMetadata(world, -width + 1, 1, -width + 2, Blocks.furnace, 0);
 		}
 		if (random.nextBoolean()) {
-			this.placeChest(world, random, width - 1, 1, width - 2, 0, LOTRChestContents.RUINED_HOUSE);
+			placeChest(world, random, width - 1, 1, width - 2, 0, LOTRChestContents.RUINED_HOUSE);
 		} else {
-			this.placeChest(world, random, -width + 1, 1, width - 2, 0, LOTRChestContents.RUINED_HOUSE);
+			placeChest(world, random, -width + 1, 1, width - 2, 0, LOTRChestContents.RUINED_HOUSE);
 		}
 		return true;
 	}
@@ -112,20 +112,20 @@ public class LOTRWorldGenRuinedHouse extends LOTRWorldGenStructureBase2 {
 	public void placeRandomGroundBlock(World world, Random random, int i, int j, int k) {
 		int l = random.nextInt(4);
 		switch (l) {
-		case 0:
-			setBlockAndMetadata(world, i, j, k, Blocks.dirt, 1);
-			break;
-		case 1:
-			setBlockAndMetadata(world, i, j, k, Blocks.gravel, 0);
-			break;
-		case 2:
-			setBlockAndMetadata(world, i, j, k, stoneBlock, stoneMeta);
-			break;
-		case 3:
-			setBlockAndMetadata(world, i, j, k, stoneVariantBlock, stoneVariantMeta);
-			break;
-		default:
-			break;
+			case 0:
+				setBlockAndMetadata(world, i, j, k, Blocks.dirt, 1);
+				break;
+			case 1:
+				setBlockAndMetadata(world, i, j, k, Blocks.gravel, 0);
+				break;
+			case 2:
+				setBlockAndMetadata(world, i, j, k, stoneBlock, stoneMeta);
+				break;
+			case 3:
+				setBlockAndMetadata(world, i, j, k, stoneVariantBlock, stoneVariantMeta);
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -135,27 +135,27 @@ public class LOTRWorldGenRuinedHouse extends LOTRWorldGenStructureBase2 {
 		}
 		int l = random.nextInt(4);
 		switch (l) {
-		case 0:
-			setBlockAndMetadata(world, i, j, k, fenceBlock, fenceMeta);
-			break;
-		case 1:
-			setBlockAndMetadata(world, i, j, k, plankBlock, plankMeta);
-			break;
-		case 2:
-			setBlockAndMetadata(world, i, j, k, woodBlock, woodMeta | (northToSouth ? 8 : 4));
-			break;
-		case 3: {
-			int upsideDown;
-			upsideDown = random.nextBoolean() ? 4 : 0;
-			if (northToSouth) {
-				setBlockAndMetadata(world, i, j, k, stairBlock, random.nextInt(2) | upsideDown);
-			} else {
-				setBlockAndMetadata(world, i, j, k, stairBlock, 2 + random.nextInt(2) | upsideDown);
+			case 0:
+				setBlockAndMetadata(world, i, j, k, fenceBlock, fenceMeta);
+				break;
+			case 1:
+				setBlockAndMetadata(world, i, j, k, plankBlock, plankMeta);
+				break;
+			case 2:
+				setBlockAndMetadata(world, i, j, k, woodBlock, woodMeta | (northToSouth ? 8 : 4));
+				break;
+			case 3: {
+				int upsideDown;
+				upsideDown = random.nextBoolean() ? 4 : 0;
+				if (northToSouth) {
+					setBlockAndMetadata(world, i, j, k, stairBlock, random.nextInt(2) | upsideDown);
+				} else {
+					setBlockAndMetadata(world, i, j, k, stairBlock, 2 + random.nextInt(2) | upsideDown);
+				}
+				break;
 			}
-			break;
-		}
-		default:
-			break;
+			default:
+				break;
 		}
 	}
 
@@ -165,20 +165,20 @@ public class LOTRWorldGenRuinedHouse extends LOTRWorldGenStructureBase2 {
 		}
 		int l = random.nextInt(4);
 		switch (l) {
-		case 0:
-			setBlockAndMetadata(world, i, j, k, fenceBlock, fenceMeta);
-			break;
-		case 1:
-			setBlockAndMetadata(world, i, j, k, plankBlock, plankMeta);
-			break;
-		case 2:
-			setBlockAndMetadata(world, i, j, k, stoneBlock, stoneMeta);
-			break;
-		case 3:
-			setBlockAndMetadata(world, i, j, k, stoneVariantBlock, stoneVariantMeta);
-			break;
-		default:
-			break;
+			case 0:
+				setBlockAndMetadata(world, i, j, k, fenceBlock, fenceMeta);
+				break;
+			case 1:
+				setBlockAndMetadata(world, i, j, k, plankBlock, plankMeta);
+				break;
+			case 2:
+				setBlockAndMetadata(world, i, j, k, stoneBlock, stoneMeta);
+				break;
+			case 3:
+				setBlockAndMetadata(world, i, j, k, stoneVariantBlock, stoneVariantMeta);
+				break;
+			default:
+				break;
 		}
 	}
 

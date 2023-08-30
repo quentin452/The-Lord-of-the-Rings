@@ -17,7 +17,7 @@ public class LOTRWorldGenSouthronStables extends LOTRWorldGenSouthronStructure {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 8);
+		setOriginAndRotation(world, i, j, k, rotation, 8);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -45,7 +45,7 @@ public class LOTRWorldGenSouthronStables extends LOTRWorldGenSouthronStructure {
 			for (int k1 = -7; k1 <= 7; ++k1) {
 				int i2 = Math.abs(i1);
 				int k2 = Math.abs(k1);
-				if (i2 <= 4 && k2 <= 7 || i1 >= 5 && i1 <= 8 && k2 <= 6) {
+				if (i2 <= 4 || i1 >= 5 && k2 <= 6) {
 					for (j1 = 0; (j1 >= 0 || !isOpaque(world, i1, j1, k1)) && getY(j1) >= 0; --j1) {
 						setBlockAndMetadata(world, i1, j1, k1, stoneBlock, stoneMeta);
 						setGrassToDirt(world, i1, j1 - 1, k1);
@@ -90,13 +90,13 @@ public class LOTRWorldGenSouthronStables extends LOTRWorldGenSouthronStructure {
 		associateBlockMetaAlias("ROOF_SLAB_INV", roofSlabBlock, roofSlabMeta | 8);
 		associateBlockAlias("ROOF_STAIR", roofStairBlock);
 		generateStrScan(world, random, 0, 1, 0);
-		this.placeChest(world, random, -3, 1, 6, LOTRMod.chestBasket, 2, LOTRChestContents.NEAR_HARAD_HOUSE);
+		placeChest(world, random, -3, 1, 6, LOTRMod.chestBasket, 2, LOTRChestContents.NEAR_HARAD_HOUSE);
 		int numHaradrim = 1 + random.nextInt(2);
 		for (int l = 0; l < numHaradrim; ++l) {
 			LOTREntityNearHaradrimBase haradrim = createHaradrim(world);
 			spawnNPCAndSetHome(haradrim, world, 0, 1, 0, 8);
 		}
-		for (int k1 : new int[] { -4, 0, 4 }) {
+		for (int k1 : new int[]{-4, 0, 4}) {
 			int i1 = 5;
 			int j12 = 1;
 			LOTREntityHorse horse = new LOTREntityHorse(world);

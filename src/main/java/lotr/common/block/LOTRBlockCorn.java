@@ -18,7 +18,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 	public static int MAX_GROW_HEIGHT = 3;
 	public static int META_GROW_END = 7;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon cornIcon;
 
 	public LOTRBlockCorn() {
@@ -36,7 +36,7 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 		return canPlaceBlockAt(world, i, j, k);
 	}
 
-	public boolean canGrowCorn(World world, int i, int j, int k) {
+	public boolean canGrowCorn(IBlockAccess world, int i, int j, int k) {
 		return world.getBlock(i, j - 1, k) == this;
 	}
 
@@ -69,7 +69,7 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 	public boolean checkCanStay(World world, int i, int j, int k) {
 		if (!canBlockStay(world, i, j, k)) {
 			int meta = world.getBlockMetadata(i, j, k);
-			this.dropBlockAsItem(world, i, j, k, meta, 0);
+			dropBlockAsItem(world, i, j, k, meta, 0);
 			world.setBlockToAir(i, j, k);
 			return false;
 		}
@@ -77,13 +77,8 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 	}
 
 	@Override
-	public int damageDropped(int i) {
-		return 0;
-	}
-
-	@Override
 	public boolean func_149851_a(World world, int i, int j, int k, boolean isRemote) {
-		return world.getBlock(i, j - 1, k) != this && world.isAirBlock(i, j + 1, k) || !LOTRBlockCorn.hasCorn(world, i, j, k) && canGrowCorn(world, i, j, k);
+		return world.getBlock(i, j - 1, k) != this && world.isAirBlock(i, j + 1, k) || !hasCorn(world, i, j, k) && canGrowCorn(world, i, j, k);
 	}
 
 	@Override
@@ -95,8 +90,8 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 	public void func_149853_b(World world, Random random, int i, int j, int k) {
 		if (world.getBlock(i, j - 1, k) != this && world.isAirBlock(i, j + 1, k)) {
 			world.setBlock(i, j + 1, k, this, 0, 3);
-		} else if (!LOTRBlockCorn.hasCorn(world, i, j, k) && canGrowCorn(world, i, j, k) && random.nextInt(2) == 0) {
-			LOTRBlockCorn.setHasCorn(world, i, j, k, true);
+		} else if (!hasCorn(world, i, j, k) && canGrowCorn(world, i, j, k) && random.nextInt(2) == 0) {
+			setHasCorn(world, i, j, k, true);
 		}
 	}
 
@@ -105,9 +100,9 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 		return null;
 	}
 
-	public ArrayList<ItemStack> getCornDrops(World world, int i, int j, int k, int meta) {
-		ArrayList<ItemStack> drops = new ArrayList<>();
-		if (LOTRBlockCorn.metaHasCorn(meta)) {
+	public Collection<ItemStack> getCornDrops(World world, int i, int j, int k, int meta) {
+		Collection<ItemStack> drops = new ArrayList<>();
+		if (metaHasCorn(meta)) {
 			int corns = 1;
 			if (world.rand.nextInt(4) == 0) {
 				++corns;
@@ -141,21 +136,16 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 		return growth / 250.0f;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
-		if (LOTRBlockCorn.metaHasCorn(j)) {
+		if (metaHasCorn(j)) {
 			return cornIcon;
 		}
 		return super.getIcon(i, j);
 	}
 
-	@Override
-	public Item getItemDropped(int i, Random random, int j) {
-		return Item.getItemFromBlock(this);
-	}
-
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public String getItemIconName() {
 		return getTextureName();
@@ -188,14 +178,14 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 
 	@Override
 	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer entityplayer, int l, float f, float f1, float f2) {
-		if (LOTRBlockCorn.hasCorn(world, i, j, k)) {
+		if (hasCorn(world, i, j, k)) {
 			if (!world.isRemote) {
 				int preMeta = world.getBlockMetadata(i, j, k);
-				LOTRBlockCorn.setHasCorn(world, i, j, k, false);
+				setHasCorn(world, i, j, k, false);
 				if (!world.isRemote) {
-					ArrayList<ItemStack> cornDrops = getCornDrops(world, i, j, k, preMeta);
+					Iterable<ItemStack> cornDrops = getCornDrops(world, i, j, k, preMeta);
 					for (ItemStack corn : cornDrops) {
-						this.dropBlockAsItem(world, i, j, k, corn);
+						dropBlockAsItem(world, i, j, k, corn);
 					}
 				}
 			}
@@ -209,7 +199,7 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 		checkCanStay(world, i, j, k);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		super.registerBlockIcons(iconregister);
@@ -242,15 +232,15 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 				meta = corn | grow;
 				world.setBlockMetadataWithNotify(i, j, k, meta, 4);
 			}
-			if (!LOTRBlockCorn.hasCorn(world, i, j, k) && canGrowCorn(world, i, j, k) && world.rand.nextFloat() < growth) {
-				LOTRBlockCorn.setHasCorn(world, i, j, k, true);
+			if (!hasCorn(world, i, j, k) && canGrowCorn(world, i, j, k) && world.rand.nextFloat() < growth) {
+				setHasCorn(world, i, j, k, true);
 			}
 		}
 	}
 
-	public static boolean hasCorn(World world, int i, int j, int k) {
+	public static boolean hasCorn(IBlockAccess world, int i, int j, int k) {
 		int meta = world.getBlockMetadata(i, j, k);
-		return LOTRBlockCorn.metaHasCorn(meta);
+		return metaHasCorn(meta);
 	}
 
 	public static boolean metaHasCorn(int l) {
@@ -259,7 +249,7 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 
 	public static void setHasCorn(World world, int i, int j, int k, boolean flag) {
 		int meta = world.getBlockMetadata(i, j, k);
-		meta = flag ? (meta |= 8) : (meta &= 7);
+		meta = flag ? meta | 8 : meta & 7;
 		world.setBlockMetadataWithNotify(i, j, k, meta, 3);
 	}
 

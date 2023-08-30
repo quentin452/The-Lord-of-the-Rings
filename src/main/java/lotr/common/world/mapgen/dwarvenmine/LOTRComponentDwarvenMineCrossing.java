@@ -61,29 +61,29 @@ public class LOTRComponentDwarvenMineCrossing extends StructureComponent {
 	public void buildComponent(StructureComponent component, List list, Random random) {
 		int i = getComponentType();
 		switch (corridorDirection) {
-		case 0: {
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.maxZ + 1, 0, i, ruined);
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY, boundingBox.minZ + 1, 1, i, ruined);
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY, boundingBox.minZ + 1, 3, i, ruined);
-			break;
-		}
-		case 1: {
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.minZ - 1, 2, i, ruined);
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.maxZ + 1, 0, i, ruined);
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY, boundingBox.minZ + 1, 1, i, ruined);
-			break;
-		}
-		case 2: {
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.minZ - 1, 2, i, ruined);
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY, boundingBox.minZ + 1, 1, i, ruined);
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY, boundingBox.minZ + 1, 3, i, ruined);
-			break;
-		}
-		case 3: {
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.minZ - 1, 2, i, ruined);
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.maxZ + 1, 0, i, ruined);
-			LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY, boundingBox.minZ + 1, 3, i, ruined);
-		}
+			case 0: {
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.maxZ + 1, 0, i, ruined);
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY, boundingBox.minZ + 1, 1, i, ruined);
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY, boundingBox.minZ + 1, 3, i, ruined);
+				break;
+			}
+			case 1: {
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.minZ - 1, 2, i, ruined);
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.maxZ + 1, 0, i, ruined);
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY, boundingBox.minZ + 1, 1, i, ruined);
+				break;
+			}
+			case 2: {
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.minZ - 1, 2, i, ruined);
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX - 1, boundingBox.minY, boundingBox.minZ + 1, 1, i, ruined);
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY, boundingBox.minZ + 1, 3, i, ruined);
+				break;
+			}
+			case 3: {
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.minZ - 1, 2, i, ruined);
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.minX + 1, boundingBox.minY, boundingBox.maxZ + 1, 0, i, ruined);
+				LOTRStructureDwarvenMinePieces.getNextComponent(component, list, random, boundingBox.maxX + 1, boundingBox.minY, boundingBox.minZ + 1, 3, i, ruined);
+			}
 		}
 		if (isMultipleFloors) {
 			if (random.nextBoolean()) {
@@ -121,29 +121,29 @@ public class LOTRComponentDwarvenMineCrossing extends StructureComponent {
 			structureboundingbox.maxY += 4;
 		}
 		switch (l) {
-		case 0: {
-			structureboundingbox.minX = i - 1;
-			structureboundingbox.maxX = i + 3;
-			structureboundingbox.maxZ = k + 4;
-			break;
-		}
-		case 1: {
-			structureboundingbox.minX = i - 4;
-			structureboundingbox.minZ = k - 1;
-			structureboundingbox.maxZ = k + 3;
-			break;
-		}
-		case 2: {
-			structureboundingbox.minX = i - 1;
-			structureboundingbox.maxX = i + 3;
-			structureboundingbox.minZ = k - 4;
-			break;
-		}
-		case 3: {
-			structureboundingbox.maxX = i + 4;
-			structureboundingbox.minZ = k - 1;
-			structureboundingbox.maxZ = k + 3;
-		}
+			case 0: {
+				structureboundingbox.minX = i - 1;
+				structureboundingbox.maxX = i + 3;
+				structureboundingbox.maxZ = k + 4;
+				break;
+			}
+			case 1: {
+				structureboundingbox.minX = i - 4;
+				structureboundingbox.minZ = k - 1;
+				structureboundingbox.maxZ = k + 3;
+				break;
+			}
+			case 2: {
+				structureboundingbox.minX = i - 1;
+				structureboundingbox.maxX = i + 3;
+				structureboundingbox.minZ = k - 4;
+				break;
+			}
+			case 3: {
+				structureboundingbox.maxX = i + 4;
+				structureboundingbox.minZ = k - 1;
+				structureboundingbox.maxZ = k + 3;
+			}
 		}
 		return StructureComponent.findIntersecting(list, structureboundingbox) != null ? null : structureboundingbox;
 	}

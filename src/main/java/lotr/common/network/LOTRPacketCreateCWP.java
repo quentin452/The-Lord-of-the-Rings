@@ -49,15 +49,15 @@ public class LOTRPacketCreateCWP implements IMessage {
 			if (numWaypoints <= pd.getMaxCustomWaypoints()) {
 				IChatComponent[] protectionMessage = new IChatComponent[1];
 				boolean protection = LOTRBannerProtection.isProtected(world, entityplayer, LOTRBannerProtection.forPlayer_returnMessage(entityplayer, LOTRBannerProtection.Permission.FULL, protectionMessage), true);
-				if (!protection) {
+				if (protection) {
+					IChatComponent clientMessage = protectionMessage[0];
+					IMessage packetMessage = new LOTRPacketCWPProtectionMessage(clientMessage);
+					LOTRPacketHandler.networkWrapper.sendTo(packetMessage, entityplayer);
+				} else {
 					String wpName = LOTRCustomWaypoint.validateCustomName(packet.name);
 					if (wpName != null) {
 						LOTRCustomWaypoint.createForPlayer(wpName, entityplayer);
 					}
-				} else {
-					IChatComponent clientMessage = protectionMessage[0];
-					LOTRPacketCWPProtectionMessage packetMessage = new LOTRPacketCWPProtectionMessage(clientMessage);
-					LOTRPacketHandler.networkWrapper.sendTo(packetMessage, entityplayer);
 				}
 			}
 			return null;

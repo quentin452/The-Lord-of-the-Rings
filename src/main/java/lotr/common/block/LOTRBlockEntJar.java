@@ -21,7 +21,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRBlockEntJar extends BlockContainer {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] jarIcons;
 
 	public LOTRBlockEntJar() {
@@ -45,7 +45,7 @@ public class LOTRBlockEntJar extends BlockContainer {
 		return new LOTRTileEntityEntJar();
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		return i == 0 || i == 1 ? jarIcons[0] : jarIcons[1];
@@ -140,12 +140,12 @@ public class LOTRBlockEntJar extends BlockContainer {
 	@Override
 	public void onNeighborBlockChange(World world, int i, int j, int k, Block block) {
 		if (!canBlockStay(world, i, j, k)) {
-			this.dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
+			dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
 			world.setBlockToAir(i, j, k);
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(World world, int i, int j, int k, Random random) {
 		TileEntity tileentity;
@@ -160,7 +160,7 @@ public class LOTRBlockEntJar extends BlockContainer {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		jarIcons = new IIcon[2];

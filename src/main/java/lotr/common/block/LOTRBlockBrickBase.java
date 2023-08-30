@@ -12,11 +12,11 @@ import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 
 public abstract class LOTRBlockBrickBase extends Block {
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon[] brickIcons;
 	public String[] brickNames;
 
-	public LOTRBlockBrickBase() {
+	protected LOTRBlockBrickBase() {
 		super(Material.rock);
 		setCreativeTab(LOTRCreativeTabs.tabBlock);
 		setHardness(1.5f);
@@ -29,7 +29,7 @@ public abstract class LOTRBlockBrickBase extends Block {
 		return i;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (j >= brickNames.length) {
@@ -38,7 +38,7 @@ public abstract class LOTRBlockBrickBase extends Block {
 		return brickIcons[j];
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < brickNames.length; ++i) {
@@ -46,7 +46,7 @@ public abstract class LOTRBlockBrickBase extends Block {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		brickIcons = new IIcon[brickNames.length];

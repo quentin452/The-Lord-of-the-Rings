@@ -49,11 +49,11 @@ public class LOTRBiomeGenAnduin extends LOTRBiome {
 		arrspawnListContainer6[1] = LOTRBiomeSpawnList.entry(LOTRSpawnList.GALADHRIM_WARRIORS, 10);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer6);
 		addBiomeVariantSet(LOTRBiomeVariant.SET_MOUNTAINS);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_LARCH, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_PINE, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_ASPEN, 0.2f);
 		decorator.treesPerChunk = 0;
 		decorator.setTreeCluster(4, 20);
 		decorator.willowPerChunk = 1;

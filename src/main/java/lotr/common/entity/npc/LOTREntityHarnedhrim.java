@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class LOTREntityHarnedhrim extends LOTREntityNearHaradrimBase {
 	public LOTREntityHarnedhrim(World world) {
 		super(world);
-		this.addTargetTasks(true);
+		addTargetTasks(true);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class LOTREntityHarnedhrim extends LOTREntityNearHaradrimBase {
 
 	@Override
 	public String getNPCFormattedName(String npcName, String entityName) {
-		if (this.getClass() == LOTREntityHarnedhrim.class) {
+		if (getClass() == LOTREntityHarnedhrim.class) {
 			return StatCollector.translateToLocalFormatted("entity.lotr.Harnedhrim.entityName", npcName);
 		}
 		return super.getNPCFormattedName(npcName, entityName);

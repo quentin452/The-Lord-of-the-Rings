@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class LOTREntityUmbarBlacksmith extends LOTREntityUmbarian implements LOTRTradeable.Smith {
 	public LOTREntityUmbarBlacksmith(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

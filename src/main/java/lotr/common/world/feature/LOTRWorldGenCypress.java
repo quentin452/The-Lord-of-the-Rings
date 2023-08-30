@@ -11,7 +11,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class LOTRWorldGenCypress extends WorldGenAbstractTree {
-	public int extraTrunkWidth = 0;
+	public int extraTrunkWidth;
 	public Block woodBlock = LOTRMod.wood6;
 	public int woodMeta = 2;
 	public Block leafBlock = LOTRMod.leaves6;
@@ -58,7 +58,7 @@ public class LOTRWorldGenCypress extends WorldGenAbstractTree {
 			for (i1 = i; i1 <= i + extraTrunkWidth && canGrow; ++i1) {
 				for (k1 = k; k1 <= k + extraTrunkWidth && canGrow; ++k1) {
 					Block block = world.getBlock(i1, j - 1, k1);
-					if (block.canSustainPlant((IBlockAccess) world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
+					if (block.canSustainPlant(world, i1, j - 1, k1, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 						continue;
 					}
 					canGrow = false;

@@ -58,13 +58,13 @@ public class LOTRPacketWaypointUseCount implements IMessage {
 			EntityPlayer entityplayer = LOTRMod.proxy.getClientPlayer();
 			LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
 			LOTRAbstractWaypoint waypoint = null;
-			if (!custom) {
+			if (custom) {
+				UUID sharingPlayerID = packet.sharingPlayer;
+				waypoint = sharingPlayerID != null ? pd.getSharedCustomWaypointByID(sharingPlayerID, wpID) : pd.getCustomWaypointByID(wpID);
+			} else {
 				if (wpID >= 0 && wpID < LOTRWaypoint.values().length) {
 					waypoint = LOTRWaypoint.values()[wpID];
 				}
-			} else {
-				UUID sharingPlayerID = packet.sharingPlayer;
-				waypoint = sharingPlayerID != null ? pd.getSharedCustomWaypointByID(sharingPlayerID, wpID) : pd.getCustomWaypointByID(wpID);
 			}
 			if (waypoint != null) {
 				pd.setWPUseCount(waypoint, packet.useCount);

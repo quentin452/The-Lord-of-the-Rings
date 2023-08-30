@@ -29,7 +29,7 @@ public class LOTRRenderCrossbowBolt extends Render {
 		}
 		float f2 = 0.0f;
 		float f3 = 0.5f;
-		float f4 = (0 + yOffset * 10) / 32.0f;
+		float f4 = (yOffset * 10) / 32.0f;
 		float f5 = (5 + yOffset * 10) / 32.0f;
 		float f6 = 0.0f;
 		float f7 = 0.15625f;

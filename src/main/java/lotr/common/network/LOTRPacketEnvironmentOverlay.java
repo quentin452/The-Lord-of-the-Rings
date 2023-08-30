@@ -38,7 +38,7 @@ public class LOTRPacketEnvironmentOverlay implements IMessage {
 	}
 
 	public enum Overlay {
-		FROST, BURN;
+		FROST, BURN
 
 	}
 

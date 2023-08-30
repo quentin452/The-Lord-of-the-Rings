@@ -24,7 +24,7 @@ public class LOTRWorldGenGondorCottage extends LOTRWorldGenGondorStructure {
 		int j13;
 		int i13;
 		int k13;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -111,14 +111,14 @@ public class LOTRWorldGenGondorCottage extends LOTRWorldGenGondorStructure {
 				}
 			}
 		}
-		for (int i15 : new int[] { -5, 5 }) {
+		for (int i15 : new int[]{-5, 5}) {
 			setBlockAndMetadata(world, i15, 2, -3, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, i15, 2, -2, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, i15, 2, 0, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, i15, 2, 2, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, i15, 2, 3, fenceBlock, fenceMeta);
 		}
-		for (int k141 : new int[] { -5, 5 }) {
+		for (int k141 : new int[]{-5, 5}) {
 			int i16;
 			for (i16 = -1; i16 <= 1; ++i16) {
 				for (int j14 = 2; j14 <= 3; ++j14) {
@@ -146,7 +146,7 @@ public class LOTRWorldGenGondorCottage extends LOTRWorldGenGondorStructure {
 		setBlockAndMetadata(world, 0, 1, 5, doorBlock, 3);
 		setBlockAndMetadata(world, 0, 2, 5, doorBlock, 8);
 		setBlockAndMetadata(world, 0, 3, 6, Blocks.torch, 3);
-		int[] i17 = { -5, 5 };
+		int[] i17 = {-5, 5};
 		k12 = i17.length;
 		for (j12 = 0; j12 < k12; ++j12) {
 			k14 = i17[j12];
@@ -211,13 +211,13 @@ public class LOTRWorldGenGondorCottage extends LOTRWorldGenGondorStructure {
 		placePlateWithCertainty(world, random, -4, 2, 1, plateBlock, LOTRFoods.GONDOR);
 		setBlockAndMetadata(world, -4, 1, 2, Blocks.cauldron, 3);
 		setBlockAndMetadata(world, -4, 1, 3, rockSlabDoubleBlock, rockSlabDoubleMeta);
-		this.placeMug(world, random, -4, 2, 3, 3, LOTRFoods.GONDOR_DRINK);
+		placeMug(world, random, -4, 2, 3, 3, LOTRFoods.GONDOR_DRINK);
 		setBlockAndMetadata(world, -3, 1, 4, rockSlabDoubleBlock, rockSlabDoubleMeta);
 		placeFlowerPot(world, -3, 2, 4, getRandomFlower(world, random));
 		setBlockAndMetadata(world, -2, 1, 4, Blocks.hay_block, 0);
 		setBlockAndMetadata(world, 4, 1, 0, tableBlock, 0);
-		this.placeChest(world, random, 4, 1, 1, 5, chestContents);
-		this.placeChest(world, random, 4, 1, 2, 5, chestContents);
+		placeChest(world, random, 4, 1, 1, 5, chestContents);
+		placeChest(world, random, 4, 1, 2, 5, chestContents);
 		setBlockAndMetadata(world, 4, 1, 3, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, 3, 1, 4, rockSlabDoubleBlock, rockSlabDoubleMeta);
 		placeFlowerPot(world, 3, 2, 4, getRandomFlower(world, random));
@@ -247,7 +247,7 @@ public class LOTRWorldGenGondorCottage extends LOTRWorldGenGondorStructure {
 				setBlockAndMetadata(world, i13, j13, 10, LOTRMod.reedBars, 0);
 			}
 		}
-		int[] j15 = { -2, 1 };
+		int[] j15 = {-2, 1};
 		i13 = j15.length;
 		for (j12 = 0; j12 < i13; ++j12) {
 			int i15;

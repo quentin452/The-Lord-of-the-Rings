@@ -10,7 +10,7 @@ import net.minecraft.entity.Entity;
 public abstract class LOTRRenderRugBase extends Render {
 	public ModelBase rugModel;
 
-	public LOTRRenderRugBase(ModelBase m) {
+	protected LOTRRenderRugBase(ModelBase m) {
 		rugModel = m;
 	}
 

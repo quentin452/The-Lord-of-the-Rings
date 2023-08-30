@@ -16,7 +16,7 @@ public class LOTRWorldGenHarnedorSmithy extends LOTRWorldGenHarnedorStructure {
 	@Override
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 5);
+		setOriginAndRotation(world, i, j, k, rotation, 5);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -42,9 +42,8 @@ public class LOTRWorldGenHarnedorSmithy extends LOTRWorldGenHarnedorStructure {
 		}
 		for (int i1 = -10; i1 <= 6; ++i1) {
 			for (int k1 = -6; k1 <= 6; ++k1) {
-				Math.abs(i1);
 				int k2 = Math.abs(k1);
-				if ((i1 < -8 || i1 > 4 || k2 != 4) && (i1 < -10 || i1 > 6 || k2 > 3)) {
+				if ((i1 < -8 || i1 > 4 || k2 != 4) && k2 > 3) {
 					continue;
 				}
 				j1 = -1;
@@ -74,15 +73,15 @@ public class LOTRWorldGenHarnedorSmithy extends LOTRWorldGenHarnedorStructure {
 		placeWeaponRack(world, -1, 2, 1, 5, getRandomHarnedorWeapon(random));
 		placeArmorStand(world, 3, 1, 3, 2, null);
 		if (random.nextBoolean()) {
-			placeArmorStand(world, 0, 1, 3, 0, new ItemStack[] { new ItemStack(LOTRMod.helmetHarnedor), new ItemStack(LOTRMod.bodyHarnedor), new ItemStack(LOTRMod.legsHarnedor), new ItemStack(LOTRMod.bootsHarnedor) });
+			placeArmorStand(world, 0, 1, 3, 0, new ItemStack[]{new ItemStack(LOTRMod.helmetHarnedor), new ItemStack(LOTRMod.bodyHarnedor), new ItemStack(LOTRMod.legsHarnedor), new ItemStack(LOTRMod.bootsHarnedor)});
 		} else {
-			placeArmorStand(world, 0, 1, 3, 0, new ItemStack[] { null, new ItemStack(LOTRMod.bodyHarnedor), null, null });
+			placeArmorStand(world, 0, 1, 3, 0, new ItemStack[]{null, new ItemStack(LOTRMod.bodyHarnedor), null, null});
 		}
-		this.placeChest(world, random, 5, 1, -2, LOTRMod.chestBasket, 5, LOTRChestContents.HARNENNOR_HOUSE);
-		this.placeChest(world, random, -7, 1, 3, LOTRMod.chestBasket, 2, LOTRChestContents.HARNENNOR_HOUSE);
-		this.placeBarrel(world, random, -3, 2, -1, 5, LOTRFoods.HARNEDOR_DRINK);
-		this.placeMug(world, random, -3, 2, 0, 2, LOTRFoods.HARNEDOR_DRINK);
-		this.placeMug(world, random, -9, 2, -2, 3, LOTRFoods.HARNEDOR_DRINK);
+		placeChest(world, random, 5, 1, -2, LOTRMod.chestBasket, 5, LOTRChestContents.HARNENNOR_HOUSE);
+		placeChest(world, random, -7, 1, 3, LOTRMod.chestBasket, 2, LOTRChestContents.HARNENNOR_HOUSE);
+		placeBarrel(world, random, -3, 2, -1, 5, LOTRFoods.HARNEDOR_DRINK);
+		placeMug(world, random, -3, 2, 0, 2, LOTRFoods.HARNEDOR_DRINK);
+		placeMug(world, random, -9, 2, -2, 3, LOTRFoods.HARNEDOR_DRINK);
 		placePlate(world, random, -5, 2, 3, LOTRMod.ceramicPlateBlock, LOTRFoods.HARNEDOR);
 		placePlate(world, random, -3, 2, 3, LOTRMod.ceramicPlateBlock, LOTRFoods.HARNEDOR);
 		placeFlowerPot(world, -4, 2, 3, getRandomFlower(world, random));

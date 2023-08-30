@@ -17,7 +17,7 @@ public class LOTRTextBody {
 	}
 
 	public void add(String s) {
-		this.add(s, defaultColor);
+		add(s, defaultColor);
 	}
 
 	public void add(String s, int c) {
@@ -25,7 +25,7 @@ public class LOTRTextBody {
 	}
 
 	public void addLinebreak() {
-		this.add(LINEBREAK);
+		add(LINEBREAK);
 	}
 
 	public int getColor(int i) {
@@ -41,9 +41,7 @@ public class LOTRTextBody {
 		for (int i = 0; i < size(); ++i) {
 			String part = getText(i);
 			List<String> lineList = fr.listFormattedStringToWidth(part, textWidth);
-			for (String line : lineList) {
-				++lines;
-			}
+			lines = lineList.size();
 		}
 		return lines;
 	}
@@ -57,7 +55,7 @@ public class LOTRTextBody {
 		int numLines = getTotalLines(fr);
 		int lineHeight = fr.FONT_HEIGHT;
 		scroll = Math.max(scroll, 0.0f);
-		scroll = Math.min(scroll, numLines - MathHelper.floor_double((float) ySize / (float) lineHeight));
+		scroll = Math.min(scroll, numLines - MathHelper.floor_double((float) ySize / lineHeight));
 		int d1 = Math.round(scroll);
 		int y = yTop;
 		y += ySize / lineHeight * lineHeight;
@@ -66,12 +64,13 @@ public class LOTRTextBody {
 		if (numLines < maxLines) {
 			y -= (maxLines - numLines) * lineHeight;
 		}
-		block0: for (int i = size() - 1; i >= 0; --i) {
+		block0:
+		for (int i = size() - 1; i >= 0; --i) {
 			String part = getText(i);
 			int color = getColor(i);
 			List lineList = fr.listFormattedStringToWidth(part, textWidth);
 			for (int l = lineList.size() - 1; l >= 0; --l) {
-				String line = (String) lineList.get(l);
+				StringBuilder line = new StringBuilder((String) lineList.get(l));
 				if (d1 > 0) {
 					--d1;
 					continue;
@@ -79,14 +78,14 @@ public class LOTRTextBody {
 				if (y < yTop) {
 					break block0;
 				}
-				if (LINEBREAK.equals(line)) {
-					line = "";
+				if (LINEBREAK.contentEquals(line)) {
+					line = new StringBuilder();
 					char br = '-';
-					while (fr.getStringWidth(line + br) < textWidth) {
-						line = line + br;
+					while (fr.getStringWidth(line.toString() + br) < textWidth) {
+						line.append(br);
 					}
 				}
-				fr.drawString(line, x, y, color);
+				fr.drawString(line.toString(), x, y, color);
 				y -= lineHeight;
 			}
 		}

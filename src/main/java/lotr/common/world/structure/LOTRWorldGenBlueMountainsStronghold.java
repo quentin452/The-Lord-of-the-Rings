@@ -30,21 +30,21 @@ public class LOTRWorldGenBlueMountainsStronghold extends LOTRWorldGenStructureBa
 			rotation = usingPlayerRotation();
 		}
 		switch (rotation) {
-		case 0: {
-			k += 8;
-			break;
-		}
-		case 1: {
-			i -= 8;
-			break;
-		}
-		case 2: {
-			k -= 8;
-			break;
-		}
-		case 3: {
-			i += 8;
-		}
+			case 0: {
+				k += 8;
+				break;
+			}
+			case 1: {
+				i -= 8;
+				break;
+			}
+			case 2: {
+				k -= 8;
+				break;
+			}
+			case 3: {
+				i += 8;
+			}
 		}
 		if (restrictions) {
 			int minHeight = j;
@@ -115,7 +115,7 @@ public class LOTRWorldGenBlueMountainsStronghold extends LOTRWorldGenStructureBa
 				} else if (k2 == 5) {
 					l = i2 % 2;
 				}
-				if (l <= -1) {
+				if (l == -1) {
 					continue;
 				}
 				if (l == 1) {
@@ -144,21 +144,21 @@ public class LOTRWorldGenBlueMountainsStronghold extends LOTRWorldGenStructureBa
 		setBlockAndNotifyAdequately(world, i, j + 11, k, LOTRMod.chandelier, 11);
 		setBlockAndNotifyAdequately(world, i, j + 12, k, LOTRMod.brick, 6);
 		switch (rotation) {
-		case 0: {
-			generateFacingSouth(world, random, i, j, k);
-			break;
-		}
-		case 1: {
-			generateFacingWest(world, random, i, j, k);
-			break;
-		}
-		case 2: {
-			generateFacingNorth(world, random, i, j, k);
-			break;
-		}
-		case 3: {
-			generateFacingEast(world, random, i, j, k);
-		}
+			case 0: {
+				generateFacingSouth(world, random, i, j, k);
+				break;
+			}
+			case 1: {
+				generateFacingWest(world, random, i, j, k);
+				break;
+			}
+			case 2: {
+				generateFacingNorth(world, random, i, j, k);
+				break;
+			}
+			case 3: {
+				generateFacingEast(world, random, i, j, k);
+			}
 		}
 		spawnDwarfCommander(world, i, j + 9, k);
 		for (int l = 0; l < 4; ++l) {
@@ -232,8 +232,8 @@ public class LOTRWorldGenBlueMountainsStronghold extends LOTRWorldGenStructureBa
 			setBlockAndNotifyAdequately(world, i + 3, j + 3, k13 + 1, LOTRMod.chandelier, 11);
 			setBlockAndNotifyAdequately(world, i + 5, j + 1, k13, Blocks.planks, 1);
 			setBlockAndNotifyAdequately(world, i + 5, j + 1, k13 + 3, Blocks.planks, 1);
-			this.placeBarrel(world, random, i + 5, j + 2, k13, 4, LOTRFoods.DWARF_DRINK);
-			this.placeBarrel(world, random, i + 5, j + 2, k13 + 3, 4, LOTRFoods.DWARF_DRINK);
+			placeBarrel(world, random, i + 5, j + 2, k13, 4, LOTRFoods.DWARF_DRINK);
+			placeBarrel(world, random, i + 5, j + 2, k13 + 3, 4, LOTRFoods.DWARF_DRINK);
 			setBlockAndNotifyAdequately(world, i + 5, j + 1, k13 + 1, Blocks.furnace, 0);
 			setBlockMetadata(world, i + 5, j + 1, k13 + 1, 4);
 			setBlockAndNotifyAdequately(world, i + 5, j + 1, k13 + 2, Blocks.furnace, 0);
@@ -398,8 +398,8 @@ public class LOTRWorldGenBlueMountainsStronghold extends LOTRWorldGenStructureBa
 			setBlockAndNotifyAdequately(world, i12 + 1, j + 3, k - 3, LOTRMod.chandelier, 11);
 			setBlockAndNotifyAdequately(world, i12, j + 1, k - 5, Blocks.planks, 1);
 			setBlockAndNotifyAdequately(world, i12 + 3, j + 1, k - 5, Blocks.planks, 1);
-			this.placeBarrel(world, random, i12, j + 2, k - 5, 3, LOTRFoods.DWARF_DRINK);
-			this.placeBarrel(world, random, i12 + 3, j + 2, k - 5, 3, LOTRFoods.DWARF_DRINK);
+			placeBarrel(world, random, i12, j + 2, k - 5, 3, LOTRFoods.DWARF_DRINK);
+			placeBarrel(world, random, i12 + 3, j + 2, k - 5, 3, LOTRFoods.DWARF_DRINK);
 			setBlockAndNotifyAdequately(world, i12 + 1, j + 1, k - 5, Blocks.furnace, 0);
 			setBlockMetadata(world, i12 + 1, j + 1, k - 5, 3);
 			setBlockAndNotifyAdequately(world, i12 + 2, j + 1, k - 5, Blocks.furnace, 0);
@@ -564,8 +564,8 @@ public class LOTRWorldGenBlueMountainsStronghold extends LOTRWorldGenStructureBa
 			setBlockAndNotifyAdequately(world, i12 + 1, j + 3, k + 3, LOTRMod.chandelier, 11);
 			setBlockAndNotifyAdequately(world, i12, j + 1, k + 5, Blocks.planks, 1);
 			setBlockAndNotifyAdequately(world, i12 + 3, j + 1, k + 5, Blocks.planks, 1);
-			this.placeBarrel(world, random, i12, j + 2, k + 5, 2, LOTRFoods.DWARF_DRINK);
-			this.placeBarrel(world, random, i12 + 3, j + 2, k + 5, 2, LOTRFoods.DWARF_DRINK);
+			placeBarrel(world, random, i12, j + 2, k + 5, 2, LOTRFoods.DWARF_DRINK);
+			placeBarrel(world, random, i12 + 3, j + 2, k + 5, 2, LOTRFoods.DWARF_DRINK);
 			setBlockAndNotifyAdequately(world, i12 + 1, j + 1, k + 5, Blocks.furnace, 0);
 			setBlockMetadata(world, i12 + 1, j + 1, k + 5, 2);
 			setBlockAndNotifyAdequately(world, i12 + 2, j + 1, k + 5, Blocks.furnace, 0);
@@ -730,8 +730,8 @@ public class LOTRWorldGenBlueMountainsStronghold extends LOTRWorldGenStructureBa
 			setBlockAndNotifyAdequately(world, i - 3, j + 3, k13 + 1, LOTRMod.chandelier, 11);
 			setBlockAndNotifyAdequately(world, i - 5, j + 1, k13, Blocks.planks, 1);
 			setBlockAndNotifyAdequately(world, i - 5, j + 1, k13 + 3, Blocks.planks, 1);
-			this.placeBarrel(world, random, i - 5, j + 2, k13, 5, LOTRFoods.DWARF_DRINK);
-			this.placeBarrel(world, random, i - 5, j + 2, k13 + 3, 5, LOTRFoods.DWARF_DRINK);
+			placeBarrel(world, random, i - 5, j + 2, k13, 5, LOTRFoods.DWARF_DRINK);
+			placeBarrel(world, random, i - 5, j + 2, k13 + 3, 5, LOTRFoods.DWARF_DRINK);
 			setBlockAndNotifyAdequately(world, i - 5, j + 1, k13 + 1, Blocks.furnace, 0);
 			setBlockMetadata(world, i - 5, j + 1, k13 + 1, 5);
 			setBlockAndNotifyAdequately(world, i - 5, j + 1, k13 + 2, Blocks.furnace, 0);
@@ -872,25 +872,25 @@ public class LOTRWorldGenBlueMountainsStronghold extends LOTRWorldGenStructureBa
 		int l = random.nextInt(5);
 		Block block = null;
 		switch (l) {
-		case 0: {
-			block = Blocks.iron_ore;
-			break;
-		}
-		case 1: {
-			block = Blocks.gold_ore;
-			break;
-		}
-		case 2: {
-			block = LOTRMod.oreCopper;
-			break;
-		}
-		case 3: {
-			block = LOTRMod.oreTin;
-			break;
-		}
-		case 4: {
-			block = LOTRMod.oreSilver;
-		}
+			case 0: {
+				block = Blocks.iron_ore;
+				break;
+			}
+			case 1: {
+				block = Blocks.gold_ore;
+				break;
+			}
+			case 2: {
+				block = LOTRMod.oreCopper;
+				break;
+			}
+			case 3: {
+				block = LOTRMod.oreTin;
+				break;
+			}
+			case 4: {
+				block = LOTRMod.oreSilver;
+			}
 		}
 		setBlockAndNotifyAdequately(world, i, j, k, block, 0);
 	}

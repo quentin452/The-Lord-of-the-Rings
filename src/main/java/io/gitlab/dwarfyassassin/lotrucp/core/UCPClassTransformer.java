@@ -1,5 +1,6 @@
 package io.gitlab.dwarfyassassin.lotrucp.core;
 
+import java.util.Collection;
 import java.util.HashSet;
 
 import org.objectweb.asm.*;
@@ -11,7 +12,7 @@ import net.minecraft.launchwrapper.IClassTransformer;
 
 public class UCPClassTransformer implements IClassTransformer {
 	static {
-		FMLLaunchHandler launchHandler = (FMLLaunchHandler) ReflectionHelper.getPrivateValue(FMLLaunchHandler.class, null, "INSTANCE");
+		FMLLaunchHandler launchHandler = ReflectionHelper.getPrivateValue(FMLLaunchHandler.class, null, "INSTANCE");
 		ReflectionHelper.getPrivateValue(FMLLaunchHandler.class, launchHandler, "classLoader");
 	}
 
@@ -33,7 +34,7 @@ public class UCPClassTransformer implements IClassTransformer {
 			classBytes = writer.toByteArray();
 		}
 		if (ran) {
-			HashSet<Patcher> removes = new HashSet<>();
+			Collection<Patcher> removes = new HashSet<>();
 			for (Patcher patcher : UCPCoreMod.activePatches) {
 				if (!patcher.isDone()) {
 					continue;

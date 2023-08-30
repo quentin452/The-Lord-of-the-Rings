@@ -10,7 +10,7 @@ public class LOTRItemOwnership {
 		if (!itemstack.hasTagCompound()) {
 			itemstack.setTagCompound(new NBTTagCompound());
 		}
-		List<String> previousOwners = LOTRItemOwnership.getPreviousOwners(itemstack);
+		List<String> previousOwners = getPreviousOwners(itemstack);
 		NBTTagCompound nbt = itemstack.getTagCompound();
 		if (nbt.hasKey("LOTROwner", 8)) {
 			nbt.removeTag("LOTROwner");
@@ -38,7 +38,7 @@ public class LOTRItemOwnership {
 	}
 
 	public static List<String> getPreviousOwners(ItemStack itemstack) {
-		ArrayList<String> owners = new ArrayList<>();
+		List<String> owners = new ArrayList<>();
 		if (itemstack.getTagCompound() != null) {
 			NBTTagCompound nbt = itemstack.getTagCompound();
 			if (nbt.hasKey("LOTROwner", 8)) {
@@ -61,9 +61,9 @@ public class LOTRItemOwnership {
 		if (!itemstack.hasTagCompound()) {
 			itemstack.setTagCompound(new NBTTagCompound());
 		}
-		previousCurrentOwner = LOTRItemOwnership.getCurrentOwner(itemstack);
+		previousCurrentOwner = getCurrentOwner(itemstack);
 		if (previousCurrentOwner != null) {
-			LOTRItemOwnership.addPreviousOwner(itemstack, previousCurrentOwner);
+			addPreviousOwner(itemstack, previousCurrentOwner);
 		}
 		NBTTagCompound nbt = itemstack.getTagCompound();
 		nbt.setString("LOTRCurrentOwner", name);

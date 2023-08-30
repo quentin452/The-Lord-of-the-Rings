@@ -22,7 +22,7 @@ public class LOTRWorldGenEasterlingHouse extends LOTRWorldGenEasterlingStructure
 		int j1;
 		int i2;
 		int k14;
-		this.setOriginAndRotation(world, i, j, k, rotation, 5);
+		setOriginAndRotation(world, i, j, k, rotation, 5);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -95,28 +95,28 @@ public class LOTRWorldGenEasterlingHouse extends LOTRWorldGenEasterlingStructure
 		}
 		setBlockAndMetadata(world, -7, 3, 0, fenceBlock, fenceMeta);
 		setBlockAndMetadata(world, 7, 3, 0, fenceBlock, fenceMeta);
-		for (int i14 : new int[] { -2, 2 }) {
+		for (int i14 : new int[]{-2, 2}) {
 			for (k13 = -5; k13 <= 5; ++k13) {
 				setBlockAndMetadata(world, i14, 4, k13, woodBeamBlock, woodBeamMeta | 8);
 			}
 			setBlockAndMetadata(world, i14, 3, -5, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, i14, 3, 5, fenceBlock, fenceMeta);
 		}
-		for (int i14 : new int[] { -6, 6 }) {
+		for (int i14 : new int[]{-6, 6}) {
 			setBlockAndMetadata(world, i14, 4, -5, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, i14, 4, 5, fenceBlock, fenceMeta);
 		}
-		for (int k151 : new int[] { -4, 4 }) {
+		for (int k151 : new int[]{-4, 4}) {
 			setBlockAndMetadata(world, -7, 4, k151, fenceBlock, fenceMeta);
 			setBlockAndMetadata(world, 7, 4, k151, fenceBlock, fenceMeta);
 		}
-		for (int i14 : new int[] { -4, 4 }) {
+		for (int i14 : new int[]{-4, 4}) {
 			setBlockAndMetadata(world, i14, 2, -4, LOTRMod.reedBars, 0);
 			setBlockAndMetadata(world, i14, 3, -4, plankStairBlock, 6);
 			setBlockAndMetadata(world, i14, 2, 4, LOTRMod.reedBars, 0);
 			setBlockAndMetadata(world, i14, 3, 4, plankStairBlock, 7);
 		}
-		int[] i15 = { -2, 2 };
+		int[] i15 = {-2, 2};
 		k12 = i15.length;
 		for (i2 = 0; i2 < k12; ++i2) {
 			k15 = i15[i2];
@@ -214,7 +214,7 @@ public class LOTRWorldGenEasterlingHouse extends LOTRWorldGenEasterlingStructure
 		for (i1 = -5; i1 <= 5; ++i1) {
 			setBlockAndMetadata(world, i1, 0, 0, woodBeamBlock, woodBeamMeta | 4);
 		}
-		for (int i14 : new int[] { -2, 2 }) {
+		for (int i14 : new int[]{-2, 2}) {
 			for (k13 = -3; k13 <= -1; ++k13) {
 				setBlockAndMetadata(world, i14, 0, k13, woodBeamBlock, woodBeamMeta | 8);
 			}
@@ -225,7 +225,7 @@ public class LOTRWorldGenEasterlingHouse extends LOTRWorldGenEasterlingStructure
 				placePlate(world, random, i16, 2, -3, plateBlock, LOTRFoods.RHUN);
 				continue;
 			}
-			this.placeMug(world, random, i16, 2, -3, 2, LOTRFoods.RHUN_DRINK);
+			placeMug(world, random, i16, 2, -3, 2, LOTRFoods.RHUN_DRINK);
 		}
 		setBlockAndMetadata(world, -4, 1, -1, plankStairBlock, 2);
 		setBlockAndMetadata(world, -4, 1, 2, bedBlock, 0);
@@ -233,15 +233,15 @@ public class LOTRWorldGenEasterlingHouse extends LOTRWorldGenEasterlingStructure
 		setBlockAndMetadata(world, -5, 1, 3, plankBlock, plankMeta);
 		placePlateWithCertainty(world, random, -5, 2, 3, plateBlock, LOTRFoods.RHUN);
 		setBlockAndMetadata(world, 5, 1, -3, tableBlock, 0);
-		this.placeChest(world, random, 5, 1, -2, 5, chestContents);
+		placeChest(world, random, 5, 1, -2, 5, chestContents);
 		setBlockAndMetadata(world, 5, 1, -1, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, 5, 1, 0, plankSlabBlock, plankSlabMeta | 8);
 		setBlockAndMetadata(world, 5, 2, 0, LOTRMod.ceramicPlateBlock, 0);
 		setBlockAndMetadata(world, 5, 1, 1, Blocks.cauldron, 3);
 		setBlockAndMetadata(world, 5, 1, 2, plankSlabBlock, plankSlabMeta | 8);
-		this.placeMug(world, random, 5, 2, 2, 1, LOTRFoods.RHUN_DRINK);
+		placeMug(world, random, 5, 2, 2, 1, LOTRFoods.RHUN_DRINK);
 		setBlockAndMetadata(world, 5, 1, 3, plankBlock, plankMeta);
-		this.placeBarrel(world, random, 5, 2, 3, 5, LOTRFoods.RHUN_DRINK);
+		placeBarrel(world, random, 5, 2, 3, 5, LOTRFoods.RHUN_DRINK);
 		setBlockAndMetadata(world, -2, 2, -3, Blocks.torch, 3);
 		setBlockAndMetadata(world, 2, 2, -3, Blocks.torch, 3);
 		setBlockAndMetadata(world, -2, 2, 3, Blocks.torch, 4);

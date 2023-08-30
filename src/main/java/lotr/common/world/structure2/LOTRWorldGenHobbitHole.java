@@ -38,7 +38,7 @@ public class LOTRWorldGenHobbitHole extends LOTRWorldGenHobbitStructure {
 		int i15;
 		int j15;
 		boolean grass;
-		this.setOriginAndRotation(world, i, j, k, rotation, 17);
+		setOriginAndRotation(world, i, j, k, rotation, 17);
 		setupRandomBlocks(random);
 		int radius = 16;
 		int height = 7;
@@ -71,10 +71,8 @@ public class LOTRWorldGenHobbitHole extends LOTRWorldGenHobbitStructure {
 		for (i13 = -radius; i13 <= radius; ++i13) {
 			for (k12 = -radius; k12 <= radius; ++k12) {
 				for (j13 = height; j13 >= 0; --j13) {
-					int i2 = i13;
 					int j2 = j13 + radius - height;
-					int k2 = k12;
-					if (i2 * i2 + j2 * j2 + k2 * k2 >= (radius + extraRadius) * (radius + extraRadius)) {
+					if (i13 * i13 + j2 * j2 + k12 * k12 >= (radius + extraRadius) * (radius + extraRadius)) {
 						continue;
 					}
 					boolean grass2 = !isOpaque(world, i13, j13 + 1, k12);
@@ -139,13 +137,13 @@ public class LOTRWorldGenHobbitHole extends LOTRWorldGenHobbitStructure {
 		setBlockAndMetadata(world, 0, 1, -16, outFenceGateBlock, 0);
 		if (random.nextInt(5) == 0) {
 			String[] signLines = LOTRNames.getHobbitSign(random);
-			int[] signPos = { -3, -2, -1, 1, 2, 3 };
+			int[] signPos = {-3, -2, -1, 1, 2, 3};
 			i12 = signPos[random.nextInt(signPos.length)];
 			signMeta = MathHelper.getRandomIntegerInRange(random, 6, 10) & 0xF;
 			placeSign(world, i12, 2, -16, Blocks.standing_sign, signMeta, signLines);
 		}
 		for (k15 = -15; k15 <= -13; ++k15) {
-			int[] signPos = { -1, 1 };
+			int[] signPos = {-1, 1};
 			i12 = signPos.length;
 			for (signMeta = 0; signMeta < i12; ++signMeta) {
 				i14 = signPos[signMeta];
@@ -155,7 +153,7 @@ public class LOTRWorldGenHobbitHole extends LOTRWorldGenHobbitStructure {
 		}
 		if (random.nextInt(3) == 0) {
 			for (k15 = -14; k15 <= -13; ++k15) {
-				int[] signPos = { -2, 2 };
+				int[] signPos = {-2, 2};
 				i12 = signPos.length;
 				for (signMeta = 0; signMeta < i12; ++signMeta) {
 					i14 = signPos[signMeta];
@@ -195,7 +193,7 @@ public class LOTRWorldGenHobbitHole extends LOTRWorldGenHobbitStructure {
 			setBlockAndMetadata(world, 2, 3, -11, plank2Block, plank2Meta);
 			setBlockAndMetadata(world, 2, 1, -12, plank2StairBlock, 2);
 			setBlockAndMetadata(world, 2, 3, -12, plank2StairBlock, 6);
-			placeSign(world, -2, 2, -12, Blocks.wall_sign, 2, new String[] { "", homeName1, homeName2, "" });
+			placeSign(world, -2, 2, -12, Blocks.wall_sign, 2, new String[]{"", homeName1, homeName2, ""});
 		} else {
 			for (i15 = -1; i15 <= 0; ++i15) {
 				setBlockAndMetadata(world, i15, 0, -10, floorBlock, floorMeta);
@@ -222,7 +220,7 @@ public class LOTRWorldGenHobbitHole extends LOTRWorldGenHobbitStructure {
 			setBlockAndMetadata(world, -2, 3, -11, plank2Block, plank2Meta);
 			setBlockAndMetadata(world, -2, 1, -12, plank2StairBlock, 2);
 			setBlockAndMetadata(world, -2, 3, -12, plank2StairBlock, 6);
-			placeSign(world, 2, 2, -12, Blocks.wall_sign, 2, new String[] { "", homeName1, homeName2, "" });
+			placeSign(world, 2, 2, -12, Blocks.wall_sign, 2, new String[]{"", homeName1, homeName2, ""});
 		}
 		for (j12 = 1; j12 <= 3; ++j12) {
 			setBlockAndMetadata(world, -3, j12, -12, LOTRMod.woodBeamV1, 0);
@@ -258,7 +256,7 @@ public class LOTRWorldGenHobbitHole extends LOTRWorldGenHobbitStructure {
 			setBlockAndMetadata(world, -1, 3, k12, plank2SlabBlock, plank2SlabMeta | 8);
 			setBlockAndMetadata(world, 0, 4, k12, plank2Block, plank2Meta);
 		}
-		int[] k17 = { -8, -4, 0 };
+		int[] k17 = {-8, -4, 0};
 		j13 = k17.length;
 		for (j15 = 0; j15 < j13; ++j15) {
 			int k18 = k17[j15];
@@ -292,7 +290,7 @@ public class LOTRWorldGenHobbitHole extends LOTRWorldGenHobbitStructure {
 			}
 		}
 		if (isWealthy && random.nextBoolean()) {
-			this.placeChest(world, random, 0, 0, 6, 2, LOTRChestContents.HOBBIT_HOLE_TREASURE);
+			placeChest(world, random, 0, 0, 6, 2, LOTRChestContents.HOBBIT_HOLE_TREASURE);
 		}
 		for (i1 = -3; i1 <= 3; ++i1) {
 			for (j13 = 1; j13 <= 3; ++j13) {
@@ -398,7 +396,7 @@ public class LOTRWorldGenHobbitHole extends LOTRWorldGenHobbitStructure {
 		setBlockAndMetadata(world, 6, 3, -5, chandelierBlock, chandelierMeta);
 		setBlockAndMetadata(world, 5, 1, -5, Blocks.oak_stairs, 3);
 		setBlockAndMetadata(world, 5, 1, -3, Blocks.wooden_slab, 8);
-		this.placeChest(world, random, 7, 1, -3, 2, LOTRChestContents.HOBBIT_HOLE_STUDY);
+		placeChest(world, random, 7, 1, -3, 2, LOTRChestContents.HOBBIT_HOLE_STUDY);
 		if (random.nextBoolean()) {
 			placeWallBanner(world, 3, 3, -4, LOTRItemBanner.BannerType.HOBBIT, 1);
 		}
@@ -516,7 +514,7 @@ public class LOTRWorldGenHobbitHole extends LOTRWorldGenHobbitStructure {
 		for (i1 = 6; i1 <= 7; ++i1) {
 			for (k1 = 2; k1 >= 0; --k1) {
 				if (random.nextInt(3) == 0) {
-					this.placeMug(world, random, i1, 2, k1, random.nextInt(4), LOTRFoods.HOBBIT_DRINK);
+					placeMug(world, random, i1, 2, k1, random.nextInt(4), LOTRFoods.HOBBIT_DRINK);
 					continue;
 				}
 				if (random.nextBoolean()) {
@@ -626,15 +624,15 @@ public class LOTRWorldGenHobbitHole extends LOTRWorldGenHobbitStructure {
 		for (i1 = -7; i1 <= -6; ++i1) {
 			placePlateWithCertainty(world, random, i1, 2, -2, plateBlock, LOTRFoods.HOBBIT);
 		}
-		this.placeBarrel(world, random, -5, 2, -2, 3, LOTRFoods.HOBBIT_DRINK);
+		placeBarrel(world, random, -5, 2, -2, 3, LOTRFoods.HOBBIT_DRINK);
 		for (j14 = 1; j14 <= 3; ++j14) {
 			setBlockAndMetadata(world, -9, j14, -3, plank2Block, plank2Meta);
 			setBlockAndMetadata(world, -4, j14, 3, plank2Block, plank2Meta);
 		}
-		this.placeChest(world, random, -8, 2, -2, Blocks.chest, 3, LOTRChestContents.HOBBIT_HOLE_LARDER);
-		this.placeChest(world, random, -9, 2, -1, Blocks.chest, 4, LOTRChestContents.HOBBIT_HOLE_LARDER);
-		this.placeChest(world, random, -9, 2, 0, Blocks.chest, 4, LOTRChestContents.HOBBIT_HOLE_LARDER);
-		this.placeChest(world, random, -8, 2, 1, Blocks.chest, 2, LOTRChestContents.HOBBIT_HOLE_LARDER);
+		placeChest(world, random, -8, 2, -2, Blocks.chest, 3, LOTRChestContents.HOBBIT_HOLE_LARDER);
+		placeChest(world, random, -9, 2, -1, Blocks.chest, 4, LOTRChestContents.HOBBIT_HOLE_LARDER);
+		placeChest(world, random, -9, 2, 0, Blocks.chest, 4, LOTRChestContents.HOBBIT_HOLE_LARDER);
+		placeChest(world, random, -8, 2, 1, Blocks.chest, 2, LOTRChestContents.HOBBIT_HOLE_LARDER);
 		if (gateFlip) {
 			setBlockAndMetadata(world, -1, 2, -9, Blocks.tripwire_hook, 0);
 		} else {

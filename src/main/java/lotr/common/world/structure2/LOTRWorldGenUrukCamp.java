@@ -31,7 +31,7 @@ public class LOTRWorldGenUrukCamp extends LOTRWorldGenCampBase {
 		respawner.setSpawnClasses(LOTREntityUrukHai.class, LOTREntityUrukHaiCrossbower.class);
 		respawner.setCheckRanges(24, -12, 12, 12);
 		respawner.setSpawnRanges(8, -4, 4, 16);
-		this.placeNPCRespawner(respawner, world, i, j, k);
+		placeNPCRespawner(respawner, world, i, j, k);
 	}
 
 	@Override

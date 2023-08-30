@@ -22,7 +22,7 @@ public class LOTRSlotHiredReplaceItem extends Slot {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getBackgroundIconIndex() {
 		return parentSlot.getBackgroundIconIndex();

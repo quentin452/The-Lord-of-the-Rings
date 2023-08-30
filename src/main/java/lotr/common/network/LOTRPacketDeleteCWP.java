@@ -3,6 +3,7 @@ package lotr.common.network;
 import cpw.mods.fml.common.network.simpleimpl.*;
 import io.netty.buffer.ByteBuf;
 import lotr.common.*;
+import lotr.common.world.map.LOTRAbstractWaypoint;
 import lotr.common.world.map.LOTRCustomWaypoint;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -12,7 +13,7 @@ public class LOTRPacketDeleteCWP implements IMessage {
 	public LOTRPacketDeleteCWP() {
 	}
 
-	public LOTRPacketDeleteCWP(LOTRCustomWaypoint wp) {
+	public LOTRPacketDeleteCWP(LOTRAbstractWaypoint wp) {
 		wpID = wp.getID();
 	}
 

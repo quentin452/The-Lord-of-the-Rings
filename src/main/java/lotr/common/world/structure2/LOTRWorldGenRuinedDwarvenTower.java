@@ -86,20 +86,20 @@ public class LOTRWorldGenRuinedDwarvenTower extends LOTRWorldGenDwarvenTower {
 		} else {
 			int randomBars = random.nextInt(4);
 			switch (randomBars) {
-			case 0:
-				barsBlock = LOTRMod.dwarfBars;
-				break;
-			case 1:
-				barsBlock = LOTRMod.orcSteelBars;
-				break;
-			case 2:
-				barsBlock = Blocks.iron_bars;
-				break;
-			case 3:
-				barsBlock = LOTRMod.bronzeBars;
-				break;
-			default:
-				break;
+				case 0:
+					barsBlock = LOTRMod.dwarfBars;
+					break;
+				case 1:
+					barsBlock = LOTRMod.orcSteelBars;
+					break;
+				case 2:
+					barsBlock = Blocks.iron_bars;
+					break;
+				case 3:
+					barsBlock = LOTRMod.bronzeBars;
+					break;
+				default:
+					break;
 			}
 		}
 		isGundabad = random.nextInt(3) == 0;

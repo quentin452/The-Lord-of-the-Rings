@@ -10,9 +10,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public abstract class LOTRWorldGenEasterlingMarketStall extends LOTRWorldGenEasterlingStructure {
-	public static Class[] allStallTypes = { Blacksmith.class, Lumber.class, Mason.class, Butcher.class, Brewer.class, Fish.class, Baker.class, Hunter.class, Farmer.class, Gold.class };
+	public static Class[] allStallTypes = {Blacksmith.class, Lumber.class, Mason.class, Butcher.class, Brewer.class, Fish.class, Baker.class, Hunter.class, Farmer.class, Gold.class};
 
-	public LOTRWorldGenEasterlingMarketStall(boolean flag) {
+	protected LOTRWorldGenEasterlingMarketStall(boolean flag) {
 		super(flag);
 	}
 
@@ -24,7 +24,7 @@ public abstract class LOTRWorldGenEasterlingMarketStall extends LOTRWorldGenEast
 	public boolean generateWithSetRotation(World world, Random random, int i, int j, int k, int rotation) {
 		int j1;
 		int i1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 3);
+		setOriginAndRotation(world, i, j, k, rotation, 3);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -107,7 +107,6 @@ public abstract class LOTRWorldGenEasterlingMarketStall extends LOTRWorldGenEast
 
 		@Override
 		public void generateRoof(World world, Random random, int i1, int j1, int k1) {
-			Math.abs(i1);
 			int k2 = Math.abs(k1);
 			if (k2 % 2 == 0) {
 				setBlockAndMetadata(world, i1, j1, k1, Blocks.wool, 1);
@@ -151,7 +150,6 @@ public abstract class LOTRWorldGenEasterlingMarketStall extends LOTRWorldGenEast
 		@Override
 		public void generateRoof(World world, Random random, int i1, int j1, int k1) {
 			int i2 = Math.abs(i1);
-			Math.abs(k1);
 			if (i2 % 2 == 0) {
 				setBlockAndMetadata(world, i1, j1, k1, Blocks.wool, 12);
 			} else {

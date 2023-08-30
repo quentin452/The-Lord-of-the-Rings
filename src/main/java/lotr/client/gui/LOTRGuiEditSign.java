@@ -1,5 +1,6 @@
 package lotr.client.gui;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -39,7 +40,7 @@ public class LOTRGuiEditSign extends GuiScreen {
 		drawDefaultBackground();
 		drawCenteredString(fontRendererObj, StatCollector.translateToLocal("sign.edit"), width / 2, 40, 16777215);
 		GL11.glPushMatrix();
-		GL11.glTranslatef(width / 2, 0.0f, 50.0f);
+		GL11.glTranslatef((float) width / 2, 0.0f, 50.0f);
 		float f1 = 93.75f;
 		GL11.glScalef(-f1, -f1, -f1);
 		GL11.glTranslatef(0.0f, -1.0625f, 0.0f);
@@ -81,7 +82,7 @@ public class LOTRGuiEditSign extends GuiScreen {
 			++editLine;
 		}
 		editLine &= tileSign.getNumLines() - 1;
-		if (i == 14 && tileSign.signText[editLine].length() > 0) {
+		if (i == 14 && !tileSign.signText[editLine].isEmpty()) {
 			String s = tileSign.signText[editLine];
 			tileSign.signText[editLine] = s.substring(0, s.length() - 1);
 		}
@@ -97,7 +98,7 @@ public class LOTRGuiEditSign extends GuiScreen {
 	@Override
 	public void onGuiClosed() {
 		Keyboard.enableRepeatEvents(false);
-		LOTRPacketEditSign packet = new LOTRPacketEditSign(tileSign);
+		IMessage packet = new LOTRPacketEditSign(tileSign);
 		LOTRPacketHandler.networkWrapper.sendToServer(packet);
 		tileSign.setEditable(true);
 	}

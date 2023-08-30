@@ -17,7 +17,7 @@ public class LOTRWorldGenGulfAltar extends LOTRWorldGenGulfStructure {
 		int k1;
 		int j1;
 		int step;
-		this.setOriginAndRotation(world, i, j, k, rotation, 13);
+		setOriginAndRotation(world, i, j, k, rotation, 13);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -58,7 +58,7 @@ public class LOTRWorldGenGulfAltar extends LOTRWorldGenGulfStructure {
 		associateBlockMetaAlias("FLAG", flagBlock, flagMeta);
 		associateBlockMetaAlias("BONE", boneBlock, boneMeta);
 		generateStrScan(world, random, 0, 0, 0);
-		this.placeSkull(world, 0, 7, 0, 0);
+		placeSkull(world, 0, 7, 0, 0);
 		int holeX = 0;
 		int holeZ = 6;
 		int holeR = 3;
@@ -90,7 +90,7 @@ public class LOTRWorldGenGulfAltar extends LOTRWorldGenGulfStructure {
 						if (random.nextInt(6) != 0) {
 							continue;
 						}
-						this.placeSkull(world, random, i2, j2 + 1, k2);
+						placeSkull(world, random, i2, j2 + 1, k2);
 					}
 				}
 			}
@@ -98,7 +98,7 @@ public class LOTRWorldGenGulfAltar extends LOTRWorldGenGulfStructure {
 		int maxSteps = 12;
 		for (int i1 = -1; i1 <= 1; ++i1) {
 			int k14;
-			for (step = 0; step < maxSteps && !isOpaque(world, i1, j1 = 0 - step / 2, k14 = -13 - step); ++step) {
+			for (step = 0; step < maxSteps && !isOpaque(world, i1, j1 = -step / 2, k14 = -13 - step); ++step) {
 				if (step % 2 == 0) {
 					setBlockAndMetadata(world, i1, j1, k14, plankBlock, plankMeta);
 					setGrassToDirt(world, i1, j1 - 1, k14);
@@ -110,7 +110,7 @@ public class LOTRWorldGenGulfAltar extends LOTRWorldGenGulfStructure {
 		}
 		for (k1 = -1; k1 <= 1; ++k1) {
 			int i1;
-			for (step = 0; step < maxSteps && !isOpaque(world, i1 = -13 - step, j1 = 0 - step / 2, k1); ++step) {
+			for (step = 0; step < maxSteps && !isOpaque(world, i1 = -13 - step, j1 = -step / 2, k1); ++step) {
 				if (step % 2 == 0) {
 					setBlockAndMetadata(world, i1, j1, k1, plankBlock, plankMeta);
 					setGrassToDirt(world, i1, j1 - 1, k1);
@@ -119,7 +119,7 @@ public class LOTRWorldGenGulfAltar extends LOTRWorldGenGulfStructure {
 				setBlockAndMetadata(world, i1, j1, k1, plankSlabBlock, plankSlabMeta);
 				setBlockAndMetadata(world, i1, j1 - 1, k1, plankSlabBlock, plankSlabMeta | 8);
 			}
-			for (step = 0; step < maxSteps && !isOpaque(world, i1 = 13 + step, j1 = 0 - step / 2, k1); ++step) {
+			for (step = 0; step < maxSteps && !isOpaque(world, i1 = 13 + step, j1 = -step / 2, k1); ++step) {
 				if (step % 2 == 0) {
 					setBlockAndMetadata(world, i1, j1, k1, plankBlock, plankMeta);
 					setGrassToDirt(world, i1, j1 - 1, k1);

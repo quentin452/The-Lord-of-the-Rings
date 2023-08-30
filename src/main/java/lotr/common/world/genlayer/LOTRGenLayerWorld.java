@@ -2,6 +2,7 @@ package lotr.common.world.genlayer;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.zip.*;
 
@@ -21,17 +22,13 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 	public static byte[] biomeImageData;
 	public static int originX = 810;
 	public static int originZ = 730;
-	public static int scale;
+	public static int scale = IntMath.pow(2, 7);
 	public static int imageWidth;
 	public static int imageHeight;
 
-	static {
-		scale = IntMath.pow(2, 7);
-	}
-
 	public LOTRGenLayerWorld() {
 		super(0L);
-		if (!LOTRGenLayerWorld.loadedBiomeImage()) {
+		if (!loadedBiomeImage()) {
 			try {
 				BufferedImage biomeImage = null;
 				String imageName = "assets/lotr/map/map.png";
@@ -49,7 +46,7 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 					zip.close();
 				} else {
 					File file = new File(LOTRMod.class.getResource("/" + imageName).toURI());
-					biomeImage = ImageIO.read(new FileInputStream(file));
+					biomeImage = ImageIO.read(Files.newInputStream(file.toPath()));
 				}
 				if (biomeImage == null) {
 					throw new RuntimeException("Could not load LOTR biome map image");
@@ -63,11 +60,11 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 					Integer biomeID = LOTRDimension.MIDDLE_EARTH.colorsToBiomeIDs.get(color);
 					if (biomeID != null) {
 						int cleanUP = biomeID;
-						LOTRGenLayerWorld.biomeImageData[i] = (byte) cleanUP;
+						biomeImageData[i] = (byte) cleanUP;
 						continue;
 					}
 					FMLLog.log(Level.ERROR, "Found unknown biome on map " + Integer.toHexString(color));
-					LOTRGenLayerWorld.biomeImageData[i] = (byte) LOTRBiome.ocean.biomeID;
+					biomeImageData[i] = (byte) LOTRBiome.ocean.biomeID;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -82,7 +79,7 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 			for (int i1 = 0; i1 < xSize; ++i1) {
 				int i2 = i + i1 + 810;
 				int k2 = k + k1 + 730;
-				intArray[i1 + k1 * xSize] = i2 < 0 || i2 >= imageWidth || k2 < 0 || k2 >= imageHeight ? LOTRBiome.ocean.biomeID : LOTRGenLayerWorld.getBiomeImageID(i2, k2);
+				intArray[i1 + k1 * xSize] = i2 < 0 || i2 >= imageWidth || k2 < 0 || k2 >= imageHeight ? LOTRBiome.ocean.biomeID : getBiomeImageID(i2, k2);
 			}
 		}
 		return intArray;
@@ -93,7 +90,7 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 		if (dim == LOTRDimension.UTUMNO) {
 			LOTRGenLayerBiome biomes = new LOTRGenLayerBiome(LOTRBiome.utumno);
 			LOTRGenLayerBiomeVariants variants = new LOTRGenLayerBiomeVariants(300L);
-			return new LOTRGenLayer[] { biomes, variants, variants, variants, variants };
+			return new LOTRGenLayer[]{biomes, variants, variants, variants, variants};
 		}
 		LOTRGenLayer rivers = new LOTRGenLayerRiverInit(100L);
 		rivers = LOTRGenLayerZoom.magnify(1000L, rivers, 10);
@@ -142,7 +139,7 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 		mapRivers = new LOTRGenLayerNarrowRivers(3000L, mapRivers, 6);
 		mapRivers = LOTRGenLayerZoom.magnify(4000L, mapRivers, 1);
 		rivers = new LOTRGenLayerIncludeMapRivers(5000L, rivers, mapRivers);
-		return new LOTRGenLayer[] { biomes, variants, variantsSmall, lakes, rivers };
+		return new LOTRGenLayer[]{biomes, variants, variantsSmall, lakes, rivers};
 	}
 
 	public static int getBiomeImageID(int x, int z) {
@@ -151,7 +148,7 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 	}
 
 	public static LOTRBiome getBiomeOrOcean(int mapX, int mapZ) {
-		int biomeID = mapX >= 0 && mapX < imageWidth && mapZ >= 0 && mapZ < imageHeight ? LOTRGenLayerWorld.getBiomeImageID(mapX, mapZ) : LOTRBiome.ocean.biomeID;
+		int biomeID = mapX >= 0 && mapX < imageWidth && mapZ >= 0 && mapZ < imageHeight ? getBiomeImageID(mapX, mapZ) : LOTRBiome.ocean.biomeID;
 		return LOTRDimension.MIDDLE_EARTH.biomeList[biomeID];
 	}
 
@@ -159,6 +156,7 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 		return biomeImageData != null;
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static void printRiverlessMap(World world, File file) {
 		if (!file.exists()) {
 			try {

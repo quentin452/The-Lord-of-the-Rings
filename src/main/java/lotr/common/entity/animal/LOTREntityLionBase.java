@@ -18,10 +18,10 @@ public abstract class LOTREntityLionBase extends LOTREntityAnimalMF {
 	public EntityAIBase attackAI = new LOTREntityAIAttackOnCollide(this, 1.5, false);
 	public EntityAIBase panicAI = new EntityAIPanic(this, 1.5);
 	public EntityAIBase targetNearAI = new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true);
-	public int hostileTick = 0;
+	public int hostileTick;
 	public boolean prevIsChild = true;
 
-	public LOTREntityLionBase(World world) {
+	protected LOTREntityLionBase(World world) {
 		super(world);
 		setSize(1.4f, 1.6f);
 		getNavigator().setAvoidsWater(true);
@@ -62,8 +62,7 @@ public abstract class LOTREntityLionBase extends LOTREntityAnimalMF {
 				List<LOTREntityLionBase> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.expand(range, range, range));
 				for (LOTREntityLionBase obj : list) {
 					LOTREntityLionBase lion;
-					Entity entity = obj;
-					if (!(entity instanceof LOTREntityLionBase) || (lion = (LOTREntityLionBase) entity).isChild()) {
+					if (!(obj instanceof LOTREntityLionBase) || (lion = obj).isChild()) {
 						continue;
 					}
 					lion.becomeAngryAt((EntityLivingBase) attacker);
@@ -101,7 +100,7 @@ public abstract class LOTREntityLionBase extends LOTREntityAnimalMF {
 		}
 		if (flag) {
 			int rugChance = 30 - i * 5;
-			if (rand.nextInt(rugChance = Math.max(rugChance, 1)) == 0) {
+			if (rand.nextInt(Math.max(rugChance, 1)) == 0) {
 				entityDropItem(new ItemStack(LOTRMod.lionRug, 1, getLionRugType().lionID), 0.0f);
 			}
 		}

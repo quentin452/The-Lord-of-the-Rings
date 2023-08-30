@@ -106,8 +106,8 @@ public class LOTRModelCamel extends ModelBase {
 
 	@Override
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-		head.rotateAngleX = f4 / (float) Math.toDegrees(1.0);
-		head.rotateAngleY = f3 / (float) Math.toDegrees(1.0);
+		head.rotateAngleX = f4 / 57.29577951308232f;
+		head.rotateAngleY = f3 / 57.29577951308232f;
 		head.rotateAngleX += MathHelper.cos(f * 0.3331f) * 0.1f * f1;
 		leg1.rotateAngleX = MathHelper.cos(f * 0.6662f) * 0.8f * f1;
 		leg2.rotateAngleX = MathHelper.cos(f * 0.6662f + 3.1415927f) * 0.8f * f1;

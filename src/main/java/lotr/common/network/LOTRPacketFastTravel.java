@@ -51,20 +51,18 @@ public class LOTRPacketFastTravel implements IMessage {
 		@Override
 		public IMessage onMessage(LOTRPacketFastTravel packet, MessageContext context) {
 			EntityPlayerMP entityplayer = context.getServerHandler().playerEntity;
-			if (!LOTRConfig.enableFastTravel) {
-				entityplayer.addChatMessage(new ChatComponentTranslation("chat.lotr.ftDisabled"));
-			} else {
+			if (LOTRConfig.enableFastTravel) {
 				LOTRPlayerData playerData = LOTRLevelData.getData(entityplayer);
 				boolean isCustom = packet.isCustom;
 				int waypointID = packet.wpID;
 				LOTRAbstractWaypoint waypoint = null;
-				if (!isCustom) {
+				if (isCustom) {
+					UUID sharingPlayer = packet.sharingPlayer;
+					waypoint = sharingPlayer != null ? playerData.getSharedCustomWaypointByID(sharingPlayer, waypointID) : playerData.getCustomWaypointByID(waypointID);
+				} else {
 					if (waypointID >= 0 && waypointID < LOTRWaypoint.values().length) {
 						waypoint = LOTRWaypoint.values()[waypointID];
 					}
-				} else {
-					UUID sharingPlayer = packet.sharingPlayer;
-					waypoint = sharingPlayer != null ? playerData.getSharedCustomWaypointByID(sharingPlayer, waypointID) : playerData.getCustomWaypointByID(waypointID);
 				}
 				if (waypoint != null && waypoint.hasPlayerUnlocked(entityplayer)) {
 					if (playerData.getTimeSinceFT() < playerData.getWaypointFTTime(waypoint, entityplayer)) {
@@ -83,6 +81,8 @@ public class LOTRPacketFastTravel implements IMessage {
 						}
 					}
 				}
+			} else {
+				entityplayer.addChatMessage(new ChatComponentTranslation("chat.lotr.ftDisabled"));
 			}
 			return null;
 		}

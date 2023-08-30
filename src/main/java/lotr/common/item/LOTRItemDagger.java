@@ -37,7 +37,7 @@ public class LOTRItemDagger extends LOTRItemSword {
 			return true;
 		}
 		if (effect == DaggerEffect.POISON) {
-			LOTRItemDagger.applyStandardPoison(hitEntity);
+			applyStandardPoison(hitEntity);
 		}
 		return true;
 	}
@@ -50,7 +50,7 @@ public class LOTRItemDagger extends LOTRItemSword {
 	}
 
 	public enum DaggerEffect {
-		NONE, POISON;
+		NONE, POISON
 
 	}
 

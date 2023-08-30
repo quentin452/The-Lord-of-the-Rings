@@ -54,9 +54,9 @@ public class LOTRModelBird extends ModelBase {
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		LOTREntityBird bird = (LOTREntityBird) entity;
 		if (bird.isBirdStill()) {
-			body.rotateAngleX = (float) Math.toRadians(-10.0);
-			head.rotateAngleX = (float) Math.toRadians(20.0);
-			wingRight.rotateAngleZ = bird.flapTime > 0 ? (float) Math.toRadians(90.0) + MathHelper.cos(f2 * 1.5f) * (float) Math.toRadians(30.0) : (float) Math.toRadians(30.0);
+			body.rotateAngleX = -0.17453292519943295f;
+			head.rotateAngleX = 0.3490658503988659f;
+			wingRight.rotateAngleZ = bird.flapTime > 0 ? 1.5707963267948966f + MathHelper.cos(f2 * 1.5f) * 0.5235987755982988f : 0.5235987755982988f;
 			wingLeft.rotateAngleZ = -wingRight.rotateAngleZ;
 			legRight.rotateAngleX = legLeft.rotateAngleX = -body.rotateAngleX;
 			legRight.rotateAngleX += MathHelper.cos(f * 0.6662f) * f1;
@@ -66,7 +66,7 @@ public class LOTRModelBird extends ModelBase {
 		} else {
 			body.rotateAngleX = 0.0f;
 			head.rotateAngleX = 0.0f;
-			wingRight.rotateAngleZ = (float) Math.toRadians(90.0) + MathHelper.cos(f2 * 1.5f) * (float) Math.toRadians(30.0);
+			wingRight.rotateAngleZ = 1.5707963267948966f + MathHelper.cos(f2 * 1.5f) * 0.5235987755982988f;
 			wingLeft.rotateAngleZ = -wingRight.rotateAngleZ;
 			legLeft.rotateAngleX = 0.0f;
 			legRight.rotateAngleX = 0.0f;

@@ -13,7 +13,7 @@ public class LOTRSlotBomb extends Slot {
 		super(inv, i, j, k);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getBackgroundIconIndex() {
 		return LOTRCommonIcons.iconBomb;

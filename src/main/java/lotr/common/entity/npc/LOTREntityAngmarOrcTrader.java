@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class LOTREntityAngmarOrcTrader extends LOTREntityAngmarOrc implements LOTRTradeable.Smith {
 	public LOTREntityAngmarOrcTrader(World world) {
 		super(world);
-		this.addTargetTasks(false);
+		addTargetTasks(false);
 	}
 
 	@Override

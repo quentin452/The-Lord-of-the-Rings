@@ -17,7 +17,7 @@ public class LOTRWorldGenRangerWell extends LOTRWorldGenRangerStructure {
 		int i1;
 		int j1;
 		int k1;
-		this.setOriginAndRotation(world, i, j, k, rotation, 2);
+		setOriginAndRotation(world, i, j, k, rotation, 2);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			for (i1 = -2; i1 <= 2; ++i1) {
@@ -61,7 +61,7 @@ public class LOTRWorldGenRangerWell extends LOTRWorldGenRangerStructure {
 			}
 		}
 		setBlockAndMetadata(world, 0, 0, 0, LOTRMod.gateWoodenCross, 0);
-		int depth = 0 + random.nextInt(2);
+		int depth = random.nextInt(2);
 		int waterDepth = 2 + random.nextInt(4);
 		int wellTop = -1;
 		for (j1 = wellBottom = wellTop - depth - waterDepth - 1; j1 <= wellTop; ++j1) {

@@ -10,7 +10,7 @@ public class LOTRBlockUtumnoSlab extends LOTRBlockUtumnoSlabBase {
 		super(flag, 6);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		j &= 7;
@@ -18,23 +18,23 @@ public class LOTRBlockUtumnoSlab extends LOTRBlockUtumnoSlabBase {
 			return LOTRMod.utumnoBrick.getIcon(i, 0);
 		}
 		switch (j) {
-		case 1:
-			return LOTRMod.utumnoBrick.getIcon(i, 2);
-		case 2:
-			return LOTRMod.utumnoBrick.getIcon(i, 4);
-		case 3:
-			return LOTRMod.utumnoPillar.getIcon(i, 0);
-		case 4:
-			return LOTRMod.utumnoPillar.getIcon(i, 1);
-		case 5:
-			return LOTRMod.utumnoPillar.getIcon(i, 2);
-		default:
-			break;
+			case 1:
+				return LOTRMod.utumnoBrick.getIcon(i, 2);
+			case 2:
+				return LOTRMod.utumnoBrick.getIcon(i, 4);
+			case 3:
+				return LOTRMod.utumnoPillar.getIcon(i, 0);
+			case 4:
+				return LOTRMod.utumnoPillar.getIcon(i, 1);
+			case 5:
+				return LOTRMod.utumnoPillar.getIcon(i, 2);
+			default:
+				break;
 		}
 		return super.getIcon(i, j);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 	}

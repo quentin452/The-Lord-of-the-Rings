@@ -6,7 +6,7 @@ import lotr.common.world.biome.LOTRMusicRegion;
 
 public class LOTRRegionTrackPool {
 	public LOTRMusicRegion region;
-	public List<LOTRMusicTrack> trackList = new ArrayList<>();
+	public Collection<LOTRMusicTrack> trackList = new ArrayList<>();
 
 	public LOTRRegionTrackPool(LOTRMusicRegion r, String s) {
 		region = r;

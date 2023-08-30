@@ -19,7 +19,7 @@ public class LOTRPacketIsOpRequest implements IMessage {
 		public IMessage onMessage(LOTRPacketIsOpRequest packet, MessageContext context) {
 			EntityPlayerMP entityplayer = context.getServerHandler().playerEntity;
 			boolean isOp = MinecraftServer.getServer().getConfigurationManager().func_152596_g(entityplayer.getGameProfile());
-			LOTRPacketIsOpResponse packetResponse = new LOTRPacketIsOpResponse(isOp);
+			IMessage packetResponse = new LOTRPacketIsOpResponse(isOp);
 			LOTRPacketHandler.networkWrapper.sendTo(packetResponse, entityplayer);
 			return null;
 		}

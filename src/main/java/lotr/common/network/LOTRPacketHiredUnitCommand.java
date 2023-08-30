@@ -61,32 +61,32 @@ public class LOTRPacketHiredUnitCommand implements IMessage {
 								entityplayer.openGui(LOTRMod.instance, 46, world, hiredNPC.getEntityId(), 0, 0);
 							} else if (page == 1) {
 								switch (action) {
-								case 0:
-									hiredNPC.hiredNPCInfo.teleportAutomatically = !hiredNPC.hiredNPCInfo.teleportAutomatically;
-									break;
-								case 1:
-									hiredNPC.hiredNPCInfo.setGuardMode(!hiredNPC.hiredNPCInfo.isGuardMode());
-									break;
-								case 2:
-									hiredNPC.hiredNPCInfo.setGuardRange(value);
-									break;
-								default:
-									break;
+									case 0:
+										hiredNPC.hiredNPCInfo.teleportAutomatically = !hiredNPC.hiredNPCInfo.teleportAutomatically;
+										break;
+									case 1:
+										hiredNPC.hiredNPCInfo.setGuardMode(!hiredNPC.hiredNPCInfo.isGuardMode());
+										break;
+									case 2:
+										hiredNPC.hiredNPCInfo.setGuardRange(value);
+										break;
+									default:
+										break;
 								}
 							}
 						} else if (task == LOTRHiredNPCInfo.Task.FARMER) {
 							switch (action) {
-							case 0:
-								hiredNPC.hiredNPCInfo.setGuardMode(!hiredNPC.hiredNPCInfo.isGuardMode());
-								break;
-							case 1:
-								hiredNPC.hiredNPCInfo.setGuardRange(value);
-								break;
-							case 2:
-								entityplayer.openGui(LOTRMod.instance, 22, world, hiredNPC.getEntityId(), 0, 0);
-								break;
-							default:
-								break;
+								case 0:
+									hiredNPC.hiredNPCInfo.setGuardMode(!hiredNPC.hiredNPCInfo.isGuardMode());
+									break;
+								case 1:
+									hiredNPC.hiredNPCInfo.setGuardRange(value);
+									break;
+								case 2:
+									entityplayer.openGui(LOTRMod.instance, 22, world, hiredNPC.getEntityId(), 0, 0);
+									break;
+								default:
+									break;
 							}
 						}
 						hiredNPC.hiredNPCInfo.sendClientPacket(false);

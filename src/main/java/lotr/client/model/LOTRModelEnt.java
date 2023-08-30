@@ -40,13 +40,13 @@ public class LOTRModelEnt extends ModelBase implements LOTRGlowingEyes.Model {
 		browRight = new ModelRenderer(this, 56, 26);
 		browRight.addBox(-6.5f, 0.0f, -8.0f, 5, 1, 2, f);
 		browRight.setRotationPoint(0.0f, -39.0f, 0.0f);
-		browRight.rotateAngleZ = (float) Math.toRadians(10.0);
+		browRight.rotateAngleZ = 0.17453292519943295f;
 		trunk.addChild(browRight);
 		browLeft = new ModelRenderer(this, 56, 26);
 		browLeft.mirror = true;
 		browLeft.addBox(1.5f, 0.0f, -8.0f, 5, 1, 2, f);
 		browLeft.setRotationPoint(0.0f, -39.0f, 0.0f);
-		browLeft.rotateAngleZ = (float) Math.toRadians(-10.0);
+		browLeft.rotateAngleZ = -0.17453292519943295f;
 		trunk.addChild(browLeft);
 		eyeRight = new ModelRenderer(this, 56, 29);
 		eyeRight.addBox(-1.5f, -2.0f, -7.0f, 3, 3, 1, f + 0.2f);
@@ -191,7 +191,7 @@ public class LOTRModelEnt extends ModelBase implements LOTRGlowingEyes.Model {
 			for (int l = 0; l < numBranches; ++l) {
 				GL11.glPushMatrix();
 				trunk.postRender(f5);
-				float angle = 90.0f + (float) l / (float) numBranches * 360.0f;
+				float angle = 90.0f + (float) l / numBranches * 360.0f;
 				GL11.glTranslatef(0.0f, -2.7f, 0.0f);
 				GL11.glRotatef(angle, 0.0f, 1.0f, 0.0f);
 				GL11.glRotatef(-60.0f, 1.0f, 0.0f, 0.0f);
@@ -226,12 +226,12 @@ public class LOTRModelEnt extends ModelBase implements LOTRGlowingEyes.Model {
 		eyeRight.showModel = ent != null && ent.eyesClosed > 0;
 		eyeLeft.showModel = ent != null && ent.eyesClosed > 0;
 		if (ent != null && ent.hurtTime > 0) {
-			browRight.rotateAngleZ = (float) Math.toRadians(30.0);
+			browRight.rotateAngleZ = 0.5235987755982988f;
 			browLeft.rotateAngleZ = -browRight.rotateAngleZ;
 			browLeft.rotationPointY = -40.0f;
 			browRight.rotationPointY = -40.0f;
 		} else {
-			browRight.rotateAngleZ = (float) Math.toRadians(10.0);
+			browRight.rotateAngleZ = 0.17453292519943295f;
 			browLeft.rotateAngleZ = -browRight.rotateAngleZ;
 			browLeft.rotationPointY = -39.0f;
 			browRight.rotationPointY = -39.0f;

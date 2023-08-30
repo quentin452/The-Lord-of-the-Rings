@@ -51,11 +51,6 @@ public class LOTREntityAlignmentBonus extends Entity {
 	}
 
 	@Override
-	public boolean canBePushed() {
-		return false;
-	}
-
-	@Override
 	public boolean canTriggerWalking() {
 		return false;
 	}

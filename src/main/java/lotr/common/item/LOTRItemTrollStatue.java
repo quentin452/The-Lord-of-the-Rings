@@ -23,7 +23,7 @@ public class LOTRItemTrollStatue extends Item {
 		setCreativeTab(LOTRCreativeTabs.tabDeco);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
 		if (itemstack.hasTagCompound() && itemstack.getTagCompound().getBoolean("TwoHeads")) {
@@ -31,7 +31,7 @@ public class LOTRItemTrollStatue extends Item {
 		}
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int j = 0; j <= 2; ++j) {
@@ -46,7 +46,7 @@ public class LOTRItemTrollStatue extends Item {
 
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
-		return super.getUnlocalizedName() + "." + itemstack.getItemDamage();
+		return getUnlocalizedName() + "." + itemstack.getItemDamage();
 	}
 
 	@Override
@@ -79,8 +79,8 @@ public class LOTRItemTrollStatue extends Item {
 		}
 		if (world.getBlock(i, j - 1, k).isSideSolid(world, i, j - 1, k, ForgeDirection.UP) && !world.isRemote) {
 			LOTREntityStoneTroll trollStatue = new LOTREntityStoneTroll(world);
-			trollStatue.setLocationAndAngles((double) i + (double) f, j, (double) k + (double) f2, 180.0f - entityplayer.rotationYaw % 360.0f, 0.0f);
-			if (world.checkNoEntityCollision(trollStatue.boundingBox) && world.getCollidingBoundingBoxes(trollStatue, trollStatue.boundingBox).size() == 0 && !world.isAnyLiquid(trollStatue.boundingBox)) {
+			trollStatue.setLocationAndAngles((double) i + f, j, (double) k + f2, 180.0f - entityplayer.rotationYaw % 360.0f, 0.0f);
+			if (world.checkNoEntityCollision(trollStatue.boundingBox) && world.getCollidingBoundingBoxes(trollStatue, trollStatue.boundingBox).isEmpty() && !world.isAnyLiquid(trollStatue.boundingBox)) {
 				trollStatue.setTrollOutfit(itemstack.getItemDamage());
 				if (itemstack.hasTagCompound()) {
 					trollStatue.setHasTwoHeads(itemstack.getTagCompound().getBoolean("TwoHeads"));

@@ -16,8 +16,4 @@ public class LOTRBiomeGenFangornClearing extends LOTRBiomeGenFangorn {
 		decorator.doubleGrassPerChunk = 8;
 	}
 
-	@Override
-	public float getTreeIncreaseChance() {
-		return 0.1f;
-	}
 }

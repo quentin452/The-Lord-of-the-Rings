@@ -8,6 +8,7 @@ import lotr.common.item.*;
 import lotr.common.recipe.LOTRRecipes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.*;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.*;
 import net.minecraft.util.MathHelper;
 
@@ -84,18 +85,18 @@ public class LOTREntityAIBanditSteal extends EntityAIBase {
 		int thefts = MathHelper.getRandomIntegerInRange(theBanditAsNPC.getRNG(), 1, theBandit.getMaxThefts());
 		boolean stolenSomething = false;
 		for (int i = 0; i < thefts; ++i) {
-			if (this.tryStealItem(inv, LOTRItemCoin.class)) {
+			if (tryStealItem(inv, LOTRItemCoin.class)) {
 				stolenSomething = true;
 			}
-			if (this.tryStealItem(inv, LOTRItemGem.class) || this.tryStealItem(inv, LOTRValuableItems.getToolMaterials()) || this.tryStealItem(inv, LOTRItemRing.class) || this.tryStealItem(inv, ItemArmor.class)) {
-				stolenSomething = true;
-				continue;
-			}
-			if (this.tryStealItem(inv, ItemSword.class) || this.tryStealItem(inv, ItemTool.class) || this.tryStealItem(inv, LOTRItemPouch.class)) {
+			if (tryStealItem(inv, LOTRItemGem.class) || tryStealItem(inv, LOTRValuableItems.getToolMaterials()) || tryStealItem(inv, LOTRItemRing.class) || tryStealItem(inv, ItemArmor.class)) {
 				stolenSomething = true;
 				continue;
 			}
-			if (!this.tryStealItem(inv)) {
+			if (tryStealItem(inv, ItemSword.class) || tryStealItem(inv, ItemTool.class) || tryStealItem(inv, LOTRItemPouch.class)) {
+				stolenSomething = true;
+				continue;
+			}
+			if (!tryStealItem(inv)) {
 				continue;
 			}
 			stolenSomething = true;
@@ -110,7 +111,7 @@ public class LOTREntityAIBanditSteal extends EntityAIBase {
 		}
 	}
 
-	public boolean stealItem(InventoryPlayer inv, int slot) {
+	public boolean stealItem(IInventory inv, int slot) {
 		ItemStack playerItem = inv.getStackInSlot(slot);
 		int theft = getRandomTheftAmount(playerItem);
 		if (theft > playerItem.stackSize) {
@@ -155,7 +156,7 @@ public class LOTREntityAIBanditSteal extends EntityAIBase {
 		});
 	}
 
-	public boolean tryStealItem(InventoryPlayer inv, List<ItemStack> itemList) {
+	public boolean tryStealItem(InventoryPlayer inv, Iterable<ItemStack> itemList) {
 		return tryStealItem_do(inv, new BanditItemFilter() {
 
 			@Override
@@ -178,11 +179,11 @@ public class LOTREntityAIBanditSteal extends EntityAIBase {
 		}
 		List<Integer> slotsAsList = Arrays.asList(inventorySlots);
 		Collections.shuffle(slotsAsList);
-		Integer[] arrinteger = inventorySlots = slotsAsList.toArray(inventorySlots);
+		Integer[] arrinteger = slotsAsList.toArray(inventorySlots);
 		int n = arrinteger.length;
-		for (int i = 0; i < n; ++i) {
+		for (Integer integer : arrinteger) {
 			ItemStack itemstack;
-			int slot = arrinteger[i];
+			int slot = integer;
 			if (slot == inv.currentItem || (itemstack = inv.getStackInSlot(slot)) == null || !filter.isApplicable(itemstack) || !stealItem(inv, slot)) {
 				continue;
 			}
@@ -207,8 +208,6 @@ public class LOTREntityAIBanditSteal extends EntityAIBase {
 	}
 
 	public abstract static class BanditItemFilter {
-		public BanditItemFilter() {
-		}
 
 		public abstract boolean isApplicable(ItemStack var1);
 	}

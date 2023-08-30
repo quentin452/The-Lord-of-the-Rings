@@ -27,12 +27,12 @@ public abstract class LOTRWorldGenCorsairStructure extends LOTRWorldGenStructure
 	public int fenceMeta;
 	public Block fenceGateBlock;
 
-	public LOTRWorldGenCorsairStructure(boolean flag) {
+	protected LOTRWorldGenCorsairStructure(boolean flag) {
 		super(flag);
 	}
 
 	public ItemStack getRandomCorsairWeapon(Random random) {
-		ItemStack[] items = { new ItemStack(LOTRMod.swordCorsair), new ItemStack(LOTRMod.daggerCorsair), new ItemStack(LOTRMod.spearCorsair), new ItemStack(LOTRMod.battleaxeCorsair), new ItemStack(LOTRMod.nearHaradBow) };
+		ItemStack[] items = {new ItemStack(LOTRMod.swordCorsair), new ItemStack(LOTRMod.daggerCorsair), new ItemStack(LOTRMod.spearCorsair), new ItemStack(LOTRMod.battleaxeCorsair), new ItemStack(LOTRMod.nearHaradBow)};
 		return items[random.nextInt(items.length)].copy();
 	}
 

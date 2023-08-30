@@ -29,7 +29,7 @@ public class LOTRGuiButtonOptions extends GuiButton {
 	}
 
 	public void setState(boolean flag) {
-		this.setState(flag ? StatCollector.translateToLocal("lotr.gui.button.on") : StatCollector.translateToLocal("lotr.gui.button.off"));
+		setState(flag ? StatCollector.translateToLocal("lotr.gui.button.on") : StatCollector.translateToLocal("lotr.gui.button.off"));
 	}
 
 	public void setState(String s) {

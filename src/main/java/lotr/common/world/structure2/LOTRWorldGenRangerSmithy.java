@@ -26,7 +26,7 @@ public class LOTRWorldGenRangerSmithy extends LOTRWorldGenRangerStructure {
 		int k13;
 		int k14;
 		int i13;
-		this.setOriginAndRotation(world, i, j, k, rotation, 5);
+		setOriginAndRotation(world, i, j, k, rotation, 5);
 		setupRandomBlocks(random);
 		if (restrictions) {
 			int minHeight = 0;
@@ -67,12 +67,9 @@ public class LOTRWorldGenRangerSmithy extends LOTRWorldGenRangerStructure {
 				if ((i12 != 2 && i12 != 8 || k2 > 3) && (i12 < 3 || i12 > 7 || k2 > 4)) {
 					continue;
 				}
-				if ((i12 == 2 || i12 == 8) && k2 <= 3 || i12 >= 3 && i12 <= 7 && k2 == 4) {
-					boolean beam = false;
-					if ((i12 == 2 || i12 == 8) && k2 == 3) {
-						beam = true;
-					}
-					if ((i12 == 3 || i12 == 7) && k2 == 4) {
+				if (i12 == 2 || i12 == 8 || k2 == 4) {
+					boolean beam = (i12 == 2 || i12 == 8) && k2 == 3;
+					if (i12 == 3 || i12 == 7) {
 						beam = true;
 					}
 					if (beam) {
@@ -122,7 +119,7 @@ public class LOTRWorldGenRangerSmithy extends LOTRWorldGenRangerStructure {
 				setBlockAndMetadata(world, i1, j1, -5 + l, roofStairBlock, 2);
 				setBlockAndMetadata(world, i1, j1, 5 - l, roofStairBlock, 3);
 			}
-			for (int i14 : new int[] { 1 + l, 9 - l }) {
+			for (int i14 : new int[]{1 + l, 9 - l}) {
 				setBlockAndMetadata(world, i14, j1, -4 + l, roofStairBlock, 2);
 				setBlockAndMetadata(world, i14, j1, 4 - l, roofStairBlock, 3);
 			}
@@ -130,7 +127,7 @@ public class LOTRWorldGenRangerSmithy extends LOTRWorldGenRangerStructure {
 				setBlockAndMetadata(world, 1 + l, j1, k16, roofStairBlock, 1);
 				setBlockAndMetadata(world, 9 - l, j1, k16, roofStairBlock, 0);
 			}
-			for (int k17 : new int[] { -4 + l, 4 - l }) {
+			for (int k17 : new int[]{-4 + l, 4 - l}) {
 				setBlockAndMetadata(world, 2 + l, j1, k17, roofStairBlock, 1);
 				setBlockAndMetadata(world, 8 - l, j1, k17, roofStairBlock, 0);
 			}
@@ -173,8 +170,8 @@ public class LOTRWorldGenRangerSmithy extends LOTRWorldGenRangerStructure {
 		for (k13 = -3; k13 <= 3; ++k13) {
 			setBlockAndMetadata(world, 5, 4, k13, woodBeamBlock, woodBeamMeta | 8);
 		}
-		for (int i15 : new int[] { 3, 7 }) {
-			for (int k18 : new int[] { -3, 3 }) {
+		for (int i15 : new int[]{3, 7}) {
+			for (int k18 : new int[]{-3, 3}) {
 				setBlockAndMetadata(world, i15, 1, k18, plankBlock, plankMeta);
 				for (int j17 = 2; j17 <= 4; ++j17) {
 					setBlockAndMetadata(world, i15, j17, k18, fenceBlock, fenceMeta);
@@ -187,14 +184,14 @@ public class LOTRWorldGenRangerSmithy extends LOTRWorldGenRangerStructure {
 		placePlate(world, random, 4, 2, -3, plateBlock, LOTRFoods.RANGER);
 		setBlockAndMetadata(world, 5, 1, -3, Blocks.crafting_table, 0);
 		setBlockAndMetadata(world, 6, 1, -3, plankBlock, plankMeta);
-		this.placeMug(world, random, 6, 2, -3, 2, LOTRFoods.RANGER_DRINK);
+		placeMug(world, random, 6, 2, -3, 2, LOTRFoods.RANGER_DRINK);
 		setBlockAndMetadata(world, 7, 1, -2, plankBlock, plankMeta);
-		this.placeBarrel(world, random, 7, 2, -2, 5, LOTRFoods.RANGER_DRINK);
+		placeBarrel(world, random, 7, 2, -2, 5, LOTRFoods.RANGER_DRINK);
 		setBlockAndMetadata(world, 3, 1, 2, plankBlock, plankMeta);
-		this.placeMug(world, random, 3, 2, 2, 3, LOTRFoods.RANGER_DRINK);
+		placeMug(world, random, 3, 2, 2, 3, LOTRFoods.RANGER_DRINK);
 		setBlockAndMetadata(world, 5, 1, 3, bedBlock, 1);
 		setBlockAndMetadata(world, 6, 1, 3, bedBlock, 9);
-		this.placeChest(world, random, 7, 1, 2, 5, chestContentsHouse);
+		placeChest(world, random, 7, 1, 2, 5, chestContentsHouse);
 		setBlockAndMetadata(world, 8, 0, 0, LOTRMod.hearth, 0);
 		setBlockAndMetadata(world, 8, 1, 0, Blocks.fire, 0);
 		for (j12 = 2; j12 <= 3; ++j12) {
@@ -203,7 +200,7 @@ public class LOTRWorldGenRangerSmithy extends LOTRWorldGenRangerStructure {
 		setBlockAndMetadata(world, 7, 1, 0, barsBlock, 0);
 		setBlockAndMetadata(world, 7, 2, 0, Blocks.furnace, 5);
 		spawnItemFrame(world, 7, 3, 0, 3, getRangerFramedItem(random));
-		this.placeChest(world, random, 1, 1, 2, 5, LOTRChestContents.RANGER_SMITHY);
+		placeChest(world, random, 1, 1, 2, 5, LOTRChestContents.RANGER_SMITHY);
 		setBlockAndMetadata(world, 1, 1, -2, tableBlock, 0);
 		setBlockAndMetadata(world, 1, 1, -3, Blocks.crafting_table, 0);
 		for (j12 = 1; j12 <= 3; ++j12) {

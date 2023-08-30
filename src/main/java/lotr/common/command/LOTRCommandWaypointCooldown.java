@@ -32,11 +32,6 @@ public class LOTRCommandWaypointCooldown extends CommandBase {
 	}
 
 	@Override
-	public boolean isUsernameIndex(String[] args, int i) {
-		return false;
-	}
-
-	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		String function = null;
 		int cooldown = -1;
@@ -60,7 +55,7 @@ public class LOTRCommandWaypointCooldown extends CommandBase {
 				LOTRLevelData.setWaypointCooldown(max, min);
 				CommandBase.func_152373_a(sender, this, "commands.lotr.wpCooldown.setMax", max, LOTRLevelData.getHMSTime_Seconds(max));
 				if (updatedMin) {
-					CommandBase.func_152373_a(sender, (ICommand) this, "commands.lotr.wpCooldown.updateMin", min);
+					CommandBase.func_152373_a(sender, this, "commands.lotr.wpCooldown.updateMin", min);
 				}
 				return;
 			}
@@ -74,7 +69,7 @@ public class LOTRCommandWaypointCooldown extends CommandBase {
 				LOTRLevelData.setWaypointCooldown(max, min);
 				CommandBase.func_152373_a(sender, this, "commands.lotr.wpCooldown.setMin", min, LOTRLevelData.getHMSTime_Seconds(min));
 				if (updatedMax) {
-					CommandBase.func_152373_a(sender, (ICommand) this, "commands.lotr.wpCooldown.updateMax", max);
+					CommandBase.func_152373_a(sender, this, "commands.lotr.wpCooldown.updateMax", max);
 				}
 				return;
 			}

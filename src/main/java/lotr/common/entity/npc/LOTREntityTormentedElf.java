@@ -62,19 +62,19 @@ public class LOTREntityTormentedElf extends LOTREntityElf {
 		data = super.onSpawnWithEgg(data);
 		int i = rand.nextInt(5);
 		switch (i) {
-		case 0:
-		case 1:
-		case 2:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordUtumno));
-			break;
-		case 3:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerUtumno));
-			break;
-		case 4:
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerUtumnoPoisoned));
-			break;
-		default:
-			break;
+			case 0:
+			case 1:
+			case 2:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.swordUtumno));
+				break;
+			case 3:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerUtumno));
+				break;
+			case 4:
+				npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.daggerUtumnoPoisoned));
+				break;
+			default:
+				break;
 		}
 		npcItemsInv.setRangedWeapon(new ItemStack(LOTRMod.utumnoBow));
 		npcItemsInv.setIdleItem(npcItemsInv.getMeleeWeapon());

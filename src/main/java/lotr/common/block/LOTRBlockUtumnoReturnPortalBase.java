@@ -12,7 +12,7 @@ import net.minecraft.world.*;
 public class LOTRBlockUtumnoReturnPortalBase extends Block {
 	public static int MAX_SACRIFICE = 15;
 	public static int RANGE = 5;
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon topIcon;
 
 	public LOTRBlockUtumnoReturnPortalBase() {
@@ -28,7 +28,7 @@ public class LOTRBlockUtumnoReturnPortalBase extends Block {
 		return super.getCollisionBoundingBoxFromPool(world, i, j, k);
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int i, int j) {
 		if (i == 1) {
@@ -40,10 +40,10 @@ public class LOTRBlockUtumnoReturnPortalBase extends Block {
 	@Override
 	public int getLightValue(IBlockAccess world, int i, int j, int k) {
 		int meta = world.getBlockMetadata(i, j, k);
-		float f = (float) meta / (float) MAX_SACRIFICE;
+		float f = (float) meta / MAX_SACRIFICE;
 		float f1 = 0.5f;
 		float f2 = f1 + (1.0f - f1) * f;
-		return (int) (f2 *= 16.0f);
+		return (int) (f2 * 16.0f);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class LOTRBlockUtumnoReturnPortalBase extends Block {
 		return 0;
 	}
 
-	@SideOnly(value = Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
 		super.registerBlockIcons(iconregister);
@@ -80,7 +80,7 @@ public class LOTRBlockUtumnoReturnPortalBase extends Block {
 	}
 
 	public void setBlockBoundsMeta(int meta) {
-		float f = (float) meta / (float) MAX_SACRIFICE;
+		float f = (float) meta / MAX_SACRIFICE;
 		float f1 = 0.0625f;
 		float f2 = f1 + (1.0f - f1) * f;
 		setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, f2, 1.0f);

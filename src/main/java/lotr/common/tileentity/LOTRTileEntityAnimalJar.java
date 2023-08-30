@@ -21,7 +21,7 @@ public class LOTRTileEntityAnimalJar extends TileEntity {
 	public Entity jarEntity;
 	public int ticksExisted = -1;
 	public float targetYaw;
-	public boolean hasTargetYaw = false;
+	public boolean hasTargetYaw;
 
 	public void clearEntityData() {
 		jarEntity = null;
@@ -50,7 +50,7 @@ public class LOTRTileEntityAnimalJar extends TileEntity {
 	}
 
 	public float[] getInitialEntityCoords(Entity entity) {
-		return new float[] { xCoord + 0.5f, yCoord + getEntityHeight() - entity.height / 2.0f, zCoord + 0.5f };
+		return new float[]{xCoord + 0.5f, yCoord + getEntityHeight() - entity.height / 2.0f, zCoord + 0.5f};
 	}
 
 	public Packet getJarPacket(int type) {
@@ -186,7 +186,7 @@ public class LOTRTileEntityAnimalJar extends TileEntity {
 			} else if (hasTargetYaw) {
 				float delta = targetYaw - jarEntity.rotationYaw;
 				delta = MathHelper.wrapAngleTo180_float(delta);
-				jarEntity.rotationYaw += delta *= 0.1f;
+				jarEntity.rotationYaw += delta * 0.1f;
 				if (Math.abs(jarEntity.rotationYaw - targetYaw) <= 0.01f) {
 					hasTargetYaw = false;
 				}

@@ -44,102 +44,102 @@ public class LOTRWorldGenHobbitFarm extends LOTRWorldGenStructureBase2 {
 		int i14;
 		int k14;
 		int k15;
-		this.setOriginAndRotation(world, i, j, k, rotation, 6);
+		setOriginAndRotation(world, i, j, k, rotation, 6);
 		int randomWood = random.nextInt(4);
 		switch (randomWood) {
-		case 0: {
-			wood1Block = Blocks.planks;
-			wood1Meta = 0;
-			wood1Stair = Blocks.oak_stairs;
-			beam1Block = LOTRMod.woodBeamV1;
-			beam1Meta = 0;
-			break;
-		}
-		case 1: {
-			wood1Block = Blocks.planks;
-			wood1Meta = 2;
-			wood1Stair = Blocks.birch_stairs;
-			beam1Block = LOTRMod.woodBeamV1;
-			beam1Meta = 2;
-			break;
-		}
-		case 2: {
-			wood1Block = LOTRMod.planks;
-			wood1Meta = 0;
-			wood1Stair = LOTRMod.stairsShirePine;
-			beam1Block = LOTRMod.woodBeam1;
-			beam1Meta = 0;
-			break;
-		}
-		case 3: {
-			wood1Block = LOTRMod.planks;
-			wood1Meta = 4;
-			wood1Stair = LOTRMod.stairsApple;
-			beam1Block = LOTRMod.woodBeamFruit;
-			beam1Meta = 0;
-		}
+			case 0: {
+				wood1Block = Blocks.planks;
+				wood1Meta = 0;
+				wood1Stair = Blocks.oak_stairs;
+				beam1Block = LOTRMod.woodBeamV1;
+				beam1Meta = 0;
+				break;
+			}
+			case 1: {
+				wood1Block = Blocks.planks;
+				wood1Meta = 2;
+				wood1Stair = Blocks.birch_stairs;
+				beam1Block = LOTRMod.woodBeamV1;
+				beam1Meta = 2;
+				break;
+			}
+			case 2: {
+				wood1Block = LOTRMod.planks;
+				wood1Meta = 0;
+				wood1Stair = LOTRMod.stairsShirePine;
+				beam1Block = LOTRMod.woodBeam1;
+				beam1Meta = 0;
+				break;
+			}
+			case 3: {
+				wood1Block = LOTRMod.planks;
+				wood1Meta = 4;
+				wood1Stair = LOTRMod.stairsApple;
+				beam1Block = LOTRMod.woodBeamFruit;
+				beam1Meta = 0;
+			}
 		}
 		int randomWood2 = random.nextInt(2);
 		switch (randomWood2) {
-		case 0: {
-			wood2Block = Blocks.planks;
-			wood2Meta = 1;
-			break;
-		}
-		case 1: {
-			wood2Block = LOTRMod.planks;
-			wood2Meta = 6;
-		}
+			case 0: {
+				wood2Block = Blocks.planks;
+				wood2Meta = 1;
+				break;
+			}
+			case 1: {
+				wood2Block = LOTRMod.planks;
+				wood2Meta = 6;
+			}
 		}
 		int randomCrop = random.nextInt(8);
 		switch (randomCrop) {
-		case 0: {
-			cropBlock = Blocks.wheat;
-			cropMeta = 7;
-			seedItem = Items.wheat_seeds;
-			break;
-		}
-		case 1: {
-			cropBlock = Blocks.carrots;
-			cropMeta = 7;
-			seedItem = Items.carrot;
-			break;
-		}
-		case 2: {
-			cropBlock = Blocks.potatoes;
-			cropMeta = 7;
-			seedItem = Items.potato;
-			break;
-		}
-		case 3: {
-			cropBlock = LOTRMod.lettuceCrop;
-			cropMeta = 7;
-			seedItem = LOTRMod.lettuce;
-			break;
-		}
-		case 4: {
-			cropBlock = LOTRMod.pipeweedCrop;
-			cropMeta = 7;
-			seedItem = LOTRMod.pipeweedSeeds;
-			break;
-		}
-		case 5: {
-			cropBlock = LOTRMod.cornStalk;
-			cropMeta = 0;
-			seedItem = Item.getItemFromBlock(LOTRMod.cornStalk);
-			break;
-		}
-		case 6: {
-			cropBlock = LOTRMod.leekCrop;
-			cropMeta = 7;
-			seedItem = LOTRMod.leek;
-			break;
-		}
-		case 7: {
-			cropBlock = LOTRMod.turnipCrop;
-			cropMeta = 7;
-			seedItem = LOTRMod.turnip;
-		}
+			case 0: {
+				cropBlock = Blocks.wheat;
+				cropMeta = 7;
+				seedItem = Items.wheat_seeds;
+				break;
+			}
+			case 1: {
+				cropBlock = Blocks.carrots;
+				cropMeta = 7;
+				seedItem = Items.carrot;
+				break;
+			}
+			case 2: {
+				cropBlock = Blocks.potatoes;
+				cropMeta = 7;
+				seedItem = Items.potato;
+				break;
+			}
+			case 3: {
+				cropBlock = LOTRMod.lettuceCrop;
+				cropMeta = 7;
+				seedItem = LOTRMod.lettuce;
+				break;
+			}
+			case 4: {
+				cropBlock = LOTRMod.pipeweedCrop;
+				cropMeta = 7;
+				seedItem = LOTRMod.pipeweedSeeds;
+				break;
+			}
+			case 5: {
+				cropBlock = LOTRMod.cornStalk;
+				cropMeta = 0;
+				seedItem = Item.getItemFromBlock(LOTRMod.cornStalk);
+				break;
+			}
+			case 6: {
+				cropBlock = LOTRMod.leekCrop;
+				cropMeta = 7;
+				seedItem = LOTRMod.leek;
+				break;
+			}
+			case 7: {
+				cropBlock = LOTRMod.turnipCrop;
+				cropMeta = 7;
+				seedItem = LOTRMod.turnip;
+			}
 		}
 		if (restrictions) {
 			int minHeight = 1;
@@ -193,7 +193,7 @@ public class LOTRWorldGenHobbitFarm extends LOTRWorldGenStructureBase2 {
 		for (int stair = 0; stair <= 4; ++stair) {
 			int j13 = 5 + stair;
 			for (i14 = -5 + stair; i14 <= 4 - stair; ++i14) {
-				for (int k17 : new int[] { -5, 6 }) {
+				for (int k17 : new int[]{-5, 6}) {
 					setBlockAndMetadata(world, i14, j13, k17, wood2Block, wood2Meta);
 				}
 			}
@@ -208,13 +208,13 @@ public class LOTRWorldGenHobbitFarm extends LOTRWorldGenStructureBase2 {
 			}
 		}
 		for (int j14 = 1; j14 <= 5; ++j14) {
-			for (int k18 : new int[] { -5, 6 }) {
+			for (int k18 : new int[]{-5, 6}) {
 				setBlockAndMetadata(world, -5, j14, k18, beam1Block, beam1Meta);
 				setBlockAndMetadata(world, -2, j14, k18, wood1Block, wood1Meta);
 				setBlockAndMetadata(world, 1, j14, k18, wood1Block, wood1Meta);
 				setBlockAndMetadata(world, 4, j14, k18, beam1Block, beam1Meta);
 			}
-			int[] i16 = { -5, 4 };
+			int[] i16 = {-5, 4};
 			k12 = i16.length;
 			for (k16 = 0; k16 < k12; ++k16) {
 				i1 = i16[k16];
@@ -223,7 +223,7 @@ public class LOTRWorldGenHobbitFarm extends LOTRWorldGenStructureBase2 {
 			}
 		}
 		for (k14 = 0; k14 <= 1; ++k14) {
-			int[] i16 = { -5, 4 };
+			int[] i16 = {-5, 4};
 			k12 = i16.length;
 			for (k16 = 0; k16 < k12; ++k16) {
 				i1 = i16[k16];
@@ -231,7 +231,7 @@ public class LOTRWorldGenHobbitFarm extends LOTRWorldGenStructureBase2 {
 				setBlockAndMetadata(world, i1, 4, k14, wood1Block, wood1Meta);
 			}
 		}
-		int[] k19 = { -5, 6 };
+		int[] k19 = {-5, 6};
 		i12 = k19.length;
 		for (k12 = 0; k12 < i12; ++k12) {
 			k16 = k19[k12];
@@ -264,11 +264,11 @@ public class LOTRWorldGenHobbitFarm extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, -4, 5, 7, wood1Stair, 4);
 		setBlockAndMetadata(world, 3, 5, 7, wood1Stair, 5);
 		setBlockAndMetadata(world, 4, 5, 7, wood1Block, wood1Meta);
-		int[] i17 = { -4, 3 };
+		int[] i17 = {-4, 3};
 		k13 = i17.length;
 		for (k12 = 0; k12 < k13; ++k12) {
 			int i18 = i17[k12];
-			for (int k110 : new int[] { -1, 2 }) {
+			for (int k110 : new int[]{-1, 2}) {
 				setBlockAndMetadata(world, i18, 1, k110, Blocks.crafting_table, 0);
 				setBlockAndMetadata(world, i18, 2, k110, Blocks.fence, 0);
 				setBlockAndMetadata(world, i18, 3, k110, Blocks.fence, 0);
@@ -338,7 +338,7 @@ public class LOTRWorldGenHobbitFarm extends LOTRWorldGenStructureBase2 {
 		setBlockAndMetadata(world, -3, 6, 1, Blocks.cauldron, 3);
 		setBlockAndMetadata(world, -3, 6, 2, LOTRMod.hobbitOven, 4);
 		setBlockAndMetadata(world, -3, 6, 3, Blocks.crafting_table, 0);
-		this.placeChest(world, random, 2, 6, 1, 5, LOTRChestContents.HOBBIT_HOLE_LARDER);
+		placeChest(world, random, 2, 6, 1, 5, LOTRChestContents.HOBBIT_HOLE_LARDER);
 		setBlockAndMetadata(world, 2, 6, 2, Blocks.bed, 0);
 		setBlockAndMetadata(world, 2, 6, 3, Blocks.bed, 8);
 		for (i12 = 5; i12 <= 10; ++i12) {
@@ -383,7 +383,7 @@ public class LOTRWorldGenHobbitFarm extends LOTRWorldGenStructureBase2 {
 		int animals = 3 + random.nextInt(6);
 		for (int l = 0; l < animals; ++l) {
 			Class animalClass = ((BiomeGenBase.SpawnListEntry) WeightedRandom.getRandomItem(world.rand, LOTRBiome.shire.getSpawnableList(EnumCreatureType.creature))).entityClass;
-			EntityCreature animal = null;
+			EntityCreature animal;
 			try {
 				animal = (EntityCreature) animalClass.getConstructor(World.class).newInstance(world);
 			} catch (Exception exception) {

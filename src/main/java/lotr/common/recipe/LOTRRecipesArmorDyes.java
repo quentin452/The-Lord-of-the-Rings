@@ -1,6 +1,7 @@
 package lotr.common.recipe;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import lotr.common.item.LOTRItemDye;
 import net.minecraft.block.BlockColored;
@@ -10,7 +11,7 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.*;
 import net.minecraft.world.World;
 
-public class LOTRRecipesArmorDyes extends RecipesArmorDyes implements IRecipe {
+public class LOTRRecipesArmorDyes extends RecipesArmorDyes {
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
 		ItemStack armor = null;
@@ -64,7 +65,7 @@ public class LOTRRecipesArmorDyes extends RecipesArmorDyes implements IRecipe {
 		int r = rgb[0] / coloredItems;
 		int g = rgb[1] / coloredItems;
 		int b = rgb[2] / coloredItems;
-		float averageColor = (float) totalColor / (float) coloredItems;
+		float averageColor = (float) totalColor / coloredItems;
 		float maxColor = Math.max(r, Math.max(g, b));
 		r = (int) (r * averageColor / maxColor);
 		g = (int) (g * averageColor / maxColor);
@@ -75,19 +76,9 @@ public class LOTRRecipesArmorDyes extends RecipesArmorDyes implements IRecipe {
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
-		return null;
-	}
-
-	@Override
-	public int getRecipeSize() {
-		return 10;
-	}
-
-	@Override
 	public boolean matches(InventoryCrafting inv, World world) {
 		ItemStack armor = null;
-		ArrayList<ItemStack> dyes = new ArrayList<>();
+		Collection<ItemStack> dyes = new ArrayList<>();
 		for (int i = 0; i < inv.getSizeInventory(); ++i) {
 			ItemStack itemstack = inv.getStackInSlot(i);
 			if (itemstack == null) {

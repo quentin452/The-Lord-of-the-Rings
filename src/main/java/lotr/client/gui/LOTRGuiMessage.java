@@ -1,6 +1,7 @@
 package lotr.client.gui;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.regex.Pattern;
 
 import org.lwjgl.opengl.GL11;
@@ -37,11 +38,11 @@ public class LOTRGuiMessage extends LOTRGuiScreenBase {
 		drawDefaultBackground();
 		mc.getTextureManager().bindTexture(guiTexture);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		String msg = type.getMessage();
 		int pageWidth = xSize - border * 2;
 		String[] splitNewline = msg.split(Pattern.quote("\\n"));
-		ArrayList<String> msgLines = new ArrayList();
+		Collection<String> msgLines = new ArrayList<>();
 		for (String line : splitNewline) {
 			msgLines.addAll(fontRendererObj.listFormattedStringToWidth(line, pageWidth));
 		}
@@ -52,7 +53,7 @@ public class LOTRGuiMessage extends LOTRGuiScreenBase {
 			y += fontRendererObj.FONT_HEIGHT;
 		}
 		String s = StatCollector.translateToLocal("lotr.gui.message.notDisplayedAgain");
-		this.drawCenteredString(s, guiLeft + xSize / 2, guiTop + ySize - border / 2 - fontRendererObj.FONT_HEIGHT, 9666921);
+		drawCenteredString(s, guiLeft + xSize / 2, guiTop + ySize - border / 2 - fontRendererObj.FONT_HEIGHT, 9666921);
 		if (type == LOTRGuiMessageTypes.ALIGN_DRAIN) {
 			int numIcons = 3;
 			int iconGap = 40;
@@ -61,7 +62,7 @@ public class LOTRGuiMessage extends LOTRGuiScreenBase {
 				iconX -= (numIcons - 1) * iconGap / 2;
 				int iconY = guiTop + border + 14;
 				int num = l + 1;
-				LOTRTickHandlerClient.renderAlignmentDrain(mc, iconX += l * iconGap - 8, iconY, num);
+				LOTRTickHandlerClient.renderAlignmentDrain(mc, iconX + (l * iconGap - 8), iconY, num);
 			}
 		}
 		if (buttonTimer > 0) {

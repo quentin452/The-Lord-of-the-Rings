@@ -14,7 +14,7 @@ public abstract class LOTRMiniQuestKill extends LOTRMiniQuest {
 	public int killTarget;
 	public int killCount;
 
-	public LOTRMiniQuestKill(LOTRPlayerData pd) {
+	protected LOTRMiniQuestKill(LOTRPlayerData pd) {
 		super(pd);
 	}
 
@@ -30,7 +30,7 @@ public abstract class LOTRMiniQuestKill extends LOTRMiniQuest {
 
 	@Override
 	public float getCompletionFactor() {
-		return (float) killCount / (float) killTarget;
+		return (float) killCount / killTarget;
 	}
 
 	public abstract String getKillTargetName();
@@ -93,24 +93,24 @@ public abstract class LOTRMiniQuestKill extends LOTRMiniQuest {
 		nbt.setInteger("Count", killCount);
 	}
 
-	public static abstract class QFKill<Q extends LOTRMiniQuestKill> extends LOTRMiniQuest.QuestFactoryBase<Q> {
+	public abstract static class QFKill<Q extends LOTRMiniQuestKill> extends LOTRMiniQuest.QuestFactoryBase<Q> {
 		public int minTarget;
 		public int maxTarget;
 
-		public QFKill(String name) {
+		protected QFKill(String name) {
 			super(name);
 		}
 
 		@Override
 		public Q createQuest(LOTREntityNPC npc, Random rand) {
-			LOTRMiniQuestKill quest = super.createQuest(npc, rand);
-			quest.killTarget = MathHelper.getRandomIntegerInRange(rand, this.minTarget, this.maxTarget);
-			return (Q) quest;
+			Q quest = super.createQuest(npc, rand);
+			quest.killTarget = MathHelper.getRandomIntegerInRange(rand, minTarget, maxTarget);
+			return quest;
 		}
 
 		public QFKill setKillTarget(int min, int max) {
-			this.minTarget = min;
-			this.maxTarget = max;
+			minTarget = min;
+			maxTarget = max;
 			return this;
 		}
 	}

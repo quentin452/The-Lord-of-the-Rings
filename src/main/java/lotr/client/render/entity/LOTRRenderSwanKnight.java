@@ -1,7 +1,7 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelHuman;
-import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.LOTRRandomSkinEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
@@ -15,6 +15,6 @@ public class LOTRRenderSwanKnight extends LOTRRenderBiped {
 
 	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
-		return dolAmrothSkins.getRandomSkin((LOTREntityNPC) entity);
+		return dolAmrothSkins.getRandomSkin((LOTRRandomSkinEntity) entity);
 	}
 }

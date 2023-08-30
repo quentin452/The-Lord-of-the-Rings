@@ -59,10 +59,10 @@ public class LOTRBiomeGenGondor extends LOTRBiome {
 		arrspawnListContainer7[0] = LOTRBiomeSpawnList.entry(LOTRSpawnList.HALF_TROLLS, 10);
 		npcSpawnList.newFactionList(0).add(arrspawnListContainer7);
 		addBiomeVariantSet(LOTRBiomeVariant.SET_NORMAL_OAK);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.5f);
-		this.addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.5f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.2f);
-		this.addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BEECH, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.FOREST_BIRCH, 0.5f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_APPLE_PEAR, 0.2f);
+		addBiomeVariant(LOTRBiomeVariant.ORCHARD_PLUM, 0.2f);
 		decorator.addSoil(new WorldGenMinable(LOTRMod.rock, 1, 60, Blocks.stone), 2.0f, 0, 64);
 		decorator.setTreeCluster(10, 30);
 		decorator.willowPerChunk = 1;
