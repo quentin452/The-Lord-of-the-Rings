@@ -19,7 +19,7 @@ buildscript {
 apply plugin: 'forge'
 
 final def currentDate = LocalDate.now()
-version = currentDate.format(DateTimeFormatter.ofPattern('yy.MM.dd'))
+version = 'v' + currentDate.format(DateTimeFormatter.ofPattern('yy.MM.dd'))
 group = 'com.yourname.modid'
 archivesBaseName = 'LOTR'
 
