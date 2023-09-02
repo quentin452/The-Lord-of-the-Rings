@@ -18,6 +18,10 @@ jobs:
         with:
           java-version: '8'
           distribution: temurin
+      - name: Setup Workspace with Gradle
+        uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25
+        with:
+          arguments: setupDecompWorkspace idea
       - name: Build with Gradle
         uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25
         with:
