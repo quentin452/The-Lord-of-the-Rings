@@ -1,20 +1,25 @@
 package lotr.common.block;
 
-import java.util.Random;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.entity.animal.LOTREntityDesertScorpion;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityHaradPyramidWraith;
+import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.tileentity.LOTRTileEntitySpawnerChest;
-import net.minecraft.block.*;
-import net.minecraft.entity.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRBlockSpawnerChest extends BlockChest {
 	public static boolean dropChestItems = true;

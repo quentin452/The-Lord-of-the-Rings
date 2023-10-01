@@ -1,9 +1,9 @@
 package lotr.common.block;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import net.minecraft.item.Item;
+
+import java.util.Random;
 
 public class LOTRBlockLeaves2 extends LOTRBlockLeavesBase {
 	public LOTRBlockLeaves2() {

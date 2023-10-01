@@ -1,8 +1,11 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.fac.LOTRFaction;
-import lotr.common.quest.*;
+import lotr.common.quest.LOTRMiniQuest;
+import lotr.common.quest.LOTRMiniQuestFactory;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,6 +18,10 @@ public class LOTREntityWickedDwarf extends LOTREntityDwarf implements LOTRTradea
 	public LOTREntityWickedDwarf(World world) {
 		super(world);
 		addTargetTasks(true);
+	}
+
+	public static LOTRFaction[] getTradeFactions() {
+		return new LOTRFaction[]{LOTRFaction.MORDOR, LOTRFaction.ANGMAR, LOTRFaction.RHUDEL};
 	}
 
 	@Override
@@ -106,9 +113,5 @@ public class LOTREntityWickedDwarf extends LOTREntityDwarf implements LOTRTradea
 		}
 		setCurrentItemOrArmor(4, null);
 		return data;
-	}
-
-	public static LOTRFaction[] getTradeFactions() {
-		return new LOTRFaction[]{LOTRFaction.MORDOR, LOTRFaction.ANGMAR, LOTRFaction.RHUDEL};
 	}
 }

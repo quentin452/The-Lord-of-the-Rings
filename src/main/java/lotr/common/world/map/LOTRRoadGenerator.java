@@ -1,14 +1,13 @@
 package lotr.common.world.map;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.Random;
 
 public class LOTRRoadGenerator {
 	public static int ROAD_DEPTH = 4;

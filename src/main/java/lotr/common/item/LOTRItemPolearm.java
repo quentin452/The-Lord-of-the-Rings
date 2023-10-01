@@ -1,6 +1,8 @@
 package lotr.common.item;
 
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class LOTRItemPolearm extends LOTRItemSword {
 	public LOTRItemPolearm(Item.ToolMaterial material) {

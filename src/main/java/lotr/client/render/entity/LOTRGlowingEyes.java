@@ -1,11 +1,10 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGlowingEyes {
 	public static void renderGlowingEyes(Entity entity, ResourceLocation eyesTexture, Model model, float f, float f1, float f2, float f3, float f4, float f5) {

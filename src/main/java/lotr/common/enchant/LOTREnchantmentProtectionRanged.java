@@ -1,8 +1,11 @@
 package lotr.common.enchant;
 
 import lotr.common.item.LOTRMaterial;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
 
 public class LOTREnchantmentProtectionRanged extends LOTREnchantmentProtectionSpecial {
 	public LOTREnchantmentProtectionRanged(String s, int level) {

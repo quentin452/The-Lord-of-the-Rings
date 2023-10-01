@@ -1,8 +1,8 @@
 package lotr.common.block;
 
-import java.util.Random;
-
 import net.minecraft.item.Item;
+
+import java.util.Random;
 
 public class LOTRBlockObsidianGravel extends LOTRBlockGravel {
 	@Override

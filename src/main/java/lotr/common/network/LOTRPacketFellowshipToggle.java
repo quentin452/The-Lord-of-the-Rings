@@ -1,9 +1,13 @@
 package lotr.common.network;
 
-import cpw.mods.fml.common.network.simpleimpl.*;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
-import lotr.common.*;
-import lotr.common.fellowship.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRPlayerData;
+import lotr.common.fellowship.LOTRFellowship;
+import lotr.common.fellowship.LOTRFellowshipClient;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 public class LOTRPacketFellowshipToggle extends LOTRPacketFellowshipDo {
@@ -29,6 +33,10 @@ public class LOTRPacketFellowshipToggle extends LOTRPacketFellowshipDo {
 		data.writeByte(function.ordinal());
 	}
 
+	public enum ToggleFunction {
+		PVP, HIRED_FF, MAP_SHOW
+	}
+
 	public static class Handler implements IMessageHandler<LOTRPacketFellowshipToggle, IMessage> {
 		@Override
 		public IMessage onMessage(LOTRPacketFellowshipToggle packet, MessageContext context) {
@@ -49,9 +57,5 @@ public class LOTRPacketFellowshipToggle extends LOTRPacketFellowshipDo {
 			}
 			return null;
 		}
-	}
-
-	public enum ToggleFunction {
-		PVP, HIRED_FF, MAP_SHOW
 	}
 }

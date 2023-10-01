@@ -1,19 +1,24 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityDwarfAxeThrower;
+import lotr.common.entity.npc.LOTREntityDwarfCommander;
+import lotr.common.entity.npc.LOTREntityDwarfWarrior;
+import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.item.LOTRItemBanner;
 import lotr.common.tileentity.LOTRTileEntityAlloyForge;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenDwarvenTower extends LOTRWorldGenStructureBase2 {
 	public Block brickBlock = LOTRMod.brick;

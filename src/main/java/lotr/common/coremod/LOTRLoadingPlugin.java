@@ -1,9 +1,11 @@
 package lotr.common.coremod;
 
-import java.util.*;
-
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import io.gitlab.dwarfyassassin.lotrucp.core.UCPCoreMod;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 
 @IFMLLoadingPlugin.TransformerExclusions({"lotr.common.coremod", "io.gitlab.dwarfyassassin.lotrucp.core"})
 @IFMLLoadingPlugin.SortingIndex(1001)

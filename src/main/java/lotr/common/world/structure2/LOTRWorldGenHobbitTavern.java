@@ -1,18 +1,23 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
-import lotr.common.*;
-import lotr.common.entity.npc.*;
-import lotr.common.item.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
+import lotr.common.entity.npc.LOTREntityHobbit;
+import lotr.common.entity.npc.LOTREntityHobbitBartender;
+import lotr.common.entity.npc.LOTREntityHobbitShirriff;
+import lotr.common.entity.npc.LOTRNames;
+import lotr.common.item.LOTRItemBanner;
+import lotr.common.item.LOTRItemLeatherHat;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenHobbitTavern extends LOTRWorldGenHobbitStructure {
 	public String[] tavernName;

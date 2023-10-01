@@ -1,12 +1,13 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityDunlending;
 import lotr.common.item.LOTRItemBanner;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenDunlendingHouse extends LOTRWorldGenDunlandStructure {
 	public LOTRWorldGenDunlendingHouse(boolean flag) {

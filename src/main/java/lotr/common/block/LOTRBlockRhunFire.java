@@ -1,15 +1,19 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import lotr.common.*;
-import net.minecraft.block.*;
+import lotr.common.LOTRBannerProtection;
+import lotr.common.LOTRMod;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFire;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.*;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class LOTRBlockRhunFire extends BlockFire {
 	public LOTRBlockRhunFire() {

@@ -1,19 +1,20 @@
 package lotr.client.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelWeaponRack;
 import lotr.client.render.item.LOTRRenderBow;
 import lotr.common.tileentity.LOTRTileEntityWeaponRack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderWeaponRack extends TileEntitySpecialRenderer {
 	public static ResourceLocation rackTexture = new ResourceLocation("lotr:item/weaponRack.png");

@@ -1,7 +1,8 @@
 package lotr.common.world.biome;
 
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTRSpawnList;
 
 public class LOTRBiomeGenLamedonHills extends LOTRBiomeGenLamedon {
 	public LOTRBiomeGenLamedonHills(int i, boolean major) {

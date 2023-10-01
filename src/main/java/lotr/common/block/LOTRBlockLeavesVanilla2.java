@@ -1,8 +1,11 @@
 package lotr.common.block;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockNewLeaf;
-import net.minecraft.world.*;
+import net.minecraft.world.ColorizerFoliage;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 public class LOTRBlockLeavesVanilla2 extends LOTRBlockLeavesBase {
 	public LOTRBlockLeavesVanilla2() {

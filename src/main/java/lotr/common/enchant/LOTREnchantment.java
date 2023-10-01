@@ -1,13 +1,16 @@
 package lotr.common.enchant;
 
-import java.text.DecimalFormat;
-import java.util.*;
-
 import lotr.common.entity.npc.*;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.StatCollector;
+
+import java.text.DecimalFormat;
+import java.util.*;
 
 public abstract class LOTREnchantment {
 	public static Collection<LOTREnchantment> allEnchantments = new ArrayList<>();
@@ -89,6 +92,10 @@ public abstract class LOTREnchantment {
 		enchantsByName.put(enchantName, this);
 	}
 
+	public static LOTREnchantment getEnchantmentByName(String s) {
+		return enchantsByName.get(s);
+	}
+
 	public boolean applyToProjectile() {
 		return applyToProjectile;
 	}
@@ -156,6 +163,11 @@ public abstract class LOTREnchantment {
 		return enchantWeight;
 	}
 
+	public LOTREnchantment setEnchantWeight(int i) {
+		enchantWeight = i;
+		return this;
+	}
+
 	public String getNamedFormattedDescription(ItemStack itemstack) {
 		String s = StatCollector.translateToLocalFormatted("lotr.enchant.descFormat", getDisplayName(), getDescription(itemstack));
 		return isBeneficial() ? EnumChatFormatting.GRAY + s : EnumChatFormatting.DARK_GRAY + s;
@@ -163,6 +175,11 @@ public abstract class LOTREnchantment {
 
 	public float getValueModifier() {
 		return valueModifier;
+	}
+
+	public LOTREnchantment setValueModifier(float f) {
+		valueModifier = f;
+		return this;
 	}
 
 	public boolean hasTemplateItem() {
@@ -193,11 +210,6 @@ public abstract class LOTREnchantment {
 		return this;
 	}
 
-	public LOTREnchantment setEnchantWeight(int i) {
-		enchantWeight = i;
-		return this;
-	}
-
 	public LOTREnchantment setPersistsReforge() {
 		persistsReforge = true;
 		return this;
@@ -206,14 +218,5 @@ public abstract class LOTREnchantment {
 	public LOTREnchantment setSkilful() {
 		skilful = true;
 		return this;
-	}
-
-	public LOTREnchantment setValueModifier(float f) {
-		valueModifier = f;
-		return this;
-	}
-
-	public static LOTREnchantment getEnchantmentByName(String s) {
-		return enchantsByName.get(s);
 	}
 }

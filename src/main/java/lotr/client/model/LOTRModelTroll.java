@@ -1,12 +1,15 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.entity.item.LOTREntityStoneTroll;
-import lotr.common.entity.npc.*;
-import net.minecraft.client.model.*;
-import net.minecraft.entity.*;
+import lotr.common.entity.npc.LOTREntityMountainTroll;
+import lotr.common.entity.npc.LOTREntitySnowTroll;
+import lotr.common.entity.npc.LOTREntityTroll;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelTroll extends ModelBase {
 	public ModelRenderer head;

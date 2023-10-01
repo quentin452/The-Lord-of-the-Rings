@@ -1,14 +1,18 @@
 package lotr.common.world.spawning;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.*;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.item.LOTRItemConquestHorn;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.WeightedRandom;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public enum LOTRInvasions {
 	HOBBIT(LOTRFaction.HOBBIT), BREE(LOTRFaction.BREE), RANGER_NORTH(LOTRFaction.RANGER_NORTH), BLUE_MOUNTAINS(LOTRFaction.BLUE_MOUNTAINS), HIGH_ELF_LINDON(LOTRFaction.HIGH_ELF, "lindon"), HIGH_ELF_RIVENDELL(LOTRFaction.HIGH_ELF, "rivendell"), GUNDABAD(LOTRFaction.GUNDABAD), GUNDABAD_WARG(LOTRFaction.GUNDABAD, "warg"), ANGMAR(LOTRFaction.ANGMAR), ANGMAR_HILLMEN(LOTRFaction.ANGMAR, "hillmen"), ANGMAR_WARG(LOTRFaction.ANGMAR, "warg"), WOOD_ELF(LOTRFaction.WOOD_ELF), DOL_GULDUR(LOTRFaction.DOL_GULDUR), DALE(LOTRFaction.DALE), DWARF(LOTRFaction.DURINS_FOLK), GALADHRIM(LOTRFaction.LOTHLORIEN), DUNLAND(LOTRFaction.DUNLAND), URUK_HAI(LOTRFaction.ISENGARD), FANGORN(LOTRFaction.FANGORN), ROHAN(LOTRFaction.ROHAN), GONDOR(LOTRFaction.GONDOR), GONDOR_ITHILIEN(LOTRFaction.GONDOR, "ithilien"), GONDOR_DOL_AMROTH(LOTRFaction.GONDOR, "dolAmroth"), GONDOR_LOSSARNACH(LOTRFaction.GONDOR, "lossarnach"), GONDOR_PELARGIR(LOTRFaction.GONDOR, "pelargir"), GONDOR_PINNATH_GELIN(LOTRFaction.GONDOR, "pinnathGelin"), GONDOR_BLACKROOT(LOTRFaction.GONDOR, "blackroot"), GONDOR_LEBENNIN(LOTRFaction.GONDOR, "lebennin"), GONDOR_LAMEDON(LOTRFaction.GONDOR, "lamedon"), MORDOR(LOTRFaction.MORDOR), MORDOR_BLACK_URUK(LOTRFaction.MORDOR, "blackUruk"), MORDOR_NAN_UNGOL(LOTRFaction.MORDOR, "nanUngol"), MORDOR_WARG(LOTRFaction.MORDOR, "warg"), DORWINION(LOTRFaction.DORWINION), DORWINION_ELF(LOTRFaction.DORWINION, "elf"), RHUN(LOTRFaction.RHUDEL), NEAR_HARAD_HARNEDOR(LOTRFaction.NEAR_HARAD, "harnedor"), NEAR_HARAD_COAST(LOTRFaction.NEAR_HARAD, "coast"), NEAR_HARAD_UMBAR(LOTRFaction.NEAR_HARAD, "umbar"), NEAR_HARAD_CORSAIR(LOTRFaction.NEAR_HARAD, "corsair"), NEAR_HARAD_NOMAD(LOTRFaction.NEAR_HARAD, "nomad"), NEAR_HARAD_GULF(LOTRFaction.NEAR_HARAD, "gulf"), MOREDAIN(LOTRFaction.MORWAITH), TAUREDAIN(LOTRFaction.TAURETHRIM), HALF_TROLL(LOTRFaction.HALF_TROLL);
@@ -25,54 +29,6 @@ public enum LOTRInvasions {
 	LOTRInvasions(LOTRFaction f, String s) {
 		invasionFaction = f;
 		subfaction = s;
-	}
-
-	public String codeName() {
-		StringBuilder s = new StringBuilder().append(invasionFaction.codeName());
-		if (subfaction != null) {
-			s.append("_").append(subfaction);
-		}
-		return s.toString();
-	}
-
-	public List<String> codeNameAndAliases() {
-		List<String> aliases = new ArrayList<>();
-		if (subfaction != null) {
-			String subfactionAdd = "_" + subfaction;
-			aliases.add(invasionFaction.codeName() + subfactionAdd);
-			for (String al : invasionFaction.listAliases()) {
-				aliases.add(al + subfactionAdd);
-			}
-		} else {
-			aliases.add(invasionFaction.codeName());
-			aliases.addAll(invasionFaction.listAliases());
-		}
-		return aliases;
-	}
-
-	public String codeNameHorn() {
-		return "lotr.invasion." + codeName() + ".horn";
-	}
-
-	public ItemStack createConquestHorn() {
-		ItemStack horn = new ItemStack(LOTRMod.conquestHorn);
-		LOTRItemConquestHorn.setInvasionType(horn, this);
-		return horn;
-	}
-
-	public ItemStack getInvasionIcon() {
-		Item sword = invasionIcon;
-		if (sword == null) {
-			sword = Items.iron_sword;
-		}
-		return new ItemStack(sword);
-	}
-
-	public String invasionName() {
-		if (subfaction == null) {
-			return invasionFaction.factionName();
-		}
-		return StatCollector.translateToLocal("lotr.invasion." + codeName());
 	}
 
 	public static void createMobLists() {
@@ -310,6 +266,54 @@ public enum LOTRInvasions {
 			names[i] = values()[i].codeName();
 		}
 		return names;
+	}
+
+	public String codeName() {
+		StringBuilder s = new StringBuilder().append(invasionFaction.codeName());
+		if (subfaction != null) {
+			s.append("_").append(subfaction);
+		}
+		return s.toString();
+	}
+
+	public List<String> codeNameAndAliases() {
+		List<String> aliases = new ArrayList<>();
+		if (subfaction != null) {
+			String subfactionAdd = "_" + subfaction;
+			aliases.add(invasionFaction.codeName() + subfactionAdd);
+			for (String al : invasionFaction.listAliases()) {
+				aliases.add(al + subfactionAdd);
+			}
+		} else {
+			aliases.add(invasionFaction.codeName());
+			aliases.addAll(invasionFaction.listAliases());
+		}
+		return aliases;
+	}
+
+	public String codeNameHorn() {
+		return "lotr.invasion." + codeName() + ".horn";
+	}
+
+	public ItemStack createConquestHorn() {
+		ItemStack horn = new ItemStack(LOTRMod.conquestHorn);
+		LOTRItemConquestHorn.setInvasionType(horn, this);
+		return horn;
+	}
+
+	public ItemStack getInvasionIcon() {
+		Item sword = invasionIcon;
+		if (sword == null) {
+			sword = Items.iron_sword;
+		}
+		return new ItemStack(sword);
+	}
+
+	public String invasionName() {
+		if (subfaction == null) {
+			return invasionFaction.factionName();
+		}
+		return StatCollector.translateToLocal("lotr.invasion." + codeName());
 	}
 
 	public static class InvasionSpawnEntry extends WeightedRandom.Item {

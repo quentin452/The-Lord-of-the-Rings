@@ -1,15 +1,19 @@
 package lotr.common.command;
 
-import java.util.List;
-
 import com.mojang.authlib.GameProfile;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.*;
-import lotr.common.network.*;
-import net.minecraft.command.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRPlayerData;
+import lotr.common.network.LOTRPacketAlignmentSee;
+import lotr.common.network.LOTRPacketHandler;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.PlayerNotFoundException;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+
+import java.util.List;
 
 public class LOTRCommandAlignmentSee extends CommandBase {
 	@Override

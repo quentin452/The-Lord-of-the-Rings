@@ -1,7 +1,9 @@
 package lotr.common.block;
 
-import lotr.common.*;
-import net.minecraft.block.*;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 
 public class LOTRBlockFlower extends BlockBush {

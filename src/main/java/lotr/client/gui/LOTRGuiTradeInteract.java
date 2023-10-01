@@ -1,8 +1,10 @@
 package lotr.client.gui;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.entity.npc.*;
-import lotr.common.network.*;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTRTradeable;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketTraderInteract;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.StatCollector;
 

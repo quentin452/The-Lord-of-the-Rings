@@ -5,9 +5,12 @@ import lotr.common.entity.animal.LOTREntityCamel;
 import lotr.common.entity.npc.LOTREntityNomadMerchant;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.map.LOTRWaypoint;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure.LOTRWorldGenHaradObelisk;
-import lotr.common.world.structure2.*;
+import lotr.common.world.structure2.LOTRWorldGenHaradRuinedFort;
+import lotr.common.world.structure2.LOTRWorldGenMumakSkeleton;
+import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
 import lotr.common.world.village.LOTRVillageGenHaradNomad;
 import net.minecraft.world.biome.BiomeGenBase;
 

@@ -1,6 +1,7 @@
 package lotr.common.tileentity;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.block.LOTRBlockSignCarved;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;

@@ -1,17 +1,29 @@
 package lotr.common.world.biome;
 
-import java.util.*;
-
-import lotr.common.*;
-import lotr.common.entity.npc.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
+import lotr.common.entity.npc.LOTREntityBanditHarad;
+import lotr.common.entity.npc.LOTREntityNomadMerchant;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
-import lotr.common.world.feature.*;
-import lotr.common.world.spawning.*;
-import lotr.common.world.structure2.*;
+import lotr.common.world.feature.LOTRWorldGenBoulder;
+import lotr.common.world.feature.LOTRWorldGenSand;
+import lotr.common.world.feature.LOTRWorldGenYams;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRInvasions;
+import lotr.common.world.spawning.LOTRSpawnList;
+import lotr.common.world.structure2.LOTRWorldGenMoredainCamp;
+import lotr.common.world.structure2.LOTRWorldGenMoredainVillage;
+import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.WorldGenDoublePlant;
+import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRBiomeGenFarHaradSavannah extends LOTRBiomeGenFarHarad {
 	public static NoiseGeneratorPerlin populatedNoise = new NoiseGeneratorPerlin(new Random(100L), 1);
@@ -86,6 +98,12 @@ public class LOTRBiomeGenFarHaradSavannah extends LOTRBiomeGenFarHarad {
 		invasionSpawns.addInvasion(LOTRInvasions.TAUREDAIN, LOTREventSpawner.EventChance.RARE);
 	}
 
+	public static boolean isBiomePopulated(int i, int j, int k) {
+		double scale = 8.0E-4;
+		double d = populatedNoise.func_151601_a(i * scale, k * scale);
+		return d > 0.5;
+	}
+
 	@Override
 	public void addBiomeF3Info(List info, World world, LOTRBiomeVariant variant, int i, int j, int k) {
 		super.addBiomeF3Info(info, world, variant, i, j, k);
@@ -148,11 +166,5 @@ public class LOTRBiomeGenFarHaradSavannah extends LOTRBiomeGenFarHarad {
 	@Override
 	public int spawnCountMultiplier() {
 		return 3;
-	}
-
-	public static boolean isBiomePopulated(int i, int j, int k) {
-		double scale = 8.0E-4;
-		double d = populatedNoise.func_151601_a(i * scale, k * scale);
-		return d > 0.5;
 	}
 }

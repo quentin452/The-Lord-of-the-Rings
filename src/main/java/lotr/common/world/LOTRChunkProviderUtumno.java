@@ -1,18 +1,25 @@
 package lotr.common.world;
 
-import java.util.*;
-
 import lotr.common.world.biome.LOTRBiome;
-import lotr.common.world.biome.variant.*;
-import lotr.common.world.mapgen.*;
-import net.minecraft.block.*;
+import lotr.common.world.biome.variant.LOTRBiomeVariant;
+import lotr.common.world.biome.variant.LOTRBiomeVariantStorage;
+import lotr.common.world.mapgen.LOTRMapGenCaves;
+import lotr.common.world.mapgen.LOTRMapGenCavesUtumno;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
-import net.minecraft.world.*;
+import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.chunk.*;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRChunkProviderUtumno implements IChunkProvider {
 	public World worldObj;

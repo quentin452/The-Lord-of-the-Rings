@@ -3,7 +3,8 @@ package lotr.common.block;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.*;
+import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.common.IPlantable;
 
 public class LOTRItemPlantableBlock extends ItemBlock implements IPlantable {
 	public IPlantable plantableBlock;

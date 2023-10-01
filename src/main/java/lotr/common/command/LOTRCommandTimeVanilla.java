@@ -1,7 +1,8 @@
 package lotr.common.command;
 
 import lotr.common.world.LOTRWorldProvider;
-import net.minecraft.command.*;
+import net.minecraft.command.CommandTime;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 

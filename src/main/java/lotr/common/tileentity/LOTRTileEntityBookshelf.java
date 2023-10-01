@@ -1,23 +1,39 @@
 package lotr.common.tileentity;
 
-import java.util.List;
-
 import lotr.common.LOTRMod;
 import lotr.common.block.LOTRBlockBookshelfStorage;
 import lotr.common.inventory.LOTRContainerBookshelf;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemModifierTemplate;
+import lotr.common.item.LOTRItemRedBook;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+
+import java.util.List;
 
 public class LOTRTileEntityBookshelf extends TileEntity implements IInventory {
 	public ItemStack[] chestContents = new ItemStack[getSizeInventory()];
 	public int numPlayersUsing;
 	public int ticksSinceSync;
+
+	public static boolean isBookItem(ItemStack itemstack) {
+		if (itemstack != null) {
+			Item item = itemstack.getItem();
+			if (item instanceof ItemBook || item instanceof ItemWritableBook || item instanceof ItemEditableBook) {
+				return true;
+			}
+			if (item instanceof LOTRItemRedBook || item == LOTRMod.mithrilBook || item instanceof ItemEnchantedBook || item instanceof ItemMapBase) {
+				return true;
+			}
+			return item == Items.paper || item instanceof LOTRItemModifierTemplate;
+		}
+		return false;
+	}
 
 	@Override
 	public void closeInventory() {
@@ -160,19 +176,5 @@ public class LOTRTileEntityBookshelf extends TileEntity implements IInventory {
 			itemTags.appendTag(slotData);
 		}
 		nbt.setTag("Items", itemTags);
-	}
-
-	public static boolean isBookItem(ItemStack itemstack) {
-		if (itemstack != null) {
-			Item item = itemstack.getItem();
-			if (item instanceof ItemBook || item instanceof ItemWritableBook || item instanceof ItemEditableBook) {
-				return true;
-			}
-			if (item instanceof LOTRItemRedBook || item == LOTRMod.mithrilBook || item instanceof ItemEnchantedBook || item instanceof ItemMapBase) {
-				return true;
-			}
-			return item == Items.paper || item instanceof LOTRItemModifierTemplate;
-		}
-		return false;
 	}
 }

@@ -1,22 +1,33 @@
 package lotr.client.render.tileentity;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.common.FMLLog;
-import lotr.common.block.*;
+import lotr.common.block.LOTRBlockChest;
+import lotr.common.block.LOTRBlockSpawnerChest;
 import lotr.common.tileentity.LOTRTileEntityChest;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRRenderChest extends TileEntitySpecialRenderer {
 	public static Map<String, ResourceLocation> chestTextures = new HashMap<>();
 	public static ModelChest chestModel = new ModelChest();
 	public LOTRTileEntityChest itemEntity = new LOTRTileEntityChest();
+
+	public static ResourceLocation getChestTexture(String s) {
+		ResourceLocation r = chestTextures.get(s);
+		if (r == null) {
+			r = new ResourceLocation("lotr:item/chest/" + s + ".png");
+			chestTextures.put(s, r);
+		}
+		return r;
+	}
 
 	public void renderInvChest(Block block, int meta) {
 		Block c;
@@ -80,14 +91,5 @@ public class LOTRRenderChest extends TileEntitySpecialRenderer {
 		GL11.glDisable(32826);
 		GL11.glPopMatrix();
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
-	public static ResourceLocation getChestTexture(String s) {
-		ResourceLocation r = chestTextures.get(s);
-		if (r == null) {
-			r = new ResourceLocation("lotr:item/chest/" + s + ".png");
-			chestTextures.put(s, r);
-		}
-		return r;
 	}
 }

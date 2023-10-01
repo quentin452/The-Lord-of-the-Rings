@@ -1,16 +1,18 @@
 package lotr.common.block;
 
-import java.util.ArrayList;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
 
 public class LOTRBlockUtumnoBrickEntrance extends Block {
 	public LOTRBlockUtumnoBrickEntrance() {

@@ -153,6 +153,31 @@ public class LOTRGuiMap extends LOTRGuiMenuBase {
 		}
 	}
 
+	public static void addPlayerLocationInfo(GameProfile player, double x, double z) {
+		if (player.isComplete()) {
+			playerLocations.put(player.getId(), new PlayerLocationInfo(player, x, z));
+		}
+	}
+
+	public static void clearPlayerLocations() {
+		playerLocations.clear();
+	}
+
+	public static boolean isOSRS() {
+		return LOTRConfig.osrsMap;
+	}
+
+	public static int[] setFakeStaticProperties(int w, int h, int xmin, int xmax, int ymin, int ymax) {
+		int[] ret = {mapWidth, mapHeight, mapXMin, mapXMax, mapYMin, mapYMax};
+		mapWidth = w;
+		mapHeight = h;
+		mapXMin = xmin;
+		mapXMax = xmax;
+		mapYMin = ymin;
+		mapYMax = ymax;
+		return ret;
+	}
+
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button.enabled) {
@@ -2196,31 +2221,6 @@ public class LOTRGuiMap extends LOTRGuiMenuBase {
 
 	public void zoomOut() {
 		zoom(-1);
-	}
-
-	public static void addPlayerLocationInfo(GameProfile player, double x, double z) {
-		if (player.isComplete()) {
-			playerLocations.put(player.getId(), new PlayerLocationInfo(player, x, z));
-		}
-	}
-
-	public static void clearPlayerLocations() {
-		playerLocations.clear();
-	}
-
-	public static boolean isOSRS() {
-		return LOTRConfig.osrsMap;
-	}
-
-	public static int[] setFakeStaticProperties(int w, int h, int xmin, int xmax, int ymin, int ymax) {
-		int[] ret = {mapWidth, mapHeight, mapXMin, mapXMax, mapYMin, mapYMax};
-		mapWidth = w;
-		mapHeight = h;
-		mapXMin = xmin;
-		mapXMax = xmax;
-		mapYMin = ymin;
-		mapYMax = ymax;
-		return ret;
 	}
 
 	public static class PlayerLocationInfo {

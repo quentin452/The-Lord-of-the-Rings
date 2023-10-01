@@ -1,8 +1,5 @@
 package lotr.common.fac;
 
-import java.awt.Color;
-import java.util.*;
-
 import lotr.common.*;
 import lotr.common.entity.LOTRNPCSelectForInfluence;
 import lotr.common.item.LOTRItemBanner;
@@ -10,8 +7,14 @@ import lotr.common.world.LOTRWorldProvider;
 import lotr.common.world.map.LOTRWaypoint;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.awt.*;
+import java.util.List;
+import java.util.*;
 
 public enum LOTRFaction {
 	HOBBIT(5885518, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(830, 745, 100), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_MAN)), BREE(11373426, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(925, 735, 50), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_MAN)), RANGER_NORTH(3823170, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1070, 760, 150), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_MAN)), BLUE_MOUNTAINS(6132172, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(650, 600, 125), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_DWARF)), HIGH_ELF(13035007, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(570, 770, 200), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_ELF)), GUNDABAD(9858132, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1160, 670, 150), EnumSet.of(FactionType.TYPE_ORC)), ANGMAR(7836023, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1080, 600, 125), EnumSet.of(FactionType.TYPE_ORC, FactionType.TYPE_TROLL)), WOOD_ELF(3774030, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1400, 640, 75), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_ELF)), DOL_GULDUR(3488580, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1380, 870, 100), EnumSet.of(FactionType.TYPE_ORC)), DALE(13535071, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1530, 670, 100), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_MAN)), DURINS_FOLK(4940162, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1650, 650, 125), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_DWARF)), LOTHLORIEN(15716696, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1230, 900, 75), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_ELF)), DUNLAND(11048079, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1090, 1030, 125), EnumSet.of(FactionType.TYPE_MAN)), ISENGARD(3356723, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1110, 1070, 50), EnumSet.of(FactionType.TYPE_ORC)), FANGORN(4831058, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1200, 1000, 75), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_TREE)), ROHAN(3508007, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1230, 1090, 150), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_MAN)), GONDOR(16382457, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1170, 1300, 300), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_MAN)), MORDOR(3481375, LOTRDimension.DimensionRegion.WEST, new LOTRMapRegion(1620, 1290, 225), EnumSet.of(FactionType.TYPE_ORC)), DORWINION(7155816, LOTRDimension.DimensionRegion.EAST, new LOTRMapRegion(1750, 900, 100), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_MAN, FactionType.TYPE_ELF)), RHUDEL(12882471, LOTRDimension.DimensionRegion.EAST, new LOTRMapRegion(1890, 980, 200), EnumSet.of(FactionType.TYPE_MAN)), NEAR_HARAD(11868955, LOTRDimension.DimensionRegion.SOUTH, new LOTRMapRegion(1400, 1730, 375), EnumSet.of(FactionType.TYPE_MAN)), MORWAITH(14266458, LOTRDimension.DimensionRegion.SOUTH, new LOTRMapRegion(1400, 2360, 450), EnumSet.of(FactionType.TYPE_MAN)), TAURETHRIM(3040066, LOTRDimension.DimensionRegion.SOUTH, new LOTRMapRegion(1250, 2870, 400), EnumSet.of(FactionType.TYPE_FREE, FactionType.TYPE_MAN)), HALF_TROLL(10388339, LOTRDimension.DimensionRegion.SOUTH, new LOTRMapRegion(1900, 2500, 200), EnumSet.of(FactionType.TYPE_MAN, FactionType.TYPE_TROLL)), DARK_HUORN(0, null, null, true, true, -1, null, null), RUFFIAN(0, null, null, true, true, 0, null, null), UTUMNO(3343616, LOTRDimension.UTUMNO, -66666, EnumSet.of(FactionType.TYPE_ORC)), HOSTILE(true, -1), UNALIGNED(false, 0);
@@ -79,404 +82,6 @@ public enum LOTRFaction {
 
 	LOTRFaction(int color, LOTRDimension.DimensionRegion region, LOTRMapRegion mapInfo, Collection<FactionType> types) {
 		this(color, LOTRDimension.MIDDLE_EARTH, region, mapInfo, types);
-	}
-
-	public void addControlZone(LOTRControlZone zone) {
-		controlZones.add(zone);
-	}
-
-	public void addLegacyAlias(String s) {
-		legacyAliases.add(s);
-	}
-
-	public LOTRFactionRank addRank(float alignment, String name) {
-		return addRank(alignment, name, false);
-	}
-
-	public LOTRFactionRank addRank(float alignment, String name, boolean gendered) {
-		LOTRFactionRank rank = new LOTRFactionRank(this, alignment, name, gendered);
-		ranksSortedDescending.add(rank);
-		Collections.sort(ranksSortedDescending);
-		return rank;
-	}
-
-	public int[] calculateFullControlZoneWorldBorders() {
-		int xMin = 0;
-		int xMax = 0;
-		int zMin = 0;
-		int zMax = 0;
-		boolean first = true;
-		for (LOTRControlZone zone : controlZones) {
-			int cxMin = zone.xCoord - zone.radiusCoord;
-			int cxMax = zone.xCoord + zone.radiusCoord;
-			int czMin = zone.zCoord - zone.radiusCoord;
-			int czMax = zone.zCoord + zone.radiusCoord;
-			if (first) {
-				xMin = cxMin;
-				xMax = cxMax;
-				zMin = czMin;
-				zMax = czMax;
-				first = false;
-				continue;
-			}
-			xMin = Math.min(xMin, cxMin);
-			xMax = Math.max(xMax, cxMax);
-			zMin = Math.min(zMin, czMin);
-			zMax = Math.max(zMax, czMax);
-		}
-		return new int[]{xMin, xMax, zMin, zMax};
-	}
-
-	public void checkAlignmentAchievements(EntityPlayer entityplayer, float alignment) {
-		LOTRPlayerData playerData = LOTRLevelData.getData(entityplayer);
-		for (LOTRFactionRank rank : ranksSortedDescending) {
-			LOTRAchievementRank rankAch = rank.getRankAchievement();
-			if (rankAch == null || !rankAch.isPlayerRequiredRank(entityplayer)) {
-				continue;
-			}
-			playerData.addAchievement(rankAch);
-		}
-	}
-
-	public String codeName() {
-		return name();
-	}
-
-	public double distanceToNearestControlZoneInRange(World world, double d, double d1, double d2, int mapRange) {
-		double closestDist = -1.0;
-		if (isFactionDimension(world)) {
-			int coordRange = LOTRWaypoint.mapToWorldR(mapRange);
-			for (LOTRControlZone zone : controlZones) {
-				double dx = d - zone.xCoord;
-				double dz = d2 - zone.zCoord;
-				double dSq = dx * dx + dz * dz;
-				double dToEdge = Math.sqrt(dSq) - zone.radiusCoord;
-				if (dToEdge > coordRange || closestDist >= 0.0 && dToEdge >= closestDist) {
-					continue;
-				}
-				closestDist = dToEdge;
-			}
-		}
-		return closestDist;
-	}
-
-	public String factionEntityName() {
-		return StatCollector.translateToLocal("lotr.faction." + codeName() + ".entity");
-	}
-
-	public String factionName() {
-		if (LOTRMod.isAprilFools()) {
-			String[] names = {"Britain Stronger in Europe", "Vote Leave"};
-			int i = ordinal();
-			i = (int) (i + (i ^ 0xF385L) + 28703L * (i * i ^ 0x30C087L));
-			factionRand.setSeed(i);
-			List<String> list = Arrays.asList(names);
-			Collections.shuffle(list, factionRand);
-			return list.get(0);
-		}
-		return StatCollector.translateToLocal(untranslatedFactionName());
-	}
-
-	public String factionSubtitle() {
-		return StatCollector.translateToLocal("lotr.faction." + codeName() + ".subtitle");
-	}
-
-	public LOTRAchievement.Category getAchieveCategory() {
-		return achieveCategory;
-	}
-
-	public List<LOTRFaction> getBonusesForKilling() {
-		List<LOTRFaction> list = new ArrayList<>();
-		for (LOTRFaction f : values()) {
-			if (f == this || !isBadRelation(f)) {
-				continue;
-			}
-			list.add(f);
-		}
-		return list;
-	}
-
-	public List<LOTRFaction> getConquestBoostRelations() {
-		List<LOTRFaction> list = new ArrayList<>();
-		for (LOTRFaction f : values()) {
-			if (f == this || !f.isPlayableAlignmentFaction() || LOTRFactionRelations.getRelations(this, f) != LOTRFactionRelations.Relation.ALLY) {
-				continue;
-			}
-			list.add(f);
-		}
-		return list;
-	}
-
-	public float getControlZoneAlignmentMultiplier(EntityPlayer entityplayer) {
-		int reducedRange;
-		double dist;
-		if (inControlZone(entityplayer)) {
-			return 1.0f;
-		}
-		if (isFactionDimension(entityplayer.worldObj) && (dist = distanceToNearestControlZoneInRange(entityplayer.worldObj, entityplayer.posX, entityplayer.boundingBox.minY, entityplayer.posZ, reducedRange = getControlZoneReducedRange())) >= 0.0) {
-			double mapDist = LOTRWaypoint.worldToMapR(dist);
-			float frac = (float) mapDist / reducedRange;
-			float mplier = 1.0f - frac;
-			return MathHelper.clamp_float(mplier, 0.0f, 1.0f);
-		}
-		return 0.0f;
-	}
-
-	public int getControlZoneReducedRange() {
-		return isolationist ? 0 : 50;
-	}
-
-	public List<LOTRControlZone> getControlZones() {
-		return controlZones;
-	}
-
-	public int getFactionColor() {
-		return factionColor.getRGB();
-	}
-
-	public float[] getFactionRGB() {
-		return getFactionRGB_MinBrightness(0.0f);
-	}
-
-	public float[] getFactionRGB_MinBrightness(float minBrightness) {
-		float[] rgb = facRGBCache.get(minBrightness);
-		if (rgb == null) {
-			float[] hsb = Color.RGBtoHSB(factionColor.getRed(), factionColor.getGreen(), factionColor.getBlue(), null);
-			hsb[2] = Math.max(hsb[2], minBrightness);
-			int alteredColor = Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
-			rgb = new Color(alteredColor).getColorComponents(null);
-			facRGBCache.put(minBrightness, rgb);
-		}
-		return rgb;
-	}
-
-	public LOTRFactionRank getFirstRank() {
-		if (ranksSortedDescending.isEmpty()) {
-			return LOTRFactionRank.RANK_NEUTRAL;
-		}
-		return ranksSortedDescending.get(ranksSortedDescending.size() - 1);
-	}
-
-	public List<LOTRFaction> getOthersOfRelation(LOTRFactionRelations.Relation rel) {
-		List<LOTRFaction> list = new ArrayList<>();
-		for (LOTRFaction f : values()) {
-			if (f == this || !f.isPlayableAlignmentFaction() || LOTRFactionRelations.getRelations(this, f) != rel) {
-				continue;
-			}
-			list.add(f);
-		}
-		return list;
-	}
-
-	public List<LOTRFaction> getPenaltiesForKilling() {
-		List<LOTRFaction> list = new ArrayList<>();
-		list.add(this);
-		for (LOTRFaction f : values()) {
-			if (f == this || !isGoodRelation(f)) {
-				continue;
-			}
-			list.add(f);
-		}
-		return list;
-	}
-
-	public float getPledgeAlignment() {
-		if (pledgeRank != null) {
-			return pledgeRank.alignment;
-		}
-		return 0.0f;
-	}
-
-	public LOTRFactionRank getPledgeRank() {
-		return pledgeRank;
-	}
-
-	public LOTRFactionRank getRank(EntityPlayer entityplayer) {
-		return getRank(LOTRLevelData.getData(entityplayer));
-	}
-
-	public LOTRFactionRank getRank(float alignment) {
-		for (LOTRFactionRank rank : ranksSortedDescending) {
-			if (rank.isDummyRank() || alignment < rank.alignment) {
-				continue;
-			}
-			return rank;
-		}
-		if (alignment >= 0.0f) {
-			return LOTRFactionRank.RANK_NEUTRAL;
-		}
-		return LOTRFactionRank.RANK_ENEMY;
-	}
-
-	public LOTRFactionRank getRank(LOTRPlayerData pd) {
-		float alignment = pd.getAlignment(this);
-		return getRank(alignment);
-	}
-
-	public LOTRFactionRank getRankAbove(LOTRFactionRank curRank) {
-		return getRankNAbove(curRank, 1);
-	}
-
-	public LOTRFactionRank getRankBelow(LOTRFactionRank curRank) {
-		return getRankNAbove(curRank, -1);
-	}
-
-	public LOTRFactionRank getRankNAbove(LOTRFactionRank curRank, int n) {
-		if (ranksSortedDescending.isEmpty() || curRank == null) {
-			return LOTRFactionRank.RANK_NEUTRAL;
-		}
-		int index = -1;
-		if (curRank.isDummyRank()) {
-			index = ranksSortedDescending.size();
-		} else if (ranksSortedDescending.contains(curRank)) {
-			index = ranksSortedDescending.indexOf(curRank);
-		}
-		if (index >= 0) {
-			index -= n;
-			if (index < 0) {
-				return ranksSortedDescending.get(0);
-			}
-			if (index > ranksSortedDescending.size() - 1) {
-				return LOTRFactionRank.RANK_NEUTRAL;
-			}
-			return ranksSortedDescending.get(index);
-		}
-		return LOTRFactionRank.RANK_NEUTRAL;
-	}
-
-	public boolean inControlZone(EntityPlayer entityplayer) {
-		return inControlZone(entityplayer.worldObj, entityplayer.posX, entityplayer.boundingBox.minY, entityplayer.posZ);
-	}
-
-	public boolean inControlZone(World world, double d, double d1, double d2) {
-		if (inDefinedControlZone(world, d, d1, d2)) {
-			return true;
-		}
-		double nearbyRange = 24.0;
-		AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(d, d1, d2, d, d1, d2).expand(nearbyRange, nearbyRange, nearbyRange);
-		List nearbyNPCs = world.selectEntitiesWithinAABB(EntityLivingBase.class, aabb, new LOTRNPCSelectForInfluence(this));
-		return !nearbyNPCs.isEmpty();
-	}
-
-	public boolean inDefinedControlZone(EntityPlayer entityplayer) {
-		return inDefinedControlZone(entityplayer, 0);
-	}
-
-	public boolean inDefinedControlZone(EntityPlayer entityplayer, int extraMapRange) {
-		return inDefinedControlZone(entityplayer.worldObj, entityplayer.posX, entityplayer.boundingBox.minY, entityplayer.posZ, extraMapRange);
-	}
-
-	public boolean inDefinedControlZone(World world, double d, double d1, double d2) {
-		return inDefinedControlZone(world, d, d1, d2, 0);
-	}
-
-	public boolean inDefinedControlZone(World world, double d, double d1, double d2, int extraMapRange) {
-		if (isFactionDimension(world)) {
-			if (!controlZonesEnabled(world)) {
-				return true;
-			}
-			for (LOTRControlZone zone : controlZones) {
-				if (!zone.inZone(d, d1, d2, extraMapRange)) {
-					continue;
-				}
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean isAlly(LOTRFaction other) {
-		LOTRFactionRelations.Relation rel = LOTRFactionRelations.getRelations(this, other);
-		return rel == LOTRFactionRelations.Relation.ALLY;
-	}
-
-	public boolean isBadRelation(LOTRFaction other) {
-		LOTRFactionRelations.Relation rel = LOTRFactionRelations.getRelations(this, other);
-		return rel == LOTRFactionRelations.Relation.ENEMY || rel == LOTRFactionRelations.Relation.MORTAL_ENEMY;
-	}
-
-	public boolean isFactionDimension(World world) {
-		return world.provider instanceof LOTRWorldProvider && ((LOTRWorldProvider) world.provider).getLOTRDimension() == factionDimension;
-	}
-
-	public boolean isGoodRelation(LOTRFaction other) {
-		LOTRFactionRelations.Relation rel = LOTRFactionRelations.getRelations(this, other);
-		return rel == LOTRFactionRelations.Relation.ALLY || rel == LOTRFactionRelations.Relation.FRIEND;
-	}
-
-	public boolean isMortalEnemy(LOTRFaction other) {
-		LOTRFactionRelations.Relation rel = LOTRFactionRelations.getRelations(this, other);
-		return rel == LOTRFactionRelations.Relation.MORTAL_ENEMY;
-	}
-
-	public boolean isNeutral(LOTRFaction other) {
-		return LOTRFactionRelations.getRelations(this, other) == LOTRFactionRelations.Relation.NEUTRAL;
-	}
-
-	public boolean isOfType(FactionType type) {
-		return factionTypes.contains(type);
-	}
-
-	public boolean isPlayableAlignmentFaction() {
-		return allowPlayer && !hasFixedAlignment;
-	}
-
-	public List<String> listAliases() {
-		return new ArrayList<>(legacyAliases);
-	}
-
-	public boolean matchesNameOrAlias(String name) {
-		if (codeName().equals(name)) {
-			return true;
-		}
-		for (String alias : legacyAliases) {
-			if (!alias.equals(name)) {
-				continue;
-			}
-			return true;
-		}
-		return false;
-	}
-
-	public void setAchieveCategory(LOTRAchievement.Category cat) {
-		achieveCategory = cat;
-	}
-
-	public void setFixedAlignment(int alignment) {
-		hasFixedAlignment = true;
-		fixedAlignment = alignment;
-	}
-
-	public void setPledgeRank(LOTRFactionRank rank) {
-		if (rank.fac != this) {
-			throw new IllegalArgumentException("Incompatible faction!");
-		}
-		if (pledgeRank != null) {
-			throw new IllegalArgumentException("Faction already has a pledge rank!");
-		}
-		pledgeRank = rank;
-	}
-
-	public boolean sharesControlZoneWith(LOTRFaction other) {
-		return sharesControlZoneWith(other, 0);
-	}
-
-	public boolean sharesControlZoneWith(LOTRFaction other, int extraMapRadius) {
-		if (other.factionDimension == factionDimension) {
-			for (LOTRControlZone zone : controlZones) {
-				for (LOTRControlZone otherZone : other.controlZones) {
-					if (!zone.intersectsWith(otherZone, extraMapRadius)) {
-						continue;
-					}
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public String untranslatedFactionName() {
-		return "lotr.faction." + codeName() + ".name";
 	}
 
 	public static boolean controlZonesEnabled(World world) {
@@ -1054,6 +659,404 @@ public enum LOTRFaction {
 		RHUDEL.addLegacyAlias("RHUN");
 		MORWAITH.addLegacyAlias("MOREDAIN");
 		TAURETHRIM.addLegacyAlias("TAUREDAIN");
+	}
+
+	public void addControlZone(LOTRControlZone zone) {
+		controlZones.add(zone);
+	}
+
+	public void addLegacyAlias(String s) {
+		legacyAliases.add(s);
+	}
+
+	public LOTRFactionRank addRank(float alignment, String name) {
+		return addRank(alignment, name, false);
+	}
+
+	public LOTRFactionRank addRank(float alignment, String name, boolean gendered) {
+		LOTRFactionRank rank = new LOTRFactionRank(this, alignment, name, gendered);
+		ranksSortedDescending.add(rank);
+		Collections.sort(ranksSortedDescending);
+		return rank;
+	}
+
+	public int[] calculateFullControlZoneWorldBorders() {
+		int xMin = 0;
+		int xMax = 0;
+		int zMin = 0;
+		int zMax = 0;
+		boolean first = true;
+		for (LOTRControlZone zone : controlZones) {
+			int cxMin = zone.xCoord - zone.radiusCoord;
+			int cxMax = zone.xCoord + zone.radiusCoord;
+			int czMin = zone.zCoord - zone.radiusCoord;
+			int czMax = zone.zCoord + zone.radiusCoord;
+			if (first) {
+				xMin = cxMin;
+				xMax = cxMax;
+				zMin = czMin;
+				zMax = czMax;
+				first = false;
+				continue;
+			}
+			xMin = Math.min(xMin, cxMin);
+			xMax = Math.max(xMax, cxMax);
+			zMin = Math.min(zMin, czMin);
+			zMax = Math.max(zMax, czMax);
+		}
+		return new int[]{xMin, xMax, zMin, zMax};
+	}
+
+	public void checkAlignmentAchievements(EntityPlayer entityplayer, float alignment) {
+		LOTRPlayerData playerData = LOTRLevelData.getData(entityplayer);
+		for (LOTRFactionRank rank : ranksSortedDescending) {
+			LOTRAchievementRank rankAch = rank.getRankAchievement();
+			if (rankAch == null || !rankAch.isPlayerRequiredRank(entityplayer)) {
+				continue;
+			}
+			playerData.addAchievement(rankAch);
+		}
+	}
+
+	public String codeName() {
+		return name();
+	}
+
+	public double distanceToNearestControlZoneInRange(World world, double d, double d1, double d2, int mapRange) {
+		double closestDist = -1.0;
+		if (isFactionDimension(world)) {
+			int coordRange = LOTRWaypoint.mapToWorldR(mapRange);
+			for (LOTRControlZone zone : controlZones) {
+				double dx = d - zone.xCoord;
+				double dz = d2 - zone.zCoord;
+				double dSq = dx * dx + dz * dz;
+				double dToEdge = Math.sqrt(dSq) - zone.radiusCoord;
+				if (dToEdge > coordRange || closestDist >= 0.0 && dToEdge >= closestDist) {
+					continue;
+				}
+				closestDist = dToEdge;
+			}
+		}
+		return closestDist;
+	}
+
+	public String factionEntityName() {
+		return StatCollector.translateToLocal("lotr.faction." + codeName() + ".entity");
+	}
+
+	public String factionName() {
+		if (LOTRMod.isAprilFools()) {
+			String[] names = {"Britain Stronger in Europe", "Vote Leave"};
+			int i = ordinal();
+			i = (int) (i + (i ^ 0xF385L) + 28703L * (i * i ^ 0x30C087L));
+			factionRand.setSeed(i);
+			List<String> list = Arrays.asList(names);
+			Collections.shuffle(list, factionRand);
+			return list.get(0);
+		}
+		return StatCollector.translateToLocal(untranslatedFactionName());
+	}
+
+	public String factionSubtitle() {
+		return StatCollector.translateToLocal("lotr.faction." + codeName() + ".subtitle");
+	}
+
+	public LOTRAchievement.Category getAchieveCategory() {
+		return achieveCategory;
+	}
+
+	public void setAchieveCategory(LOTRAchievement.Category cat) {
+		achieveCategory = cat;
+	}
+
+	public List<LOTRFaction> getBonusesForKilling() {
+		List<LOTRFaction> list = new ArrayList<>();
+		for (LOTRFaction f : values()) {
+			if (f == this || !isBadRelation(f)) {
+				continue;
+			}
+			list.add(f);
+		}
+		return list;
+	}
+
+	public List<LOTRFaction> getConquestBoostRelations() {
+		List<LOTRFaction> list = new ArrayList<>();
+		for (LOTRFaction f : values()) {
+			if (f == this || !f.isPlayableAlignmentFaction() || LOTRFactionRelations.getRelations(this, f) != LOTRFactionRelations.Relation.ALLY) {
+				continue;
+			}
+			list.add(f);
+		}
+		return list;
+	}
+
+	public float getControlZoneAlignmentMultiplier(EntityPlayer entityplayer) {
+		int reducedRange;
+		double dist;
+		if (inControlZone(entityplayer)) {
+			return 1.0f;
+		}
+		if (isFactionDimension(entityplayer.worldObj) && (dist = distanceToNearestControlZoneInRange(entityplayer.worldObj, entityplayer.posX, entityplayer.boundingBox.minY, entityplayer.posZ, reducedRange = getControlZoneReducedRange())) >= 0.0) {
+			double mapDist = LOTRWaypoint.worldToMapR(dist);
+			float frac = (float) mapDist / reducedRange;
+			float mplier = 1.0f - frac;
+			return MathHelper.clamp_float(mplier, 0.0f, 1.0f);
+		}
+		return 0.0f;
+	}
+
+	public int getControlZoneReducedRange() {
+		return isolationist ? 0 : 50;
+	}
+
+	public List<LOTRControlZone> getControlZones() {
+		return controlZones;
+	}
+
+	public int getFactionColor() {
+		return factionColor.getRGB();
+	}
+
+	public float[] getFactionRGB() {
+		return getFactionRGB_MinBrightness(0.0f);
+	}
+
+	public float[] getFactionRGB_MinBrightness(float minBrightness) {
+		float[] rgb = facRGBCache.get(minBrightness);
+		if (rgb == null) {
+			float[] hsb = Color.RGBtoHSB(factionColor.getRed(), factionColor.getGreen(), factionColor.getBlue(), null);
+			hsb[2] = Math.max(hsb[2], minBrightness);
+			int alteredColor = Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+			rgb = new Color(alteredColor).getColorComponents(null);
+			facRGBCache.put(minBrightness, rgb);
+		}
+		return rgb;
+	}
+
+	public LOTRFactionRank getFirstRank() {
+		if (ranksSortedDescending.isEmpty()) {
+			return LOTRFactionRank.RANK_NEUTRAL;
+		}
+		return ranksSortedDescending.get(ranksSortedDescending.size() - 1);
+	}
+
+	public List<LOTRFaction> getOthersOfRelation(LOTRFactionRelations.Relation rel) {
+		List<LOTRFaction> list = new ArrayList<>();
+		for (LOTRFaction f : values()) {
+			if (f == this || !f.isPlayableAlignmentFaction() || LOTRFactionRelations.getRelations(this, f) != rel) {
+				continue;
+			}
+			list.add(f);
+		}
+		return list;
+	}
+
+	public List<LOTRFaction> getPenaltiesForKilling() {
+		List<LOTRFaction> list = new ArrayList<>();
+		list.add(this);
+		for (LOTRFaction f : values()) {
+			if (f == this || !isGoodRelation(f)) {
+				continue;
+			}
+			list.add(f);
+		}
+		return list;
+	}
+
+	public float getPledgeAlignment() {
+		if (pledgeRank != null) {
+			return pledgeRank.alignment;
+		}
+		return 0.0f;
+	}
+
+	public LOTRFactionRank getPledgeRank() {
+		return pledgeRank;
+	}
+
+	public void setPledgeRank(LOTRFactionRank rank) {
+		if (rank.fac != this) {
+			throw new IllegalArgumentException("Incompatible faction!");
+		}
+		if (pledgeRank != null) {
+			throw new IllegalArgumentException("Faction already has a pledge rank!");
+		}
+		pledgeRank = rank;
+	}
+
+	public LOTRFactionRank getRank(EntityPlayer entityplayer) {
+		return getRank(LOTRLevelData.getData(entityplayer));
+	}
+
+	public LOTRFactionRank getRank(float alignment) {
+		for (LOTRFactionRank rank : ranksSortedDescending) {
+			if (rank.isDummyRank() || alignment < rank.alignment) {
+				continue;
+			}
+			return rank;
+		}
+		if (alignment >= 0.0f) {
+			return LOTRFactionRank.RANK_NEUTRAL;
+		}
+		return LOTRFactionRank.RANK_ENEMY;
+	}
+
+	public LOTRFactionRank getRank(LOTRPlayerData pd) {
+		float alignment = pd.getAlignment(this);
+		return getRank(alignment);
+	}
+
+	public LOTRFactionRank getRankAbove(LOTRFactionRank curRank) {
+		return getRankNAbove(curRank, 1);
+	}
+
+	public LOTRFactionRank getRankBelow(LOTRFactionRank curRank) {
+		return getRankNAbove(curRank, -1);
+	}
+
+	public LOTRFactionRank getRankNAbove(LOTRFactionRank curRank, int n) {
+		if (ranksSortedDescending.isEmpty() || curRank == null) {
+			return LOTRFactionRank.RANK_NEUTRAL;
+		}
+		int index = -1;
+		if (curRank.isDummyRank()) {
+			index = ranksSortedDescending.size();
+		} else if (ranksSortedDescending.contains(curRank)) {
+			index = ranksSortedDescending.indexOf(curRank);
+		}
+		if (index >= 0) {
+			index -= n;
+			if (index < 0) {
+				return ranksSortedDescending.get(0);
+			}
+			if (index > ranksSortedDescending.size() - 1) {
+				return LOTRFactionRank.RANK_NEUTRAL;
+			}
+			return ranksSortedDescending.get(index);
+		}
+		return LOTRFactionRank.RANK_NEUTRAL;
+	}
+
+	public boolean inControlZone(EntityPlayer entityplayer) {
+		return inControlZone(entityplayer.worldObj, entityplayer.posX, entityplayer.boundingBox.minY, entityplayer.posZ);
+	}
+
+	public boolean inControlZone(World world, double d, double d1, double d2) {
+		if (inDefinedControlZone(world, d, d1, d2)) {
+			return true;
+		}
+		double nearbyRange = 24.0;
+		AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(d, d1, d2, d, d1, d2).expand(nearbyRange, nearbyRange, nearbyRange);
+		List nearbyNPCs = world.selectEntitiesWithinAABB(EntityLivingBase.class, aabb, new LOTRNPCSelectForInfluence(this));
+		return !nearbyNPCs.isEmpty();
+	}
+
+	public boolean inDefinedControlZone(EntityPlayer entityplayer) {
+		return inDefinedControlZone(entityplayer, 0);
+	}
+
+	public boolean inDefinedControlZone(EntityPlayer entityplayer, int extraMapRange) {
+		return inDefinedControlZone(entityplayer.worldObj, entityplayer.posX, entityplayer.boundingBox.minY, entityplayer.posZ, extraMapRange);
+	}
+
+	public boolean inDefinedControlZone(World world, double d, double d1, double d2) {
+		return inDefinedControlZone(world, d, d1, d2, 0);
+	}
+
+	public boolean inDefinedControlZone(World world, double d, double d1, double d2, int extraMapRange) {
+		if (isFactionDimension(world)) {
+			if (!controlZonesEnabled(world)) {
+				return true;
+			}
+			for (LOTRControlZone zone : controlZones) {
+				if (!zone.inZone(d, d1, d2, extraMapRange)) {
+					continue;
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isAlly(LOTRFaction other) {
+		LOTRFactionRelations.Relation rel = LOTRFactionRelations.getRelations(this, other);
+		return rel == LOTRFactionRelations.Relation.ALLY;
+	}
+
+	public boolean isBadRelation(LOTRFaction other) {
+		LOTRFactionRelations.Relation rel = LOTRFactionRelations.getRelations(this, other);
+		return rel == LOTRFactionRelations.Relation.ENEMY || rel == LOTRFactionRelations.Relation.MORTAL_ENEMY;
+	}
+
+	public boolean isFactionDimension(World world) {
+		return world.provider instanceof LOTRWorldProvider && ((LOTRWorldProvider) world.provider).getLOTRDimension() == factionDimension;
+	}
+
+	public boolean isGoodRelation(LOTRFaction other) {
+		LOTRFactionRelations.Relation rel = LOTRFactionRelations.getRelations(this, other);
+		return rel == LOTRFactionRelations.Relation.ALLY || rel == LOTRFactionRelations.Relation.FRIEND;
+	}
+
+	public boolean isMortalEnemy(LOTRFaction other) {
+		LOTRFactionRelations.Relation rel = LOTRFactionRelations.getRelations(this, other);
+		return rel == LOTRFactionRelations.Relation.MORTAL_ENEMY;
+	}
+
+	public boolean isNeutral(LOTRFaction other) {
+		return LOTRFactionRelations.getRelations(this, other) == LOTRFactionRelations.Relation.NEUTRAL;
+	}
+
+	public boolean isOfType(FactionType type) {
+		return factionTypes.contains(type);
+	}
+
+	public boolean isPlayableAlignmentFaction() {
+		return allowPlayer && !hasFixedAlignment;
+	}
+
+	public List<String> listAliases() {
+		return new ArrayList<>(legacyAliases);
+	}
+
+	public boolean matchesNameOrAlias(String name) {
+		if (codeName().equals(name)) {
+			return true;
+		}
+		for (String alias : legacyAliases) {
+			if (!alias.equals(name)) {
+				continue;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public void setFixedAlignment(int alignment) {
+		hasFixedAlignment = true;
+		fixedAlignment = alignment;
+	}
+
+	public boolean sharesControlZoneWith(LOTRFaction other) {
+		return sharesControlZoneWith(other, 0);
+	}
+
+	public boolean sharesControlZoneWith(LOTRFaction other, int extraMapRadius) {
+		if (other.factionDimension == factionDimension) {
+			for (LOTRControlZone zone : controlZones) {
+				for (LOTRControlZone otherZone : other.controlZones) {
+					if (!zone.intersectsWith(otherZone, extraMapRadius)) {
+						continue;
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public String untranslatedFactionName() {
+		return "lotr.faction." + codeName() + ".name";
 	}
 
 	public enum FactionType {

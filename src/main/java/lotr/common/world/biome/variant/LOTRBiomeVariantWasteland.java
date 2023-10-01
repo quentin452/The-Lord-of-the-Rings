@@ -1,11 +1,11 @@
 package lotr.common.world.biome.variant;
 
-import java.util.Random;
-
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRBiomeVariantWasteland extends LOTRBiomeVariant {
 	public Block stoneBlock;

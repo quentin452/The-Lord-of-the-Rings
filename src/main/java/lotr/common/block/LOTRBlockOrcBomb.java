@@ -1,18 +1,23 @@
 package lotr.common.block;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import lotr.common.entity.item.LOTREntityOrcBomb;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.*;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRBlockOrcBomb extends Block {
 	@SideOnly(Side.CLIENT)
@@ -24,6 +29,14 @@ public class LOTRBlockOrcBomb extends Block {
 		setHardness(3.0f);
 		setResistance(0.0f);
 		setStepSound(Block.soundTypeMetal);
+	}
+
+	public static int getBombStrengthLevel(int meta) {
+		return meta & 7;
+	}
+
+	public static boolean isFireBomb(int meta) {
+		return (meta & 8) != 0;
 	}
 
 	@Override
@@ -162,13 +175,5 @@ public class LOTRBlockOrcBomb extends Block {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
-	}
-
-	public static int getBombStrengthLevel(int meta) {
-		return meta & 7;
-	}
-
-	public static boolean isFireBomb(int meta) {
-		return (meta & 8) != 0;
 	}
 }

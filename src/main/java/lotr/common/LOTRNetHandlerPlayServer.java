@@ -1,18 +1,23 @@
 package lotr.common;
 
-import com.google.common.primitives.*;
-
+import com.google.common.primitives.Doubles;
+import com.google.common.primitives.Floats;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.entity.LOTRMountFunctions;
 import lotr.common.item.LOTRWeaponStats;
-import lotr.common.network.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.item.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketMountControl;
+import lotr.common.network.LOTRPacketMountControlServerEnforce;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.*;
+import net.minecraft.network.NetHandlerPlayServer;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.client.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;

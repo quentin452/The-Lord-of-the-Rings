@@ -1,13 +1,15 @@
 package lotr.client.model;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.render.entity.LOTRHuornTextures;
 import lotr.common.entity.npc.LOTREntityHuornBase;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRModelHuorn extends ModelBase {
 	public List woodBlocks = new ArrayList();

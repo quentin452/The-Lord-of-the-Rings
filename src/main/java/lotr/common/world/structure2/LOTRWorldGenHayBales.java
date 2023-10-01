@@ -1,12 +1,12 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenHayBales extends LOTRWorldGenStructureBase2 {
 	public LOTRWorldGenHayBales(boolean flag) {

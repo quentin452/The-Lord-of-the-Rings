@@ -1,14 +1,17 @@
 package lotr.common.world.village;
 
-import java.util.Random;
-
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityHarnedhrim;
+import lotr.common.entity.npc.LOTREntityHarnedorArcher;
+import lotr.common.entity.npc.LOTREntityHarnedorWarrior;
+import lotr.common.entity.npc.LOTRNames;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.map.LOTRRoadType;
 import lotr.common.world.structure2.*;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRVillageGenHarnedor extends LOTRVillageGen {
 	public boolean isRuinedVillage;
@@ -29,6 +32,11 @@ public class LOTRVillageGenHarnedor extends LOTRVillageGen {
 	public LOTRVillageGenHarnedor setRuined() {
 		isRuinedVillage = true;
 		return this;
+	}
+
+	public enum VillageType {
+		VILLAGE, FORTRESS
+
 	}
 
 	public static class Instance extends LOTRVillageGen.AbstractInstance<LOTRVillageGenHarnedor> {
@@ -270,11 +278,6 @@ public class LOTRVillageGenHarnedor extends LOTRVillageGen {
 			numOuterHouses = MathHelper.getRandomIntegerInRange(random, 5, 8);
 			palisade = random.nextInt(3) != 0;
 		}
-
-	}
-
-	public enum VillageType {
-		VILLAGE, FORTRESS
 
 	}
 

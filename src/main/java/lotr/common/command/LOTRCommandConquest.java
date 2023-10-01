@@ -1,14 +1,17 @@
 package lotr.common.command;
 
-import java.util.List;
-
 import lotr.common.LOTRLevelData;
 import lotr.common.fac.LOTRFaction;
-import lotr.common.world.map.*;
-import net.minecraft.command.*;
+import lotr.common.world.map.LOTRConquestGrid;
+import lotr.common.world.map.LOTRConquestZone;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRCommandConquest extends CommandBase {
 	@Override

@@ -1,19 +1,23 @@
 package lotr.common.block;
 
-import java.util.*;
-
 import lotr.common.LOTRCreativeTabs;
 import lotr.common.item.LOTRItemAnimalJar;
 import lotr.common.tileentity.LOTRTileEntityAnimalJar;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.*;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class LOTRBlockAnimalJar extends BlockContainer {
 	protected LOTRBlockAnimalJar(Material material) {

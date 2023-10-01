@@ -2,7 +2,8 @@ package lotr.common.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class LOTRItemMattock extends LOTRItemPickaxe {
 	public float efficiencyOnProperMaterial;

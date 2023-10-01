@@ -1,17 +1,22 @@
 package lotr.common.world.biome;
 
-import java.util.*;
-
-import lotr.common.*;
+import lotr.common.LOTRDimension;
+import lotr.common.LOTRMod;
 import lotr.common.world.LOTRUtumnoLevel;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
-import lotr.common.world.feature.*;
-import lotr.common.world.spawning.*;
+import lotr.common.world.feature.LOTRWorldGenSkullPile;
+import lotr.common.world.feature.LOTRWorldGenStalactites;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTRSpawnList;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Random;
 
 public class LOTRBiomeGenUtumno extends LOTRBiome {
 	public static Collection<LOTRBiome> utumnoBiomes = new ArrayList<>();
@@ -37,6 +42,13 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 		LOTRBiomeSpawnList.SpawnListContainer[] arrspawnListContainer = new LOTRBiomeSpawnList.SpawnListContainer[1];
 		arrspawnListContainer[0] = LOTRBiomeSpawnList.entry(LOTRSpawnList.UTUMNO_GUESTS, 10);
 		spawnableGuestList.newFactionList(100).add(arrspawnListContainer);
+	}
+
+	public static void updateFogColor(int i, int j, int k) {
+		LOTRUtumnoLevel utumnoLevel = LOTRUtumnoLevel.forY(j);
+		for (LOTRBiome biome : utumnoBiomes) {
+			biome.biomeColors.setFog(utumnoLevel.fogColor);
+		}
 	}
 
 	@Override
@@ -441,12 +453,5 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 			return new int[]{x, z};
 		}
 		return null;
-	}
-
-	public static void updateFogColor(int i, int j, int k) {
-		LOTRUtumnoLevel utumnoLevel = LOTRUtumnoLevel.forY(j);
-		for (LOTRBiome biome : utumnoBiomes) {
-			biome.biomeColors.setFog(utumnoLevel.fogColor);
-		}
 	}
 }

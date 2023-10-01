@@ -1,16 +1,24 @@
 package lotr.common.entity.item;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntities;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTRTradeable;
+import lotr.common.entity.npc.LOTRTraderNPCInfo;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class LOTREntityTraderRespawn extends Entity {
@@ -97,6 +105,10 @@ public class LOTREntityTraderRespawn extends Entity {
 		return dataWatcher.getWatchableObjectString(18);
 	}
 
+	public void setClientTraderString(String s) {
+		dataWatcher.updateObject(18, s);
+	}
+
 	@Override
 	public ItemStack getPickedResult(MovingObjectPosition target) {
 		int entityID = LOTREntities.getIDFromString(getClientTraderString());
@@ -108,6 +120,10 @@ public class LOTREntityTraderRespawn extends Entity {
 
 	public int getScale() {
 		return dataWatcher.getWatchableObjectInt(16);
+	}
+
+	public void setScale(int i) {
+		dataWatcher.updateObject(16, i);
 	}
 
 	public float getScaleFloat(float tick) {
@@ -234,14 +250,6 @@ public class LOTREntityTraderRespawn extends Entity {
 		if (nbt.hasKey("TraderData")) {
 			traderData = nbt.getCompoundTag("TraderData");
 		}
-	}
-
-	public void setClientTraderString(String s) {
-		dataWatcher.updateObject(18, s);
-	}
-
-	public void setScale(int i) {
-		dataWatcher.updateObject(16, i);
 	}
 
 	public void setSpawnImminent() {

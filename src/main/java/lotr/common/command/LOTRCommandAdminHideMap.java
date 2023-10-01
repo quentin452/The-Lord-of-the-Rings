@@ -1,12 +1,18 @@
 package lotr.common.command;
 
 import lotr.common.LOTRLevelData;
-import net.minecraft.command.*;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 
 public class LOTRCommandAdminHideMap extends CommandBase {
+
+	public static void notifyUnhidden(ICommandSender entityplayer) {
+		entityplayer.addChatMessage(new ChatComponentTranslation("commands.lotr.opHideMap.unhide"));
+	}
 
 	@Override
 	public String getCommandName() {
@@ -37,9 +43,5 @@ public class LOTRCommandAdminHideMap extends CommandBase {
 			}
 		}
 		throw new WrongUsageException("commands.lotr.opHideMap.notOp");
-	}
-
-	public static void notifyUnhidden(ICommandSender entityplayer) {
-		entityplayer.addChatMessage(new ChatComponentTranslation("commands.lotr.opHideMap.unhide"));
 	}
 }

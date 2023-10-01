@@ -1,8 +1,7 @@
 package lotr.common.item;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRCreativeTabs;
 import lotr.common.entity.item.LOTREntityBossTrophy;
 import net.minecraft.block.Block;
@@ -10,10 +9,17 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LOTRItemBossTrophy extends Item {
 	@SideOnly(Side.CLIENT)
@@ -24,6 +30,17 @@ public class LOTRItemBossTrophy extends Item {
 		setMaxStackSize(1);
 		setMaxDamage(0);
 		setHasSubtypes(true);
+	}
+
+	public static TrophyType getTrophyType(int i) {
+		return TrophyType.forID(i);
+	}
+
+	public static TrophyType getTrophyType(ItemStack itemstack) {
+		if (itemstack.getItem() instanceof LOTRItemBossTrophy) {
+			return getTrophyType(itemstack.getItemDamage());
+		}
+		return null;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -109,17 +126,6 @@ public class LOTRItemBossTrophy extends Item {
 		for (int i = 0; i < trophyIcons.length; ++i) {
 			trophyIcons[i] = iconregister.registerIcon(getIconString() + "_" + TrophyType.trophyTypes.get(i).trophyName);
 		}
-	}
-
-	public static TrophyType getTrophyType(int i) {
-		return TrophyType.forID(i);
-	}
-
-	public static TrophyType getTrophyType(ItemStack itemstack) {
-		if (itemstack.getItem() instanceof LOTRItemBossTrophy) {
-			return getTrophyType(itemstack.getItemDamage());
-		}
-		return null;
 	}
 
 	public enum TrophyType {

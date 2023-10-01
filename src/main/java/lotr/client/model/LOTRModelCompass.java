@@ -1,12 +1,12 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.render.entity.LOTRRenderPortal;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelCompass extends ModelBase {
 	public static LOTRModelCompass compassModel = new LOTRModelCompass();

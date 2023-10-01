@@ -1,6 +1,9 @@
 package lotr.common.world.biome;
 
-import lotr.common.entity.animal.*;
+import lotr.common.entity.animal.LOTREntityBird;
+import lotr.common.entity.animal.LOTREntityButterfly;
+import lotr.common.entity.animal.LOTREntityFlamingo;
+import lotr.common.entity.animal.LOTREntityJungleScorpion;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRTreeType;
 import net.minecraft.world.biome.BiomeGenBase;

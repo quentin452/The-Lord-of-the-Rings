@@ -1,7 +1,5 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.animal.LOTREntityDesertScorpion;
 import lotr.common.entity.npc.LOTREntityHaradPyramidWraith;
@@ -10,6 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenHaradPyramid extends LOTRWorldGenStructureBase2 {
 	public LOTRWorldGenHaradPyramid(boolean flag) {

@@ -33,14 +33,14 @@ public class LOTREntityWargskinRug extends LOTREntityRugBase {
 		return LOTREntityWarg.WargType.forID(i);
 	}
 
+	public void setRugType(LOTREntityWarg.WargType w) {
+		dataWatcher.updateObject(18, (byte) w.wargID);
+	}
+
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		setRugType(LOTREntityWarg.WargType.forID(nbt.getByte("RugType")));
-	}
-
-	public void setRugType(LOTREntityWarg.WargType w) {
-		dataWatcher.updateObject(18, (byte) w.wargID);
 	}
 
 	@Override

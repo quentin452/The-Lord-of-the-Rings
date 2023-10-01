@@ -1,7 +1,5 @@
 package lotr.common.world.feature;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityEntJar;
 import lotr.common.world.biome.LOTRBiomeGenFangorn;
@@ -9,6 +7,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.Random;
 
 public class LOTRWorldGenEntJars extends WorldGenerator {
 	@Override

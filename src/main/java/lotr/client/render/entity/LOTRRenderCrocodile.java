@@ -3,7 +3,8 @@ package lotr.client.render.entity;
 import lotr.client.model.LOTRModelCrocodile;
 import lotr.common.entity.animal.LOTREntityCrocodile;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderCrocodile extends RenderLiving {

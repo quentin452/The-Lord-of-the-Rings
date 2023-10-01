@@ -61,18 +61,6 @@ public enum LOTRUtumnoLevel {
 		corridorBaseLevels = Ints.toArray(baseLevels);
 	}
 
-	public int getHighestCorridorRoof() {
-		return corridorBaseLevels[corridorBaseLevels.length - 1] + corridorHeight;
-	}
-
-	public int getLowestCorridorFloor() {
-		return corridorBaseLevels[0] - 1;
-	}
-
-	public LOTRBiomeSpawnList getNPCSpawnList() {
-		return npcSpawnList;
-	}
-
 	public static LOTRUtumnoLevel forY(int y) {
 		for (LOTRUtumnoLevel level : values()) {
 			if (y < level.baseLevel) {
@@ -239,5 +227,17 @@ public enum LOTRUtumnoLevel {
 		OBSIDIAN.npcSpawnList.newFactionList(100).add(LOTRBiomeSpawnList.entry(LOTRSpawnList.UTUMNO_OBSIDIAN, 10));
 		FIRE.npcSpawnList.newFactionList(100).add(LOTRBiomeSpawnList.entry(LOTRSpawnList.UTUMNO_FIRE, 10));
 		initSpawnLists = true;
+	}
+
+	public int getHighestCorridorRoof() {
+		return corridorBaseLevels[corridorBaseLevels.length - 1] + corridorHeight;
+	}
+
+	public int getLowestCorridorFloor() {
+		return corridorBaseLevels[0] - 1;
+	}
+
+	public LOTRBiomeSpawnList getNPCSpawnList() {
+		return npcSpawnList;
 	}
 }

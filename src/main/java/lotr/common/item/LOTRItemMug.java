@@ -1,8 +1,7 @@
 package lotr.common.item;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.client.render.LOTRDrinkIcons;
 import lotr.common.*;
 import lotr.common.block.LOTRBlockMug;
@@ -13,11 +12,19 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.potion.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class LOTRItemMug extends Item {
 	public static String[] strengthNames = {"weak", "light", "moderate", "strong", "potent"};
@@ -63,6 +70,177 @@ public class LOTRItemMug extends Item {
 
 	public LOTRItemMug(float alc) {
 		this(true, false, true, alc);
+	}
+
+	public static void addPotionEffectsToTooltip(ItemStack itemstack, EntityPlayer entityplayer, Collection list, boolean flag, Collection itemEffects) {
+		if (!itemEffects.isEmpty()) {
+			ItemStack potionEquivalent = new ItemStack(Items.potionitem);
+			potionEquivalent.setItemDamage(69);
+			NBTTagList effectsData = new NBTTagList();
+			for (Object itemEffect : itemEffects) {
+				PotionEffect effect = (PotionEffect) itemEffect;
+				NBTTagCompound nbt = new NBTTagCompound();
+				effect.writeCustomPotionEffectToNBT(nbt);
+				effectsData.appendTag(nbt);
+			}
+			potionEquivalent.setTagCompound(new NBTTagCompound());
+			potionEquivalent.getTagCompound().setTag("CustomPotionEffects", effectsData);
+			List effectTooltips = new ArrayList();
+			potionEquivalent.getItem().addInformation(potionEquivalent, entityplayer, effectTooltips, flag);
+			list.addAll(effectTooltips);
+		}
+	}
+
+	public static ItemStack getEquivalentDrink(ItemStack itemstack) {
+		if (itemstack != null) {
+			Item item = itemstack.getItem();
+			if (item instanceof LOTRItemMug) {
+				return itemstack;
+			}
+			if (item == Items.potionitem && itemstack.getItemDamage() == 0) {
+				ItemStack water = itemstack.copy();
+				water.func_150996_a(LOTRMod.mugWater);
+				setVessel(water, Vessel.BOTTLE, false);
+				return water;
+			}
+		}
+		return itemstack;
+	}
+
+	public static float getFoodStrength(ItemStack itemstack) {
+		Item item = itemstack.getItem();
+		if (item instanceof LOTRItemMug && ((LOTRItemMug) item).isBrewable) {
+			int i = getStrengthMeta(itemstack);
+			return foodStrengths[i];
+		}
+		return 1.0f;
+	}
+
+	public static ItemStack getRealDrink(ItemStack itemstack) {
+		if (itemstack != null && itemstack.getItem() == LOTRMod.mugWater && getVessel(itemstack) == Vessel.BOTTLE) {
+			ItemStack water = itemstack.copy();
+			water.func_150996_a(Items.potionitem);
+			water.setItemDamage(0);
+			return water;
+		}
+		return itemstack;
+	}
+
+	public static float getStrength(ItemStack itemstack) {
+		Item item = itemstack.getItem();
+		if (item instanceof LOTRItemMug && ((LOTRItemMug) item).isBrewable) {
+			int i = getStrengthMeta(itemstack);
+			return strengths[i];
+		}
+		return 1.0f;
+	}
+
+	public static int getStrengthMeta(int damage) {
+		int i = damage % vesselMeta;
+		if (i < 0 || i >= strengths.length) {
+			i = 0;
+		}
+		return i;
+	}
+
+	public static int getStrengthMeta(ItemStack itemstack) {
+		return getStrengthMeta(itemstack.getItemDamage());
+	}
+
+	public static String getStrengthSubtitle(ItemStack itemstack) {
+		Item item;
+		if (itemstack != null && (item = itemstack.getItem()) instanceof LOTRItemMug && ((LOTRItemMug) item).isBrewable) {
+			int i = getStrengthMeta(itemstack);
+			return StatCollector.translateToLocal("item.lotr.drink." + strengthNames[i]);
+		}
+		return null;
+	}
+
+	public static Vessel getVessel(int damage) {
+		int i = damage / vesselMeta;
+		return Vessel.forMeta(i);
+	}
+
+	public static Vessel getVessel(ItemStack itemstack) {
+		Item item = itemstack.getItem();
+		if (item instanceof LOTRItemMug) {
+			LOTRItemMug itemMug = (LOTRItemMug) item;
+			if (itemMug.isFullMug) {
+				return getVessel(itemstack.getItemDamage());
+			}
+			return itemMug.getEmptyVesselType();
+		}
+		if (item == Items.glass_bottle || item == Items.potionitem && itemstack.getItemDamage() == 0) {
+			return Vessel.BOTTLE;
+		}
+		return null;
+	}
+
+	public static boolean isItemEmptyDrink(ItemStack itemstack) {
+		if (itemstack != null) {
+			Item item = itemstack.getItem();
+			if (item instanceof LOTRItemMug) {
+				return !((LOTRItemMug) item).isFullMug;
+			}
+			return item == Items.glass_bottle;
+		}
+		return false;
+	}
+
+	public static boolean isItemFullDrink(ItemStack itemstack) {
+		if (itemstack != null) {
+			Item item = itemstack.getItem();
+			if (item instanceof LOTRItemMug) {
+				return ((LOTRItemMug) item).isFullMug;
+			}
+			return item == Items.potionitem && itemstack.getItemDamage() == 0;
+		}
+		return false;
+	}
+
+	public static void setStrengthMeta(ItemStack itemstack, int i) {
+		Vessel v = getVessel(itemstack);
+		itemstack.setItemDamage(i);
+		setVessel(itemstack, v, true);
+	}
+
+	public static void setVessel(ItemStack itemstack, Vessel v, boolean correctItem) {
+		if (correctItem && itemstack.getItem() == Items.potionitem && itemstack.getItemDamage() == 0) {
+			itemstack.func_150996_a(LOTRMod.mugWater);
+			itemstack.setItemDamage(0);
+		}
+		int i = itemstack.getItemDamage();
+		itemstack.setItemDamage(v.id * vesselMeta + i % vesselMeta);
+		if (correctItem && itemstack.getItem() == LOTRMod.mugWater && v == Vessel.BOTTLE) {
+			itemstack.func_150996_a(Items.potionitem);
+			itemstack.setItemDamage(0);
+		}
+	}
+
+	public static boolean tryPlaceMug(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int side) {
+		Vessel vessel = getVessel(itemstack);
+		if (vessel == null || !vessel.canPlace) {
+			return false;
+		}
+		Block mugBlock = vessel.getBlock();
+		Block block = world.getBlock(i += Facing.offsetsXForSide[side], j += Facing.offsetsYForSide[side], k += Facing.offsetsZForSide[side]);
+		if (block != null && !block.isReplaceable(world, i, j, k) || block.getMaterial() == Material.water) {
+			return false;
+		}
+		if (entityplayer.canPlayerEdit(i, j, k, side, itemstack)) {
+			if (!mugBlock.canPlaceBlockAt(world, i, j, k)) {
+				return false;
+			}
+			int l = MathHelper.floor_double(entityplayer.rotationYaw * 4.0f / 360.0f + 0.5) & 3;
+			world.setBlock(i, j, k, mugBlock, l, 3);
+			ItemStack mugFill = itemstack.copy();
+			mugFill.stackSize = 1;
+			LOTRBlockMug.setMugItem(world, i, j, k, mugFill, vessel);
+			world.playSoundEffect(i + 0.5, j + 0.5, k + 0.5, mugBlock.stepSound.func_150496_b(), (mugBlock.stepSound.getVolume() + 1.0f) / 2.0f, mugBlock.stepSound.getPitch() * 0.8f);
+			--itemstack.stackSize;
+			return true;
+		}
+		return false;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -334,177 +512,6 @@ public class LOTRItemMug extends Item {
 		return true;
 	}
 
-	public static void addPotionEffectsToTooltip(ItemStack itemstack, EntityPlayer entityplayer, Collection list, boolean flag, Collection itemEffects) {
-		if (!itemEffects.isEmpty()) {
-			ItemStack potionEquivalent = new ItemStack(Items.potionitem);
-			potionEquivalent.setItemDamage(69);
-			NBTTagList effectsData = new NBTTagList();
-			for (Object itemEffect : itemEffects) {
-				PotionEffect effect = (PotionEffect) itemEffect;
-				NBTTagCompound nbt = new NBTTagCompound();
-				effect.writeCustomPotionEffectToNBT(nbt);
-				effectsData.appendTag(nbt);
-			}
-			potionEquivalent.setTagCompound(new NBTTagCompound());
-			potionEquivalent.getTagCompound().setTag("CustomPotionEffects", effectsData);
-			List effectTooltips = new ArrayList();
-			potionEquivalent.getItem().addInformation(potionEquivalent, entityplayer, effectTooltips, flag);
-			list.addAll(effectTooltips);
-		}
-	}
-
-	public static ItemStack getEquivalentDrink(ItemStack itemstack) {
-		if (itemstack != null) {
-			Item item = itemstack.getItem();
-			if (item instanceof LOTRItemMug) {
-				return itemstack;
-			}
-			if (item == Items.potionitem && itemstack.getItemDamage() == 0) {
-				ItemStack water = itemstack.copy();
-				water.func_150996_a(LOTRMod.mugWater);
-				setVessel(water, Vessel.BOTTLE, false);
-				return water;
-			}
-		}
-		return itemstack;
-	}
-
-	public static float getFoodStrength(ItemStack itemstack) {
-		Item item = itemstack.getItem();
-		if (item instanceof LOTRItemMug && ((LOTRItemMug) item).isBrewable) {
-			int i = getStrengthMeta(itemstack);
-			return foodStrengths[i];
-		}
-		return 1.0f;
-	}
-
-	public static ItemStack getRealDrink(ItemStack itemstack) {
-		if (itemstack != null && itemstack.getItem() == LOTRMod.mugWater && getVessel(itemstack) == Vessel.BOTTLE) {
-			ItemStack water = itemstack.copy();
-			water.func_150996_a(Items.potionitem);
-			water.setItemDamage(0);
-			return water;
-		}
-		return itemstack;
-	}
-
-	public static float getStrength(ItemStack itemstack) {
-		Item item = itemstack.getItem();
-		if (item instanceof LOTRItemMug && ((LOTRItemMug) item).isBrewable) {
-			int i = getStrengthMeta(itemstack);
-			return strengths[i];
-		}
-		return 1.0f;
-	}
-
-	public static int getStrengthMeta(int damage) {
-		int i = damage % vesselMeta;
-		if (i < 0 || i >= strengths.length) {
-			i = 0;
-		}
-		return i;
-	}
-
-	public static int getStrengthMeta(ItemStack itemstack) {
-		return getStrengthMeta(itemstack.getItemDamage());
-	}
-
-	public static String getStrengthSubtitle(ItemStack itemstack) {
-		Item item;
-		if (itemstack != null && (item = itemstack.getItem()) instanceof LOTRItemMug && ((LOTRItemMug) item).isBrewable) {
-			int i = getStrengthMeta(itemstack);
-			return StatCollector.translateToLocal("item.lotr.drink." + strengthNames[i]);
-		}
-		return null;
-	}
-
-	public static Vessel getVessel(int damage) {
-		int i = damage / vesselMeta;
-		return Vessel.forMeta(i);
-	}
-
-	public static Vessel getVessel(ItemStack itemstack) {
-		Item item = itemstack.getItem();
-		if (item instanceof LOTRItemMug) {
-			LOTRItemMug itemMug = (LOTRItemMug) item;
-			if (itemMug.isFullMug) {
-				return getVessel(itemstack.getItemDamage());
-			}
-			return itemMug.getEmptyVesselType();
-		}
-		if (item == Items.glass_bottle || item == Items.potionitem && itemstack.getItemDamage() == 0) {
-			return Vessel.BOTTLE;
-		}
-		return null;
-	}
-
-	public static boolean isItemEmptyDrink(ItemStack itemstack) {
-		if (itemstack != null) {
-			Item item = itemstack.getItem();
-			if (item instanceof LOTRItemMug) {
-				return !((LOTRItemMug) item).isFullMug;
-			}
-			return item == Items.glass_bottle;
-		}
-		return false;
-	}
-
-	public static boolean isItemFullDrink(ItemStack itemstack) {
-		if (itemstack != null) {
-			Item item = itemstack.getItem();
-			if (item instanceof LOTRItemMug) {
-				return ((LOTRItemMug) item).isFullMug;
-			}
-			return item == Items.potionitem && itemstack.getItemDamage() == 0;
-		}
-		return false;
-	}
-
-	public static void setStrengthMeta(ItemStack itemstack, int i) {
-		Vessel v = getVessel(itemstack);
-		itemstack.setItemDamage(i);
-		setVessel(itemstack, v, true);
-	}
-
-	public static void setVessel(ItemStack itemstack, Vessel v, boolean correctItem) {
-		if (correctItem && itemstack.getItem() == Items.potionitem && itemstack.getItemDamage() == 0) {
-			itemstack.func_150996_a(LOTRMod.mugWater);
-			itemstack.setItemDamage(0);
-		}
-		int i = itemstack.getItemDamage();
-		itemstack.setItemDamage(v.id * vesselMeta + i % vesselMeta);
-		if (correctItem && itemstack.getItem() == LOTRMod.mugWater && v == Vessel.BOTTLE) {
-			itemstack.func_150996_a(Items.potionitem);
-			itemstack.setItemDamage(0);
-		}
-	}
-
-	public static boolean tryPlaceMug(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int side) {
-		Vessel vessel = getVessel(itemstack);
-		if (vessel == null || !vessel.canPlace) {
-			return false;
-		}
-		Block mugBlock = vessel.getBlock();
-		Block block = world.getBlock(i += Facing.offsetsXForSide[side], j += Facing.offsetsYForSide[side], k += Facing.offsetsZForSide[side]);
-		if (block != null && !block.isReplaceable(world, i, j, k) || block.getMaterial() == Material.water) {
-			return false;
-		}
-		if (entityplayer.canPlayerEdit(i, j, k, side, itemstack)) {
-			if (!mugBlock.canPlaceBlockAt(world, i, j, k)) {
-				return false;
-			}
-			int l = MathHelper.floor_double(entityplayer.rotationYaw * 4.0f / 360.0f + 0.5) & 3;
-			world.setBlock(i, j, k, mugBlock, l, 3);
-			ItemStack mugFill = itemstack.copy();
-			mugFill.stackSize = 1;
-			LOTRBlockMug.setMugItem(world, i, j, k, mugFill, vessel);
-			world.playSoundEffect(i + 0.5, j + 0.5, k + 0.5, mugBlock.stepSound.func_150496_b(), (mugBlock.stepSound.getVolume() + 1.0f) / 2.0f, mugBlock.stepSound.getPitch() * 0.8f);
-			--itemstack.stackSize;
-			return true;
-		}
-		return false;
-	}
-
 	public enum Vessel {
 		MUG(0, "mug", true, 0), MUG_CLAY(1, "clay", true, 1), GOBLET_GOLD(2, "gobletGold", true, 10), GOBLET_SILVER(3, "gobletSilver", true, 8), GOBLET_COPPER(4, "gobletCopper", true, 5), GOBLET_WOOD(5, "gobletWood", true, 0), SKULL(6, "skull", true, 3), GLASS(7, "glass", true, 3), BOTTLE(8, "bottle", true, 2), SKIN(9, "skin", false, 0), HORN(10, "horn", true, 5), HORN_GOLD(11, "hornGold", true, 8);
 
@@ -518,6 +525,16 @@ public class LOTRItemMug extends Item {
 			name = s;
 			canPlace = flag;
 			extraPrice = p;
+		}
+
+		public static Vessel forMeta(int i) {
+			for (Vessel v : values()) {
+				if (v.id != i) {
+					continue;
+				}
+				return v;
+			}
+			return MUG;
 		}
 
 		public Block getBlock() {
@@ -602,16 +619,6 @@ public class LOTRItemMug extends Item {
 				return LOTRMod.aleHornGold;
 			}
 			return LOTRMod.mug;
-		}
-
-		public static Vessel forMeta(int i) {
-			for (Vessel v : values()) {
-				if (v.id != i) {
-					continue;
-				}
-				return v;
-			}
-			return MUG;
 		}
 	}
 

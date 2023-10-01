@@ -1,12 +1,12 @@
 package lotr.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.inventory.LOTRContainerCraftingTable;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
 public abstract class LOTRGuiCraftingTable extends GuiContainer {
 	public static ResourceLocation craftingTexture = new ResourceLocation("textures/gui/container/crafting_table.png");

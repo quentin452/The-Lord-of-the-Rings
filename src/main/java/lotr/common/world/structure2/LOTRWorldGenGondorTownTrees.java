@@ -1,15 +1,22 @@
 package lotr.common.world.structure2;
 
-import java.util.*;
-
 import lotr.common.world.feature.LOTRTreeType;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class LOTRWorldGenGondorTownTrees extends LOTRWorldGenGondorStructure {
 	public LOTRWorldGenGondorTownTrees(boolean flag) {
 		super(flag);
+	}
+
+	public static LOTRTreeType getRandomTree(Random random) {
+		ArrayList<LOTRTreeType> treeList = new ArrayList<>();
+		treeList.add(LOTRTreeType.CYPRESS);
+		return treeList.get(random.nextInt(treeList.size()));
 	}
 
 	@Override
@@ -60,11 +67,5 @@ public class LOTRWorldGenGondorTownTrees extends LOTRWorldGenGondorStructure {
 			}
 		}
 		return true;
-	}
-
-	public static LOTRTreeType getRandomTree(Random random) {
-		ArrayList<LOTRTreeType> treeList = new ArrayList<>();
-		treeList.add(LOTRTreeType.CYPRESS);
-		return treeList.get(random.nextInt(treeList.size()));
 	}
 }

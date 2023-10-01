@@ -1,11 +1,11 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityRohanFarmhand;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenRohanVillageFarm extends LOTRWorldGenRohanStructure {
 	public LOTRWorldGenRohanVillageFarm(boolean flag) {

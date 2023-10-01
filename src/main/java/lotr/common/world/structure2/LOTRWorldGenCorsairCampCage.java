@@ -1,9 +1,9 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.entity.npc.LOTREntityHaradSlave;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenCorsairCampCage extends LOTRWorldGenCorsairStructure {
 	public LOTRWorldGenCorsairCampCage(boolean flag) {

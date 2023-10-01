@@ -1,22 +1,29 @@
 package lotr.common.quest;
 
-import java.awt.Color;
-import java.util.*;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import cpw.mods.fml.common.FMLLog;
 import lotr.common.*;
 import lotr.common.entity.npc.*;
-import lotr.common.fac.*;
-import lotr.common.item.*;
+import lotr.common.fac.LOTRAlignmentBonusMap;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
+import lotr.common.item.LOTRItemCoin;
+import lotr.common.item.LOTRItemModifierTemplate;
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
-import net.minecraft.util.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.biome.BiomeGenBase;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.awt.*;
+import java.util.List;
+import java.util.*;
 
 public abstract class LOTRMiniQuest {
 	public static Map<String, Class<? extends LOTRMiniQuest>> nameToQuestMapping = new HashMap<>();
@@ -70,6 +77,36 @@ public abstract class LOTRMiniQuest {
 	protected LOTRMiniQuest(LOTRPlayerData pd) {
 		playerData = pd;
 		questUUID = UUID.randomUUID();
+	}
+
+	public static LOTRMiniQuest loadQuestFromNBT(NBTTagCompound nbt, LOTRPlayerData playerData) {
+		String questTypeName = nbt.getString("QuestType");
+		Class<? extends LOTRMiniQuest> questType = nameToQuestMapping.get(questTypeName);
+		if (questType == null) {
+			FMLLog.severe("Could not instantiate miniquest of type " + questTypeName);
+			return null;
+		}
+		LOTRMiniQuest quest = newQuestInstance(questType, playerData);
+		quest.readFromNBT(nbt);
+		if (quest.isValidQuest()) {
+			return quest;
+		}
+		FMLLog.severe("Loaded an invalid LOTR miniquest " + quest.speechBankStart);
+		return null;
+	}
+
+	public static <Q extends LOTRMiniQuest> Q newQuestInstance(Class<Q> questType, LOTRPlayerData playerData) {
+		try {
+			return questType.getConstructor(LOTRPlayerData.class).newInstance(playerData);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static void registerQuestType(String name, Class<? extends LOTRMiniQuest> questType) {
+		nameToQuestMapping.put(name, questType);
+		questToNameMapping.put(questType, name);
 	}
 
 	public boolean anyRewardsGiven() {
@@ -201,6 +238,10 @@ public abstract class LOTRMiniQuest {
 
 	public LOTRPlayerData getPlayerData() {
 		return playerData;
+	}
+
+	public void setPlayerData(LOTRPlayerData pd) {
+		playerData = pd;
 	}
 
 	public abstract String getProgressedObjectiveInSpeech();
@@ -380,10 +421,6 @@ public abstract class LOTRMiniQuest {
 		questColor = npc.getMiniquestColor();
 	}
 
-	public void setPlayerData(LOTRPlayerData pd) {
-		playerData = pd;
-	}
-
 	public boolean shouldRandomiseCoinReward() {
 		return true;
 	}
@@ -495,36 +532,6 @@ public abstract class LOTRMiniQuest {
 		}
 	}
 
-	public static LOTRMiniQuest loadQuestFromNBT(NBTTagCompound nbt, LOTRPlayerData playerData) {
-		String questTypeName = nbt.getString("QuestType");
-		Class<? extends LOTRMiniQuest> questType = nameToQuestMapping.get(questTypeName);
-		if (questType == null) {
-			FMLLog.severe("Could not instantiate miniquest of type " + questTypeName);
-			return null;
-		}
-		LOTRMiniQuest quest = newQuestInstance(questType, playerData);
-		quest.readFromNBT(nbt);
-		if (quest.isValidQuest()) {
-			return quest;
-		}
-		FMLLog.severe("Loaded an invalid LOTR miniquest " + quest.speechBankStart);
-		return null;
-	}
-
-	public static <Q extends LOTRMiniQuest> Q newQuestInstance(Class<Q> questType, LOTRPlayerData playerData) {
-		try {
-			return questType.getConstructor(LOTRPlayerData.class).newInstance(playerData);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public static void registerQuestType(String name, Class<? extends LOTRMiniQuest> questType) {
-		nameToQuestMapping.put(name, questType);
-		questToNameMapping.put(questType, name);
-	}
-
 	public abstract static class QuestFactoryBase<Q extends LOTRMiniQuest> {
 		public LOTRMiniQuestFactory questFactoryGroup;
 		public String questName;
@@ -563,11 +570,11 @@ public abstract class LOTRMiniQuest {
 			return questFactoryGroup;
 		}
 
-		public abstract Class<Q> getQuestClass();
-
 		public void setFactoryGroup(LOTRMiniQuestFactory factory) {
 			questFactoryGroup = factory;
 		}
+
+		public abstract Class<Q> getQuestClass();
 
 		public QuestFactoryBase setHiring(float f) {
 			willHire = true;

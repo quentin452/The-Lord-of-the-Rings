@@ -1,8 +1,5 @@
 package lotr.common.entity.animal;
 
-import java.util.List;
-import java.util.Locale;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntities;
 import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
@@ -16,9 +13,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.WorldChunkManager;
+
+import java.util.List;
+import java.util.Locale;
 
 public class LOTREntityBear extends EntityAnimal implements LOTRAnimalSpawnConditions {
 	public EntityAIBase attackAI = new LOTREntityAIAttackOnCollide(this, 1.7, false);
@@ -130,6 +132,10 @@ public class LOTREntityBear extends EntityAnimal implements LOTRAnimalSpawnCondi
 		return BearType.forID(i);
 	}
 
+	public void setBearType(BearType t) {
+		dataWatcher.updateObject(18, (byte) t.bearID);
+	}
+
 	@Override
 	public boolean getCanSpawnHere() {
 		WorldChunkManager worldChunkMgr = worldObj.getWorldChunkManager();
@@ -196,6 +202,10 @@ public class LOTREntityBear extends EntityAnimal implements LOTRAnimalSpawnCondi
 		return dataWatcher.getWatchableObjectByte(20) == 1;
 	}
 
+	public void setHostile(boolean flag) {
+		dataWatcher.updateObject(20, flag ? (byte) 1 : 0);
+	}
+
 	@Override
 	public void onLivingUpdate() {
 		boolean isChild;
@@ -259,24 +269,11 @@ public class LOTREntityBear extends EntityAnimal implements LOTRAnimalSpawnCondi
 		hostileTick = nbt.getInteger("Angry");
 	}
 
-	public void setBearType(BearType t) {
-		dataWatcher.updateObject(18, (byte) t.bearID);
-	}
-
-	public void setHostile(boolean flag) {
-		dataWatcher.updateObject(20, flag ? (byte) 1 : 0);
-	}
-
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
 		nbt.setByte("BearType", (byte) getBearType().bearID);
 		nbt.setInteger("Angry", hostileTick);
-	}
-
-	public static class BearGroupSpawnData implements IEntityLivingData {
-		public int numSpawned;
-
 	}
 
 	public enum BearType {
@@ -286,10 +283,6 @@ public class LOTREntityBear extends EntityAnimal implements LOTRAnimalSpawnCondi
 
 		BearType(int i) {
 			bearID = i;
-		}
-
-		public String textureName() {
-			return name().toLowerCase(Locale.ROOT);
 		}
 
 		public static String[] bearTypeNames() {
@@ -309,6 +302,15 @@ public class LOTREntityBear extends EntityAnimal implements LOTRAnimalSpawnCondi
 			}
 			return LIGHT;
 		}
+
+		public String textureName() {
+			return name().toLowerCase(Locale.ROOT);
+		}
+	}
+
+	public static class BearGroupSpawnData implements IEntityLivingData {
+		public int numSpawned;
+
 	}
 
 }

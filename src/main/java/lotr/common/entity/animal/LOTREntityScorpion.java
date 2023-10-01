@@ -1,19 +1,25 @@
 package lotr.common.entity.animal;
 
 import lotr.common.LOTRMod;
-import lotr.common.entity.*;
+import lotr.common.entity.LOTREntities;
+import lotr.common.entity.LOTRMobSpawnerCondition;
 import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityHaradPyramidWraith;
+import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.block.Block;
 import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -135,12 +141,20 @@ public abstract class LOTREntityScorpion extends EntityMob implements LOTRMobSpa
 		return dataWatcher.getWatchableObjectByte(18);
 	}
 
+	public void setScorpionScale(int i) {
+		dataWatcher.updateObject(18, (byte) i);
+	}
+
 	public float getScorpionScaleAmount() {
 		return 0.5f + getScorpionScale() / 2.0f;
 	}
 
 	public int getStrikeTime() {
 		return dataWatcher.getWatchableObjectInt(19);
+	}
+
+	public void setStrikeTime(int i) {
+		dataWatcher.updateObject(19, i);
 	}
 
 	@Override
@@ -192,10 +206,6 @@ public abstract class LOTREntityScorpion extends EntityMob implements LOTRMobSpa
 		super.setSize(scorpionWidth * f, scorpionHeight * f);
 	}
 
-	public void setScorpionScale(int i) {
-		dataWatcher.updateObject(18, (byte) i);
-	}
-
 	@Override
 	public void setSize(float f, float f1) {
 		boolean flag = scorpionWidth > 0.0f;
@@ -209,10 +219,6 @@ public abstract class LOTREntityScorpion extends EntityMob implements LOTRMobSpa
 	@Override
 	public void setSpawningFromMobSpawner(boolean flag) {
 		spawningFromSpawner = flag;
-	}
-
-	public void setStrikeTime(int i) {
-		dataWatcher.updateObject(19, i);
 	}
 
 	@Override

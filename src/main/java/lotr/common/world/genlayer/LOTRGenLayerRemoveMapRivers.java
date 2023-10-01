@@ -1,12 +1,14 @@
 package lotr.common.world.genlayer;
 
-import java.util.*;
-import java.util.Map.Entry;
-
 import cpw.mods.fml.common.FMLLog;
 import lotr.common.LOTRDimension;
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class LOTRGenLayerRemoveMapRivers extends LOTRGenLayer {
 	public static int MAX_PIXEL_RANGE = 4;

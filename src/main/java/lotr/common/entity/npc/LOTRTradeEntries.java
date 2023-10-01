@@ -1,13 +1,20 @@
 package lotr.common.entity.npc;
 
-import java.util.*;
-
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.enchant.LOTREnchantmentHelper;
-import lotr.common.item.*;
-import net.minecraft.init.*;
+import lotr.common.item.LOTRItemBanner;
+import lotr.common.item.LOTRItemMug;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRTradeEntries {
 	public static LOTRTradeEntries HOBBIT_BARTENDER_BUY;
@@ -229,56 +236,6 @@ public class LOTRTradeEntries {
 	public LOTRTradeEntries(TradeType t, LOTRTradeEntry... trades) {
 		tradeType = t;
 		tradeEntries = trades;
-	}
-
-	public LOTRTradeEntry[] getRandomTrades(Random random) {
-		int numTrades = 3 + random.nextInt(3) + random.nextInt(3) + random.nextInt(3);
-		if (numTrades > tradeEntries.length) {
-			numTrades = tradeEntries.length;
-		}
-		LOTRTradeEntry[] tempTrades = new LOTRTradeEntry[tradeEntries.length];
-		System.arraycopy(tradeEntries, 0, tempTrades, 0, tradeEntries.length);
-		List<LOTRTradeEntry> tempTradesAsList = Arrays.asList(tempTrades);
-		Collections.shuffle(tempTradesAsList);
-		tempTrades = tempTradesAsList.toArray(tempTrades);
-		LOTRTradeEntry[] trades = new LOTRTradeEntry[numTrades];
-		for (int i = 0; i < trades.length; ++i) {
-			ItemStack tradeItem = tempTrades[i].createTradeItem();
-			float tradeCost = tempTrades[i].getCost();
-			if (tradeItem.getItem() instanceof LOTRItemMug && ((LOTRItemMug) tradeItem.getItem()).isBrewable && tradeItem.getItemDamage() == 9999) {
-				int strength = 1 + random.nextInt(3);
-				tradeItem.setItemDamage(strength);
-				tradeCost *= LOTRItemMug.getFoodStrength(tradeItem);
-			}
-			if (drinkVessels != null && LOTRItemMug.isItemFullDrink(tradeItem)) {
-				LOTRItemMug.Vessel v = drinkVessels[random.nextInt(drinkVessels.length)];
-				LOTRItemMug.setVessel(tradeItem, v, true);
-				tradeCost += v.extraPrice;
-			}
-			if (LOTRConfig.enchantingLOTR && tradeType == TradeType.BUY) {
-				boolean skilful = random.nextInt(3) == 0;
-				LOTREnchantmentHelper.applyRandomEnchantments(tradeItem, random, skilful, false);
-				tradeCost *= LOTREnchantmentHelper.calcTradeValueFactor(tradeItem);
-			}
-			tradeCost *= MathHelper.randomFloatClamp(random, 0.75f, 1.25f);
-			tradeCost = Math.max(tradeCost, 1.0f);
-			int tradeCostI = Math.round(tradeCost);
-			tradeCostI = Math.max(tradeCostI, 1);
-			trades[i] = new LOTRTradeEntry(tradeItem, tradeCostI);
-		}
-		return trades;
-	}
-
-	public LOTRTradeEntries setVessels(LOTRFoods foods) {
-		return setVessels(foods.getDrinkVessels());
-	}
-
-	public LOTRTradeEntries setVessels(LOTRItemMug.Vessel... v) {
-		if (tradeType != TradeType.BUY) {
-			throw new IllegalArgumentException("Cannot set the vessel types for a sell list");
-		}
-		drinkVessels = v;
-		return this;
 	}
 
 	public static LOTRTradeSellResult getItemSellResult(ItemStack itemstack, LOTREntityNPC trader) {
@@ -505,6 +462,56 @@ public class LOTRTradeEntries {
 		BREE_FLORIST_SELL = new LOTRTradeEntries(TradeType.SELL, new LOTRTradeEntry(new ItemStack(Items.bucket), 3), new LOTRTradeEntry(new ItemStack(Items.water_bucket), 4), new LOTRTradeEntry(new ItemStack(Items.iron_hoe), 8), new LOTRTradeEntry(new ItemStack(Items.stone_hoe), 1), new LOTRTradeEntry(new ItemStack(LOTRMod.hoeBronze), 6), new LOTRTradeEntry(new ItemStack(Items.dye, 6, 15), 1));
 		BREE_FARMER_BUY = new LOTRTradeEntries(TradeType.BUY, new LOTRTradeEntry(new ItemStack(Items.wheat), 2), new LOTRTradeEntry(new ItemStack(Items.wheat_seeds), 1), new LOTRTradeEntry(new ItemStack(Items.carrot), 3), new LOTRTradeEntry(new ItemStack(Items.potato), 2), new LOTRTradeEntry(new ItemStack(LOTRMod.lettuce), 3), new LOTRTradeEntry(new ItemStack(LOTRMod.leek), 3), new LOTRTradeEntry(new ItemStack(LOTRMod.turnip), 3), new LOTRTradeEntry(new ItemStack(LOTRMod.pipeweedLeaf), 8), new LOTRTradeEntry(new ItemStack(LOTRMod.pipeweedSeeds), 6), new LOTRTradeEntry(new ItemStack(LOTRMod.corn), 2), new LOTRTradeEntry(new ItemStack(LOTRMod.cornStalk), 1), new LOTRTradeEntry(new ItemStack(Items.apple), 3), new LOTRTradeEntry(new ItemStack(LOTRMod.appleGreen), 3), new LOTRTradeEntry(new ItemStack(LOTRMod.pear), 3), new LOTRTradeEntry(new ItemStack(LOTRMod.cherry), 2), new LOTRTradeEntry(new ItemStack(LOTRMod.plum), 3), new LOTRTradeEntry(new ItemStack(Blocks.wool), 2), new LOTRTradeEntry(new ItemStack(Items.milk_bucket), 8), new LOTRTradeEntry(new ItemStack(Items.lead), 8), new LOTRTradeEntry(new ItemStack(LOTRMod.brandingIron), 16), new LOTRTradeEntry(new ItemStack(Blocks.hay_block), 12)).setVessels(LOTRFoods.BREE_DRINK);
 		BREE_FARMER_SELL = new LOTRTradeEntries(TradeType.SELL, new LOTRTradeEntry(new ItemStack(Items.bucket), 3), new LOTRTradeEntry(new ItemStack(Items.water_bucket), 4), new LOTRTradeEntry(new ItemStack(Items.iron_hoe), 8), new LOTRTradeEntry(new ItemStack(Items.stone_hoe), 1), new LOTRTradeEntry(new ItemStack(LOTRMod.hoeBronze), 6), new LOTRTradeEntry(new ItemStack(Items.dye, 6, 15), 1));
+	}
+
+	public LOTRTradeEntry[] getRandomTrades(Random random) {
+		int numTrades = 3 + random.nextInt(3) + random.nextInt(3) + random.nextInt(3);
+		if (numTrades > tradeEntries.length) {
+			numTrades = tradeEntries.length;
+		}
+		LOTRTradeEntry[] tempTrades = new LOTRTradeEntry[tradeEntries.length];
+		System.arraycopy(tradeEntries, 0, tempTrades, 0, tradeEntries.length);
+		List<LOTRTradeEntry> tempTradesAsList = Arrays.asList(tempTrades);
+		Collections.shuffle(tempTradesAsList);
+		tempTrades = tempTradesAsList.toArray(tempTrades);
+		LOTRTradeEntry[] trades = new LOTRTradeEntry[numTrades];
+		for (int i = 0; i < trades.length; ++i) {
+			ItemStack tradeItem = tempTrades[i].createTradeItem();
+			float tradeCost = tempTrades[i].getCost();
+			if (tradeItem.getItem() instanceof LOTRItemMug && ((LOTRItemMug) tradeItem.getItem()).isBrewable && tradeItem.getItemDamage() == 9999) {
+				int strength = 1 + random.nextInt(3);
+				tradeItem.setItemDamage(strength);
+				tradeCost *= LOTRItemMug.getFoodStrength(tradeItem);
+			}
+			if (drinkVessels != null && LOTRItemMug.isItemFullDrink(tradeItem)) {
+				LOTRItemMug.Vessel v = drinkVessels[random.nextInt(drinkVessels.length)];
+				LOTRItemMug.setVessel(tradeItem, v, true);
+				tradeCost += v.extraPrice;
+			}
+			if (LOTRConfig.enchantingLOTR && tradeType == TradeType.BUY) {
+				boolean skilful = random.nextInt(3) == 0;
+				LOTREnchantmentHelper.applyRandomEnchantments(tradeItem, random, skilful, false);
+				tradeCost *= LOTREnchantmentHelper.calcTradeValueFactor(tradeItem);
+			}
+			tradeCost *= MathHelper.randomFloatClamp(random, 0.75f, 1.25f);
+			tradeCost = Math.max(tradeCost, 1.0f);
+			int tradeCostI = Math.round(tradeCost);
+			tradeCostI = Math.max(tradeCostI, 1);
+			trades[i] = new LOTRTradeEntry(tradeItem, tradeCostI);
+		}
+		return trades;
+	}
+
+	public LOTRTradeEntries setVessels(LOTRFoods foods) {
+		return setVessels(foods.getDrinkVessels());
+	}
+
+	public LOTRTradeEntries setVessels(LOTRItemMug.Vessel... v) {
+		if (tradeType != TradeType.BUY) {
+			throw new IllegalArgumentException("Cannot set the vessel types for a sell list");
+		}
+		drinkVessels = v;
+		return this;
 	}
 
 	public enum TradeType {

@@ -1,26 +1,28 @@
 package lotr.common;
 
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.mojang.authlib.GameProfile;
-
 import io.gitlab.dwarfyassassin.lotrucp.core.hooks.ThaumcraftHooks;
 import lotr.common.entity.LOTREntityInvasionSpawner;
 import lotr.common.entity.item.LOTREntityBanner;
 import lotr.common.fac.LOTRFaction;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
-import net.minecraft.entity.item.*;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityMinecartTNT;
+import net.minecraft.entity.item.EntityTNTPrimed;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.*;
 
 public class LOTRBannerProtection {
 	public static int MAX_RANGE = 64;
@@ -290,6 +292,34 @@ public class LOTRBannerProtection {
 		}
 	}
 
+	public enum Permission {
+		FULL, DOORS, TABLES, CONTAINERS, PERSONAL_CONTAINERS, FOOD, BEDS, SWITCHES;
+
+		public int bitFlag = 1 << ordinal();
+		public String codeName = name();
+
+		public static Permission forName(String s) {
+			for (Permission p : values()) {
+				if (!p.codeName.equals(s)) {
+					continue;
+				}
+				return p;
+			}
+			return null;
+		}
+	}
+
+	public enum ProtectType {
+		NONE, FACTION, PLAYER_SPECIFIC, STRUCTURE
+
+	}
+
+	public interface IFilter {
+		ProtectType protects(LOTREntityBanner var1);
+
+		void warnProtection(IChatComponent var1);
+	}
+
 	public static class FilterForPlayer implements IFilter {
 		public EntityPlayer thePlayer;
 		public Permission thePerm;
@@ -343,34 +373,6 @@ public class LOTRBannerProtection {
 				}
 			}
 		}
-	}
-
-	public interface IFilter {
-		ProtectType protects(LOTREntityBanner var1);
-
-		void warnProtection(IChatComponent var1);
-	}
-
-	public enum Permission {
-		FULL, DOORS, TABLES, CONTAINERS, PERSONAL_CONTAINERS, FOOD, BEDS, SWITCHES;
-
-		public int bitFlag = 1 << ordinal();
-		public String codeName = name();
-
-		public static Permission forName(String s) {
-			for (Permission p : values()) {
-				if (!p.codeName.equals(s)) {
-					continue;
-				}
-				return p;
-			}
-			return null;
-		}
-	}
-
-	public enum ProtectType {
-		NONE, FACTION, PLAYER_SPECIFIC, STRUCTURE
-
 	}
 
 }

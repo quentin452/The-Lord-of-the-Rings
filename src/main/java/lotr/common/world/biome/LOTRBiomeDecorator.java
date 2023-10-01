@@ -1,19 +1,28 @@
 package lotr.common.world.biome;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
-import lotr.common.world.*;
+import lotr.common.world.LOTRChunkProvider;
+import lotr.common.world.LOTRWorldChunkManager;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.*;
 import lotr.common.world.map.LOTRRoads;
-import lotr.common.world.structure.*;
-import lotr.common.world.structure2.*;
+import lotr.common.world.structure.LOTRWorldGenMarshHut;
+import lotr.common.world.structure.LOTRWorldGenOrcDungeon;
+import lotr.common.world.structure.LOTRWorldGenStructureBase;
+import lotr.common.world.structure2.LOTRWorldGenGrukHouse;
+import lotr.common.world.structure2.LOTRWorldGenStructureBase2;
+import lotr.common.world.structure2.LOTRWorldGenTicketBooth;
 import lotr.common.world.village.LOTRVillageGen;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRBiomeDecorator {
 	public World worldObj;

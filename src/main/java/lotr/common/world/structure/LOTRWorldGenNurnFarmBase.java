@@ -1,7 +1,5 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
 import lotr.common.entity.npc.LOTREntityNurnSlave;
@@ -9,6 +7,8 @@ import lotr.common.world.biome.LOTRBiomeGenNurn;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public abstract class LOTRWorldGenNurnFarmBase extends LOTRWorldGenStructureBase {
 	protected LOTRWorldGenNurnFarmBase(boolean flag) {

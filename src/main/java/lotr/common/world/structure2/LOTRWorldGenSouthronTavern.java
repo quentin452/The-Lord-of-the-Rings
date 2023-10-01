@@ -1,13 +1,17 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
-import lotr.common.entity.npc.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
+import lotr.common.entity.npc.LOTREntityNearHaradrimBase;
+import lotr.common.entity.npc.LOTREntitySouthronBartender;
+import lotr.common.entity.npc.LOTREntityUmbarBartender;
+import lotr.common.entity.npc.LOTRNames;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenSouthronTavern extends LOTRWorldGenSouthronStructure {
 	public LOTRWorldGenSouthronTavern(boolean flag) {

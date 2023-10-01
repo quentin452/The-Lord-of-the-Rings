@@ -1,9 +1,10 @@
 package lotr.client.render.entity;
 
+import lotr.common.entity.npc.LOTREntityGaladhrimWarden;
+import lotr.common.entity.npc.LOTREntityNPC;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import org.lwjgl.opengl.GL11;
-
-import lotr.common.entity.npc.*;
-import net.minecraft.entity.*;
 
 public class LOTRRenderGaladhrimWarden extends LOTRRenderElf {
 	public void doElfInvisibility() {

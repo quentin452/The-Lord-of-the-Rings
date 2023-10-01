@@ -1,18 +1,20 @@
 package lotr.common.world.biome.variant;
 
-import java.util.*;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import lotr.common.LOTRMod;
 import lotr.common.world.biome.LOTRBiome;
-import lotr.common.world.feature.*;
+import lotr.common.world.feature.LOTRTreeType;
+import lotr.common.world.feature.LOTRWorldGenBoulder;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Random;
 
 public class LOTRBiomeVariant {
 	public static LOTRBiomeVariant[] allVariants = new LOTRBiomeVariant[256];
@@ -70,10 +72,10 @@ public class LOTRBiomeVariant {
 	public static LOTRBiomeVariant WASTELAND_SAND = new LOTRBiomeVariantWasteland(51, "wasteland_sand", Blocks.sandstone).setHeight(0.0f, 0.5f);
 	public static LOTRBiomeVariant[] SET_NORMAL = {FLOWERS, FOREST, FOREST_LIGHT, STEPPE, STEPPE_BARREN, HILLS, HILLS_FOREST};
 	public static LOTRBiomeVariant[] SET_NORMAL_OAK = (LOTRBiomeVariant[]) ArrayUtils.addAll(SET_NORMAL, (Object[]) new LOTRBiomeVariant[]{DENSEFOREST_OAK, DEADFOREST_OAK, SHRUBLAND_OAK});
+	public static LOTRBiomeVariant[] SET_NORMAL_OAK_NOSTEPPE = (LOTRBiomeVariant[]) ArrayUtils.removeElements(SET_NORMAL_OAK, (Object[]) new LOTRBiomeVariant[]{STEPPE, STEPPE_BARREN});
 	public static LOTRBiomeVariant[] SET_NORMAL_SPRUCE = (LOTRBiomeVariant[]) ArrayUtils.addAll(SET_NORMAL, (Object[]) new LOTRBiomeVariant[]{DENSEFOREST_SPRUCE, DEADFOREST_SPRUCE});
 	public static LOTRBiomeVariant[] SET_NORMAL_OAK_SPRUCE = (LOTRBiomeVariant[]) ArrayUtils.addAll(SET_NORMAL, (Object[]) new LOTRBiomeVariant[]{DENSEFOREST_OAK, DEADFOREST_OAK, SHRUBLAND_OAK, DENSEFOREST_SPRUCE, DEADFOREST_SPRUCE, DENSEFOREST_OAK_SPRUCE, DEADFOREST_OAK_SPRUCE});
 	public static LOTRBiomeVariant[] SET_NORMAL_NOSTEPPE = (LOTRBiomeVariant[]) ArrayUtils.removeElements(SET_NORMAL, (Object[]) new LOTRBiomeVariant[]{STEPPE, STEPPE_BARREN});
-	public static LOTRBiomeVariant[] SET_NORMAL_OAK_NOSTEPPE = (LOTRBiomeVariant[]) ArrayUtils.removeElements(SET_NORMAL_OAK, (Object[]) new LOTRBiomeVariant[]{STEPPE, STEPPE_BARREN});
 	public static LOTRBiomeVariant[] SET_FOREST = {FLOWERS, HILLS, CLEARING};
 	public static LOTRBiomeVariant[] SET_MOUNTAINS = {FOREST, FOREST_LIGHT};
 	public static LOTRBiomeVariant[] SET_SWAMP = {SWAMP_LOWLAND, SWAMP_LOWLAND, SWAMP_LOWLAND, SWAMP_UPLAND};
@@ -108,6 +110,14 @@ public class LOTRBiomeVariant {
 		allVariants[i] = this;
 		variantName = s;
 		variantScale = scale;
+	}
+
+	public static LOTRBiomeVariant getVariantForID(int i) {
+		LOTRBiomeVariant variant = allVariants[i];
+		if (variant == null) {
+			return STANDARD;
+		}
+		return variant;
 	}
 
 	public LOTRBiomeVariant addTreeTypes(float f, Object... trees) {
@@ -196,14 +206,6 @@ public class LOTRBiomeVariant {
 	public LOTRBiomeVariant setTrees(float f) {
 		treeFactor = f;
 		return this;
-	}
-
-	public static LOTRBiomeVariant getVariantForID(int i) {
-		LOTRBiomeVariant variant = allVariants[i];
-		if (variant == null) {
-			return STANDARD;
-		}
-		return variant;
 	}
 
 	public enum VariantScale {

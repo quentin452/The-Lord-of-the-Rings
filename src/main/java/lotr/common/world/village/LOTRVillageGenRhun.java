@@ -1,13 +1,16 @@
 package lotr.common.world.village;
 
-import java.util.Random;
-
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityEasterling;
+import lotr.common.entity.npc.LOTREntityEasterlingArcher;
+import lotr.common.entity.npc.LOTREntityEasterlingWarrior;
+import lotr.common.entity.npc.LOTRNames;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.map.LOTRRoadType;
 import lotr.common.world.structure2.*;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRVillageGenRhun extends LOTRVillageGen {
 	public boolean enableTowns;
@@ -24,6 +27,11 @@ public class LOTRVillageGenRhun extends LOTRVillageGen {
 	@Override
 	public LOTRVillageGen.AbstractInstance<?> createVillageInstance(World world, int i, int k, Random random, LocationInfo loc) {
 		return new Instance(this, world, i, k, random, loc);
+	}
+
+	public enum VillageType {
+		VILLAGE, TOWN, FORT
+
 	}
 
 	public static class Instance extends LOTRVillageGen.AbstractInstance<LOTRVillageGenRhun> {
@@ -402,11 +410,6 @@ public class LOTRVillageGenRhun extends LOTRVillageGen {
 			villageName = LOTRNames.getRhunVillageName(random);
 			villageType = random.nextInt(4) == 0 ? VillageType.FORT : enableTowns && random.nextInt(4) == 0 ? VillageType.TOWN : VillageType.VILLAGE;
 		}
-
-	}
-
-	public enum VillageType {
-		VILLAGE, TOWN, FORT
 
 	}
 

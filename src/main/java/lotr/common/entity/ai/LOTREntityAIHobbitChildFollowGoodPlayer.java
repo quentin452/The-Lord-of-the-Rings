@@ -1,11 +1,11 @@
 package lotr.common.entity.ai;
 
-import java.util.List;
-
 import lotr.common.LOTRLevelData;
 import lotr.common.entity.npc.LOTREntityHobbit;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
+
+import java.util.List;
 
 public class LOTREntityAIHobbitChildFollowGoodPlayer extends EntityAIBase {
 	public LOTREntityHobbit theHobbit;

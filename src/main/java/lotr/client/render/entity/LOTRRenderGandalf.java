@@ -1,12 +1,16 @@
 package lotr.client.render.entity;
 
 import lotr.client.LOTRSpeechClient;
-import lotr.client.model.*;
-import lotr.common.*;
-import lotr.common.entity.npc.*;
+import lotr.client.model.LOTRModelHuman;
+import lotr.client.model.LOTRModelWizardHat;
+import lotr.common.LOTRCapes;
+import lotr.common.LOTRMod;
+import lotr.common.entity.npc.LOTREntityGandalf;
+import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderGandalf extends LOTRRenderBiped {

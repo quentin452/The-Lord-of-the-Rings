@@ -1,8 +1,8 @@
 package lotr.common.playerdetails;
 
-import java.util.*;
-
 import net.minecraft.entity.player.EntityPlayer;
+
+import java.util.*;
 
 public class LOTRPlayerDetailsCache {
 	public Map<UUID, PlayerDetails> detailsForPlayer = new HashMap<>();

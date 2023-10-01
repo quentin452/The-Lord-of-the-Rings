@@ -1,11 +1,12 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityElf;
+import lotr.common.entity.npc.LOTREntityGaladhrimSmith;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenGaladhrimForge extends LOTRWorldGenElvenForge {
 	public LOTRWorldGenGaladhrimForge(boolean flag) {

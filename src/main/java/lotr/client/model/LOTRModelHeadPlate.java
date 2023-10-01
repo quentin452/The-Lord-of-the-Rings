@@ -1,7 +1,5 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRTickHandlerClient;
 import lotr.client.render.LOTRRenderBlocks;
 import lotr.common.LOTRMod;
@@ -13,9 +11,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelHeadPlate extends LOTRModelHuman {
 	public RenderBlocks blockRenderer = new RenderBlocks();

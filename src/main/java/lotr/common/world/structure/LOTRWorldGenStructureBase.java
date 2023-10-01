@@ -1,12 +1,15 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
-import lotr.common.*;
-import lotr.common.block.*;
-import lotr.common.entity.*;
-import lotr.common.entity.item.*;
-import lotr.common.item.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
+import lotr.common.block.LOTRBlockFlowerPot;
+import lotr.common.block.LOTRBlockMug;
+import lotr.common.entity.LOTREntities;
+import lotr.common.entity.LOTREntityNPCRespawner;
+import lotr.common.entity.item.LOTREntityBanner;
+import lotr.common.entity.item.LOTREntityBannerWall;
+import lotr.common.item.LOTRItemBanner;
+import lotr.common.item.LOTRItemMug;
 import lotr.common.recipe.LOTRBrewingRecipes;
 import lotr.common.tileentity.*;
 import lotr.common.world.structure2.LOTRStructureTimelapse;
@@ -16,10 +19,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.Random;
 
 public abstract class LOTRWorldGenStructureBase extends WorldGenerator {
 	public boolean restrictions = true;

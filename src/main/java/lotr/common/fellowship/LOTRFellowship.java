@@ -1,22 +1,28 @@
 package lotr.common.fellowship;
 
-import java.util.*;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import net.minecraft.command.ICommandSender;
-import org.apache.commons.lang3.StringUtils;
-
 import lotr.common.LOTRLevelData;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketFellowshipNotification;
+import lotr.common.network.LOTRPacketHandler;
 import lotr.common.util.LOTRLog;
-import net.minecraft.entity.player.*;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatAllowedCharacters;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.ForgeHooks;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.*;
 
 public class LOTRFellowship {
 	public boolean needsSave;
@@ -100,6 +106,12 @@ public class LOTRFellowship {
 		return fellowshipIcon;
 	}
 
+	public void setIcon(ItemStack itemstack) {
+		fellowshipIcon = itemstack;
+		updateForAllMembers(new FellowshipUpdateType.ChangeIcon());
+		markDirty();
+	}
+
 	public List<UUID> getMemberUUIDs() {
 		return memberUUIDs;
 	}
@@ -108,8 +120,27 @@ public class LOTRFellowship {
 		return fellowshipName;
 	}
 
+	public void setName(String name) {
+		fellowshipName = name;
+		updateForAllMembers(new FellowshipUpdateType.Rename());
+		markDirty();
+	}
+
 	public UUID getOwner() {
 		return ownerUUID;
+	}
+
+	public void setOwner(UUID owner) {
+		UUID prevOwner = ownerUUID;
+		if (prevOwner != null && !memberUUIDs.contains(prevOwner)) {
+			memberUUIDs.add(0, prevOwner);
+		}
+		ownerUUID = owner;
+		memberUUIDs.remove(owner);
+		adminUUIDs.remove(owner);
+		LOTRLevelData.getData(ownerUUID).addFellowship(this);
+		updateForAllMembers(new FellowshipUpdateType.SetOwner(ownerUUID));
+		markDirty();
 	}
 
 	public int getPlayerCount() {
@@ -120,12 +151,30 @@ public class LOTRFellowship {
 		return preventHiredFF;
 	}
 
+	public void setPreventHiredFriendlyFire(boolean flag) {
+		preventHiredFF = flag;
+		updateForAllMembers(new FellowshipUpdateType.ToggleHiredFriendlyFire());
+		markDirty();
+	}
+
 	public boolean getPreventPVP() {
 		return preventPVP;
 	}
 
+	public void setPreventPVP(boolean flag) {
+		preventPVP = flag;
+		updateForAllMembers(new FellowshipUpdateType.TogglePvp());
+		markDirty();
+	}
+
 	public boolean getShowMapLocations() {
 		return showMapLocations;
+	}
+
+	public void setShowMapLocations(boolean flag) {
+		showMapLocations = flag;
+		updateForAllMembers(new FellowshipUpdateType.ToggleShowMapLocations());
+		markDirty();
 	}
 
 	public Set<UUID> getWaypointSharerUUIDs() {
@@ -339,49 +388,6 @@ public class LOTRFellowship {
 		for (UUID player : copyMemberIDs) {
 			removeMember(player);
 		}
-	}
-
-	public void setIcon(ItemStack itemstack) {
-		fellowshipIcon = itemstack;
-		updateForAllMembers(new FellowshipUpdateType.ChangeIcon());
-		markDirty();
-	}
-
-	public void setName(String name) {
-		fellowshipName = name;
-		updateForAllMembers(new FellowshipUpdateType.Rename());
-		markDirty();
-	}
-
-	public void setOwner(UUID owner) {
-		UUID prevOwner = ownerUUID;
-		if (prevOwner != null && !memberUUIDs.contains(prevOwner)) {
-			memberUUIDs.add(0, prevOwner);
-		}
-		ownerUUID = owner;
-		memberUUIDs.remove(owner);
-		adminUUIDs.remove(owner);
-		LOTRLevelData.getData(ownerUUID).addFellowship(this);
-		updateForAllMembers(new FellowshipUpdateType.SetOwner(ownerUUID));
-		markDirty();
-	}
-
-	public void setPreventHiredFriendlyFire(boolean flag) {
-		preventHiredFF = flag;
-		updateForAllMembers(new FellowshipUpdateType.ToggleHiredFriendlyFire());
-		markDirty();
-	}
-
-	public void setPreventPVP(boolean flag) {
-		preventPVP = flag;
-		updateForAllMembers(new FellowshipUpdateType.TogglePvp());
-		markDirty();
-	}
-
-	public void setShowMapLocations(boolean flag) {
-		showMapLocations = flag;
-		updateForAllMembers(new FellowshipUpdateType.ToggleShowMapLocations());
-		markDirty();
 	}
 
 	public void updateForAllMembers(FellowshipUpdateType updateType) {

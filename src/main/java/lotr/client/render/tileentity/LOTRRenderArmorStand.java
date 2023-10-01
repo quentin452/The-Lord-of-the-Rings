@@ -1,19 +1,21 @@
 package lotr.client.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
 import io.gitlab.dwarfyassassin.lotrucp.client.util.FakeArmorStandEntity;
 import lotr.client.LOTRClientProxy;
-import lotr.client.model.*;
+import lotr.client.model.LOTRArmorModels;
+import lotr.client.model.LOTRModelArmorStand;
 import lotr.common.item.LOTRItemPlate;
 import lotr.common.tileentity.LOTRTileEntityArmorStand;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ForgeHooksClient;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderArmorStand extends TileEntitySpecialRenderer {
 	public static ResourceLocation standTexture = new ResourceLocation("lotr:item/armorStand.png");

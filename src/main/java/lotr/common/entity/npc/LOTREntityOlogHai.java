@@ -1,15 +1,23 @@
 package lotr.common.entity.npc;
 
-import java.util.List;
-
-import lotr.common.*;
-import lotr.common.entity.ai.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAIFollowHiringPlayer;
+import lotr.common.entity.ai.LOTREntityAIHiredRemainStill;
+import lotr.common.entity.ai.LOTREntityAINearestAttackableTargetOrc;
 import lotr.common.fac.LOTRFaction;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTREntityOlogHai extends LOTREntityTroll {
 	public LOTREntityOlogHai(World world) {

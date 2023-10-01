@@ -1,18 +1,21 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityHobbitFarmer;
+import lotr.common.entity.npc.LOTREntityHobbitFarmhand;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
-import net.minecraft.init.*;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.Random;
 
 public class LOTRWorldGenHobbitFarm extends LOTRWorldGenStructureBase2 {
 	public Block wood1Block;

@@ -1,14 +1,15 @@
 package io.gitlab.dwarfyassassin.lotrucp.core;
 
-import java.util.Collection;
-import java.util.HashSet;
-
-import org.objectweb.asm.*;
-import org.objectweb.asm.tree.ClassNode;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.FMLLaunchHandler;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import io.gitlab.dwarfyassassin.lotrucp.core.patches.base.Patcher;
 import net.minecraft.launchwrapper.IClassTransformer;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.tree.ClassNode;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 public class UCPClassTransformer implements IClassTransformer {
 	static {

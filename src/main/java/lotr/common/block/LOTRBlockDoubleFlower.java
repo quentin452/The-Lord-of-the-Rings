@@ -1,18 +1,24 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 	public static String[] flowerNames = {"blackIris", "yellowIris", "pink", "red"};
@@ -23,6 +29,14 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 
 	public LOTRBlockDoubleFlower() {
 		setCreativeTab(LOTRCreativeTabs.tabDeco);
+	}
+
+	public static int getFlowerMeta(int i) {
+		return i & 7;
+	}
+
+	public static boolean isTop(int i) {
+		return (i & 8) != 0;
 	}
 
 	@Override
@@ -167,13 +181,5 @@ public class LOTRBlockDoubleFlower extends BlockDoublePlant {
 			doublePlantBottomIcons[i] = iconregister.registerIcon(getTextureName() + "_" + flowerNames[i] + "_bottom");
 			doublePlantTopIcons[i] = iconregister.registerIcon(getTextureName() + "_" + flowerNames[i] + "_top");
 		}
-	}
-
-	public static int getFlowerMeta(int i) {
-		return i & 7;
-	}
-
-	public static boolean isTop(int i) {
-		return (i & 8) != 0;
 	}
 }

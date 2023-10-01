@@ -1,6 +1,8 @@
 package lotr.common.network;
 
-import cpw.mods.fml.common.network.simpleimpl.*;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import lotr.common.LOTRMod;
 
@@ -25,6 +27,11 @@ public class LOTRPacketEnvironmentOverlay implements IMessage {
 		data.writeByte(overlay.ordinal());
 	}
 
+	public enum Overlay {
+		FROST, BURN
+
+	}
+
 	public static class Handler implements IMessageHandler<LOTRPacketEnvironmentOverlay, IMessage> {
 		@Override
 		public IMessage onMessage(LOTRPacketEnvironmentOverlay packet, MessageContext context) {
@@ -35,11 +42,6 @@ public class LOTRPacketEnvironmentOverlay implements IMessage {
 			}
 			return null;
 		}
-	}
-
-	public enum Overlay {
-		FROST, BURN
-
 	}
 
 }

@@ -1,11 +1,14 @@
 package lotr.common.entity.animal;
 
-import java.util.List;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.ai.*;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAILionChase;
+import lotr.common.entity.ai.LOTREntityAIMFMate;
 import lotr.common.item.LOTRItemLionRug;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -13,6 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public abstract class LOTREntityLionBase extends LOTREntityAnimalMF {
 	public EntityAIBase attackAI = new LOTREntityAIAttackOnCollide(this, 1.5, false);
@@ -166,6 +171,10 @@ public abstract class LOTREntityLionBase extends LOTREntityAnimalMF {
 		return dataWatcher.getWatchableObjectByte(20) == 1;
 	}
 
+	public void setHostile(boolean flag) {
+		dataWatcher.updateObject(20, flag ? (byte) 1 : 0);
+	}
+
 	@Override
 	public void onLivingUpdate() {
 		boolean isChild;
@@ -205,10 +214,6 @@ public abstract class LOTREntityLionBase extends LOTREntityAnimalMF {
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		hostileTick = nbt.getInteger("Angry");
-	}
-
-	public void setHostile(boolean flag) {
-		dataWatcher.updateObject(20, flag ? (byte) 1 : 0);
 	}
 
 	@Override

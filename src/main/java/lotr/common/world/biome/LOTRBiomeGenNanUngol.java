@@ -1,13 +1,14 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
 import lotr.common.LOTRAchievement;
 import lotr.common.world.feature.LOTRWorldGenWebOfUngoliant;
 import lotr.common.world.map.LOTRWaypoint;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.LOTRWorldGenMordorSpiderPit;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRBiomeGenNanUngol extends LOTRBiomeGenMordor {
 	public LOTRBiomeGenNanUngol(int i, boolean major) {

@@ -1,7 +1,5 @@
 package lotr.client.render.item;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelBanner;
 import lotr.client.render.entity.LOTRRenderBanner;
 import lotr.common.item.LOTRItemBanner;
@@ -10,6 +8,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderBannerItem implements IItemRenderer {
 	public static LOTRModelBanner model = new LOTRModelBanner();

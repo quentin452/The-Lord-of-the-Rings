@@ -1,13 +1,11 @@
 package lotr.common.quest;
 
-import java.util.*;
-
-import net.minecraft.command.ICommandSender;
-import org.apache.commons.lang3.StringUtils;
-
 import lotr.common.*;
 import lotr.common.entity.npc.LOTREntityNPC;
-import lotr.common.fac.*;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
+import lotr.common.fac.LOTRFactionBounties;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -15,6 +13,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.*;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class LOTRMiniQuestBounty extends LOTRMiniQuest {
 	public UUID targetID;

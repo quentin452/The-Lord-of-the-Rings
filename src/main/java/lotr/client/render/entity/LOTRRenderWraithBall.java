@@ -1,12 +1,11 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.entity.projectile.LOTREntityMarshWraithBall;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderWraithBall extends Render {
 	public static ResourceLocation texture = new ResourceLocation("lotr:mob/wraith/marshWraith_ball.png");

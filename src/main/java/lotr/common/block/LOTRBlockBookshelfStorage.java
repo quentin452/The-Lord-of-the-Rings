@@ -1,20 +1,24 @@
 package lotr.common.block;
 
-import java.util.ArrayList;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityBookshelf;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
 
 public class LOTRBlockBookshelfStorage extends BlockContainer {
 	public LOTRBlockBookshelfStorage() {
@@ -22,6 +26,11 @@ public class LOTRBlockBookshelfStorage extends BlockContainer {
 		setHardness(1.5f);
 		setStepSound(Block.soundTypeWood);
 		setCreativeTab(null);
+	}
+
+	public static boolean canOpenBookshelf(World world, int i, int j, int k, EntityPlayer entityplayer) {
+		ItemStack itemstack = entityplayer.inventory.getCurrentItem();
+		return itemstack == null || itemstack.getItem() != Item.getItemFromBlock(Blocks.bookshelf);
 	}
 
 	@Override
@@ -84,10 +93,5 @@ public class LOTRBlockBookshelfStorage extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
-	}
-
-	public static boolean canOpenBookshelf(World world, int i, int j, int k, EntityPlayer entityplayer) {
-		ItemStack itemstack = entityplayer.inventory.getCurrentItem();
-		return itemstack == null || itemstack.getItem() != Item.getItemFromBlock(Blocks.bookshelf);
 	}
 }

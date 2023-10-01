@@ -1,14 +1,16 @@
 package lotr.common.world.village;
 
-import java.util.Random;
-
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityNomad;
+import lotr.common.entity.npc.LOTREntityNomadArcher;
+import lotr.common.entity.npc.LOTREntityNomadWarrior;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.map.LOTRRoadType;
 import lotr.common.world.structure2.*;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRVillageGenHaradNomad extends LOTRVillageGen {
 	public LOTRVillageGenHaradNomad(LOTRBiome biome, float f) {
@@ -22,6 +24,11 @@ public class LOTRVillageGenHaradNomad extends LOTRVillageGen {
 	@Override
 	public LOTRVillageGen.AbstractInstance<?> createVillageInstance(World world, int i, int k, Random random, LocationInfo loc) {
 		return new Instance(this, world, i, k, random, loc);
+	}
+
+	public enum VillageType {
+		SMALL, BIG
+
 	}
 
 	public static class Instance extends LOTRVillageGen.AbstractInstance<LOTRVillageGenHaradNomad> {
@@ -142,11 +149,6 @@ public class LOTRVillageGenHaradNomad extends LOTRVillageGen {
 				numOuterHouses = MathHelper.getRandomIntegerInRange(random, 4, 7);
 			}
 		}
-
-	}
-
-	public enum VillageType {
-		SMALL, BIG
 
 	}
 

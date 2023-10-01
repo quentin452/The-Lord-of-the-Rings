@@ -1,20 +1,29 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
-import net.minecraft.block.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
+import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.*;
-import net.minecraftforge.common.*;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRBlockBerryBush extends Block implements IPlantable, IGrowable {
 	public LOTRBlockBerryBush() {
@@ -23,6 +32,21 @@ public class LOTRBlockBerryBush extends Block implements IPlantable, IGrowable {
 		setCreativeTab(LOTRCreativeTabs.tabDeco);
 		setHardness(0.4f);
 		setStepSound(Block.soundTypeGrass);
+	}
+
+	public static int getBerryType(int meta) {
+		return meta & 7;
+	}
+
+	public static boolean hasBerries(int meta) {
+		return (meta & 8) != 0;
+	}
+
+	public static int setHasBerries(int meta, boolean flag) {
+		if (flag) {
+			return getBerryType(meta) | 8;
+		}
+		return getBerryType(meta);
 	}
 
 	@Override
@@ -233,21 +257,6 @@ public class LOTRBlockBerryBush extends Block implements IPlantable, IGrowable {
 				growBerries(world, i, j, k);
 			}
 		}
-	}
-
-	public static int getBerryType(int meta) {
-		return meta & 7;
-	}
-
-	public static boolean hasBerries(int meta) {
-		return (meta & 8) != 0;
-	}
-
-	public static int setHasBerries(int meta, boolean flag) {
-		if (flag) {
-			return getBerryType(meta) | 8;
-		}
-		return getBerryType(meta);
 	}
 
 	public enum BushType {

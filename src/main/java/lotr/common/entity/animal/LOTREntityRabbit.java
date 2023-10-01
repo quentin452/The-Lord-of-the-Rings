@@ -1,20 +1,35 @@
 package lotr.common.entity.animal;
 
-import java.util.*;
-
-import lotr.common.*;
-import lotr.common.entity.*;
-import lotr.common.entity.ai.*;
-import lotr.common.entity.npc.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.entity.LOTREntities;
+import lotr.common.entity.LOTRRandomSkinEntity;
+import lotr.common.entity.ai.LOTREntityAIAvoidWithChance;
+import lotr.common.entity.ai.LOTREntityAIFlee;
+import lotr.common.entity.ai.LOTREntityAIRabbitEatCrops;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTRFarmhand;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.UUID;
 
 public class LOTREntityRabbit extends EntityCreature implements LOTRAmbientCreature, LOTRRandomSkinEntity {
 	public static String fleeSound = "lotr:rabbit.flee";

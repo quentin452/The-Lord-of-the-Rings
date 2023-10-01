@@ -1,14 +1,15 @@
 package lotr.client.gui;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.LOTRMod;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketHornSelect;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiHornSelect extends LOTRGuiScreenBase {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/horn_select.png");

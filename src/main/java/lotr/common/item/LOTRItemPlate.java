@@ -4,10 +4,12 @@ import lotr.common.LOTRCreativeTabs;
 import lotr.common.block.LOTRBlockPlate;
 import lotr.common.dispenser.LOTRDispensePlate;
 import lotr.common.entity.projectile.LOTREntityPlate;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemReed;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTRItemPlate extends ItemReed {

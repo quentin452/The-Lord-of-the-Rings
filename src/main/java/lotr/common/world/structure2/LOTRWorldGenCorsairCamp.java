@@ -1,13 +1,16 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityCorsair;
+import lotr.common.entity.npc.LOTREntityCorsairCaptain;
+import lotr.common.entity.npc.LOTREntityCorsairSlaver;
+import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenCorsairCamp extends LOTRWorldGenCampBase {
 	public LOTRWorldGenCorsairCamp(boolean flag) {

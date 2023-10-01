@@ -1,7 +1,5 @@
 package lotr.common.quest;
 
-import java.util.Random;
-
 import lotr.common.LOTRPlayerData;
 import lotr.common.entity.LOTREntities;
 import lotr.common.entity.npc.LOTREntityNPC;
@@ -9,6 +7,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
+
+import java.util.Random;
 
 public class LOTRMiniQuestKillEntity extends LOTRMiniQuestKill {
 	public Class entityType;

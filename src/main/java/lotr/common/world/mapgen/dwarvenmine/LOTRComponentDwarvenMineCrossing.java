@@ -1,14 +1,16 @@
 package lotr.common.world.mapgen.dwarvenmine;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.structure.*;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
+import net.minecraft.world.gen.structure.StructureComponent;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRComponentDwarvenMineCrossing extends StructureComponent {
 	public int corridorDirection;
@@ -24,6 +26,39 @@ public class LOTRComponentDwarvenMineCrossing extends StructureComponent {
 		boundingBox = structureBoundingBox;
 		isMultipleFloors = boundingBox.getYSize() > 3;
 		ruined = r;
+	}
+
+	public static StructureBoundingBox findValidPlacement(List list, Random random, int i, int j, int k, int l) {
+		StructureBoundingBox structureboundingbox = new StructureBoundingBox(i, j, k, i, j + 2, k);
+		if (random.nextInt(4) == 0) {
+			structureboundingbox.maxY += 4;
+		}
+		switch (l) {
+			case 0: {
+				structureboundingbox.minX = i - 1;
+				structureboundingbox.maxX = i + 3;
+				structureboundingbox.maxZ = k + 4;
+				break;
+			}
+			case 1: {
+				structureboundingbox.minX = i - 4;
+				structureboundingbox.minZ = k - 1;
+				structureboundingbox.maxZ = k + 3;
+				break;
+			}
+			case 2: {
+				structureboundingbox.minX = i - 1;
+				structureboundingbox.maxX = i + 3;
+				structureboundingbox.minZ = k - 4;
+				break;
+			}
+			case 3: {
+				structureboundingbox.maxX = i + 4;
+				structureboundingbox.minZ = k - 1;
+				structureboundingbox.maxZ = k + 3;
+			}
+		}
+		return StructureComponent.findIntersecting(list, structureboundingbox) != null ? null : structureboundingbox;
 	}
 
 	@Override
@@ -113,38 +148,5 @@ public class LOTRComponentDwarvenMineCrossing extends StructureComponent {
 		nbt.setInteger("Direction", corridorDirection);
 		nbt.setBoolean("Multiple", isMultipleFloors);
 		nbt.setBoolean("Ruined", ruined);
-	}
-
-	public static StructureBoundingBox findValidPlacement(List list, Random random, int i, int j, int k, int l) {
-		StructureBoundingBox structureboundingbox = new StructureBoundingBox(i, j, k, i, j + 2, k);
-		if (random.nextInt(4) == 0) {
-			structureboundingbox.maxY += 4;
-		}
-		switch (l) {
-			case 0: {
-				structureboundingbox.minX = i - 1;
-				structureboundingbox.maxX = i + 3;
-				structureboundingbox.maxZ = k + 4;
-				break;
-			}
-			case 1: {
-				structureboundingbox.minX = i - 4;
-				structureboundingbox.minZ = k - 1;
-				structureboundingbox.maxZ = k + 3;
-				break;
-			}
-			case 2: {
-				structureboundingbox.minX = i - 1;
-				structureboundingbox.maxX = i + 3;
-				structureboundingbox.minZ = k - 4;
-				break;
-			}
-			case 3: {
-				structureboundingbox.maxX = i + 4;
-				structureboundingbox.minZ = k - 1;
-				structureboundingbox.maxZ = k + 3;
-			}
-		}
-		return StructureComponent.findIntersecting(list, structureboundingbox) != null ? null : structureboundingbox;
 	}
 }

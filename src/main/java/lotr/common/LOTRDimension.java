@@ -1,14 +1,17 @@
 package lotr.common;
 
-import java.util.*;
-
 import lotr.common.fac.LOTRFaction;
-import lotr.common.world.*;
+import lotr.common.world.LOTRWorldProvider;
+import lotr.common.world.LOTRWorldProviderMiddleEarth;
+import lotr.common.world.LOTRWorldProviderUtumno;
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.util.StatCollector;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.config.Configuration;
+
+import java.util.*;
 
 public enum LOTRDimension {
 	MIDDLE_EARTH("MiddleEarth", 100, LOTRWorldProviderMiddleEarth.class, true, 100, EnumSet.of(DimensionRegion.WEST, DimensionRegion.EAST, DimensionRegion.SOUTH)), UTUMNO("Utumno", 101, LOTRWorldProviderUtumno.class, false, 500, EnumSet.of(DimensionRegion.REG_UTUMNO));
@@ -37,14 +40,6 @@ public enum LOTRDimension {
 		for (DimensionRegion r : dimensionRegions) {
 			r.setDimension(this);
 		}
-	}
-
-	public String getDimensionName() {
-		return StatCollector.translateToLocal(getUntranslatedDimensionName());
-	}
-
-	public String getUntranslatedDimensionName() {
-		return "lotr.dimension." + dimensionName;
 	}
 
 	public static void configureDimensions(Configuration config, String category) {
@@ -86,6 +81,14 @@ public enum LOTRDimension {
 		}
 	}
 
+	public String getDimensionName() {
+		return StatCollector.translateToLocal(getUntranslatedDimensionName());
+	}
+
+	public String getUntranslatedDimensionName() {
+		return "lotr.dimension." + dimensionName;
+	}
+
 	public enum DimensionRegion {
 		WEST("west"), EAST("east"), SOUTH("south"), REG_UTUMNO("utumno");
 
@@ -95,22 +98,6 @@ public enum LOTRDimension {
 
 		DimensionRegion(String s) {
 			regionName = s;
-		}
-
-		public String codeName() {
-			return regionName;
-		}
-
-		public LOTRDimension getDimension() {
-			return dimension;
-		}
-
-		public String getRegionName() {
-			return StatCollector.translateToLocal("lotr.dimension." + dimension.dimensionName + "." + codeName());
-		}
-
-		public void setDimension(LOTRDimension dim) {
-			dimension = dim;
 		}
 
 		public static DimensionRegion forID(int ID) {
@@ -131,6 +118,22 @@ public enum LOTRDimension {
 				return r;
 			}
 			return null;
+		}
+
+		public String codeName() {
+			return regionName;
+		}
+
+		public LOTRDimension getDimension() {
+			return dimension;
+		}
+
+		public void setDimension(LOTRDimension dim) {
+			dimension = dim;
+		}
+
+		public String getRegionName() {
+			return StatCollector.translateToLocal("lotr.dimension." + dimension.dimensionName + "." + codeName());
 		}
 	}
 

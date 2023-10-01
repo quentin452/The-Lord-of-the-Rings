@@ -1,13 +1,14 @@
 package lotr.client.render.entity;
 
-import java.util.HashMap;
-
 import lotr.client.LOTRTextures;
 import lotr.client.model.LOTRModelEnt;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityTree;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.HashMap;
 
 public class LOTRRenderEnt extends RenderLiving {
 	public static HashMap entTextures = new HashMap();

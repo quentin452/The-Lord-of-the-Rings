@@ -3,7 +3,9 @@ package lotr.common.entity.npc;
 import lotr.common.LOTRMod;
 import lotr.common.entity.ai.LOTREntityAIRangedAttack;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -72,6 +74,13 @@ public class LOTREntityGaladhrimWarden extends LOTREntityGaladhrimElf {
 		return dataWatcher.getWatchableObjectByte(17) == 1;
 	}
 
+	public void setElfSneaking(boolean flag) {
+		dataWatcher.updateObject(17, flag ? (byte) 1 : 0);
+		if (flag) {
+			sneakCooldown = 20;
+		}
+	}
+
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
@@ -115,13 +124,6 @@ public class LOTREntityGaladhrimWarden extends LOTREntityGaladhrimElf {
 			if (!worldObj.isRemote && !isElfSneaking()) {
 				setElfSneaking(true);
 			}
-		}
-	}
-
-	public void setElfSneaking(boolean flag) {
-		dataWatcher.updateObject(17, flag ? (byte) 1 : 0);
-		if (flag) {
-			sneakCooldown = 20;
 		}
 	}
 

@@ -1,10 +1,13 @@
 package lotr.common.entity.projectile;
 
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRReflection;
 import lotr.common.item.LOTRItemRing;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.*;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.item.ItemStack;
@@ -77,6 +80,10 @@ public class LOTREntityFishHook extends EntityFishHook {
 		return dataWatcher.getWatchableObjectInt(16);
 	}
 
+	public void setPlayerID(int id) {
+		dataWatcher.updateObject(16, id);
+	}
+
 	@Override
 	public void onUpdate() {
 		if (field_146042_b == null) {
@@ -95,9 +102,5 @@ public class LOTREntityFishHook extends EntityFishHook {
 			field_146042_b = entityplayer;
 		}
 		super.onUpdate();
-	}
-
-	public void setPlayerID(int id) {
-		dataWatcher.updateObject(16, id);
 	}
 }

@@ -3,7 +3,8 @@ package lotr.common.world.biome;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRTreeType;
 import lotr.common.world.map.LOTRRoadType;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRInvasions;
 
 public class LOTRBiomeGenFarHaradJungleEdge extends LOTRBiomeGenFarHaradJungle {
 	public LOTRBiomeGenFarHaradJungleEdge(int i, boolean major) {

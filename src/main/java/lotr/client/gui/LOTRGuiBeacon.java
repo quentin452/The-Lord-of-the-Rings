@@ -1,19 +1,21 @@
 package lotr.client.gui;
 
-import java.util.UUID;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import lotr.common.LOTRLevelData;
+import lotr.common.fellowship.LOTRFellowshipClient;
+import lotr.common.network.LOTRPacketBeaconEdit;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.tileentity.LOTRTileEntityBeacon;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
-import lotr.common.LOTRLevelData;
-import lotr.common.fellowship.LOTRFellowshipClient;
-import lotr.common.network.*;
-import lotr.common.tileentity.LOTRTileEntityBeacon;
-import net.minecraft.client.gui.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import java.util.UUID;
 
 public class LOTRGuiBeacon extends LOTRGuiScreenBase {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/beacon.png");

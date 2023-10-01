@@ -1,10 +1,9 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelHobbit extends LOTRModelBiped {
 	public ModelRenderer bipedChest;

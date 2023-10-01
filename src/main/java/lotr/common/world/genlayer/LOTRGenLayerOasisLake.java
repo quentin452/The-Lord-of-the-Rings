@@ -1,7 +1,8 @@
 package lotr.common.world.genlayer;
 
 import lotr.common.LOTRDimension;
-import lotr.common.world.biome.*;
+import lotr.common.world.biome.LOTRBiome;
+import lotr.common.world.biome.LOTRBiomeGenNearHaradOasis;
 import net.minecraft.world.World;
 
 public class LOTRGenLayerOasisLake extends LOTRGenLayer {

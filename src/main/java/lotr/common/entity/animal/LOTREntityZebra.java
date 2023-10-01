@@ -1,11 +1,12 @@
 package lotr.common.entity.animal;
 
 import lotr.common.LOTRMod;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class LOTREntityZebra extends LOTREntityHorse {

@@ -1,15 +1,22 @@
 package lotr.common.entity.projectile;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.UUID;
 
 public class LOTREntityMallornLeafBomb extends EntityThrowable {
 	public static int MAX_LEAVES_AGE = 200;

@@ -1,13 +1,14 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelEnt;
 import lotr.common.entity.npc.LOTREntityMallornEnt;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.BossStatus;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderMallornEnt extends LOTRRenderEnt {
 	public static ResourceLocation mallornEntSkin = new ResourceLocation("lotr:mob/ent/mallorn.png");

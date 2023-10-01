@@ -1,11 +1,11 @@
 package lotr.client.sound;
 
-import java.io.InputStream;
-import java.util.*;
-
 import lotr.common.world.biome.LOTRMusicRegion;
 import net.minecraft.client.audio.*;
 import net.minecraft.util.ResourceLocation;
+
+import java.io.InputStream;
+import java.util.*;
 
 public class LOTRMusicTrack extends PositionedSound {
 	public String filename;
@@ -24,6 +24,10 @@ public class LOTRMusicTrack extends PositionedSound {
 		field_147665_h = 0;
 		field_147666_i = ISound.AttenuationType.NONE;
 		filename = s;
+	}
+
+	public static ResourceLocation getMusicResource(String s) {
+		return new ResourceLocation("lotrmusic", s);
 	}
 
 	public void addAuthor(String s) {
@@ -63,6 +67,10 @@ public class LOTRMusicTrack extends PositionedSound {
 			return title;
 		}
 		return filename;
+	}
+
+	public void setTitle(String s) {
+		title = s;
 	}
 
 	public String[] getTrackInfo() {
@@ -126,14 +134,6 @@ public class LOTRMusicTrack extends PositionedSound {
 	public void loadTrack(InputStream in) {
 		loadSoundResource();
 		LOTRMusic.addTrackToRegions(this);
-	}
-
-	public void setTitle(String s) {
-		title = s;
-	}
-
-	public static ResourceLocation getMusicResource(String s) {
-		return new ResourceLocation("lotrmusic", s);
 	}
 
 	public static class TrackSoundAccessor implements ISoundEventAccessor {

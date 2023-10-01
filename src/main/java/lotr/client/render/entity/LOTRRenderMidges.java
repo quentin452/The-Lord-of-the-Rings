@@ -1,13 +1,13 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelMidge;
 import lotr.common.entity.animal.LOTREntityMidges;
 import lotr.common.entity.animal.LOTREntityMidges.Midge;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderMidges extends RenderLiving {
 	public static ResourceLocation midgeTexture = new ResourceLocation("lotr:mob/midge.png");

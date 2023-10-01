@@ -1,6 +1,7 @@
 package lotr.common.inventory;
 
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class LOTRSlotProtected extends Slot {

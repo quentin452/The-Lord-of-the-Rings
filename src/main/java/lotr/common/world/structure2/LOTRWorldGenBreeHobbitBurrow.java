@@ -1,12 +1,14 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRFoods;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityBreeHobbit;
+import lotr.common.entity.npc.LOTREntityHobbit;
+import lotr.common.entity.npc.LOTRNames;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenBreeHobbitBurrow extends LOTRWorldGenHobbitBurrow {
 	public LOTRWorldGenBreeHobbitBurrow(boolean flag) {

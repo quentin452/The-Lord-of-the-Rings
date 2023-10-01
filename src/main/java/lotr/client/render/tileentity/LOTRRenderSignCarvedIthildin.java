@@ -1,7 +1,8 @@
 package lotr.client.render.tileentity;
 
 import lotr.client.LOTRClientProxy;
-import lotr.common.tileentity.*;
+import lotr.common.tileentity.LOTRTileEntitySignCarved;
+import lotr.common.tileentity.LOTRTileEntitySignCarvedIthildin;
 import net.minecraft.tileentity.TileEntity;
 
 public class LOTRRenderSignCarvedIthildin extends LOTRRenderSignCarved {

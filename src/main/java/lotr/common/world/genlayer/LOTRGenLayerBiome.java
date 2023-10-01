@@ -1,9 +1,9 @@
 package lotr.common.world.genlayer;
 
-import java.util.Arrays;
-
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.Arrays;
 
 public class LOTRGenLayerBiome extends LOTRGenLayer {
 	public BiomeGenBase theBiome;

@@ -1,13 +1,15 @@
 package lotr.common;
 
-import java.io.*;
-import java.nio.file.Files;
-
 import cpw.mods.fml.common.FMLLog;
-import lotr.common.world.*;
-import net.minecraft.nbt.*;
+import lotr.common.world.LOTRWorldInfo;
+import lotr.common.world.LOTRWorldProvider;
+import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
+
+import java.io.File;
+import java.nio.file.Files;
 
 public class LOTRTime {
 	public static int DAY_LENGTH = 48000;

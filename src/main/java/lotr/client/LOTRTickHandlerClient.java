@@ -156,6 +156,209 @@ public class LOTRTickHandlerClient {
 		miniquestTracker = new LOTRGuiMiniquestTracker();
 	}
 
+	public static void drawAlignmentText(FontRenderer f, int x, int y, String s, float alphaF) {
+		drawBorderedText(f, x, y, s, 16772620, alphaF);
+	}
+
+	public static void drawBorderedText(FontRenderer f, int x, int y, String s, int color, float alphaF) {
+		int alpha = (int) (alphaF * 255.0F);
+		alpha = MathHelper.clamp_int(alpha, 4, 255);
+		alpha <<= 24;
+		f.drawString(s, x - 1, y - 1, alpha);
+		f.drawString(s, x, y - 1, alpha);
+		f.drawString(s, x + 1, y - 1, alpha);
+		f.drawString(s, x + 1, y, alpha);
+		f.drawString(s, x + 1, y + 1, alpha);
+		f.drawString(s, x, y + 1, alpha);
+		f.drawString(s, x - 1, y + 1, alpha);
+		f.drawString(s, x - 1, y, alpha);
+		f.drawString(s, x, y, color | alpha);
+	}
+
+	public static void drawConquestText(FontRenderer f, int x, int y, String s, boolean cleanse, float alphaF) {
+		drawBorderedText(f, x, y, s, cleanse ? 16773846 : 14833677, alphaF);
+	}
+
+	public static void drawTexturedModalRect(double x, double y, int u, int v, int width, int height) {
+		float f = 0.00390625F;
+		Tessellator tessellator = Tessellator.instance;
+		tessellator.startDrawingQuads();
+		tessellator.addVertexWithUV(x + 0.0D, y + height, 0.0D, (u) * f, (v + height) * f);
+		tessellator.addVertexWithUV(x + width, y + height, 0.0D, (u + width) * f, (v + height) * f);
+		tessellator.addVertexWithUV(x + width, y + 0.0D, 0.0D, (u + width) * f, (v) * f);
+		tessellator.addVertexWithUV(x + 0.0D, y + 0.0D, 0.0D, (u) * f, (v) * f);
+		tessellator.draw();
+	}
+
+	public static boolean isBossActive() {
+		return BossStatus.bossName != null && BossStatus.statusBarTime > 0;
+	}
+
+	public static void renderAlignmentBar(float alignment, boolean isOtherPlayer, LOTRFaction faction, float x, float y, boolean renderFacName, boolean renderValue, boolean renderLimits, boolean renderLimitValues) {
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityClientPlayerMP entityClientPlayerMP = mc.thePlayer;
+		LOTRPlayerData clientPD = LOTRLevelData.getData(entityClientPlayerMP);
+		LOTRFactionRank rank = faction.getRank(alignment);
+		boolean pledged = clientPD.isPledgedTo(faction);
+		LOTRAlignmentTicker ticker = LOTRAlignmentTicker.forFaction(faction);
+		float alignMin;
+		float alignMax;
+		LOTRFactionRank rankMin;
+		LOTRFactionRank rankMax;
+		if (rank.isDummyRank()) {
+			float firstRankAlign;
+			LOTRFactionRank firstRank = faction.getFirstRank();
+			if (firstRank != null && !firstRank.isDummyRank()) {
+				firstRankAlign = firstRank.alignment;
+			} else {
+				firstRankAlign = 10.0F;
+			}
+			if (Math.abs(alignment) < firstRankAlign) {
+				alignMin = -firstRankAlign;
+				alignMax = firstRankAlign;
+				rankMin = LOTRFactionRank.RANK_ENEMY;
+				rankMax = firstRank != null && !firstRank.isDummyRank() ? firstRank : LOTRFactionRank.RANK_NEUTRAL;
+			} else if (alignment < 0.0F) {
+				alignMax = -firstRankAlign;
+				alignMin = alignMax * 10.0F;
+				rankMin = rankMax = LOTRFactionRank.RANK_ENEMY;
+				while (alignment <= alignMin) {
+					alignMax *= 10.0F;
+					alignMin = alignMax * 10.0F;
+				}
+			} else {
+				alignMin = firstRankAlign;
+				alignMax = alignMin * 10.0F;
+				rankMin = rankMax = LOTRFactionRank.RANK_NEUTRAL;
+				while (alignment >= alignMax) {
+					alignMin = alignMax;
+					alignMax = alignMin * 10.0F;
+				}
+			}
+		} else {
+			alignMin = rank.alignment;
+			rankMin = rank;
+			LOTRFactionRank nextRank = faction.getRankAbove(rank);
+			if (nextRank != null && !nextRank.isDummyRank() && nextRank != rank) {
+				alignMax = nextRank.alignment;
+				rankMax = nextRank;
+			} else {
+				alignMax = rank.alignment * 10.0F;
+				rankMax = rank;
+				while (alignment >= alignMax) {
+					alignMin = alignMax;
+					alignMax = alignMin * 10.0F;
+				}
+			}
+		}
+		float ringProgress = (alignment - alignMin) / (alignMax - alignMin);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		mc.getTextureManager().bindTexture(LOTRClientProxy.alignmentTexture);
+		int barWidth = 232;
+		int barHeight = 14;
+		int activeBarWidth = 220;
+		float[] factionColors = faction.getFactionRGB();
+		GL11.glColor4f(factionColors[0], factionColors[1], factionColors[2], 1.0F);
+		drawTexturedModalRect(x - (double) barWidth / 2, y, 0, 14, barWidth, barHeight);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		drawTexturedModalRect(x - (double) barWidth / 2, y, 0, 0, barWidth, barHeight);
+		float ringProgressAdj = (ringProgress - 0.5F) * 2.0F;
+		int ringSize = 16;
+		float ringX = x - (float) ringSize / 2 + ringProgressAdj * activeBarWidth / 2.0F;
+		float ringY = y + (float) barHeight / 2 - (float) ringSize / 2;
+		int flashTick = ticker.flashTick;
+		if (pledged) {
+			drawTexturedModalRect(ringX, ringY, 16 * Math.round((float) flashTick / 3), 212, ringSize, ringSize);
+		} else {
+			drawTexturedModalRect(ringX, ringY, 16 * Math.round((float) flashTick / 3), 36, ringSize, ringSize);
+		}
+		if (faction.isPlayableAlignmentFaction()) {
+			float alpha;
+			boolean definedZone;
+			if (faction.inControlZone(entityClientPlayerMP)) {
+				alpha = 1.0F;
+				definedZone = faction.inDefinedControlZone(entityClientPlayerMP);
+			} else {
+				alpha = faction.getControlZoneAlignmentMultiplier(entityClientPlayerMP);
+				definedZone = true;
+			}
+			if (alpha > 0.0F) {
+				int arrowSize = 14;
+				int y0 = definedZone ? 60 : 88;
+				int y1 = definedZone ? 74 : 102;
+				GL11.glEnable(3042);
+				OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+				GL11.glColor4f(factionColors[0], factionColors[1], factionColors[2], alpha);
+				drawTexturedModalRect(x - (double) barWidth / 2 - arrowSize, y, 0, y1, arrowSize, arrowSize);
+				drawTexturedModalRect(x + (double) barWidth / 2, y, arrowSize, y1, arrowSize, arrowSize);
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
+				drawTexturedModalRect(x - (double) barWidth / 2 - arrowSize, y, 0, y0, arrowSize, arrowSize);
+				drawTexturedModalRect(x + (double) barWidth / 2, y, arrowSize, y0, arrowSize, arrowSize);
+				GL11.glDisable(3042);
+			}
+		}
+		FontRenderer fr = mc.fontRenderer;
+		int textX = Math.round(x);
+		int textY = Math.round(y + barHeight + 4.0F);
+		if (renderLimits) {
+			String sMin = rankMin.getShortNameWithGender(clientPD);
+			String sMax = rankMax.getShortNameWithGender(clientPD);
+			if (renderLimitValues) {
+				sMin = StatCollector.translateToLocalFormatted("lotr.gui.factions.alignment.limits", sMin, LOTRAlignmentValues.formatAlignForDisplay(alignMin));
+				sMax = StatCollector.translateToLocalFormatted("lotr.gui.factions.alignment.limits", sMax, LOTRAlignmentValues.formatAlignForDisplay(alignMax));
+			}
+			int limitsX = barWidth / 2 - 6;
+			int xMin = Math.round(x - limitsX);
+			int xMax = Math.round(x + limitsX);
+			GL11.glPushMatrix();
+			GL11.glScalef(0.5F, 0.5F, 0.5F);
+			drawAlignmentText(fr, xMin * 2 - fr.getStringWidth(sMin) / 2, textY * 2, sMin, 1.0F);
+			drawAlignmentText(fr, xMax * 2 - fr.getStringWidth(sMax) / 2, textY * 2, sMax, 1.0F);
+			GL11.glPopMatrix();
+		}
+		if (renderFacName) {
+			String name = faction.factionName();
+			drawAlignmentText(fr, textX - fr.getStringWidth(name) / 2, textY, name, 1.0F);
+		}
+		if (renderValue) {
+			String alignS;
+			float alignAlpha;
+			int numericalTick = ticker.numericalTick;
+			if (numericalTick > 0) {
+				alignS = LOTRAlignmentValues.formatAlignForDisplay(alignment);
+				alignAlpha = LOTRFunctions.triangleWave(numericalTick, 0.7F, 1.0F, 30.0F);
+				int fadeTick = 15;
+				if (numericalTick < fadeTick) {
+					alignAlpha *= 0;
+				}
+			} else {
+				alignS = rank.getShortNameWithGender(clientPD);
+				alignAlpha = 1.0F;
+			}
+			GL11.glEnable(3042);
+			OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+			drawAlignmentText(fr, textX - fr.getStringWidth(alignS) / 2, textY + fr.FONT_HEIGHT + 3, alignS, alignAlpha);
+			GL11.glDisable(3042);
+		}
+	}
+
+	public static void renderAlignmentDrain(Minecraft mc, int x, int y, int numFactions) {
+		renderAlignmentDrain(mc, x, y, numFactions, 1.0F);
+	}
+
+	public static void renderAlignmentDrain(Minecraft mc, int x, int y, int numFactions, float alpha) {
+		GL11.glEnable(3042);
+		OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
+		mc.getTextureManager().bindTexture(LOTRClientProxy.alignmentTexture);
+		drawTexturedModalRect(x, y, 0, 128, 16, 16);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		String s = "-" + numFactions;
+		FontRenderer fr = mc.fontRenderer;
+		drawBorderedText(fr, x + 8 - fr.getStringWidth(s) / 2, y + 8 - fr.FONT_HEIGHT / 2, s, 16777215, alpha);
+		GL11.glDisable(3042);
+	}
+
 	@SubscribeEvent
 	public void getItemTooltip(ItemTooltipEvent event) {
 		ItemStack itemstack = event.itemStack;
@@ -1366,208 +1569,5 @@ public class LOTRTickHandlerClient {
 				players.remove(entityplayer);
 			}
 		}
-	}
-
-	public static void drawAlignmentText(FontRenderer f, int x, int y, String s, float alphaF) {
-		drawBorderedText(f, x, y, s, 16772620, alphaF);
-	}
-
-	public static void drawBorderedText(FontRenderer f, int x, int y, String s, int color, float alphaF) {
-		int alpha = (int) (alphaF * 255.0F);
-		alpha = MathHelper.clamp_int(alpha, 4, 255);
-		alpha <<= 24;
-		f.drawString(s, x - 1, y - 1, alpha);
-		f.drawString(s, x, y - 1, alpha);
-		f.drawString(s, x + 1, y - 1, alpha);
-		f.drawString(s, x + 1, y, alpha);
-		f.drawString(s, x + 1, y + 1, alpha);
-		f.drawString(s, x, y + 1, alpha);
-		f.drawString(s, x - 1, y + 1, alpha);
-		f.drawString(s, x - 1, y, alpha);
-		f.drawString(s, x, y, color | alpha);
-	}
-
-	public static void drawConquestText(FontRenderer f, int x, int y, String s, boolean cleanse, float alphaF) {
-		drawBorderedText(f, x, y, s, cleanse ? 16773846 : 14833677, alphaF);
-	}
-
-	public static void drawTexturedModalRect(double x, double y, int u, int v, int width, int height) {
-		float f = 0.00390625F;
-		Tessellator tessellator = Tessellator.instance;
-		tessellator.startDrawingQuads();
-		tessellator.addVertexWithUV(x + 0.0D, y + height, 0.0D, (u) * f, (v + height) * f);
-		tessellator.addVertexWithUV(x + width, y + height, 0.0D, (u + width) * f, (v + height) * f);
-		tessellator.addVertexWithUV(x + width, y + 0.0D, 0.0D, (u + width) * f, (v) * f);
-		tessellator.addVertexWithUV(x + 0.0D, y + 0.0D, 0.0D, (u) * f, (v) * f);
-		tessellator.draw();
-	}
-
-	public static boolean isBossActive() {
-		return BossStatus.bossName != null && BossStatus.statusBarTime > 0;
-	}
-
-	public static void renderAlignmentBar(float alignment, boolean isOtherPlayer, LOTRFaction faction, float x, float y, boolean renderFacName, boolean renderValue, boolean renderLimits, boolean renderLimitValues) {
-		Minecraft mc = Minecraft.getMinecraft();
-		EntityClientPlayerMP entityClientPlayerMP = mc.thePlayer;
-		LOTRPlayerData clientPD = LOTRLevelData.getData(entityClientPlayerMP);
-		LOTRFactionRank rank = faction.getRank(alignment);
-		boolean pledged = clientPD.isPledgedTo(faction);
-		LOTRAlignmentTicker ticker = LOTRAlignmentTicker.forFaction(faction);
-		float alignMin;
-		float alignMax;
-		LOTRFactionRank rankMin;
-		LOTRFactionRank rankMax;
-		if (rank.isDummyRank()) {
-			float firstRankAlign;
-			LOTRFactionRank firstRank = faction.getFirstRank();
-			if (firstRank != null && !firstRank.isDummyRank()) {
-				firstRankAlign = firstRank.alignment;
-			} else {
-				firstRankAlign = 10.0F;
-			}
-			if (Math.abs(alignment) < firstRankAlign) {
-				alignMin = -firstRankAlign;
-				alignMax = firstRankAlign;
-				rankMin = LOTRFactionRank.RANK_ENEMY;
-				rankMax = firstRank != null && !firstRank.isDummyRank() ? firstRank : LOTRFactionRank.RANK_NEUTRAL;
-			} else if (alignment < 0.0F) {
-				alignMax = -firstRankAlign;
-				alignMin = alignMax * 10.0F;
-				rankMin = rankMax = LOTRFactionRank.RANK_ENEMY;
-				while (alignment <= alignMin) {
-					alignMax *= 10.0F;
-					alignMin = alignMax * 10.0F;
-				}
-			} else {
-				alignMin = firstRankAlign;
-				alignMax = alignMin * 10.0F;
-				rankMin = rankMax = LOTRFactionRank.RANK_NEUTRAL;
-				while (alignment >= alignMax) {
-					alignMin = alignMax;
-					alignMax = alignMin * 10.0F;
-				}
-			}
-		} else {
-			alignMin = rank.alignment;
-			rankMin = rank;
-			LOTRFactionRank nextRank = faction.getRankAbove(rank);
-			if (nextRank != null && !nextRank.isDummyRank() && nextRank != rank) {
-				alignMax = nextRank.alignment;
-				rankMax = nextRank;
-			} else {
-				alignMax = rank.alignment * 10.0F;
-				rankMax = rank;
-				while (alignment >= alignMax) {
-					alignMin = alignMax;
-					alignMax = alignMin * 10.0F;
-				}
-			}
-		}
-		float ringProgress = (alignment - alignMin) / (alignMax - alignMin);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.getTextureManager().bindTexture(LOTRClientProxy.alignmentTexture);
-		int barWidth = 232;
-		int barHeight = 14;
-		int activeBarWidth = 220;
-		float[] factionColors = faction.getFactionRGB();
-		GL11.glColor4f(factionColors[0], factionColors[1], factionColors[2], 1.0F);
-		drawTexturedModalRect(x - (double) barWidth / 2, y, 0, 14, barWidth, barHeight);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawTexturedModalRect(x - (double) barWidth / 2, y, 0, 0, barWidth, barHeight);
-		float ringProgressAdj = (ringProgress - 0.5F) * 2.0F;
-		int ringSize = 16;
-		float ringX = x - (float) ringSize / 2 + ringProgressAdj * activeBarWidth / 2.0F;
-		float ringY = y + (float) barHeight / 2 - (float) ringSize / 2;
-		int flashTick = ticker.flashTick;
-		if (pledged) {
-			drawTexturedModalRect(ringX, ringY, 16 * Math.round((float) flashTick / 3), 212, ringSize, ringSize);
-		} else {
-			drawTexturedModalRect(ringX, ringY, 16 * Math.round((float) flashTick / 3), 36, ringSize, ringSize);
-		}
-		if (faction.isPlayableAlignmentFaction()) {
-			float alpha;
-			boolean definedZone;
-			if (faction.inControlZone(entityClientPlayerMP)) {
-				alpha = 1.0F;
-				definedZone = faction.inDefinedControlZone(entityClientPlayerMP);
-			} else {
-				alpha = faction.getControlZoneAlignmentMultiplier(entityClientPlayerMP);
-				definedZone = true;
-			}
-			if (alpha > 0.0F) {
-				int arrowSize = 14;
-				int y0 = definedZone ? 60 : 88;
-				int y1 = definedZone ? 74 : 102;
-				GL11.glEnable(3042);
-				OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-				GL11.glColor4f(factionColors[0], factionColors[1], factionColors[2], alpha);
-				drawTexturedModalRect(x - (double) barWidth / 2 - arrowSize, y, 0, y1, arrowSize, arrowSize);
-				drawTexturedModalRect(x + (double) barWidth / 2, y, arrowSize, y1, arrowSize, arrowSize);
-				GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
-				drawTexturedModalRect(x - (double) barWidth / 2 - arrowSize, y, 0, y0, arrowSize, arrowSize);
-				drawTexturedModalRect(x + (double) barWidth / 2, y, arrowSize, y0, arrowSize, arrowSize);
-				GL11.glDisable(3042);
-			}
-		}
-		FontRenderer fr = mc.fontRenderer;
-		int textX = Math.round(x);
-		int textY = Math.round(y + barHeight + 4.0F);
-		if (renderLimits) {
-			String sMin = rankMin.getShortNameWithGender(clientPD);
-			String sMax = rankMax.getShortNameWithGender(clientPD);
-			if (renderLimitValues) {
-				sMin = StatCollector.translateToLocalFormatted("lotr.gui.factions.alignment.limits", sMin, LOTRAlignmentValues.formatAlignForDisplay(alignMin));
-				sMax = StatCollector.translateToLocalFormatted("lotr.gui.factions.alignment.limits", sMax, LOTRAlignmentValues.formatAlignForDisplay(alignMax));
-			}
-			int limitsX = barWidth / 2 - 6;
-			int xMin = Math.round(x - limitsX);
-			int xMax = Math.round(x + limitsX);
-			GL11.glPushMatrix();
-			GL11.glScalef(0.5F, 0.5F, 0.5F);
-			drawAlignmentText(fr, xMin * 2 - fr.getStringWidth(sMin) / 2, textY * 2, sMin, 1.0F);
-			drawAlignmentText(fr, xMax * 2 - fr.getStringWidth(sMax) / 2, textY * 2, sMax, 1.0F);
-			GL11.glPopMatrix();
-		}
-		if (renderFacName) {
-			String name = faction.factionName();
-			drawAlignmentText(fr, textX - fr.getStringWidth(name) / 2, textY, name, 1.0F);
-		}
-		if (renderValue) {
-			String alignS;
-			float alignAlpha;
-			int numericalTick = ticker.numericalTick;
-			if (numericalTick > 0) {
-				alignS = LOTRAlignmentValues.formatAlignForDisplay(alignment);
-				alignAlpha = LOTRFunctions.triangleWave(numericalTick, 0.7F, 1.0F, 30.0F);
-				int fadeTick = 15;
-				if (numericalTick < fadeTick) {
-					alignAlpha *= 0;
-				}
-			} else {
-				alignS = rank.getShortNameWithGender(clientPD);
-				alignAlpha = 1.0F;
-			}
-			GL11.glEnable(3042);
-			OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-			drawAlignmentText(fr, textX - fr.getStringWidth(alignS) / 2, textY + fr.FONT_HEIGHT + 3, alignS, alignAlpha);
-			GL11.glDisable(3042);
-		}
-	}
-
-	public static void renderAlignmentDrain(Minecraft mc, int x, int y, int numFactions) {
-		renderAlignmentDrain(mc, x, y, numFactions, 1.0F);
-	}
-
-	public static void renderAlignmentDrain(Minecraft mc, int x, int y, int numFactions, float alpha) {
-		GL11.glEnable(3042);
-		OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
-		mc.getTextureManager().bindTexture(LOTRClientProxy.alignmentTexture);
-		drawTexturedModalRect(x, y, 0, 128, 16, 16);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		String s = "-" + numFactions;
-		FontRenderer fr = mc.fontRenderer;
-		drawBorderedText(fr, x + 8 - fr.getStringWidth(s) / 2, y + 8 - fr.FONT_HEIGHT / 2, s, 16777215, alpha);
-		GL11.glDisable(3042);
 	}
 }

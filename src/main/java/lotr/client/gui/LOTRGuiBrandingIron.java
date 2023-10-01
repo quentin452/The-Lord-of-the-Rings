@@ -1,15 +1,17 @@
 package lotr.client.gui;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import org.apache.commons.lang3.StringUtils;
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.item.LOTRItemBrandingIron;
-import lotr.common.network.*;
-import net.minecraft.client.gui.*;
+import lotr.common.network.LOTRPacketBrandingIron;
+import lotr.common.network.LOTRPacketHandler;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.apache.commons.lang3.StringUtils;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiBrandingIron extends LOTRGuiScreenBase {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/brandingIron.png");

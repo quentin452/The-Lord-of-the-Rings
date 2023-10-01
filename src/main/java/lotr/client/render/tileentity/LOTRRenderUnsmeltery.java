@@ -1,7 +1,5 @@
 package lotr.client.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelUnsmeltery;
 import lotr.common.block.LOTRBlockForgeBase;
 import lotr.common.tileentity.LOTRTileEntityUnsmeltery;
@@ -9,6 +7,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderUnsmeltery extends TileEntitySpecialRenderer {
 	public ModelBase unsmelteryModel = new LOTRModelUnsmeltery();

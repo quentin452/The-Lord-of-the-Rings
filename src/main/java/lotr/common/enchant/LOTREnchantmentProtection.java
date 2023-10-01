@@ -1,7 +1,9 @@
 package lotr.common.enchant;
 
 import lotr.common.item.LOTRMaterial;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 public class LOTREnchantmentProtection extends LOTREnchantment {

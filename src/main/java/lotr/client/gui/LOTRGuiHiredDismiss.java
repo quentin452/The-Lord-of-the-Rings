@@ -2,7 +2,8 @@ package lotr.client.gui;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.entity.npc.LOTREntityNPC;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketHiredUnitDismiss;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.StatCollector;

@@ -1,14 +1,24 @@
 package lotr.common.world.biome;
 
-import lotr.common.*;
-import lotr.common.entity.animal.*;
-import lotr.common.entity.npc.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
+import lotr.common.entity.animal.LOTREntityHorse;
+import lotr.common.entity.animal.LOTREntitySeagull;
+import lotr.common.entity.npc.LOTREntityBlueDwarfMerchant;
+import lotr.common.entity.npc.LOTREntityGaladhrimTrader;
+import lotr.common.entity.npc.LOTREntityRivendellTrader;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRTreeType;
-import lotr.common.world.map.*;
-import lotr.common.world.spawning.*;
+import lotr.common.world.map.LOTRRoadType;
+import lotr.common.world.map.LOTRWaypoint;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRInvasions;
+import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure.LOTRWorldGenHighElvenHall;
-import lotr.common.world.structure2.*;
+import lotr.common.world.structure2.LOTRWorldGenHighElfHouse;
+import lotr.common.world.structure2.LOTRWorldGenHighElvenForge;
+import lotr.common.world.structure2.LOTRWorldGenHighElvenTower;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 

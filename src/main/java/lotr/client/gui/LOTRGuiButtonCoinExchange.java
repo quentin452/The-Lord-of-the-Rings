@@ -1,9 +1,8 @@
 package lotr.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiButtonCoinExchange extends GuiButton {
 	public LOTRGuiButtonCoinExchange(int i, int j, int k) {

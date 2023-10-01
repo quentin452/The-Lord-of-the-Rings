@@ -1,10 +1,10 @@
 package lotr.common.world.biome.variant;
 
-import java.util.Random;
-
 import lotr.common.util.LOTRFunctions;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
+
+import java.util.Random;
 
 public class LOTRBiomeVariantDunes extends LOTRBiomeVariant {
 	public static NoiseGeneratorPerlin duneWaveNoise = new NoiseGeneratorPerlin(new Random(305620668206968L), 1);

@@ -1,14 +1,18 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
-import lotr.common.entity.npc.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
+import lotr.common.entity.npc.LOTREntityDaleBaker;
+import lotr.common.entity.npc.LOTRNames;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenDaleBakery extends LOTRWorldGenDaleStructure {
 	public LOTRWorldGenDaleBakery(boolean flag) {

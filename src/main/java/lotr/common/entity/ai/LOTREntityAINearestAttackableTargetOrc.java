@@ -1,6 +1,7 @@
 package lotr.common.entity.ai;
 
-import lotr.common.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.fac.LOTRFaction;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.EntityCreature;

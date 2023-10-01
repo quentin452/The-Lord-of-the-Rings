@@ -4,7 +4,8 @@ import lotr.common.LOTRDimension;
 import lotr.common.world.map.LOTRFixedStructures;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.*;
+import net.minecraft.world.Teleporter;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 
 public class LOTRTeleporterUtumno extends Teleporter {
@@ -15,6 +16,15 @@ public class LOTRTeleporterUtumno extends Teleporter {
 	public LOTRTeleporterUtumno(WorldServer world) {
 		super(world);
 		worldObj = world;
+	}
+
+	public static LOTRTeleporterUtumno newTeleporter(int dimension) {
+		WorldServer world = DimensionManager.getWorld(dimension);
+		if (world == null) {
+			DimensionManager.initDimension(dimension);
+			world = DimensionManager.getWorld(dimension);
+		}
+		return new LOTRTeleporterUtumno(world);
 	}
 
 	@Override
@@ -69,14 +79,5 @@ public class LOTRTeleporterUtumno extends Teleporter {
 	public void setTargetCoords(int x, int z) {
 		targetX = x;
 		targetZ = z;
-	}
-
-	public static LOTRTeleporterUtumno newTeleporter(int dimension) {
-		WorldServer world = DimensionManager.getWorld(dimension);
-		if (world == null) {
-			DimensionManager.initDimension(dimension);
-			world = DimensionManager.getWorld(dimension);
-		}
-		return new LOTRTeleporterUtumno(world);
 	}
 }

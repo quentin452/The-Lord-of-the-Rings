@@ -1,10 +1,9 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenGondorTownWall extends LOTRWorldGenGondorStructure {
 	public int xMin;
@@ -22,6 +21,34 @@ public class LOTRWorldGenGondorTownWall extends LOTRWorldGenGondorStructure {
 		xMax = x1;
 		xMinInner = xi0;
 		xMaxInner = xi1;
+	}
+
+	public static LOTRWorldGenGondorTownWall Centre(boolean flag) {
+		return new LOTRWorldGenGondorTownWall(flag, -5, 5);
+	}
+
+	public static LOTRWorldGenGondorTownWall Left(boolean flag) {
+		return new LOTRWorldGenGondorTownWall(flag, -9, 6);
+	}
+
+	public static LOTRWorldGenGondorTownWall LeftEnd(boolean flag) {
+		return new LOTRWorldGenGondorTownWall(flag, -6, 6, -5, 6);
+	}
+
+	public static LOTRWorldGenGondorTownWall LeftEndShort(boolean flag) {
+		return new LOTRWorldGenGondorTownWall(flag, -5, 6);
+	}
+
+	public static LOTRWorldGenGondorTownWall Right(boolean flag) {
+		return new LOTRWorldGenGondorTownWall(flag, -6, 9);
+	}
+
+	public static LOTRWorldGenGondorTownWall RightEnd(boolean flag) {
+		return new LOTRWorldGenGondorTownWall(flag, -6, 6, -6, 5);
+	}
+
+	public static LOTRWorldGenGondorTownWall RightEndShort(boolean flag) {
+		return new LOTRWorldGenGondorTownWall(flag, -6, 5);
 	}
 
 	@Override
@@ -70,33 +97,5 @@ public class LOTRWorldGenGondorTownWall extends LOTRWorldGenGondorStructure {
 			}
 		}
 		return true;
-	}
-
-	public static LOTRWorldGenGondorTownWall Centre(boolean flag) {
-		return new LOTRWorldGenGondorTownWall(flag, -5, 5);
-	}
-
-	public static LOTRWorldGenGondorTownWall Left(boolean flag) {
-		return new LOTRWorldGenGondorTownWall(flag, -9, 6);
-	}
-
-	public static LOTRWorldGenGondorTownWall LeftEnd(boolean flag) {
-		return new LOTRWorldGenGondorTownWall(flag, -6, 6, -5, 6);
-	}
-
-	public static LOTRWorldGenGondorTownWall LeftEndShort(boolean flag) {
-		return new LOTRWorldGenGondorTownWall(flag, -5, 6);
-	}
-
-	public static LOTRWorldGenGondorTownWall Right(boolean flag) {
-		return new LOTRWorldGenGondorTownWall(flag, -6, 9);
-	}
-
-	public static LOTRWorldGenGondorTownWall RightEnd(boolean flag) {
-		return new LOTRWorldGenGondorTownWall(flag, -6, 6, -6, 5);
-	}
-
-	public static LOTRWorldGenGondorTownWall RightEndShort(boolean flag) {
-		return new LOTRWorldGenGondorTownWall(flag, -6, 5);
 	}
 }

@@ -1,12 +1,11 @@
 package lotr.client.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelTrollTotem;
 import lotr.common.tileentity.LOTRTileEntityTrollTotem;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderTrollTotem extends TileEntitySpecialRenderer {
 	public LOTRModelTrollTotem totemModel = new LOTRModelTrollTotem();

@@ -1,13 +1,17 @@
 package lotr.client.gui;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.LOTRSquadrons;
-import lotr.common.network.*;
-import net.minecraft.client.gui.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketItemSquadron;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.StringUtils;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiSquadronItem extends LOTRGuiScreenBase {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/squadronItem.png");

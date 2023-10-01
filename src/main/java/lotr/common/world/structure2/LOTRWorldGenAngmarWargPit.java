@@ -1,14 +1,16 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityAngmarOrc;
+import lotr.common.entity.npc.LOTREntityAngmarWarg;
+import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.item.LOTRItemBanner;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenAngmarWargPit extends LOTRWorldGenWargPitBase {
 	public LOTRWorldGenAngmarWargPit(boolean flag) {

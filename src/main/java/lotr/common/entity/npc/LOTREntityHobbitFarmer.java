@@ -1,6 +1,8 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityUtils;
 import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
 import lotr.common.item.LOTRItemLeatherHat;

@@ -1,10 +1,12 @@
 package lotr.common.fac;
 
-import java.text.*;
-
 import lotr.common.util.LOTRLog;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.*;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 
 public class LOTRAlignmentValues {
 	public static float MAX_ALIGNMENT = 10000.0f;

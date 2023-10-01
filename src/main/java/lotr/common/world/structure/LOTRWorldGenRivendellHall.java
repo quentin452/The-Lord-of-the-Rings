@@ -1,11 +1,14 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityElf;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTREntityRivendellElf;
+import lotr.common.entity.npc.LOTREntityRivendellLord;
 import lotr.common.item.LOTRItemBanner;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenRivendellHall extends LOTRWorldGenHighElvenHall {
 	public LOTRWorldGenRivendellHall(boolean flag) {

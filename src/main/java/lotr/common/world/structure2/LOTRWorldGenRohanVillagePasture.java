@@ -1,11 +1,11 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenRohanVillagePasture extends LOTRWorldGenRohanStructure {
 	public LOTRWorldGenRohanVillagePasture(boolean flag) {

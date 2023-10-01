@@ -2,8 +2,10 @@ package lotr.common.entity.npc;
 
 import lotr.common.LOTRAchievement;
 import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
-import lotr.common.quest.*;
-import net.minecraft.entity.*;
+import lotr.common.quest.LOTRMiniQuest;
+import lotr.common.quest.LOTRMiniQuestFactory;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
 
 public class LOTREntityRuffianBrute extends LOTREntityBreeRuffian {

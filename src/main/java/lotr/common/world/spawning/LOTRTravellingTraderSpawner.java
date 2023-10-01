@@ -1,11 +1,10 @@
 package lotr.common.world.spawning;
 
-import java.util.Random;
-
 import cpw.mods.fml.common.eventhandler.Event;
 import lotr.common.LOTRLevelData;
 import lotr.common.entity.LOTREntities;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTRTravellingTrader;
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityList;
@@ -16,6 +15,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.event.ForgeEventFactory;
 
+import java.util.Random;
+
 public class LOTRTravellingTraderSpawner {
 	public static Random rand = new Random();
 	public Class theEntityClass;
@@ -25,6 +26,12 @@ public class LOTRTravellingTraderSpawner {
 	public LOTRTravellingTraderSpawner(Class<? extends LOTREntityNPC> entityClass) {
 		theEntityClass = entityClass;
 		entityClassName = LOTREntities.getStringFromClass(theEntityClass);
+	}
+
+	public static int getRandomTraderTime() {
+		float minHours = 0.8f;
+		float maxHours = 10.0f;
+		return MathHelper.getRandomIntegerInRange(rand, (int) (minHours * 3600.0f) * 20, (int) (maxHours * 3600.0f) * 20);
 	}
 
 	public void performSpawning(World world) {
@@ -84,11 +91,5 @@ public class LOTRTravellingTraderSpawner {
 
 	public void writeToNBT(NBTTagCompound nbt) {
 		nbt.setInteger("TraderTime", timeUntilTrader);
-	}
-
-	public static int getRandomTraderTime() {
-		float minHours = 0.8f;
-		float maxHours = 10.0f;
-		return MathHelper.getRandomIntegerInRange(rand, (int) (minHours * 3600.0f) * 20, (int) (maxHours * 3600.0f) * 20);
 	}
 }

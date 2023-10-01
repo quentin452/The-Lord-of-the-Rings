@@ -1,13 +1,15 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityTauredainFarmer;
+import lotr.common.entity.npc.LOTREntityTauredainFarmhand;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenTauredainVillageFarm extends LOTRWorldGenTauredainHouse {
 	public Block cropBlock;

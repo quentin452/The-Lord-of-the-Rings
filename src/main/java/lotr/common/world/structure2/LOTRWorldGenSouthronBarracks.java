@@ -1,11 +1,13 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityNearHaradrimArcher;
+import lotr.common.entity.npc.LOTREntityNearHaradrimBase;
+import lotr.common.entity.npc.LOTREntityNearHaradrimWarrior;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenSouthronBarracks extends LOTRWorldGenSouthronStructure {
 	public LOTRWorldGenSouthronBarracks(boolean flag) {

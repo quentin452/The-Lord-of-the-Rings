@@ -1,12 +1,12 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityRohanBarrowWraith;
 import lotr.common.world.biome.LOTRBiomeGenRohan;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenRohanBarrow extends LOTRWorldGenStructureBase {
 	public LOTRWorldGenRohanBarrow(boolean flag) {

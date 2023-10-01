@@ -8,6 +8,14 @@ public class LOTRGenLayerZoom extends LOTRGenLayer {
 		lotrParent = layer;
 	}
 
+	public static LOTRGenLayer magnify(long seed, LOTRGenLayer source, int zooms) {
+		LOTRGenLayer layer = source;
+		for (int i = 0; i < zooms; ++i) {
+			layer = new LOTRGenLayerZoom(seed + i, layer);
+		}
+		return layer;
+	}
+
 	@Override
 	public int[] getInts(World world, int i, int k, int xSize, int zSize) {
 		int i1 = i >> 1;
@@ -37,13 +45,5 @@ public class LOTRGenLayerZoom extends LOTRGenLayer {
 			System.arraycopy(ints, (k3 + (k & 1)) * i2 + (i & 1), zoomedInts, k3 * xSize, xSize);
 		}
 		return zoomedInts;
-	}
-
-	public static LOTRGenLayer magnify(long seed, LOTRGenLayer source, int zooms) {
-		LOTRGenLayer layer = source;
-		for (int i = 0; i < zooms; ++i) {
-			layer = new LOTRGenLayerZoom(seed + i, layer);
-		}
-		return layer;
 	}
 }

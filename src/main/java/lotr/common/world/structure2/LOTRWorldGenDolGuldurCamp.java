@@ -1,11 +1,14 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityDolGuldurOrc;
+import lotr.common.entity.npc.LOTREntityDolGuldurOrcArcher;
+import lotr.common.entity.npc.LOTREntityDolGuldurOrcTrader;
+import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenDolGuldurCamp extends LOTRWorldGenCampBase {
 	public LOTRWorldGenDolGuldurCamp(boolean flag) {

@@ -1,13 +1,16 @@
 package lotr.client.render.entity;
 
-import lotr.common.entity.LOTRRandomSkinEntity;
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRTextures;
 import lotr.client.model.LOTRModelOrc;
-import lotr.common.entity.npc.*;
-import net.minecraft.entity.*;
+import lotr.common.entity.LOTRRandomSkinEntity;
+import lotr.common.entity.npc.LOTREntityBlackUruk;
+import lotr.common.entity.npc.LOTREntityOrc;
+import lotr.common.entity.npc.LOTREntityUrukHai;
+import lotr.common.entity.npc.LOTREntityUrukHaiBerserker;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderOrc extends LOTRRenderBiped {
 	public static LOTRRandomSkins orcSkins;

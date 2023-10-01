@@ -1,10 +1,9 @@
 package lotr.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.MathHelper;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiSlider extends GuiButton {
 	public String baseDisplayString;
@@ -58,8 +57,18 @@ public class LOTRGuiSlider extends GuiButton {
 		return minValue + Math.round(sliderValue * (maxValue - minValue));
 	}
 
+	public void setSliderValue(int value) {
+		value = MathHelper.clamp_int(value, minValue, maxValue);
+		sliderValue = (float) (value - minValue) / (maxValue - minValue);
+	}
+
 	public float getSliderValue_F() {
 		return minValueF + sliderValue * (maxValueF - minValueF);
+	}
+
+	public void setSliderValue_F(float value) {
+		value = MathHelper.clamp_float(value, minValueF, maxValueF);
+		sliderValue = (value - minValueF) / (maxValueF - minValueF);
 	}
 
 	@Override
@@ -125,16 +134,6 @@ public class LOTRGuiSlider extends GuiButton {
 
 	public void setOverrideStateString(String s) {
 		overrideStateString = s;
-	}
-
-	public void setSliderValue(int value) {
-		value = MathHelper.clamp_int(value, minValue, maxValue);
-		sliderValue = (float) (value - minValue) / (maxValue - minValue);
-	}
-
-	public void setSliderValue_F(float value) {
-		value = MathHelper.clamp_float(value, minValueF, maxValueF);
-		sliderValue = (value - minValueF) / (maxValueF - minValueF);
 	}
 
 	public void setValueOnly() {

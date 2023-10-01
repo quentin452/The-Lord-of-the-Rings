@@ -1,6 +1,7 @@
 package lotr.client.model;
 
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.model.ModelZombie;
 
 public class LOTRModelSkeleton extends ModelZombie {
 	public LOTRModelSkeleton() {

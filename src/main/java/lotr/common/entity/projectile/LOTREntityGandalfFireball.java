@@ -1,17 +1,21 @@
 package lotr.common.entity.projectile;
 
-import java.util.List;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.fac.LOTRFaction;
-import lotr.common.network.*;
-import net.minecraft.entity.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketWeaponFX;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTREntityGandalfFireball extends EntityThrowable {
 	public int animationTick;
@@ -67,6 +71,10 @@ public class LOTREntityGandalfFireball extends EntityThrowable {
 		return dataWatcher.getWatchableObjectShort(16);
 	}
 
+	public void setFireballAge(int age) {
+		dataWatcher.updateObject(16, (short) age);
+	}
+
 	@Override
 	public float getGravityVelocity() {
 		return 0.0f;
@@ -115,10 +123,6 @@ public class LOTREntityGandalfFireball extends EntityThrowable {
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		setFireballAge(nbt.getInteger("FireballAge"));
-	}
-
-	public void setFireballAge(int age) {
-		dataWatcher.updateObject(16, (short) age);
 	}
 
 	@Override

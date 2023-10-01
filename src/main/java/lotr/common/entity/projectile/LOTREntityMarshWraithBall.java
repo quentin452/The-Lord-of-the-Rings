@@ -1,10 +1,14 @@
 package lotr.common.entity.projectile;
 
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.*;
-import net.minecraft.util.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class LOTREntityMarshWraithBall extends EntityThrowable {
@@ -61,6 +65,10 @@ public class LOTREntityMarshWraithBall extends EntityThrowable {
 		return dataWatcher.getWatchableObjectShort(16);
 	}
 
+	public void setBallAge(int age) {
+		dataWatcher.updateObject(16, (short) age);
+	}
+
 	@Override
 	public float getGravityVelocity() {
 		return 0.0f;
@@ -107,10 +115,6 @@ public class LOTREntityMarshWraithBall extends EntityThrowable {
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		setBallAge(nbt.getInteger("BallAge"));
-	}
-
-	public void setBallAge(int age) {
-		dataWatcher.updateObject(16, (short) age);
 	}
 
 	@Override

@@ -1,13 +1,14 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelBannerWall;
 import lotr.common.entity.item.LOTREntityBannerWall;
 import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderBannerWall extends Render {
 	public static LOTRModelBannerWall model = new LOTRModelBannerWall();

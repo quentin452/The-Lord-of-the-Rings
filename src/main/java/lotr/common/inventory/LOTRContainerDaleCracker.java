@@ -2,10 +2,14 @@ package lotr.common.inventory;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.item.LOTRItemDaleCracker;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketSealCracker;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class LOTRContainerDaleCracker extends Container {

@@ -1,16 +1,17 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRSpeechClient;
 import lotr.client.model.LOTRModelGollum;
 import lotr.common.entity.npc.LOTREntityGollum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderGollum extends RenderLiving {
 	public static ResourceLocation skin = new ResourceLocation("lotr:mob/char/gollum.png");

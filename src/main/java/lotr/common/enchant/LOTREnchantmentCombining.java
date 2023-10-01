@@ -1,10 +1,11 @@
 package lotr.common.enchant;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import lotr.common.item.LOTRItemModifierTemplate;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class LOTREnchantmentCombining {
 	public static Collection<CombineRecipe> allCombineRecipes = new ArrayList<>();

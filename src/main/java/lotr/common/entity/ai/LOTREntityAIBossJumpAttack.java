@@ -1,6 +1,7 @@
 package lotr.common.entity.ai;
 
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTRBoss;
+import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.entity.ai.EntityAIBase;
 
 public class LOTREntityAIBossJumpAttack extends EntityAIBase {

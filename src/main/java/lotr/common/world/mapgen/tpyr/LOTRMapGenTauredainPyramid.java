@@ -23,6 +23,24 @@ public class LOTRMapGenTauredainPyramid extends MapGenStructure {
 
 	public int spawnChance = 10;
 
+	public static void register() {
+		MapGenStructureIO.registerStructure(LOTRStructureTPyrStart.class, "LOTR.TPyr");
+		MapGenStructureIO.func_143031_a(LOTRComponentTauredainPyramid.class, "LOTR.TPyr.Pyramid");
+	}
+
+	public static void setupSpawnBiomes() {
+		if (spawnBiomes == null) {
+			spawnBiomes = new ArrayList();
+			for (LOTRBiome biome : LOTRDimension.MIDDLE_EARTH.biomeList) {
+				boolean flag = biome instanceof LOTRBiomeGenFarHaradJungle && !(biome instanceof LOTRBiomeGenTauredainClearing);
+				if (!flag) {
+					continue;
+				}
+				spawnBiomes.add(biome);
+			}
+		}
+	}
+
 	@Override
 	public boolean canSpawnStructureAtCoords(int i, int k) {
 		LOTRWorldChunkManager worldChunkMgr = (LOTRWorldChunkManager) worldObj.getWorldChunkManager();
@@ -56,23 +74,5 @@ public class LOTRMapGenTauredainPyramid extends MapGenStructure {
 	@Override
 	public StructureStart getStructureStart(int i, int j) {
 		return new LOTRStructureTPyrStart(worldObj, rand, i, j);
-	}
-
-	public static void register() {
-		MapGenStructureIO.registerStructure(LOTRStructureTPyrStart.class, "LOTR.TPyr");
-		MapGenStructureIO.func_143031_a(LOTRComponentTauredainPyramid.class, "LOTR.TPyr.Pyramid");
-	}
-
-	public static void setupSpawnBiomes() {
-		if (spawnBiomes == null) {
-			spawnBiomes = new ArrayList();
-			for (LOTRBiome biome : LOTRDimension.MIDDLE_EARTH.biomeList) {
-				boolean flag = biome instanceof LOTRBiomeGenFarHaradJungle && !(biome instanceof LOTRBiomeGenTauredainClearing);
-				if (!flag) {
-					continue;
-				}
-				spawnBiomes.add(biome);
-			}
-		}
 	}
 }

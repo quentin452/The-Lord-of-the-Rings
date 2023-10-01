@@ -1,11 +1,13 @@
 package lotr.common.block;
 
-import java.util.Random;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public abstract class LOTRBlockTorch extends BlockTorch {
 	protected LOTRBlockTorch() {

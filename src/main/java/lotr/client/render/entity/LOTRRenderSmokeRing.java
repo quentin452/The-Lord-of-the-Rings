@@ -1,7 +1,5 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRClientProxy;
 import lotr.client.model.LOTRModelSmokeShip;
 import lotr.common.entity.projectile.LOTREntitySmokeRing;
@@ -11,6 +9,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderSmokeRing extends Render {
 	public ModelBase magicShipModel = new LOTRModelSmokeShip();

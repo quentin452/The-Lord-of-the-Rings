@@ -1,18 +1,27 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
 import lotr.common.entity.npc.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public abstract class LOTRWorldGenGondorMarketStall extends LOTRWorldGenGondorStructure {
 	public static Class[] allStallTypes = {Greengrocer.class, Lumber.class, Mason.class, Brewer.class, Flowers.class, Butcher.class, Fish.class, Farmer.class, Blacksmith.class, Baker.class};
 
 	protected LOTRWorldGenGondorMarketStall(boolean flag) {
 		super(flag);
+	}
+
+	public static LOTRWorldGenStructureBase2 getRandomStall(Random random, boolean flag) {
+		try {
+			Class cls = allStallTypes[random.nextInt(allStallTypes.length)];
+			return (LOTRWorldGenStructureBase2) cls.getConstructor(Boolean.TYPE).newInstance(flag);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public abstract LOTREntityGondorMan createTrader(World var1);
@@ -74,16 +83,6 @@ public abstract class LOTRWorldGenGondorMarketStall extends LOTRWorldGenGondorSt
 		LOTREntityGondorMan trader = createTrader(world);
 		spawnNPCAndSetHome(trader, world, 0, 1, 0, 4);
 		return true;
-	}
-
-	public static LOTRWorldGenStructureBase2 getRandomStall(Random random, boolean flag) {
-		try {
-			Class cls = allStallTypes[random.nextInt(allStallTypes.length)];
-			return (LOTRWorldGenStructureBase2) cls.getConstructor(Boolean.TYPE).newInstance(flag);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	public static class Baker extends LOTRWorldGenGondorMarketStall {

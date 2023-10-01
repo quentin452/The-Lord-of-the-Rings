@@ -1,17 +1,23 @@
 package lotr.common.item;
 
-import java.util.List;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.*;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.fac.LOTRFaction;
-import lotr.common.network.*;
-import net.minecraft.entity.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketWeaponFX;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRItemSauronMace extends LOTRItemHammer implements LOTRStoryItem {
 	public LOTRItemSauronMace() {
@@ -19,28 +25,6 @@ public class LOTRItemSauronMace extends LOTRItemHammer implements LOTRStoryItem 
 		setMaxDamage(1500);
 		setCreativeTab(LOTRCreativeTabs.tabStory);
 		lotrWeaponDamage = 8.0f;
-	}
-
-	@Override
-	public EnumAction getItemUseAction(ItemStack itemstack) {
-		return EnumAction.bow;
-	}
-
-	@Override
-	public int getMaxItemUseDuration(ItemStack itemstack) {
-		return 40;
-	}
-
-	@Override
-	public ItemStack onEaten(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		itemstack.damageItem(2, entityplayer);
-		return useSauronMace(itemstack, world, entityplayer);
-	}
-
-	@Override
-	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		entityplayer.setItemInUse(itemstack, getMaxItemUseDuration(itemstack));
-		return itemstack;
 	}
 
 	public static ItemStack useSauronMace(ItemStack itemstack, World world, EntityLivingBase user) {
@@ -73,6 +57,28 @@ public class LOTRItemSauronMace extends LOTRItemHammer implements LOTRStoryItem 
 			IMessage packet = new LOTRPacketWeaponFX(LOTRPacketWeaponFX.Type.MACE_SAURON, user);
 			LOTRPacketHandler.networkWrapper.sendToAllAround(packet, LOTRPacketHandler.nearEntity(user, 64.0));
 		}
+		return itemstack;
+	}
+
+	@Override
+	public EnumAction getItemUseAction(ItemStack itemstack) {
+		return EnumAction.bow;
+	}
+
+	@Override
+	public int getMaxItemUseDuration(ItemStack itemstack) {
+		return 40;
+	}
+
+	@Override
+	public ItemStack onEaten(ItemStack itemstack, World world, EntityPlayer entityplayer) {
+		itemstack.damageItem(2, entityplayer);
+		return useSauronMace(itemstack, world, entityplayer);
+	}
+
+	@Override
+	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
+		entityplayer.setItemInUse(itemstack, getMaxItemUseDuration(itemstack));
 		return itemstack;
 	}
 }

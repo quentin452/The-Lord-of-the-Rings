@@ -1,20 +1,24 @@
 package lotr.common.block;
 
-import java.util.Random;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityPlate;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
 
 public class LOTRBlockPlate extends BlockContainer {
 	public static Block.SoundType soundTypePlate = new Block.SoundType("lotr:plate", 1.0f, 1.0f) {
@@ -41,6 +45,14 @@ public class LOTRBlockPlate extends BlockContainer {
 		super(Material.circuits);
 		setHardness(0.0f);
 		setBlockBounds(0.125f, 0.0f, 0.125f, 0.875f, 0.125f, 0.875f);
+	}
+
+	public static ItemStack getFoodItem(IBlockAccess world, int i, int j, int k) {
+		TileEntity tileentity = world.getTileEntity(i, j, k);
+		if (tileentity instanceof LOTRTileEntityPlate) {
+			return ((LOTRTileEntityPlate) tileentity).getFoodItem();
+		}
+		return null;
 	}
 
 	@Override
@@ -180,14 +192,6 @@ public class LOTRBlockPlate extends BlockContainer {
 
 	public void setPlateItem(Item item) {
 		plateItem = item;
-	}
-
-	public static ItemStack getFoodItem(IBlockAccess world, int i, int j, int k) {
-		TileEntity tileentity = world.getTileEntity(i, j, k);
-		if (tileentity instanceof LOTRTileEntityPlate) {
-			return ((LOTRTileEntityPlate) tileentity).getFoodItem();
-		}
-		return null;
 	}
 
 }

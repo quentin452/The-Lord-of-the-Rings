@@ -1,10 +1,12 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityCorsair;
+import lotr.common.entity.npc.LOTREntityCorsairCaptain;
+import lotr.common.entity.npc.LOTREntityCorsairSlaver;
+import lotr.common.entity.npc.LOTREntityHaradSlave;
 import lotr.common.item.LOTRItemBanner;
 import lotr.common.world.feature.LOTRTreeType;
 import lotr.common.world.structure.LOTRChestContents;
@@ -13,6 +15,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+
+import java.util.Random;
 
 public class LOTRWorldGenCorsairCove extends LOTRWorldGenCorsairStructure {
 	public LOTRWorldGenCorsairCove(boolean flag) {

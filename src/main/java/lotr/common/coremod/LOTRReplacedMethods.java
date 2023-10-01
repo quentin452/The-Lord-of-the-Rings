@@ -1,17 +1,22 @@
 package lotr.common.coremod;
 
-import java.util.*;
-
-import cpw.mods.fml.common.network.internal.*;
+import cpw.mods.fml.common.network.internal.FMLMessage;
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+import cpw.mods.fml.common.network.internal.FMLRuntimeCodec;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import io.netty.buffer.*;
-import lotr.common.*;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.LOTRReflection;
 import lotr.common.block.*;
 import lotr.common.enchant.LOTREnchantmentHelper;
 import lotr.common.entity.LOTRMountFunctions;
 import lotr.common.entity.item.LOTREntityBanner;
 import lotr.common.item.LOTRWeaponStats;
-import lotr.common.util.*;
+import lotr.common.util.LOTRCommonIcons;
+import lotr.common.util.LOTRLog;
 import lotr.common.world.spawning.LOTRSpawnerAnimals;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -20,21 +25,34 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.*;
-import net.minecraft.entity.*;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentDurability;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
-import net.minecraft.network.play.server.*;
+import net.minecraft.network.play.server.S14PacketEntity;
+import net.minecraft.network.play.server.S18PacketEntityTeleport;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+
+import java.util.*;
 
 public class LOTRReplacedMethods {
 

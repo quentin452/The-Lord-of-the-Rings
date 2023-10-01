@@ -1,11 +1,11 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+
+import java.util.Random;
 
 public abstract class LOTRWorldGenGulfStructure extends LOTRWorldGenStructureBase2 {
 	public Block trapdoorBlock;

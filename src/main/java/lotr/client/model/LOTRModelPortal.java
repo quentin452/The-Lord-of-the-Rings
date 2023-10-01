@@ -1,11 +1,11 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Vec3;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelPortal extends ModelBase {
 	public boolean isScript;

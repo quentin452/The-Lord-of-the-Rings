@@ -1,16 +1,23 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRDate;
+import lotr.common.LOTRMod;
 import lotr.common.world.LOTRWorldProvider;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.*;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class LOTRBlockLeavesBase extends BlockLeaves {
 	public static Collection allLeafBlocks = new ArrayList();
@@ -31,6 +38,33 @@ public class LOTRBlockLeavesBase extends BlockLeaves {
 			setCreativeTab(LOTRCreativeTabs.tabDeco);
 		}
 		allLeafBlocks.add(this);
+	}
+
+	public static int getBiomeLeafColor(IBlockAccess world, int i, int j, int k) {
+		int totalR = 0;
+		int totalG = 0;
+		int totalB = 0;
+		int count = 0;
+		int range = 1;
+		for (int i1 = -range; i1 <= range; ++i1) {
+			for (int k1 = -range; k1 <= range; ++k1) {
+				int biomeColor = world.getBiomeGenForCoords(i + i1, k + k1).getBiomeFoliageColor(i + i1, j, k + k1);
+				totalR += (biomeColor & 0xFF0000) >> 16;
+				totalG += (biomeColor & 0xFF00) >> 8;
+				totalB += biomeColor & 0xFF;
+				++count;
+			}
+		}
+		int avgR = totalR / count & 0xFF;
+		int avgG = totalG / count & 0xFF;
+		int avgB = totalB / count & 0xFF;
+		return avgR << 16 | avgG << 8 | avgB;
+	}
+
+	public static void setAllGraphicsLevels(boolean flag) {
+		for (Object leafBlock : allLeafBlocks) {
+			((BlockLeaves) leafBlock).setGraphicsLevel(flag);
+		}
 	}
 
 	public void addSpecialLeafDrops(List drops, World world, int i, int j, int k, int meta, int fortune) {
@@ -135,32 +169,5 @@ public class LOTRBlockLeavesBase extends BlockLeaves {
 	public boolean shouldOakUseBiomeColor() {
 		LOTRDate.Season season = LOTRDate.ShireReckoning.getSeason();
 		return season == LOTRDate.Season.SPRING || season == LOTRDate.Season.SUMMER || !(LOTRMod.proxy.getClientWorld().provider instanceof LOTRWorldProvider);
-	}
-
-	public static int getBiomeLeafColor(IBlockAccess world, int i, int j, int k) {
-		int totalR = 0;
-		int totalG = 0;
-		int totalB = 0;
-		int count = 0;
-		int range = 1;
-		for (int i1 = -range; i1 <= range; ++i1) {
-			for (int k1 = -range; k1 <= range; ++k1) {
-				int biomeColor = world.getBiomeGenForCoords(i + i1, k + k1).getBiomeFoliageColor(i + i1, j, k + k1);
-				totalR += (biomeColor & 0xFF0000) >> 16;
-				totalG += (biomeColor & 0xFF00) >> 8;
-				totalB += biomeColor & 0xFF;
-				++count;
-			}
-		}
-		int avgR = totalR / count & 0xFF;
-		int avgG = totalG / count & 0xFF;
-		int avgB = totalB / count & 0xFF;
-		return avgR << 16 | avgG << 8 | avgB;
-	}
-
-	public static void setAllGraphicsLevels(boolean flag) {
-		for (Object leafBlock : allLeafBlocks) {
-			((BlockLeaves) leafBlock).setGraphicsLevel(flag);
-		}
 	}
 }

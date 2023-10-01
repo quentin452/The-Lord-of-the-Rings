@@ -2,8 +2,10 @@ package lotr.common.world.biome;
 
 import lotr.common.LOTRAchievement;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
-import lotr.common.world.spawning.*;
-import lotr.common.world.structure2.*;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTRSpawnList;
+import lotr.common.world.structure2.LOTRWorldGenRangerCamp;
+import lotr.common.world.structure2.LOTRWorldGenTowerHillsTower;
 
 public class LOTRBiomeGenTowerHills extends LOTRBiomeGenLindon {
 	public LOTRBiomeGenTowerHills(int i, boolean major) {

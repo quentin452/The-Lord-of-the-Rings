@@ -1,15 +1,15 @@
 package lotr.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRReflectionClient;
 import lotr.common.LOTRMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.*;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiButtonRestockPouch extends GuiButton {
 	public static ResourceLocation texture = new ResourceLocation("lotr:gui/widgets.png");

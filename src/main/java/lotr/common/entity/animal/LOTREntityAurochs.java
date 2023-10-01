@@ -1,18 +1,26 @@
 package lotr.common.entity.animal;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.*;
+import lotr.common.entity.LOTREntities;
+import lotr.common.entity.LOTREntityUtils;
+import lotr.common.entity.LOTRRandomSkinEntity;
 import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAIPanic;
+import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.UUID;
 
 public class LOTREntityAurochs extends EntityCow implements LOTRRandomSkinEntity {
 	public EntityAIBase attackAI;
@@ -153,6 +161,10 @@ public class LOTREntityAurochs extends EntityCow implements LOTRRandomSkinEntity
 		return dataWatcher.getWatchableObjectByte(20) == 1;
 	}
 
+	public void setAurochsEnraged(boolean flag) {
+		dataWatcher.updateObject(20, flag ? (byte) 1 : 0);
+	}
+
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
@@ -181,10 +193,6 @@ public class LOTREntityAurochs extends EntityCow implements LOTRRandomSkinEntity
 			setAurochsEnraged(getAttackTarget() != null);
 		}
 		prevIsChild = isChild();
-	}
-
-	public void setAurochsEnraged(boolean flag) {
-		dataWatcher.updateObject(20, flag ? (byte) 1 : 0);
 	}
 
 	@Override

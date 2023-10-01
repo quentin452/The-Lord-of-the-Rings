@@ -1,6 +1,7 @@
 package lotr.common.world.map;
 
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRMod;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 
@@ -14,19 +15,6 @@ public enum LOTRFixedStructures {
 	LOTRFixedStructures(double x, double z) {
 		xCoord = LOTRWaypoint.mapToWorldX(x);
 		zCoord = LOTRWaypoint.mapToWorldZ(z);
-	}
-
-	public double distanceSqTo(EntityLivingBase entity) {
-		double dx = entity.posX - (xCoord + 0.5);
-		double dz = entity.posZ - (zCoord + 0.5);
-		return dx * dx + dz * dz;
-	}
-
-	public boolean isAt(World world, int x, int z) {
-		if (!hasMapFeatures(world)) {
-			return false;
-		}
-		return xCoord == x && zCoord == z;
 	}
 
 	public static boolean[] _mountainNear_structureNear(World world, int x, int z) {
@@ -89,5 +77,18 @@ public enum LOTRFixedStructures {
 			return true;
 		}
 		return false;
+	}
+
+	public double distanceSqTo(EntityLivingBase entity) {
+		double dx = entity.posX - (xCoord + 0.5);
+		double dz = entity.posZ - (zCoord + 0.5);
+		return dx * dx + dz * dz;
+	}
+
+	public boolean isAt(World world, int x, int z) {
+		if (!hasMapFeatures(world)) {
+			return false;
+		}
+		return xCoord == x && zCoord == z;
 	}
 }

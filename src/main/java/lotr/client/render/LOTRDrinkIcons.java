@@ -1,17 +1,19 @@
 package lotr.client.render;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.*;
-
-import javax.imageio.ImageIO;
-
 import cpw.mods.fml.common.FMLLog;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.*;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.item.Item;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRDrinkIcons {
 	public static int maskColor = 16711935;

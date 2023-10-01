@@ -1,6 +1,7 @@
 package lotr.common.item;
 
-import lotr.common.entity.item.*;
+import lotr.common.entity.item.LOTREntityRugBase;
+import lotr.common.entity.item.LOTREntityWargskinRug;
 import lotr.common.entity.npc.LOTREntityWarg;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

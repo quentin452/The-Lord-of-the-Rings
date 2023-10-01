@@ -1,7 +1,5 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityMirkwoodSpider;
 import lotr.common.world.biome.LOTRBiome;
@@ -9,6 +7,8 @@ import lotr.common.world.feature.LOTRWorldGenWebOfUngoliant;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenRuinedWoodElfTower extends LOTRWorldGenStructureBase {
 	public LOTRWorldGenRuinedWoodElfTower(boolean flag) {

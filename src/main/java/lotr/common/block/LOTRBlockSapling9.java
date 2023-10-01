@@ -1,11 +1,11 @@
 package lotr.common.block;
 
-import java.util.Random;
-
 import lotr.common.world.feature.LOTRTreeType;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+
+import java.util.Random;
 
 public class LOTRBlockSapling9 extends LOTRBlockSaplingBase {
 	public LOTRBlockSapling9() {

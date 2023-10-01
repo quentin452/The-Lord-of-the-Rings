@@ -1,10 +1,13 @@
 package lotr.common.item;
 
-import lotr.common.*;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Facing;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class LOTRItemArmorStand extends Item {

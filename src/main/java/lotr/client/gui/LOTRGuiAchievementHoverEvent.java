@@ -1,8 +1,8 @@
 package lotr.client.gui;
 
-import java.util.List;
-
 import net.minecraft.client.gui.GuiScreen;
+
+import java.util.List;
 
 public class LOTRGuiAchievementHoverEvent extends GuiScreen {
 	@Override

@@ -1,9 +1,10 @@
 package lotr.common.recipe;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import net.minecraft.item.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTREntJarRecipes {
 	public static Map<ItemStack, ItemStack> recipes = new HashMap<>();

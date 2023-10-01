@@ -1,11 +1,11 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenGondorRuin extends LOTRWorldGenStructureBase {
 	public LOTRWorldGenGondorRuin(boolean flag) {

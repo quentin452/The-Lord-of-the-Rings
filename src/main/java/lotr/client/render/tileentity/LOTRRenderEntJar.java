@@ -1,9 +1,5 @@
 package lotr.client.render.tileentity;
 
-import java.awt.Color;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityEntJar;
 import net.minecraft.client.renderer.Tessellator;
@@ -13,6 +9,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
 
 public class LOTRRenderEntJar extends TileEntitySpecialRenderer {
 	@Override

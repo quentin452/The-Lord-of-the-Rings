@@ -1,6 +1,8 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityUtils;
 import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
 import lotr.common.item.LOTRItemLeatherHat;
@@ -8,7 +10,8 @@ import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTREntityHobbitOrcharder extends LOTREntityHobbit implements LOTRTradeable {

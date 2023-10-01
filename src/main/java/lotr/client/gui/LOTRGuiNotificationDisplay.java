@@ -1,17 +1,23 @@
 package lotr.client.gui;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
-import lotr.client.*;
+import lotr.client.LOTRClientProxy;
+import lotr.client.LOTRTickHandlerClient;
 import lotr.common.LOTRAchievement;
-import lotr.common.fac.*;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 
 public class LOTRGuiNotificationDisplay extends Gui {
 	public static int guiXSize = 190;

@@ -1,22 +1,32 @@
 package lotr.common.block;
 
-import java.util.Random;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.item.LOTRItemMatch;
 import lotr.common.tileentity.LOTRTileEntityBeacon;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.*;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
 
 public class LOTRBlockBeacon extends BlockContainer {
 	public LOTRBlockBeacon() {
@@ -26,6 +36,32 @@ public class LOTRBlockBeacon extends BlockContainer {
 		setHardness(0.0f);
 		setResistance(5.0f);
 		setStepSound(Block.soundTypeWood);
+	}
+
+	public static boolean isFullyLit(IBlockAccess world, int i, int j, int k) {
+		TileEntity tileentity = world.getTileEntity(i, j, k);
+		if (tileentity instanceof LOTRTileEntityBeacon) {
+			LOTRTileEntityBeacon beacon = (LOTRTileEntityBeacon) tileentity;
+			return beacon.isFullyLit();
+		}
+		return false;
+	}
+
+	public static boolean isLit(IBlockAccess world, int i, int j, int k) {
+		TileEntity tileentity = world.getTileEntity(i, j, k);
+		if (tileentity instanceof LOTRTileEntityBeacon) {
+			LOTRTileEntityBeacon beacon = (LOTRTileEntityBeacon) tileentity;
+			return beacon.isLit();
+		}
+		return false;
+	}
+
+	public static void setLit(IBlockAccess world, int i, int j, int k, boolean lit) {
+		TileEntity tileentity = world.getTileEntity(i, j, k);
+		if (tileentity instanceof LOTRTileEntityBeacon) {
+			LOTRTileEntityBeacon beacon = (LOTRTileEntityBeacon) tileentity;
+			beacon.setLit(lit);
+		}
 	}
 
 	@Override
@@ -155,31 +191,5 @@ public class LOTRBlockBeacon extends BlockContainer {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
-	}
-
-	public static boolean isFullyLit(IBlockAccess world, int i, int j, int k) {
-		TileEntity tileentity = world.getTileEntity(i, j, k);
-		if (tileentity instanceof LOTRTileEntityBeacon) {
-			LOTRTileEntityBeacon beacon = (LOTRTileEntityBeacon) tileentity;
-			return beacon.isFullyLit();
-		}
-		return false;
-	}
-
-	public static boolean isLit(IBlockAccess world, int i, int j, int k) {
-		TileEntity tileentity = world.getTileEntity(i, j, k);
-		if (tileentity instanceof LOTRTileEntityBeacon) {
-			LOTRTileEntityBeacon beacon = (LOTRTileEntityBeacon) tileentity;
-			return beacon.isLit();
-		}
-		return false;
-	}
-
-	public static void setLit(IBlockAccess world, int i, int j, int k, boolean lit) {
-		TileEntity tileentity = world.getTileEntity(i, j, k);
-		if (tileentity instanceof LOTRTileEntityBeacon) {
-			LOTRTileEntityBeacon beacon = (LOTRTileEntityBeacon) tileentity;
-			beacon.setLit(lit);
-		}
 	}
 }

@@ -3,8 +3,10 @@ package lotr.common.dispenser;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.item.LOTRItemSpawnEgg;
 import net.minecraft.block.BlockDispenser;
-import net.minecraft.dispenser.*;
-import net.minecraft.entity.*;
+import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.dispenser.IBlockSource;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 

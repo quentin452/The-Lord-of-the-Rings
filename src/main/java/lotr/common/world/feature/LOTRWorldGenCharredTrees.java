@@ -1,15 +1,15 @@
 package lotr.common.world.feature;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.world.biome.LOTRBiomeGenMordor;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
 
 public class LOTRWorldGenCharredTrees extends WorldGenAbstractTree {
 	public LOTRWorldGenCharredTrees() {

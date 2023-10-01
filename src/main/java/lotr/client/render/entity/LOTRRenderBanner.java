@@ -1,26 +1,42 @@
 package lotr.client.render.entity;
 
-import java.util.*;
-
-import net.minecraft.client.renderer.culling.ICamera;
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelBanner;
 import lotr.common.LOTRConfig;
 import lotr.common.entity.item.LOTREntityBanner;
 import lotr.common.item.LOTRItemBanner;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.culling.Frustrum;
-import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.culling.ICamera;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class LOTRRenderBanner extends Render {
 	public static Map<LOTRItemBanner.BannerType, ResourceLocation> bannerTextures = new EnumMap<>(LOTRItemBanner.BannerType.class);
 	public static ResourceLocation standTexture = new ResourceLocation("lotr:item/banner/stand.png");
 	public static LOTRModelBanner model = new LOTRModelBanner();
 	public static ICamera bannerFrustum = new Frustrum();
+
+	public static ResourceLocation getBannerTexture(LOTRItemBanner.BannerType type) {
+		ResourceLocation r = bannerTextures.get(type);
+		if (r == null) {
+			r = new ResourceLocation("lotr:item/banner/banner_" + type.bannerName + ".png");
+			bannerTextures.put(type, r);
+		}
+		return r;
+	}
+
+	public static ResourceLocation getStandTexture(LOTRItemBanner.BannerType type) {
+		return standTexture;
+	}
 
 	@Override
 	public void doRender(Entity entity, double d, double d1, double d2, float f, float f1) {
@@ -103,18 +119,5 @@ public class LOTRRenderBanner extends Render {
 	public ResourceLocation getStandTexture(Entity entity) {
 		LOTREntityBanner banner = (LOTREntityBanner) entity;
 		return getStandTexture(banner.getBannerType());
-	}
-
-	public static ResourceLocation getBannerTexture(LOTRItemBanner.BannerType type) {
-		ResourceLocation r = bannerTextures.get(type);
-		if (r == null) {
-			r = new ResourceLocation("lotr:item/banner/banner_" + type.bannerName + ".png");
-			bannerTextures.put(type, r);
-		}
-		return r;
-	}
-
-	public static ResourceLocation getStandTexture(LOTRItemBanner.BannerType type) {
-		return standTexture;
 	}
 }

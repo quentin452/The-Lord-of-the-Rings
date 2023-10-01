@@ -1,15 +1,15 @@
 package lotr.client.render.entity;
 
-import lotr.common.entity.npc.LOTREntityNPC;
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRTextures;
 import lotr.client.model.LOTRModelSpider;
+import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.entity.npc.LOTREntitySpiderBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public abstract class LOTRRenderSpiderBase extends RenderLiving {
 	public LOTRGlowingEyes.Model eyesModel = new LOTRModelSpider(0.55f);

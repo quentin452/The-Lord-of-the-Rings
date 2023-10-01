@@ -1,16 +1,17 @@
 package lotr.client.render.entity;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
-import lotr.client.model.*;
+import lotr.client.model.LOTRModelEnt;
+import lotr.client.model.LOTRModelTroll;
 import lotr.common.entity.item.LOTREntityBossTrophy;
 import lotr.common.item.LOTRItemBossTrophy;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class LOTRRenderBossTrophy extends Render {
 	public static Map<LOTRItemBossTrophy.TrophyType, ResourceLocation> trophyTextures = new EnumMap<>(LOTRItemBossTrophy.TrophyType.class);

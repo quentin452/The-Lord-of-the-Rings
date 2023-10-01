@@ -1,9 +1,5 @@
 package lotr.client.render;
 
-import java.util.Random;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import lotr.client.render.tileentity.*;
 import lotr.common.LOTRMod;
@@ -11,12 +7,19 @@ import lotr.common.block.*;
 import lotr.common.tileentity.*;
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Random;
 
 public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 	public static Random blockRand = new Random();
@@ -24,6 +27,265 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 
 	public LOTRRenderBlocks(boolean flag) {
 		renderInvIn3D = flag;
+	}
+
+	public static int getAO() {
+		return Minecraft.getMinecraft().gameSettings.ambientOcclusion;
+	}
+
+	public static void setAO(int i) {
+		Minecraft.getMinecraft().gameSettings.ambientOcclusion = i;
+	}
+
+	public static void renderClover(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks, int petalCount, boolean randomTranslation) {
+		double scale = 0.5;
+		Tessellator tessellator = Tessellator.instance;
+		tessellator.setBrightness(block.getMixedBrightnessForBlock(world, i, j, k));
+		int l = block.colorMultiplier(world, i, j, k);
+		float f = 1.0f;
+		float f1 = (l >> 16 & 0xFF) / 255.0f;
+		float f2 = (l >> 8 & 0xFF) / 255.0f;
+		float f3 = (l & 0xFF) / 255.0f;
+		if (EntityRenderer.anaglyphEnable) {
+			float f4 = (f1 * 30.0f + f2 * 59.0f + f3 * 11.0f) / 100.0f;
+			float f5 = (f1 * 30.0f + f2 * 70.0f) / 100.0f;
+			float f6 = (f1 * 30.0f + f3 * 70.0f) / 100.0f;
+			f1 = f4;
+			f2 = f5;
+			f3 = f6;
+		}
+		tessellator.setColorOpaque_F(f * f1, f * f2, f * f3);
+		renderblocks.setOverrideBlockTexture(LOTRBlockClover.stemIcon);
+		double posX = i;
+		double posZ = k;
+		if (randomTranslation) {
+			long seed = i * 3129871L ^ k * 116129781L ^ j;
+			seed = seed * seed * 42317861L + seed * 11L;
+			posX += ((seed >> 16 & 0xFL) / 15.0f - 0.5) * 0.5;
+			posZ += ((seed >> 24 & 0xFL) / 15.0f - 0.5) * 0.5;
+		}
+		renderblocks.drawCrossedSquares(block.getIcon(2, 0), posX, j, posZ, (float) scale);
+		renderblocks.clearOverrideBlockTexture();
+		for (int petal = 0; petal < petalCount; ++petal) {
+			float rotation = (float) petal / petalCount * 3.1415927f * 2.0f;
+			IIcon icon = LOTRBlockClover.petalIcon;
+			double d = icon.getMinU();
+			double d1 = icon.getMinV();
+			double d2 = icon.getMaxU();
+			double d3 = icon.getMaxV();
+			double d4 = posX + 0.5;
+			double d5 = j + 0.5 * scale + petal * 0.0025;
+			double d6 = posZ + 0.5;
+			Vec3[] vecs = {Vec3.createVectorHelper(0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, 0.5 * scale), Vec3.createVectorHelper(0.5 * scale, 0.0, 0.5 * scale)};
+			for (Vec3 vec : vecs) {
+				vec.rotateAroundY(rotation);
+				vec.xCoord += d4;
+				vec.yCoord += d5;
+				vec.zCoord += d6;
+			}
+			tessellator.addVertexWithUV(vecs[0].xCoord, vecs[0].yCoord, vecs[0].zCoord, d, d1);
+			tessellator.addVertexWithUV(vecs[1].xCoord, vecs[1].yCoord, vecs[1].zCoord, d, d3);
+			tessellator.addVertexWithUV(vecs[2].xCoord, vecs[2].yCoord, vecs[2].zCoord, d2, d3);
+			tessellator.addVertexWithUV(vecs[3].xCoord, vecs[3].yCoord, vecs[3].zCoord, d2, d1);
+			tessellator.addVertexWithUV(vecs[3].xCoord, vecs[3].yCoord, vecs[3].zCoord, d2, d1);
+			tessellator.addVertexWithUV(vecs[2].xCoord, vecs[2].yCoord, vecs[2].zCoord, d2, d3);
+			tessellator.addVertexWithUV(vecs[1].xCoord, vecs[1].yCoord, vecs[1].zCoord, d, d3);
+			tessellator.addVertexWithUV(vecs[0].xCoord, vecs[0].yCoord, vecs[0].zCoord, d, d1);
+		}
+	}
+
+	public static void renderDwarvenDoorGlow(LOTRBlockGateDwarvenIthildin block, RenderBlocks renderblocks, int i, int j, int k) {
+		Tessellator tessellator = Tessellator.instance;
+		block.setBlockBoundsBasedOnState(renderblocks.blockAccess, i, j, k);
+		renderblocks.setRenderBoundsFromBlock(block);
+		double d = 0.01;
+		IIcon icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 0);
+		if (icon != null) {
+			tessellator.startDrawingQuads();
+			renderblocks.renderFaceYNeg(block, 0.0, -d, 0.0, icon);
+			tessellator.draw();
+			renderblocks.flipTexture = false;
+		}
+		icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 1);
+		if (icon != null) {
+			tessellator.startDrawingQuads();
+			renderblocks.renderFaceYPos(block, 0.0, d, 0.0, icon);
+			tessellator.draw();
+			renderblocks.flipTexture = false;
+		}
+		icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 2);
+		if (icon != null) {
+			tessellator.startDrawingQuads();
+			renderblocks.renderFaceZNeg(block, 0.0, 0.0, -d, icon);
+			tessellator.draw();
+			renderblocks.flipTexture = false;
+		}
+		icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 3);
+		if (icon != null) {
+			tessellator.startDrawingQuads();
+			renderblocks.renderFaceZPos(block, 0.0, 0.0, d, icon);
+			tessellator.draw();
+			renderblocks.flipTexture = false;
+		}
+		icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 4);
+		if (icon != null) {
+			tessellator.startDrawingQuads();
+			renderblocks.renderFaceXNeg(block, -d, 0.0, 0.0, icon);
+			tessellator.draw();
+			renderblocks.flipTexture = false;
+		}
+		icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 5);
+		if (icon != null) {
+			tessellator.startDrawingQuads();
+			renderblocks.renderFaceXPos(block, d, 0.0, 0.0, icon);
+			tessellator.draw();
+			renderblocks.flipTexture = false;
+		}
+	}
+
+	public static void renderEntityPlate(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
+		renderblocks.renderAllFaces = true;
+		renderStandardInvBlock(renderblocks, block, 0.1875, 0.0, 0.1875, 0.8125, 0.0625, 0.8125);
+		renderStandardInvBlock(renderblocks, block, 0.125, 0.0625, 0.125, 0.875, 0.125, 0.875);
+		renderblocks.renderAllFaces = false;
+	}
+
+	public static void renderGrass(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks, boolean randomTranslation) {
+		Tessellator tessellator = Tessellator.instance;
+		tessellator.setBrightness(block.getMixedBrightnessForBlock(world, i, j, k));
+		int meta = world.getBlockMetadata(i, j, k);
+		int l = block.colorMultiplier(world, i, j, k);
+		float f = 1.0f;
+		float f1 = (l >> 16 & 0xFF) / 255.0f;
+		float f2 = (l >> 8 & 0xFF) / 255.0f;
+		float f3 = (l & 0xFF) / 255.0f;
+		if (EntityRenderer.anaglyphEnable) {
+			float f4 = (f1 * 30.0f + f2 * 59.0f + f3 * 11.0f) / 100.0f;
+			float f5 = (f1 * 30.0f + f2 * 70.0f) / 100.0f;
+			float f6 = (f1 * 30.0f + f3 * 70.0f) / 100.0f;
+			f1 = f4;
+			f2 = f5;
+			f3 = f6;
+		}
+		tessellator.setColorOpaque_F(f * f1, f * f2, f * f3);
+		double posX = i;
+		double posY = j;
+		double posZ = k;
+		if (randomTranslation) {
+			long seed = i * 3129871L ^ k * 116129781L ^ j;
+			seed = seed * seed * 42317861L + seed * 11L;
+			posX += ((seed >> 16 & 0xFL) / 15.0f - 0.5) * 0.5;
+			posY += ((seed >> 20 & 0xFL) / 15.0f - 1.0) * 0.2;
+			posZ += ((seed >> 24 & 0xFL) / 15.0f - 0.5) * 0.5;
+		}
+		renderblocks.drawCrossedSquares(block.getIcon(2, meta), posX, posY, posZ, 1.0f);
+		renderblocks.clearOverrideBlockTexture();
+		if (block == LOTRMod.tallGrass && meta >= 0 && meta < LOTRBlockTallGrass.grassOverlay.length && LOTRBlockTallGrass.grassOverlay[meta]) {
+			tessellator.setColorOpaque_F(1.0f, 1.0f, 1.0f);
+			renderblocks.drawCrossedSquares(block.getIcon(-1, meta), posX, posY, posZ, 1.0f);
+			renderblocks.clearOverrideBlockTexture();
+		}
+	}
+
+	public static void renderInvClover(Block block, RenderBlocks renderblocks, int petalCount) {
+		GL11.glDisable(2896);
+		double scale = 1.0;
+		Tessellator tessellator = Tessellator.instance;
+		int l = block.getRenderColor(0);
+		float f = 1.0f;
+		float f1 = (l >> 16 & 0xFF) / 255.0f;
+		float f2 = (l >> 8 & 0xFF) / 255.0f;
+		float f3 = (l & 0xFF) / 255.0f;
+		if (EntityRenderer.anaglyphEnable) {
+			float f4 = (f1 * 30.0f + f2 * 59.0f + f3 * 11.0f) / 100.0f;
+			float f5 = (f1 * 30.0f + f2 * 70.0f) / 100.0f;
+			float f6 = (f1 * 30.0f + f3 * 70.0f) / 100.0f;
+			f1 = f4;
+			f2 = f5;
+			f3 = f6;
+		}
+		tessellator.setColorOpaque_F(f * f1, f * f2, f * f3);
+		renderblocks.setOverrideBlockTexture(LOTRBlockClover.stemIcon);
+		tessellator.startDrawingQuads();
+		renderblocks.drawCrossedSquares(block.getIcon(2, 0), -scale * 0.5, -scale * 0.5, -scale * 0.5, (float) scale);
+		tessellator.draw();
+		renderblocks.clearOverrideBlockTexture();
+		for (int petal = 0; petal < petalCount; ++petal) {
+			float rotation = (float) petal / petalCount * 3.1415927f * 2.0f;
+			IIcon icon = LOTRBlockClover.petalIcon;
+			double d = icon.getMinU();
+			double d1 = icon.getMinV();
+			double d2 = icon.getMaxU();
+			double d3 = icon.getMaxV();
+			double d4 = 0.0;
+			double d5 = petal * 0.0025;
+			double d6 = 0.0;
+			Vec3[] vecs = {Vec3.createVectorHelper(0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, 0.5 * scale), Vec3.createVectorHelper(0.5 * scale, 0.0, 0.5 * scale)};
+			for (Vec3 vec : vecs) {
+				vec.rotateAroundY(rotation);
+				vec.xCoord += d4;
+				vec.yCoord += d5;
+				vec.zCoord += d6;
+			}
+			tessellator.startDrawingQuads();
+			tessellator.addVertexWithUV(vecs[0].xCoord, vecs[0].yCoord, vecs[0].zCoord, d, d1);
+			tessellator.addVertexWithUV(vecs[1].xCoord, vecs[1].yCoord, vecs[1].zCoord, d, d3);
+			tessellator.addVertexWithUV(vecs[2].xCoord, vecs[2].yCoord, vecs[2].zCoord, d2, d3);
+			tessellator.addVertexWithUV(vecs[3].xCoord, vecs[3].yCoord, vecs[3].zCoord, d2, d1);
+			tessellator.addVertexWithUV(vecs[3].xCoord, vecs[3].yCoord, vecs[3].zCoord, d2, d1);
+			tessellator.addVertexWithUV(vecs[2].xCoord, vecs[2].yCoord, vecs[2].zCoord, d2, d3);
+			tessellator.addVertexWithUV(vecs[1].xCoord, vecs[1].yCoord, vecs[1].zCoord, d, d3);
+			tessellator.addVertexWithUV(vecs[0].xCoord, vecs[0].yCoord, vecs[0].zCoord, d, d1);
+			tessellator.draw();
+		}
+		GL11.glEnable(2896);
+	}
+
+	public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, double d, double d1, double d2, double d3, double d4, double d5) {
+		renderStandardInvBlock(renderblocks, block, d, d1, d2, d3, d4, d5, 0);
+	}
+
+	public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, double d, double d1, double d2, double d3, double d4, double d5, int metadata) {
+		Tessellator tessellator = Tessellator.instance;
+		renderblocks.setRenderBounds(d, d1, d2, d3, d4, d5);
+		GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0f, -1.0f, 0.0f);
+		renderblocks.renderFaceYNeg(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 0, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0f, 1.0f, 0.0f);
+		renderblocks.renderFaceYPos(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 1, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0f, 0.0f, -1.0f);
+		renderblocks.renderFaceZNeg(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 2, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0f, 0.0f, 1.0f);
+		renderblocks.renderFaceZPos(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 3, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(-1.0f, 0.0f, 0.0f);
+		renderblocks.renderFaceXNeg(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 4, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(1.0f, 0.0f, 0.0f);
+		renderblocks.renderFaceXPos(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 5, metadata));
+		tessellator.draw();
+		GL11.glTranslatef(0.5f, 0.5f, 0.5f);
+	}
+
+	public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, int meta) {
+		block.setBlockBoundsForItemRender();
+		renderblocks.setRenderBoundsFromBlock(block);
+		double d = renderblocks.renderMinX;
+		double d1 = renderblocks.renderMinY;
+		double d2 = renderblocks.renderMinZ;
+		double d3 = renderblocks.renderMaxX;
+		double d4 = renderblocks.renderMaxY;
+		double d5 = renderblocks.renderMaxZ;
+		renderStandardInvBlock(renderblocks, block, d, d1, d2, d3, d4, d5, meta);
 	}
 
 	@Override
@@ -1183,264 +1445,5 @@ public class LOTRRenderBlocks implements ISimpleBlockRenderingHandler {
 	@Override
 	public boolean shouldRender3DInInventory(int modelID) {
 		return renderInvIn3D;
-	}
-
-	public static int getAO() {
-		return Minecraft.getMinecraft().gameSettings.ambientOcclusion;
-	}
-
-	public static void renderClover(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks, int petalCount, boolean randomTranslation) {
-		double scale = 0.5;
-		Tessellator tessellator = Tessellator.instance;
-		tessellator.setBrightness(block.getMixedBrightnessForBlock(world, i, j, k));
-		int l = block.colorMultiplier(world, i, j, k);
-		float f = 1.0f;
-		float f1 = (l >> 16 & 0xFF) / 255.0f;
-		float f2 = (l >> 8 & 0xFF) / 255.0f;
-		float f3 = (l & 0xFF) / 255.0f;
-		if (EntityRenderer.anaglyphEnable) {
-			float f4 = (f1 * 30.0f + f2 * 59.0f + f3 * 11.0f) / 100.0f;
-			float f5 = (f1 * 30.0f + f2 * 70.0f) / 100.0f;
-			float f6 = (f1 * 30.0f + f3 * 70.0f) / 100.0f;
-			f1 = f4;
-			f2 = f5;
-			f3 = f6;
-		}
-		tessellator.setColorOpaque_F(f * f1, f * f2, f * f3);
-		renderblocks.setOverrideBlockTexture(LOTRBlockClover.stemIcon);
-		double posX = i;
-		double posZ = k;
-		if (randomTranslation) {
-			long seed = i * 3129871L ^ k * 116129781L ^ j;
-			seed = seed * seed * 42317861L + seed * 11L;
-			posX += ((seed >> 16 & 0xFL) / 15.0f - 0.5) * 0.5;
-			posZ += ((seed >> 24 & 0xFL) / 15.0f - 0.5) * 0.5;
-		}
-		renderblocks.drawCrossedSquares(block.getIcon(2, 0), posX, j, posZ, (float) scale);
-		renderblocks.clearOverrideBlockTexture();
-		for (int petal = 0; petal < petalCount; ++petal) {
-			float rotation = (float) petal / petalCount * 3.1415927f * 2.0f;
-			IIcon icon = LOTRBlockClover.petalIcon;
-			double d = icon.getMinU();
-			double d1 = icon.getMinV();
-			double d2 = icon.getMaxU();
-			double d3 = icon.getMaxV();
-			double d4 = posX + 0.5;
-			double d5 = j + 0.5 * scale + petal * 0.0025;
-			double d6 = posZ + 0.5;
-			Vec3[] vecs = {Vec3.createVectorHelper(0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, 0.5 * scale), Vec3.createVectorHelper(0.5 * scale, 0.0, 0.5 * scale)};
-			for (Vec3 vec : vecs) {
-				vec.rotateAroundY(rotation);
-				vec.xCoord += d4;
-				vec.yCoord += d5;
-				vec.zCoord += d6;
-			}
-			tessellator.addVertexWithUV(vecs[0].xCoord, vecs[0].yCoord, vecs[0].zCoord, d, d1);
-			tessellator.addVertexWithUV(vecs[1].xCoord, vecs[1].yCoord, vecs[1].zCoord, d, d3);
-			tessellator.addVertexWithUV(vecs[2].xCoord, vecs[2].yCoord, vecs[2].zCoord, d2, d3);
-			tessellator.addVertexWithUV(vecs[3].xCoord, vecs[3].yCoord, vecs[3].zCoord, d2, d1);
-			tessellator.addVertexWithUV(vecs[3].xCoord, vecs[3].yCoord, vecs[3].zCoord, d2, d1);
-			tessellator.addVertexWithUV(vecs[2].xCoord, vecs[2].yCoord, vecs[2].zCoord, d2, d3);
-			tessellator.addVertexWithUV(vecs[1].xCoord, vecs[1].yCoord, vecs[1].zCoord, d, d3);
-			tessellator.addVertexWithUV(vecs[0].xCoord, vecs[0].yCoord, vecs[0].zCoord, d, d1);
-		}
-	}
-
-	public static void renderDwarvenDoorGlow(LOTRBlockGateDwarvenIthildin block, RenderBlocks renderblocks, int i, int j, int k) {
-		Tessellator tessellator = Tessellator.instance;
-		block.setBlockBoundsBasedOnState(renderblocks.blockAccess, i, j, k);
-		renderblocks.setRenderBoundsFromBlock(block);
-		double d = 0.01;
-		IIcon icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 0);
-		if (icon != null) {
-			tessellator.startDrawingQuads();
-			renderblocks.renderFaceYNeg(block, 0.0, -d, 0.0, icon);
-			tessellator.draw();
-			renderblocks.flipTexture = false;
-		}
-		icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 1);
-		if (icon != null) {
-			tessellator.startDrawingQuads();
-			renderblocks.renderFaceYPos(block, 0.0, d, 0.0, icon);
-			tessellator.draw();
-			renderblocks.flipTexture = false;
-		}
-		icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 2);
-		if (icon != null) {
-			tessellator.startDrawingQuads();
-			renderblocks.renderFaceZNeg(block, 0.0, 0.0, -d, icon);
-			tessellator.draw();
-			renderblocks.flipTexture = false;
-		}
-		icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 3);
-		if (icon != null) {
-			tessellator.startDrawingQuads();
-			renderblocks.renderFaceZPos(block, 0.0, 0.0, d, icon);
-			tessellator.draw();
-			renderblocks.flipTexture = false;
-		}
-		icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 4);
-		if (icon != null) {
-			tessellator.startDrawingQuads();
-			renderblocks.renderFaceXNeg(block, -d, 0.0, 0.0, icon);
-			tessellator.draw();
-			renderblocks.flipTexture = false;
-		}
-		icon = block.getGlowIcon(renderblocks.blockAccess, i, j, k, 5);
-		if (icon != null) {
-			tessellator.startDrawingQuads();
-			renderblocks.renderFaceXPos(block, d, 0.0, 0.0, icon);
-			tessellator.draw();
-			renderblocks.flipTexture = false;
-		}
-	}
-
-	public static void renderEntityPlate(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks) {
-		renderblocks.renderAllFaces = true;
-		renderStandardInvBlock(renderblocks, block, 0.1875, 0.0, 0.1875, 0.8125, 0.0625, 0.8125);
-		renderStandardInvBlock(renderblocks, block, 0.125, 0.0625, 0.125, 0.875, 0.125, 0.875);
-		renderblocks.renderAllFaces = false;
-	}
-
-	public static void renderGrass(IBlockAccess world, int i, int j, int k, Block block, RenderBlocks renderblocks, boolean randomTranslation) {
-		Tessellator tessellator = Tessellator.instance;
-		tessellator.setBrightness(block.getMixedBrightnessForBlock(world, i, j, k));
-		int meta = world.getBlockMetadata(i, j, k);
-		int l = block.colorMultiplier(world, i, j, k);
-		float f = 1.0f;
-		float f1 = (l >> 16 & 0xFF) / 255.0f;
-		float f2 = (l >> 8 & 0xFF) / 255.0f;
-		float f3 = (l & 0xFF) / 255.0f;
-		if (EntityRenderer.anaglyphEnable) {
-			float f4 = (f1 * 30.0f + f2 * 59.0f + f3 * 11.0f) / 100.0f;
-			float f5 = (f1 * 30.0f + f2 * 70.0f) / 100.0f;
-			float f6 = (f1 * 30.0f + f3 * 70.0f) / 100.0f;
-			f1 = f4;
-			f2 = f5;
-			f3 = f6;
-		}
-		tessellator.setColorOpaque_F(f * f1, f * f2, f * f3);
-		double posX = i;
-		double posY = j;
-		double posZ = k;
-		if (randomTranslation) {
-			long seed = i * 3129871L ^ k * 116129781L ^ j;
-			seed = seed * seed * 42317861L + seed * 11L;
-			posX += ((seed >> 16 & 0xFL) / 15.0f - 0.5) * 0.5;
-			posY += ((seed >> 20 & 0xFL) / 15.0f - 1.0) * 0.2;
-			posZ += ((seed >> 24 & 0xFL) / 15.0f - 0.5) * 0.5;
-		}
-		renderblocks.drawCrossedSquares(block.getIcon(2, meta), posX, posY, posZ, 1.0f);
-		renderblocks.clearOverrideBlockTexture();
-		if (block == LOTRMod.tallGrass && meta >= 0 && meta < LOTRBlockTallGrass.grassOverlay.length && LOTRBlockTallGrass.grassOverlay[meta]) {
-			tessellator.setColorOpaque_F(1.0f, 1.0f, 1.0f);
-			renderblocks.drawCrossedSquares(block.getIcon(-1, meta), posX, posY, posZ, 1.0f);
-			renderblocks.clearOverrideBlockTexture();
-		}
-	}
-
-	public static void renderInvClover(Block block, RenderBlocks renderblocks, int petalCount) {
-		GL11.glDisable(2896);
-		double scale = 1.0;
-		Tessellator tessellator = Tessellator.instance;
-		int l = block.getRenderColor(0);
-		float f = 1.0f;
-		float f1 = (l >> 16 & 0xFF) / 255.0f;
-		float f2 = (l >> 8 & 0xFF) / 255.0f;
-		float f3 = (l & 0xFF) / 255.0f;
-		if (EntityRenderer.anaglyphEnable) {
-			float f4 = (f1 * 30.0f + f2 * 59.0f + f3 * 11.0f) / 100.0f;
-			float f5 = (f1 * 30.0f + f2 * 70.0f) / 100.0f;
-			float f6 = (f1 * 30.0f + f3 * 70.0f) / 100.0f;
-			f1 = f4;
-			f2 = f5;
-			f3 = f6;
-		}
-		tessellator.setColorOpaque_F(f * f1, f * f2, f * f3);
-		renderblocks.setOverrideBlockTexture(LOTRBlockClover.stemIcon);
-		tessellator.startDrawingQuads();
-		renderblocks.drawCrossedSquares(block.getIcon(2, 0), -scale * 0.5, -scale * 0.5, -scale * 0.5, (float) scale);
-		tessellator.draw();
-		renderblocks.clearOverrideBlockTexture();
-		for (int petal = 0; petal < petalCount; ++petal) {
-			float rotation = (float) petal / petalCount * 3.1415927f * 2.0f;
-			IIcon icon = LOTRBlockClover.petalIcon;
-			double d = icon.getMinU();
-			double d1 = icon.getMinV();
-			double d2 = icon.getMaxU();
-			double d3 = icon.getMaxV();
-			double d4 = 0.0;
-			double d5 = petal * 0.0025;
-			double d6 = 0.0;
-			Vec3[] vecs = {Vec3.createVectorHelper(0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, -0.5 * scale), Vec3.createVectorHelper(-0.5 * scale, 0.0, 0.5 * scale), Vec3.createVectorHelper(0.5 * scale, 0.0, 0.5 * scale)};
-			for (Vec3 vec : vecs) {
-				vec.rotateAroundY(rotation);
-				vec.xCoord += d4;
-				vec.yCoord += d5;
-				vec.zCoord += d6;
-			}
-			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV(vecs[0].xCoord, vecs[0].yCoord, vecs[0].zCoord, d, d1);
-			tessellator.addVertexWithUV(vecs[1].xCoord, vecs[1].yCoord, vecs[1].zCoord, d, d3);
-			tessellator.addVertexWithUV(vecs[2].xCoord, vecs[2].yCoord, vecs[2].zCoord, d2, d3);
-			tessellator.addVertexWithUV(vecs[3].xCoord, vecs[3].yCoord, vecs[3].zCoord, d2, d1);
-			tessellator.addVertexWithUV(vecs[3].xCoord, vecs[3].yCoord, vecs[3].zCoord, d2, d1);
-			tessellator.addVertexWithUV(vecs[2].xCoord, vecs[2].yCoord, vecs[2].zCoord, d2, d3);
-			tessellator.addVertexWithUV(vecs[1].xCoord, vecs[1].yCoord, vecs[1].zCoord, d, d3);
-			tessellator.addVertexWithUV(vecs[0].xCoord, vecs[0].yCoord, vecs[0].zCoord, d, d1);
-			tessellator.draw();
-		}
-		GL11.glEnable(2896);
-	}
-
-	public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, double d, double d1, double d2, double d3, double d4, double d5) {
-		renderStandardInvBlock(renderblocks, block, d, d1, d2, d3, d4, d5, 0);
-	}
-
-	public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, double d, double d1, double d2, double d3, double d4, double d5, int metadata) {
-		Tessellator tessellator = Tessellator.instance;
-		renderblocks.setRenderBounds(d, d1, d2, d3, d4, d5);
-		GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0f, -1.0f, 0.0f);
-		renderblocks.renderFaceYNeg(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 0, metadata));
-		tessellator.draw();
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0f, 1.0f, 0.0f);
-		renderblocks.renderFaceYPos(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 1, metadata));
-		tessellator.draw();
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0f, 0.0f, -1.0f);
-		renderblocks.renderFaceZNeg(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 2, metadata));
-		tessellator.draw();
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0f, 0.0f, 1.0f);
-		renderblocks.renderFaceZPos(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 3, metadata));
-		tessellator.draw();
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(-1.0f, 0.0f, 0.0f);
-		renderblocks.renderFaceXNeg(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 4, metadata));
-		tessellator.draw();
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(1.0f, 0.0f, 0.0f);
-		renderblocks.renderFaceXPos(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 5, metadata));
-		tessellator.draw();
-		GL11.glTranslatef(0.5f, 0.5f, 0.5f);
-	}
-
-	public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, int meta) {
-		block.setBlockBoundsForItemRender();
-		renderblocks.setRenderBoundsFromBlock(block);
-		double d = renderblocks.renderMinX;
-		double d1 = renderblocks.renderMinY;
-		double d2 = renderblocks.renderMinZ;
-		double d3 = renderblocks.renderMaxX;
-		double d4 = renderblocks.renderMaxY;
-		double d5 = renderblocks.renderMaxZ;
-		renderStandardInvBlock(renderblocks, block, d, d1, d2, d3, d4, d5, meta);
-	}
-
-	public static void setAO(int i) {
-		Minecraft.getMinecraft().gameSettings.ambientOcclusion = i;
 	}
 }

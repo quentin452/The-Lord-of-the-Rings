@@ -1,14 +1,17 @@
 package lotr.common.world.village;
 
-import java.util.Random;
-
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityRohanMan;
+import lotr.common.entity.npc.LOTREntityRohirrimArcher;
+import lotr.common.entity.npc.LOTREntityRohirrimWarrior;
+import lotr.common.entity.npc.LOTRNames;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.map.LOTRRoadType;
 import lotr.common.world.structure2.*;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRVillageGenRohan extends LOTRVillageGen {
 	public LOTRVillageGenRohan(LOTRBiome biome, float f) {
@@ -22,6 +25,11 @@ public class LOTRVillageGenRohan extends LOTRVillageGen {
 	@Override
 	public LOTRVillageGen.AbstractInstance<?> createVillageInstance(World world, int i, int k, Random random, LocationInfo loc) {
 		return new Instance(this, world, i, k, random, loc);
+	}
+
+	public enum VillageType {
+		VILLAGE, FORT
+
 	}
 
 	public static class Instance extends LOTRVillageGen.AbstractInstance<LOTRVillageGenRohan> {
@@ -290,11 +298,6 @@ public class LOTRVillageGenRohan extends LOTRVillageGen {
 			villageType = random.nextInt(3) == 0 ? VillageType.FORT : VillageType.VILLAGE;
 			palisade = random.nextBoolean();
 		}
-
-	}
-
-	public enum VillageType {
-		VILLAGE, FORT
 
 	}
 

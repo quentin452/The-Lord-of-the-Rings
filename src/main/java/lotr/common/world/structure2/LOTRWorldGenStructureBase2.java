@@ -1,37 +1,51 @@
 package lotr.common.world.structure2;
 
-import java.util.*;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.block.*;
-import lotr.common.entity.*;
-import lotr.common.entity.item.*;
+import lotr.common.entity.LOTREntities;
+import lotr.common.entity.LOTREntityNPCRespawner;
+import lotr.common.entity.item.LOTREntityBanner;
+import lotr.common.entity.item.LOTREntityBannerWall;
+import lotr.common.entity.item.LOTREntityRugBase;
 import lotr.common.entity.npc.LOTREntityNPC;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemBanner;
+import lotr.common.item.LOTRItemMug;
 import lotr.common.recipe.LOTRBrewingRecipes;
 import lotr.common.tileentity.*;
 import lotr.common.util.LOTRLog;
 import lotr.common.world.biome.LOTRBiome;
-import lotr.common.world.structure.*;
+import lotr.common.world.structure.LOTRChestContents;
+import lotr.common.world.structure.LOTRStructures;
 import lotr.common.world.structure2.scan.LOTRStructureScan;
 import lotr.common.world.village.LOTRVillageGen;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLeashKnot;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFlowerPot;
+import net.minecraft.tileentity.TileEntitySign;
+import net.minecraft.tileentity.TileEntitySkull;
+import net.minecraft.util.Direction;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.*;
 
 public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	public boolean restrictions = true;
@@ -52,6 +66,28 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	protected LOTRWorldGenStructureBase2(boolean flag) {
 		super(flag);
 		notifyChanges = flag;
+	}
+
+	public static boolean isSurfaceStatic(World world, int i, int j, int k) {
+		Block block = world.getBlock(i, j, k);
+		BiomeGenBase biome = world.getBiomeGenForCoords(i, k);
+		if (block instanceof BlockSlab && !block.isOpaqueCube()) {
+			return isSurfaceStatic(world, i, j - 1, k);
+		}
+		Block above = world.getBlock(i, j + 1, k);
+		if (above.getMaterial().isLiquid()) {
+			return false;
+		}
+		if (block == biome.topBlock || block == biome.fillerBlock) {
+			return true;
+		}
+		if (block == Blocks.grass || block == Blocks.dirt || block == Blocks.gravel || block == LOTRMod.dirtPath) {
+			return true;
+		}
+		if (block == LOTRMod.mudGrass || block == LOTRMod.mud || block == Blocks.sand || block == LOTRMod.whiteSand) {
+			return true;
+		}
+		return block == LOTRMod.mordorDirt || block == LOTRMod.mordorGravel;
 	}
 
 	public void addBlockAliasOption(String alias, int weight, Block block) {
@@ -1116,28 +1152,6 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 
 	public int usingPlayerRotation() {
 		return LOTRStructures.getRotationFromPlayer(usingPlayer);
-	}
-
-	public static boolean isSurfaceStatic(World world, int i, int j, int k) {
-		Block block = world.getBlock(i, j, k);
-		BiomeGenBase biome = world.getBiomeGenForCoords(i, k);
-		if (block instanceof BlockSlab && !block.isOpaqueCube()) {
-			return isSurfaceStatic(world, i, j - 1, k);
-		}
-		Block above = world.getBlock(i, j + 1, k);
-		if (above.getMaterial().isLiquid()) {
-			return false;
-		}
-		if (block == biome.topBlock || block == biome.fillerBlock) {
-			return true;
-		}
-		if (block == Blocks.grass || block == Blocks.dirt || block == Blocks.gravel || block == LOTRMod.dirtPath) {
-			return true;
-		}
-		if (block == LOTRMod.mudGrass || block == LOTRMod.mud || block == Blocks.sand || block == LOTRMod.whiteSand) {
-			return true;
-		}
-		return block == LOTRMod.mordorDirt || block == LOTRMod.mordorGravel;
 	}
 
 	public static class BlockAliasPool {

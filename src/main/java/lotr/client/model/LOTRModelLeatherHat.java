@@ -1,14 +1,14 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.item.LOTRItemLeatherHat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelLeatherHat extends LOTRModelBiped {
 	public static ItemStack feather = new ItemStack(Items.feather);

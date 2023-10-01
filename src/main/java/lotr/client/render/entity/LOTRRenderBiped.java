@@ -1,25 +1,32 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import com.mojang.authlib.GameProfile;
-
-import lotr.client.model.*;
+import lotr.client.model.LOTRArmorModels;
+import lotr.client.model.LOTRModelBiped;
 import lotr.client.render.LOTRRenderShield;
 import lotr.common.LOTRShields;
 import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.util.*;
-import net.minecraftforge.client.*;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StringUtils;
+import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.client.MinecraftForgeClient;
+import org.lwjgl.opengl.GL11;
 
 public abstract class LOTRRenderBiped extends RenderBiped {
 	public static float PLAYER_SCALE = 0.9375f;

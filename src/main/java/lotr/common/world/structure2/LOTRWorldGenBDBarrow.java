@@ -1,12 +1,12 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityBarrowWight;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenBDBarrow extends LOTRWorldGenStructureBase2 {
 	public LOTRWorldGenStructureBase2 ruinsGen = new LOTRWorldGenStoneRuin.STONE(3, 3);

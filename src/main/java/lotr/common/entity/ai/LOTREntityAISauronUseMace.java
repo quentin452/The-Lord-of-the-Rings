@@ -1,14 +1,16 @@
 package lotr.common.entity.ai;
 
-import java.util.List;
-
-import lotr.common.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntitySauron;
 import lotr.common.item.LOTRItemSauronMace;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTREntityAISauronUseMace extends EntityAIBase {
 	public LOTREntitySauron theSauron;

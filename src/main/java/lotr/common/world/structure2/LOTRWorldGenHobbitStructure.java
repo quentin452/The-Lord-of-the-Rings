@@ -1,13 +1,15 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityHobbit;
+import lotr.common.entity.npc.LOTRNames;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public abstract class LOTRWorldGenHobbitStructure extends LOTRWorldGenStructureBase2 {
 	public boolean isWealthy;
@@ -70,6 +72,25 @@ public abstract class LOTRWorldGenHobbitStructure extends LOTRWorldGenStructureB
 
 	protected LOTRWorldGenHobbitStructure(boolean flag) {
 		super(flag);
+	}
+
+	public static Block getRandomCakeBlock(Random random) {
+		int i = random.nextInt(5);
+		switch (i) {
+			case 0:
+				return Blocks.cake;
+			case 1:
+				return LOTRMod.appleCrumble;
+			case 2:
+				return LOTRMod.cherryPie;
+			case 3:
+				return LOTRMod.berryPie;
+			case 4:
+				return LOTRMod.marzipanBlock;
+			default:
+				break;
+		}
+		return Blocks.cake;
 	}
 
 	public LOTREntityHobbit createHobbit(World world) {
@@ -395,24 +416,5 @@ public abstract class LOTRWorldGenHobbitStructure extends LOTRWorldGenStructureB
 		hobbitFemale.familyInfo.spouseUniqueID = hobbitMale.getUniqueID();
 		hobbitFemale.familyInfo.setMaxBreedingDelay();
 		hobbitFemale.familyInfo.maxChildren = maxChildren;
-	}
-
-	public static Block getRandomCakeBlock(Random random) {
-		int i = random.nextInt(5);
-		switch (i) {
-			case 0:
-				return Blocks.cake;
-			case 1:
-				return LOTRMod.appleCrumble;
-			case 2:
-				return LOTRMod.cherryPie;
-			case 3:
-				return LOTRMod.berryPie;
-			case 4:
-				return LOTRMod.marzipanBlock;
-			default:
-				break;
-		}
-		return Blocks.cake;
 	}
 }

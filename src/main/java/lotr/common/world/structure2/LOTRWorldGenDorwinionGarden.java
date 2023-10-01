@@ -1,12 +1,12 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.Random;
 
 public class LOTRWorldGenDorwinionGarden extends LOTRWorldGenStructureBase2 {
 	public LOTRWorldGenDorwinionGarden(boolean flag) {

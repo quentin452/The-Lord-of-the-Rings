@@ -1,23 +1,31 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.item.LOTRItemMug;
 import lotr.common.world.biome.LOTRBiome;
-import lotr.common.world.map.*;
+import lotr.common.world.map.LOTRFixedStructures;
+import lotr.common.world.map.LOTRRoadType;
 import net.minecraft.block.Block;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.passive.*;
-import net.minecraft.init.*;
+import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.Random;
 
 public class LOTRWorldGenGrukHouse extends LOTRWorldGenStructureBase2 {
 	public LOTRWorldGenGrukHouse(boolean flag) {
 		super(flag);
+	}
+
+	public static boolean generatesAt(World world, int i, int k) {
+		return LOTRFixedStructures.generatesAtMapImageCoords(i, k, 989, 528);
 	}
 
 	@Override
@@ -245,9 +253,5 @@ public class LOTRWorldGenGrukHouse extends LOTRWorldGenStructureBase2 {
 			return new ItemStack(LOTRMod.mugPlumKvass);
 		}
 		return new ItemStack(LOTRMod.mugVodka);
-	}
-
-	public static boolean generatesAt(World world, int i, int k) {
-		return LOTRFixedStructures.generatesAtMapImageCoords(i, k, 989, 528);
 	}
 }

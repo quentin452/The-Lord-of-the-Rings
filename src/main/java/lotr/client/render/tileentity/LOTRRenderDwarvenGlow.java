@@ -1,8 +1,7 @@
 package lotr.client.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.renderer.OpenGlHelper;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderDwarvenGlow {
 	public static void endGlow(float alphaFunc) {

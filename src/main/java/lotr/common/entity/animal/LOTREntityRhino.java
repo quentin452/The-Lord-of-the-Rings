@@ -1,16 +1,19 @@
 package lotr.common.entity.animal;
 
-import java.util.List;
-
-import lotr.common.*;
+import lotr.common.LOTRMod;
+import lotr.common.LOTRReflection;
 import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTREntityRhino extends LOTREntityHorse {
 	public LOTREntityRhino(World world) {

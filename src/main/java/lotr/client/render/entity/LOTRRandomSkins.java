@@ -1,19 +1,20 @@
 package lotr.client.render.entity;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.*;
-
-import javax.imageio.ImageIO;
-
 import cpw.mods.fml.common.FMLLog;
 import lotr.client.LOTRTextures;
 import lotr.common.entity.LOTRRandomSkinEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.client.resources.*;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.*;
 
 public class LOTRRandomSkins implements IResourceManagerReloadListener {
 	public static Random rand = new Random();
@@ -30,6 +31,37 @@ public class LOTRRandomSkins implements IResourceManagerReloadListener {
 		} else {
 			loadAllRandomSkins();
 		}
+	}
+
+	public static LOTRRandomSkins getCombinatorialSkins(String path, String... layers) {
+		StringBuilder combinedPath = new StringBuilder(path);
+		for (String s : layers) {
+			combinedPath.append("_").append(s);
+		}
+		LOTRRandomSkins skins = allRandomSkins.get(combinedPath.toString());
+		if (skins == null) {
+			skins = new LOTRRandomSkinsCombinatorial(path, layers);
+			allRandomSkins.put(combinedPath.toString(), skins);
+		}
+		return skins;
+	}
+
+	public static LOTRRandomSkins loadSkinsList(String path) {
+		LOTRRandomSkins skins = allRandomSkins.get(path);
+		if (skins == null) {
+			skins = new LOTRRandomSkins(path, true);
+			allRandomSkins.put(path, skins);
+		}
+		return skins;
+	}
+
+	public static int nextInt(LOTRRandomSkinEntity rsEntity, int n) {
+		Entity entity = (Entity) rsEntity;
+		long l = entity.getUniqueID().getLeastSignificantBits();
+		l = l * 29506206L * (l ^ 0x6429C58L) + 25859L;
+		l = l * l * 426430295004L + 25925025L * l;
+		rand.setSeed(l);
+		return rand.nextInt(n);
 	}
 
 	public List<ResourceLocation> getAllSkins() {
@@ -100,37 +132,6 @@ public class LOTRRandomSkins implements IResourceManagerReloadListener {
 	@Override
 	public void onResourceManagerReload(IResourceManager resourcemanager) {
 		loadAllRandomSkins();
-	}
-
-	public static LOTRRandomSkins getCombinatorialSkins(String path, String... layers) {
-		StringBuilder combinedPath = new StringBuilder(path);
-		for (String s : layers) {
-			combinedPath.append("_").append(s);
-		}
-		LOTRRandomSkins skins = allRandomSkins.get(combinedPath.toString());
-		if (skins == null) {
-			skins = new LOTRRandomSkinsCombinatorial(path, layers);
-			allRandomSkins.put(combinedPath.toString(), skins);
-		}
-		return skins;
-	}
-
-	public static LOTRRandomSkins loadSkinsList(String path) {
-		LOTRRandomSkins skins = allRandomSkins.get(path);
-		if (skins == null) {
-			skins = new LOTRRandomSkins(path, true);
-			allRandomSkins.put(path, skins);
-		}
-		return skins;
-	}
-
-	public static int nextInt(LOTRRandomSkinEntity rsEntity, int n) {
-		Entity entity = (Entity) rsEntity;
-		long l = entity.getUniqueID().getLeastSignificantBits();
-		l = l * 29506206L * (l ^ 0x6429C58L) + 25859L;
-		l = l * l * 426430295004L + 25925025L * l;
-		rand.setSeed(l);
-		return rand.nextInt(n);
 	}
 
 	public static class LOTRRandomSkinsCombinatorial extends LOTRRandomSkins {

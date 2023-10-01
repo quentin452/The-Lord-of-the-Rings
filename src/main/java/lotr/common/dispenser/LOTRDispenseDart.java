@@ -2,7 +2,9 @@ package lotr.common.dispenser;
 
 import lotr.common.entity.projectile.LOTREntityDart;
 import lotr.common.item.LOTRItemDart;
-import net.minecraft.dispenser.*;
+import net.minecraft.dispenser.BehaviorProjectileDispense;
+import net.minecraft.dispenser.IBlockSource;
+import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

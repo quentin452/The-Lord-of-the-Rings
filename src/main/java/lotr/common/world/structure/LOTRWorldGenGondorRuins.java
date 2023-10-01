@@ -1,11 +1,11 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityGondorRuinsWraith;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenGondorRuins extends LOTRWorldGenStructureBase {
 	public LOTRWorldGenGondorRuins() {

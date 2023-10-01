@@ -1,9 +1,9 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenSouthronStatue extends LOTRWorldGenSouthronStructure {
 	public LOTRWorldGenSouthronStatue(boolean flag) {

@@ -1,19 +1,20 @@
 package lotr.client.gui;
 
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRClientProxy;
 import lotr.common.entity.npc.LOTRSpeech;
 import lotr.common.util.LOTRFunctions;
-import lotr.common.world.map.*;
+import lotr.common.world.map.LOTRAbstractWaypoint;
+import lotr.common.world.map.LOTRWaypoint;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
+
+import java.util.List;
 
 public class LOTRGuiFastTravel extends LOTRGuiScreenBase {
 	public static ResourceLocation ftSound = new ResourceLocation("lotr:event.fastTravel");

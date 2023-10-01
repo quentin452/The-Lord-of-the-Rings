@@ -2,7 +2,8 @@ package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelTroll;
 import lotr.common.entity.LOTRRandomSkinEntity;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderMirkTroll extends LOTRRenderTroll {

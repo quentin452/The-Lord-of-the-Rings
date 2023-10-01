@@ -53,6 +53,49 @@ public class LOTRGuiMainMenu extends GuiMainMenu {
 		mapRenderer.prevMapY = mapRenderer.mapY = wp.getY();
 	}
 
+	public static void setupWaypoints() {
+		waypointRoute.clear();
+		waypointRoute.add(LOTRWaypoint.HOBBITON);
+		waypointRoute.add(LOTRWaypoint.BRANDYWINE_BRIDGE);
+		waypointRoute.add(LOTRWaypoint.BUCKLEBURY);
+		waypointRoute.add(LOTRWaypoint.WITHYWINDLE_VALLEY);
+		waypointRoute.add(LOTRWaypoint.BREE);
+		waypointRoute.add(LOTRWaypoint.WEATHERTOP);
+		waypointRoute.add(LOTRWaypoint.RIVENDELL);
+		waypointRoute.add(LOTRWaypoint.WEST_GATE);
+		waypointRoute.add(LOTRWaypoint.DIMRILL_DALE);
+		waypointRoute.add(LOTRWaypoint.CERIN_AMROTH);
+		waypointRoute.add(LOTRWaypoint.CARAS_GALADHON);
+		waypointRoute.add(LOTRWaypoint.NORTH_UNDEEP);
+		waypointRoute.add(LOTRWaypoint.SOUTH_UNDEEP);
+		waypointRoute.add(LOTRWaypoint.ARGONATH);
+		waypointRoute.add(LOTRWaypoint.RAUROS);
+		waypointRoute.add(LOTRWaypoint.EDORAS);
+		waypointRoute.add(LOTRWaypoint.HELMS_DEEP);
+		waypointRoute.add(LOTRWaypoint.ISENGARD);
+		waypointRoute.add(LOTRWaypoint.DUNHARROW);
+		waypointRoute.add(LOTRWaypoint.ERECH);
+		waypointRoute.add(LOTRWaypoint.MINAS_TIRITH);
+		waypointRoute.add(LOTRWaypoint.MINAS_MORGUL);
+		waypointRoute.add(LOTRWaypoint.MOUNT_DOOM);
+		waypointRoute.add(LOTRWaypoint.MORANNON);
+		waypointRoute.add(LOTRWaypoint.EAST_RHOVANION_ROAD);
+		waypointRoute.add(LOTRWaypoint.OLD_RHOVANION);
+		waypointRoute.add(LOTRWaypoint.RUNNING_FORD);
+		waypointRoute.add(LOTRWaypoint.DALE_CITY);
+		waypointRoute.add(LOTRWaypoint.THRANDUIL_HALLS);
+		waypointRoute.add(LOTRWaypoint.ENCHANTED_RIVER);
+		waypointRoute.add(LOTRWaypoint.FOREST_GATE);
+		waypointRoute.add(LOTRWaypoint.BEORN);
+		waypointRoute.add(LOTRWaypoint.EAGLES_EYRIE);
+		waypointRoute.add(LOTRWaypoint.GOBLIN_TOWN);
+		waypointRoute.add(LOTRWaypoint.MOUNT_GRAM);
+		waypointRoute.add(LOTRWaypoint.FORNOST);
+		waypointRoute.add(LOTRWaypoint.ANNUMINAS);
+		waypointRoute.add(LOTRWaypoint.MITHLOND_NORTH);
+		waypointRoute.add(LOTRWaypoint.TOWER_HILLS);
+	}
+
 	@Override
 	public void drawScreen(int i, int j, float f) {
 		GL11.glEnable(3008);
@@ -178,48 +221,5 @@ public class LOTRGuiMainMenu extends GuiMainMenu {
 		}
 		mapRenderer.mapX += mapVelX;
 		mapRenderer.mapY += mapVelY;
-	}
-
-	public static void setupWaypoints() {
-		waypointRoute.clear();
-		waypointRoute.add(LOTRWaypoint.HOBBITON);
-		waypointRoute.add(LOTRWaypoint.BRANDYWINE_BRIDGE);
-		waypointRoute.add(LOTRWaypoint.BUCKLEBURY);
-		waypointRoute.add(LOTRWaypoint.WITHYWINDLE_VALLEY);
-		waypointRoute.add(LOTRWaypoint.BREE);
-		waypointRoute.add(LOTRWaypoint.WEATHERTOP);
-		waypointRoute.add(LOTRWaypoint.RIVENDELL);
-		waypointRoute.add(LOTRWaypoint.WEST_GATE);
-		waypointRoute.add(LOTRWaypoint.DIMRILL_DALE);
-		waypointRoute.add(LOTRWaypoint.CERIN_AMROTH);
-		waypointRoute.add(LOTRWaypoint.CARAS_GALADHON);
-		waypointRoute.add(LOTRWaypoint.NORTH_UNDEEP);
-		waypointRoute.add(LOTRWaypoint.SOUTH_UNDEEP);
-		waypointRoute.add(LOTRWaypoint.ARGONATH);
-		waypointRoute.add(LOTRWaypoint.RAUROS);
-		waypointRoute.add(LOTRWaypoint.EDORAS);
-		waypointRoute.add(LOTRWaypoint.HELMS_DEEP);
-		waypointRoute.add(LOTRWaypoint.ISENGARD);
-		waypointRoute.add(LOTRWaypoint.DUNHARROW);
-		waypointRoute.add(LOTRWaypoint.ERECH);
-		waypointRoute.add(LOTRWaypoint.MINAS_TIRITH);
-		waypointRoute.add(LOTRWaypoint.MINAS_MORGUL);
-		waypointRoute.add(LOTRWaypoint.MOUNT_DOOM);
-		waypointRoute.add(LOTRWaypoint.MORANNON);
-		waypointRoute.add(LOTRWaypoint.EAST_RHOVANION_ROAD);
-		waypointRoute.add(LOTRWaypoint.OLD_RHOVANION);
-		waypointRoute.add(LOTRWaypoint.RUNNING_FORD);
-		waypointRoute.add(LOTRWaypoint.DALE_CITY);
-		waypointRoute.add(LOTRWaypoint.THRANDUIL_HALLS);
-		waypointRoute.add(LOTRWaypoint.ENCHANTED_RIVER);
-		waypointRoute.add(LOTRWaypoint.FOREST_GATE);
-		waypointRoute.add(LOTRWaypoint.BEORN);
-		waypointRoute.add(LOTRWaypoint.EAGLES_EYRIE);
-		waypointRoute.add(LOTRWaypoint.GOBLIN_TOWN);
-		waypointRoute.add(LOTRWaypoint.MOUNT_GRAM);
-		waypointRoute.add(LOTRWaypoint.FORNOST);
-		waypointRoute.add(LOTRWaypoint.ANNUMINAS);
-		waypointRoute.add(LOTRWaypoint.MITHLOND_NORTH);
-		waypointRoute.add(LOTRWaypoint.TOWER_HILLS);
 	}
 }

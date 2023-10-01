@@ -5,7 +5,8 @@ import lotr.common.entity.npc.LOTREntityGollum;
 import lotr.common.world.map.LOTRWaypoint;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class LOTRGollumSpawner {

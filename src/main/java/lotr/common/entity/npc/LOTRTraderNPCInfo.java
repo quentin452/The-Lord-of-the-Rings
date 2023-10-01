@@ -1,15 +1,19 @@
 package lotr.common.entity.npc;
 
-import java.util.*;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.LOTRLevelData;
 import lotr.common.inventory.LOTRContainerTrade;
-import lotr.common.network.*;
-import net.minecraft.entity.player.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketTraderInfo;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRTraderNPCInfo {
 	public LOTREntityNPC theEntity;
@@ -36,12 +40,26 @@ public class LOTRTraderNPCInfo {
 		return buyTrades;
 	}
 
+	public void setBuyTrades(LOTRTradeEntry[] trades) {
+		for (LOTRTradeEntry trade : trades) {
+			trade.setOwningTrader(this);
+		}
+		buyTrades = trades;
+	}
+
 	public int getLockTradeAtValue() {
 		return lockTradeAtValue;
 	}
 
 	public LOTRTradeEntry[] getSellTrades() {
 		return sellTrades;
+	}
+
+	public void setSellTrades(LOTRTradeEntry[] trades) {
+		for (LOTRTradeEntry trade : trades) {
+			trade.setOwningTrader(this);
+		}
+		sellTrades = trades;
 	}
 
 	public int getValueDecayTicks() {
@@ -198,20 +216,6 @@ public class LOTRTraderNPCInfo {
 			}
 			trade.setLockedForTicks(delay);
 		}
-	}
-
-	public void setBuyTrades(LOTRTradeEntry[] trades) {
-		for (LOTRTradeEntry trade : trades) {
-			trade.setOwningTrader(this);
-		}
-		buyTrades = trades;
-	}
-
-	public void setSellTrades(LOTRTradeEntry[] trades) {
-		for (LOTRTradeEntry trade : trades) {
-			trade.setOwningTrader(this);
-		}
-		sellTrades = trades;
 	}
 
 	public boolean shouldLockTrades() {

@@ -1,13 +1,13 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.world.feature.LOTRTreeType;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+
+import java.util.Random;
 
 public class LOTRBiomeGenFarHaradMangrove extends LOTRBiomeGenFarHarad {
 	public LOTRBiomeGenFarHaradMangrove(int i, boolean major) {

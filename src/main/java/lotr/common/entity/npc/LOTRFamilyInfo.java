@@ -1,18 +1,24 @@
 package lotr.common.entity.npc;
 
-import java.util.*;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.*;
-import lotr.common.network.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.network.LOTRPacketFamilyInfo;
+import lotr.common.network.LOTRPacketHandler;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.*;
-import net.minecraft.item.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.PlayerManager;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldServer;
+
+import java.util.List;
+import java.util.UUID;
 
 public class LOTRFamilyInfo {
 	public LOTREntityNPC theEntity;
@@ -56,8 +62,18 @@ public class LOTRFamilyInfo {
 		return age;
 	}
 
+	public void setAge(int i) {
+		age = i;
+		markDirty();
+	}
+
 	public String getName() {
 		return name;
+	}
+
+	public void setName(String s) {
+		name = s;
+		markDirty();
 	}
 
 	public LOTREntityNPC getParentToFollow() {
@@ -137,6 +153,11 @@ public class LOTRFamilyInfo {
 
 	public boolean isMale() {
 		return male;
+	}
+
+	public void setMale(boolean flag) {
+		male = flag;
+		markDirty();
 	}
 
 	public void markDirty() {
@@ -243,11 +264,6 @@ public class LOTRFamilyInfo {
 		}
 	}
 
-	public void setAge(int i) {
-		age = i;
-		markDirty();
-	}
-
 	public void setChild() {
 		setAge(-timeToMature);
 	}
@@ -260,19 +276,9 @@ public class LOTRFamilyInfo {
 		}
 	}
 
-	public void setMale(boolean flag) {
-		male = flag;
-		markDirty();
-	}
-
 	public void setMaxBreedingDelay() {
 		float f = breedingDelay;
 		setAge((int) (f * (0.5f + theEntity.getRNG().nextFloat() * 0.5f)));
-	}
-
-	public void setName(String s) {
-		name = s;
-		markDirty();
 	}
 
 	public void writeToNBT(NBTTagCompound nbt) {

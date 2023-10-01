@@ -1,17 +1,22 @@
 package lotr.common.entity.animal;
 
-import java.util.UUID;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.*;
+import lotr.common.entity.LOTREntities;
+import lotr.common.entity.LOTRRandomSkinEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.*;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemFishFood;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+
+import java.util.UUID;
 
 public class LOTREntityFish extends EntityWaterMob implements LOTRRandomSkinEntity {
 	public ChunkCoordinates currentSwimTarget;
@@ -75,6 +80,14 @@ public class LOTREntityFish extends EntityWaterMob implements LOTRRandomSkinEnti
 		return FishType.values()[i];
 	}
 
+	public void setFishType(FishType type) {
+		setFishType(type.ordinal());
+	}
+
+	public void setFishType(int i) {
+		dataWatcher.updateObject(16, (byte) i);
+	}
+
 	@Override
 	public ItemStack getPickedResult(MovingObjectPosition target) {
 		return new ItemStack(LOTRMod.spawnEgg, 1, LOTREntities.getEntityID(this));
@@ -121,14 +134,6 @@ public class LOTREntityFish extends EntityWaterMob implements LOTRRandomSkinEnti
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		setFishType(nbt.getInteger("FishType"));
-	}
-
-	public void setFishType(FishType type) {
-		setFishType(type.ordinal());
-	}
-
-	public void setFishType(int i) {
-		dataWatcher.updateObject(16, (byte) i);
 	}
 
 	@Override

@@ -1,22 +1,50 @@
 package lotr.common.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.entity.item.LOTREntityBarrel;
 import lotr.common.tileentity.LOTRTileEntityBarrel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRItemBarrel extends ItemBlock {
 	public LOTRItemBarrel(Block block) {
 		super(block);
+	}
+
+	public static NBTTagCompound getBarrelData(ItemStack itemstack) {
+		if (itemstack.hasTagCompound() && itemstack.getTagCompound().hasKey("LOTRBarrelData")) {
+			return itemstack.getTagCompound().getCompoundTag("LOTRBarrelData");
+		}
+		return null;
+	}
+
+	public static void loadBarrelDataToTE(ItemStack itemstack, LOTRTileEntityBarrel barrel) {
+		NBTTagCompound nbt = getBarrelData(itemstack);
+		if (nbt != null) {
+			barrel.readBarrelFromNBT(nbt);
+		}
+	}
+
+	public static void setBarrelData(ItemStack itemstack, NBTTagCompound nbt) {
+		itemstack.setTagCompound(new NBTTagCompound());
+		itemstack.getTagCompound().setTag("LOTRBarrelData", nbt);
+	}
+
+	public static void setBarrelDataFromTE(ItemStack itemstack, LOTRTileEntityBarrel barrel) {
+		NBTTagCompound nbt = new NBTTagCompound();
+		barrel.writeBarrelToNBT(nbt);
+		setBarrelData(itemstack, nbt);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -79,30 +107,5 @@ public class LOTRItemBarrel extends ItemBlock {
 			return true;
 		}
 		return false;
-	}
-
-	public static NBTTagCompound getBarrelData(ItemStack itemstack) {
-		if (itemstack.hasTagCompound() && itemstack.getTagCompound().hasKey("LOTRBarrelData")) {
-			return itemstack.getTagCompound().getCompoundTag("LOTRBarrelData");
-		}
-		return null;
-	}
-
-	public static void loadBarrelDataToTE(ItemStack itemstack, LOTRTileEntityBarrel barrel) {
-		NBTTagCompound nbt = getBarrelData(itemstack);
-		if (nbt != null) {
-			barrel.readBarrelFromNBT(nbt);
-		}
-	}
-
-	public static void setBarrelData(ItemStack itemstack, NBTTagCompound nbt) {
-		itemstack.setTagCompound(new NBTTagCompound());
-		itemstack.getTagCompound().setTag("LOTRBarrelData", nbt);
-	}
-
-	public static void setBarrelDataFromTE(ItemStack itemstack, LOTRTileEntityBarrel barrel) {
-		NBTTagCompound nbt = new NBTTagCompound();
-		barrel.writeBarrelToNBT(nbt);
-		setBarrelData(itemstack, nbt);
 	}
 }

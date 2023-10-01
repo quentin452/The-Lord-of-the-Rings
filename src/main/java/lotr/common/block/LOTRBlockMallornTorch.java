@@ -1,8 +1,8 @@
 package lotr.common.block;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
+
+import java.util.Random;
 
 public class LOTRBlockMallornTorch extends LOTRBlockTorch {
 	public int torchColor;

@@ -1,13 +1,13 @@
 package lotr.common.world.biome.variant;
 
-import java.util.Random;
-
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.feature.LOTRTreeType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRBiomeVariantScrubland extends LOTRBiomeVariant {
 	public Block stoneBlock;

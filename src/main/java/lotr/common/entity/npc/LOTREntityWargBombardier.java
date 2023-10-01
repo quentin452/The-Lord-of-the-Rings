@@ -32,8 +32,16 @@ public abstract class LOTREntityWargBombardier extends LOTREntityWarg {
 		return dataWatcher.getWatchableObjectByte(21);
 	}
 
+	public void setBombFuse(int i) {
+		dataWatcher.updateObject(21, (byte) i);
+	}
+
 	public int getBombStrengthLevel() {
 		return dataWatcher.getWatchableObjectByte(22);
+	}
+
+	public void setBombStrengthLevel(int i) {
+		dataWatcher.updateObject(22, (byte) i);
 	}
 
 	@Override
@@ -67,14 +75,6 @@ public abstract class LOTREntityWargBombardier extends LOTREntityWarg {
 		if (target != null) {
 			worldObj.playSoundAtEntity(this, "game.tnt.primed", 1.0f, 1.0f);
 		}
-	}
-
-	public void setBombFuse(int i) {
-		dataWatcher.updateObject(21, (byte) i);
-	}
-
-	public void setBombStrengthLevel(int i) {
-		dataWatcher.updateObject(22, (byte) i);
 	}
 
 	@Override

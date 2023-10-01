@@ -33,14 +33,14 @@ public class LOTREntityLionRug extends LOTREntityRugBase {
 		return LOTRItemLionRug.LionRugType.forID(i);
 	}
 
+	public void setRugType(LOTRItemLionRug.LionRugType t) {
+		dataWatcher.updateObject(18, (byte) t.lionID);
+	}
+
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		setRugType(LOTRItemLionRug.LionRugType.forID(nbt.getByte("RugType")));
-	}
-
-	public void setRugType(LOTRItemLionRug.LionRugType t) {
-		dataWatcher.updateObject(18, (byte) t.lionID);
 	}
 
 	@Override

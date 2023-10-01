@@ -1,14 +1,18 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRPlayerData;
 import lotr.common.entity.LOTREntities;
 import lotr.common.entity.animal.LOTREntityHorse;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.item.LOTRItemCoin;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class LOTRUnitTradeEntry {
@@ -94,6 +98,11 @@ public class LOTRUnitTradeEntry {
 		return pledgeType;
 	}
 
+	public LOTRUnitTradeEntry setPledgeType(PledgeType t) {
+		pledgeType = t;
+		return this;
+	}
+
 	public String getUnitTradeName() {
 		if (mountClass == null) {
 			String entityName = LOTREntities.getStringFromClass(entityClass);
@@ -163,11 +172,6 @@ public class LOTRUnitTradeEntry {
 		return setPledgeType(PledgeType.FACTION);
 	}
 
-	public LOTRUnitTradeEntry setPledgeType(PledgeType t) {
-		pledgeType = t;
-		return this;
-	}
-
 	public LOTRUnitTradeEntry setTask(LOTRHiredNPCInfo.Task t) {
 		task = t;
 		return this;
@@ -180,6 +184,16 @@ public class LOTRUnitTradeEntry {
 
 		PledgeType(int i) {
 			typeID = i;
+		}
+
+		public static PledgeType forID(int i) {
+			for (PledgeType t : values()) {
+				if (t.typeID != i) {
+					continue;
+				}
+				return t;
+			}
+			return NONE;
 		}
 
 		public boolean canAcceptPlayer(EntityPlayer entityplayer, LOTRFaction fac) {
@@ -205,16 +219,6 @@ public class LOTRUnitTradeEntry {
 				return null;
 			}
 			return StatCollector.translateToLocalFormatted("lotr.hiredNPC.commandReq.pledge." + name(), fac.factionName());
-		}
-
-		public static PledgeType forID(int i) {
-			for (PledgeType t : values()) {
-				if (t.typeID != i) {
-					continue;
-				}
-				return t;
-			}
-			return NONE;
 		}
 	}
 

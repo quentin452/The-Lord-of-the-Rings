@@ -1,23 +1,33 @@
 package lotr.common.world.spawning;
 
-import java.util.*;
-
 import cpw.mods.fml.common.eventhandler.Event;
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRSpawnDamping;
 import lotr.common.entity.npc.LOTREntityNPC;
-import lotr.common.world.*;
+import lotr.common.world.LOTRWorldChunkManager;
+import lotr.common.world.LOTRWorldProvider;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.ForgeEventFactory;
+
+import java.util.*;
 
 public class LOTRSpawnerNPCs {
 	public static int expectedChunks = 196;

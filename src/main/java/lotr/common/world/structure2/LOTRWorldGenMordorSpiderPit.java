@@ -1,11 +1,13 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityMordorOrcSpiderKeeper;
+import lotr.common.entity.npc.LOTREntityMordorSpider;
+import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenMordorSpiderPit extends LOTRWorldGenMordorWargPit {
 	public LOTRWorldGenMordorSpiderPit(boolean flag) {

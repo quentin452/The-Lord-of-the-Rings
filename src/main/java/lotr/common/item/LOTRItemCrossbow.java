@@ -1,19 +1,26 @@
 package lotr.common.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
-import lotr.common.enchant.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
+import lotr.common.enchant.LOTREnchantment;
+import lotr.common.enchant.LOTREnchantmentHelper;
 import lotr.common.entity.projectile.LOTREntityCrossbowBolt;
 import lotr.common.recipe.LOTRRecipes;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.enchantment.*;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRItemCrossbow extends ItemBow {
 	public double boltDamageFactor;
@@ -31,6 +38,59 @@ public class LOTRItemCrossbow extends ItemBow {
 
 	public LOTRItemCrossbow(LOTRMaterial material) {
 		this(material.toToolMaterial());
+	}
+
+	public static void applyCrossbowModifiers(LOTREntityCrossbowBolt bolt, ItemStack itemstack) {
+		int power = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, itemstack);
+		if (power > 0) {
+			bolt.boltDamageFactor += power * 0.5 + 0.5;
+		}
+		int punch = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, itemstack);
+		punch += LOTREnchantmentHelper.calcRangedKnockback(itemstack);
+		if (punch > 0) {
+			bolt.knockbackStrength = punch;
+		}
+		if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, itemstack) + LOTREnchantmentHelper.calcFireAspect(itemstack) > 0) {
+			bolt.setFire(100);
+		}
+		for (LOTREnchantment ench : LOTREnchantment.allEnchantments) {
+			if (!ench.applyToProjectile() || !LOTREnchantmentHelper.hasEnchant(itemstack, ench)) {
+				continue;
+			}
+			LOTREnchantmentHelper.setProjectileEnchantment(bolt, ench);
+		}
+	}
+
+	public static float getCrossbowLaunchSpeedFactor(ItemStack itemstack) {
+		float f = 1.0f;
+		if (itemstack != null) {
+			if (itemstack.getItem() instanceof LOTRItemCrossbow) {
+				f = (float) (f * ((LOTRItemCrossbow) itemstack.getItem()).boltDamageFactor);
+			}
+			f *= LOTREnchantmentHelper.calcRangedDamageFactor(itemstack);
+		}
+		return f;
+	}
+
+	public static ItemStack getLoaded(ItemStack itemstack) {
+		if (itemstack != null && itemstack.getItem() instanceof LOTRItemCrossbow) {
+			NBTTagCompound nbt = itemstack.getTagCompound();
+			if (nbt == null) {
+				return null;
+			}
+			if (nbt.hasKey("LOTRCrossbowAmmo")) {
+				NBTTagCompound ammoData = nbt.getCompoundTag("LOTRCrossbowAmmo");
+				return ItemStack.loadItemStackFromNBT(ammoData);
+			}
+			if (nbt.hasKey("LOTRCrossbowLoaded")) {
+				return new ItemStack(LOTRMod.crossbowBolt);
+			}
+		}
+		return null;
+	}
+
+	public static boolean isLoaded(ItemStack itemstack) {
+		return getLoaded(itemstack) != null;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -220,58 +280,5 @@ public class LOTRItemCrossbow extends ItemBow {
 
 	public boolean shouldConsumeBolt(ItemStack itemstack, EntityPlayer entityplayer) {
 		return !entityplayer.capabilities.isCreativeMode && EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, itemstack) == 0;
-	}
-
-	public static void applyCrossbowModifiers(LOTREntityCrossbowBolt bolt, ItemStack itemstack) {
-		int power = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, itemstack);
-		if (power > 0) {
-			bolt.boltDamageFactor += power * 0.5 + 0.5;
-		}
-		int punch = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, itemstack);
-		punch += LOTREnchantmentHelper.calcRangedKnockback(itemstack);
-		if (punch > 0) {
-			bolt.knockbackStrength = punch;
-		}
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, itemstack) + LOTREnchantmentHelper.calcFireAspect(itemstack) > 0) {
-			bolt.setFire(100);
-		}
-		for (LOTREnchantment ench : LOTREnchantment.allEnchantments) {
-			if (!ench.applyToProjectile() || !LOTREnchantmentHelper.hasEnchant(itemstack, ench)) {
-				continue;
-			}
-			LOTREnchantmentHelper.setProjectileEnchantment(bolt, ench);
-		}
-	}
-
-	public static float getCrossbowLaunchSpeedFactor(ItemStack itemstack) {
-		float f = 1.0f;
-		if (itemstack != null) {
-			if (itemstack.getItem() instanceof LOTRItemCrossbow) {
-				f = (float) (f * ((LOTRItemCrossbow) itemstack.getItem()).boltDamageFactor);
-			}
-			f *= LOTREnchantmentHelper.calcRangedDamageFactor(itemstack);
-		}
-		return f;
-	}
-
-	public static ItemStack getLoaded(ItemStack itemstack) {
-		if (itemstack != null && itemstack.getItem() instanceof LOTRItemCrossbow) {
-			NBTTagCompound nbt = itemstack.getTagCompound();
-			if (nbt == null) {
-				return null;
-			}
-			if (nbt.hasKey("LOTRCrossbowAmmo")) {
-				NBTTagCompound ammoData = nbt.getCompoundTag("LOTRCrossbowAmmo");
-				return ItemStack.loadItemStackFromNBT(ammoData);
-			}
-			if (nbt.hasKey("LOTRCrossbowLoaded")) {
-				return new ItemStack(LOTRMod.crossbowBolt);
-			}
-		}
-		return null;
-	}
-
-	public static boolean isLoaded(ItemStack itemstack) {
-		return getLoaded(itemstack) != null;
 	}
 }

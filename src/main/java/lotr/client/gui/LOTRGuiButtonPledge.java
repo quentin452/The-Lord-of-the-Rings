@@ -1,12 +1,12 @@
 package lotr.client.gui;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class LOTRGuiButtonPledge extends GuiButton {
 	public LOTRGuiFactions parentGUI;

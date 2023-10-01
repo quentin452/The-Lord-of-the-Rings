@@ -1,12 +1,14 @@
 package lotr.common.world.village;
 
-import java.util.Random;
-
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityUmbarArcher;
+import lotr.common.entity.npc.LOTREntityUmbarWarrior;
+import lotr.common.entity.npc.LOTREntityUmbarian;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.structure2.*;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRVillageGenUmbar extends LOTRVillageGenSouthron {
 	public LOTRVillageGenUmbar(LOTRBiome biome, float f) {

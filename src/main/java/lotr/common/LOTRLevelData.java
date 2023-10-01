@@ -1,26 +1,34 @@
 package lotr.common;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.common.base.Optional;
 import com.mojang.authlib.GameProfile;
-
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.fellowship.*;
+import lotr.common.fellowship.LOTRFellowship;
+import lotr.common.fellowship.LOTRFellowshipData;
 import lotr.common.network.*;
-import lotr.common.world.spawning.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.nbt.*;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRTravellingTraderSpawner;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.StatCollector;
-import net.minecraft.world.*;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.*;
 
 public class LOTRLevelData {
 	public static int madePortal;
@@ -36,7 +44,7 @@ public class LOTRLevelData {
 	public static int waypointCooldownMin;
 	public static boolean gollumSpawned;
 	public static boolean enableAlignmentZones;
-	public static float conquestRate= 1.0f;
+	public static float conquestRate = 1.0f;
 	public static boolean clientside_thisServer_feastMode;
 	public static boolean clientside_thisServer_fellowshipCreation;
 	public static int clientside_thisServer_fellowshipMaxSize;
@@ -48,7 +56,7 @@ public class LOTRLevelData {
 	public static boolean clientside_thisServer_commemorateEmpressShamiir = true;
 	public static EnumDifficulty difficulty;
 	public static boolean difficultyLock;
-	public static Map<UUID, LOTRPlayerData> playerDataMap= new HashMap<>();
+	public static Map<UUID, LOTRPlayerData> playerDataMap = new HashMap<>();
 	public static Map<UUID, Optional<LOTRTitle.PlayerTitle>> playerTitleOfflineCacheMap = new HashMap<>();
 	public static boolean needsLoad = true;
 	public static boolean needsSave;
@@ -95,6 +103,11 @@ public class LOTRLevelData {
 
 	public static float getConquestRate() {
 		return conquestRate;
+	}
+
+	public static void setConquestRate(float f) {
+		conquestRate = f;
+		markDirty();
 	}
 
 	public static LOTRPlayerData getData(EntityPlayer entityplayer) {
@@ -173,6 +186,11 @@ public class LOTRLevelData {
 		return difficulty;
 	}
 
+	public static void setSavedDifficulty(EnumDifficulty d) {
+		difficulty = d;
+		markDirty();
+	}
+
 	public static int getWaypointCooldownMax() {
 		return waypointCooldownMax;
 	}
@@ -187,6 +205,11 @@ public class LOTRLevelData {
 
 	public static boolean isDifficultyLocked() {
 		return difficultyLock;
+	}
+
+	public static void setDifficultyLocked(boolean flag) {
+		difficultyLock = flag;
+		markDirty();
 	}
 
 	public static boolean isPlayerBannedForStructures(EntityPlayer entityplayer) {
@@ -507,16 +530,6 @@ public class LOTRLevelData {
 		}
 	}
 
-	public static void setConquestRate(float f) {
-		conquestRate = f;
-		markDirty();
-	}
-
-	public static void setDifficultyLocked(boolean flag) {
-		difficultyLock = flag;
-		markDirty();
-	}
-
 	public static void setEnableAlignmentZones(boolean flag) {
 		enableAlignmentZones = flag;
 		markDirty();
@@ -548,11 +561,6 @@ public class LOTRLevelData {
 	public static void setPlayerBannedForStructures(String username, boolean flag) {
 		UUID uuid = UUID.fromString(PreYggdrasilConverter.func_152719_a(username));
 		getData(uuid).setStructuresBanned(flag);
-	}
-
-	public static void setSavedDifficulty(EnumDifficulty d) {
-		difficulty = d;
-		markDirty();
 	}
 
 	public static void setStructuresBanned(boolean banned) {

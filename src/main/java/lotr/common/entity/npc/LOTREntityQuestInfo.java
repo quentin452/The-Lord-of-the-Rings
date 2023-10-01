@@ -1,21 +1,30 @@
 package lotr.common.entity.npc;
 
-import java.util.*;
-
-import com.google.common.base.*;
-
+import com.google.common.base.Predicate;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.*;
-import lotr.common.network.*;
-import lotr.common.quest.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRPlayerData;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketMiniquestOffer;
+import lotr.common.network.LOTRPacketNPCIsOfferingQuest;
+import lotr.common.quest.LOTRMiniQuest;
+import lotr.common.quest.LOTRMiniQuestBounty;
+import lotr.common.quest.LOTRMiniQuestFactory;
+import lotr.common.quest.MiniQuestSelector;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.map.LOTRWaypoint;
-import net.minecraft.entity.player.*;
-import net.minecraft.nbt.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.server.management.PlayerManager;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldServer;
+
+import java.util.*;
 
 public class LOTREntityQuestInfo {
 	public static int maxOfferTime = 24000;

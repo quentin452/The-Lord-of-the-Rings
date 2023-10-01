@@ -1,7 +1,5 @@
 package lotr.common.world.structure;
 
-import java.util.*;
-
 import cpw.mods.fml.common.FMLLog;
 import lotr.common.LOTRConfig;
 import lotr.common.world.biome.LOTRBiome;
@@ -13,6 +11,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class LOTRStructures {
 	public static HashMap<Integer, IStructureProvider> idToClassMapping = new HashMap<>();

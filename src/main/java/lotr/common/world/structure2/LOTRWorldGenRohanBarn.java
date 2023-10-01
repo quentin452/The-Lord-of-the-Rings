@@ -1,9 +1,6 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityRohanFarmer;
 import lotr.common.world.structure.LOTRChestContents;
@@ -11,9 +8,28 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class LOTRWorldGenRohanBarn extends LOTRWorldGenRohanStructure {
 	public LOTRWorldGenRohanBarn(boolean flag) {
 		super(flag);
+	}
+
+	public static EntityAnimal getRandomAnimal(World world, Random random) {
+		int animal = random.nextInt(4);
+		switch (animal) {
+			case 0:
+				return new EntityCow(world);
+			case 1:
+				return new EntityPig(world);
+			case 2:
+				return new EntitySheep(world);
+			case 3:
+				return new EntityChicken(world);
+			default:
+				break;
+		}
+		return null;
 	}
 
 	@Override
@@ -445,22 +461,5 @@ public class LOTRWorldGenRohanBarn extends LOTRWorldGenRohanStructure {
 		LOTREntityRohanFarmer farmer = new LOTREntityRohanFarmer(world);
 		spawnNPCAndSetHome(farmer, world, 0, 1, 8, 16);
 		return true;
-	}
-
-	public static EntityAnimal getRandomAnimal(World world, Random random) {
-		int animal = random.nextInt(4);
-		switch (animal) {
-			case 0:
-				return new EntityCow(world);
-			case 1:
-				return new EntityPig(world);
-			case 2:
-				return new EntitySheep(world);
-			case 3:
-				return new EntityChicken(world);
-			default:
-				break;
-		}
-		return null;
 	}
 }

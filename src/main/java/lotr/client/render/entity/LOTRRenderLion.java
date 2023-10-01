@@ -1,7 +1,9 @@
 package lotr.client.render.entity;
 
-import lotr.client.model.*;
-import lotr.common.entity.animal.*;
+import lotr.client.model.LOTRModelLion;
+import lotr.client.model.LOTRModelLionOld;
+import lotr.common.entity.animal.LOTREntityLionBase;
+import lotr.common.entity.animal.LOTREntityLioness;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -18,6 +20,10 @@ public class LOTRRenderLion extends RenderLiving {
 		super(lionModel, 0.5f);
 	}
 
+	public static boolean isTicket(LOTREntityLionBase lion) {
+		return lion.hasCustomNameTag() && "ticket lion".equalsIgnoreCase(lion.getCustomNameTag());
+	}
+
 	@Override
 	public void doRender(Entity entity, double d, double d1, double d2, float f, float f1) {
 		LOTREntityLionBase lion = (LOTREntityLionBase) entity;
@@ -32,9 +38,5 @@ public class LOTRRenderLion extends RenderLiving {
 			return textureTicket;
 		}
 		return lion instanceof LOTREntityLioness ? textureLioness : textureLion;
-	}
-
-	public static boolean isTicket(LOTREntityLionBase lion) {
-		return lion.hasCustomNameTag() && "ticket lion".equalsIgnoreCase(lion.getCustomNameTag());
 	}
 }

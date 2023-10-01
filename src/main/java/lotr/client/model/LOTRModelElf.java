@@ -1,11 +1,11 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.render.entity.LOTRGlowingEyes;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityElf;
+import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelElf extends LOTRModelBiped implements LOTRGlowingEyes.Model {
 	public ModelRenderer earRight = new ModelRenderer(this, 0, 0);

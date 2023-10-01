@@ -1,6 +1,7 @@
 package lotr.client.model;
 
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelPig;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class LOTRModelBoar extends ModelPig {

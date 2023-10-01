@@ -1,16 +1,23 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
-import lotr.common.*;
-import lotr.common.entity.animal.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
+import lotr.common.entity.animal.LOTREntityBear;
+import lotr.common.entity.animal.LOTREntityHorse;
+import lotr.common.entity.animal.LOTREntityKineAraw;
 import lotr.common.entity.npc.*;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
-import lotr.common.world.feature.*;
-import lotr.common.world.map.*;
-import lotr.common.world.spawning.*;
+import lotr.common.world.feature.LOTRTreeType;
+import lotr.common.world.feature.LOTRWorldGenBoulder;
+import lotr.common.world.feature.LOTRWorldGenDoubleFlower;
+import lotr.common.world.map.LOTRRoadType;
+import lotr.common.world.map.LOTRRoads;
+import lotr.common.world.map.LOTRWaypoint;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRInvasions;
+import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,6 +25,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.Random;
 
 public class LOTRBiomeGenDorwinion extends LOTRBiome {
 	public WorldGenerator boulderGen = new LOTRWorldGenBoulder(LOTRMod.rock, 5, 1, 2);

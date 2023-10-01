@@ -3,7 +3,8 @@ package lotr.client.render.entity;
 import lotr.client.model.LOTRModelHuman;
 import lotr.common.entity.LOTRRandomSkinEntity;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderBlacksmith extends LOTRRenderBiped {

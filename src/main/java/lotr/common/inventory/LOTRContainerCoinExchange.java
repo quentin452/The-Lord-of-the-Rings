@@ -1,6 +1,7 @@
 package lotr.common.inventory;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.item.LOTRItemCoin;
@@ -36,6 +37,10 @@ public class LOTRContainerCoinExchange extends Container {
 			addSlotToContainer(new Slot(entityplayer.inventory, i, 8 + i * 18, 164));
 		}
 		onCraftMatrixChanged(coinInputInv);
+	}
+
+	public static boolean isValidCoin(ItemStack item) {
+		return item.getItem() == LOTRMod.silverCoin && !IPickpocketable.Helper.isPickpocketed(item);
 	}
 
 	@Override
@@ -199,10 +204,6 @@ public class LOTRContainerCoinExchange extends Container {
 		if (i == 0) {
 			exchanged = j == 1;
 		}
-	}
-
-	public static boolean isValidCoin(ItemStack item) {
-		return item.getItem() == LOTRMod.silverCoin && !IPickpocketable.Helper.isPickpocketed(item);
 	}
 
 	public class InventoryCoinExchangeSlot extends InventoryBasic {

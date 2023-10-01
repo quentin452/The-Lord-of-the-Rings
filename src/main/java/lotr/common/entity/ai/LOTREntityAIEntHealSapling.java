@@ -5,7 +5,9 @@ import lotr.common.entity.npc.LOTREntityEnt;
 import lotr.common.tileentity.LOTRTileEntityCorruptMallorn;
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.*;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class LOTREntityAIEntHealSapling extends EntityAIBase {

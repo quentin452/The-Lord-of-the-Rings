@@ -1,19 +1,32 @@
 package lotr.common.world;
 
-import java.util.*;
-
 import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
-import lotr.common.world.biome.*;
-import lotr.common.world.biome.variant.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRDimension;
+import lotr.common.LOTRMod;
+import lotr.common.world.biome.LOTRBiome;
+import lotr.common.world.biome.LOTRBiomeGenFarHaradJungle;
+import lotr.common.world.biome.LOTRBiomeGenFarHaradMangrove;
+import lotr.common.world.biome.variant.LOTRBiomeVariant;
+import lotr.common.world.biome.variant.LOTRBiomeVariantList;
+import lotr.common.world.biome.variant.LOTRBiomeVariantStorage;
 import lotr.common.world.genlayer.*;
 import lotr.common.world.map.LOTRFixedStructures;
-import lotr.common.world.village.*;
-import net.minecraft.world.*;
-import net.minecraft.world.biome.*;
+import lotr.common.world.village.LOTRVillageGen;
+import lotr.common.world.village.LOTRVillagePositionCache;
+import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeCache;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.structure.MapGenStructure;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class LOTRWorldChunkManager extends WorldChunkManager {
 	public static int LAYER_BIOME;

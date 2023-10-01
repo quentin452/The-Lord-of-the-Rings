@@ -1,16 +1,22 @@
 package lotr.common.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.entity.projectile.LOTREntitySmokeRing;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRItemHobbitPipe extends Item {
 	public static int MAGIC_COLOR = 16;
@@ -19,6 +25,29 @@ public class LOTRItemHobbitPipe extends Item {
 		setMaxDamage(300);
 		setMaxStackSize(1);
 		setCreativeTab(LOTRCreativeTabs.tabMisc);
+	}
+
+	public static int getSmokeColor(ItemStack itemstack) {
+		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("SmokeColour")) {
+			return itemstack.getTagCompound().getInteger("SmokeColour");
+		}
+		return 0;
+	}
+
+	public static boolean isPipeDyed(ItemStack itemstack) {
+		int color = getSmokeColor(itemstack);
+		return color != 0 && color != 16;
+	}
+
+	public static void removePipeDye(ItemStack itemstack) {
+		setSmokeColor(itemstack, 0);
+	}
+
+	public static void setSmokeColor(ItemStack itemstack, int i) {
+		if (itemstack.getTagCompound() == null) {
+			itemstack.setTagCompound(new NBTTagCompound());
+		}
+		itemstack.getTagCompound().setInteger("SmokeColour", i);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -78,28 +107,5 @@ public class LOTRItemHobbitPipe extends Item {
 			entityplayer.setItemInUse(itemstack, getMaxItemUseDuration(itemstack));
 		}
 		return itemstack;
-	}
-
-	public static int getSmokeColor(ItemStack itemstack) {
-		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("SmokeColour")) {
-			return itemstack.getTagCompound().getInteger("SmokeColour");
-		}
-		return 0;
-	}
-
-	public static boolean isPipeDyed(ItemStack itemstack) {
-		int color = getSmokeColor(itemstack);
-		return color != 0 && color != 16;
-	}
-
-	public static void removePipeDye(ItemStack itemstack) {
-		setSmokeColor(itemstack, 0);
-	}
-
-	public static void setSmokeColor(ItemStack itemstack, int i) {
-		if (itemstack.getTagCompound() == null) {
-			itemstack.setTagCompound(new NBTTagCompound());
-		}
-		itemstack.getTagCompound().setInteger("SmokeColour", i);
 	}
 }

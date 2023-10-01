@@ -1,13 +1,13 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.spawning.LOTREventSpawner;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRBiomeGenHaradMountains extends LOTRBiomeGenFarHarad {
 	public LOTRBiomeGenHaradMountains(int i, boolean major) {

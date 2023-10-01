@@ -1,11 +1,13 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityMoredainHuntsman;
+import lotr.common.entity.npc.LOTREntityMoredainHutmaker;
+import lotr.common.entity.npc.LOTREntityMoredainVillageTrader;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenMoredainHutTrader extends LOTRWorldGenMoredainHut {
 	public LOTRWorldGenMoredainHutTrader(boolean flag) {

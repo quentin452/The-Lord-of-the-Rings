@@ -1,8 +1,8 @@
 package lotr.common.entity.npc;
 
-import java.util.List;
-
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.block.LOTRBlockOrcBomb;
 import lotr.common.entity.ai.*;
 import lotr.common.entity.animal.LOTREntityRabbit;
@@ -10,16 +10,22 @@ import lotr.common.entity.item.LOTREntityOrcBomb;
 import lotr.common.item.LOTRItemMug;
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.List;
 
 public abstract class LOTREntityOrc extends LOTREntityNPC {
 	public boolean isWeakOrc = true;

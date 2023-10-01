@@ -1,13 +1,13 @@
 package lotr.common.world.feature;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.world.structure2.LOTRWorldGenStructureBase2;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.Random;
 
 public class LOTRWorldGenVolcanoCrater extends WorldGenerator {
 	public int minWidth = 5;

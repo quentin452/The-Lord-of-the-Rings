@@ -1,9 +1,10 @@
 package lotr.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiButtonRedBook extends GuiButton {
 	public LOTRGuiButtonRedBook(int i, int x, int y, int w, int h, String s) {

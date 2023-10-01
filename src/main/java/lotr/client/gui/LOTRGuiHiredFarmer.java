@@ -2,10 +2,14 @@ package lotr.client.gui;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.LOTRSquadrons;
-import lotr.common.entity.npc.*;
-import lotr.common.network.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.util.*;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTRHiredNPCInfo;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketNPCSquadron;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.StringUtils;
 
 public class LOTRGuiHiredFarmer extends LOTRGuiHiredNPC {
 	public LOTRGuiButtonOptions buttonGuardMode;

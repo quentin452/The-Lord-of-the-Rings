@@ -1,14 +1,15 @@
 package lotr.client.render.entity;
 
-import lotr.common.entity.LOTRRandomSkinEntity;
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRTickHandlerClient;
 import lotr.client.model.LOTRModelBarrowWight;
+import lotr.common.entity.LOTRRandomSkinEntity;
 import lotr.common.entity.npc.LOTREntityBarrowWight;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.*;
-import net.minecraft.util.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderBarrowWight extends LOTRRenderBiped {
 	public static LOTRRandomSkins wightSkins;

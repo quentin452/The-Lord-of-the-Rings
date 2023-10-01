@@ -5,7 +5,8 @@ import lotr.common.dispenser.LOTRDispenseConker;
 import lotr.common.entity.projectile.LOTREntityConker;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTRItemConker extends Item {

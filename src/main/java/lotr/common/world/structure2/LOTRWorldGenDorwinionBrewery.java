@@ -1,19 +1,21 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityDorwinionElfVintner;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemBanner;
+import lotr.common.item.LOTRItemMug;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenDorwinionBrewery extends LOTRWorldGenDorwinionHouse {
 	public LOTRWorldGenDorwinionBrewery(boolean flag) {

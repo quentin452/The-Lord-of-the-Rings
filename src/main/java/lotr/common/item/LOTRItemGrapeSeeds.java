@@ -1,12 +1,16 @@
 package lotr.common.item;
 
-import lotr.common.*;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import lotr.common.block.LOTRBlockGrapevine;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
-import net.minecraft.world.*;
-import net.minecraftforge.common.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.common.IPlantable;
 
 public class LOTRItemGrapeSeeds extends Item implements IPlantable {
 	public Block grapevineBlock;

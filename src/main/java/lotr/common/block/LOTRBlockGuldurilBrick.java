@@ -1,18 +1,24 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityGulduril;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LOTRBlockGuldurilBrick extends Block {
 	public LOTRBlockGuldurilBrick() {
@@ -22,67 +28,6 @@ public class LOTRBlockGuldurilBrick extends Block {
 		setResistance(10.0f);
 		setStepSound(Block.soundTypeStone);
 		setLightLevel(0.75f);
-	}
-
-	@Override
-	public boolean canSilkHarvest() {
-		return true;
-	}
-
-	@Override
-	public TileEntity createTileEntity(World world, int metadata) {
-		return new LOTRTileEntityGulduril();
-	}
-
-	@Override
-	public ArrayList getDrops(World world, int i, int j, int k, int metadata, int fortune) {
-		ArrayList<ItemStack> drops = new ArrayList<>();
-		ItemStack drop = blockForGuldurilMeta(metadata);
-		if (drop != null) {
-			drops.add(drop);
-		}
-		return drops;
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int i, int j) {
-		Item item;
-		ItemStack itemstack = blockForGuldurilMeta(j);
-		if (itemstack != null && (item = itemstack.getItem()) instanceof ItemBlock) {
-			Block block = ((ItemBlock) item).field_150939_a;
-			int meta = itemstack.getItemDamage();
-			return block.getIcon(i, meta);
-		}
-		return LOTRMod.brick.getIcon(i, 0);
-	}
-
-	@Override
-	public ItemStack getPickBlock(MovingObjectPosition target, World world, int i, int j, int k) {
-		return new ItemStack(this, 1, world.getBlockMetadata(i, j, k));
-	}
-
-	@Override
-	public int getRenderType() {
-		return LOTRMod.proxy.getGuldurilRenderID();
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
-		for (int i = 0; i <= 9; ++i) {
-			list.add(new ItemStack(item, 1, i));
-		}
-	}
-
-	@Override
-	public boolean hasTileEntity(int metadata) {
-		return true;
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister iconregister) {
 	}
 
 	public static ItemStack blockForGuldurilMeta(int i) {
@@ -148,5 +93,66 @@ public class LOTRBlockGuldurilBrick extends Block {
 			return 9;
 		}
 		return -1;
+	}
+
+	@Override
+	public boolean canSilkHarvest() {
+		return true;
+	}
+
+	@Override
+	public TileEntity createTileEntity(World world, int metadata) {
+		return new LOTRTileEntityGulduril();
+	}
+
+	@Override
+	public ArrayList getDrops(World world, int i, int j, int k, int metadata, int fortune) {
+		ArrayList<ItemStack> drops = new ArrayList<>();
+		ItemStack drop = blockForGuldurilMeta(metadata);
+		if (drop != null) {
+			drops.add(drop);
+		}
+		return drops;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public IIcon getIcon(int i, int j) {
+		Item item;
+		ItemStack itemstack = blockForGuldurilMeta(j);
+		if (itemstack != null && (item = itemstack.getItem()) instanceof ItemBlock) {
+			Block block = ((ItemBlock) item).field_150939_a;
+			int meta = itemstack.getItemDamage();
+			return block.getIcon(i, meta);
+		}
+		return LOTRMod.brick.getIcon(i, 0);
+	}
+
+	@Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int i, int j, int k) {
+		return new ItemStack(this, 1, world.getBlockMetadata(i, j, k));
+	}
+
+	@Override
+	public int getRenderType() {
+		return LOTRMod.proxy.getGuldurilRenderID();
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+		for (int i = 0; i <= 9; ++i) {
+			list.add(new ItemStack(item, 1, i));
+		}
+	}
+
+	@Override
+	public boolean hasTileEntity(int metadata) {
+		return true;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void registerBlockIcons(IIconRegister iconregister) {
 	}
 }

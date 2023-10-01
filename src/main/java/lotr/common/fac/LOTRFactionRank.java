@@ -1,6 +1,8 @@
 package lotr.common.fac;
 
-import lotr.common.*;
+import lotr.common.LOTRAchievementRank;
+import lotr.common.LOTRPlayerData;
+import lotr.common.LOTRTitle;
 import net.minecraft.util.StatCollector;
 
 public class LOTRFactionRank implements Comparable<LOTRFactionRank> {

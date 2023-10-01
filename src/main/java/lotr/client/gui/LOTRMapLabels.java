@@ -29,14 +29,14 @@ public enum LOTRMapLabels {
 		}
 	}
 
+	public static LOTRMapLabels[] allMapLabels() {
+		return values();
+	}
+
 	public String getDisplayName() {
 		if (labelName != null) {
 			return StatCollector.translateToLocal("lotr.map." + labelName);
 		}
 		return biome.getBiomeDisplayName();
-	}
-
-	public static LOTRMapLabels[] allMapLabels() {
-		return values();
 	}
 }

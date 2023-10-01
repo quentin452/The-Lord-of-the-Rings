@@ -1,8 +1,8 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenSouthronTownCorner extends LOTRWorldGenSouthronStructure {
 	public LOTRWorldGenSouthronTownCorner(boolean flag) {

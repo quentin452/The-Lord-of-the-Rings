@@ -2,7 +2,8 @@ package lotr.client.model;
 
 import lotr.client.LOTRTickHandlerClient;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
 public class LOTRModelSwanChestplate extends LOTRModelBiped {

@@ -1,9 +1,6 @@
 package lotr.common.world.village;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
 import lotr.common.entity.npc.*;
@@ -12,6 +9,8 @@ import lotr.common.world.map.LOTRRoadType;
 import lotr.common.world.structure2.*;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRVillageGenSouthron extends LOTRVillageGen {
 	public LOTRVillageGenSouthron(LOTRBiome biome, float f) {
@@ -25,6 +24,11 @@ public class LOTRVillageGenSouthron extends LOTRVillageGen {
 	@Override
 	public LOTRVillageGen.AbstractInstance<?> createVillageInstance(World world, int i, int k, Random random, LocationInfo loc) {
 		return new Instance(this, world, i, k, random, loc);
+	}
+
+	public enum VillageType {
+		VILLAGE, TOWN, FORT
+
 	}
 
 	public static class Instance extends LOTRVillageGen.AbstractInstance<LOTRVillageGenSouthron> {
@@ -594,11 +598,6 @@ public class LOTRVillageGenSouthron extends LOTRVillageGen {
 		public void setWarriorSpawnClasses(LOTREntityNPCRespawner spawner) {
 			spawner.setSpawnClasses(LOTREntityNearHaradrimWarrior.class, LOTREntityNearHaradrimArcher.class);
 		}
-
-	}
-
-	public enum VillageType {
-		VILLAGE, TOWN, FORT
 
 	}
 

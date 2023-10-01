@@ -1,7 +1,8 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelHuman;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityDaleLevyman;
+import lotr.common.entity.npc.LOTREntityDaleMan;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;

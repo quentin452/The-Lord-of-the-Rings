@@ -4,7 +4,9 @@ import lotr.common.LOTRAchievement;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRTreeType;
 import lotr.common.world.map.LOTRWaypoint;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRSpawnList;
 
 public class LOTRBiomeGenOldForest extends LOTRBiome {
 	public LOTRBiomeGenOldForest(int i, boolean major) {

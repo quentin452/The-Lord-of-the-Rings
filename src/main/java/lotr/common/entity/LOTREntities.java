@@ -1,15 +1,16 @@
 package lotr.common.entity;
 
-import java.util.*;
-
 import cpw.mods.fml.common.registry.EntityRegistry;
 import lotr.common.LOTRMod;
 import lotr.common.entity.animal.*;
 import lotr.common.entity.item.*;
 import lotr.common.entity.npc.*;
 import lotr.common.entity.projectile.*;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.world.World;
+
+import java.util.*;
 
 public class LOTREntities {
 	public static HashMap<Integer, SpawnEggInfo> spawnEggs = new LinkedHashMap<>();

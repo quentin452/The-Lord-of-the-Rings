@@ -2,8 +2,9 @@ package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelTroll;
 import lotr.common.entity.LOTRRandomSkinEntity;
-import lotr.common.entity.npc.*;
-import net.minecraft.entity.*;
+import lotr.common.entity.npc.LOTREntitySnowTroll;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderSnowTroll extends LOTRRenderTroll {

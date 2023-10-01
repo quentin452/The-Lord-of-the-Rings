@@ -18,6 +18,20 @@ public class LOTRTradeEntry {
 		tradeCost = cost;
 	}
 
+	public static LOTRTradeEntry readFromNBT(NBTTagCompound nbt) {
+		ItemStack savedItem = ItemStack.loadItemStackFromNBT(nbt);
+		if (savedItem != null) {
+			int cost = nbt.getInteger("Cost");
+			LOTRTradeEntry trade = new LOTRTradeEntry(savedItem, cost);
+			if (nbt.hasKey("RecentTradeValue")) {
+				trade.recentTradeValue = nbt.getInteger("RecentTradeValue");
+			}
+			trade.lockedTicks = nbt.getInteger("LockedTicks");
+			return trade;
+		}
+		return null;
+	}
+
 	public ItemStack createTradeItem() {
 		return tradeItem.copy();
 	}
@@ -28,6 +42,10 @@ public class LOTRTradeEntry {
 
 	public int getCost() {
 		return tradeCost;
+	}
+
+	public void setCost(int cost) {
+		tradeCost = cost;
 	}
 
 	public float getLockedProgress() {
@@ -66,10 +84,6 @@ public class LOTRTradeEntry {
 		return OreDictionary.itemMatches(tradeCreated, itemstack, false);
 	}
 
-	public void setCost(int cost) {
-		tradeCost = cost;
-	}
-
 	public void setLockedForTicks(int ticks) {
 		lockedTicks = ticks;
 	}
@@ -101,19 +115,5 @@ public class LOTRTradeEntry {
 		nbt.setInteger("Cost", tradeCost);
 		nbt.setInteger("RecentTradeValue", recentTradeValue);
 		nbt.setInteger("LockedTicks", lockedTicks);
-	}
-
-	public static LOTRTradeEntry readFromNBT(NBTTagCompound nbt) {
-		ItemStack savedItem = ItemStack.loadItemStackFromNBT(nbt);
-		if (savedItem != null) {
-			int cost = nbt.getInteger("Cost");
-			LOTRTradeEntry trade = new LOTRTradeEntry(savedItem, cost);
-			if (nbt.hasKey("RecentTradeValue")) {
-				trade.recentTradeValue = nbt.getInteger("RecentTradeValue");
-			}
-			trade.lockedTicks = nbt.getInteger("LockedTicks");
-			return trade;
-		}
-		return null;
 	}
 }

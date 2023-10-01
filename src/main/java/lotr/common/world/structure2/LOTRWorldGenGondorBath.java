@@ -1,10 +1,11 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityGondorMan;
+import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenGondorBath extends LOTRWorldGenGondorStructure {
 	public LOTRWorldGenGondorBath(boolean flag) {

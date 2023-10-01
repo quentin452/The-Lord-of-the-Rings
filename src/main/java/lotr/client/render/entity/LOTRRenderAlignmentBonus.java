@@ -1,17 +1,21 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
-import lotr.client.*;
+import lotr.client.LOTRClientProxy;
+import lotr.client.LOTRTickHandlerClient;
 import lotr.client.fx.LOTREntityAlignmentBonus;
-import lotr.common.*;
-import lotr.common.fac.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRPlayerData;
+import lotr.common.fac.LOTRAlignmentBonusMap;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Map;
 

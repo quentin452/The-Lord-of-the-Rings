@@ -2,7 +2,8 @@ package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelDwarf;
 import lotr.common.entity.npc.LOTREntityBlueDwarf;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderDwarfCommander extends LOTRRenderDwarf {

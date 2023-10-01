@@ -1,12 +1,16 @@
 package lotr.common.command;
 
-import java.util.*;
-
-import lotr.common.enchant.*;
-import net.minecraft.command.*;
+import lotr.common.enchant.LOTREnchantment;
+import lotr.common.enchant.LOTREnchantmentHelper;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LOTRCommandEnchant extends CommandBase {
 	@Override

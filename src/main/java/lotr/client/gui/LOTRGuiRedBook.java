@@ -1,25 +1,33 @@
 package lotr.client.gui;
 
-import java.util.*;
-
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import org.apache.commons.lang3.tuple.Pair;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
 import com.google.common.collect.Lists;
-
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.client.LOTRTextBody;
-import lotr.common.*;
+import lotr.common.LOTRDate;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRPlayerData;
 import lotr.common.entity.npc.LOTRSpeech;
 import lotr.common.fac.LOTRAlignmentValues;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketDeleteMiniquest;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketMiniquestTrack;
 import lotr.common.quest.LOTRMiniQuest;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.ItemEditableBook;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.apache.commons.lang3.tuple.Pair;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LOTRGuiRedBook extends LOTRGuiScreenBase {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/quest/redBook.png");

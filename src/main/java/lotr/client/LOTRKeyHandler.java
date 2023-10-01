@@ -1,17 +1,21 @@
 package lotr.client;
 
-import java.util.*;
-
 import com.google.common.math.IntMath;
-
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
-import lotr.common.*;
+import lotr.common.LOTRDimension;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.LOTRPlayerData;
 import lotr.common.fac.LOTRFaction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 public class LOTRKeyHandler {
 	public static KeyBinding keyBindingMenu = new KeyBinding("Menu", 38, "LOTR");
@@ -33,6 +37,12 @@ public class LOTRKeyHandler {
 		ClientRegistry.registerKeyBinding(keyBindingAlignmentCycleRight);
 		ClientRegistry.registerKeyBinding(keyBindingAlignmentGroupPrev);
 		ClientRegistry.registerKeyBinding(keyBindingAlignmentGroupNext);
+	}
+
+	public static void update() {
+		if (alignmentChangeTick > 0) {
+			--alignmentChangeTick;
+		}
 	}
 
 	@SubscribeEvent
@@ -97,11 +107,5 @@ public class LOTRKeyHandler {
 	@SubscribeEvent
 	public void MouseInputEvent(InputEvent.MouseInputEvent event) {
 		LOTRAttackTiming.doAttackTiming();
-	}
-
-	public static void update() {
-		if (alignmentChangeTick > 0) {
-			--alignmentChangeTick;
-		}
 	}
 }

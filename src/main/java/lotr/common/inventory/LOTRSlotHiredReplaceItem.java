@@ -1,7 +1,9 @@
 package lotr.common.inventory;
 
-import cpw.mods.fml.relauncher.*;
-import lotr.common.entity.npc.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTRInventoryHiredReplacedItems;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;

@@ -1,14 +1,15 @@
 package lotr.common.world.spawning;
 
-import java.util.*;
-
 import cpw.mods.fml.common.FMLLog;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.util.LOTRLog;
 import lotr.common.world.biome.LOTRBiome;
-import lotr.common.world.map.*;
+import lotr.common.world.map.LOTRConquestGrid;
+import lotr.common.world.map.LOTRConquestZone;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
+
+import java.util.*;
 
 public class LOTRBiomeSpawnList {
 	public String biomeIdentifier;
@@ -22,6 +23,14 @@ public class LOTRBiomeSpawnList {
 
 	public LOTRBiomeSpawnList(String s) {
 		biomeIdentifier = s;
+	}
+
+	public static SpawnListContainer entry(LOTRSpawnList list) {
+		return entry(list, 1);
+	}
+
+	public static SpawnListContainer entry(LOTRSpawnList list, int weight) {
+		return new SpawnListContainer(list, weight);
 	}
 
 	public void clear() {
@@ -140,14 +149,6 @@ public class LOTRBiomeSpawnList {
 		cont.conquestSensitivity = conq;
 		factionContainers.add(cont);
 		return cont;
-	}
-
-	public static SpawnListContainer entry(LOTRSpawnList list) {
-		return entry(list, 1);
-	}
-
-	public static SpawnListContainer entry(LOTRSpawnList list, int weight) {
-		return new SpawnListContainer(list, weight);
 	}
 
 	public static class FactionContainer {

@@ -1,7 +1,5 @@
 package lotr.common.entity;
 
-import java.util.*;
-
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -9,19 +7,28 @@ import lotr.common.*;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.item.LOTRItemConquestHorn;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketInvasionWatch;
 import lotr.common.world.spawning.LOTRInvasions;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.ForgeEventFactory;
+
+import java.util.*;
 
 public class LOTREntityInvasionSpawner extends Entity {
 	public static int MAX_INVASION_SIZE = 10000;
@@ -42,6 +49,23 @@ public class LOTREntityInvasionSpawner extends Entity {
 		setSize(1.5f, 1.5f);
 		renderDistanceWeight = 4.0;
 		spawnerSpin = rand.nextFloat() * 360.0f;
+	}
+
+	@SuppressWarnings("Convert2Lambda")
+	public static LOTREntityInvasionSpawner locateInvasionNearby(Entity seeker, UUID id) {
+		World world = seeker.worldObj;
+		double search = 256.0;
+		List invasions = world.selectEntitiesWithinAABB(LOTREntityInvasionSpawner.class, seeker.boundingBox.expand(search, search, search), new IEntitySelector() {
+
+			@Override
+			public boolean isEntityApplicable(Entity e) {
+				return e.getUniqueID().equals(id);
+			}
+		});
+		if (!invasions.isEmpty()) {
+			return (LOTREntityInvasionSpawner) invasions.get(0);
+		}
+		return null;
 	}
 
 	public void addPlayerKill(EntityPlayer entityplayer) {
@@ -182,6 +206,10 @@ public class LOTREntityInvasionSpawner extends Entity {
 			return type;
 		}
 		return LOTRInvasions.HOBBIT;
+	}
+
+	public void setInvasionType(LOTRInvasions type) {
+		dataWatcher.updateObject(20, (byte) type.ordinal());
 	}
 
 	@Override
@@ -399,10 +427,6 @@ public class LOTREntityInvasionSpawner extends Entity {
 		};
 	}
 
-	public void setInvasionType(LOTRInvasions type) {
-		dataWatcher.updateObject(20, (byte) type.ordinal());
-	}
-
 	public void setWatchingInvasion(EntityPlayerMP entityplayer, boolean overrideAlreadyWatched) {
 		IMessage pkt = new LOTRPacketInvasionWatch(this, overrideAlreadyWatched);
 		LOTRPacketHandler.networkWrapper.sendTo(pkt, entityplayer);
@@ -480,23 +504,6 @@ public class LOTREntityInvasionSpawner extends Entity {
 			}
 			nbt.setTag("BonusFactions", bonusTags);
 		}
-	}
-
-	@SuppressWarnings("Convert2Lambda")
-	public static LOTREntityInvasionSpawner locateInvasionNearby(Entity seeker, UUID id) {
-		World world = seeker.worldObj;
-		double search = 256.0;
-		List invasions = world.selectEntitiesWithinAABB(LOTREntityInvasionSpawner.class, seeker.boundingBox.expand(search, search, search), new IEntitySelector() {
-
-			@Override
-			public boolean isEntityApplicable(Entity e) {
-				return e.getUniqueID().equals(id);
-			}
-		});
-		if (!invasions.isEmpty()) {
-			return (LOTREntityInvasionSpawner) invasions.get(0);
-		}
-		return null;
 	}
 
 }

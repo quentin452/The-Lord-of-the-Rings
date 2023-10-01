@@ -1,9 +1,12 @@
 package lotr.common.item;
 
-import java.util.*;
-
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LOTRItemOwnership {
 	public static void addPreviousOwner(ItemStack itemstack, String name) {

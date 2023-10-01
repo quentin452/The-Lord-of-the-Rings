@@ -1,21 +1,24 @@
 package lotr.client.render.tileentity;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.nio.IntBuffer;
-import java.util.*;
-
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.tileentity.LOTRTileEntitySignCarved;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.resources.*;
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.Direction;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.nio.IntBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRRenderSignCarved extends TileEntitySpecialRenderer implements IResourceManagerReloadListener {
 	public BufferedImage cachedBlockAtlasImage;

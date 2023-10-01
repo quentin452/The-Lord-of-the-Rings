@@ -1,13 +1,14 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityHobbit;
 import lotr.common.world.biome.LOTRBiomeGenShire;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenHobbitPicnicBench extends LOTRWorldGenStructureBase {
 	public Block baseBlock;

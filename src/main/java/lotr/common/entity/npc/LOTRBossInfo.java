@@ -1,16 +1,19 @@
 package lotr.common.entity.npc;
 
-import java.util.*;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import lotr.common.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.entity.ai.LOTRNPCTargetSelector;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.*;
-import net.minecraft.util.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.*;
 
 public class LOTRBossInfo {
 	public static int PLAYER_HURT_COOLDOWN = 600;

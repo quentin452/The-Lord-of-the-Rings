@@ -1,10 +1,10 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.entity.npc.LOTRNames;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenGondorVillageSign extends LOTRWorldGenGondorStructure {
 	public String[] signText = LOTRNames.getGondorVillageName(new Random());

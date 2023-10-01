@@ -1,18 +1,21 @@
 package lotr.client.gui;
 
-import java.util.*;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRClientProxy;
-import lotr.common.*;
-import lotr.common.fac.*;
-import lotr.common.network.*;
-import net.minecraft.client.gui.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRPlayerData;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
+import lotr.common.network.LOTRPacketAlignmentChoices;
+import lotr.common.network.LOTRPacketHandler;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.EnumChatFormatting;
+import org.lwjgl.opengl.GL11;
+
+import java.util.*;
 
 public class LOTRGuiAlignmentChoices extends LOTRGuiScreenBase {
 	public int xSize = 430;

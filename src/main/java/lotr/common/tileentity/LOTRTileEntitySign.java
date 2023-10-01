@@ -1,14 +1,17 @@
 package lotr.common.tileentity;
 
-import java.util.Arrays;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.network.*;
-import net.minecraft.entity.player.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketOpenSignEditor;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.*;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+
+import java.util.Arrays;
 
 public abstract class LOTRTileEntitySign extends TileEntity {
 	public static int MAX_LINE_LENGTH = 15;
@@ -33,10 +36,21 @@ public abstract class LOTRTileEntitySign extends TileEntity {
 		return editingPlayer;
 	}
 
+	public void setEditingPlayer(EntityPlayer entityplayer) {
+		editingPlayer = entityplayer;
+	}
+
 	public abstract int getNumLines();
 
 	public boolean isEditable() {
 		return editable;
+	}
+
+	public void setEditable(boolean flag) {
+		editable = flag;
+		if (!flag) {
+			editingPlayer = null;
+		}
 	}
 
 	@Override
@@ -66,17 +80,6 @@ public abstract class LOTRTileEntitySign extends TileEntity {
 			}
 			signText[i] = signText[i].substring(0, 15);
 		}
-	}
-
-	public void setEditable(boolean flag) {
-		editable = flag;
-		if (!flag) {
-			editingPlayer = null;
-		}
-	}
-
-	public void setEditingPlayer(EntityPlayer entityplayer) {
-		editingPlayer = entityplayer;
 	}
 
 	public void writeSignText(NBTTagCompound nbt) {

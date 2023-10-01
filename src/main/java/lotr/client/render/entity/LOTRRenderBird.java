@@ -1,15 +1,19 @@
 package lotr.client.render.entity;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelBird;
-import lotr.common.entity.animal.*;
+import lotr.common.entity.animal.LOTREntityBird;
+import lotr.common.entity.animal.LOTREntityCrebain;
+import lotr.common.entity.animal.LOTREntityGorcrow;
+import lotr.common.entity.animal.LOTREntitySeagull;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRRenderBird extends RenderLiving {
 	public static Map<String, LOTRRandomSkins> birdTypeSkins = new HashMap<>();

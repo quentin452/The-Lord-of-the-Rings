@@ -1,11 +1,12 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTRSpawnList;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRBiomeGenBlueMountainsFoothills extends LOTRBiomeGenBlueMountains {
 	public LOTRBiomeGenBlueMountainsFoothills(int i, boolean major) {

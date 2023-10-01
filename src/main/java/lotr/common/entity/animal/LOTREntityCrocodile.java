@@ -1,22 +1,27 @@
 package lotr.common.entity.animal;
 
-import java.util.List;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntities;
 import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.world.biome.LOTRBiomeGenFarHaradSwamp;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTREntityCrocodile extends EntityMob {
 	public EntityAIBase targetAI;
@@ -152,6 +157,10 @@ public class LOTREntityCrocodile extends EntityMob {
 		return dataWatcher.getWatchableObjectInt(20);
 	}
 
+	public void setSnapTime(int i) {
+		dataWatcher.updateObject(20, i);
+	}
+
 	@Override
 	public boolean isAIEnabled() {
 		return true;
@@ -205,9 +214,5 @@ public class LOTREntityCrocodile extends EntityMob {
 		if (getAttackTarget() == null && worldObj.rand.nextInt(1000) == 0 && !(list = worldObj.getEntitiesWithinAABB(EntityAnimal.class, boundingBox.expand(12.0, 6.0, 12.0))).isEmpty() && (entityanimal = (EntityAnimal) list.get(rand.nextInt(list.size()))).getAttributeMap().getAttributeInstance(SharedMonsterAttributes.attackDamage) == null) {
 			setAttackTarget(entityanimal);
 		}
-	}
-
-	public void setSnapTime(int i) {
-		dataWatcher.updateObject(20, i);
 	}
 }

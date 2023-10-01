@@ -1,16 +1,24 @@
 package lotr.common.entity;
 
-import java.util.Random;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.entity.npc.*;
-import lotr.common.network.*;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTREntityNPCRideable;
+import lotr.common.entity.npc.LOTRNPCMount;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketMountControl;
+import lotr.common.network.LOTRPacketMountControlServerEnforce;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRMountFunctions {
 	public static boolean canRiderControl(Entity entity) {

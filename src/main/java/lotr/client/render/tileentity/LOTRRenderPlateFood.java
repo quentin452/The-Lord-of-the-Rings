@@ -1,17 +1,17 @@
 package lotr.client.render.tileentity;
 
-import java.util.Random;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.entity.LOTRPlateFallingInfo;
 import lotr.common.tileentity.LOTRTileEntityPlate;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Random;
 
 public class LOTRRenderPlateFood extends TileEntitySpecialRenderer {
 	public Random rand = new Random();

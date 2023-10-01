@@ -1,10 +1,9 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public abstract class LOTRWorldGenSouthronTownWall extends LOTRWorldGenSouthronStructure {
 	public boolean centrePillar;

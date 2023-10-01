@@ -1,24 +1,37 @@
 package lotr.common.entity.npc;
 
-import java.util.*;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.LOTRPlayerData;
 import lotr.common.entity.LOTRMountFunctions;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.inventory.LOTRInventoryNPC;
-import lotr.common.network.*;
-import net.minecraft.entity.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketHiredGui;
+import lotr.common.network.LOTRPacketHiredInfo;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityFireworkRocket;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
-import net.minecraft.server.management.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.server.management.PlayerManager;
+import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.List;
+import java.util.UUID;
 
 public class LOTRHiredNPCInfo {
 	public static int XP_COLOR = 16733440;
@@ -50,6 +63,14 @@ public class LOTRHiredNPCInfo {
 
 	public LOTRHiredNPCInfo(LOTREntityNPC npc) {
 		theEntity = npc;
+	}
+
+	public static int totalXPForLevel(int lvl) {
+		if (lvl <= 1) {
+			return 0;
+		}
+		double d = 3.0 * (lvl - 1) * Math.pow(1.08, lvl - 2);
+		return MathHelper.floor_double(d);
 	}
 
 	public void addExperience(int xpAdd) {
@@ -135,6 +156,16 @@ public class LOTRHiredNPCInfo {
 		return guardRange;
 	}
 
+	public void setGuardRange(int range) {
+		guardRange = MathHelper.clamp_int(range, GUARD_RANGE_MIN, GUARD_RANGE_MAX);
+		if (guardMode) {
+			int i = MathHelper.floor_double(theEntity.posX);
+			int j = MathHelper.floor_double(theEntity.posY);
+			int k = MathHelper.floor_double(theEntity.posZ);
+			theEntity.setHomeArea(i, j, k, guardRange);
+		}
+	}
+
 	public LOTRInventoryNPC getHiredInventory() {
 		return hiredInventory;
 	}
@@ -144,6 +175,11 @@ public class LOTRHiredNPCInfo {
 			return null;
 		}
 		return theEntity.worldObj.func_152378_a(hiringPlayerUUID);
+	}
+
+	public void setHiringPlayer(EntityPlayer entityplayer) {
+		hiringPlayerUUID = entityplayer == null ? null : entityplayer.getUniqueID();
+		markDirty();
 	}
 
 	public UUID getHiringPlayerUUID() {
@@ -181,6 +217,11 @@ public class LOTRHiredNPCInfo {
 		return hiredSquadron;
 	}
 
+	public void setSquadron(String s) {
+		hiredSquadron = s;
+		markDirty();
+	}
+
 	public String getStatusString() {
 		String status = "";
 		if (hiredTask == Task.WARRIOR) {
@@ -193,6 +234,16 @@ public class LOTRHiredNPCInfo {
 
 	public Task getTask() {
 		return hiredTask;
+	}
+
+	public void setTask(Task t) {
+		if (t != hiredTask) {
+			hiredTask = t;
+			markDirty();
+		}
+		if (hiredTask == Task.FARMER) {
+			hiredInventory = new LOTRInventoryNPC("HiredInventory", theEntity, 4);
+		}
 	}
 
 	public void halt() {
@@ -239,6 +290,18 @@ public class LOTRHiredNPCInfo {
 
 	public boolean isGuardMode() {
 		return guardMode;
+	}
+
+	public void setGuardMode(boolean flag) {
+		guardMode = flag;
+		if (flag) {
+			int i = MathHelper.floor_double(theEntity.posX);
+			int j = MathHelper.floor_double(theEntity.posY);
+			int k = MathHelper.floor_double(theEntity.posZ);
+			theEntity.setHomeArea(i, j, k, guardRange);
+		} else {
+			theEntity.detachHome();
+		}
 	}
 
 	public boolean isHalted() {
@@ -461,48 +524,6 @@ public class LOTRHiredNPCInfo {
 		}
 	}
 
-	public void setGuardMode(boolean flag) {
-		guardMode = flag;
-		if (flag) {
-			int i = MathHelper.floor_double(theEntity.posX);
-			int j = MathHelper.floor_double(theEntity.posY);
-			int k = MathHelper.floor_double(theEntity.posZ);
-			theEntity.setHomeArea(i, j, k, guardRange);
-		} else {
-			theEntity.detachHome();
-		}
-	}
-
-	public void setGuardRange(int range) {
-		guardRange = MathHelper.clamp_int(range, GUARD_RANGE_MIN, GUARD_RANGE_MAX);
-		if (guardMode) {
-			int i = MathHelper.floor_double(theEntity.posX);
-			int j = MathHelper.floor_double(theEntity.posY);
-			int k = MathHelper.floor_double(theEntity.posZ);
-			theEntity.setHomeArea(i, j, k, guardRange);
-		}
-	}
-
-	public void setHiringPlayer(EntityPlayer entityplayer) {
-		hiringPlayerUUID = entityplayer == null ? null : entityplayer.getUniqueID();
-		markDirty();
-	}
-
-	public void setSquadron(String s) {
-		hiredSquadron = s;
-		markDirty();
-	}
-
-	public void setTask(Task t) {
-		if (t != hiredTask) {
-			hiredTask = t;
-			markDirty();
-		}
-		if (hiredTask == Task.FARMER) {
-			hiredInventory = new LOTRInventoryNPC("HiredInventory", theEntity, 4);
-		}
-	}
-
 	public boolean shouldFollowPlayer() {
 		return !guardMode && canMove;
 	}
@@ -640,14 +661,6 @@ public class LOTRHiredNPCInfo {
 			hiredInventory.writeToNBT(data);
 		}
 		nbt.setTag("HiredNPCInfo", data);
-	}
-
-	public static int totalXPForLevel(int lvl) {
-		if (lvl <= 1) {
-			return 0;
-		}
-		double d = 3.0 * (lvl - 1) * Math.pow(1.08, lvl - 2);
-		return MathHelper.floor_double(d);
 	}
 
 	public enum Task {

@@ -1,11 +1,10 @@
 package lotr.common.recipe;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.inventory.LOTRInventoryPouch;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemDye;
+import lotr.common.item.LOTRItemPouch;
 import net.minecraft.block.BlockColored;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.inventory.IInventory;
@@ -13,6 +12,10 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class LOTRRecipesPouch implements IRecipe {
 	public int overrideColor;

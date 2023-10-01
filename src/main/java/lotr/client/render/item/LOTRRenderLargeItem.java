@@ -1,21 +1,31 @@
 package lotr.client.render.item;
 
-import java.io.IOException;
-import java.util.*;
-
+import lotr.client.LOTRClientProxy;
+import lotr.common.item.LOTRItemLance;
+import lotr.common.item.LOTRItemPike;
+import lotr.common.item.LOTRItemSpear;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.resources.IResource;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StringUtils;
+import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
-import lotr.client.LOTRClientProxy;
-import lotr.common.item.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.client.resources.IResource;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraftforge.client.IItemRenderer;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRRenderLargeItem implements IItemRenderer {
 	public static Map<String, Float> sizeFolders = new HashMap<>();
@@ -36,6 +46,32 @@ public class LOTRRenderLargeItem implements IItemRenderer {
 		theItem = item;
 		folderName = dir;
 		largeIconScale = f;
+	}
+
+	public static ResourceLocation getLargeTexturePath(Item item, String folder) {
+		String prefix = "lotr:";
+		String itemName = item.getUnlocalizedName();
+		itemName = itemName.substring(itemName.indexOf(prefix) + prefix.length());
+		String s = prefix + "textures/items/" + folder + "/" + itemName +
+				".png";
+		return new ResourceLocation(s);
+	}
+
+	public static LOTRRenderLargeItem getRendererIfLarge(Item item) {
+		for (Map.Entry<String, Float> entry : sizeFolders.entrySet()) {
+			String folder = entry.getKey();
+			float iconScale = entry.getValue();
+			try {
+				ResourceLocation resLoc = getLargeTexturePath(item, folder);
+				IResource res = Minecraft.getMinecraft().getResourceManager().getResource(resLoc);
+				if (res == null) {
+					continue;
+				}
+				return new LOTRRenderLargeItem(item, folder, iconScale);
+			} catch (IOException resLoc) {
+			}
+		}
+		return null;
 	}
 
 	public void doTransformations() {
@@ -132,32 +168,6 @@ public class LOTRRenderLargeItem implements IItemRenderer {
 	@Override
 	public boolean shouldUseRenderHelper(IItemRenderer.ItemRenderType type, ItemStack itemstack, IItemRenderer.ItemRendererHelper helper) {
 		return false;
-	}
-
-	public static ResourceLocation getLargeTexturePath(Item item, String folder) {
-		String prefix = "lotr:";
-		String itemName = item.getUnlocalizedName();
-		itemName = itemName.substring(itemName.indexOf(prefix) + prefix.length());
-		String s = prefix + "textures/items/" + folder + "/" + itemName +
-				".png";
-		return new ResourceLocation(s);
-	}
-
-	public static LOTRRenderLargeItem getRendererIfLarge(Item item) {
-		for (Map.Entry<String, Float> entry : sizeFolders.entrySet()) {
-			String folder = entry.getKey();
-			float iconScale = entry.getValue();
-			try {
-				ResourceLocation resLoc = getLargeTexturePath(item, folder);
-				IResource res = Minecraft.getMinecraft().getResourceManager().getResource(resLoc);
-				if (res == null) {
-					continue;
-				}
-				return new LOTRRenderLargeItem(item, folder, iconScale);
-			} catch (IOException resLoc) {
-			}
-		}
-		return null;
 	}
 
 	public static class ExtraLargeIconToken {

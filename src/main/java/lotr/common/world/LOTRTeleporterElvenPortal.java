@@ -1,12 +1,18 @@
 package lotr.common.world;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.util.LongHashMap;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.world.Teleporter;
+import net.minecraft.world.WorldServer;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Random;
 
 public class LOTRTeleporterElvenPortal extends Teleporter {
 	public WorldServer theWorld;

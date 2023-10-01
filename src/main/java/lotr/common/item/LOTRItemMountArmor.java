@@ -1,12 +1,17 @@
 package lotr.common.item;
 
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRReflection;
 import lotr.common.entity.animal.*;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityWarg;
+import lotr.common.entity.npc.LOTRNPCMount;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 import java.util.Locale;

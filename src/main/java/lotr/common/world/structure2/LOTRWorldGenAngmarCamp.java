@@ -1,11 +1,14 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityAngmarOrc;
+import lotr.common.entity.npc.LOTREntityAngmarOrcArcher;
+import lotr.common.entity.npc.LOTREntityAngmarOrcTrader;
+import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenAngmarCamp extends LOTRWorldGenCampBase {
 	public LOTRWorldGenAngmarCamp(boolean flag) {

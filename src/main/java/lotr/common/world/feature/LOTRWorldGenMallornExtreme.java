@@ -1,16 +1,16 @@
 package lotr.common.world.feature;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.world.structure.LOTRWorldGenElfLordHouse;
 import lotr.common.world.structure2.LOTRWorldGenElfHouse;
 import net.minecraft.block.Block;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
 
 public class LOTRWorldGenMallornExtreme extends WorldGenAbstractTree {
 	public static int HEIGHT_MIN = 35;

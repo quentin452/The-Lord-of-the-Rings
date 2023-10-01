@@ -1,19 +1,28 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public abstract class LOTRWorldGenRohanMarketStall extends LOTRWorldGenRohanStructure {
 	public static Class[] allStallTypes = {Blacksmith.class, Farmer.class, Lumber.class, Builder.class, Brewer.class, Butcher.class, Fish.class, Baker.class, Orcharder.class};
 
 	protected LOTRWorldGenRohanMarketStall(boolean flag) {
 		super(flag);
+	}
+
+	public static LOTRWorldGenStructureBase2 getRandomStall(Random random, boolean flag) {
+		try {
+			Class cls = allStallTypes[random.nextInt(allStallTypes.length)];
+			return (LOTRWorldGenStructureBase2) cls.getConstructor(Boolean.TYPE).newInstance(flag);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public abstract LOTREntityRohanMan createTrader(World var1);
@@ -95,16 +104,6 @@ public abstract class LOTRWorldGenRohanMarketStall extends LOTRWorldGenRohanStru
 		LOTREntityRohanMan trader = createTrader(world);
 		spawnNPCAndSetHome(trader, world, 0, 1, 0, 4);
 		return true;
-	}
-
-	public static LOTRWorldGenStructureBase2 getRandomStall(Random random, boolean flag) {
-		try {
-			Class cls = allStallTypes[random.nextInt(allStallTypes.length)];
-			return (LOTRWorldGenStructureBase2) cls.getConstructor(Boolean.TYPE).newInstance(flag);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	public static class Baker extends LOTRWorldGenRohanMarketStall {

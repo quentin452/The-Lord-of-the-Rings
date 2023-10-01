@@ -1,7 +1,10 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
-import lotr.common.entity.ai.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAIFollowHiringPlayer;
+import lotr.common.entity.ai.LOTREntityAIHiredRemainStill;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
@@ -10,7 +13,8 @@ import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -138,6 +142,10 @@ public class LOTREntityBarrowWight extends LOTREntityNPC {
 		return dataWatcher.getWatchableObjectInt(16);
 	}
 
+	public void setTargetEntityID(Entity entity) {
+		dataWatcher.updateObject(16, entity == null ? -1 : entity.getEntityId());
+	}
+
 	public EntityAIBase getWightAttackAI() {
 		return new LOTREntityAIAttackOnCollide(this, 1.5, false);
 	}
@@ -168,9 +176,5 @@ public class LOTREntityBarrowWight extends LOTREntityNPC {
 		if (!worldObj.isRemote) {
 			setTargetEntityID(target);
 		}
-	}
-
-	public void setTargetEntityID(Entity entity) {
-		dataWatcher.updateObject(16, entity == null ? -1 : entity.getEntityId());
 	}
 }

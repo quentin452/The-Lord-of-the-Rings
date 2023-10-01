@@ -68,12 +68,24 @@ public class LOTREntityBossTrophy extends Entity implements LOTRBannerProtectabl
 		return i;
 	}
 
+	public void setTrophyFacing(int i) {
+		dataWatcher.updateObject(20, (byte) i);
+	}
+
 	public LOTRItemBossTrophy.TrophyType getTrophyType() {
 		return LOTRItemBossTrophy.TrophyType.forID(getTrophyTypeID());
 	}
 
+	public void setTrophyType(LOTRItemBossTrophy.TrophyType type) {
+		setTrophyTypeID(type.trophyID);
+	}
+
 	public int getTrophyTypeID() {
 		return dataWatcher.getWatchableObjectByte(18);
+	}
+
+	public void setTrophyTypeID(int i) {
+		dataWatcher.updateObject(18, (byte) i);
 	}
 
 	public boolean hangingOnValidSurface() {
@@ -94,6 +106,10 @@ public class LOTREntityBossTrophy extends Entity implements LOTRBannerProtectabl
 
 	public boolean isTrophyHanging() {
 		return dataWatcher.getWatchableObjectByte(19) == 1;
+	}
+
+	public void setTrophyHanging(boolean flag) {
+		dataWatcher.updateObject(19, flag ? (byte) 1 : 0);
 	}
 
 	@Override
@@ -132,22 +148,6 @@ public class LOTREntityBossTrophy extends Entity implements LOTRBannerProtectabl
 		setTrophyTypeID(nbt.getByte("TrophyType"));
 		setTrophyHanging(nbt.getBoolean("TrophyHanging"));
 		setTrophyFacing(nbt.getByte("TrophyFacing"));
-	}
-
-	public void setTrophyFacing(int i) {
-		dataWatcher.updateObject(20, (byte) i);
-	}
-
-	public void setTrophyHanging(boolean flag) {
-		dataWatcher.updateObject(19, flag ? (byte) 1 : 0);
-	}
-
-	public void setTrophyType(LOTRItemBossTrophy.TrophyType type) {
-		setTrophyTypeID(type.trophyID);
-	}
-
-	public void setTrophyTypeID(int i) {
-		dataWatcher.updateObject(18, (byte) i);
 	}
 
 	@Override

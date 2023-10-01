@@ -1,18 +1,21 @@
 package lotr.client.gui;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.entity.npc.*;
-import lotr.common.inventory.*;
-import lotr.common.network.*;
-import net.minecraft.client.gui.*;
+import lotr.common.inventory.LOTRContainerTrade;
+import lotr.common.inventory.LOTRSlotTrade;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketSell;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiTrade extends GuiContainer {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/npc/trade.png");

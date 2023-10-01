@@ -1,22 +1,27 @@
 package lotr.client.gui;
 
-import java.util.Arrays;
-
+import com.google.common.base.Function;
+import com.mojang.authlib.GameProfile;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import lotr.common.LOTRBannerProtection;
+import lotr.common.entity.item.LOTRBannerWhitelistEntry;
+import lotr.common.entity.item.LOTREntityBanner;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fellowship.LOTRFellowshipProfile;
+import lotr.common.network.LOTRPacketBannerRequestInvalidName;
+import lotr.common.network.LOTRPacketEditBanner;
+import lotr.common.network.LOTRPacketHandler;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import com.google.common.base.Function;
-import com.mojang.authlib.GameProfile;
-
-import lotr.common.LOTRBannerProtection;
-import lotr.common.entity.item.*;
-import lotr.common.fac.LOTRAlignmentValues;
-import lotr.common.fellowship.LOTRFellowshipProfile;
-import lotr.common.network.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.util.*;
+import java.util.Arrays;
 
 public class LOTRGuiBanner extends LOTRGuiScreenBase {
 	public static ResourceLocation bannerTexture = new ResourceLocation("lotr:gui/banner_edit.png");

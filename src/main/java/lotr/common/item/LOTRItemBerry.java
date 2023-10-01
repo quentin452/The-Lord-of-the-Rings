@@ -1,12 +1,15 @@
 package lotr.common.item;
 
-import java.util.*;
-
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
-import net.minecraft.potion.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class LOTRItemBerry extends LOTRItemFood {
 	public static Collection<Item> allBerries = new ArrayList<>();
@@ -15,6 +18,12 @@ public class LOTRItemBerry extends LOTRItemFood {
 	public LOTRItemBerry() {
 		super(2, 0.2f, false);
 		allBerries.add(this);
+	}
+
+	public static void registerAllBerries(String name) {
+		for (Item berry : allBerries) {
+			OreDictionary.registerOre(name, berry);
+		}
 	}
 
 	@Override
@@ -31,11 +40,5 @@ public class LOTRItemBerry extends LOTRItemFood {
 	public LOTRItemBerry setPoisonous() {
 		isPoisonous = true;
 		return this;
-	}
-
-	public static void registerAllBerries(String name) {
-		for (Item berry : allBerries) {
-			OreDictionary.registerOre(name, berry);
-		}
 	}
 }

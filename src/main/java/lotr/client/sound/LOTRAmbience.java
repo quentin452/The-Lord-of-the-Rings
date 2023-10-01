@@ -1,27 +1,32 @@
 package lotr.client.sound;
 
-import java.util.*;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import lotr.client.LOTRTickHandlerClient;
 import lotr.client.render.LOTRWeatherRenderer;
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityElf;
 import lotr.common.world.LOTRWorldProvider;
 import lotr.common.world.biome.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.*;
+import net.minecraft.client.audio.ISound;
+import net.minecraft.client.audio.PositionedSound;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.event.sound.PlaySoundEvent17;
 import net.minecraftforge.common.MinecraftForge;
+
+import java.util.*;
 
 public class LOTRAmbience {
 	public static ResourceLocation jazzMusicPath = new ResourceLocation("lotr:music.jazzelf");

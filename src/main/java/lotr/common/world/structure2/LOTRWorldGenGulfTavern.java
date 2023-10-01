@@ -1,14 +1,17 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
-import lotr.common.entity.npc.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
+import lotr.common.entity.npc.LOTREntityGulfBartender;
+import lotr.common.entity.npc.LOTREntityGulfHaradrim;
+import lotr.common.entity.npc.LOTRNames;
 import lotr.common.item.LOTRItemBanner;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenGulfTavern extends LOTRWorldGenGulfStructure {
 	public LOTRWorldGenGulfTavern(boolean flag) {

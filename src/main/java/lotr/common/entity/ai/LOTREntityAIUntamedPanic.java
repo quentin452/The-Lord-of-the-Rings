@@ -1,7 +1,8 @@
 package lotr.common.entity.ai;
 
 import lotr.common.entity.npc.LOTREntityNPCRideable;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
 

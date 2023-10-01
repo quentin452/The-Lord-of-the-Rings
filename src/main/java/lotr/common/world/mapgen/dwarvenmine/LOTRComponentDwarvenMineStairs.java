@@ -1,11 +1,13 @@
 package lotr.common.world.mapgen.dwarvenmine;
 
-import java.util.*;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.structure.*;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
+import net.minecraft.world.gen.structure.StructureComponent;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRComponentDwarvenMineStairs extends StructureComponent {
 	public boolean ruined;
@@ -18,6 +20,32 @@ public class LOTRComponentDwarvenMineStairs extends StructureComponent {
 		coordBaseMode = j;
 		boundingBox = structureBoundingBox;
 		ruined = r;
+	}
+
+	public static StructureBoundingBox findValidPlacement(List list, Random random, int i, int j, int k, int l) {
+		StructureBoundingBox structureboundingbox = new StructureBoundingBox(i, j - 5, k, i, j + 2, k);
+		switch (l) {
+			case 0: {
+				structureboundingbox.maxX = i + 2;
+				structureboundingbox.maxZ = k + 8;
+				break;
+			}
+			case 1: {
+				structureboundingbox.minX = i - 8;
+				structureboundingbox.maxZ = k + 2;
+				break;
+			}
+			case 2: {
+				structureboundingbox.maxX = i + 2;
+				structureboundingbox.minZ = k - 8;
+				break;
+			}
+			case 3: {
+				structureboundingbox.maxX = i + 8;
+				structureboundingbox.maxZ = k + 2;
+			}
+		}
+		return StructureComponent.findIntersecting(list, structureboundingbox) != null ? null : structureboundingbox;
 	}
 
 	@Override
@@ -63,31 +91,5 @@ public class LOTRComponentDwarvenMineStairs extends StructureComponent {
 	@Override
 	public void func_143012_a(NBTTagCompound nbt) {
 		nbt.setBoolean("Ruined", ruined);
-	}
-
-	public static StructureBoundingBox findValidPlacement(List list, Random random, int i, int j, int k, int l) {
-		StructureBoundingBox structureboundingbox = new StructureBoundingBox(i, j - 5, k, i, j + 2, k);
-		switch (l) {
-			case 0: {
-				structureboundingbox.maxX = i + 2;
-				structureboundingbox.maxZ = k + 8;
-				break;
-			}
-			case 1: {
-				structureboundingbox.minX = i - 8;
-				structureboundingbox.maxZ = k + 2;
-				break;
-			}
-			case 2: {
-				structureboundingbox.maxX = i + 2;
-				structureboundingbox.minZ = k - 8;
-				break;
-			}
-			case 3: {
-				structureboundingbox.maxX = i + 8;
-				structureboundingbox.maxZ = k + 2;
-			}
-		}
-		return StructureComponent.findIntersecting(list, structureboundingbox) != null ? null : structureboundingbox;
 	}
 }

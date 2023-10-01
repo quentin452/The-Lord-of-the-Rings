@@ -1,9 +1,13 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
-import lotr.common.entity.ai.*;
+import lotr.common.LOTRCapes;
+import lotr.common.LOTRMod;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAIRangedAttack;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -73,6 +77,13 @@ public abstract class LOTREntityRanger extends LOTREntityDunedain {
 		return dataWatcher.getWatchableObjectByte(17) == 1;
 	}
 
+	public void setRangerSneaking(boolean flag) {
+		dataWatcher.updateObject(17, flag ? (byte) 1 : 0);
+		if (flag) {
+			sneakCooldown = 20;
+		}
+	}
+
 	@Override
 	public void onAttackModeChange(LOTREntityNPC.AttackMode mode, boolean mounted) {
 		if (mode == LOTREntityNPC.AttackMode.IDLE) {
@@ -139,13 +150,6 @@ public abstract class LOTREntityRanger extends LOTREntityDunedain {
 			if (!worldObj.isRemote && !isRangerSneaking() && ridingEntity == null) {
 				setRangerSneaking(true);
 			}
-		}
-	}
-
-	public void setRangerSneaking(boolean flag) {
-		dataWatcher.updateObject(17, flag ? (byte) 1 : 0);
-		if (flag) {
-			sneakCooldown = 20;
 		}
 	}
 

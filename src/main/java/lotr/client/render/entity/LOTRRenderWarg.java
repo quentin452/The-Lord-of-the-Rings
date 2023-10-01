@@ -1,19 +1,25 @@
 package lotr.client.render.entity;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRTextures;
 import lotr.client.model.LOTRModelWarg;
 import lotr.common.LOTRMod;
 import lotr.common.entity.item.LOTREntityOrcBomb;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTREntityWarg;
+import lotr.common.entity.npc.LOTREntityWargBombardier;
+import lotr.common.entity.npc.LOTRNPCMount;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.entity.*;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRRenderWarg extends RenderLiving {
 	public static Map wargSkins = new HashMap();
@@ -23,6 +29,16 @@ public class LOTRRenderWarg extends RenderLiving {
 
 	public LOTRRenderWarg() {
 		super(new LOTRModelWarg(), 0.5f);
+	}
+
+	public static ResourceLocation getWargSkin(LOTREntityWarg.WargType type) {
+		String s = type.textureName();
+		ResourceLocation wargSkin = (ResourceLocation) wargSkins.get(s);
+		if (wargSkin == null) {
+			wargSkin = new ResourceLocation("lotr:mob/warg/" + s + ".png");
+			wargSkins.put(s, wargSkin);
+		}
+		return wargSkin;
 	}
 
 	@Override
@@ -83,15 +99,5 @@ public class LOTRRenderWarg extends RenderLiving {
 			return 1;
 		}
 		return super.shouldRenderPass(entity, pass, f);
-	}
-
-	public static ResourceLocation getWargSkin(LOTREntityWarg.WargType type) {
-		String s = type.textureName();
-		ResourceLocation wargSkin = (ResourceLocation) wargSkins.get(s);
-		if (wargSkin == null) {
-			wargSkin = new ResourceLocation("lotr:mob/warg/" + s + ".png");
-			wargSkins.put(s, wargSkin);
-		}
-		return wargSkin;
 	}
 }

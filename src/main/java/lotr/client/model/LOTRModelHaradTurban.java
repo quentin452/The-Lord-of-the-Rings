@@ -1,10 +1,9 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.item.LOTRItemHaradTurban;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelHaradTurban extends LOTRModelHaradRobes {
 	public ModelRenderer ornament;

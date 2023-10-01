@@ -1,7 +1,5 @@
 package lotr.common.world.feature;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.world.biome.LOTRBiomeGenEttenmoors;
 import lotr.common.world.structure.LOTRChestContents;
@@ -10,6 +8,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.Random;
 
 public class LOTRWorldGenTrollHoard extends WorldGenerator {
 	@Override

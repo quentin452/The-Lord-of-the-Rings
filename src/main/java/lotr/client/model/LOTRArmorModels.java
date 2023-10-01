@@ -1,21 +1,28 @@
 package lotr.client.model;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityNPC;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemBanner;
+import lotr.common.item.LOTRItemCrossbow;
+import lotr.common.item.LOTRItemSling;
+import lotr.common.item.LOTRItemSpear;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.*;
-import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.RenderBiped;
+import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
-import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.opengl.GL11;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRArmorModels {
 	public static LOTRArmorModels INSTANCE;
@@ -23,6 +30,10 @@ public class LOTRArmorModels {
 
 	public LOTRArmorModels() {
 		MinecraftForge.EVENT_BUS.register(this);
+	}
+
+	public static void setupArmorModels() {
+		INSTANCE = new LOTRArmorModels();
 	}
 
 	public void copyBoxRotations(ModelRenderer target, ModelRenderer src) {
@@ -258,9 +269,5 @@ public class LOTRArmorModels {
 			setupHeldItem(model, entity, heldRight, true);
 			setupHeldItem(model, entity, heldLeft, false);
 		}
-	}
-
-	public static void setupArmorModels() {
-		INSTANCE = new LOTRArmorModels();
 	}
 }

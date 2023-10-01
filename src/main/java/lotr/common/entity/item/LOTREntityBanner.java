@@ -1,24 +1,34 @@
 package lotr.common.entity.item;
 
-import java.util.*;
-
 import com.mojang.authlib.GameProfile;
-
-import lotr.common.*;
-import lotr.common.fellowship.*;
+import lotr.common.LOTRBannerProtection;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.fellowship.LOTRFellowship;
+import lotr.common.fellowship.LOTRFellowshipClient;
+import lotr.common.fellowship.LOTRFellowshipProfile;
 import lotr.common.item.LOTRItemBanner;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketBannerData;
+import lotr.common.network.LOTRPacketHandler;
 import lotr.common.util.LOTRLog;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerManager;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+
+import java.util.*;
 
 public class LOTREntityBanner extends Entity {
 	public static float ALIGNMENT_PROTECTION_MIN = 1.0f;
@@ -120,6 +130,13 @@ public class LOTREntityBanner extends Entity {
 		return alignmentProtection;
 	}
 
+	public void setAlignmentProtection(float f) {
+		alignmentProtection = MathHelper.clamp_float(f, ALIGNMENT_PROTECTION_MIN, ALIGNMENT_PROTECTION_MAX);
+		if (!worldObj.isRemote) {
+			updateForAllWatchers(worldObj);
+		}
+	}
+
 	public ItemStack getBannerItem() {
 		ItemStack item = new ItemStack(LOTRMod.banner, 1, getBannerType().bannerID);
 		if (wasEverProtecting && protectData == null) {
@@ -138,8 +155,16 @@ public class LOTREntityBanner extends Entity {
 		return LOTRItemBanner.BannerType.forID(getBannerTypeID());
 	}
 
+	public void setBannerType(LOTRItemBanner.BannerType type) {
+		setBannerTypeID(type.bannerID);
+	}
+
 	public int getBannerTypeID() {
 		return dataWatcher.getWatchableObjectByte(18);
+	}
+
+	public void setBannerTypeID(int i) {
+		dataWatcher.updateObject(18, (byte) i);
 	}
 
 	public int getDefaultPermBitFlags() {
@@ -162,6 +187,10 @@ public class LOTREntityBanner extends Entity {
 
 	public GameProfile getPlacingPlayer() {
 		return getWhitelistedPlayer(0);
+	}
+
+	public void setPlacingPlayer(EntityPlayer player) {
+		whitelistPlayer(0, player.getGameProfile());
 	}
 
 	public int getProtectionRange() {
@@ -225,6 +254,13 @@ public class LOTREntityBanner extends Entity {
 		return playerSpecificProtection;
 	}
 
+	public void setPlayerSpecificProtection(boolean flag) {
+		playerSpecificProtection = flag;
+		if (!worldObj.isRemote) {
+			updateForAllWatchers(worldObj);
+		}
+	}
+
 	public boolean isPlayerWhitelisted(EntityPlayer entityplayer, LOTRBannerProtection.Permission perm) {
 		if (playerSpecificProtection) {
 			if (hasDefaultPermission(perm)) {
@@ -277,8 +313,22 @@ public class LOTREntityBanner extends Entity {
 		return selfProtection;
 	}
 
+	public void setSelfProtection(boolean flag) {
+		selfProtection = flag;
+		if (!worldObj.isRemote) {
+			updateForAllWatchers(worldObj);
+		}
+	}
+
 	public boolean isStructureProtection() {
 		return structureProtection;
+	}
+
+	public void setStructureProtection(boolean flag) {
+		structureProtection = flag;
+		if (!worldObj.isRemote) {
+			updateForAllWatchers(worldObj);
+		}
 	}
 
 	public boolean isValidFellowship(LOTRFellowship fs) {
@@ -485,21 +535,6 @@ public class LOTREntityBanner extends Entity {
 		sendBannerData(entityplayer, sendWhitelist, openGui);
 	}
 
-	public void setAlignmentProtection(float f) {
-		alignmentProtection = MathHelper.clamp_float(f, ALIGNMENT_PROTECTION_MIN, ALIGNMENT_PROTECTION_MAX);
-		if (!worldObj.isRemote) {
-			updateForAllWatchers(worldObj);
-		}
-	}
-
-	public void setBannerType(LOTRItemBanner.BannerType type) {
-		setBannerTypeID(type.bannerID);
-	}
-
-	public void setBannerTypeID(int i) {
-		dataWatcher.updateObject(18, (byte) i);
-	}
-
 	public void setClientside_playerHasPermissionInSurvival(boolean flag) {
 		clientside_playerHasPermission = flag;
 	}
@@ -519,31 +554,6 @@ public class LOTREntityBanner extends Entity {
 			}
 			defaultPermissions.add(p);
 		}
-		if (!worldObj.isRemote) {
-			updateForAllWatchers(worldObj);
-		}
-	}
-
-	public void setPlacingPlayer(EntityPlayer player) {
-		whitelistPlayer(0, player.getGameProfile());
-	}
-
-	public void setPlayerSpecificProtection(boolean flag) {
-		playerSpecificProtection = flag;
-		if (!worldObj.isRemote) {
-			updateForAllWatchers(worldObj);
-		}
-	}
-
-	public void setSelfProtection(boolean flag) {
-		selfProtection = flag;
-		if (!worldObj.isRemote) {
-			updateForAllWatchers(worldObj);
-		}
-	}
-
-	public void setStructureProtection(boolean flag) {
-		structureProtection = flag;
 		if (!worldObj.isRemote) {
 			updateForAllWatchers(worldObj);
 		}

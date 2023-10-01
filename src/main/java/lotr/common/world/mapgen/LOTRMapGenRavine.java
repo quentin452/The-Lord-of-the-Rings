@@ -1,7 +1,5 @@
 package lotr.common.world.mapgen;
 
-import java.util.Random;
-
 import lotr.common.world.biome.LOTRBiomeGenMordor;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -9,6 +7,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.MapGenRavine;
+
+import java.util.Random;
 
 public class LOTRMapGenRavine extends MapGenRavine {
 	public float[] ravineNoise = new float[1024];

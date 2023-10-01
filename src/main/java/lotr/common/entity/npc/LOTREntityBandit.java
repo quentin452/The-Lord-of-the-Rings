@@ -1,17 +1,27 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
-import lotr.common.entity.ai.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAIBanditFlee;
+import lotr.common.entity.ai.LOTREntityAIBanditSteal;
+import lotr.common.entity.ai.LOTREntityAINearestAttackableTargetBandit;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.inventory.LOTRInventoryNPC;
-import lotr.common.item.*;
-import net.minecraft.entity.*;
+import lotr.common.item.LOTRItemLeatherHat;
+import lotr.common.item.LOTRItemMug;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 
 public class LOTREntityBandit extends LOTREntityMan implements IBandit {

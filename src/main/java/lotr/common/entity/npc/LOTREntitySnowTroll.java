@@ -1,15 +1,21 @@
 package lotr.common.entity.npc;
 
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
-import lotr.common.entity.ai.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAIRangedAttack;
 import lotr.common.entity.projectile.LOTREntityTrollSnowball;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
-import net.minecraft.potion.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class LOTREntitySnowTroll extends LOTREntityTroll {
@@ -136,6 +142,10 @@ public class LOTREntitySnowTroll extends LOTREntityTroll {
 		return dataWatcher.getWatchableObjectByte(21) == 1;
 	}
 
+	public void setThrowingSnow(boolean flag) {
+		dataWatcher.updateObject(21, flag ? (byte) 1 : 0);
+	}
+
 	@Override
 	public void onAttackModeChange(LOTREntityNPC.AttackMode mode, boolean mounted) {
 		if (mode == LOTREntityNPC.AttackMode.IDLE) {
@@ -162,9 +172,5 @@ public class LOTREntitySnowTroll extends LOTREntityTroll {
 		worldObj.playSoundAtEntity(this, "lotr:troll.transform", getSoundVolume(), getSoundPitch());
 		worldObj.setEntityState(this, (byte) 15);
 		setDead();
-	}
-
-	public void setThrowingSnow(boolean flag) {
-		dataWatcher.updateObject(21, flag ? (byte) 1 : 0);
 	}
 }

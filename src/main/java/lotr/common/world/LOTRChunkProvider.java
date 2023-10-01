@@ -1,25 +1,36 @@
 package lotr.common.world;
 
-import java.util.*;
-
 import lotr.common.world.biome.LOTRBiome;
-import lotr.common.world.biome.variant.*;
-import lotr.common.world.map.*;
-import lotr.common.world.mapgen.*;
+import lotr.common.world.biome.variant.LOTRBiomeVariant;
+import lotr.common.world.biome.variant.LOTRBiomeVariantStorage;
+import lotr.common.world.map.LOTRFixedStructures;
+import lotr.common.world.map.LOTRMountains;
+import lotr.common.world.map.LOTRRoadGenerator;
+import lotr.common.world.map.LOTRRoads;
+import lotr.common.world.mapgen.LOTRMapGenCaves;
+import lotr.common.world.mapgen.LOTRMapGenRavine;
 import lotr.common.world.mapgen.dwarvenmine.LOTRMapGenDwarvenMine;
 import lotr.common.world.mapgen.tpyr.LOTRMapGenTauredainPyramid;
 import lotr.common.world.spawning.LOTRSpawnerAnimals;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.util.IProgressUpdate;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.chunk.*;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
-import net.minecraft.world.gen.*;
+import net.minecraft.world.gen.MapGenBase;
+import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.structure.MapGenStructure;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRChunkProvider implements IChunkProvider {
 	public static int seaLevel = 62;

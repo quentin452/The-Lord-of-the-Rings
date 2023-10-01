@@ -1,10 +1,10 @@
 package lotr.common.entity.ai;
 
-import java.util.List;
-
 import lotr.common.entity.npc.LOTREntityHuornBase;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.EntityCreature;
+
+import java.util.List;
 
 public class LOTREntityAINearestAttackableTargetHuorn extends LOTREntityAINearestAttackableTargetBasic {
 	public LOTREntityAINearestAttackableTargetHuorn(EntityCreature entity, Class targetClass, int chance, boolean flag) {

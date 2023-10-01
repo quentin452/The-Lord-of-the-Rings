@@ -11,6 +11,10 @@ public class LOTRMercenaryTradeEntry extends LOTRUnitTradeEntry {
 		theMerc = merc;
 	}
 
+	public static LOTRMercenaryTradeEntry createFor(LOTRMercenary merc) {
+		return new LOTRMercenaryTradeEntry(merc);
+	}
+
 	@Override
 	public LOTREntityNPC getOrCreateHiredNPC(World world) {
 		return (LOTREntityNPC) theMerc;
@@ -22,9 +26,5 @@ public class LOTRMercenaryTradeEntry extends LOTRUnitTradeEntry {
 			return false;
 		}
 		return super.hasRequiredCostAndAlignment(entityplayer, trader);
-	}
-
-	public static LOTRMercenaryTradeEntry createFor(LOTRMercenary merc) {
-		return new LOTRMercenaryTradeEntry(merc);
 	}
 }

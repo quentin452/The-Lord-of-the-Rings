@@ -1,15 +1,16 @@
 package lotr.common.entity.animal;
 
-import java.util.UUID;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTRRandomSkinEntity;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
+import java.util.UUID;
 
 public class LOTREntityDeer extends LOTREntityAnimalMF implements LOTRRandomSkinEntity {
 	public LOTREntityDeer(World world) {
@@ -103,14 +104,14 @@ public class LOTREntityDeer extends LOTREntityAnimalMF implements LOTRRandomSkin
 		return dataWatcher.getWatchableObjectByte(20) == 1;
 	}
 
+	public void setMale(boolean flag) {
+		dataWatcher.updateObject(20, flag ? (byte) 1 : 0);
+	}
+
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		setMale(nbt.getBoolean("DeerMale"));
-	}
-
-	public void setMale(boolean flag) {
-		dataWatcher.updateObject(20, flag ? (byte) 1 : 0);
 	}
 
 	@Override

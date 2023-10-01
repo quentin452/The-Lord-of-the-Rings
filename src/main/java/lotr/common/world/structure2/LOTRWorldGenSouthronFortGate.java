@@ -1,8 +1,8 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenSouthronFortGate extends LOTRWorldGenSouthronStructure {
 	public LOTRWorldGenSouthronFortGate(boolean flag) {

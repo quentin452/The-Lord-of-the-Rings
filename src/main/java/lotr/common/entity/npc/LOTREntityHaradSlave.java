@@ -1,13 +1,17 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.ai.*;
 import lotr.common.fac.LOTRFaction;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -82,6 +86,11 @@ public class LOTREntityHaradSlave extends LOTREntityMan implements LOTRFarmhand 
 		return SlaveType.values()[i];
 	}
 
+	public void setSlaveType(SlaveType t) {
+		int i = t.ordinal();
+		dataWatcher.updateObject(20, (byte) i);
+	}
+
 	@Override
 	public String getSpeechBank(EntityPlayer entityplayer) {
 		if (hiredNPCInfo.getHiringPlayer() == entityplayer) {
@@ -126,11 +135,6 @@ public class LOTREntityHaradSlave extends LOTREntityMan implements LOTRFarmhand 
 		if (nbt.hasKey("SeedsID") && (item = Item.getItemById(nbt.getInteger("SeedsID"))) != null && item instanceof IPlantable) {
 			seedsItem = item;
 		}
-	}
-
-	public void setSlaveType(SlaveType t) {
-		int i = t.ordinal();
-		dataWatcher.updateObject(20, (byte) i);
 	}
 
 	@Override
@@ -187,10 +191,6 @@ public class LOTREntityHaradSlave extends LOTREntityMan implements LOTRFarmhand 
 			skinDir = s;
 		}
 
-		public String saveName() {
-			return name();
-		}
-
 		public static SlaveType forName(String s) {
 			for (SlaveType type : values()) {
 				if (!type.saveName().equals(s)) {
@@ -199,6 +199,10 @@ public class LOTREntityHaradSlave extends LOTREntityMan implements LOTRFarmhand 
 				return type;
 			}
 			return null;
+		}
+
+		public String saveName() {
+			return name();
 		}
 	}
 

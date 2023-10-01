@@ -1,19 +1,26 @@
 package lotr.common.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.*;
-import lotr.common.entity.*;
-import lotr.common.fac.*;
+import lotr.common.entity.LOTREntityInvasionSpawner;
+import lotr.common.entity.LOTREntityNPCRespawner;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
 import lotr.common.world.spawning.LOTRInvasions;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRItemConquestHorn extends Item {
 	@SideOnly(Side.CLIENT)
@@ -24,6 +31,36 @@ public class LOTRItemConquestHorn extends Item {
 	public LOTRItemConquestHorn() {
 		setMaxStackSize(1);
 		setCreativeTab(LOTRCreativeTabs.tabCombat);
+	}
+
+	public static ItemStack createHorn(LOTRInvasions type) {
+		ItemStack itemstack = new ItemStack(LOTRMod.conquestHorn);
+		setInvasionType(itemstack, type);
+		return itemstack;
+	}
+
+	public static LOTRInvasions getInvasionType(ItemStack itemstack) {
+		String s;
+		LOTRInvasions invasionType = null;
+		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("InvasionType")) {
+			s = itemstack.getTagCompound().getString("InvasionType");
+			invasionType = LOTRInvasions.forName(s);
+		}
+		if (invasionType == null && itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("HornFaction")) {
+			s = itemstack.getTagCompound().getString("HornFaction");
+			invasionType = LOTRInvasions.forName(s);
+		}
+		if (invasionType == null) {
+			invasionType = LOTRInvasions.HOBBIT;
+		}
+		return invasionType;
+	}
+
+	public static void setInvasionType(ItemStack itemstack, LOTRInvasions type) {
+		if (itemstack.getTagCompound() == null) {
+			itemstack.setTagCompound(new NBTTagCompound());
+		}
+		itemstack.getTagCompound().setString("InvasionType", type.codeName());
 	}
 
 	@Override
@@ -145,35 +182,5 @@ public class LOTRItemConquestHorn extends Item {
 	@SideOnly(Side.CLIENT)
 	public boolean requiresMultipleRenderPasses() {
 		return true;
-	}
-
-	public static ItemStack createHorn(LOTRInvasions type) {
-		ItemStack itemstack = new ItemStack(LOTRMod.conquestHorn);
-		setInvasionType(itemstack, type);
-		return itemstack;
-	}
-
-	public static LOTRInvasions getInvasionType(ItemStack itemstack) {
-		String s;
-		LOTRInvasions invasionType = null;
-		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("InvasionType")) {
-			s = itemstack.getTagCompound().getString("InvasionType");
-			invasionType = LOTRInvasions.forName(s);
-		}
-		if (invasionType == null && itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("HornFaction")) {
-			s = itemstack.getTagCompound().getString("HornFaction");
-			invasionType = LOTRInvasions.forName(s);
-		}
-		if (invasionType == null) {
-			invasionType = LOTRInvasions.HOBBIT;
-		}
-		return invasionType;
-	}
-
-	public static void setInvasionType(ItemStack itemstack, LOTRInvasions type) {
-		if (itemstack.getTagCompound() == null) {
-			itemstack.setTagCompound(new NBTTagCompound());
-		}
-		itemstack.getTagCompound().setString("InvasionType", type.codeName());
 	}
 }

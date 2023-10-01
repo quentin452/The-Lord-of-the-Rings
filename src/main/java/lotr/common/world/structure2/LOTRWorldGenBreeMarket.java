@@ -1,14 +1,15 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.animal.*;
+import lotr.common.entity.animal.LOTREntityBird;
+import lotr.common.entity.animal.LOTREntityButterfly;
 import lotr.common.entity.npc.LOTREntityBreeGuard;
 import lotr.common.item.LOTRItemBanner;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenBreeMarket extends LOTRWorldGenBreeStructure {
 	public LOTRWorldGenBreeMarketStall[] presetStalls;

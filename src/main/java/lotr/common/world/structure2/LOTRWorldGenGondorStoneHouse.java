@@ -1,13 +1,15 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityGondorMan;
 import lotr.common.world.structure.LOTRChestContents;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenGondorStoneHouse extends LOTRWorldGenGondorStructure {
 	public LOTRWorldGenGondorStoneHouse(boolean flag) {

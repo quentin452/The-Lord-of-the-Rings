@@ -1,11 +1,17 @@
 package lotr.common.command;
 
-import java.util.*;
-
-import lotr.common.*;
-import net.minecraft.command.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRPlayerData;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LOTRCommandAchievement extends CommandBase {
 	@Override

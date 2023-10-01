@@ -1,16 +1,23 @@
 package lotr.common.item;
 
-import java.util.*;
-
-import lotr.common.*;
-import lotr.common.enchant.*;
+import lotr.common.LOTRBannerProtection;
+import lotr.common.LOTRMod;
+import lotr.common.enchant.LOTREnchantment;
+import lotr.common.enchant.LOTREnchantmentHelper;
 import net.minecraft.block.BlockLeavesBase;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class LOTRItemBalrogWhip extends LOTRItemSword {
 	public LOTRItemBalrogWhip() {

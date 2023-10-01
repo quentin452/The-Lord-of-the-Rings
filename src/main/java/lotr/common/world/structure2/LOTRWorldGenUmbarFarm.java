@@ -1,6 +1,7 @@
 package lotr.common.world.structure2;
 
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityNearHaradrimBase;
+import lotr.common.entity.npc.LOTREntityUmbarFarmer;
 import net.minecraft.world.World;
 
 public class LOTRWorldGenUmbarFarm extends LOTRWorldGenSouthronFarm {

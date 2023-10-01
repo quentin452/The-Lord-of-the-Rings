@@ -1,19 +1,22 @@
 package lotr.common.world.map;
 
-import java.io.*;
+import com.google.common.io.Files;
+import cpw.mods.fml.common.FMLLog;
+import lotr.common.LOTRConfig;
+import lotr.common.fellowship.LOTRFellowship;
+import lotr.common.fellowship.LOTRFellowshipData;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.DimensionManager;
+
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
-
-import com.google.common.io.Files;
-
-import cpw.mods.fml.common.FMLLog;
-import lotr.common.LOTRConfig;
-import lotr.common.fellowship.*;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.DimensionManager;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 public class LOTRCustomWaypointLogger {
 	public static Charset CHARSET = StandardCharsets.UTF_8;

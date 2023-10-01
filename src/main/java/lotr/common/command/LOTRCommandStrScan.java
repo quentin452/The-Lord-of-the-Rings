@@ -1,15 +1,18 @@
 package lotr.common.command;
 
-import java.util.*;
-
+import lotr.common.world.structure2.scan.LOTRScanAlias;
+import lotr.common.world.structure2.scan.LOTRStructureScan;
+import net.minecraft.block.Block;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 import org.apache.commons.lang3.tuple.Pair;
 
-import lotr.common.world.structure2.scan.*;
-import net.minecraft.block.Block;
-import net.minecraft.command.*;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.*;
-import net.minecraft.world.World;
+import java.util.*;
 
 public class LOTRCommandStrScan extends CommandBase {
 	public boolean scanning;

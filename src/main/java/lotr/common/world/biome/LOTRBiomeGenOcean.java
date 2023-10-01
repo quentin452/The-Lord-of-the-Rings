@@ -1,20 +1,26 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
 import lotr.common.entity.animal.LOTREntitySeagull;
-import lotr.common.world.feature.*;
+import lotr.common.world.feature.LOTRTreeType;
+import lotr.common.world.feature.LOTRWorldGenSeaBlock;
 import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.structure.LOTRWorldGenUnderwaterElvenRuin;
-import lotr.common.world.structure2.*;
+import lotr.common.world.structure2.LOTRWorldGenNumenorRuin;
+import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
+import lotr.common.world.structure2.LOTRWorldGenStructureBase2;
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.Random;
 
 public class LOTRBiomeGenOcean extends LOTRBiome {
 	public static Random iceRand = new Random();
@@ -46,6 +52,14 @@ public class LOTRBiomeGenOcean extends LOTRBiome {
 		decorator.addRandomStructure(new LOTRWorldGenNumenorRuin(false), 500);
 		decorator.addRandomStructure(new LOTRWorldGenSmallStoneRuin(false), 400);
 		setBanditChance(LOTREventSpawner.EventChance.NEVER);
+	}
+
+	public static boolean isFrozen(int i, int k) {
+		if (k > -30000) {
+			return false;
+		}
+		int l = -1;
+		return true;
 	}
 
 	@Override
@@ -119,13 +133,5 @@ public class LOTRBiomeGenOcean extends LOTRBiome {
 	@Override
 	public boolean getEnableRiver() {
 		return false;
-	}
-
-	public static boolean isFrozen(int i, int k) {
-		if (k > -30000) {
-			return false;
-		}
-		int l = -1;
-		return true;
 	}
 }

@@ -1,11 +1,10 @@
 package lotr.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.LOTRMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.multiplayer.WorldClient;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiButtonMenu extends GuiButton {
 	public Class<? extends LOTRGuiMenuBase> menuScreenClass;

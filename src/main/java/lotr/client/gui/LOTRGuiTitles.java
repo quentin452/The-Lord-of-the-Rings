@@ -1,18 +1,23 @@
 package lotr.client.gui;
 
-import java.awt.Color;
-import java.util.*;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import lotr.client.LOTRReflectionClient;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRTitle;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketSelectTitle;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import lotr.client.LOTRReflectionClient;
-import lotr.common.*;
-import lotr.common.network.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.util.*;
+import java.awt.*;
+import java.util.List;
+import java.util.*;
 
 public class LOTRGuiTitles extends LOTRGuiMenuBase {
 	public LOTRTitle.PlayerTitle currentTitle;

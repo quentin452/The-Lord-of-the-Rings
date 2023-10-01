@@ -1,8 +1,9 @@
 package lotr.common.util;
 
-import java.util.*;
-
 import net.minecraft.util.MathHelper;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LOTRMazeGenerator {
 	public int xSize;

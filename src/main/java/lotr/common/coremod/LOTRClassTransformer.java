@@ -28,6 +28,75 @@ public class LOTRClassTransformer implements IClassTransformer {
 	public static String cls_World = "net/minecraft/world/World";
 	public static String cls_World_obf = "ahb";
 
+	public static NBTTagCompound doDebug(DataInputStream stream, int i, int k) {
+		try {
+			return CompressedStreamTools.read(stream);
+		} catch (Exception e) {
+			System.out.println("Error loading chunk: " + i + ", " + k);
+			e.printStackTrace();
+			return new NBTTagCompound();
+		}
+	}
+
+	public static <N extends AbstractInsnNode> N findNodeInMethod(MethodNode method, N target) {
+		return findNodeInMethod(method, target, 0);
+	}
+
+	public static <N extends AbstractInsnNode> N findNodeInMethod(MethodNode method, N targetAbstract, int skip) {
+		int skipped = 0;
+		Iterator<AbstractInsnNode> it = method.instructions.iterator();
+		while (it.hasNext()) {
+			AbstractInsnNode nextAbstract = it.next();
+			boolean matched = false;
+			if (nextAbstract.getClass() == targetAbstract.getClass()) {
+				if (targetAbstract.getClass() == InsnNode.class) {
+					InsnNode next = (InsnNode) nextAbstract;
+					InsnNode target = (InsnNode) targetAbstract;
+					if (next.getOpcode() == target.getOpcode()) {
+						matched = true;
+					}
+				} else if (targetAbstract.getClass() == VarInsnNode.class) {
+					VarInsnNode next = (VarInsnNode) nextAbstract;
+					VarInsnNode target = (VarInsnNode) targetAbstract;
+					if (next.getOpcode() == target.getOpcode() && next.var == target.var) {
+						matched = true;
+					}
+				} else if (targetAbstract.getClass() == LdcInsnNode.class) {
+					LdcInsnNode next = (LdcInsnNode) nextAbstract;
+					LdcInsnNode target = (LdcInsnNode) targetAbstract;
+					if (next.cst.equals(target.cst)) {
+						matched = true;
+					}
+				} else if (targetAbstract.getClass() == TypeInsnNode.class) {
+					TypeInsnNode next = (TypeInsnNode) nextAbstract;
+					TypeInsnNode target = (TypeInsnNode) targetAbstract;
+					if (next.getOpcode() == target.getOpcode() && next.desc.equals(target.desc)) {
+						matched = true;
+					}
+				} else if (targetAbstract.getClass() == FieldInsnNode.class) {
+					FieldInsnNode next = (FieldInsnNode) nextAbstract;
+					FieldInsnNode target = (FieldInsnNode) targetAbstract;
+					if (next.getOpcode() == target.getOpcode() && next.owner.equals(target.owner) && next.name.equals(target.name) && next.desc.equals(target.desc)) {
+						matched = true;
+					}
+				} else if (targetAbstract.getClass() == MethodInsnNode.class) {
+					MethodInsnNode next = (MethodInsnNode) nextAbstract;
+					MethodInsnNode target = (MethodInsnNode) targetAbstract;
+					if (next.getOpcode() == target.getOpcode() && next.owner.equals(target.owner) && next.name.equals(target.name) && next.desc.equals(target.desc) && next.itf == target.itf) {
+						matched = true;
+					}
+				}
+			}
+			if (matched) {
+				if (skipped >= skip) {
+					return (N) nextAbstract;
+				}
+				skipped++;
+			}
+		}
+		return null;
+	}
+
 	public byte[] patchArmorProperties(String name, byte[] bytes) {
 		String targetMethodName;
 		String targetMethodSign;
@@ -1399,74 +1468,5 @@ public class LOTRClassTransformer implements IClassTransformer {
 			return patchFMLNetworkHandler(name, basicClass);
 		}
 		return basicClass;
-	}
-
-	public static NBTTagCompound doDebug(DataInputStream stream, int i, int k) {
-		try {
-			return CompressedStreamTools.read(stream);
-		} catch (Exception e) {
-			System.out.println("Error loading chunk: " + i + ", " + k);
-			e.printStackTrace();
-			return new NBTTagCompound();
-		}
-	}
-
-	public static <N extends AbstractInsnNode> N findNodeInMethod(MethodNode method, N target) {
-		return findNodeInMethod(method, target, 0);
-	}
-
-	public static <N extends AbstractInsnNode> N findNodeInMethod(MethodNode method, N targetAbstract, int skip) {
-		int skipped = 0;
-		Iterator<AbstractInsnNode> it = method.instructions.iterator();
-		while (it.hasNext()) {
-			AbstractInsnNode nextAbstract = it.next();
-			boolean matched = false;
-			if (nextAbstract.getClass() == targetAbstract.getClass()) {
-				if (targetAbstract.getClass() == InsnNode.class) {
-					InsnNode next = (InsnNode) nextAbstract;
-					InsnNode target = (InsnNode) targetAbstract;
-					if (next.getOpcode() == target.getOpcode()) {
-						matched = true;
-					}
-				} else if (targetAbstract.getClass() == VarInsnNode.class) {
-					VarInsnNode next = (VarInsnNode) nextAbstract;
-					VarInsnNode target = (VarInsnNode) targetAbstract;
-					if (next.getOpcode() == target.getOpcode() && next.var == target.var) {
-						matched = true;
-					}
-				} else if (targetAbstract.getClass() == LdcInsnNode.class) {
-					LdcInsnNode next = (LdcInsnNode) nextAbstract;
-					LdcInsnNode target = (LdcInsnNode) targetAbstract;
-					if (next.cst.equals(target.cst)) {
-						matched = true;
-					}
-				} else if (targetAbstract.getClass() == TypeInsnNode.class) {
-					TypeInsnNode next = (TypeInsnNode) nextAbstract;
-					TypeInsnNode target = (TypeInsnNode) targetAbstract;
-					if (next.getOpcode() == target.getOpcode() && next.desc.equals(target.desc)) {
-						matched = true;
-					}
-				} else if (targetAbstract.getClass() == FieldInsnNode.class) {
-					FieldInsnNode next = (FieldInsnNode) nextAbstract;
-					FieldInsnNode target = (FieldInsnNode) targetAbstract;
-					if (next.getOpcode() == target.getOpcode() && next.owner.equals(target.owner) && next.name.equals(target.name) && next.desc.equals(target.desc)) {
-						matched = true;
-					}
-				} else if (targetAbstract.getClass() == MethodInsnNode.class) {
-					MethodInsnNode next = (MethodInsnNode) nextAbstract;
-					MethodInsnNode target = (MethodInsnNode) targetAbstract;
-					if (next.getOpcode() == target.getOpcode() && next.owner.equals(target.owner) && next.name.equals(target.name) && next.desc.equals(target.desc) && next.itf == target.itf) {
-						matched = true;
-					}
-				}
-			}
-			if (matched) {
-				if (skipped >= skip) {
-					return (N) nextAbstract;
-				}
-				skipped++;
-			}
-		}
-		return null;
 	}
 }

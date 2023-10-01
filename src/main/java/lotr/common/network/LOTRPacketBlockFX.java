@@ -1,11 +1,13 @@
 package lotr.common.network;
 
-import java.util.Random;
-
-import cpw.mods.fml.common.network.simpleimpl.*;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import lotr.common.LOTRMod;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRPacketBlockFX implements IMessage {
 	public Type type;
@@ -40,6 +42,11 @@ public class LOTRPacketBlockFX implements IMessage {
 		data.writeInt(blockZ);
 	}
 
+	public enum Type {
+		UTUMNO_EVAPORATE
+
+	}
+
 	public static class Handler implements IMessageHandler<LOTRPacketBlockFX, IMessage> {
 		@Override
 		public IMessage onMessage(LOTRPacketBlockFX packet, MessageContext context) {
@@ -55,11 +62,6 @@ public class LOTRPacketBlockFX implements IMessage {
 			}
 			return null;
 		}
-	}
-
-	public enum Type {
-		UTUMNO_EVAPORATE
-
 	}
 
 }

@@ -1,13 +1,13 @@
 package lotr.common.block;
 
-import java.util.Random;
-
 import lotr.common.world.feature.LOTRTreeType;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+
+import java.util.Random;
 
 public class LOTRVanillaSaplings {
 	public static void growTree(World world, int i, int j, int k, Random random) {

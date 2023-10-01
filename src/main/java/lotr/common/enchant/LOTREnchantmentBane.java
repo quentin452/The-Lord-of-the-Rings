@@ -1,14 +1,18 @@
 package lotr.common.enchant;
 
-import java.util.*;
-
 import lotr.common.LOTRConfig;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.world.LOTRWorldProviderUtumno;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class LOTREnchantmentBane extends LOTREnchantmentDamage {
 	public List<Class<? extends EntityLivingBase>> entityClasses;

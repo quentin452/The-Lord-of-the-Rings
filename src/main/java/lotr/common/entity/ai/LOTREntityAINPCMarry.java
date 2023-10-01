@@ -1,7 +1,5 @@
 package lotr.common.entity.ai;
 
-import java.util.List;
-
 import lotr.common.LOTRLevelData;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.fac.LOTRAlignmentValues;
@@ -10,6 +8,8 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTREntityAINPCMarry extends EntityAIBase {
 	public LOTREntityNPC theNPC;

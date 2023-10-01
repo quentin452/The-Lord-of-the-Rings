@@ -1,9 +1,9 @@
 package lotr.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiButton;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiButtonFsInvites extends GuiButton {
 	public LOTRGuiButtonFsInvites(int i, int x, int y, String s) {

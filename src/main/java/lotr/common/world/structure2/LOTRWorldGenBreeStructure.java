@@ -1,12 +1,13 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public abstract class LOTRWorldGenBreeStructure extends LOTRWorldGenStructureBase2 {
 	public Block brickBlock;
@@ -48,6 +49,21 @@ public abstract class LOTRWorldGenBreeStructure extends LOTRWorldGenStructureBas
 
 	protected LOTRWorldGenBreeStructure(boolean flag) {
 		super(flag);
+	}
+
+	public static Block getRandomPieBlock(Random random) {
+		int i = random.nextInt(3);
+		switch (i) {
+			case 0:
+				return LOTRMod.appleCrumble;
+			case 1:
+				return LOTRMod.cherryPie;
+			case 2:
+				return LOTRMod.berryPie;
+			default:
+				break;
+		}
+		return LOTRMod.appleCrumble;
 	}
 
 	public ItemStack getRandomBreeWeapon(Random random) {
@@ -195,20 +211,5 @@ public abstract class LOTRWorldGenBreeStructure extends LOTRWorldGenStructureBas
 		carpetMeta = 12;
 		bedBlock = LOTRMod.strawBed;
 		tableBlock = LOTRMod.breeTable;
-	}
-
-	public static Block getRandomPieBlock(Random random) {
-		int i = random.nextInt(3);
-		switch (i) {
-			case 0:
-				return LOTRMod.appleCrumble;
-			case 1:
-				return LOTRMod.cherryPie;
-			case 2:
-				return LOTRMod.berryPie;
-			default:
-				break;
-		}
-		return LOTRMod.appleCrumble;
 	}
 }

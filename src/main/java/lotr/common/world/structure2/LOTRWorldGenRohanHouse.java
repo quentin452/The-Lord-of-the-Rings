@@ -1,13 +1,15 @@
 package lotr.common.world.structure2;
 
-import java.util.*;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityRohanMan;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LOTRWorldGenRohanHouse extends LOTRWorldGenRohanStructure {
 	public boolean hasStoneBase;

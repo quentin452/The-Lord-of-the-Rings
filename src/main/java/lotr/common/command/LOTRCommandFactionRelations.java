@@ -1,9 +1,12 @@
 package lotr.common.command;
 
-import java.util.List;
+import lotr.common.fac.LOTRFaction;
+import lotr.common.fac.LOTRFactionRelations;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 
-import lotr.common.fac.*;
-import net.minecraft.command.*;
+import java.util.List;
 
 public class LOTRCommandFactionRelations extends CommandBase {
 	@Override

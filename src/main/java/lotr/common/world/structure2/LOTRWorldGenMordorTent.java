@@ -1,10 +1,10 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.init.Blocks;
+
+import java.util.Random;
 
 public class LOTRWorldGenMordorTent extends LOTRWorldGenTentBase {
 	public LOTRWorldGenMordorTent(boolean flag) {

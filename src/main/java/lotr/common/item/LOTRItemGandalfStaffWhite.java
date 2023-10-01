@@ -3,9 +3,11 @@ package lotr.common.item;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.LOTRCreativeTabs;
 import lotr.common.entity.projectile.LOTREntityGandalfFireball;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketWeaponFX;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTRItemGandalfStaffWhite extends LOTRItemSword implements LOTRStoryItem {

@@ -1,12 +1,14 @@
 package lotr.common.tileentity;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityEnt;
 import lotr.common.world.biome.LOTRBiomeGenFangorn;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRTileEntityCorruptMallorn extends TileEntity {
 	@Override

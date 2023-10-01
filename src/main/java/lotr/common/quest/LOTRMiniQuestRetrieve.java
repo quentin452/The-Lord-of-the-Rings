@@ -1,7 +1,5 @@
 package lotr.common.quest;
 
-import java.util.*;
-
 import lotr.common.LOTRPlayerData;
 import lotr.common.entity.LOTREntities;
 import lotr.common.entity.npc.LOTREntityNPC;
@@ -11,12 +9,30 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 
+import java.util.Random;
+import java.util.UUID;
+
 public class LOTRMiniQuestRetrieve extends LOTRMiniQuestCollect {
 	public Class killEntityType;
 	public boolean hasDropped;
 
 	public LOTRMiniQuestRetrieve(LOTRPlayerData pd) {
 		super(pd);
+	}
+
+	public static UUID getRetrieveQuestID(ItemStack itemstack) {
+		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("LOTRRetrieveID")) {
+			String id = itemstack.getTagCompound().getString("LOTRRetrieveID");
+			return UUID.fromString(id);
+		}
+		return null;
+	}
+
+	public static void setRetrieveQuest(ItemStack itemstack, LOTRMiniQuest quest) {
+		if (itemstack.getTagCompound() == null) {
+			itemstack.setTagCompound(new NBTTagCompound());
+		}
+		itemstack.getTagCompound().setString("LOTRRetrieveID", quest.questUUID.toString());
 	}
 
 	@Override
@@ -71,21 +87,6 @@ public class LOTRMiniQuestRetrieve extends LOTRMiniQuestCollect {
 		super.writeToNBT(nbt);
 		nbt.setString("KillClass", LOTREntities.getStringFromClass(killEntityType));
 		nbt.setBoolean("HasDropped", hasDropped);
-	}
-
-	public static UUID getRetrieveQuestID(ItemStack itemstack) {
-		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("LOTRRetrieveID")) {
-			String id = itemstack.getTagCompound().getString("LOTRRetrieveID");
-			return UUID.fromString(id);
-		}
-		return null;
-	}
-
-	public static void setRetrieveQuest(ItemStack itemstack, LOTRMiniQuest quest) {
-		if (itemstack.getTagCompound() == null) {
-			itemstack.setTagCompound(new NBTTagCompound());
-		}
-		itemstack.getTagCompound().setString("LOTRRetrieveID", quest.questUUID.toString());
 	}
 
 	public static class QFRetrieve extends LOTRMiniQuestCollect.QFCollect<LOTRMiniQuestRetrieve> {

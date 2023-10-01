@@ -1,14 +1,18 @@
 package lotr.common.world.village;
 
-import java.util.*;
-
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityBreeGuard;
+import lotr.common.entity.npc.LOTREntityBreeHobbit;
+import lotr.common.entity.npc.LOTREntityBreeMan;
 import lotr.common.world.biome.LOTRBiome;
-import lotr.common.world.map.*;
+import lotr.common.world.map.LOTRRoadType;
+import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.structure2.*;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LOTRVillageGenBree extends LOTRVillageGen {
 	public LOTRVillageGenBree(LOTRBiome biome, float f) {
@@ -23,6 +27,11 @@ public class LOTRVillageGenBree extends LOTRVillageGen {
 	@Override
 	public LOTRVillageGen.AbstractInstance<?> createVillageInstance(World world, int i, int k, Random random, LocationInfo loc) {
 		return new Instance(this, world, i, k, random, loc);
+	}
+
+	public enum VillageType {
+		HAMLET, VILLAGE
+
 	}
 
 	public static class Instance extends LOTRVillageGen.AbstractInstance<LOTRVillageGenBree> {
@@ -473,11 +482,6 @@ public class LOTRVillageGenBree extends LOTRVillageGen {
 				hamletHedge = random.nextBoolean();
 			}
 		}
-
-	}
-
-	public enum VillageType {
-		HAMLET, VILLAGE
 
 	}
 

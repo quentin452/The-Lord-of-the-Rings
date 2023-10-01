@@ -1,11 +1,11 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelGiraffe extends ModelBase {
 	public ModelRenderer body = new ModelRenderer(this, 0, 0).setTextureSize(128, 64);

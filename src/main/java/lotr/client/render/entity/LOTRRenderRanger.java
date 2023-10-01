@@ -1,11 +1,14 @@
 package lotr.client.render.entity;
 
 import lotr.common.entity.LOTRRandomSkinEntity;
-import org.lwjgl.opengl.GL11;
-
-import lotr.common.entity.npc.*;
-import net.minecraft.entity.*;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTREntityRanger;
+import lotr.common.entity.npc.LOTREntityRangerIthilien;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderRanger extends LOTRRenderDunedain {
 	public static LOTRRandomSkins ithilienSkins;

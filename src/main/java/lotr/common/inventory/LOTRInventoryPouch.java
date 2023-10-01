@@ -4,7 +4,8 @@ import lotr.common.item.LOTRItemPouch;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public class LOTRInventoryPouch extends InventoryBasic {
 	public LOTRContainerPouch theContainer;

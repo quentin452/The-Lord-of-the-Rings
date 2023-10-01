@@ -1,13 +1,15 @@
 package lotr.common.network;
 
-import java.util.Random;
-
-import cpw.mods.fml.common.network.simpleimpl.*;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import lotr.common.LOTRMod;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRPacketWeaponFX implements IMessage {
 	public Type type;
@@ -32,6 +34,11 @@ public class LOTRPacketWeaponFX implements IMessage {
 	public void toBytes(ByteBuf data) {
 		data.writeByte(type.ordinal());
 		data.writeInt(entityID);
+	}
+
+	public enum Type {
+		MACE_SAURON, STAFF_GANDALF_WHITE, FIREBALL_GANDALF_WHITE, INFERNAL, CHILLING
+
 	}
 
 	public static class Handler implements IMessageHandler<LOTRPacketWeaponFX, IMessage> {
@@ -124,11 +131,6 @@ public class LOTRPacketWeaponFX implements IMessage {
 			}
 			return null;
 		}
-	}
-
-	public enum Type {
-		MACE_SAURON, STAFF_GANDALF_WHITE, FIREBALL_GANDALF_WHITE, INFERNAL, CHILLING
-
 	}
 
 }

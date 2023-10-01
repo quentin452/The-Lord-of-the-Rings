@@ -1,6 +1,7 @@
 package lotr.common.world.biome;
 
-import lotr.common.world.structure2.*;
+import lotr.common.world.structure2.LOTRWorldGenMordorCamp;
+import lotr.common.world.structure2.LOTRWorldGenMordorWargPit;
 
 public class LOTRBiomeGenUdun extends LOTRBiomeGenMordor {
 	public LOTRBiomeGenUdun(int i, boolean major) {

@@ -1,9 +1,9 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
-import lotr.common.entity.npc.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
+import lotr.common.entity.npc.LOTREntityRangerIthilien;
+import lotr.common.entity.npc.LOTREntityRangerIthilienCaptain;
 import lotr.common.item.LOTRItemBanner;
 import lotr.common.world.feature.LOTRTreeType;
 import lotr.common.world.structure.LOTRChestContents;
@@ -11,6 +11,8 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenIthilienHideout extends LOTRWorldGenStructureBase2 {
 	public LOTRWorldGenIthilienHideout(boolean flag) {

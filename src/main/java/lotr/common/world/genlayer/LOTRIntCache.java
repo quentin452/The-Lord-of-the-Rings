@@ -1,8 +1,9 @@
 package lotr.common.world.genlayer;
 
-import java.util.*;
-
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LOTRIntCache {
 	public static LOTRIntCache SERVER = new LOTRIntCache();
@@ -12,6 +13,13 @@ public class LOTRIntCache {
 	public List<int[]> inUseSmallArrays = new ArrayList<>();
 	public List<int[]> freeLargeArrays = new ArrayList<>();
 	public List<int[]> inUseLargeArrays = new ArrayList<>();
+
+	public static LOTRIntCache get(World world) {
+		if (!world.isRemote) {
+			return SERVER;
+		}
+		return CLIENT;
+	}
 
 	public String getCacheSizes() {
 		return "cache: " + freeLargeArrays.size() + ", tcache: " + freeSmallArrays.size() + ", allocated: " + inUseLargeArrays.size() + ", tallocated: " + inUseSmallArrays.size();
@@ -57,12 +65,5 @@ public class LOTRIntCache {
 		freeSmallArrays.addAll(inUseSmallArrays);
 		inUseLargeArrays.clear();
 		inUseSmallArrays.clear();
-	}
-
-	public static LOTRIntCache get(World world) {
-		if (!world.isRemote) {
-			return SERVER;
-		}
-		return CLIENT;
 	}
 }

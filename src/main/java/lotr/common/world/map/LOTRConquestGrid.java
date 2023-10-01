@@ -1,24 +1,27 @@
 package lotr.common.world.map;
 
-import java.io.File;
-import java.util.*;
-
 import com.google.common.math.IntMath;
-
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.*;
-import lotr.common.fac.*;
-import lotr.common.network.*;
+import lotr.common.fac.LOTRFaction;
+import lotr.common.fac.LOTRFactionRank;
+import lotr.common.network.LOTRPacketConquestGrid;
+import lotr.common.network.LOTRPacketConquestNotification;
+import lotr.common.network.LOTRPacketHandler;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.genlayer.LOTRGenLayerWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.io.File;
+import java.util.*;
 
 public class LOTRConquestGrid {
 	public static int MAP_GRID_SCALE = IntMath.pow(2, 3);
@@ -419,6 +422,10 @@ public class LOTRConquestGrid {
 			gridZ = k;
 		}
 
+		public static GridCoordPair forZone(LOTRConquestZone zone) {
+			return new GridCoordPair(zone.gridX, zone.gridZ);
+		}
+
 		@Override
 		public boolean equals(Object other) {
 			if (this == other) {
@@ -436,10 +443,6 @@ public class LOTRConquestGrid {
 			int i = 1664525 * gridX + 1013904223;
 			int j = 1664525 * (gridZ ^ 0xDEADBEEF) + 1013904223;
 			return i ^ j;
-		}
-
-		public static GridCoordPair forZone(LOTRConquestZone zone) {
-			return new GridCoordPair(zone.gridX, zone.gridZ);
 		}
 	}
 

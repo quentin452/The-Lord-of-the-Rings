@@ -1,11 +1,11 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRBiomeGenForodwaithMountains extends LOTRBiomeGenForodwaith {
 	public LOTRBiomeGenForodwaithMountains(int i, boolean major) {

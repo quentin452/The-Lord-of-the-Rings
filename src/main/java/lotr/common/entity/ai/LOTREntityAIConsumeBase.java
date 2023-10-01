@@ -1,11 +1,11 @@
 package lotr.common.entity.ai;
 
-import java.util.Random;
-
 import lotr.common.LOTRFoods;
 import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.ItemStack;
+
+import java.util.Random;
 
 public abstract class LOTREntityAIConsumeBase extends EntityAIBase {
 	public LOTREntityNPC theEntity;

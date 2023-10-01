@@ -1,11 +1,14 @@
 package lotr.common.entity.npc;
 
-import java.util.List;
-
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.LOTRShields;
 import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
-import lotr.common.fac.*;
-import lotr.common.world.*;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
+import lotr.common.world.LOTRWorldChunkManager;
+import lotr.common.world.LOTRWorldProvider;
 import lotr.common.world.biome.LOTRBiomeGenDorwinion;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import net.minecraft.block.Block;
@@ -15,10 +18,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.List;
 
 public class LOTREntityDorwinionGuard extends LOTREntityDorwinionMan {
 	public static ItemStack[] guardWeapons = {new ItemStack(Items.iron_sword), new ItemStack(LOTRMod.battleaxeIron), new ItemStack(LOTRMod.pikeIron)};
@@ -29,84 +35,6 @@ public class LOTREntityDorwinionGuard extends LOTREntityDorwinionMan {
 		super(world);
 		addTargetTasks(true);
 		npcShield = LOTRShields.ALIGNMENT_DORWINION;
-	}
-
-	@Override
-	public EntityAIBase createDorwinionAttackAI() {
-		return new LOTREntityAIAttackOnCollide(this, 1.4, true);
-	}
-
-	@Override
-	public float getAlignmentBonus() {
-		return 2.0f;
-	}
-
-	@Override
-	public String getSpeechBank(EntityPlayer entityplayer) {
-		if (isFriendly(entityplayer)) {
-			if (hiredNPCInfo.getHiringPlayer() == entityplayer) {
-				return "dorwinion/guard/hired";
-			}
-			return "dorwinion/guard/friendly";
-		}
-		return "dorwinion/guard/hostile";
-	}
-
-	@Override
-	public void onDeath(DamageSource damagesource) {
-		super.onDeath(damagesource);
-		if (!worldObj.isRemote && damagesource.getEntity() instanceof EntityPlayer) {
-			EntityPlayer entityplayer = (EntityPlayer) damagesource.getEntity();
-			if (grapeAlert >= 3) {
-				LOTRLevelData.getData(entityplayer).addAchievement(LOTRAchievement.stealDorwinionGrapes);
-			}
-		}
-	}
-
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		if (!worldObj.isRemote && grapeAlert > 0 && ticksExisted % 600 == 0) {
-			--grapeAlert;
-		}
-	}
-
-	@Override
-	public IEntityLivingData onSpawnWithEgg(IEntityLivingData data) {
-		data = super.onSpawnWithEgg(data);
-		int i = rand.nextInt(guardWeapons.length);
-		npcItemsInv.setMeleeWeapon(guardWeapons[i].copy());
-		if (rand.nextInt(8) == 0) {
-			npcItemsInv.setSpearBackup(npcItemsInv.getMeleeWeapon());
-			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.spearIron));
-		}
-		npcItemsInv.setIdleItem(npcItemsInv.getMeleeWeapon());
-		setCurrentItemOrArmor(1, new ItemStack(LOTRMod.bootsDorwinion));
-		setCurrentItemOrArmor(2, new ItemStack(LOTRMod.legsDorwinion));
-		setCurrentItemOrArmor(3, new ItemStack(LOTRMod.bodyDorwinion));
-		if (rand.nextInt(4) == 0) {
-			setCurrentItemOrArmor(4, null);
-		} else {
-			setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetDorwinion));
-		}
-		return data;
-	}
-
-	@Override
-	public void readEntityFromNBT(NBTTagCompound nbt) {
-		super.readEntityFromNBT(nbt);
-		grapeAlert = nbt.getInteger("GrapeAlert");
-	}
-
-	@Override
-	public void setupNPCGender() {
-		familyInfo.setMale(true);
-	}
-
-	@Override
-	public void writeEntityToNBT(NBTTagCompound nbt) {
-		super.writeEntityToNBT(nbt);
-		nbt.setInteger("GrapeAlert", grapeAlert);
 	}
 
 	public static void defendGrapevines(EntityPlayer entityplayer, World world, int i, int j, int k) {
@@ -199,5 +127,83 @@ public class LOTREntityDorwinionGuard extends LOTREntityDorwinionMan {
 				}
 			}
 		}
+	}
+
+	@Override
+	public EntityAIBase createDorwinionAttackAI() {
+		return new LOTREntityAIAttackOnCollide(this, 1.4, true);
+	}
+
+	@Override
+	public float getAlignmentBonus() {
+		return 2.0f;
+	}
+
+	@Override
+	public String getSpeechBank(EntityPlayer entityplayer) {
+		if (isFriendly(entityplayer)) {
+			if (hiredNPCInfo.getHiringPlayer() == entityplayer) {
+				return "dorwinion/guard/hired";
+			}
+			return "dorwinion/guard/friendly";
+		}
+		return "dorwinion/guard/hostile";
+	}
+
+	@Override
+	public void onDeath(DamageSource damagesource) {
+		super.onDeath(damagesource);
+		if (!worldObj.isRemote && damagesource.getEntity() instanceof EntityPlayer) {
+			EntityPlayer entityplayer = (EntityPlayer) damagesource.getEntity();
+			if (grapeAlert >= 3) {
+				LOTRLevelData.getData(entityplayer).addAchievement(LOTRAchievement.stealDorwinionGrapes);
+			}
+		}
+	}
+
+	@Override
+	public void onLivingUpdate() {
+		super.onLivingUpdate();
+		if (!worldObj.isRemote && grapeAlert > 0 && ticksExisted % 600 == 0) {
+			--grapeAlert;
+		}
+	}
+
+	@Override
+	public IEntityLivingData onSpawnWithEgg(IEntityLivingData data) {
+		data = super.onSpawnWithEgg(data);
+		int i = rand.nextInt(guardWeapons.length);
+		npcItemsInv.setMeleeWeapon(guardWeapons[i].copy());
+		if (rand.nextInt(8) == 0) {
+			npcItemsInv.setSpearBackup(npcItemsInv.getMeleeWeapon());
+			npcItemsInv.setMeleeWeapon(new ItemStack(LOTRMod.spearIron));
+		}
+		npcItemsInv.setIdleItem(npcItemsInv.getMeleeWeapon());
+		setCurrentItemOrArmor(1, new ItemStack(LOTRMod.bootsDorwinion));
+		setCurrentItemOrArmor(2, new ItemStack(LOTRMod.legsDorwinion));
+		setCurrentItemOrArmor(3, new ItemStack(LOTRMod.bodyDorwinion));
+		if (rand.nextInt(4) == 0) {
+			setCurrentItemOrArmor(4, null);
+		} else {
+			setCurrentItemOrArmor(4, new ItemStack(LOTRMod.helmetDorwinion));
+		}
+		return data;
+	}
+
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt) {
+		super.readEntityFromNBT(nbt);
+		grapeAlert = nbt.getInteger("GrapeAlert");
+	}
+
+	@Override
+	public void setupNPCGender() {
+		familyInfo.setMale(true);
+	}
+
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt) {
+		super.writeEntityToNBT(nbt);
+		nbt.setInteger("GrapeAlert", grapeAlert);
 	}
 }

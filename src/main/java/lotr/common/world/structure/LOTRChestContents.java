@@ -1,19 +1,30 @@
 package lotr.common.world.structure;
 
-import java.util.*;
-
 import cpw.mods.fml.common.FMLLog;
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRLore;
+import lotr.common.LOTRMod;
 import lotr.common.enchant.LOTREnchantmentHelper;
 import lotr.common.item.*;
 import lotr.common.world.spawning.LOTRInvasions;
-import net.minecraft.init.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.ChestGenHooks;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRChestContents {
 	public static LOTRChestContents RARE_DROPS = new LOTRChestContents(1, 1, new WeightedRandomChestContent[]{new WeightedRandomChestContent(new ItemStack(LOTRMod.silverNugget), 1, 6, 20), new WeightedRandomChestContent(new ItemStack(Items.gold_nugget), 1, 4, 10)});
@@ -113,34 +124,6 @@ public class LOTRChestContents {
 		items = w;
 	}
 
-	public LOTRChestContents enablePouches() {
-		pouches = true;
-		return this;
-	}
-
-	public ItemStack getOneItem(Random random, boolean isNPCDrop) {
-		IInventory drops = new InventoryBasic("oneItem", false, 1);
-		fillInventory(drops, random, this, 1, isNPCDrop);
-		ItemStack item = drops.getStackInSlot(0);
-		item.stackSize = 1;
-		return item;
-	}
-
-	public LOTRChestContents setDrinkVessels(LOTRFoods foods) {
-		return setDrinkVessels(foods.getDrinkVessels());
-	}
-
-	public LOTRChestContents setDrinkVessels(LOTRItemMug.Vessel... v) {
-		vesselTypes = v;
-		return this;
-	}
-
-	public LOTRChestContents setLore(int chance, LOTRLore.LoreCategory... categories) {
-		loreCategories = Arrays.asList(categories);
-		loreChance = chance;
-		return this;
-	}
-
 	public static void fillChest(IBlockAccess world, Random random, int i, int j, int k, LOTRChestContents itemPool) {
 		fillChest(world, random, i, j, k, itemPool, -1);
 	}
@@ -216,5 +199,33 @@ public class LOTRChestContents {
 
 	public static int getRandomItemAmount(LOTRChestContents itemPool, Random random) {
 		return MathHelper.getRandomIntegerInRange(random, itemPool.minItems, itemPool.maxItems);
+	}
+
+	public LOTRChestContents enablePouches() {
+		pouches = true;
+		return this;
+	}
+
+	public ItemStack getOneItem(Random random, boolean isNPCDrop) {
+		IInventory drops = new InventoryBasic("oneItem", false, 1);
+		fillInventory(drops, random, this, 1, isNPCDrop);
+		ItemStack item = drops.getStackInSlot(0);
+		item.stackSize = 1;
+		return item;
+	}
+
+	public LOTRChestContents setDrinkVessels(LOTRFoods foods) {
+		return setDrinkVessels(foods.getDrinkVessels());
+	}
+
+	public LOTRChestContents setDrinkVessels(LOTRItemMug.Vessel... v) {
+		vesselTypes = v;
+		return this;
+	}
+
+	public LOTRChestContents setLore(int chance, LOTRLore.LoreCategory... categories) {
+		loreCategories = Arrays.asList(categories);
+		loreChance = chance;
+		return this;
 	}
 }

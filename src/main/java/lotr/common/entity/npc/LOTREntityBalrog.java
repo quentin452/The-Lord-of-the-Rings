@@ -1,18 +1,24 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
-import lotr.common.entity.ai.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAIBalrogCharge;
+import lotr.common.entity.ai.LOTREntityAIFollowHiringPlayer;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.world.LOTRWorldProviderUtumno;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
-import net.minecraft.entity.ai.attributes.*;
+import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class LOTREntityBalrog extends LOTREntityNPC {
@@ -165,6 +171,10 @@ public class LOTREntityBalrog extends LOTREntityNPC {
 		return dataWatcher.getWatchableObjectByte(20) == 1;
 	}
 
+	public void setBalrogCharging(boolean flag) {
+		dataWatcher.updateObject(20, (byte) (flag ? 1 : 0));
+	}
+
 	public boolean isWreathedInFlame() {
 		return isEntityAlive() && !isWet();
 	}
@@ -306,9 +316,5 @@ public class LOTREntityBalrog extends LOTREntityNPC {
 		}
 		npcItemsInv.setIdleItem(npcItemsInv.getMeleeWeapon());
 		return data;
-	}
-
-	public void setBalrogCharging(boolean flag) {
-		dataWatcher.updateObject(20, (byte) (flag ? 1 : 0));
 	}
 }

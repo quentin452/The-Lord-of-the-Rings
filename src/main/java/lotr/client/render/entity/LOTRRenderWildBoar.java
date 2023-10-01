@@ -3,7 +3,8 @@ package lotr.client.render.entity;
 import lotr.client.model.LOTRModelBoar;
 import lotr.common.entity.npc.LOTRNPCMount;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderWildBoar extends RenderLiving {

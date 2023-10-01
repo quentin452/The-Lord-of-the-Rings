@@ -1,10 +1,9 @@
 package lotr.common.quest;
 
-import java.util.UUID;
-
 import com.google.common.base.Supplier;
-
 import lotr.common.fac.LOTRFaction;
+
+import java.util.UUID;
 
 public interface MiniQuestSelector {
 	boolean include(LOTRMiniQuest var1);

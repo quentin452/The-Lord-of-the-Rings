@@ -1,7 +1,8 @@
 package lotr.common.world.structure2;
 
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityBlueMountainsSmith;
+import lotr.common.entity.npc.LOTREntityDwarf;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.world.World;
 

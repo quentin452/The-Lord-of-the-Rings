@@ -1,9 +1,9 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.entity.LOTREntityNPCRespawner;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public abstract class LOTRWorldGenNPCRespawner extends LOTRWorldGenStructureBase2 {
 	protected LOTRWorldGenNPCRespawner(boolean flag) {

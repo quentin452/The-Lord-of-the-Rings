@@ -1,16 +1,25 @@
 package lotr.common.entity.item;
 
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.entity.LOTRBannerProtectable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class LOTREntityStoneTroll extends Entity implements LOTRBannerProtectable {
@@ -130,6 +139,10 @@ public class LOTREntityStoneTroll extends Entity implements LOTRBannerProtectabl
 		return dataWatcher.getWatchableObjectByte(16);
 	}
 
+	public void setTrollOutfit(int i) {
+		dataWatcher.updateObject(16, (byte) i);
+	}
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void handleHealthUpdate(byte b) {
@@ -203,10 +216,6 @@ public class LOTREntityStoneTroll extends Entity implements LOTRBannerProtectabl
 
 	public void setHasTwoHeads(boolean flag) {
 		dataWatcher.updateObject(17, flag ? (byte) 1 : 0);
-	}
-
-	public void setTrollOutfit(int i) {
-		dataWatcher.updateObject(16, (byte) i);
 	}
 
 	@Override

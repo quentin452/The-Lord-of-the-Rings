@@ -1,21 +1,23 @@
 package lotr.common.world.genlayer;
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.file.Files;
-import java.util.Enumeration;
-import java.util.zip.*;
-
-import javax.imageio.ImageIO;
-
+import com.google.common.math.IntMath;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.ModContainer;
+import lotr.common.LOTRDimension;
+import lotr.common.LOTRMod;
+import lotr.common.world.biome.LOTRBiome;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldType;
 import org.apache.logging.log4j.Level;
 
-import com.google.common.math.IntMath;
-
-import cpw.mods.fml.common.*;
-import lotr.common.*;
-import lotr.common.world.biome.LOTRBiome;
-import net.minecraft.world.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class LOTRGenLayerWorld extends LOTRGenLayer {
 	public static int scalePower = 7;
@@ -70,19 +72,6 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	@Override
-	public int[] getInts(World world, int i, int k, int xSize, int zSize) {
-		int[] intArray = LOTRIntCache.get(world).getIntArray(xSize * zSize);
-		for (int k1 = 0; k1 < zSize; ++k1) {
-			for (int i1 = 0; i1 < xSize; ++i1) {
-				int i2 = i + i1 + 810;
-				int k2 = k + k1 + 730;
-				intArray[i1 + k1 * xSize] = i2 < 0 || i2 >= imageWidth || k2 < 0 || k2 >= imageHeight ? LOTRBiome.ocean.biomeID : getBiomeImageID(i2, k2);
-			}
-		}
-		return intArray;
 	}
 
 	public static LOTRGenLayer[] createWorld(LOTRDimension dim, WorldType worldType) {
@@ -185,5 +174,18 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public int[] getInts(World world, int i, int k, int xSize, int zSize) {
+		int[] intArray = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+		for (int k1 = 0; k1 < zSize; ++k1) {
+			for (int i1 = 0; i1 < xSize; ++i1) {
+				int i2 = i + i1 + 810;
+				int k2 = k + k1 + 730;
+				intArray[i1 + k1 * xSize] = i2 < 0 || i2 >= imageWidth || k2 < 0 || k2 >= imageHeight ? LOTRBiome.ocean.biomeID : getBiomeImageID(i2, k2);
+			}
+		}
+		return intArray;
 	}
 }

@@ -1,12 +1,14 @@
 package lotr.common.world.mapgen.dwarvenmine;
 
-import java.util.*;
-
 import lotr.common.world.structure2.LOTRWorldGenDwarvenMineEntrance;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.structure.*;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
+import net.minecraft.world.gen.structure.StructureComponent;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRComponentDwarvenMineEntrance extends StructureComponent {
 	public static LOTRWorldGenDwarvenMineEntrance entranceGen = new LOTRWorldGenDwarvenMineEntrance(false);

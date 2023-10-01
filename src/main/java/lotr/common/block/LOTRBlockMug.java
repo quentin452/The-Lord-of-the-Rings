@@ -1,22 +1,28 @@
 package lotr.common.block;
 
-import java.util.ArrayList;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemBottlePoison;
+import lotr.common.item.LOTRItemMug;
 import lotr.common.tileentity.LOTRTileEntityMug;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
+
+import java.util.ArrayList;
 
 public class LOTRBlockMug extends BlockContainer {
 	public static float MUG_SCALE = 0.75f;
@@ -32,6 +38,24 @@ public class LOTRBlockMug extends BlockContainer {
 		setBlockBounds(0.5f - (f *= 0.75f), 0.0f, 0.5f - f, 0.5f + f, f1 * 0.75f, 0.5f + f);
 		setHardness(0.0f);
 		setStepSound(Block.soundTypeWood);
+	}
+
+	public static ItemStack getMugItem(IBlockAccess world, int i, int j, int k) {
+		TileEntity tileentity = world.getTileEntity(i, j, k);
+		if (tileentity instanceof LOTRTileEntityMug) {
+			LOTRTileEntityMug mug = (LOTRTileEntityMug) tileentity;
+			return mug.getMugItem();
+		}
+		return new ItemStack(LOTRMod.mug);
+	}
+
+	public static void setMugItem(IBlockAccess world, int i, int j, int k, ItemStack itemstack, LOTRItemMug.Vessel vessel) {
+		TileEntity te = world.getTileEntity(i, j, k);
+		if (te instanceof LOTRTileEntityMug) {
+			LOTRTileEntityMug mug = (LOTRTileEntityMug) te;
+			mug.setMugItem(itemstack);
+			mug.setVessel(vessel);
+		}
 	}
 
 	@Override
@@ -176,23 +200,5 @@ public class LOTRBlockMug extends BlockContainer {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
-	}
-
-	public static ItemStack getMugItem(IBlockAccess world, int i, int j, int k) {
-		TileEntity tileentity = world.getTileEntity(i, j, k);
-		if (tileentity instanceof LOTRTileEntityMug) {
-			LOTRTileEntityMug mug = (LOTRTileEntityMug) tileentity;
-			return mug.getMugItem();
-		}
-		return new ItemStack(LOTRMod.mug);
-	}
-
-	public static void setMugItem(IBlockAccess world, int i, int j, int k, ItemStack itemstack, LOTRItemMug.Vessel vessel) {
-		TileEntity te = world.getTileEntity(i, j, k);
-		if (te instanceof LOTRTileEntityMug) {
-			LOTRTileEntityMug mug = (LOTRTileEntityMug) te;
-			mug.setMugItem(itemstack);
-			mug.setVessel(vessel);
-		}
 	}
 }

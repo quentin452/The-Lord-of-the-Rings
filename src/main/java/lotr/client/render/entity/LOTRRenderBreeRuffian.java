@@ -2,7 +2,8 @@ package lotr.client.render.entity;
 
 import lotr.common.entity.LOTRRandomSkinEntity;
 import lotr.common.entity.npc.LOTREntityBreeRuffian;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderBreeRuffian extends LOTRRenderBreeMan {

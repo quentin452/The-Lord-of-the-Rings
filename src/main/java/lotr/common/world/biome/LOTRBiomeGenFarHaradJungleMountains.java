@@ -1,12 +1,13 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
-import lotr.common.world.feature.*;
+import lotr.common.world.feature.LOTRWorldGenStreams;
+import lotr.common.world.feature.LOTRWorldGenVolcanoCrater;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRBiomeGenFarHaradJungleMountains extends LOTRBiomeGenFarHaradJungle {
 	public LOTRBiomeGenFarHaradJungleMountains(int i, boolean major) {

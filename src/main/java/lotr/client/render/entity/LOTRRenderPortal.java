@@ -1,7 +1,5 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelPortal;
 import lotr.common.entity.item.LOTREntityPortal;
 import net.minecraft.client.model.ModelBase;
@@ -9,6 +7,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderPortal extends Render {
 	public static ResourceLocation ringTexture = new ResourceLocation("lotr:misc/portal.png");

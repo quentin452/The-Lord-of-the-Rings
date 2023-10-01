@@ -1,15 +1,16 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.animal.LOTREntityHorse;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityRohanMan;
+import lotr.common.entity.npc.LOTREntityRohanStablemaster;
+import lotr.common.entity.npc.LOTREntityRohirrimWarrior;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenRohanStables extends LOTRWorldGenRohanStructure {
 	public LOTRWorldGenRohanStables(boolean flag) {

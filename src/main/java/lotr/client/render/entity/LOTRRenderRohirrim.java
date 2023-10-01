@@ -1,9 +1,12 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelHuman;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityRohanMan;
+import lotr.common.entity.npc.LOTREntityRohanShieldmaiden;
+import lotr.common.entity.npc.LOTREntityRohirrimWarrior;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderRohirrim extends LOTRRenderBiped {

@@ -1,14 +1,19 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import lotr.common.*;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import lotr.common.world.biome.LOTRBiomeGenMordor;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.*;
-import net.minecraft.world.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LOTRBlockMordorGrass extends BlockBush implements IShearable {
 	public LOTRBlockMordorGrass() {

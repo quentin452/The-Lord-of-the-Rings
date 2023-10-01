@@ -1,15 +1,17 @@
 package lotr.common.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRCreativeTabs;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
+
+import java.util.List;
 
 public class LOTRItemLeatherHat extends LOTRItemArmor {
 	public static int HAT_LEATHER = 6834742;
@@ -24,53 +26,6 @@ public class LOTRItemLeatherHat extends LOTRItemArmor {
 	public LOTRItemLeatherHat() {
 		super(LOTRMaterial.COSMETIC, 0);
 		setCreativeTab(LOTRCreativeTabs.tabMisc);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-		if (isHatDyed(itemstack)) {
-			list.add(StatCollector.translateToLocal("item.lotr.hat.dyed"));
-		}
-		if (hasFeather(itemstack)) {
-			list.add(StatCollector.translateToLocal("item.lotr.hat.feathered"));
-		}
-	}
-
-	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-		return "lotr:armor/hat.png";
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getColorFromItemStack(ItemStack itemstack, int pass) {
-		if (pass == 1 && hasFeather(itemstack)) {
-			return getFeatherColor(itemstack);
-		}
-		return getHatColor(itemstack);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(ItemStack itemstack, int pass) {
-		if (pass == 1 && hasFeather(itemstack)) {
-			return featherIcon;
-		}
-		return itemIcon;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister iconregister) {
-		super.registerIcons(iconregister);
-		featherIcon = iconregister.registerIcon(getIconString() + "_feather");
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean requiresMultipleRenderPasses() {
-		return true;
 	}
 
 	public static int getFeatherColor(ItemStack itemstack) {
@@ -131,5 +86,52 @@ public class LOTRItemLeatherHat extends LOTRItemArmor {
 		}
 		itemstack.getTagCompound().setInteger("HatColor", i);
 		return itemstack;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+		if (isHatDyed(itemstack)) {
+			list.add(StatCollector.translateToLocal("item.lotr.hat.dyed"));
+		}
+		if (hasFeather(itemstack)) {
+			list.add(StatCollector.translateToLocal("item.lotr.hat.feathered"));
+		}
+	}
+
+	@Override
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
+		return "lotr:armor/hat.png";
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getColorFromItemStack(ItemStack itemstack, int pass) {
+		if (pass == 1 && hasFeather(itemstack)) {
+			return getFeatherColor(itemstack);
+		}
+		return getHatColor(itemstack);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(ItemStack itemstack, int pass) {
+		if (pass == 1 && hasFeather(itemstack)) {
+			return featherIcon;
+		}
+		return itemIcon;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IIconRegister iconregister) {
+		super.registerIcons(iconregister);
+		featherIcon = iconregister.registerIcon(getIconString() + "_feather");
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean requiresMultipleRenderPasses() {
+		return true;
 	}
 }

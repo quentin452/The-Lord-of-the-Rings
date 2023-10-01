@@ -1,8 +1,7 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityHobbit;
 import lotr.common.item.LOTRItemMug;
 import lotr.common.world.structure.LOTRChestContents;
@@ -10,9 +9,12 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenHobbitWindmill extends LOTRWorldGenStructureBase2 {
 	public Block plankBlock;

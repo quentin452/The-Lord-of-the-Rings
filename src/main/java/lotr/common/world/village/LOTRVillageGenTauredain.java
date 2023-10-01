@@ -1,11 +1,11 @@
 package lotr.common.world.village;
 
-import java.util.Random;
-
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.map.LOTRRoadType;
 import lotr.common.world.structure2.*;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRVillageGenTauredain extends LOTRVillageGen {
 	public LOTRVillageGenTauredain(LOTRBiome biome, float f) {

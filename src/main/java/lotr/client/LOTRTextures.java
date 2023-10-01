@@ -1,31 +1,41 @@
 package lotr.client;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.*;
-
-import javax.imageio.ImageIO;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import lotr.client.gui.LOTRGuiMap;
 import lotr.client.render.LOTRBufferedImageIcon;
-import lotr.common.*;
-import lotr.common.util.*;
-import lotr.common.world.biome.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRDimension;
+import lotr.common.LOTRLevelData;
+import lotr.common.util.LOTRColorUtil;
+import lotr.common.util.LOTRCommonIcons;
+import lotr.common.util.LOTRLog;
+import lotr.common.world.biome.LOTRBiome;
+import lotr.common.world.biome.LOTRBiomeGenMordor;
 import lotr.common.world.genlayer.LOTRGenLayerWorld;
 import lotr.common.world.map.LOTRWaypoint;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.*;
-import net.minecraft.client.resources.*;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.resources.IResource;
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.opengl.GL11;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRTextures implements IResourceManagerReloadListener {
 	public static Minecraft mc = Minecraft.getMinecraft();
@@ -56,28 +66,6 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 	public static int newWaterHeight = 8;
 	public static Map<ResourceLocation, ResourceLocation> eyesTextures = new HashMap<>();
 	public static Map<ResourceLocation, Integer> averagedPageColors = new HashMap<>();
-
-	@Override
-	public void onResourceManagerReload(IResourceManager resourceManager) {
-		loadMapTextures();
-		replaceWaterParticles();
-		eyesTextures.clear();
-		averagedPageColors.clear();
-	}
-
-	@SubscribeEvent
-	public void preTextureStitch(TextureStitchEvent.Pre event) {
-		TextureMap map = event.map;
-		if (map.getTextureType() == 0) {
-			LOTRCommonIcons.iconEmptyBlock = generateIconEmpty(map);
-			LOTRCommonIcons.iconStoneSnow = map.registerIcon("stone_snow");
-		}
-		if (map.getTextureType() == 1) {
-			LOTRCommonIcons.iconEmptyItem = generateIconEmpty(map);
-			LOTRCommonIcons.iconMeleeWeapon = map.registerIcon("lotr:slotMelee");
-			LOTRCommonIcons.iconBomb = map.registerIcon("lotr:slotBomb");
-		}
-	}
 
 	public static int computeAverageFactionPageColor(ResourceLocation texture, int u0, int v0, int u1, int v1) {
 		if (!averagedPageColors.containsKey(texture)) {
@@ -423,6 +411,28 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 		} catch (IOException e) {
 			FMLLog.severe("Failed to replace rain particles");
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onResourceManagerReload(IResourceManager resourceManager) {
+		loadMapTextures();
+		replaceWaterParticles();
+		eyesTextures.clear();
+		averagedPageColors.clear();
+	}
+
+	@SubscribeEvent
+	public void preTextureStitch(TextureStitchEvent.Pre event) {
+		TextureMap map = event.map;
+		if (map.getTextureType() == 0) {
+			LOTRCommonIcons.iconEmptyBlock = generateIconEmpty(map);
+			LOTRCommonIcons.iconStoneSnow = map.registerIcon("stone_snow");
+		}
+		if (map.getTextureType() == 1) {
+			LOTRCommonIcons.iconEmptyItem = generateIconEmpty(map);
+			LOTRCommonIcons.iconMeleeWeapon = map.registerIcon("lotr:slotMelee");
+			LOTRCommonIcons.iconBomb = map.registerIcon("lotr:slotBomb");
 		}
 	}
 }

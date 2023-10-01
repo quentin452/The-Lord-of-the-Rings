@@ -1,7 +1,8 @@
 package lotr.client.render.entity;
 
 import lotr.client.model.LOTRModelHuman;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityDunlending;
+import lotr.common.entity.npc.LOTREntityDunlendingBartender;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;

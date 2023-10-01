@@ -1,13 +1,12 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.fx.LOTREntityDeadMarshFace;
 import lotr.client.model.LOTRModelMarshWraith;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderDeadMarshFace extends Render {
 	public static ResourceLocation skin = new ResourceLocation("lotr:mob/wraith/marshWraith.png");

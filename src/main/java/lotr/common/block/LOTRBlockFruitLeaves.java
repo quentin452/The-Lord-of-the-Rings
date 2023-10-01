@@ -1,11 +1,13 @@
 package lotr.common.block;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRBlockFruitLeaves extends LOTRBlockLeavesBase {
 	public LOTRBlockFruitLeaves() {

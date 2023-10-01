@@ -1,18 +1,25 @@
 package lotr.common.tileentity;
 
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
-import lotr.common.fellowship.*;
+import lotr.common.fellowship.LOTRFellowship;
+import lotr.common.fellowship.LOTRFellowshipData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.*;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.chunk.Chunk;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.UUID;
 
 public class LOTRTileEntityBeacon extends TileEntity {
 	public int ticksExisted;
@@ -34,6 +41,12 @@ public class LOTRTileEntityBeacon extends TileEntity {
 		return beaconName;
 	}
 
+	public void setBeaconName(String name) {
+		beaconName = name;
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		markDirty();
+	}
+
 	@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound data = new NBTTagCompound();
@@ -51,6 +64,21 @@ public class LOTRTileEntityBeacon extends TileEntity {
 
 	public boolean isLit() {
 		return isLit;
+	}
+
+	public void setLit(boolean flag) {
+		boolean wasLit = isLit;
+		isLit = flag;
+		if (isLit) {
+			unlitCounter = 0;
+		} else {
+			litCounter = 0;
+		}
+		updateLight();
+		stateChangeTime = worldObj.getTotalWorldTime();
+		if (wasLit && !isLit) {
+			sendFellowshipMessage(false);
+		}
 	}
 
 	public boolean isPlayerEditing(EntityPlayer entityplayer) {
@@ -98,32 +126,11 @@ public class LOTRTileEntityBeacon extends TileEntity {
 		}
 	}
 
-	public void setBeaconName(String name) {
-		beaconName = name;
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-		markDirty();
-	}
-
 	public void setFellowship(LOTRFellowship fs) {
 		beaconFellowshipID = fs != null ? fs.getFellowshipID() : null;
 		beaconFellowshipID = fs == null ? null : fs.getFellowshipID();
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		markDirty();
-	}
-
-	public void setLit(boolean flag) {
-		boolean wasLit = isLit;
-		isLit = flag;
-		if (isLit) {
-			unlitCounter = 0;
-		} else {
-			litCounter = 0;
-		}
-		updateLight();
-		stateChangeTime = worldObj.getTotalWorldTime();
-		if (wasLit && !isLit) {
-			sendFellowshipMessage(false);
-		}
 	}
 
 	@Override

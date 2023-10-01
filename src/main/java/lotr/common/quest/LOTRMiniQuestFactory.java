@@ -1,22 +1,25 @@
 package lotr.common.quest;
 
-import java.util.*;
-import java.util.Map.Entry;
-
 import cpw.mods.fml.common.FMLLog;
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLore;
+import lotr.common.LOTRMod;
 import lotr.common.entity.animal.*;
 import lotr.common.entity.npc.*;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.item.LOTRItemBanner;
 import lotr.common.quest.LOTRMiniQuest.QuestFactoryBase;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public enum LOTRMiniQuestFactory {
 	HOBBIT("hobbit"), BREE("bree"), RUFFIAN_SPY("ruffianSpy"), RUFFIAN_BRUTE("ruffianBrute"), RANGER_NORTH("rangerNorth"), RANGER_NORTH_ARNOR_RELIC("rangerNorthArnorRelic"), BLUE_MOUNTAINS("blueMountains"), HIGH_ELF("highElf"), RIVENDELL("rivendell"), GUNDABAD("gundabad"), ANGMAR("angmar"), ANGMAR_HILLMAN("angmarHillman"), WOOD_ELF("woodElf"), DOL_GULDUR("dolGuldur"), DALE("dale"), DURIN("durin"), GALADHRIM("galadhrim"), DUNLAND("dunland"), ISENGARD("isengard"), ENT("ent"), ROHAN("rohan"), ROHAN_SHIELDMAIDEN("rohanShieldmaiden"), GONDOR("gondor"), GONDOR_KILL_RENEGADE("gondorKillRenegade"), MORDOR("mordor"), DORWINION("dorwinion"), DORWINION_ELF("dorwinionElf"), RHUN("rhun"), HARNENNOR("harnennor"), NEAR_HARAD("nearHarad"), UMBAR("umbar"), CORSAIR("corsair"), GONDOR_RENEGADE("gondorRenegade"), NOMAD("nomad"), GULF_HARAD("gulfHarad"), MOREDAIN("moredain"), TAUREDAIN("tauredain"), HALF_TROLL("halfTroll");
 
-	public static Random rand= new Random();
+	public static Random rand = new Random();
 	public static Map<Class<? extends LOTRMiniQuest>, Integer> questClassWeights = new HashMap<>();
 
 	public String baseName;
@@ -30,108 +33,6 @@ public enum LOTRMiniQuestFactory {
 
 	LOTRMiniQuestFactory(String s) {
 		baseName = s;
-	}
-
-	public void addQuest(LOTRMiniQuest.QuestFactoryBase factory) {
-		Class questClass = factory.getQuestClass();
-		Class<? extends LOTRMiniQuest> registryClass = null;
-		for (Class<? extends LOTRMiniQuest> c : questClassWeights.keySet()) {
-			if (!questClass.equals(c)) {
-				continue;
-			}
-			registryClass = c;
-			break;
-		}
-		if (registryClass == null) {
-			for (Class<? extends LOTRMiniQuest> c : questClassWeights.keySet()) {
-				if (!c.isAssignableFrom(questClass)) {
-					continue;
-				}
-				registryClass = c;
-				break;
-			}
-		}
-		if (registryClass == null) {
-			throw new IllegalArgumentException("Could not find registered quest class for " + questClass.toString());
-		}
-		factory.setFactoryGroup(this);
-		List<LOTRMiniQuest.QuestFactoryBase> list = questFactories.computeIfAbsent(registryClass, k -> new ArrayList<>());
-		list.add(factory);
-	}
-
-	public LOTRFaction checkAlignmentRewardFaction(LOTRFaction fac) {
-		if (alignmentRewardOverride != null) {
-			return alignmentRewardOverride;
-		}
-		return fac;
-	}
-
-	public LOTRMiniQuest createQuest(LOTREntityNPC npc) {
-		int totalWeight = getTotalQuestClassWeight(this);
-		if (totalWeight <= 0) {
-			FMLLog.warning("LOTR: No quests registered for %s!", baseName);
-			return null;
-		}
-		int i = rand.nextInt(totalWeight);
-		List<LOTRMiniQuest.QuestFactoryBase> chosenFactoryList = null;
-		for (Entry<Class<? extends LOTRMiniQuest>, List<QuestFactoryBase>> next : questFactories.entrySet()) {
-			chosenFactoryList = next.getValue();
-			i -= getQuestClassWeight(next.getKey());
-		}
-		LOTRMiniQuest.QuestFactoryBase factory = chosenFactoryList.get(rand.nextInt(chosenFactoryList.size()));
-		LOTRMiniQuest quest = factory.createQuest(npc, rand);
-		if (quest != null) {
-			quest.questGroup = this;
-		}
-		return quest;
-	}
-
-	public LOTRAchievement getAchievement() {
-		return questAchievement;
-	}
-
-	public String getBaseName() {
-		return baseName;
-	}
-
-	public LOTRMiniQuestFactory getBaseSpeechGroup() {
-		if (baseSpeechGroup != null) {
-			return baseSpeechGroup;
-		}
-		return this;
-	}
-
-	public List<LOTRLore.LoreCategory> getLoreCategories() {
-		return loreCategories;
-	}
-
-	public boolean isNoAlignRewardForEnemy() {
-		return noAlignRewardForEnemy;
-	}
-
-	public void setAchievement(LOTRAchievement a) {
-		if (questAchievement != null) {
-			throw new IllegalArgumentException("Miniquest achievement is already registered");
-		}
-		questAchievement = a;
-	}
-
-	public LOTRMiniQuestFactory setAlignmentRewardOverride(LOTRFaction fac) {
-		alignmentRewardOverride = fac;
-		return this;
-	}
-
-	public void setBaseSpeechGroup(LOTRMiniQuestFactory qf) {
-		baseSpeechGroup = qf;
-	}
-
-	public void setLore(LOTRLore.LoreCategory... categories) {
-		loreCategories = Arrays.asList(categories);
-	}
-
-	public LOTRMiniQuestFactory setNoAlignRewardForEnemy() {
-		noAlignRewardForEnemy = true;
-		return this;
 	}
 
 	public static void createMiniQuests() {
@@ -1313,5 +1214,107 @@ public enum LOTRMiniQuestFactory {
 
 	public static void registerQuestClass(Class<? extends LOTRMiniQuest> questClass, int weight) {
 		questClassWeights.put(questClass, weight);
+	}
+
+	public void addQuest(LOTRMiniQuest.QuestFactoryBase factory) {
+		Class questClass = factory.getQuestClass();
+		Class<? extends LOTRMiniQuest> registryClass = null;
+		for (Class<? extends LOTRMiniQuest> c : questClassWeights.keySet()) {
+			if (!questClass.equals(c)) {
+				continue;
+			}
+			registryClass = c;
+			break;
+		}
+		if (registryClass == null) {
+			for (Class<? extends LOTRMiniQuest> c : questClassWeights.keySet()) {
+				if (!c.isAssignableFrom(questClass)) {
+					continue;
+				}
+				registryClass = c;
+				break;
+			}
+		}
+		if (registryClass == null) {
+			throw new IllegalArgumentException("Could not find registered quest class for " + questClass.toString());
+		}
+		factory.setFactoryGroup(this);
+		List<LOTRMiniQuest.QuestFactoryBase> list = questFactories.computeIfAbsent(registryClass, k -> new ArrayList<>());
+		list.add(factory);
+	}
+
+	public LOTRFaction checkAlignmentRewardFaction(LOTRFaction fac) {
+		if (alignmentRewardOverride != null) {
+			return alignmentRewardOverride;
+		}
+		return fac;
+	}
+
+	public LOTRMiniQuest createQuest(LOTREntityNPC npc) {
+		int totalWeight = getTotalQuestClassWeight(this);
+		if (totalWeight <= 0) {
+			FMLLog.warning("LOTR: No quests registered for %s!", baseName);
+			return null;
+		}
+		int i = rand.nextInt(totalWeight);
+		List<LOTRMiniQuest.QuestFactoryBase> chosenFactoryList = null;
+		for (Entry<Class<? extends LOTRMiniQuest>, List<QuestFactoryBase>> next : questFactories.entrySet()) {
+			chosenFactoryList = next.getValue();
+			i -= getQuestClassWeight(next.getKey());
+		}
+		LOTRMiniQuest.QuestFactoryBase factory = chosenFactoryList.get(rand.nextInt(chosenFactoryList.size()));
+		LOTRMiniQuest quest = factory.createQuest(npc, rand);
+		if (quest != null) {
+			quest.questGroup = this;
+		}
+		return quest;
+	}
+
+	public LOTRAchievement getAchievement() {
+		return questAchievement;
+	}
+
+	public void setAchievement(LOTRAchievement a) {
+		if (questAchievement != null) {
+			throw new IllegalArgumentException("Miniquest achievement is already registered");
+		}
+		questAchievement = a;
+	}
+
+	public String getBaseName() {
+		return baseName;
+	}
+
+	public LOTRMiniQuestFactory getBaseSpeechGroup() {
+		if (baseSpeechGroup != null) {
+			return baseSpeechGroup;
+		}
+		return this;
+	}
+
+	public void setBaseSpeechGroup(LOTRMiniQuestFactory qf) {
+		baseSpeechGroup = qf;
+	}
+
+	public List<LOTRLore.LoreCategory> getLoreCategories() {
+		return loreCategories;
+	}
+
+	public boolean isNoAlignRewardForEnemy() {
+		return noAlignRewardForEnemy;
+	}
+
+	public LOTRMiniQuestFactory setAlignmentRewardOverride(LOTRFaction fac) {
+		alignmentRewardOverride = fac;
+		return this;
+	}
+
+	public void setLore(LOTRLore.LoreCategory... categories) {
+		loreCategories = Arrays.asList(categories);
+	}
+
+	public LOTRMiniQuestFactory setNoAlignRewardForEnemy() {
+		noAlignRewardForEnemy = true;
+		return this;
 	}
 }

@@ -1,7 +1,6 @@
 package lotr.common.world.genlayer;
 
 import com.google.common.math.IntMath;
-
 import net.minecraft.world.World;
 
 public class LOTRGenLayerBiomeVariantsLake extends LOTRGenLayer {
@@ -15,6 +14,14 @@ public class LOTRGenLayerBiomeVariantsLake extends LOTRGenLayer {
 		super(l);
 		lotrParent = layer;
 		zoomScale = IntMath.pow(2, i);
+	}
+
+	public static boolean getFlag(int param, int flag) {
+		return (param & flag) == flag;
+	}
+
+	public static int setFlag(int param, int flag) {
+		return param | flag;
 	}
 
 	@Override
@@ -46,13 +53,5 @@ public class LOTRGenLayerBiomeVariantsLake extends LOTRGenLayer {
 			lakeFlags = setFlag(lakeFlags, f);
 		}
 		return this;
-	}
-
-	public static boolean getFlag(int param, int flag) {
-		return (param & flag) == flag;
-	}
-
-	public static int setFlag(int param, int flag) {
-		return param | flag;
 	}
 }

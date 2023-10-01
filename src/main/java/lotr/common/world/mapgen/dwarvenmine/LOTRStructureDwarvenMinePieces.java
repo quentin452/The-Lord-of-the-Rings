@@ -1,8 +1,10 @@
 package lotr.common.world.mapgen.dwarvenmine;
 
-import java.util.*;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
+import net.minecraft.world.gen.structure.StructureComponent;
 
-import net.minecraft.world.gen.structure.*;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRStructureDwarvenMinePieces {
 	public static void getNextComponent(StructureComponent component, List list, Random random, int i, int j, int k, int direction, int iteration, boolean ruined) {

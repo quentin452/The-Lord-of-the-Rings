@@ -1,7 +1,8 @@
 package lotr.common.item;
 
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
 
 public class LOTRItemOrcSkullStaff extends LOTRItemSword {
 	public LOTRItemOrcSkullStaff() {

@@ -36,6 +36,54 @@ public class LOTRItemBanner extends Item {
 		setFull3D();
 	}
 
+	public static BannerType getBannerType(int i) {
+		return BannerType.forID(i);
+	}
+
+	public static BannerType getBannerType(ItemStack itemstack) {
+		if (itemstack.getItem() instanceof LOTRItemBanner) {
+			return getBannerType(itemstack.getItemDamage());
+		}
+		return null;
+	}
+
+	public static NBTTagCompound getProtectionData(ItemStack itemstack) {
+		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("LOTRBannerData")) {
+			return itemstack.getTagCompound().getCompoundTag("LOTRBannerData");
+		}
+		return null;
+	}
+
+	public static boolean hasChoiceToKeepOriginalOwner(EntityPlayer entityplayer) {
+		return entityplayer.capabilities.isCreativeMode;
+	}
+
+	public static boolean isHoldingBannerWithExistingProtection(EntityPlayer entityplayer) {
+		ItemStack itemstack = entityplayer.getHeldItem();
+		if (itemstack != null && itemstack.getItem() instanceof LOTRItemBanner) {
+			NBTTagCompound protectData = getProtectionData(itemstack);
+			return protectData != null && !protectData.hasNoTags();
+		}
+		return false;
+	}
+
+	public static void setProtectionData(ItemStack itemstack, NBTTagCompound data) {
+		if (data == null) {
+			if (itemstack.getTagCompound() != null) {
+				itemstack.getTagCompound().removeTag("LOTRBannerData");
+			}
+		} else {
+			if (itemstack.getTagCompound() == null) {
+				itemstack.setTagCompound(new NBTTagCompound());
+			}
+			itemstack.getTagCompound().setTag("LOTRBannerData", data);
+		}
+	}
+
+	public static boolean shouldKeepOriginalOwnerOnPlacement(EntityPlayer entityplayer, ItemStack bannerItem) {
+		return hasChoiceToKeepOriginalOwner(entityplayer) && entityplayer.isSneaking();
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
@@ -152,54 +200,6 @@ public class LOTRItemBanner extends Item {
 		for (int i = 0; i < bannerIcons.length; ++i) {
 			bannerIcons[i] = iconregister.registerIcon(getIconString() + "_" + BannerType.bannerTypes.get(i).bannerName);
 		}
-	}
-
-	public static BannerType getBannerType(int i) {
-		return BannerType.forID(i);
-	}
-
-	public static BannerType getBannerType(ItemStack itemstack) {
-		if (itemstack.getItem() instanceof LOTRItemBanner) {
-			return getBannerType(itemstack.getItemDamage());
-		}
-		return null;
-	}
-
-	public static NBTTagCompound getProtectionData(ItemStack itemstack) {
-		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("LOTRBannerData")) {
-			return itemstack.getTagCompound().getCompoundTag("LOTRBannerData");
-		}
-		return null;
-	}
-
-	public static boolean hasChoiceToKeepOriginalOwner(EntityPlayer entityplayer) {
-		return entityplayer.capabilities.isCreativeMode;
-	}
-
-	public static boolean isHoldingBannerWithExistingProtection(EntityPlayer entityplayer) {
-		ItemStack itemstack = entityplayer.getHeldItem();
-		if (itemstack != null && itemstack.getItem() instanceof LOTRItemBanner) {
-			NBTTagCompound protectData = getProtectionData(itemstack);
-			return protectData != null && !protectData.hasNoTags();
-		}
-		return false;
-	}
-
-	public static void setProtectionData(ItemStack itemstack, NBTTagCompound data) {
-		if (data == null) {
-			if (itemstack.getTagCompound() != null) {
-				itemstack.getTagCompound().removeTag("LOTRBannerData");
-			}
-		} else {
-			if (itemstack.getTagCompound() == null) {
-				itemstack.setTagCompound(new NBTTagCompound());
-			}
-			itemstack.getTagCompound().setTag("LOTRBannerData", data);
-		}
-	}
-
-	public static boolean shouldKeepOriginalOwnerOnPlacement(EntityPlayer entityplayer, ItemStack bannerItem) {
-		return hasChoiceToKeepOriginalOwner(entityplayer) && entityplayer.isSneaking();
 	}
 
 	public enum BannerType {

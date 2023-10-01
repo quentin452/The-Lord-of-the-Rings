@@ -1,14 +1,17 @@
 package lotr.common.entity.projectile;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityMountainTroll;
+import lotr.common.entity.npc.LOTREntityTroll;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class LOTREntityThrownRock extends EntityThrowable {
@@ -48,6 +51,10 @@ public class LOTREntityThrownRock extends EntityThrowable {
 
 	public boolean getSpawnsTroll() {
 		return dataWatcher.getWatchableObjectByte(16) == 1;
+	}
+
+	public void setSpawnsTroll(boolean flag) {
+		dataWatcher.updateObject(16, flag ? (byte) 1 : 0);
 	}
 
 	@Override
@@ -117,10 +124,6 @@ public class LOTREntityThrownRock extends EntityThrowable {
 
 	public void setDamage(float f) {
 		damage = f;
-	}
-
-	public void setSpawnsTroll(boolean flag) {
-		dataWatcher.updateObject(16, flag ? (byte) 1 : 0);
 	}
 
 	@Override

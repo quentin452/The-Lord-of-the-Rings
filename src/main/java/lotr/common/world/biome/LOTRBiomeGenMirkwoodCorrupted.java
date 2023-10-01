@@ -1,13 +1,16 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
-import lotr.common.entity.animal.*;
+import lotr.common.entity.animal.LOTREntityButterfly;
+import lotr.common.entity.animal.LOTREntityGorcrow;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
-import lotr.common.world.feature.*;
-import lotr.common.world.spawning.*;
+import lotr.common.world.feature.LOTRTreeType;
+import lotr.common.world.feature.LOTRWorldGenWebOfUngoliant;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRInvasions;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.Random;
 
 public class LOTRBiomeGenMirkwoodCorrupted extends LOTRBiomeGenMirkwood {
 	public LOTRBiomeGenMirkwoodCorrupted(int i, boolean major) {

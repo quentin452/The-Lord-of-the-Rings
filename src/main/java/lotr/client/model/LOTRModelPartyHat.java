@@ -1,11 +1,10 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.item.LOTRItemPartyHat;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelPartyHat extends LOTRModelBiped {
 	public ItemStack hatItem;

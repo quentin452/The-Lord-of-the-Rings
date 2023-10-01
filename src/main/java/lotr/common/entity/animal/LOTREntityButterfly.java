@@ -1,20 +1,31 @@
 package lotr.common.entity.animal;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import lotr.common.block.LOTRBlockTorch;
-import lotr.common.entity.*;
-import lotr.common.world.biome.*;
+import lotr.common.entity.LOTREntities;
+import lotr.common.entity.LOTRRandomSkinEntity;
+import lotr.common.world.biome.LOTRBiomeGenFarHaradJungle;
+import lotr.common.world.biome.LOTRBiomeGenLothlorien;
+import lotr.common.world.biome.LOTRBiomeGenMirkwood;
+import lotr.common.world.biome.LOTRBiomeGenWoodlandRealm;
 import lotr.common.world.structure2.LOTRWorldGenElfHouse;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
+import java.util.UUID;
 
 public class LOTREntityButterfly extends EntityLiving implements LOTRAmbientCreature, LOTRRandomSkinEntity {
 	public LOTRBlockTorch elfTorchBlock;
@@ -94,6 +105,14 @@ public class LOTREntityButterfly extends EntityLiving implements LOTRAmbientCrea
 		return ButterflyType.values()[i];
 	}
 
+	public void setButterflyType(ButterflyType type) {
+		setButterflyType(type.ordinal());
+	}
+
+	public void setButterflyType(int i) {
+		dataWatcher.updateObject(16, (byte) i);
+	}
+
 	@Override
 	public boolean getCanSpawnHere() {
 		if (super.getCanSpawnHere()) {
@@ -114,6 +133,10 @@ public class LOTREntityButterfly extends EntityLiving implements LOTRAmbientCrea
 
 	public boolean isButterflyStill() {
 		return dataWatcher.getWatchableObjectByte(17) == 1;
+	}
+
+	public void setButterflyStill(boolean flag) {
+		dataWatcher.updateObject(17, flag ? (byte) 1 : 0);
 	}
 
 	@Override
@@ -178,18 +201,6 @@ public class LOTREntityButterfly extends EntityLiving implements LOTRAmbientCrea
 		super.readEntityFromNBT(nbt);
 		setButterflyType(nbt.getInteger("ButterflyType"));
 		setButterflyStill(nbt.getBoolean("ButterflyStill"));
-	}
-
-	public void setButterflyStill(boolean flag) {
-		dataWatcher.updateObject(17, flag ? (byte) 1 : 0);
-	}
-
-	public void setButterflyType(ButterflyType type) {
-		setButterflyType(type.ordinal());
-	}
-
-	public void setButterflyType(int i) {
-		dataWatcher.updateObject(16, (byte) i);
 	}
 
 	@Override

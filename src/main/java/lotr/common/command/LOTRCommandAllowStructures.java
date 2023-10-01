@@ -1,11 +1,14 @@
 package lotr.common.command;
 
-import java.util.*;
-
 import lotr.common.LOTRLevelData;
-import net.minecraft.command.*;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentTranslation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LOTRCommandAllowStructures extends CommandBase {
 	@Override

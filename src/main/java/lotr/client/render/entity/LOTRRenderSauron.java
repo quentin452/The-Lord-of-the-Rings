@@ -1,12 +1,11 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelSauron;
 import lotr.common.entity.npc.LOTREntitySauron;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderSauron extends RenderBiped {
 	public static ResourceLocation skin = new ResourceLocation("lotr:mob/char/sauron.png");

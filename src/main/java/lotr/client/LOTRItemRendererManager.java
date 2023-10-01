@@ -1,24 +1,39 @@
 package lotr.client;
 
-import java.lang.reflect.Field;
-import java.util.*;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import lotr.client.render.item.*;
 import lotr.client.render.tileentity.LOTRRenderAnimalJar;
 import lotr.common.LOTRMod;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemAnimalJar;
+import lotr.common.item.LOTRItemBow;
+import lotr.common.item.LOTRItemCrossbow;
+import lotr.common.item.LOTRItemSword;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.resources.*;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 public class LOTRItemRendererManager implements IResourceManagerReloadListener {
 	public static LOTRItemRendererManager INSTANCE;
 	public static List<LOTRRenderLargeItem> largeItemRenderers = new ArrayList<>();
+
+	public static void load() {
+		Minecraft mc = Minecraft.getMinecraft();
+		IResourceManager resMgr = mc.getResourceManager();
+		INSTANCE = new LOTRItemRendererManager();
+		INSTANCE.onResourceManagerReload(resMgr);
+		((IReloadableResourceManager) resMgr).registerReloadListener(INSTANCE);
+		MinecraftForge.EVENT_BUS.register(INSTANCE);
+	}
 
 	@Override
 	public void onResourceManagerReload(IResourceManager resourceManager) {
@@ -76,14 +91,5 @@ public class LOTRItemRendererManager implements IResourceManagerReloadListener {
 				largeRenderer.registerIcons(map);
 			}
 		}
-	}
-
-	public static void load() {
-		Minecraft mc = Minecraft.getMinecraft();
-		IResourceManager resMgr = mc.getResourceManager();
-		INSTANCE = new LOTRItemRendererManager();
-		INSTANCE.onResourceManagerReload(resMgr);
-		((IReloadableResourceManager) resMgr).registerReloadListener(INSTANCE);
-		MinecraftForge.EVENT_BUS.register(INSTANCE);
 	}
 }

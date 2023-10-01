@@ -1,7 +1,5 @@
 package lotr.common.entity.animal;
 
-import java.util.UUID;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTRRandomSkinEntity;
 import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
@@ -11,6 +9,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.UUID;
 
 public class LOTREntityElk extends LOTREntityHorse implements LOTRRandomSkinEntity {
 	public LOTREntityElk(World world) {

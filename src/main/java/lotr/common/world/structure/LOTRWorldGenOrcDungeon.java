@@ -1,20 +1,23 @@
 package lotr.common.world.structure;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntities;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityGundabadOrc;
+import lotr.common.entity.npc.LOTREntityOrc;
 import lotr.common.world.LOTRWorldChunkManager;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTRSpawnEntry;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityList;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LOTRWorldGenOrcDungeon extends LOTRWorldGenStructureBase {
 	public LOTRWorldGenOrcDungeon(boolean flag) {

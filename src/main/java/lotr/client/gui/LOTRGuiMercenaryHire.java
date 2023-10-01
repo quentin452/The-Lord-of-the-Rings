@@ -1,6 +1,8 @@
 package lotr.client.gui;
 
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTRMercenary;
+import lotr.common.entity.npc.LOTRMercenaryTradeEntry;
+import lotr.common.entity.npc.LOTRUnitTradeEntries;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 

@@ -1,11 +1,12 @@
 package lotr.common.block;
 
-import java.util.Random;
-
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public abstract class LOTRBlockSlabFalling extends LOTRBlockSlabBase {
 	protected LOTRBlockSlabFalling(boolean flag, Material material, int n) {

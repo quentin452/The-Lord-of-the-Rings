@@ -1,15 +1,16 @@
 package lotr.client.fx;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LOTREffectRenderer {
 	public Minecraft mc;

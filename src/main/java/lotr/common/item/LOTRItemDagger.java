@@ -1,8 +1,10 @@
 package lotr.common.item;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.*;
-import net.minecraft.potion.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.EnumDifficulty;
 
 public class LOTRItemDagger extends LOTRItemSword {
@@ -26,6 +28,13 @@ public class LOTRItemDagger extends LOTRItemSword {
 		this(material.toToolMaterial(), e);
 	}
 
+	public static void applyStandardPoison(EntityLivingBase entity) {
+		EnumDifficulty difficulty = entity.worldObj.difficultySetting;
+		int duration = 1 + difficulty.getDifficultyId() * 2;
+		PotionEffect poison = new PotionEffect(Potion.poison.id, (duration + itemRand.nextInt(duration)) * 20);
+		entity.addPotionEffect(poison);
+	}
+
 	public DaggerEffect getDaggerEffect() {
 		return effect;
 	}
@@ -40,13 +49,6 @@ public class LOTRItemDagger extends LOTRItemSword {
 			applyStandardPoison(hitEntity);
 		}
 		return true;
-	}
-
-	public static void applyStandardPoison(EntityLivingBase entity) {
-		EnumDifficulty difficulty = entity.worldObj.difficultySetting;
-		int duration = 1 + difficulty.getDifficultyId() * 2;
-		PotionEffect poison = new PotionEffect(Potion.poison.id, (duration + itemRand.nextInt(duration)) * 20);
-		entity.addPotionEffect(poison);
 	}
 
 	public enum DaggerEffect {

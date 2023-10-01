@@ -1,7 +1,8 @@
 package lotr.common.block;
 
 import lotr.common.LOTRCreativeTabs;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 
 public class LOTRBlockTrapdoor extends BlockTrapDoor {

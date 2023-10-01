@@ -33,14 +33,14 @@ public class LOTREntityBearRug extends LOTREntityRugBase {
 		return LOTREntityBear.BearType.forID(i);
 	}
 
+	public void setRugType(LOTREntityBear.BearType t) {
+		dataWatcher.updateObject(18, (byte) t.bearID);
+	}
+
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		setRugType(LOTREntityBear.BearType.forID(nbt.getByte("RugType")));
-	}
-
-	public void setRugType(LOTREntityBear.BearType t) {
-		dataWatcher.updateObject(18, (byte) t.bearID);
 	}
 
 	@Override

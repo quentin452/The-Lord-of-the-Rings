@@ -1,17 +1,19 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityDwarf;
+import lotr.common.entity.npc.LOTREntityDwarfSmith;
 import lotr.common.tileentity.LOTRTileEntityDwarvenForge;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenDwarfSmithy extends LOTRWorldGenStructureBase2 {
 	public Block baseBrickBlock = Blocks.stonebrick;

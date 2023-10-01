@@ -1,6 +1,9 @@
 package lotr.common.enchant;
 
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemBlowgun;
+import lotr.common.item.LOTRItemCommandSword;
+import lotr.common.item.LOTRItemThrowingAxe;
+import lotr.common.item.LOTRWeaponStats;
 import net.minecraft.item.*;
 
 public enum LOTREnchantmentType {

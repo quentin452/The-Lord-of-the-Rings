@@ -1,11 +1,15 @@
 package lotr.common.world;
 
 import com.google.common.math.IntMath;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.client.render.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.client.render.LOTRCloudRenderer;
+import lotr.client.render.LOTRSkyRenderer;
+import lotr.client.render.LOTRWeatherRenderer;
 import lotr.common.*;
-import lotr.common.world.biome.*;
+import lotr.common.world.biome.LOTRBiome;
+import lotr.common.world.biome.LOTRBiomeGenOcean;
+import lotr.common.world.biome.LOTRBiomeGenTundra;
 import lotr.compatibility.LOTRModChecker;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -13,8 +17,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.IRenderHandler;
@@ -28,6 +34,16 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 	public IRenderHandler lotrCloudRenderer;
 	@SideOnly(Side.CLIENT)
 	public IRenderHandler lotrWeatherRenderer;
+
+	public static int getLOTRMoonPhase() {
+		int day = LOTRDate.ShireReckoning.currentDay;
+		return IntMath.mod(day, MOON_PHASES);
+	}
+
+	public static boolean isLunarEclipse() {
+		int day = LOTRDate.ShireReckoning.currentDay;
+		return getLOTRMoonPhase() == 0 && IntMath.mod(day / MOON_PHASES, 4) == 3;
+	}
 
 	@Override
 	public float calculateCelestialAngle(long time, float partialTick) {
@@ -319,15 +335,5 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 	@Override
 	public boolean shouldMapSpin(String entity, double x, double y, double z) {
 		return false;
-	}
-
-	public static int getLOTRMoonPhase() {
-		int day = LOTRDate.ShireReckoning.currentDay;
-		return IntMath.mod(day, MOON_PHASES);
-	}
-
-	public static boolean isLunarEclipse() {
-		int day = LOTRDate.ShireReckoning.currentDay;
-		return getLOTRMoonPhase() == 0 && IntMath.mod(day / MOON_PHASES, 4) == 3;
 	}
 }

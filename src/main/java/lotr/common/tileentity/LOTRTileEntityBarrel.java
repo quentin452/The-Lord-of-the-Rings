@@ -1,20 +1,25 @@
 package lotr.common.tileentity;
 
-import java.util.*;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import lotr.common.inventory.LOTRSlotStackSize;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemMug;
+import lotr.common.item.LOTRPoisonedDrinks;
 import lotr.common.recipe.LOTRBrewingRecipes;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
-import net.minecraft.network.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class LOTRTileEntityBarrel extends TileEntity implements ISidedInventory {
 	public static int EMPTY;

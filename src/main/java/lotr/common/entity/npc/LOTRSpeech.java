@@ -1,24 +1,32 @@
 package lotr.common.entity.npc;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.util.*;
-import java.util.zip.*;
-
+import com.google.common.base.Charsets;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import lotr.common.LOTRDrunkenSpeech;
+import lotr.common.LOTRMod;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketNPCSpeech;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.world.World;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.BOMInputStream;
 
-import com.google.common.base.Charsets;
-
-import cpw.mods.fml.common.*;
-import lotr.common.*;
-import lotr.common.network.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.*;
-import net.minecraft.world.World;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class LOTRSpeech {
 	public static Map<String, SpeechBank> allSpeechBanks = new HashMap<>();

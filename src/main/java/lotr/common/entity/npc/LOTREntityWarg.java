@@ -1,19 +1,30 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.entity.LOTRMountFunctions;
 import lotr.common.entity.ai.*;
-import lotr.common.entity.animal.*;
+import lotr.common.entity.animal.LOTREntityDeer;
+import lotr.common.entity.animal.LOTREntityRabbit;
 import lotr.common.fac.LOTRAlignmentValues;
 import lotr.common.item.LOTRItemMountArmor;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
+import net.minecraft.inventory.AnimalChest;
+import net.minecraft.inventory.IInvBasic;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.Locale;
@@ -130,6 +141,10 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 	}
 
 	@Override
+	public void setBelongsToNPC(boolean flag) {
+	}
+
+	@Override
 	public String getDeathSound() {
 		return "lotr:warg.death";
 	}
@@ -177,9 +192,23 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 		return wargInventory.getStackInSlot(1);
 	}
 
+	public void setWargArmor(ItemStack itemstack) {
+		wargInventory.setInventorySlotContents(1, itemstack);
+		setupWargInventory();
+		setWargArmorWatched(getWargArmor());
+	}
+
 	public ItemStack getWargArmorWatched() {
 		int ID = dataWatcher.getWatchableObjectInt(20);
 		return new ItemStack(Item.getItemById(ID));
+	}
+
+	public void setWargArmorWatched(ItemStack itemstack) {
+		if (itemstack == null) {
+			dataWatcher.updateObject(20, 0);
+		} else {
+			dataWatcher.updateObject(20, Item.getIdFromItem(itemstack.getItem()));
+		}
 	}
 
 	public EntityAIBase getWargAttackAI() {
@@ -189,6 +218,10 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 	public WargType getWargType() {
 		byte i = dataWatcher.getWatchableObjectByte(19);
 		return WargType.forID(i);
+	}
+
+	public void setWargType(WargType w) {
+		dataWatcher.updateObject(19, (byte) w.wargID);
 	}
 
 	@Override
@@ -349,10 +382,6 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 		checkWargInventory();
 	}
 
-	@Override
-	public void setBelongsToNPC(boolean flag) {
-	}
-
 	public void setupWargInventory() {
 		AnimalChest prevInv = wargInventory;
 		wargInventory = new AnimalChest("WargInv", 2);
@@ -372,26 +401,8 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 		checkWargInventory();
 	}
 
-	public void setWargArmor(ItemStack itemstack) {
-		wargInventory.setInventorySlotContents(1, itemstack);
-		setupWargInventory();
-		setWargArmorWatched(getWargArmor());
-	}
-
-	public void setWargArmorWatched(ItemStack itemstack) {
-		if (itemstack == null) {
-			dataWatcher.updateObject(20, 0);
-		} else {
-			dataWatcher.updateObject(20, Item.getIdFromItem(itemstack.getItem()));
-		}
-	}
-
 	public void setWargSaddled(boolean flag) {
 		dataWatcher.updateObject(18, flag ? (byte) 1 : 0);
-	}
-
-	public void setWargType(WargType w) {
-		dataWatcher.updateObject(19, (byte) w.wargID);
 	}
 
 	@Override
@@ -415,10 +426,6 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 			wargID = i;
 		}
 
-		public String textureName() {
-			return name().toLowerCase(Locale.ROOT);
-		}
-
 		public static WargType forID(int ID) {
 			for (WargType w : values()) {
 				if (w.wargID != ID) {
@@ -435,6 +442,10 @@ public abstract class LOTREntityWarg extends LOTREntityNPCRideable implements II
 				names[i] = values()[i].textureName();
 			}
 			return names;
+		}
+
+		public String textureName() {
+			return name().toLowerCase(Locale.ROOT);
 		}
 	}
 

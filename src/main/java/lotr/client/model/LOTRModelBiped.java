@@ -1,7 +1,8 @@
 package lotr.client.model;
 
 import lotr.client.LOTRTickHandlerClient;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityElf;
+import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;

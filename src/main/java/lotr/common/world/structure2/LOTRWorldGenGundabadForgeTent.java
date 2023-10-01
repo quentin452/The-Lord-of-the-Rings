@@ -1,8 +1,8 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import net.minecraft.init.Blocks;
+
+import java.util.Random;
 
 public class LOTRWorldGenGundabadForgeTent extends LOTRWorldGenGundabadTent {
 	public LOTRWorldGenGundabadForgeTent(boolean flag) {

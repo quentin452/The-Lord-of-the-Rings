@@ -1,15 +1,19 @@
 package lotr.common.world.biome.variant;
 
-import java.util.*;
-
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.LOTRDimension;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketBiomeVariantsUnwatch;
+import lotr.common.network.LOTRPacketBiomeVariantsWatch;
+import lotr.common.network.LOTRPacketHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.*;
+import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
+
+import java.util.*;
 
 public class LOTRBiomeVariantStorage {
 	public static Map<LOTRDimension, Map<ChunkCoordIntPair, byte[]>> chunkVariantMap = new EnumMap<>(LOTRDimension.class);

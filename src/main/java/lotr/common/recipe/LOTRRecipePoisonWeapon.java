@@ -1,13 +1,15 @@
 package lotr.common.recipe;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRRecipePoisonWeapon implements IRecipe {
 	public static Map<Item, Item> inputToPoisoned = new HashMap<>();

@@ -1,7 +1,8 @@
 package lotr.common.recipe;
 
 import lotr.common.LOTRMod;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemFeatherDyed;
+import lotr.common.item.LOTRItemLeatherHat;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;

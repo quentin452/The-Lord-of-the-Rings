@@ -1,11 +1,13 @@
 package lotr.common.world.structure2;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRWorldGenHaradRuinedFort extends LOTRWorldGenStructureBase2 {
 	public LOTRWorldGenHaradRuinedFort(boolean flag) {

@@ -1,20 +1,23 @@
 package lotr.client.render;
 
-import java.util.Random;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRTickHandlerClient;
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRMod;
 import lotr.common.world.biome.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.IRenderHandler;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Random;
 
 public class LOTRWeatherRenderer extends IRenderHandler {
 	public static ResourceLocation rainTexture = new ResourceLocation("lotr:weather/rain.png");
@@ -26,6 +29,10 @@ public class LOTRWeatherRenderer extends IRenderHandler {
 	public Random rand = new Random();
 	public float[] rainXCoords;
 	public float[] rainYCoords;
+
+	public static boolean isSandstormBiome(BiomeGenBase biome) {
+		return !biome.canSpawnLightningBolt() && biome.topBlock.getMaterial() == Material.sand;
+	}
 
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
@@ -226,9 +233,5 @@ public class LOTRWeatherRenderer extends IRenderHandler {
 			GL11.glAlphaFunc(516, 0.1f);
 			er.disableLightmap(partialTicks);
 		}
-	}
-
-	public static boolean isSandstormBiome(BiomeGenBase biome) {
-		return !biome.canSpawnLightningBolt() && biome.topBlock.getMaterial() == Material.sand;
 	}
 }

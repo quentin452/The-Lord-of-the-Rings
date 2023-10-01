@@ -1,10 +1,15 @@
 package lotr.common.tileentity;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.entity.LOTRPlateFallingInfo;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemSoup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.*;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -12,6 +17,17 @@ import net.minecraft.util.AxisAlignedBB;
 public class LOTRTileEntityPlate extends TileEntity {
 	public ItemStack foodItem;
 	public LOTRPlateFallingInfo plateFallInfo;
+
+	public static boolean isValidFoodItem(ItemStack itemstack) {
+		Item item;
+		if (itemstack != null && (item = itemstack.getItem()) instanceof ItemFood) {
+			if (item instanceof ItemSoup) {
+				return false;
+			}
+			return !item.hasContainerItem(itemstack);
+		}
+		return false;
+	}
 
 	@Override
 	public Packet getDescriptionPacket() {
@@ -22,6 +38,17 @@ public class LOTRTileEntityPlate extends TileEntity {
 
 	public ItemStack getFoodItem() {
 		return foodItem;
+	}
+
+	public void setFoodItem(ItemStack item) {
+		if (item != null && item.stackSize <= 0) {
+			item = null;
+		}
+		foodItem = item;
+		if (worldObj != null) {
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		}
+		markDirty();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -55,17 +82,6 @@ public class LOTRTileEntityPlate extends TileEntity {
 		}
 	}
 
-	public void setFoodItem(ItemStack item) {
-		if (item != null && item.stackSize <= 0) {
-			item = null;
-		}
-		foodItem = item;
-		if (worldObj != null) {
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-		}
-		markDirty();
-	}
-
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
@@ -73,16 +89,5 @@ public class LOTRTileEntityPlate extends TileEntity {
 		if (foodItem != null) {
 			nbt.setTag("FoodItem", foodItem.writeToNBT(new NBTTagCompound()));
 		}
-	}
-
-	public static boolean isValidFoodItem(ItemStack itemstack) {
-		Item item;
-		if (itemstack != null && (item = itemstack.getItem()) instanceof ItemFood) {
-			if (item instanceof ItemSoup) {
-				return false;
-			}
-			return !item.hasContainerItem(itemstack);
-		}
-		return false;
 	}
 }

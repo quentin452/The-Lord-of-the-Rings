@@ -1,7 +1,5 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
 import lotr.common.entity.animal.LOTREntityCamel;
@@ -10,6 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLeashKnot;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenNearHaradDesertCamp extends LOTRWorldGenStructureBase2 {
 	public LOTRWorldGenNearHaradDesertCamp(boolean flag) {

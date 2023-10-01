@@ -1,16 +1,24 @@
 package lotr.common.entity.ai;
 
-import java.util.*;
-
 import lotr.common.LOTRLevelData;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.IBandit;
+import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.item.*;
 import lotr.common.recipe.LOTRRecipes;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
 import net.minecraft.util.MathHelper;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class LOTREntityAIBanditSteal extends EntityAIBase {
 	public IBandit theBandit;

@@ -1,12 +1,12 @@
 package lotr.common.world.feature;
 
-import java.util.Random;
-
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.Random;
 
 public class LOTRWorldGenBiomeFlowers extends WorldGenerator {
 	public Block specifiedBlock;

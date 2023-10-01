@@ -1,12 +1,12 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
 import lotr.common.entity.npc.LOTREntityWoodElf;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenWoodElfPlatform extends LOTRWorldGenStructureBase {
 	public LOTRWorldGenWoodElfPlatform(boolean flag) {

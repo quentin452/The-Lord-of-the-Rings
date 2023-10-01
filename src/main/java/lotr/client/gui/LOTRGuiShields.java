@@ -1,18 +1,21 @@
 package lotr.client.gui;
 
-import java.util.List;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import lotr.client.render.LOTRRenderShield;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRShields;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketSelectShield;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import lotr.client.render.LOTRRenderShield;
-import lotr.common.*;
-import lotr.common.network.*;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.*;
-import net.minecraft.util.*;
+import java.util.List;
 
 public class LOTRGuiShields extends LOTRGuiMenuBase {
 	public static ModelBiped playerModel = new ModelBiped();

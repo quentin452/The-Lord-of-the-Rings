@@ -1,11 +1,11 @@
 package lotr.client.fx;
 
-import java.awt.Color;
-
 import net.minecraft.client.particle.EntityFlameFX;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.awt.*;
 
 public class LOTREntityElvenGlowFX extends EntityFlameFX {
 	public LOTREntityElvenGlowFX(World world, double d, double d1, double d2, double d3, double d4, double d5) {

@@ -139,6 +139,50 @@ public class LOTRDate {
 			return year % 4 == 0 && year % 100 != 0;
 		}
 
+		public enum Day {
+			STERDAY("sterday"), SUNDAY("sunday"), MONDAY("monday"), TREWSDAY("trewsday"), HEVENSDAY("hevensday"), MERSDAY("mersday"), HIGHDAY("highday");
+
+			public String name;
+
+			Day(String s) {
+				name = s;
+			}
+
+			public String getDayName() {
+				return StatCollector.translateToLocal("lotr.date.shire.day." + name);
+			}
+		}
+
+		public enum Month {
+			YULE_2("yule2", 1, Season.WINTER), AFTERYULE("afteryule", 30, Season.WINTER), SOLMATH("solmath", 30, Season.WINTER), RETHE("rethe", 30, Season.WINTER), ASTRON("astron", 30, Season.SPRING), THRIMIDGE("thrimidge", 30, Season.SPRING), FORELITHE("forelithe", 30, Season.SPRING), LITHE_1("lithe1", 1, Season.SPRING), MIDYEARSDAY("midyearsday", 1, Season.SUMMER, false, false), OVERLITHE("overlithe", 1, Season.SUMMER, false, true), LITHE_2("lithe2", 1, Season.SUMMER), AFTERLITHE("afterlithe", 30, Season.SUMMER), WEDMATH("wedmath", 30, Season.SUMMER), HALIMATH("halimath", 30, Season.SUMMER), WINTERFILTH("winterfilth", 30, Season.AUTUMN), BLOTMATH("blotmath", 30, Season.AUTUMN), FOREYULE("foreyule", 30, Season.AUTUMN), YULE_1("yule1", 1, Season.AUTUMN);
+
+			public String name;
+			public int days;
+			public boolean hasWeekdayName;
+			public boolean isLeapYear;
+			public Season season;
+
+			Month(String s, int i, Season se) {
+				this(s, i, se, true, false);
+			}
+
+			Month(String s, int i, Season se, boolean flag, boolean flag1) {
+				name = s;
+				days = i;
+				hasWeekdayName = flag;
+				isLeapYear = flag1;
+				season = se;
+			}
+
+			public String getMonthName() {
+				return StatCollector.translateToLocal("lotr.date.shire.month." + name);
+			}
+
+			public boolean isSingleDay() {
+				return days == 1;
+			}
+		}
+
 		public static class Date {
 			public int year;
 			public Month month;
@@ -242,50 +286,6 @@ public class LOTRDate {
 					}
 				}
 				return new Date(newYear, newMonth, newDate);
-			}
-		}
-
-		public enum Day {
-			STERDAY("sterday"), SUNDAY("sunday"), MONDAY("monday"), TREWSDAY("trewsday"), HEVENSDAY("hevensday"), MERSDAY("mersday"), HIGHDAY("highday");
-
-			public String name;
-
-			Day(String s) {
-				name = s;
-			}
-
-			public String getDayName() {
-				return StatCollector.translateToLocal("lotr.date.shire.day." + name);
-			}
-		}
-
-		public enum Month {
-			YULE_2("yule2", 1, Season.WINTER), AFTERYULE("afteryule", 30, Season.WINTER), SOLMATH("solmath", 30, Season.WINTER), RETHE("rethe", 30, Season.WINTER), ASTRON("astron", 30, Season.SPRING), THRIMIDGE("thrimidge", 30, Season.SPRING), FORELITHE("forelithe", 30, Season.SPRING), LITHE_1("lithe1", 1, Season.SPRING), MIDYEARSDAY("midyearsday", 1, Season.SUMMER, false, false), OVERLITHE("overlithe", 1, Season.SUMMER, false, true), LITHE_2("lithe2", 1, Season.SUMMER), AFTERLITHE("afterlithe", 30, Season.SUMMER), WEDMATH("wedmath", 30, Season.SUMMER), HALIMATH("halimath", 30, Season.SUMMER), WINTERFILTH("winterfilth", 30, Season.AUTUMN), BLOTMATH("blotmath", 30, Season.AUTUMN), FOREYULE("foreyule", 30, Season.AUTUMN), YULE_1("yule1", 1, Season.AUTUMN);
-
-			public String name;
-			public int days;
-			public boolean hasWeekdayName;
-			public boolean isLeapYear;
-			public Season season;
-
-			Month(String s, int i, Season se) {
-				this(s, i, se, true, false);
-			}
-
-			Month(String s, int i, Season se, boolean flag, boolean flag1) {
-				name = s;
-				days = i;
-				hasWeekdayName = flag;
-				isLeapYear = flag1;
-				season = se;
-			}
-
-			public String getMonthName() {
-				return StatCollector.translateToLocal("lotr.date.shire.month." + name);
-			}
-
-			public boolean isSingleDay() {
-				return days == 1;
 			}
 		}
 

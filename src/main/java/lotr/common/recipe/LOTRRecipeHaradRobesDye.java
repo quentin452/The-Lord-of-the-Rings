@@ -1,15 +1,18 @@
 package lotr.common.recipe;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemDye;
+import lotr.common.item.LOTRItemHaradRobes;
+import lotr.common.item.LOTRMaterial;
 import net.minecraft.block.BlockColored;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class LOTRRecipeHaradRobesDye implements IRecipe {
 	public ItemArmor.ArmorMaterial robeMaterial;

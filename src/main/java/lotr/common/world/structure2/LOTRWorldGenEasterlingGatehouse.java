@@ -1,10 +1,11 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityEasterlingWarrior;
+import lotr.common.entity.npc.LOTRNames;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenEasterlingGatehouse extends LOTRWorldGenEasterlingStructureTown {
 	public String[] signText = LOTRNames.getRhunVillageName(new Random());

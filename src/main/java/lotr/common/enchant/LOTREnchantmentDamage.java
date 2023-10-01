@@ -1,6 +1,7 @@
 package lotr.common.enchant;
 
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemThrowingAxe;
+import lotr.common.item.LOTRWeaponStats;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;

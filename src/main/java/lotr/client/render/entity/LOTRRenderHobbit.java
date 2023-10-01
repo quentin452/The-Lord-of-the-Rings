@@ -1,20 +1,21 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelHobbit;
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityHobbit;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderHobbit extends LOTRRenderBiped {
 	public static LOTRRandomSkins hobbitSkinsMale;
 	public static LOTRRandomSkins hobbitSkinsFemale;
 	public static LOTRRandomSkins hobbitSkinsMaleChild;
 	public static LOTRRandomSkins hobbitSkinsFemaleChild;
-	public static ResourceLocation ringTexture  = new ResourceLocation("lotr:mob/hobbit/ring.png");
+	public static ResourceLocation ringTexture = new ResourceLocation("lotr:mob/hobbit/ring.png");
 
 	public ModelBiped outfitModel = new LOTRModelHobbit(0.5f, 64, 64);
 

@@ -1,19 +1,27 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRBlockFallenLeaves extends Block implements IShearable {
 	public static Collection<LOTRBlockFallenLeaves> allFallenLeaves = new ArrayList<>();
@@ -27,6 +35,24 @@ public class LOTRBlockFallenLeaves extends Block implements IShearable {
 		setStepSound(Block.soundTypeGrass);
 		useNeighborBrightness = true;
 		setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.125f, 1.0f);
+	}
+
+	public static void assignLeaves(Block fallenLeaves, Block... leaves) {
+		((LOTRBlockFallenLeaves) fallenLeaves).leafBlocks = leaves;
+	}
+
+	public static Object[] fallenBlockMetaFromLeafBlockMeta(Block block, int meta) {
+		meta &= 3;
+		for (LOTRBlockFallenLeaves fallenLeaves : allFallenLeaves) {
+			for (int i = 0; i < fallenLeaves.leafBlocks.length; ++i) {
+				Block leafBlock = fallenLeaves.leafBlocks[i];
+				if (leafBlock != block) {
+					continue;
+				}
+				return new Object[]{fallenLeaves, i * 4 + meta};
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -146,23 +172,5 @@ public class LOTRBlockFallenLeaves extends Block implements IShearable {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
-	}
-
-	public static void assignLeaves(Block fallenLeaves, Block... leaves) {
-		((LOTRBlockFallenLeaves) fallenLeaves).leafBlocks = leaves;
-	}
-
-	public static Object[] fallenBlockMetaFromLeafBlockMeta(Block block, int meta) {
-		meta &= 3;
-		for (LOTRBlockFallenLeaves fallenLeaves : allFallenLeaves) {
-			for (int i = 0; i < fallenLeaves.leafBlocks.length; ++i) {
-				Block leafBlock = fallenLeaves.leafBlocks[i];
-				if (leafBlock != block) {
-					continue;
-				}
-				return new Object[]{fallenLeaves, i * 4 + meta};
-			}
-		}
-		return null;
 	}
 }

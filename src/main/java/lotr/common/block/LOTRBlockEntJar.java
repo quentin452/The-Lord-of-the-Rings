@@ -1,14 +1,16 @@
 package lotr.common.block;
 
-import java.util.Random;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
-import lotr.common.item.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
+import lotr.common.item.LOTRItemEntDraught;
+import lotr.common.item.LOTRItemMug;
 import lotr.common.recipe.LOTREntJarRecipes;
 import lotr.common.tileentity.LOTRTileEntityEntJar;
 import lotr.common.world.biome.LOTRBiomeGenFangorn;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +21,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
 
 public class LOTRBlockEntJar extends BlockContainer {
 	@SideOnly(Side.CLIENT)

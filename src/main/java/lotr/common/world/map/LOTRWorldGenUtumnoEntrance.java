@@ -1,10 +1,10 @@
 package lotr.common.world.map;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.world.structure2.LOTRWorldGenStructureBase2;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenUtumnoEntrance extends LOTRWorldGenStructureBase2 {
 	public LOTRWorldGenUtumnoEntrance() {

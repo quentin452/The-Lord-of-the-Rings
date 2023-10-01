@@ -1,24 +1,29 @@
 package lotr.client.render;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import lotr.client.*;
+import lotr.client.LOTRClientProxy;
+import lotr.client.LOTRTickHandlerClient;
 import lotr.client.render.entity.LOTRNPCRendering;
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRPlayerData;
+import lotr.common.LOTRShields;
 import lotr.common.fac.LOTRAlignmentValues;
 import lotr.common.fellowship.LOTRFellowshipClient;
 import lotr.common.world.LOTRWorldProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.opengl.GL11;
+
+import java.util.List;
+import java.util.UUID;
 
 public class LOTRRenderPlayer {
 	public Minecraft mc = Minecraft.getMinecraft();

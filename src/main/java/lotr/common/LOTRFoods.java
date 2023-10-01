@@ -1,10 +1,13 @@
 package lotr.common;
 
-import java.util.*;
-
 import lotr.common.item.LOTRItemMug;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRFoods {
 	public static LOTRFoods HOBBIT = new LOTRFoods(new ItemStack[]{new ItemStack(Items.cooked_porkchop), new ItemStack(Items.cooked_fished), new ItemStack(Items.cooked_chicken), new ItemStack(Items.cooked_beef), new ItemStack(LOTRMod.muttonCooked), new ItemStack(LOTRMod.gammon), new ItemStack(Items.baked_potato), new ItemStack(Items.apple), new ItemStack(LOTRMod.appleGreen), new ItemStack(Items.bread), new ItemStack(LOTRMod.cornBread), new ItemStack(Items.carrot), new ItemStack(LOTRMod.lettuce), new ItemStack(LOTRMod.leek), new ItemStack(LOTRMod.leekSoup), new ItemStack(Items.mushroom_stew), new ItemStack(LOTRMod.turnip), new ItemStack(LOTRMod.turnipCooked), new ItemStack(Items.pumpkin_pie), new ItemStack(LOTRMod.mushroomPie), new ItemStack(LOTRMod.pear), new ItemStack(LOTRMod.cherry), new ItemStack(LOTRMod.plum), new ItemStack(Items.cookie), new ItemStack(LOTRMod.hobbitPancake), new ItemStack(LOTRMod.rabbitCooked), new ItemStack(LOTRMod.blueberry), new ItemStack(LOTRMod.blackberry), new ItemStack(LOTRMod.raspberry), new ItemStack(LOTRMod.cranberry), new ItemStack(LOTRMod.elderberry), new ItemStack(LOTRMod.chestnutRoast), new ItemStack(LOTRMod.cornCooked), new ItemStack(LOTRMod.marzipan), new ItemStack(LOTRMod.marzipanChocolate)});
@@ -67,6 +70,22 @@ public class LOTRFoods {
 		return drinkVessels;
 	}
 
+	public LOTRFoods setDrinkVessels(LOTRItemMug.Vessel... vessels) {
+		drinkVessels = vessels;
+		List<LOTRItemMug.Vessel> placeable = new ArrayList<>();
+		for (LOTRItemMug.Vessel v : drinkVessels) {
+			if (v.canPlace) {
+				placeable.add(v);
+			}
+		}
+		if (placeable.isEmpty()) {
+			drinkVesselsPlaceable = new LOTRItemMug.Vessel[]{LOTRItemMug.Vessel.MUG};
+		} else {
+			drinkVesselsPlaceable = placeable.toArray(new LOTRItemMug.Vessel[0]);
+		}
+		return this;
+	}
+
 	public LOTRItemMug.Vessel[] getPlaceableDrinkVessels() {
 		return drinkVesselsPlaceable;
 	}
@@ -123,21 +142,5 @@ public class LOTRFoods {
 			LOTRItemMug.Vessel v = requirePlaceable ? getRandomPlaceableVessel(random) : getRandomVessel(random);
 			LOTRItemMug.setVessel(itemstack, v, true);
 		}
-	}
-
-	public LOTRFoods setDrinkVessels(LOTRItemMug.Vessel... vessels) {
-		drinkVessels = vessels;
-		List<LOTRItemMug.Vessel> placeable = new ArrayList<>();
-		for (LOTRItemMug.Vessel v : drinkVessels) {
-			if (v.canPlace) {
-				placeable.add(v);
-			}
-		}
-		if (placeable.isEmpty()) {
-			drinkVesselsPlaceable = new LOTRItemMug.Vessel[]{LOTRItemMug.Vessel.MUG};
-		} else {
-			drinkVesselsPlaceable = placeable.toArray(new LOTRItemMug.Vessel[0]);
-		}
-		return this;
 	}
 }

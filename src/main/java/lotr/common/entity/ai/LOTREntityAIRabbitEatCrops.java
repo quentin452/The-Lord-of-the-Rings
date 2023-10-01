@@ -1,13 +1,15 @@
 package lotr.common.entity.ai;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.animal.LOTREntityRabbit;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTREntityAIRabbitEatCrops extends EntityAIBase {
 	public LOTREntityRabbit theRabbit;

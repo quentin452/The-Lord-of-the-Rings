@@ -1,9 +1,11 @@
 package lotr.common.world.biome;
 
-import lotr.common.entity.animal.*;
+import lotr.common.entity.animal.LOTREntityBird;
+import lotr.common.entity.animal.LOTREntityButterfly;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.map.LOTRRoadType;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.village.LOTRVillageGenTauredain;
 import net.minecraft.world.biome.BiomeGenBase;
 

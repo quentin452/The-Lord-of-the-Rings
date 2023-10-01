@@ -1,14 +1,16 @@
 package lotr.common.entity.ai;
 
-import java.util.Random;
-
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityGollum;
+import lotr.common.entity.npc.LOTRSpeech;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTREntityAIGollumFishing extends EntityAIBase {
 	public LOTREntityGollum theGollum;

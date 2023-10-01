@@ -5,7 +5,8 @@ import lotr.common.dispenser.LOTRDispenseTermite;
 import lotr.common.entity.projectile.LOTREntityThrownTermite;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class LOTRItemTermite extends Item {

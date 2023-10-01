@@ -1,16 +1,19 @@
 package lotr.client;
 
-import java.lang.reflect.Method;
-
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import lotr.common.LOTRReflection;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.inventory.*;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiIngame;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
+import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
+
+import java.lang.reflect.Method;
 
 public class LOTRReflectionClient {
 	public static int[] colorCodes;

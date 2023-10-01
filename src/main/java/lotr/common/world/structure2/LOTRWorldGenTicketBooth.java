@@ -18,6 +18,10 @@ public class LOTRWorldGenTicketBooth extends LOTRWorldGenEasterlingStructureTown
 		super(flag);
 	}
 
+	public static boolean generatesAt(World world, int i, int k) {
+		return LOTRFixedStructures.generatesAtMapImageCoords(i, k, 1583, 2527);
+	}
+
 	public void generateSupports(World world, int i, int j, int k, Block stairBlock, int stairMeta, Block woodBlock, int woodMeta) {
 		setBlockAndMetadata(world, i, j, k, stairBlock, stairMeta);
 		int j1 = -1;
@@ -244,9 +248,5 @@ public class LOTRWorldGenTicketBooth extends LOTRWorldGenEasterlingStructureTown
 			default:
 				return new ItemStack(Items.stick, 2 + random.nextInt(4));
 		}
-	}
-
-	public static boolean generatesAt(World world, int i, int k) {
-		return LOTRFixedStructures.generatesAtMapImageCoords(i, k, 1583, 2527);
 	}
 }

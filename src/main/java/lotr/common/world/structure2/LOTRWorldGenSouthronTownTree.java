@@ -1,11 +1,12 @@
 package lotr.common.world.structure2;
 
-import java.util.*;
-
 import lotr.common.world.feature.LOTRTreeType;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LOTRWorldGenSouthronTownTree extends LOTRWorldGenSouthronStructure {
 	public LOTRWorldGenSouthronTownTree(boolean flag) {

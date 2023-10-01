@@ -1,13 +1,17 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
-import lotr.common.entity.npc.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
+import lotr.common.entity.npc.LOTREntityBreeRuffian;
+import lotr.common.entity.npc.LOTREntityRuffianBrute;
+import lotr.common.entity.npc.LOTREntityRuffianSpy;
+import lotr.common.entity.npc.LOTRNames;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenBreeRuffianHouse extends LOTRWorldGenBreeStructure {
 	public String fixedName;

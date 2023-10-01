@@ -1,12 +1,15 @@
 package lotr.common.world.spawning;
 
-import java.util.*;
-
 import lotr.common.entity.LOTREntities;
 import lotr.common.entity.npc.*;
 import lotr.common.fac.LOTRFaction;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRSpawnList {
 	public static LOTRSpawnList HOBBITS = new LOTRSpawnList(new LOTRSpawnEntry(LOTREntityHobbit.class, 40, 1, 4), new LOTRSpawnEntry(LOTREntityHobbitBounder.class, 1, 1, 3));

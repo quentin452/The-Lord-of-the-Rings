@@ -1,9 +1,10 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityDorwinionMan;
+import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenDorwinionBath extends LOTRWorldGenGondorBath {
 	public LOTRWorldGenDorwinionHouse houseGenForBlocks;

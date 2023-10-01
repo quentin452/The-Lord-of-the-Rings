@@ -1,22 +1,30 @@
 package lotr.common.entity.projectile;
 
-import java.util.List;
-
 import cpw.mods.fml.common.registry.IThrowableEntity;
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.item.LOTRWeaponStats;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityTracker;
+import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.*;
+import net.minecraft.network.play.server.S0DPacketCollectItem;
+import net.minecraft.network.play.server.S2BPacketChangeGameState;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+
+import java.util.List;
 
 public abstract class LOTREntityProjectileBase extends Entity implements IThrowableEntity, IProjectile {
 	public int xTile = -1;
@@ -138,12 +146,20 @@ public abstract class LOTREntityProjectileBase extends Entity implements IThrowa
 		return dataWatcher.getWatchableObjectByte(17) == 1;
 	}
 
+	public void setIsCritical(boolean flag) {
+		dataWatcher.updateObject(17, (byte) (flag ? 1 : 0));
+	}
+
 	public float getKnockbackFactor() {
 		return 1.0f;
 	}
 
 	public ItemStack getProjectileItem() {
 		return dataWatcher.getWatchableObjectItemStack(18);
+	}
+
+	public void setProjectileItem(ItemStack item) {
+		dataWatcher.updateObject(18, item);
 	}
 
 	@Override
@@ -158,6 +174,11 @@ public abstract class LOTREntityProjectileBase extends Entity implements IThrowa
 	@Override
 	public Entity getThrower() {
 		return shootingEntity;
+	}
+
+	@Override
+	public void setThrower(Entity entity) {
+		shootingEntity = entity;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -409,14 +430,6 @@ public abstract class LOTREntityProjectileBase extends Entity implements IThrowa
 		}
 	}
 
-	public void setIsCritical(boolean flag) {
-		dataWatcher.updateObject(17, (byte) (flag ? 1 : 0));
-	}
-
-	public void setProjectileItem(ItemStack item) {
-		dataWatcher.updateObject(18, item);
-	}
-
 	@Override
 	public void setThrowableHeading(double d, double d1, double d2, float f, float f1) {
 		float f2 = MathHelper.sqrt_double(d * d + d1 * d1 + d2 * d2);
@@ -433,11 +446,6 @@ public abstract class LOTREntityProjectileBase extends Entity implements IThrowa
 		prevRotationYaw = rotationYaw = (float) (Math.atan2(d, d2) * 180.0 / 3.141592653589793);
 		prevRotationPitch = rotationPitch = (float) (Math.atan2(d1, f3) * 180.0 / 3.141592653589793);
 		ticksInGround = 0;
-	}
-
-	@Override
-	public void setThrower(Entity entity) {
-		shootingEntity = entity;
 	}
 
 	@Override

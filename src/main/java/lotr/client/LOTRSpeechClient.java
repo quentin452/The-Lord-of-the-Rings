@@ -1,8 +1,10 @@
 package lotr.client;
 
-import java.util.*;
-
 import lotr.common.entity.npc.LOTREntityNPC;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class LOTRSpeechClient {
 	public static Map<UUID, TimedSpeech> npcSpeeches = new HashMap<>();

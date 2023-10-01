@@ -1,14 +1,18 @@
 package lotr.common.entity.ai;
 
-import java.util.*;
-
 import lotr.common.LOTRLevelData;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityHobbit;
+import lotr.common.entity.npc.LOTREntityNPC;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.pathfinding.*;
+import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.Vec3;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LOTREntityAINPCAvoidEvilPlayer extends EntityAIBase {
 	public LOTREntityNPC theNPC;

@@ -1,20 +1,33 @@
 package lotr.common.enchant;
 
-import java.util.*;
-
 import com.google.common.collect.Lists;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.item.LOTRMaterial;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketCancelItemHighlight;
+import lotr.common.network.LOTRPacketHandler;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.WeightedRandom;
+
+import java.util.*;
 
 public class LOTREnchantmentHelper {
 	public static Map<UUID, ItemStack[]> lastKnownPlayerInventories = new HashMap<>();

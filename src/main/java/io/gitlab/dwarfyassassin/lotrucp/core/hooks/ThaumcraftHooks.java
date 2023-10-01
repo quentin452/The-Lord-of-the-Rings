@@ -1,19 +1,21 @@
 package io.gitlab.dwarfyassassin.lotrucp.core.hooks;
 
-import java.lang.reflect.*;
-import java.util.*;
-
 import com.mojang.authlib.GameProfile;
-
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import io.gitlab.dwarfyassassin.lotrucp.core.UCPCoreMod;
 import io.gitlab.dwarfyassassin.lotrucp.server.util.PlayerUtils;
-import lotr.common.*;
+import lotr.common.LOTRBannerProtection;
+import lotr.common.LOTRReflection;
 import lotr.common.entity.item.LOTREntityBanner;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.UUID;
 
 public class ThaumcraftHooks {
 	public static boolean doneReflection;

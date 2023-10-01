@@ -1,12 +1,15 @@
 package lotr.common.item;
 
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
 import lotr.common.block.LOTRBlockAnimalJar;
 import lotr.common.entity.LOTREntities;
 import lotr.common.entity.animal.LOTREntityButterfly;
 import lotr.common.tileentity.LOTRTileEntityAnimalJar;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,6 +21,43 @@ public class LOTRItemAnimalJar extends LOTRItemBlockMetadata {
 	public LOTRItemAnimalJar(Block block) {
 		super(block);
 		setMaxStackSize(1);
+	}
+
+	public static NBTTagCompound getEntityData(ItemStack itemstack) {
+		if (itemstack.hasTagCompound()) {
+			NBTTagCompound nbt;
+			if (itemstack.getTagCompound().hasKey("LOTRButterfly")) {
+				nbt = itemstack.getTagCompound().getCompoundTag("LOTRButterfly");
+				if (!nbt.hasNoTags()) {
+					nbt.setString("id", LOTREntities.getStringFromClass(LOTREntityButterfly.class));
+					setEntityData(itemstack, (NBTTagCompound) nbt.copy());
+				}
+				itemstack.getTagCompound().removeTag("LOTRButterfly");
+			}
+			if (itemstack.getTagCompound().hasKey("JarEntity") && !(nbt = itemstack.getTagCompound().getCompoundTag("JarEntity")).hasNoTags()) {
+				return nbt;
+			}
+		}
+		return null;
+	}
+
+	public static Entity getItemJarEntity(ItemStack itemstack, World world) {
+		NBTTagCompound nbt = getEntityData(itemstack);
+		if (nbt != null) {
+			return EntityList.createEntityFromNBT(nbt, world);
+		}
+		return null;
+	}
+
+	public static void setEntityData(ItemStack itemstack, NBTTagCompound nbt) {
+		if (itemstack.getTagCompound() == null) {
+			itemstack.setTagCompound(new NBTTagCompound());
+		}
+		if (nbt == null) {
+			itemstack.getTagCompound().removeTag("JarEntity");
+		} else {
+			itemstack.getTagCompound().setTag("JarEntity", nbt);
+		}
 	}
 
 	@Override
@@ -68,42 +108,5 @@ public class LOTRItemAnimalJar extends LOTRItemBlockMetadata {
 			return true;
 		}
 		return false;
-	}
-
-	public static NBTTagCompound getEntityData(ItemStack itemstack) {
-		if (itemstack.hasTagCompound()) {
-			NBTTagCompound nbt;
-			if (itemstack.getTagCompound().hasKey("LOTRButterfly")) {
-				nbt = itemstack.getTagCompound().getCompoundTag("LOTRButterfly");
-				if (!nbt.hasNoTags()) {
-					nbt.setString("id", LOTREntities.getStringFromClass(LOTREntityButterfly.class));
-					setEntityData(itemstack, (NBTTagCompound) nbt.copy());
-				}
-				itemstack.getTagCompound().removeTag("LOTRButterfly");
-			}
-			if (itemstack.getTagCompound().hasKey("JarEntity") && !(nbt = itemstack.getTagCompound().getCompoundTag("JarEntity")).hasNoTags()) {
-				return nbt;
-			}
-		}
-		return null;
-	}
-
-	public static Entity getItemJarEntity(ItemStack itemstack, World world) {
-		NBTTagCompound nbt = getEntityData(itemstack);
-		if (nbt != null) {
-			return EntityList.createEntityFromNBT(nbt, world);
-		}
-		return null;
-	}
-
-	public static void setEntityData(ItemStack itemstack, NBTTagCompound nbt) {
-		if (itemstack.getTagCompound() == null) {
-			itemstack.setTagCompound(new NBTTagCompound());
-		}
-		if (nbt == null) {
-			itemstack.getTagCompound().removeTag("JarEntity");
-		} else {
-			itemstack.getTagCompound().setTag("JarEntity", nbt);
-		}
 	}
 }

@@ -1,15 +1,17 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityMordorOrc;
+import lotr.common.entity.npc.LOTREntityMordorOrcMercenaryCaptain;
 import lotr.common.item.LOTRItemBanner;
 import lotr.common.world.biome.LOTRBiomeGenMordor;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenMordorTower extends LOTRWorldGenStructureBase {
 	public LOTRWorldGenMordorTower(boolean flag) {

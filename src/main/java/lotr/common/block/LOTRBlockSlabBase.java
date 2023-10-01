@@ -1,16 +1,23 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
-import net.minecraft.block.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemSlab;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Facing;
-import net.minecraft.world.*;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Random;
 
 public abstract class LOTRBlockSlabBase extends BlockSlab {
 	public Block singleSlab;
@@ -27,6 +34,13 @@ public abstract class LOTRBlockSlabBase extends BlockSlab {
 			setResistance(5.0f);
 			setStepSound(Block.soundTypeWood);
 		}
+	}
+
+	public static void registerSlabs(Block block, Block block1) {
+		((LOTRBlockSlabBase) block).singleSlab = block;
+		((LOTRBlockSlabBase) block).doubleSlab = block1;
+		((LOTRBlockSlabBase) block1).singleSlab = block;
+		((LOTRBlockSlabBase) block1).doubleSlab = block1;
 	}
 
 	@Override
@@ -86,13 +100,6 @@ public abstract class LOTRBlockSlabBase extends BlockSlab {
 		int k1 = k + Facing.offsetsZForSide[Facing.oppositeSide[l]];
 		flag = (world.getBlockMetadata(i1, j1, k1) & 8) != 0;
 		return flag ? l == 0 || l == 1 && super.shouldSideBeRendered(world, i, j, k, l) || world.getBlock(i, j, k) != singleSlab || (world.getBlockMetadata(i, j, k) & 8) == 0 : l == 1 || l == 0 && super.shouldSideBeRendered(world, i, j, k, l) || world.getBlock(i, j, k) != singleSlab || (world.getBlockMetadata(i, j, k) & 8) != 0;
-	}
-
-	public static void registerSlabs(Block block, Block block1) {
-		((LOTRBlockSlabBase) block).singleSlab = block;
-		((LOTRBlockSlabBase) block).doubleSlab = block1;
-		((LOTRBlockSlabBase) block1).singleSlab = block;
-		((LOTRBlockSlabBase) block1).doubleSlab = block1;
 	}
 
 	public static class SlabItems {

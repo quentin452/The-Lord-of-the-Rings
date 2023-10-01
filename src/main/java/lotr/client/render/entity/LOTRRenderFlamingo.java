@@ -3,8 +3,10 @@ package lotr.client.render.entity;
 import lotr.client.model.LOTRModelFlamingo;
 import lotr.common.entity.animal.LOTREntityFlamingo;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.*;
-import net.minecraft.util.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderFlamingo extends RenderLiving {
 	public static ResourceLocation texture = new ResourceLocation("lotr:mob/flamingo/flamingo.png");

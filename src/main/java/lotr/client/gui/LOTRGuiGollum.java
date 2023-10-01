@@ -1,12 +1,12 @@
 package lotr.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.entity.npc.LOTREntityGollum;
 import lotr.common.inventory.LOTRContainerGollum;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiGollum extends GuiContainer {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/npc/gollum.png");

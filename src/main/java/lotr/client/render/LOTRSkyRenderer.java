@@ -1,16 +1,19 @@
 package lotr.client.render;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.render.entity.LOTRRandomSkins;
 import lotr.common.world.LOTRWorldProvider;
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.*;
-import net.minecraft.util.*;
+import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.IRenderHandler;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRSkyRenderer extends IRenderHandler {
 	public static ResourceLocation moonTexture = new ResourceLocation("lotr:sky/moon.png");

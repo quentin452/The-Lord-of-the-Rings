@@ -1,12 +1,12 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
+
+import java.util.Random;
 
 public class LOTRBiomeGenNearHaradHills extends LOTRBiomeGenNearHarad {
 	public static NoiseGeneratorPerlin noiseSandstone = new NoiseGeneratorPerlin(new Random(8906820602062L), 1);

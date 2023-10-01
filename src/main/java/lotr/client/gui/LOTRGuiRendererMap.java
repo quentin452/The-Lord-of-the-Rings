@@ -1,12 +1,13 @@
 package lotr.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRTextures;
 import lotr.common.world.map.LOTRWaypoint;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiRendererMap {
 	public static ResourceLocation vignetteTexture = new ResourceLocation("textures/misc/vignette.png");

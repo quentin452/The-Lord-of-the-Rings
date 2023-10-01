@@ -1,10 +1,11 @@
 package io.gitlab.dwarfyassassin.lotrucp.core.patches;
 
-import org.objectweb.asm.tree.*;
-
 import io.gitlab.dwarfyassassin.lotrucp.core.UCPCoreMod;
 import io.gitlab.dwarfyassassin.lotrucp.core.patches.base.Patcher;
 import io.gitlab.dwarfyassassin.lotrucp.core.utils.ASMUtils;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
 
 public class FMLPatcher extends Patcher {
 	public FMLPatcher() {

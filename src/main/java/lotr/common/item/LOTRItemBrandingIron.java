@@ -1,26 +1,33 @@
 package lotr.common.item;
 
-import java.util.UUID;
-
-import org.apache.commons.lang3.StringUtils;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityNPC;
-import lotr.common.tileentity.*;
+import lotr.common.tileentity.LOTRTileEntityForgeBase;
+import lotr.common.tileentity.LOTRTileEntityHobbitOven;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.UUID;
 
 public class LOTRItemBrandingIron extends Item {
 	@SideOnly(Side.CLIENT)
@@ -33,6 +40,62 @@ public class LOTRItemBrandingIron extends Item {
 		setMaxStackSize(1);
 		setMaxDamage(100);
 		setFull3D();
+	}
+
+	public static UUID getBrandingPlayer(Entity entity) {
+		NBTTagCompound nbt = entity.getEntityData();
+		if (nbt.hasKey("LOTRBrander")) {
+			String s = nbt.getString("LOTRBrander");
+			return UUID.fromString(s);
+		}
+		return null;
+	}
+
+	public static String getBrandName(ItemStack itemstack) {
+		String s;
+		if (itemstack.hasTagCompound() && !StringUtils.isBlank(s = itemstack.getTagCompound().getString("BrandName"))) {
+			return s;
+		}
+		return null;
+	}
+
+	public static boolean hasBrandName(ItemStack itemstack) {
+		return getBrandName(itemstack) != null;
+	}
+
+	public static boolean isHeated(ItemStack itemstack) {
+		if (itemstack.hasTagCompound()) {
+			return itemstack.getTagCompound().getBoolean("HotIron");
+		}
+		return false;
+	}
+
+	public static void setBrandingPlayer(Entity entity, UUID player) {
+		String s = player.toString();
+		entity.getEntityData().setString("LOTRBrander", s);
+	}
+
+	public static void setBrandName(ItemStack itemstack, String s) {
+		if (!itemstack.hasTagCompound()) {
+			itemstack.setTagCompound(new NBTTagCompound());
+		}
+		itemstack.getTagCompound().setString("BrandName", s);
+	}
+
+	public static void setHeated(ItemStack itemstack, boolean flag) {
+		if (!itemstack.hasTagCompound()) {
+			itemstack.setTagCompound(new NBTTagCompound());
+		}
+		itemstack.getTagCompound().setBoolean("HotIron", flag);
+	}
+
+	public static String trimAcceptableBrandName(String s) {
+		s = StringUtils.trim(s);
+		int maxLength = 64;
+		if (s.length() > maxLength) {
+			s = s.substring(0, maxLength);
+		}
+		return s;
 	}
 
 	@Override
@@ -135,61 +198,5 @@ public class LOTRItemBrandingIron extends Item {
 	public void registerIcons(IIconRegister iconregister) {
 		iconCool = iconregister.registerIcon(getIconString());
 		iconHot = iconregister.registerIcon(getIconString() + "_hot");
-	}
-
-	public static UUID getBrandingPlayer(Entity entity) {
-		NBTTagCompound nbt = entity.getEntityData();
-		if (nbt.hasKey("LOTRBrander")) {
-			String s = nbt.getString("LOTRBrander");
-			return UUID.fromString(s);
-		}
-		return null;
-	}
-
-	public static String getBrandName(ItemStack itemstack) {
-		String s;
-		if (itemstack.hasTagCompound() && !StringUtils.isBlank(s = itemstack.getTagCompound().getString("BrandName"))) {
-			return s;
-		}
-		return null;
-	}
-
-	public static boolean hasBrandName(ItemStack itemstack) {
-		return getBrandName(itemstack) != null;
-	}
-
-	public static boolean isHeated(ItemStack itemstack) {
-		if (itemstack.hasTagCompound()) {
-			return itemstack.getTagCompound().getBoolean("HotIron");
-		}
-		return false;
-	}
-
-	public static void setBrandingPlayer(Entity entity, UUID player) {
-		String s = player.toString();
-		entity.getEntityData().setString("LOTRBrander", s);
-	}
-
-	public static void setBrandName(ItemStack itemstack, String s) {
-		if (!itemstack.hasTagCompound()) {
-			itemstack.setTagCompound(new NBTTagCompound());
-		}
-		itemstack.getTagCompound().setString("BrandName", s);
-	}
-
-	public static void setHeated(ItemStack itemstack, boolean flag) {
-		if (!itemstack.hasTagCompound()) {
-			itemstack.setTagCompound(new NBTTagCompound());
-		}
-		itemstack.getTagCompound().setBoolean("HotIron", flag);
-	}
-
-	public static String trimAcceptableBrandName(String s) {
-		s = StringUtils.trim(s);
-		int maxLength = 64;
-		if (s.length() > maxLength) {
-			s = s.substring(0, maxLength);
-		}
-		return s;
 	}
 }

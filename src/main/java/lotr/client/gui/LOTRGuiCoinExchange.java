@@ -1,16 +1,17 @@
 package lotr.client.gui;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.inventory.LOTRContainerCoinExchange;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketCoinExchange;
+import lotr.common.network.LOTRPacketHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiCoinExchange extends GuiContainer {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/coin_exchange.png");

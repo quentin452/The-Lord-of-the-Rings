@@ -1,7 +1,9 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
-import net.minecraft.entity.*;
+import lotr.common.LOTRCapes;
+import lotr.common.LOTRMod;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 

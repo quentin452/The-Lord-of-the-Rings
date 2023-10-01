@@ -1,19 +1,27 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
-import net.minecraft.block.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
+import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
-import net.minecraftforge.common.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Random;
 
 public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 	public static int MAX_GROW_HEIGHT = 3;
@@ -29,6 +37,21 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 		setHardness(0.0f);
 		setStepSound(soundTypeGrass);
 		setCreativeTab(LOTRCreativeTabs.tabDeco);
+	}
+
+	public static boolean hasCorn(IBlockAccess world, int i, int j, int k) {
+		int meta = world.getBlockMetadata(i, j, k);
+		return metaHasCorn(meta);
+	}
+
+	public static boolean metaHasCorn(int l) {
+		return (l & 8) != 0;
+	}
+
+	public static void setHasCorn(World world, int i, int j, int k, boolean flag) {
+		int meta = world.getBlockMetadata(i, j, k);
+		meta = flag ? meta | 8 : meta & 7;
+		world.setBlockMetadataWithNotify(i, j, k, meta, 3);
 	}
 
 	@Override
@@ -236,21 +259,6 @@ public class LOTRBlockCorn extends Block implements IPlantable, IGrowable {
 				setHasCorn(world, i, j, k, true);
 			}
 		}
-	}
-
-	public static boolean hasCorn(IBlockAccess world, int i, int j, int k) {
-		int meta = world.getBlockMetadata(i, j, k);
-		return metaHasCorn(meta);
-	}
-
-	public static boolean metaHasCorn(int l) {
-		return (l & 8) != 0;
-	}
-
-	public static void setHasCorn(World world, int i, int j, int k, boolean flag) {
-		int meta = world.getBlockMetadata(i, j, k);
-		meta = flag ? meta | 8 : meta & 7;
-		world.setBlockMetadataWithNotify(i, j, k, meta, 3);
 	}
 
 }

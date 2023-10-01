@@ -1,21 +1,28 @@
 package lotr.client.gui;
 
-import java.util.List;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.enchant.LOTREnchantmentHelper;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.inventory.LOTRContainerAnvil;
-import lotr.common.network.*;
-import net.minecraft.client.gui.*;
+import lotr.common.network.LOTRPacketAnvilEngraveOwner;
+import lotr.common.network.LOTRPacketAnvilReforge;
+import lotr.common.network.LOTRPacketAnvilRename;
+import lotr.common.network.LOTRPacketHandler;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
+
+import java.util.List;
 
 public class LOTRGuiAnvil extends GuiContainer {
 	public static ResourceLocation anvilTexture = new ResourceLocation("lotr:gui/anvil.png");

@@ -1,20 +1,29 @@
 package lotr.common.entity.npc;
 
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.entity.ai.*;
 import lotr.common.entity.item.LOTREntityStoneTroll;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
@@ -202,6 +211,10 @@ public class LOTREntityTroll extends LOTREntityNPC {
 		return dataWatcher.getWatchableObjectByte(18);
 	}
 
+	public void setSneezingTime(int i) {
+		dataWatcher.updateObject(18, (byte) i);
+	}
+
 	@Override
 	public float getSoundVolume() {
 		return 1.5f;
@@ -234,8 +247,16 @@ public class LOTREntityTroll extends LOTREntityNPC {
 		return dataWatcher.getWatchableObjectShort(17);
 	}
 
+	public void setTrollBurnTime(int i) {
+		dataWatcher.updateObject(17, (short) i);
+	}
+
 	public int getTrollOutfit() {
 		return dataWatcher.getWatchableObjectByte(16);
+	}
+
+	public void setTrollOutfit(int i) {
+		dataWatcher.updateObject(16, (byte) i);
 	}
 
 	public float getTrollScale() {
@@ -399,18 +420,6 @@ public class LOTREntityTroll extends LOTREntityNPC {
 
 	public void setHasTwoHeads(boolean flag) {
 		dataWatcher.updateObject(19, flag ? (byte) 1 : 0);
-	}
-
-	public void setSneezingTime(int i) {
-		dataWatcher.updateObject(18, (byte) i);
-	}
-
-	public void setTrollBurnTime(int i) {
-		dataWatcher.updateObject(17, (short) i);
-	}
-
-	public void setTrollOutfit(int i) {
-		dataWatcher.updateObject(16, (byte) i);
 	}
 
 	@Override

@@ -1,16 +1,15 @@
 package lotr.common;
 
-import java.lang.reflect.*;
-import java.util.*;
-
-import org.apache.logging.log4j.Level;
-
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import lotr.common.util.LOTRLog;
-import net.minecraft.block.*;
-import net.minecraft.command.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockPistonBase;
+import net.minecraft.block.BlockStem;
+import net.minecraft.command.CommandHandler;
+import net.minecraft.command.ICommand;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.projectile.EntityFishHook;
@@ -22,6 +21,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldInfo;
+import org.apache.logging.log4j.Level;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
 
 public class LOTRReflection {
 	public static boolean canPistonPushBlock(Block block, World world, int i, int j, int k, boolean flag) {

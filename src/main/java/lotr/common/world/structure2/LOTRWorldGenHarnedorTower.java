@@ -1,12 +1,13 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityHarnedorArcher;
+import lotr.common.entity.npc.LOTREntityHarnedorWarrior;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenHarnedorTower extends LOTRWorldGenHarnedorStructure {
 	public LOTRWorldGenHarnedorTower(boolean flag) {

@@ -1,7 +1,5 @@
 package lotr.common.world.mapgen;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.world.LOTRChunkProvider;
 import lotr.common.world.biome.LOTRBiome;
@@ -12,8 +10,26 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.MapGenBase;
 
+import java.util.Random;
+
 public class LOTRMapGenCaves extends MapGenBase {
 	public LOTRChunkProvider.ChunkFlags chunkFlags;
+
+	public static boolean isTerrainBlock(Block block, BiomeGenBase biome) {
+		if (block == biome.topBlock || block == biome.fillerBlock) {
+			return true;
+		}
+		if (block == Blocks.grass || block == Blocks.dirt || block == Blocks.sand || block == LOTRMod.whiteSand || block == Blocks.gravel || block == LOTRMod.mudGrass || block == LOTRMod.mud) {
+			return true;
+		}
+		if (block == LOTRMod.dirtPath) {
+			return true;
+		}
+		if (block == Blocks.stone || block == LOTRMod.rock || block == Blocks.sandstone || block == LOTRMod.redSandstone || block == LOTRMod.whiteSandstone) {
+			return true;
+		}
+		return block == LOTRMod.mordorDirt || block == LOTRMod.mordorGravel;
+	}
 
 	public int caveRarity() {
 		return 10;
@@ -218,21 +234,5 @@ public class LOTRMapGenCaves extends MapGenBase {
 
 	public int getCaveGenerationHeight() {
 		return rand.nextInt(rand.nextInt(120) + 8);
-	}
-
-	public static boolean isTerrainBlock(Block block, BiomeGenBase biome) {
-		if (block == biome.topBlock || block == biome.fillerBlock) {
-			return true;
-		}
-		if (block == Blocks.grass || block == Blocks.dirt || block == Blocks.sand || block == LOTRMod.whiteSand || block == Blocks.gravel || block == LOTRMod.mudGrass || block == LOTRMod.mud) {
-			return true;
-		}
-		if (block == LOTRMod.dirtPath) {
-			return true;
-		}
-		if (block == Blocks.stone || block == LOTRMod.rock || block == Blocks.sandstone || block == LOTRMod.redSandstone || block == LOTRMod.whiteSandstone) {
-			return true;
-		}
-		return block == LOTRMod.mordorDirt || block == LOTRMod.mordorGravel;
 	}
 }

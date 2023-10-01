@@ -1,9 +1,9 @@
 package lotr.common.world.mapgen.tpyr;
 
-import java.util.Random;
-
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureStart;
+
+import java.util.Random;
 
 public class LOTRStructureTPyrStart extends StructureStart {
 	public LOTRStructureTPyrStart() {

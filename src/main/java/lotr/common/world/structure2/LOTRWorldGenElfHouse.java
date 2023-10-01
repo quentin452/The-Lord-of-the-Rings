@@ -1,7 +1,5 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityGaladhrimElf;
 import lotr.common.world.feature.LOTRWorldGenMallornExtreme;
@@ -12,9 +10,49 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class LOTRWorldGenElfHouse extends LOTRWorldGenStructureBase2 {
 	public LOTRWorldGenElfHouse(boolean flag) {
 		super(flag);
+	}
+
+	public static ItemStack getRandomChandelier(Random random) {
+		if (random.nextBoolean()) {
+			int i = random.nextInt(3);
+			switch (i) {
+				case 0:
+					return new ItemStack(LOTRMod.chandelier, 1, 13);
+				case 1:
+					return new ItemStack(LOTRMod.chandelier, 1, 14);
+				case 2:
+					return new ItemStack(LOTRMod.chandelier, 1, 15);
+				default:
+					break;
+			}
+		}
+		return new ItemStack(LOTRMod.chandelier, 1, 5);
+	}
+
+	public static ItemStack getRandomPlant(Random random) {
+		return random.nextBoolean() ? new ItemStack(LOTRMod.elanor) : new ItemStack(LOTRMod.niphredil);
+	}
+
+	public static Block getRandomTorch(Random random) {
+		if (random.nextBoolean()) {
+			int i = random.nextInt(3);
+			switch (i) {
+				case 0:
+					return LOTRMod.mallornTorchBlue;
+				case 1:
+					return LOTRMod.mallornTorchGold;
+				case 2:
+					return LOTRMod.mallornTorchGreen;
+				default:
+					break;
+			}
+		}
+		return LOTRMod.mallornTorchSilver;
 	}
 
 	@Override
@@ -335,43 +373,5 @@ public class LOTRWorldGenElfHouse extends LOTRWorldGenStructureBase2 {
 			}
 			setBlockAndMetadata(world, i, j1, k, LOTRMod.fence, 1);
 		}
-	}
-
-	public static ItemStack getRandomChandelier(Random random) {
-		if (random.nextBoolean()) {
-			int i = random.nextInt(3);
-			switch (i) {
-				case 0:
-					return new ItemStack(LOTRMod.chandelier, 1, 13);
-				case 1:
-					return new ItemStack(LOTRMod.chandelier, 1, 14);
-				case 2:
-					return new ItemStack(LOTRMod.chandelier, 1, 15);
-				default:
-					break;
-			}
-		}
-		return new ItemStack(LOTRMod.chandelier, 1, 5);
-	}
-
-	public static ItemStack getRandomPlant(Random random) {
-		return random.nextBoolean() ? new ItemStack(LOTRMod.elanor) : new ItemStack(LOTRMod.niphredil);
-	}
-
-	public static Block getRandomTorch(Random random) {
-		if (random.nextBoolean()) {
-			int i = random.nextInt(3);
-			switch (i) {
-				case 0:
-					return LOTRMod.mallornTorchBlue;
-				case 1:
-					return LOTRMod.mallornTorchGold;
-				case 2:
-					return LOTRMod.mallornTorchGreen;
-				default:
-					break;
-			}
-		}
-		return LOTRMod.mallornTorchSilver;
 	}
 }

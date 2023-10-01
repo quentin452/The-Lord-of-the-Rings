@@ -1,18 +1,17 @@
 package lotr.common.fac;
 
-import java.io.File;
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.mojang.authlib.GameProfile;
-
 import cpw.mods.fml.common.FMLLog;
 import lotr.common.LOTRLevelData;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.UsernameCache;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.util.*;
 
 public class LOTRFactionBounties {
 	public static Map<LOTRFaction, LOTRFactionBounties> factionBountyMap = new EnumMap<>(LOTRFaction.class);
@@ -25,70 +24,6 @@ public class LOTRFactionBounties {
 
 	public LOTRFactionBounties(LOTRFaction f) {
 		theFaction = f;
-	}
-
-	public List<PlayerData> findBountyTargets(int killAmount) {
-		List<PlayerData> players = new ArrayList<>();
-		for (PlayerData pd : playerList.values()) {
-			if (pd.recentlyBountyKilled() || pd.getNumKills() < killAmount) {
-				continue;
-			}
-			players.add(pd);
-		}
-		return players;
-	}
-
-	public PlayerData forPlayer(EntityPlayer entityplayer) {
-		return forPlayer(entityplayer.getUniqueID());
-	}
-
-	public PlayerData forPlayer(UUID id) {
-		PlayerData pd = playerList.get(id);
-		if (pd == null) {
-			pd = new PlayerData(this, id);
-			playerList.put(id, pd);
-		}
-		return pd;
-	}
-
-	public void markDirty() {
-		needsSave = true;
-	}
-
-	public void readFromNBT(NBTTagCompound nbt) {
-		playerList.clear();
-		if (nbt.hasKey("PlayerList")) {
-			NBTTagList playerTags = nbt.getTagList("PlayerList", 10);
-			for (int i = 0; i < playerTags.tagCount(); ++i) {
-				NBTTagCompound playerData = playerTags.getCompoundTagAt(i);
-				UUID id = UUID.fromString(playerData.getString("UUID"));
-				PlayerData pd = new PlayerData(this, id);
-				pd.readFromNBT(playerData);
-				playerList.put(id, pd);
-			}
-		}
-	}
-
-	public void update() {
-		for (PlayerData pd : playerList.values()) {
-			pd.update();
-		}
-	}
-
-	public void writeToNBT(NBTTagCompound nbt) {
-		NBTTagList playerTags = new NBTTagList();
-		for (Map.Entry<UUID, PlayerData> e : playerList.entrySet()) {
-			UUID id = e.getKey();
-			PlayerData pd = e.getValue();
-			if (!pd.shouldSave()) {
-				continue;
-			}
-			NBTTagCompound playerData = new NBTTagCompound();
-			playerData.setString("UUID", id.toString());
-			pd.writeToNBT(playerData);
-			playerTags.appendTag(playerData);
-		}
-		nbt.setTag("PlayerList", playerTags);
 	}
 
 	public static boolean anyDataNeedsSave() {
@@ -195,6 +130,70 @@ public class LOTRFactionBounties {
 		for (LOTRFactionBounties fb : factionBountyMap.values()) {
 			fb.update();
 		}
+	}
+
+	public List<PlayerData> findBountyTargets(int killAmount) {
+		List<PlayerData> players = new ArrayList<>();
+		for (PlayerData pd : playerList.values()) {
+			if (pd.recentlyBountyKilled() || pd.getNumKills() < killAmount) {
+				continue;
+			}
+			players.add(pd);
+		}
+		return players;
+	}
+
+	public PlayerData forPlayer(EntityPlayer entityplayer) {
+		return forPlayer(entityplayer.getUniqueID());
+	}
+
+	public PlayerData forPlayer(UUID id) {
+		PlayerData pd = playerList.get(id);
+		if (pd == null) {
+			pd = new PlayerData(this, id);
+			playerList.put(id, pd);
+		}
+		return pd;
+	}
+
+	public void markDirty() {
+		needsSave = true;
+	}
+
+	public void readFromNBT(NBTTagCompound nbt) {
+		playerList.clear();
+		if (nbt.hasKey("PlayerList")) {
+			NBTTagList playerTags = nbt.getTagList("PlayerList", 10);
+			for (int i = 0; i < playerTags.tagCount(); ++i) {
+				NBTTagCompound playerData = playerTags.getCompoundTagAt(i);
+				UUID id = UUID.fromString(playerData.getString("UUID"));
+				PlayerData pd = new PlayerData(this, id);
+				pd.readFromNBT(playerData);
+				playerList.put(id, pd);
+			}
+		}
+	}
+
+	public void update() {
+		for (PlayerData pd : playerList.values()) {
+			pd.update();
+		}
+	}
+
+	public void writeToNBT(NBTTagCompound nbt) {
+		NBTTagList playerTags = new NBTTagList();
+		for (Map.Entry<UUID, PlayerData> e : playerList.entrySet()) {
+			UUID id = e.getKey();
+			PlayerData pd = e.getValue();
+			if (!pd.shouldSave()) {
+				continue;
+			}
+			NBTTagCompound playerData = new NBTTagCompound();
+			playerData.setString("UUID", id.toString());
+			pd.writeToNBT(playerData);
+			playerTags.appendTag(playerData);
+		}
+		nbt.setTag("PlayerList", playerTags);
 	}
 
 	public static class PlayerData {

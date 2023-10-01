@@ -1,9 +1,9 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
+
+import java.util.Random;
 
 public abstract class LOTRWorldGenMordorStructure extends LOTRWorldGenStructureBase2 {
 	public Block brickBlock;

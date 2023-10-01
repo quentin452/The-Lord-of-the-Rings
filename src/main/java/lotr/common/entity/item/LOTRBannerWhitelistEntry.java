@@ -1,10 +1,12 @@
 package lotr.common.entity.item;
 
-import java.util.*;
-
 import com.mojang.authlib.GameProfile;
-
 import lotr.common.LOTRBannerProtection;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 public class LOTRBannerWhitelistEntry {
 	public GameProfile profile;
@@ -15,6 +17,25 @@ public class LOTRBannerWhitelistEntry {
 		if (profile == null) {
 			throw new IllegalArgumentException("Banner whitelist entry cannot have a null profile!");
 		}
+	}
+
+	public static List<LOTRBannerProtection.Permission> static_decodePermBitFlags(int i) {
+		List<LOTRBannerProtection.Permission> decoded = new ArrayList<>();
+		for (LOTRBannerProtection.Permission p : LOTRBannerProtection.Permission.values()) {
+			if ((i & p.bitFlag) == 0) {
+				continue;
+			}
+			decoded.add(p);
+		}
+		return decoded;
+	}
+
+	public static int static_encodePermBitFlags(Iterable<LOTRBannerProtection.Permission> permList) {
+		int i = 0;
+		for (LOTRBannerProtection.Permission p : permList) {
+			i |= p.bitFlag;
+		}
+		return i;
 	}
 
 	public void addPermission(LOTRBannerProtection.Permission p) {
@@ -60,24 +81,5 @@ public class LOTRBannerWhitelistEntry {
 		for (LOTRBannerProtection.Permission p : perms) {
 			addPermission(p);
 		}
-	}
-
-	public static List<LOTRBannerProtection.Permission> static_decodePermBitFlags(int i) {
-		List<LOTRBannerProtection.Permission> decoded = new ArrayList<>();
-		for (LOTRBannerProtection.Permission p : LOTRBannerProtection.Permission.values()) {
-			if ((i & p.bitFlag) == 0) {
-				continue;
-			}
-			decoded.add(p);
-		}
-		return decoded;
-	}
-
-	public static int static_encodePermBitFlags(Iterable<LOTRBannerProtection.Permission> permList) {
-		int i = 0;
-		for (LOTRBannerProtection.Permission p : permList) {
-			i |= p.bitFlag;
-		}
-		return i;
 	}
 }

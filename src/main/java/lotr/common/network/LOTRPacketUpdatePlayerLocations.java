@@ -1,16 +1,19 @@
 package lotr.common.network;
 
+import com.mojang.authlib.GameProfile;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import lotr.common.LOTRMod;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.network.PacketBuffer;
+
 import java.io.IOException;
 import java.util.*;
-
-import com.mojang.authlib.GameProfile;
-
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.network.simpleimpl.*;
-import io.netty.buffer.*;
-import lotr.common.LOTRMod;
-import net.minecraft.nbt.*;
-import net.minecraft.network.PacketBuffer;
 
 public class LOTRPacketUpdatePlayerLocations implements IMessage {
 	public static Map<UUID, byte[]> cachedProfileBytes = new HashMap<>();

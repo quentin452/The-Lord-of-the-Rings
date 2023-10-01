@@ -1,12 +1,15 @@
 package lotr.common.command;
 
-import java.util.*;
-
 import lotr.common.LOTRLevelData;
 import lotr.common.fac.LOTRFaction;
-import net.minecraft.command.*;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LOTRCommandAlignment extends CommandBase {
 	@Override

@@ -1,21 +1,31 @@
 package lotr.common.recipe;
 
-import java.lang.reflect.Field;
-import java.util.*;
-
 import cpw.mods.fml.common.registry.GameRegistry;
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRMod;
 import lotr.common.block.*;
 import lotr.common.item.*;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.*;
-import net.minecraft.item.crafting.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.RecipesArmorDyes;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.*;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import java.lang.reflect.Field;
+import java.util.*;
 
 public class LOTRRecipes {
 	public static Collection<IRecipe> woodenSlabRecipes = new ArrayList<>();

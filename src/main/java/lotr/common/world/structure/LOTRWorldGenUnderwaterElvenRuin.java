@@ -1,12 +1,12 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenUnderwaterElvenRuin extends LOTRWorldGenStructureBase {
 	public LOTRWorldGenUnderwaterElvenRuin(boolean flag) {

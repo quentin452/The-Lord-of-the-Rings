@@ -2,7 +2,9 @@ package lotr.common.entity.ai;
 
 import lotr.common.LOTRFoods;
 import lotr.common.entity.npc.LOTREntityNPC;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
 
 public class LOTREntityAIEat extends LOTREntityAIConsumeBase {
 	public LOTREntityAIEat(LOTREntityNPC entity, LOTRFoods foods, int chance) {

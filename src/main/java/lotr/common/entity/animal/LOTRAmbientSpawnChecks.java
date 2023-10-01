@@ -1,12 +1,14 @@
 package lotr.common.entity.animal;
 
-import java.util.*;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRAmbientSpawnChecks {
 	public static boolean canSpawn(EntityLiving entity, int xzRange, int yRange, int attempts, int required, Material... materials) {

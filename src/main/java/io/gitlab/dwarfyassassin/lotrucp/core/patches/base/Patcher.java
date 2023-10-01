@@ -1,8 +1,9 @@
 package io.gitlab.dwarfyassassin.lotrucp.core.patches.base;
 
-import java.util.*;
-
 import org.objectweb.asm.tree.ClassNode;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Patcher {
 	public Map<String, ConsumerImplBecauseNoLambdas<ClassNode>> classes = new HashMap<>();
@@ -37,13 +38,13 @@ public abstract class Patcher {
 		return true;
 	}
 
-	public interface ConsumerImplBecauseNoLambdas<T> {
-		void accept(T var1);
-	}
-
 	public enum LoadingPhase {
 		CORE_MOD_LOADING, FORGE_MOD_LOADING
 
+	}
+
+	public interface ConsumerImplBecauseNoLambdas<T> {
+		void accept(T var1);
 	}
 
 }

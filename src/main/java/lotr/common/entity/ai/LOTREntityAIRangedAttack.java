@@ -1,10 +1,13 @@
 package lotr.common.entity.ai;
 
-import java.util.Random;
-
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
+
+import java.util.Random;
 
 public class LOTREntityAIRangedAttack extends EntityAIBase {
 	public EntityLiving theOwner;
@@ -32,6 +35,21 @@ public class LOTREntityAIRangedAttack extends EntityAIBase {
 		attackRange = range;
 		attackRangeSq = range * range;
 		setMutexBits(3);
+	}
+
+	public static Vec3 findPositionAwayFrom(EntityLivingBase entity, EntityLivingBase target, int min, int max) {
+		Random random = entity.getRNG();
+		for (int l = 0; l < 24; ++l) {
+			int k;
+			int j;
+			int i = MathHelper.floor_double(entity.posX) - max + random.nextInt(max * 2 + 1);
+			double d = target.getDistanceSq(i, j = MathHelper.floor_double(entity.boundingBox.minY) - 4 + random.nextInt(9), k = MathHelper.floor_double(entity.posZ) - max + random.nextInt(max * 2 + 1));
+			if (d <= min * min || d >= max * max) {
+				continue;
+			}
+			return Vec3.createVectorHelper(i, j, k);
+		}
+		return null;
 	}
 
 	@Override
@@ -93,20 +111,5 @@ public class LOTREntityAIRangedAttack extends EntityAIBase {
 			float distanceRatio = MathHelper.sqrt_double(distanceSq) / attackRange;
 			rangedAttackTime = MathHelper.floor_float(distanceRatio * (attackTimeMax - attackTimeMin) + attackTimeMin);
 		}
-	}
-
-	public static Vec3 findPositionAwayFrom(EntityLivingBase entity, EntityLivingBase target, int min, int max) {
-		Random random = entity.getRNG();
-		for (int l = 0; l < 24; ++l) {
-			int k;
-			int j;
-			int i = MathHelper.floor_double(entity.posX) - max + random.nextInt(max * 2 + 1);
-			double d = target.getDistanceSq(i, j = MathHelper.floor_double(entity.boundingBox.minY) - 4 + random.nextInt(9), k = MathHelper.floor_double(entity.posZ) - max + random.nextInt(max * 2 + 1));
-			if (d <= min * min || d >= max * max) {
-				continue;
-			}
-			return Vec3.createVectorHelper(i, j, k);
-		}
-		return null;
 	}
 }

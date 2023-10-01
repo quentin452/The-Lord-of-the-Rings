@@ -1,7 +1,5 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.world.biome.LOTRBiomeGenMordor;
 import lotr.common.world.structure.LOTRChestContents;
@@ -9,6 +7,8 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.Random;
 
 public abstract class LOTRWorldGenTentBase extends LOTRWorldGenStructureBase2 {
 	public Block tentBlock;

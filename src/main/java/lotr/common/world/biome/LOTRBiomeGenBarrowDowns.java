@@ -5,9 +5,13 @@ import lotr.common.entity.animal.LOTREntityHorse;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRTreeType;
 import lotr.common.world.map.LOTRWaypoint;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure.LOTRWorldGenRuinedDunedainTower;
-import lotr.common.world.structure2.*;
+import lotr.common.world.structure2.LOTRWorldGenBDBarrow;
+import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
+import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class LOTRBiomeGenBarrowDowns extends LOTRBiome {

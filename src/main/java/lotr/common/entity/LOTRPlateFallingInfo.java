@@ -20,6 +20,15 @@ public class LOTRPlateFallingInfo implements IExtendedEntityProperties {
 		theEntity = entity;
 	}
 
+	public static LOTRPlateFallingInfo getOrCreateFor(Entity entity, boolean create) {
+		LOTRPlateFallingInfo props = (LOTRPlateFallingInfo) entity.getExtendedProperties(propID);
+		if (props == null && create) {
+			props = new LOTRPlateFallingInfo(entity);
+			entity.registerExtendedProperties(propID, props);
+		}
+		return props;
+	}
+
 	public float getFoodOffsetY(int food, float f) {
 		return getOffsetY(food - 1, f);
 	}
@@ -84,14 +93,5 @@ public class LOTRPlateFallingInfo implements IExtendedEntityProperties {
 			fallerPos[l] = pos;
 			fallerSpeed[l] = speed;
 		}
-	}
-
-	public static LOTRPlateFallingInfo getOrCreateFor(Entity entity, boolean create) {
-		LOTRPlateFallingInfo props = (LOTRPlateFallingInfo) entity.getExtendedProperties(propID);
-		if (props == null && create) {
-			props = new LOTRPlateFallingInfo(entity);
-			entity.registerExtendedProperties(propID, props);
-		}
-		return props;
 	}
 }

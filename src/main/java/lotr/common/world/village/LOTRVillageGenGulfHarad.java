@@ -1,16 +1,19 @@
 package lotr.common.world.village;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityGulfHaradArcher;
+import lotr.common.entity.npc.LOTREntityGulfHaradWarrior;
+import lotr.common.entity.npc.LOTREntityGulfHaradrim;
+import lotr.common.entity.npc.LOTRNames;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.map.LOTRRoadType;
 import lotr.common.world.structure2.*;
 import net.minecraft.block.Block;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRVillageGenGulfHarad extends LOTRVillageGen {
 	public LOTRVillageGenGulfHarad(LOTRBiome biome, float f) {
@@ -24,6 +27,11 @@ public class LOTRVillageGenGulfHarad extends LOTRVillageGen {
 	@Override
 	public LOTRVillageGen.AbstractInstance<?> createVillageInstance(World world, int i, int k, Random random, LocationInfo loc) {
 		return new Instance(this, world, i, k, random, loc);
+	}
+
+	public enum VillageType {
+		VILLAGE, TOWN, FORT
+
 	}
 
 	public static class Instance extends LOTRVillageGen.AbstractInstance<LOTRVillageGenGulfHarad> {
@@ -322,11 +330,6 @@ public class LOTRVillageGenGulfHarad extends LOTRVillageGen {
 			villageName = LOTRNames.getHaradVillageName(random);
 			numOuterHouses = MathHelper.getRandomIntegerInRange(random, 5, 8);
 		}
-
-	}
-
-	public enum VillageType {
-		VILLAGE, TOWN, FORT
 
 	}
 

@@ -1,17 +1,36 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
-import lotr.common.entity.npc.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
+import lotr.common.entity.npc.LOTREntityGondorFarmer;
+import lotr.common.entity.npc.LOTREntityGondorFarmhand;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.entity.passive.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class LOTRWorldGenGondorBarn extends LOTRWorldGenGondorStructure {
 	public LOTRWorldGenGondorBarn(boolean flag) {
 		super(flag);
+	}
+
+	public static EntityAnimal getRandomAnimal(World world, Random random) {
+		int animal = random.nextInt(4);
+		switch (animal) {
+			case 0:
+				return new EntityCow(world);
+			case 1:
+				return new EntityPig(world);
+			case 2:
+				return new EntitySheep(world);
+			case 3:
+				return new EntityChicken(world);
+			default:
+				break;
+		}
+		return null;
 	}
 
 	@Override
@@ -306,22 +325,5 @@ public class LOTRWorldGenGondorBarn extends LOTRWorldGenGondorStructure {
 			farmhand.seedsItem = seedItem;
 		}
 		return true;
-	}
-
-	public static EntityAnimal getRandomAnimal(World world, Random random) {
-		int animal = random.nextInt(4);
-		switch (animal) {
-			case 0:
-				return new EntityCow(world);
-			case 1:
-				return new EntityPig(world);
-			case 2:
-				return new EntitySheep(world);
-			case 3:
-				return new EntityChicken(world);
-			default:
-				break;
-		}
-		return null;
 	}
 }

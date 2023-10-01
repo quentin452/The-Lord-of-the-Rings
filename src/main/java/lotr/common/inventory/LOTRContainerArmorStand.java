@@ -1,9 +1,12 @@
 package lotr.common.inventory;
 
 import lotr.common.tileentity.LOTRTileEntityArmorStand;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 
 public class LOTRContainerArmorStand extends Container {
 	public LOTRTileEntityArmorStand theArmorStand;

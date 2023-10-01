@@ -1,7 +1,8 @@
 package lotr.common.item;
 
 import lotr.common.LOTRCreativeTabs;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemPickaxe;
 
 public class LOTRItemPickaxe extends ItemPickaxe {
 	public LOTRItemPickaxe(Item.ToolMaterial material) {

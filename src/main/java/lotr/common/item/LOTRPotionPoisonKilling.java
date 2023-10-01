@@ -1,10 +1,13 @@
 package lotr.common.item;
 
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRDamage;
+import lotr.common.LOTRMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.potion.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 
 public class LOTRPotionPoisonKilling extends Potion {
 	public LOTRPotionPoisonKilling() {

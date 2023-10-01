@@ -1,9 +1,10 @@
 package lotr.client;
 
-import java.util.*;
-
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.MathHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LOTRTextBody {
 	public static String LINEBREAK = "<BR>";

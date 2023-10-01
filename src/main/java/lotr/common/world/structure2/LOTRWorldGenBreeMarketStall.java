@@ -1,13 +1,18 @@
 package lotr.common.world.structure2;
 
-import java.util.*;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.*;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStructure {
 	public static Class[] allStallTypes = {Baker.class, Butcher.class, Brewer.class, Mason.class, Lumber.class, Smith.class, Florist.class, Farmer.class};
@@ -18,6 +23,32 @@ public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStruct
 
 	protected LOTRWorldGenBreeMarketStall(boolean flag) {
 		super(flag);
+	}
+
+	public static LOTRWorldGenBreeMarketStall getRandomStall(Random random, boolean flag) {
+		try {
+			Class cls = allStallTypes[random.nextInt(allStallTypes.length)];
+			return (LOTRWorldGenBreeMarketStall) cls.getConstructor(Boolean.TYPE).newInstance(flag);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static LOTRWorldGenBreeMarketStall[] getRandomStalls(Random random, boolean flag, int num) {
+		List<Class> types = Arrays.asList(Arrays.copyOf(allStallTypes, allStallTypes.length));
+		Collections.shuffle(types, random);
+		LOTRWorldGenBreeMarketStall[] ret = new LOTRWorldGenBreeMarketStall[num];
+		for (int i = 0; i < ret.length; ++i) {
+			int listIndex = i % types.size();
+			Class cls = types.get(listIndex);
+			try {
+				ret[i] = (LOTRWorldGenBreeMarketStall) cls.getConstructor(Boolean.TYPE).newInstance(flag);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ret;
 	}
 
 	public abstract LOTREntityNPC createTrader(World var1, Random var2);
@@ -168,32 +199,6 @@ public abstract class LOTRWorldGenBreeMarketStall extends LOTRWorldGenBreeStruct
 		wool1Meta = 14;
 		wool2Block = Blocks.wool;
 		wool2Meta = 0;
-	}
-
-	public static LOTRWorldGenBreeMarketStall getRandomStall(Random random, boolean flag) {
-		try {
-			Class cls = allStallTypes[random.nextInt(allStallTypes.length)];
-			return (LOTRWorldGenBreeMarketStall) cls.getConstructor(Boolean.TYPE).newInstance(flag);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public static LOTRWorldGenBreeMarketStall[] getRandomStalls(Random random, boolean flag, int num) {
-		List<Class> types = Arrays.asList(Arrays.copyOf(allStallTypes, allStallTypes.length));
-		Collections.shuffle(types, random);
-		LOTRWorldGenBreeMarketStall[] ret = new LOTRWorldGenBreeMarketStall[num];
-		for (int i = 0; i < ret.length; ++i) {
-			int listIndex = i % types.size();
-			Class cls = types.get(listIndex);
-			try {
-				ret[i] = (LOTRWorldGenBreeMarketStall) cls.getConstructor(Boolean.TYPE).newInstance(flag);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return ret;
 	}
 
 	public static class Baker extends LOTRWorldGenBreeMarketStall {

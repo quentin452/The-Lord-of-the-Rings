@@ -1,15 +1,20 @@
 package lotr.common.quest;
 
-import java.util.*;
-
 import lotr.client.LOTRKeyHandler;
 import lotr.common.*;
-import lotr.common.entity.npc.*;
-import net.minecraft.client.settings.*;
+import lotr.common.entity.npc.LOTREntityGandalf;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTRSpeech;
+import net.minecraft.client.settings.GameSettings;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class LOTRMiniQuestWelcome extends LOTRMiniQuest {
 	public static String SPEECHBANK = "char/gandalf/quest";
@@ -45,6 +50,28 @@ public class LOTRMiniQuestWelcome extends LOTRMiniQuest {
 		speechBankTooMany = "";
 		quoteStart = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 2);
 		quoteComplete = LOTRSpeech.getSpeechAtLine(SPEECHBANK, 12);
+	}
+
+	public static boolean[] forceMenu_Map_Factions(EntityPlayer entityplayer) {
+		boolean[] flags = {false, false};
+		LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
+		List<LOTRMiniQuest> activeQuests = pd.getActiveMiniQuests();
+		for (LOTRMiniQuest quest : activeQuests) {
+			if (!(quest instanceof LOTRMiniQuestWelcome)) {
+				continue;
+			}
+			LOTRMiniQuestWelcome qw = (LOTRMiniQuestWelcome) quest;
+			if (qw.stage == 5) {
+				flags[0] = true;
+				break;
+			}
+			if (qw.stage != 11) {
+				continue;
+			}
+			flags[1] = true;
+			break;
+		}
+		return flags;
 	}
 
 	@Override
@@ -335,27 +362,5 @@ public class LOTRMiniQuestWelcome extends LOTRMiniQuest {
 		super.writeToNBT(nbt);
 		nbt.setByte("WStage", (byte) stage);
 		nbt.setBoolean("WMovedOn", movedOn);
-	}
-
-	public static boolean[] forceMenu_Map_Factions(EntityPlayer entityplayer) {
-		boolean[] flags = {false, false};
-		LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
-		List<LOTRMiniQuest> activeQuests = pd.getActiveMiniQuests();
-		for (LOTRMiniQuest quest : activeQuests) {
-			if (!(quest instanceof LOTRMiniQuestWelcome)) {
-				continue;
-			}
-			LOTRMiniQuestWelcome qw = (LOTRMiniQuestWelcome) quest;
-			if (qw.stage == 5) {
-				flags[0] = true;
-				break;
-			}
-			if (qw.stage != 11) {
-				continue;
-			}
-			flags[1] = true;
-			break;
-		}
-		return flags;
 	}
 }

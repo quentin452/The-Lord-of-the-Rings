@@ -1,6 +1,8 @@
 package lotr.common.fac;
 
-import java.util.*;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Set;
 
 public class LOTRAlignmentBonusMap extends HashMap<LOTRFaction, Float> {
 	public Set<LOTRFaction> getChangedFactions() {

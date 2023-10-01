@@ -1,10 +1,10 @@
 package lotr.common.entity.ai;
 
-import java.util.List;
-
 import lotr.common.LOTRConfig;
 import lotr.common.entity.npc.LOTREntityOrc;
 import net.minecraft.entity.EntityLivingBase;
+
+import java.util.List;
 
 public class LOTREntityAIOrcSkirmish extends LOTREntityAINearestAttackableTargetBasic {
 	public LOTREntityOrc theOrc;

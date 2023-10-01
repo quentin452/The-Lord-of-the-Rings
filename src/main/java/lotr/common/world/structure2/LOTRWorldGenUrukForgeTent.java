@@ -1,8 +1,8 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
+
+import java.util.Random;
 
 public class LOTRWorldGenUrukForgeTent extends LOTRWorldGenUrukTent {
 	public LOTRWorldGenUrukForgeTent(boolean flag) {

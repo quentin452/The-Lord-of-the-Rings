@@ -1,15 +1,15 @@
 package lotr.client.gui;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.regex.Pattern;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRTickHandlerClient;
 import lotr.common.LOTRGuiMessageTypes;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.regex.Pattern;
 
 public class LOTRGuiMessage extends LOTRGuiScreenBase {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/message.png");

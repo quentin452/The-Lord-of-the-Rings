@@ -1,11 +1,12 @@
 package lotr.common.block;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+
+import java.util.Random;
 
 public class LOTRBlockRedClay extends Block {
 	public LOTRBlockRedClay() {

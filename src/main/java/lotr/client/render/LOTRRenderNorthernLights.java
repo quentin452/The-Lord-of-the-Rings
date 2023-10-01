@@ -1,21 +1,24 @@
 package lotr.client.render;
 
-import java.awt.Color;
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.Project;
-
 import lotr.client.LOTRReflectionClient;
-import lotr.common.*;
+import lotr.common.LOTRDate;
+import lotr.common.LOTRMod;
+import lotr.common.LOTRTime;
 import lotr.common.world.map.LOTRFixedStructures;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.Project;
+
+import java.awt.*;
+import java.util.List;
+import java.util.*;
 
 public class LOTRRenderNorthernLights {
 	public static int nlTick;
@@ -28,7 +31,7 @@ public class LOTRRenderNorthernLights {
 	public static boolean atUtumno = false;
 	public static int utumnoChange = 0;
 	public static Random rand = new Random();
-	public static Random dateRand= new Random();
+	public static Random dateRand = new Random();
 	public static float[] colorTopCurrent;
 	public static float[] colorMidCurrent;
 	public static float[] colorBottomCurrent;
@@ -39,10 +42,10 @@ public class LOTRRenderNorthernLights {
 	public static int colorChangeTick;
 	public static int timeUntilColorChange;
 	public static int utumnoCheckTime;
-	public static AuroraCycle wave0= new AuroraCycle(4.0f, 0.01f, 0.9f);
+	public static AuroraCycle wave0 = new AuroraCycle(4.0f, 0.01f, 0.9f);
 	public static List<AuroraCycle> waveOscillations = new ArrayList<>();
-	public static List<AuroraCycle> glowOscillations= new ArrayList<>();
-	public static AuroraCycle glow0= new AuroraCycle(20.0f, 0.02f, 0.6f);
+	public static List<AuroraCycle> glowOscillations = new ArrayList<>();
+	public static AuroraCycle glow0 = new AuroraCycle(20.0f, 0.02f, 0.6f);
 
 	public static Color[] generateColorSet() {
 		float h1 = MathHelper.randomFloatClamp(rand, 0.22f, 0.48f);

@@ -1,17 +1,22 @@
 package lotr.common.entity.npc;
 
-import java.awt.Color;
-
 import lotr.common.*;
-import lotr.common.entity.ai.*;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAIDrink;
+import lotr.common.entity.ai.LOTREntityAIEat;
 import lotr.common.item.LOTRItemLeatherHat;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.awt.*;
 
 public class LOTREntityScrapTrader extends LOTREntityMan implements LOTRTravellingTrader, LOTRTradeable.Smith {
 	public static int maxFadeoutTick = 60;
@@ -106,6 +111,10 @@ public class LOTREntityScrapTrader extends LOTREntityMan implements LOTRTravelli
 
 	public int getFadeoutTick() {
 		return dataWatcher.getWatchableObjectInt(20);
+	}
+
+	public void setFadeoutTick(int i) {
+		dataWatcher.updateObject(20, i);
 	}
 
 	@Override
@@ -209,10 +218,6 @@ public class LOTREntityScrapTrader extends LOTREntityMan implements LOTRTravelli
 		LOTRItemLeatherHat.setFeatherColor(hat, featherColor);
 		setCurrentItemOrArmor(4, hat);
 		return data;
-	}
-
-	public void setFadeoutTick(int i) {
-		dataWatcher.updateObject(20, i);
 	}
 
 	@Override

@@ -1,15 +1,19 @@
 package lotr.common.inventory;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
 import lotr.common.block.LOTRBlockCraftingTable;
-import lotr.common.recipe.*;
+import lotr.common.recipe.LOTRRecipes;
+import lotr.common.recipe.LOTRRecipesPouch;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ContainerWorkbench;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class LOTRContainerCraftingTable extends ContainerWorkbench {
 	public World theWorld;

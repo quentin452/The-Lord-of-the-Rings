@@ -1,16 +1,21 @@
 package lotr.common.entity.ai;
 
-import java.util.List;
-
-import lotr.common.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityOrc;
 import lotr.common.fac.LOTRFaction;
 import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.pathfinding.*;
+import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.Vec3;
+
+import java.util.List;
 
 public class LOTREntityAIOrcAvoidGoodPlayer extends EntityAIBase {
 	public LOTREntityOrc theOrc;

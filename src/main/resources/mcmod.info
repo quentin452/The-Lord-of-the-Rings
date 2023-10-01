@@ -1,16 +1,18 @@
 [
-  {
-	"modid" : "lotr",
-	"name" : "The Lord of the Rings Mod",
-	"version" : "Update 36.15",
-	"credits" : "Hummel009",
-	"authorList": ["Hummel009"],
-	"description": "The Lord of the Rings Mod: Bringing Middle-earth to Minecraft",
-	"logoFile" : "assets/lotr/logo.png",
-	"url" : "https://github.com/Hummel009",
-	"updateUrl" : "",
-	"parent" : "",
-	"dependencies": [],
-	"screenshots": []
-  }
+	{
+		"modid": "lotr",
+		"name": "The Lord of the Rings Mod",
+		"version": "Update 36.15",
+		"credits": "Hummel009",
+		"authorList": [
+			"Hummel009"
+		],
+		"description": "The Lord of the Rings Mod: Bringing Middle-earth to Minecraft",
+		"logoFile": "assets/lotr/logo.png",
+		"url": "https://github.com/Hummel009",
+		"updateUrl": "",
+		"parent": "",
+		"dependencies": [],
+		"screenshots": []
+	}
 ]

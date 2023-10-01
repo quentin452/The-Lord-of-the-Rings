@@ -1,12 +1,17 @@
 package io.gitlab.dwarfyassassin.lotrucp.core.hooks;
 
-import java.util.*;
-
-import cpw.mods.fml.common.registry.*;
+import cpw.mods.fml.common.registry.GameData;
+import cpw.mods.fml.common.registry.RegistryDelegate;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.block.Block;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 public class GenericModHooks {
 	public static void removeBlockFromOreDictionary(Block block) {

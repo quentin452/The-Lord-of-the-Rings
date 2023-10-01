@@ -1,20 +1,59 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityFlowerPot;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFlowerPot;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LOTRBlockFlowerPot extends BlockFlowerPot {
+	public static boolean canAcceptPlant(ItemStack itemstack) {
+		Item item = itemstack.getItem();
+		if (item instanceof ItemBlock) {
+			Block block = ((ItemBlock) item).field_150939_a;
+			return block instanceof LOTRBlockFlower;
+		}
+		return false;
+	}
+
+	public static ItemStack getPlant(IBlockAccess world, int i, int j, int k) {
+		TileEntity tileentity = world.getTileEntity(i, j, k);
+		if (tileentity instanceof LOTRTileEntityFlowerPot) {
+			LOTRTileEntityFlowerPot flowerPot = (LOTRTileEntityFlowerPot) tileentity;
+			if (flowerPot.item == null) {
+				return null;
+			}
+			return new ItemStack(flowerPot.item, 1, flowerPot.meta);
+		}
+		return null;
+	}
+
+	public static void setPlant(World world, int i, int j, int k, ItemStack itemstack) {
+		TileEntity tileentity = world.getTileEntity(i, j, k);
+		if (tileentity instanceof LOTRTileEntityFlowerPot) {
+			LOTRTileEntityFlowerPot flowerPot = (LOTRTileEntityFlowerPot) tileentity;
+			flowerPot.item = itemstack.getItem();
+			flowerPot.meta = itemstack.getItemDamage();
+			world.markBlockForUpdate(i, j, k);
+		}
+	}
+
 	@Override
 	public TileEntity createNewTileEntity(World world, int i) {
 		return new LOTRTileEntityFlowerPot();
@@ -77,36 +116,5 @@ public class LOTRBlockFlowerPot extends BlockFlowerPot {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconregister) {
-	}
-
-	public static boolean canAcceptPlant(ItemStack itemstack) {
-		Item item = itemstack.getItem();
-		if (item instanceof ItemBlock) {
-			Block block = ((ItemBlock) item).field_150939_a;
-			return block instanceof LOTRBlockFlower;
-		}
-		return false;
-	}
-
-	public static ItemStack getPlant(IBlockAccess world, int i, int j, int k) {
-		TileEntity tileentity = world.getTileEntity(i, j, k);
-		if (tileentity instanceof LOTRTileEntityFlowerPot) {
-			LOTRTileEntityFlowerPot flowerPot = (LOTRTileEntityFlowerPot) tileentity;
-			if (flowerPot.item == null) {
-				return null;
-			}
-			return new ItemStack(flowerPot.item, 1, flowerPot.meta);
-		}
-		return null;
-	}
-
-	public static void setPlant(World world, int i, int j, int k, ItemStack itemstack) {
-		TileEntity tileentity = world.getTileEntity(i, j, k);
-		if (tileentity instanceof LOTRTileEntityFlowerPot) {
-			LOTRTileEntityFlowerPot flowerPot = (LOTRTileEntityFlowerPot) tileentity;
-			flowerPot.item = itemstack.getItem();
-			flowerPot.meta = itemstack.getItemDamage();
-			world.markBlockForUpdate(i, j, k);
-		}
 	}
 }

@@ -1,6 +1,7 @@
 package lotr.common.world;
 
-import lotr.common.*;
+import lotr.common.LOTRDimension;
+import lotr.common.LOTRLevelData;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.chunk.IChunkProvider;
 

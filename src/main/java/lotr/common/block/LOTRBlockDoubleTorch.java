@@ -1,8 +1,7 @@
 package lotr.common.block;
 
-import java.util.Random;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -10,8 +9,12 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRBlockDoubleTorch extends Block {
 	@SideOnly(Side.CLIENT)
@@ -22,6 +25,10 @@ public class LOTRBlockDoubleTorch extends Block {
 		super(Material.circuits);
 		setHardness(0.0f);
 		setStepSound(Block.soundTypeWood);
+	}
+
+	public static boolean canPlaceTorchOn(World world, int i, int j, int k) {
+		return world.getBlock(i, j, k).canPlaceTorchOnTop(world, i, j, k);
 	}
 
 	@Override
@@ -148,9 +155,5 @@ public class LOTRBlockDoubleTorch extends Block {
 		} else if (meta == 1) {
 			setBlockBounds(0.4375f, 0.0f, 0.4375f, 0.5625f, 0.5f, 0.5625f);
 		}
-	}
-
-	public static boolean canPlaceTorchOn(World world, int i, int j, int k) {
-		return world.getBlock(i, j, k).canPlaceTorchOnTop(world, i, j, k);
 	}
 }

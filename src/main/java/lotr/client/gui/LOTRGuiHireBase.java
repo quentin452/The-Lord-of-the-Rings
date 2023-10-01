@@ -1,19 +1,25 @@
 package lotr.client.gui;
 
-import java.util.List;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRClientProxy;
-import lotr.common.*;
-import lotr.common.entity.npc.*;
-import lotr.common.fac.*;
-import lotr.common.inventory.*;
-import lotr.common.network.*;
-import net.minecraft.client.gui.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.LOTRSquadrons;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTRHireableBase;
+import lotr.common.entity.npc.LOTRUnitTradeEntries;
+import lotr.common.entity.npc.LOTRUnitTradeEntry;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
+import lotr.common.inventory.LOTRContainerUnitTrade;
+import lotr.common.inventory.LOTRSlotAlignmentReward;
+import lotr.common.network.LOTRPacketBuyUnit;
+import lotr.common.network.LOTRPacketHandler;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +27,9 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
+
+import java.util.List;
 
 public abstract class LOTRGuiHireBase extends GuiContainer {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/npc/unit_trade.png");

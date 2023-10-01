@@ -3,7 +3,8 @@ package lotr.common.entity.npc;
 import lotr.common.LOTRMod;
 import lotr.common.item.LOTRItemHaradRobes;
 import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 

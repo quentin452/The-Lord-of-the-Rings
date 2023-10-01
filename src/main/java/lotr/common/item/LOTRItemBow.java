@@ -1,24 +1,32 @@
 package lotr.common.item;
 
-import java.util.Arrays;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.client.render.item.LOTRRenderBow;
-import lotr.common.*;
-import lotr.common.enchant.*;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
+import lotr.common.enchant.LOTREnchantment;
+import lotr.common.enchant.LOTREnchantmentHelper;
 import lotr.common.entity.item.LOTREntityArrowPoisoned;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.enchantment.*;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.client.*;
+import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.ArrowNockEvent;
+
+import java.util.Arrays;
 
 public class LOTRItemBow extends ItemBow {
 	public static float MIN_BOW_DRAW_AMOUNT = 0.65f;
@@ -46,6 +54,38 @@ public class LOTRItemBow extends ItemBow {
 
 	public LOTRItemBow(LOTRMaterial material, double d) {
 		this(material.toToolMaterial(), d);
+	}
+
+	public static void applyBowModifiers(EntityArrow arrow, ItemStack itemstack) {
+		int power = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, itemstack);
+		if (power > 0) {
+			arrow.setDamage(arrow.getDamage() + power * 0.5 + 0.5);
+		}
+		int punch = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, itemstack);
+		punch += LOTREnchantmentHelper.calcRangedKnockback(itemstack);
+		if (punch > 0) {
+			arrow.setKnockbackStrength(punch);
+		}
+		if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, itemstack) + LOTREnchantmentHelper.calcFireAspect(itemstack) > 0) {
+			arrow.setFire(100);
+		}
+		for (LOTREnchantment ench : LOTREnchantment.allEnchantments) {
+			if (!ench.applyToProjectile() || !LOTREnchantmentHelper.hasEnchant(itemstack, ench)) {
+				continue;
+			}
+			LOTREnchantmentHelper.setProjectileEnchantment(arrow, ench);
+		}
+	}
+
+	public static float getLaunchSpeedFactor(ItemStack itemstack) {
+		float f = 1.0f;
+		if (itemstack != null) {
+			if (itemstack.getItem() instanceof LOTRItemBow) {
+				f = (float) (f * ((LOTRItemBow) itemstack.getItem()).arrowDamageFactor);
+			}
+			f *= LOTREnchantmentHelper.calcRangedDamageFactor(itemstack);
+		}
+		return f;
 	}
 
 	public BowState getBowState(EntityLivingBase entity, ItemStack usingItem, int useRemaining) {
@@ -190,38 +230,6 @@ public class LOTRItemBow extends ItemBow {
 
 	public boolean shouldConsumeArrow(ItemStack itemstack, EntityPlayer entityplayer) {
 		return !entityplayer.capabilities.isCreativeMode && EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, itemstack) == 0;
-	}
-
-	public static void applyBowModifiers(EntityArrow arrow, ItemStack itemstack) {
-		int power = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, itemstack);
-		if (power > 0) {
-			arrow.setDamage(arrow.getDamage() + power * 0.5 + 0.5);
-		}
-		int punch = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, itemstack);
-		punch += LOTREnchantmentHelper.calcRangedKnockback(itemstack);
-		if (punch > 0) {
-			arrow.setKnockbackStrength(punch);
-		}
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, itemstack) + LOTREnchantmentHelper.calcFireAspect(itemstack) > 0) {
-			arrow.setFire(100);
-		}
-		for (LOTREnchantment ench : LOTREnchantment.allEnchantments) {
-			if (!ench.applyToProjectile() || !LOTREnchantmentHelper.hasEnchant(itemstack, ench)) {
-				continue;
-			}
-			LOTREnchantmentHelper.setProjectileEnchantment(arrow, ench);
-		}
-	}
-
-	public static float getLaunchSpeedFactor(ItemStack itemstack) {
-		float f = 1.0f;
-		if (itemstack != null) {
-			if (itemstack.getItem() instanceof LOTRItemBow) {
-				f = (float) (f * ((LOTRItemBow) itemstack.getItem()).arrowDamageFactor);
-			}
-			f *= LOTREnchantmentHelper.calcRangedDamageFactor(itemstack);
-		}
-		return f;
 	}
 
 	public enum BowState {

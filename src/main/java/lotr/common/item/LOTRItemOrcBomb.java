@@ -1,14 +1,17 @@
 package lotr.common.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.block.LOTRBlockOrcBomb;
 import lotr.common.dispenser.LOTRDispenseOrcBomb;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
+
+import java.util.List;
 
 public class LOTRItemOrcBomb extends ItemBlock {
 	public LOTRItemOrcBomb(Block block) {

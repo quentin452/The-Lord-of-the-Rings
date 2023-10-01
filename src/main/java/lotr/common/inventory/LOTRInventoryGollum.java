@@ -4,7 +4,8 @@ import lotr.common.entity.npc.LOTREntityGollum;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public class LOTRInventoryGollum implements IInventory {
 	public ItemStack[] inventory = new ItemStack[9];

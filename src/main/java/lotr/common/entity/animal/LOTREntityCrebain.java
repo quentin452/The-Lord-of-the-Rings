@@ -1,6 +1,7 @@
 package lotr.common.entity.animal;
 
-import net.minecraft.entity.*;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
 
 public class LOTREntityCrebain extends LOTREntityBird {

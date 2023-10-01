@@ -1,11 +1,11 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.world.biome.LOTRBiomeGenFarHaradSavannah;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.Random;
 
 public class LOTRWorldGenMoredainVillage extends LOTRWorldGenStructureBase2 {
 	public static int VILLAGE_SIZE = 16;

@@ -1,12 +1,17 @@
 package lotr.common.entity.npc;
 
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
-import lotr.common.entity.ai.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAIRangedAttack;
 import lotr.common.entity.projectile.LOTREntityThrownRock;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.attributes.*;
+import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemStack;
@@ -138,6 +143,10 @@ public class LOTREntityMountainTroll extends LOTREntityTroll {
 		return dataWatcher.getWatchableObjectByte(21) == 1;
 	}
 
+	public void setThrowingRocks(boolean flag) {
+		dataWatcher.updateObject(21, flag ? (byte) 1 : 0);
+	}
+
 	@Override
 	public void onAttackModeChange(LOTREntityNPC.AttackMode mode, boolean mounted) {
 		if (mode == LOTREntityNPC.AttackMode.IDLE) {
@@ -177,10 +186,6 @@ public class LOTREntityMountainTroll extends LOTREntityTroll {
 	public LOTREntityMountainTroll setCanDropTrollTotem(boolean flag) {
 		canDropTrollTotem = flag;
 		return this;
-	}
-
-	public void setThrowingRocks(boolean flag) {
-		dataWatcher.updateObject(21, flag ? (byte) 1 : 0);
 	}
 
 	@Override

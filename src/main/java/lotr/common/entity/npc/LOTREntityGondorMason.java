@@ -1,7 +1,8 @@
 package lotr.common.entity.npc;
 
 import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 

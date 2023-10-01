@@ -1,9 +1,5 @@
 package lotr.client.render.tileentity;
 
-import java.util.HashMap;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRTickHandlerClient;
 import lotr.common.entity.LOTREntities;
 import lotr.common.tileentity.LOTRTileEntityMobSpawner;
@@ -12,16 +8,26 @@ import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
+
+import java.util.HashMap;
 
 public class LOTRTileEntityMobSpawnerRenderer extends TileEntitySpecialRenderer {
 	public static double itemYaw;
 	public static double prevItemYaw;
 	public int tempID;
 	public HashMap initialisedItemEntities = new HashMap();
+
+	public static void onClientTick() {
+		prevItemYaw = itemYaw = MathHelper.wrapAngleTo180_double(itemYaw);
+		itemYaw += 1.5;
+	}
 
 	@Override
 	public void func_147496_a(World world) {
@@ -93,10 +99,5 @@ public class LOTRTileEntityMobSpawnerRenderer extends TileEntitySpecialRenderer 
 
 	public void unloadEntities() {
 		initialisedItemEntities.clear();
-	}
-
-	public static void onClientTick() {
-		prevItemYaw = itemYaw = MathHelper.wrapAngleTo180_double(itemYaw);
-		itemYaw += 1.5;
 	}
 }

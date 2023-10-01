@@ -1,11 +1,10 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
 import lotr.common.entity.npc.LOTREntityNomadMerchant;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRTreeType;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure.LOTRWorldGenHaradObelisk;
 import lotr.common.world.structure2.*;
 import lotr.common.world.village.LOTRVillageGenHaradNomad;
@@ -13,6 +12,8 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+
+import java.util.Random;
 
 public class LOTRBiomeGenNearHaradSemiDesert extends LOTRBiomeGenNearHarad {
 	public LOTRBiomeGenNearHaradSemiDesert(int i, boolean major) {

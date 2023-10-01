@@ -1,16 +1,21 @@
 package lotr.common.entity;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.*;
-
-import org.apache.commons.io.input.BOMInputStream;
-
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import lotr.common.entity.npc.LOTREntityMordorOrc;
-import lotr.common.fac.*;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
+import org.apache.commons.io.input.BOMInputStream;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class LOTREntityRegistry {
 	public static Map registeredNPCs = new HashMap();

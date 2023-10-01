@@ -1,7 +1,5 @@
 package lotr.client.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRTextures;
 import lotr.common.tileentity.LOTRTileEntityCommandTable;
 import lotr.common.world.genlayer.LOTRGenLayerWorld;
@@ -11,6 +9,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.tileentity.TileEntity;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderCommandTable extends TileEntitySpecialRenderer {
 	public void renderInvTable() {

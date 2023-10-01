@@ -1,16 +1,21 @@
 package lotr.client.gui;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
-
-import lotr.common.network.*;
-import lotr.common.tileentity.*;
-import net.minecraft.client.gui.*;
+import lotr.common.network.LOTRPacketEditSign;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.tileentity.LOTRTileEntitySign;
+import lotr.common.tileentity.LOTRTileEntitySignCarved;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatAllowedCharacters;
+import net.minecraft.util.Direction;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiEditSign extends GuiScreen {
 	public static RenderItem itemRenderer = new RenderItem();

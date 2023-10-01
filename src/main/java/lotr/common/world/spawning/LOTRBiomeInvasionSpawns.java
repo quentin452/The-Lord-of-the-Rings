@@ -1,9 +1,9 @@
 package lotr.common.world.spawning;
 
-import java.util.*;
-
 import cpw.mods.fml.common.FMLLog;
 import lotr.common.world.biome.LOTRBiome;
+
+import java.util.*;
 
 public class LOTRBiomeInvasionSpawns {
 	public LOTRBiome theBiome;

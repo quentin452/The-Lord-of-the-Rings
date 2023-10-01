@@ -1,7 +1,8 @@
 package lotr.common.world.structure2;
 
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityElf;
+import lotr.common.entity.npc.LOTREntityRivendellSmith;
 import net.minecraft.world.World;
 
 public class LOTRWorldGenRivendellForge extends LOTRWorldGenHighElvenForge {

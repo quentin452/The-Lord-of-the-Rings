@@ -1,19 +1,23 @@
 package lotr.common.entity.npc;
 
-import java.util.List;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.ai.*;
 import lotr.common.playerdetails.ExclusiveGroup;
 import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public abstract class LOTREntityElf extends LOTREntityNPC {
 	public EntityAIBase rangedAttackAI = createElfRangedAttackAI();
@@ -110,6 +114,10 @@ public abstract class LOTREntityElf extends LOTREntityNPC {
 		return dataWatcher.getWatchableObjectShort(23);
 	}
 
+	public void setBowingTick(int i) {
+		dataWatcher.updateObject(23, (short) i);
+	}
+
 	@Override
 	public boolean getCanSpawnHere() {
 		if (super.getCanSpawnHere()) {
@@ -164,8 +172,16 @@ public abstract class LOTREntityElf extends LOTREntityNPC {
 		return getJazzFlag(0);
 	}
 
+	public void setJazz(boolean flag) {
+		setJazzFlag(0, flag);
+	}
+
 	public boolean isSolo() {
 		return getJazzFlag(1);
+	}
+
+	public void setSolo(boolean flag) {
+		setJazzFlag(1, flag);
 	}
 
 	@Override
@@ -275,23 +291,11 @@ public abstract class LOTREntityElf extends LOTREntityNPC {
 		setJazz(nbt.getBoolean("BoopBoopBaDoop"));
 	}
 
-	public void setBowingTick(int i) {
-		dataWatcher.updateObject(23, (short) i);
-	}
-
-	public void setJazz(boolean flag) {
-		setJazzFlag(0, flag);
-	}
-
 	public void setJazzFlag(int i, boolean flag) {
 		byte b = dataWatcher.getWatchableObjectByte(22);
 		int pow2 = 1 << i;
 		b = flag ? (byte) (b | pow2) : (byte) (b & ~pow2);
 		dataWatcher.updateObject(22, b);
-	}
-
-	public void setSolo(boolean flag) {
-		setJazzFlag(1, flag);
 	}
 
 	@Override

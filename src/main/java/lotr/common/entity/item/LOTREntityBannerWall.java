@@ -1,18 +1,24 @@
 package lotr.common.entity.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRBannerProtection;
+import lotr.common.LOTRMod;
 import lotr.common.item.LOTRItemBanner;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityHanging;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Direction;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTREntityBannerWall extends EntityHanging {
 	public NBTTagCompound protectData;
@@ -58,8 +64,16 @@ public class LOTREntityBannerWall extends EntityHanging {
 		return LOTRItemBanner.BannerType.forID(getBannerTypeID());
 	}
 
+	public void setBannerType(LOTRItemBanner.BannerType type) {
+		setBannerTypeID(type.bannerID);
+	}
+
 	public int getBannerTypeID() {
 		return dataWatcher.getWatchableObjectByte(18);
+	}
+
+	public void setBannerTypeID(int i) {
+		dataWatcher.updateObject(18, (byte) i);
 	}
 
 	@Override
@@ -149,14 +163,6 @@ public class LOTREntityBannerWall extends EntityHanging {
 		if (nbt.hasKey("ProtectData")) {
 			protectData = nbt.getCompoundTag("ProtectData");
 		}
-	}
-
-	public void setBannerType(LOTRItemBanner.BannerType type) {
-		setBannerTypeID(type.bannerID);
-	}
-
-	public void setBannerTypeID(int i) {
-		dataWatcher.updateObject(18, (byte) i);
 	}
 
 	@Override

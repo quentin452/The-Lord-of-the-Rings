@@ -1,6 +1,7 @@
 package lotr.client.model;
 
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 
 public class LOTRModelTrollTotem extends ModelBase {
 	public ModelRenderer head;

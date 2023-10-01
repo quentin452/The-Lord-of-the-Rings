@@ -1,19 +1,24 @@
 package lotr.common.world.village;
 
-import java.util.*;
-
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRMod;
 import lotr.common.util.CentredSquareArray;
 import lotr.common.world.LOTRWorldChunkManager;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.genlayer.LOTRGenLayerWorld;
 import lotr.common.world.map.*;
 import lotr.common.world.structure2.LOTRWorldGenStructureBase2;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 public abstract class LOTRVillageGen {
 	public static Random villageRand = new Random();
@@ -31,6 +36,18 @@ public abstract class LOTRVillageGen {
 		villageBiome = biome;
 		spawnBiomes = new ArrayList<>();
 		spawnBiomes.add(villageBiome);
+	}
+
+	public static boolean hasFixedSettlements(World world) {
+		if (!LOTRConfig.generateFixedSettlements) {
+			return false;
+		}
+		return world.getWorldInfo().getTerrainType() != LOTRMod.worldTypeMiddleEarthClassic;
+	}
+
+	public static void seedVillageRand(World world, int i, int k) {
+		long seed = i * 6890360793007L + k * 456879569029062L + world.getWorldInfo().getSeed() + 274893855L;
+		villageRand.setSeed(seed);
 	}
 
 	public LocationInfo addFixedLocation(LOTRWaypoint wp, int addX, int addZ, int rotation, String name) {
@@ -278,18 +295,6 @@ public abstract class LOTRVillageGen {
 			}
 		}
 		return cache.markResult(chunkX, chunkZ, LocationInfo.NONE_HERE);
-	}
-
-	public static boolean hasFixedSettlements(World world) {
-		if (!LOTRConfig.generateFixedSettlements) {
-			return false;
-		}
-		return world.getWorldInfo().getTerrainType() != LOTRMod.worldTypeMiddleEarthClassic;
-	}
-
-	public static void seedVillageRand(World world, int i, int k) {
-		long seed = i * 6890360793007L + k * 456879569029062L + world.getWorldInfo().getSeed() + 274893855L;
-		villageRand.setSeed(seed);
 	}
 
 	public abstract static class AbstractInstance<V extends LOTRVillageGen> {

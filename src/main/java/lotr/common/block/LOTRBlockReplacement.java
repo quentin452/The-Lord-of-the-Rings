@@ -1,21 +1,34 @@
 package lotr.common.block;
 
-import java.lang.reflect.*;
-import java.util.*;
-
-import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.registry.RegistryDelegate;
 import io.gitlab.dwarfyassassin.lotrucp.core.hooks.GenericModHooks;
 import lotr.common.LOTRReflection;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
-import net.minecraft.item.crafting.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.*;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ObjectIntIdentityMap;
+import net.minecraft.util.RegistryNamespaced;
+import net.minecraft.util.RegistrySimple;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.oredict.*;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
 
 public class LOTRBlockReplacement {
 	public static boolean initForgeHooks;

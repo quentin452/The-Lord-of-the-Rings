@@ -1,9 +1,8 @@
 package lotr.common.entity.npc;
 
-import java.util.UUID;
-
 import lotr.common.LOTRAchievement;
-import lotr.common.enchant.*;
+import lotr.common.enchant.LOTREnchantment;
+import lotr.common.enchant.LOTREnchantmentHelper;
 import lotr.common.entity.ai.LOTREntityAIRangedAttack;
 import lotr.common.entity.projectile.LOTREntityMarshWraithBall;
 import lotr.common.fac.LOTRFaction;
@@ -11,13 +10,18 @@ import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.UUID;
 
 public class LOTREntityMarshWraith extends LOTREntityNPC {
 	public UUID attackTargetUUID;
@@ -103,6 +107,10 @@ public class LOTREntityMarshWraith extends LOTREntityNPC {
 		return dataWatcher.getWatchableObjectInt(17);
 	}
 
+	public void setDeathFadeTime(int i) {
+		dataWatcher.updateObject(17, i);
+	}
+
 	@Override
 	public String getDeathSound() {
 		return "lotr:wight.death";
@@ -125,6 +133,10 @@ public class LOTREntityMarshWraith extends LOTREntityNPC {
 
 	public int getSpawnFadeTime() {
 		return dataWatcher.getWatchableObjectInt(16);
+	}
+
+	public void setSpawnFadeTime(int i) {
+		dataWatcher.updateObject(16, i);
 	}
 
 	@Override
@@ -217,16 +229,8 @@ public class LOTREntityMarshWraith extends LOTREntityNPC {
 		}
 	}
 
-	public void setDeathFadeTime(int i) {
-		dataWatcher.updateObject(17, i);
-	}
-
 	@Override
 	public void setInWeb() {
-	}
-
-	public void setSpawnFadeTime(int i) {
-		dataWatcher.updateObject(16, i);
 	}
 
 	@Override

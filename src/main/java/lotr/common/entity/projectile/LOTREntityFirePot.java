@@ -1,16 +1,22 @@
 package lotr.common.entity.projectile;
 
-import java.util.List;
-
-import lotr.common.*;
-import lotr.common.block.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.block.LOTRBlockPlate;
+import lotr.common.block.LOTRBlockRhunFireJar;
 import lotr.common.entity.animal.LOTREntityBird;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTREntityFirePot extends EntityThrowable {
 	public LOTREntityFirePot(World world) {

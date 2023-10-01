@@ -1,13 +1,11 @@
 package lotr.common.world.map;
 
-import java.util.*;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.google.common.collect.Iterators;
-
 import cpw.mods.fml.common.FMLLog;
 import net.minecraft.util.StatCollector;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.*;
 
 public class LOTRRoads {
 	public static List<LOTRRoads> allRoads = new ArrayList<>();
@@ -20,10 +18,6 @@ public class LOTRRoads {
 	public LOTRRoads(String name, RoadPoint... ends) {
 		roadName = name;
 		Collections.addAll(endpoints, ends);
-	}
-
-	public String getDisplayName() {
-		return StatCollector.translateToLocal("lotr.road." + roadName);
 	}
 
 	public static void createRoads() {
@@ -182,6 +176,10 @@ public class LOTRRoads {
 		RoadPoint[] array = points.toArray(new RoadPoint[0]);
 		LOTRRoads[] roads = BezierCurves.getSplines(name, array);
 		targetList.addAll(Arrays.asList(roads));
+	}
+
+	public String getDisplayName() {
+		return StatCollector.translateToLocal("lotr.road." + roadName);
 	}
 
 	public static class BezierCurves {

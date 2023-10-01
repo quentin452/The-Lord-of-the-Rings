@@ -1,9 +1,6 @@
 package lotr.common.world.structure2;
 
-import java.util.*;
-
 import com.google.common.math.IntMath;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityTauredainPyramidWraith;
 import lotr.common.item.LOTRItemBanner;
@@ -11,13 +8,18 @@ import lotr.common.tileentity.LOTRTileEntityDartTrap;
 import lotr.common.util.LOTRMazeGenerator;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
-import net.minecraft.inventory.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LOTRWorldGenTauredainPyramid extends LOTRWorldGenStructureBase2 {
 	public static int RADIUS = 60;

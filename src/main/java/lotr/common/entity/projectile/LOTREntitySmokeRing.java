@@ -49,8 +49,16 @@ public class LOTREntitySmokeRing extends EntityThrowable {
 		return dataWatcher.getWatchableObjectInt(16);
 	}
 
+	public void setSmokeAge(int age) {
+		dataWatcher.updateObject(16, age);
+	}
+
 	public int getSmokeColour() {
 		return dataWatcher.getWatchableObjectByte(17);
+	}
+
+	public void setSmokeColour(int colour) {
+		dataWatcher.updateObject(17, (byte) colour);
 	}
 
 	@Override
@@ -84,14 +92,6 @@ public class LOTREntitySmokeRing extends EntityThrowable {
 		super.readEntityFromNBT(nbt);
 		setSmokeAge(nbt.getInteger("SmokeAge"));
 		setSmokeColour(nbt.getInteger("SmokeColour"));
-	}
-
-	public void setSmokeAge(int age) {
-		dataWatcher.updateObject(16, age);
-	}
-
-	public void setSmokeColour(int colour) {
-		dataWatcher.updateObject(17, (byte) colour);
 	}
 
 	@Override

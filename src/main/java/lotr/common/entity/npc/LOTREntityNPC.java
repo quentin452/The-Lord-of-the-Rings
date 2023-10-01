@@ -1,23 +1,30 @@
 package lotr.common.entity.npc;
 
-import java.awt.Color;
-import java.lang.reflect.Constructor;
-import java.util.*;
-
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.*;
 import lotr.common.entity.*;
 import lotr.common.entity.ai.*;
 import lotr.common.entity.animal.LOTREntityHorse;
-import lotr.common.entity.item.*;
-import lotr.common.entity.projectile.*;
+import lotr.common.entity.item.LOTREntityArrowPoisoned;
+import lotr.common.entity.item.LOTREntityTraderRespawn;
+import lotr.common.entity.projectile.LOTREntityCrossbowBolt;
+import lotr.common.entity.projectile.LOTREntityPebble;
+import lotr.common.entity.projectile.LOTREntityPlate;
 import lotr.common.fac.LOTRFaction;
-import lotr.common.inventory.*;
+import lotr.common.inventory.LOTRContainerAnvil;
+import lotr.common.inventory.LOTRContainerCoinExchange;
+import lotr.common.inventory.LOTRContainerTrade;
+import lotr.common.inventory.LOTRContainerUnitTrade;
 import lotr.common.item.*;
-import lotr.common.network.*;
-import lotr.common.quest.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketNPCCombatStance;
+import lotr.common.network.LOTRPacketNPCFX;
+import lotr.common.network.LOTRPacketNPCIsEating;
+import lotr.common.quest.LOTRMiniQuest;
+import lotr.common.quest.LOTRMiniQuestFactory;
 import lotr.common.world.LOTRUtumnoLevel;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.structure.LOTRChestContents;
@@ -25,18 +32,34 @@ import net.minecraft.command.IEntitySelector;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.entity.ai.attributes.*;
+import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.server.management.PlayerManager;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.awt.*;
+import java.lang.reflect.Constructor;
+import java.util.List;
+import java.util.*;
 
 public abstract class LOTREntityNPC extends EntityCreature implements IRangedAttackMob, LOTRRandomSkinEntity {
 	public static IAttribute npcAttackDamage = new RangedAttribute("lotr.npcAttackDamage", 2.0, 0.0, Double.MAX_VALUE).setDescription("LOTR NPC Attack Damage");
@@ -103,6 +126,18 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		if (this instanceof LOTRBoss || this instanceof LOTRCharacter) {
 			isNPCPersistent = true;
 		}
+	}
+
+	public static int addTargetTasks(EntityCreature entity, int index, Class<? extends LOTREntityAINearestAttackableTargetBasic> c) {
+		try {
+			Constructor<? extends LOTREntityAINearestAttackableTargetBasic> constructor = c.getConstructor(EntityCreature.class, Class.class, Integer.TYPE, Boolean.TYPE, IEntitySelector.class);
+			entity.targetTasks.addTask(index, constructor.newInstance(entity, EntityPlayer.class, 0, true, null));
+			entity.targetTasks.addTask(index, constructor.newInstance(entity, EntityLiving.class, 0, true, new LOTRNPCTargetSelector(entity)));
+		} catch (Exception e) {
+			FMLLog.severe("Error adding LOTR target tasks to entity " + entity.toString());
+			e.printStackTrace();
+		}
+		return index;
 	}
 
 	public int addTargetTasks(boolean seekTargets) {
@@ -659,6 +694,10 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 
 	public UUID getInvasionID() {
 		return invasionID;
+	}
+
+	public void setInvasionID(UUID id) {
+		invasionID = id;
 	}
 
 	public LOTRAchievement getKillAchievement() {
@@ -1321,10 +1360,6 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		}
 	}
 
-	public void setInvasionID(UUID id) {
-		invasionID = id;
-	}
-
 	public void setPersistentAndTraderShouldRespawn() {
 		isNPCPersistent = true;
 		shouldTraderRespawn = true;
@@ -1597,18 +1632,6 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		nbt.setInteger("InitHomeY", initHomeY);
 		nbt.setInteger("InitHomeZ", initHomeZ);
 		nbt.setInteger("InitHomeR", initHomeRange);
-	}
-
-	public static int addTargetTasks(EntityCreature entity, int index, Class<? extends LOTREntityAINearestAttackableTargetBasic> c) {
-		try {
-			Constructor<? extends LOTREntityAINearestAttackableTargetBasic> constructor = c.getConstructor(EntityCreature.class, Class.class, Integer.TYPE, Boolean.TYPE, IEntitySelector.class);
-			entity.targetTasks.addTask(index, constructor.newInstance(entity, EntityPlayer.class, 0, true, null));
-			entity.targetTasks.addTask(index, constructor.newInstance(entity, EntityLiving.class, 0, true, new LOTRNPCTargetSelector(entity)));
-		} catch (Exception e) {
-			FMLLog.severe("Error adding LOTR target tasks to entity " + entity.toString());
-			e.printStackTrace();
-		}
-		return index;
 	}
 
 	public enum AttackMode {

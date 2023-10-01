@@ -1,7 +1,8 @@
 package lotr.common.tileentity;
 
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.*;
+import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.World;
 
 public class LOTRDwarvenGlowLogic {
 	public static float[] lightValueSqrts = new float[16];
@@ -38,6 +39,10 @@ public class LOTRDwarvenGlowLogic {
 		return glowTick;
 	}
 
+	public void setGlowTick(int i) {
+		glowTick = prevGlowTick = i;
+	}
+
 	public void resetGlowTick() {
 		prevGlowTick = 0;
 		glowTick = 0;
@@ -46,10 +51,6 @@ public class LOTRDwarvenGlowLogic {
 	public LOTRDwarvenGlowLogic setFullGlow(float f) {
 		fullGlow = f;
 		return this;
-	}
-
-	public void setGlowTick(int i) {
-		glowTick = prevGlowTick = i;
 	}
 
 	public LOTRDwarvenGlowLogic setGlowTime(int i) {

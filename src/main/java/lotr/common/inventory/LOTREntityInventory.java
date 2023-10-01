@@ -3,7 +3,8 @@ package lotr.common.inventory;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public class LOTREntityInventory extends InventoryBasic {
 	public EntityLivingBase theEntity;

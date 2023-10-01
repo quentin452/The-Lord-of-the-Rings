@@ -1,17 +1,21 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.animal.*;
+import lotr.common.entity.animal.LOTREntityBear;
+import lotr.common.entity.animal.LOTREntityCrebain;
 import lotr.common.entity.item.LOTREntityBearRug;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityDunlendingArcher;
+import lotr.common.entity.npc.LOTREntityDunlendingWarlord;
+import lotr.common.entity.npc.LOTREntityDunlendingWarrior;
 import lotr.common.item.LOTRItemBanner;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenDunlandHillFort extends LOTRWorldGenDunlandStructure {
 	public LOTRWorldGenDunlandHillFort(boolean flag) {

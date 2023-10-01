@@ -1,12 +1,15 @@
 package lotr.common.recipe;
 
-import java.util.*;
-
 import cpw.mods.fml.common.registry.GameRegistry;
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRMillstoneRecipes {
 	public static Map<ItemStack, MillstoneResult> recipeList = new HashMap<>();

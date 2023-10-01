@@ -1,21 +1,31 @@
 package lotr.common.world;
 
-import java.awt.Color;
-
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRDimension;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketBlockFX;
+import lotr.common.network.LOTRPacketHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
+import java.awt.*;
+
 public class LOTRWorldProviderUtumno extends LOTRWorldProvider {
 	public LOTRWorldProviderUtumno() {
 		hasNoSky = true;
+	}
+
+	public static void doEvaporateFX(World world, int i, int j, int k) {
+		if (!world.isRemote) {
+			world.playSoundEffect(i + 0.5f, j + 0.5f, k + 0.5f, "random.fizz", 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f);
+			IMessage pkt = new LOTRPacketBlockFX(LOTRPacketBlockFX.Type.UTUMNO_EVAPORATE, i, j, k);
+			LOTRPacketHandler.networkWrapper.sendToAllAround(pkt, new NetworkRegistry.TargetPoint(world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 32.0));
+		}
 	}
 
 	@Override
@@ -91,14 +101,6 @@ public class LOTRWorldProviderUtumno extends LOTRWorldProvider {
 
 	@Override
 	public void setSpawnPoint(int i, int j, int k) {
-	}
-
-	public static void doEvaporateFX(World world, int i, int j, int k) {
-		if (!world.isRemote) {
-			world.playSoundEffect(i + 0.5f, j + 0.5f, k + 0.5f, "random.fizz", 0.5f, 2.6f + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8f);
-			IMessage pkt = new LOTRPacketBlockFX(LOTRPacketBlockFX.Type.UTUMNO_EVAPORATE, i, j, k);
-			LOTRPacketHandler.networkWrapper.sendToAllAround(pkt, new NetworkRegistry.TargetPoint(world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 32.0));
-		}
 	}
 
 	public interface UtumnoBlock {

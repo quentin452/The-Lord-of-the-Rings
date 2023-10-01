@@ -1,20 +1,26 @@
 package lotr.common.tileentity;
 
-import java.util.*;
-
 import lotr.common.block.LOTRBlockAnimalJar;
-import lotr.common.entity.*;
+import lotr.common.entity.AnimalJarUpdater;
+import lotr.common.entity.LOTREntities;
 import lotr.common.entity.animal.LOTREntityButterfly;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.*;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.management.PlayerManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRTileEntityAnimalJar extends TileEntity {
 	public NBTTagCompound jarEntityData;
@@ -39,6 +45,12 @@ public class LOTRTileEntityAnimalJar extends TileEntity {
 
 	public NBTTagCompound getEntityData() {
 		return jarEntityData;
+	}
+
+	public void setEntityData(NBTTagCompound nbt) {
+		jarEntityData = nbt;
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		markDirty();
 	}
 
 	public float getEntityHeight() {
@@ -135,12 +147,6 @@ public class LOTRTileEntityAnimalJar extends TileEntity {
 			}
 			entityplayer.playerNetServerHandler.sendPacket(packet);
 		}
-	}
-
-	public void setEntityData(NBTTagCompound nbt) {
-		jarEntityData = nbt;
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-		markDirty();
 	}
 
 	@Override

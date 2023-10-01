@@ -1,13 +1,13 @@
 package lotr.client.render.entity;
 
-import java.awt.Color;
-import java.util.Random;
-
+import lotr.client.model.LOTRModelHuman;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-import lotr.client.model.LOTRModelHuman;
-import net.minecraft.entity.*;
-import net.minecraft.util.ResourceLocation;
+import java.awt.*;
+import java.util.Random;
 
 public class LOTRRenderSaruman extends LOTRRenderBiped {
 	public static ResourceLocation skin = new ResourceLocation("lotr:mob/char/saruman.png");

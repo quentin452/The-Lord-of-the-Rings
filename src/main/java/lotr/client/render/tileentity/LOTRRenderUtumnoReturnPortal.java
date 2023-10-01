@@ -1,13 +1,13 @@
 package lotr.client.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.tileentity.LOTRTileEntityUtumnoReturnPortal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderUtumnoReturnPortal extends TileEntitySpecialRenderer {
 	public static ResourceLocation lightCircle = new ResourceLocation("lotr:misc/utumnoPortal_lightCircle.png");

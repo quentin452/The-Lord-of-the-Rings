@@ -1,10 +1,12 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.IShearable;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LOTRBlockDeadPlant extends LOTRBlockFlower implements IShearable {
 	public LOTRBlockDeadPlant() {

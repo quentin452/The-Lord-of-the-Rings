@@ -1,12 +1,14 @@
 package lotr.common.fellowship;
 
-import java.util.*;
-
 import com.google.common.collect.ImmutableList;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.*;
-import lotr.common.network.*;
+import lotr.common.LOTRPlayerData;
+import lotr.common.LOTRTitle;
+import lotr.common.network.LOTRPacketFellowship;
+import lotr.common.network.LOTRPacketFellowshipPartialUpdate;
+
+import java.util.List;
+import java.util.UUID;
 
 public interface FellowshipUpdateType {
 	IMessage createUpdatePacket(LOTRPlayerData var1, LOTRFellowship var2);

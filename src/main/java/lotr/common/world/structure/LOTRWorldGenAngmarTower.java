@@ -1,7 +1,5 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityAngmarOrcMercenaryCaptain;
 import lotr.common.item.LOTRItemBanner;
@@ -9,6 +7,8 @@ import lotr.common.world.biome.LOTRBiomeGenAngmar;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenAngmarTower extends LOTRWorldGenStructureBase {
 	public LOTRWorldGenAngmarTower(boolean flag) {

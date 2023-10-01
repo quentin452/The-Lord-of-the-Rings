@@ -1,10 +1,10 @@
 package lotr.common.world.genlayer;
 
-import java.util.List;
-
 import lotr.common.LOTRDimension;
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRGenLayerClassicBiomes extends LOTRGenLayer {
 	public LOTRDimension dimension;

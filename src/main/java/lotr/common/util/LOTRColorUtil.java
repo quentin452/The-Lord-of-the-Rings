@@ -1,10 +1,11 @@
 package lotr.common.util;
 
-import java.awt.Color;
-import java.util.Random;
-
-import net.minecraft.item.*;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+
+import java.awt.*;
+import java.util.Random;
 
 public class LOTRColorUtil {
 	public static ItemStack dyeLeather(ItemStack itemstack, int color) {

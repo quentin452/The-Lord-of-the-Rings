@@ -3,7 +3,8 @@ package lotr.common.item;
 import lotr.common.LOTRCreativeTabs;
 import lotr.common.entity.npc.LOTREntityHalfTroll;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StringUtils;
 
 import java.util.Locale;

@@ -1,9 +1,6 @@
 package lotr.common.world.biome.variant;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.map.LOTRRoads;
 import net.minecraft.block.Block;
@@ -11,6 +8,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+
+import java.util.Random;
 
 public class LOTRBiomeVariantOrchard extends LOTRBiomeVariant {
 	public LOTRBiomeVariantOrchard(int i, String s) {

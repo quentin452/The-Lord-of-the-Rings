@@ -1,18 +1,20 @@
 package lotr.client;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.*;
-import java.util.zip.*;
-
+import com.google.common.base.Charsets;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.ModContainer;
+import lotr.common.LOTRMod;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.input.BOMInputStream;
 
-import com.google.common.base.Charsets;
-
-import cpw.mods.fml.common.*;
-import lotr.common.LOTRMod;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class LOTRLang {
 	public static void copyZipEntryToFile(ZipFile zip, ZipEntry entry, File copy) throws IOException {

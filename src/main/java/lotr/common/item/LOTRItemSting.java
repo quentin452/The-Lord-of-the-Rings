@@ -1,6 +1,7 @@
 package lotr.common.item;
 
-import lotr.common.*;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 

@@ -1,10 +1,12 @@
 package lotr.common.inventory;
 
 import lotr.common.LOTRLevelData;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTRHireableBase;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.item.LOTRItemCoin;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 

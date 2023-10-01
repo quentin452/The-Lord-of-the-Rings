@@ -1,14 +1,20 @@
 package lotr.common.world.structure2;
 
-import java.util.*;
-
-import lotr.common.*;
-import lotr.common.entity.animal.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
+import lotr.common.entity.animal.LOTREntityBird;
+import lotr.common.entity.animal.LOTREntityButterfly;
 import lotr.common.entity.npc.*;
 import lotr.common.item.LOTRItemBanner;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class LOTRWorldGenHarnedorMarket extends LOTRWorldGenHarnedorStructure {
 	public static Class[] stalls = {Brewer.class, Fish.class, Butcher.class, Baker.class, Lumber.class, Miner.class, Mason.class, Hunter.class, Blacksmith.class, Farmer.class};

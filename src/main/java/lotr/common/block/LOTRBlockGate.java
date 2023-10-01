@@ -1,8 +1,7 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.client.render.LOTRConnectedTextures;
 import lotr.common.LOTRCreativeTabs;
 import lotr.common.item.LOTRWeaponStats;
@@ -10,9 +9,16 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.Facing;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+import java.util.*;
 
 public class LOTRBlockGate extends Block implements LOTRConnectedBlock {
 	public static int MAX_GATE_RANGE = 16;
@@ -23,6 +29,58 @@ public class LOTRBlockGate extends Block implements LOTRConnectedBlock {
 		super(material);
 		hasConnectedTextures = ct;
 		setCreativeTab(LOTRCreativeTabs.tabUtil);
+	}
+
+	public static LOTRBlockGate createMetal(boolean ct) {
+		LOTRBlockGate block = new LOTRBlockGate(Material.iron, ct);
+		block.setHardness(4.0F);
+		block.setResistance(10.0F);
+		block.setStepSound(Block.soundTypeMetal);
+		return block;
+	}
+
+	public static LOTRBlockGate createStone(boolean ct) {
+		LOTRBlockGate block = new LOTRBlockGate(Material.rock, ct);
+		block.setHardness(4.0F);
+		block.setResistance(10.0F);
+		block.setStepSound(Block.soundTypeStone);
+		return block;
+	}
+
+	public static LOTRBlockGate createWooden(boolean ct) {
+		LOTRBlockGate block = new LOTRBlockGate(Material.wood, ct);
+		block.setHardness(4.0F);
+		block.setResistance(5.0F);
+		block.setStepSound(Block.soundTypeWood);
+		return block;
+	}
+
+	public static int getGateDirection(IBlockAccess world, int i, int j, int k) {
+		int meta = world.getBlockMetadata(i, j, k);
+		return getGateDirection(meta);
+	}
+
+	public static int getGateDirection(int meta) {
+		return meta & 0x7;
+	}
+
+	public static boolean isGateOpen(IBlockAccess world, int i, int j, int k) {
+		int meta = world.getBlockMetadata(i, j, k);
+		return isGateOpen(meta);
+	}
+
+	public static boolean isGateOpen(int meta) {
+		return (meta & 0x8) != 0;
+	}
+
+	public static void setGateOpen(World world, int i, int j, int k, boolean flag) {
+		int meta = world.getBlockMetadata(i, j, k);
+		if (flag) {
+			meta |= 0x8;
+		} else {
+			meta &= 0x7;
+		}
+		world.setBlockMetadataWithNotify(i, j, k, meta, 3);
 	}
 
 	public void activateGate(World world, int i, int j, int k) {
@@ -302,57 +360,5 @@ public class LOTRBlockGate extends Block implements LOTRConnectedBlock {
 			}
 		}
 		return super.shouldSideBeRendered(world, i, j, k, side);
-	}
-
-	public static LOTRBlockGate createMetal(boolean ct) {
-		LOTRBlockGate block = new LOTRBlockGate(Material.iron, ct);
-		block.setHardness(4.0F);
-		block.setResistance(10.0F);
-		block.setStepSound(Block.soundTypeMetal);
-		return block;
-	}
-
-	public static LOTRBlockGate createStone(boolean ct) {
-		LOTRBlockGate block = new LOTRBlockGate(Material.rock, ct);
-		block.setHardness(4.0F);
-		block.setResistance(10.0F);
-		block.setStepSound(Block.soundTypeStone);
-		return block;
-	}
-
-	public static LOTRBlockGate createWooden(boolean ct) {
-		LOTRBlockGate block = new LOTRBlockGate(Material.wood, ct);
-		block.setHardness(4.0F);
-		block.setResistance(5.0F);
-		block.setStepSound(Block.soundTypeWood);
-		return block;
-	}
-
-	public static int getGateDirection(IBlockAccess world, int i, int j, int k) {
-		int meta = world.getBlockMetadata(i, j, k);
-		return getGateDirection(meta);
-	}
-
-	public static int getGateDirection(int meta) {
-		return meta & 0x7;
-	}
-
-	public static boolean isGateOpen(IBlockAccess world, int i, int j, int k) {
-		int meta = world.getBlockMetadata(i, j, k);
-		return isGateOpen(meta);
-	}
-
-	public static boolean isGateOpen(int meta) {
-		return (meta & 0x8) != 0;
-	}
-
-	public static void setGateOpen(World world, int i, int j, int k, boolean flag) {
-		int meta = world.getBlockMetadata(i, j, k);
-		if (flag) {
-			meta |= 0x8;
-		} else {
-			meta &= 0x7;
-		}
-		world.setBlockMetadataWithNotify(i, j, k, meta, 3);
 	}
 }

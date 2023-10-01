@@ -1,23 +1,32 @@
 package lotr.common.inventory;
 
-import java.util.*;
-
-import net.minecraft.command.ICommandSender;
-import org.apache.commons.lang3.StringUtils;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
-import lotr.common.enchant.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.enchant.LOTREnchantment;
+import lotr.common.enchant.LOTREnchantmentCombining;
+import lotr.common.enchant.LOTREnchantmentHelper;
 import lotr.common.entity.npc.*;
 import lotr.common.item.*;
 import lotr.common.recipe.LOTRRecipePoisonWeapon;
-import net.minecraft.enchantment.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.init.*;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatAllowedCharacters;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.*;
 
 public class LOTRContainerAnvil extends Container {
 	public static int maxReforgeTime = 40;
@@ -80,6 +89,46 @@ public class LOTRContainerAnvil extends Container {
 		this(entityplayer, true);
 		theNPC = npc;
 		theTrader = (LOTRTradeable) npc;
+	}
+
+	public static String applyFormattingCodes(String name, Iterable<EnumChatFormatting> colors) {
+		StringBuilder nameBuilder = new StringBuilder(name);
+		for (EnumChatFormatting color : colors) {
+			nameBuilder.insert(0, color);
+		}
+		name = nameBuilder.toString();
+		return name;
+	}
+
+	public static boolean costsToRename(ItemStack itemstack) {
+		Item item = itemstack.getItem();
+		if (item instanceof ItemSword || item instanceof ItemTool || item instanceof ItemArmor && ((ItemArmor) item).damageReduceAmount > 0) {
+			return true;
+		}
+		return item instanceof ItemBow || item instanceof LOTRItemThrowingAxe || item instanceof LOTRItemBlowgun;
+	}
+
+	public static List<EnumChatFormatting> getAppliedFormattingCodes(String name) {
+		List<EnumChatFormatting> colors = new ArrayList<>();
+		for (EnumChatFormatting color : EnumChatFormatting.values()) {
+			String formatCode = color.toString();
+			if (!name.startsWith(formatCode)) {
+				continue;
+			}
+			colors.add(color);
+		}
+		return colors;
+	}
+
+	public static String stripFormattingCodes(String name) {
+		for (EnumChatFormatting color : EnumChatFormatting.values()) {
+			String formatCode = color.toString();
+			if (!name.startsWith(formatCode)) {
+				continue;
+			}
+			name = name.substring(formatCode.length());
+		}
+		return name;
 	}
 
 	public boolean applyMischief(ItemStack itemstack) {
@@ -774,46 +823,6 @@ public class LOTRContainerAnvil extends Container {
 			}
 			detectAndSendChanges();
 		}
-	}
-
-	public static String applyFormattingCodes(String name, Iterable<EnumChatFormatting> colors) {
-		StringBuilder nameBuilder = new StringBuilder(name);
-		for (EnumChatFormatting color : colors) {
-			nameBuilder.insert(0, color);
-		}
-		name = nameBuilder.toString();
-		return name;
-	}
-
-	public static boolean costsToRename(ItemStack itemstack) {
-		Item item = itemstack.getItem();
-		if (item instanceof ItemSword || item instanceof ItemTool || item instanceof ItemArmor && ((ItemArmor) item).damageReduceAmount > 0) {
-			return true;
-		}
-		return item instanceof ItemBow || item instanceof LOTRItemThrowingAxe || item instanceof LOTRItemBlowgun;
-	}
-
-	public static List<EnumChatFormatting> getAppliedFormattingCodes(String name) {
-		List<EnumChatFormatting> colors = new ArrayList<>();
-		for (EnumChatFormatting color : EnumChatFormatting.values()) {
-			String formatCode = color.toString();
-			if (!name.startsWith(formatCode)) {
-				continue;
-			}
-			colors.add(color);
-		}
-		return colors;
-	}
-
-	public static String stripFormattingCodes(String name) {
-		for (EnumChatFormatting color : EnumChatFormatting.values()) {
-			String formatCode = color.toString();
-			if (!name.startsWith(formatCode)) {
-				continue;
-			}
-			name = name.substring(formatCode.length());
-		}
-		return name;
 	}
 
 }

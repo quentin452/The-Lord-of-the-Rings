@@ -1,20 +1,27 @@
 package lotr.common.entity.npc;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
 import lotr.common.block.LOTRBlockCorruptMallorn;
-import lotr.common.entity.ai.*;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAIEntHealSapling;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.item.LOTRItemEntDraught;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTREntityEnt extends LOTREntityTree {
 	public Random branchRand = new Random();
@@ -153,6 +160,10 @@ public class LOTREntityEnt extends LOTREntityTree {
 		return dataWatcher.getWatchableObjectByte(18) == 1;
 	}
 
+	public void setHealingSapling(boolean flag) {
+		dataWatcher.updateObject(18, flag ? (byte) 1 : 0);
+	}
+
 	@Override
 	public void onDeath(DamageSource damagesource) {
 		super.onDeath(damagesource);
@@ -217,10 +228,6 @@ public class LOTREntityEnt extends LOTREntityTree {
 		if (getAttackTarget() == null) {
 			canHealSapling = true;
 		}
-	}
-
-	public void setHealingSapling(boolean flag) {
-		dataWatcher.updateObject(18, flag ? (byte) 1 : 0);
 	}
 
 	@Override

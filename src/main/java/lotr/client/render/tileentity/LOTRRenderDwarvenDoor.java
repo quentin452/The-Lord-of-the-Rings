@@ -1,7 +1,5 @@
 package lotr.client.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.render.LOTRRenderBlocks;
 import lotr.common.block.LOTRBlockGateDwarvenIthildin;
 import lotr.common.tileentity.LOTRTileEntityDwarvenDoor;
@@ -11,6 +9,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderDwarvenDoor extends TileEntitySpecialRenderer {
 	public RenderBlocks renderBlocks;

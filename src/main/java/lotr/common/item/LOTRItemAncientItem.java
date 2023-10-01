@@ -1,19 +1,25 @@
 package lotr.common.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
-import lotr.common.enchant.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRLevelData;
+import lotr.common.enchant.LOTREnchantment;
+import lotr.common.enchant.LOTREnchantmentHelper;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRItemAncientItem extends Item {
 	@SideOnly(Side.CLIENT)
@@ -25,6 +31,35 @@ public class LOTRItemAncientItem extends Item {
 		setHasSubtypes(true);
 		setMaxDamage(0);
 		setCreativeTab(LOTRCreativeTabs.tabMisc);
+	}
+
+	public static ItemStack getRandomItem(ItemStack itemstack) {
+		ItemStack randomItem;
+		IInventory randomItemInv = new InventoryBasic("ancientItem", true, 1);
+		LOTRChestContents itemPool = null;
+		if (itemstack.getItemDamage() == 0) {
+			itemPool = LOTRChestContents.ANCIENT_SWORD;
+		} else if (itemstack.getItemDamage() == 1) {
+			itemPool = LOTRChestContents.ANCIENT_DAGGER;
+		} else if (itemstack.getItemDamage() == 2) {
+			itemPool = LOTRChestContents.ANCIENT_HELMET;
+		} else if (itemstack.getItemDamage() == 3) {
+			itemPool = LOTRChestContents.ANCIENT_BODY;
+		} else if (itemstack.getItemDamage() == 4) {
+			itemPool = LOTRChestContents.ANCIENT_LEGS;
+		} else if (itemstack.getItemDamage() == 5) {
+			itemPool = LOTRChestContents.ANCIENT_BOOTS;
+		}
+		LOTRChestContents.fillInventory(randomItemInv, itemRand, itemPool, 1);
+		randomItem = randomItemInv.getStackInSlot(0);
+		if (randomItem != null) {
+			LOTREnchantment wraithbane;
+			if (LOTRConfig.enchantingLOTR && (wraithbane = LOTREnchantment.baneWraith).canApply(randomItem, false) && itemRand.nextInt(4) == 0) {
+				LOTREnchantmentHelper.setHasEnchant(randomItem, wraithbane);
+			}
+			return randomItem;
+		}
+		return itemstack;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -67,34 +102,5 @@ public class LOTRItemAncientItem extends Item {
 		for (int i = 0; i < itemNames.length; ++i) {
 			icons[i] = iconregister.registerIcon(getIconString() + "_" + itemNames[i]);
 		}
-	}
-
-	public static ItemStack getRandomItem(ItemStack itemstack) {
-		ItemStack randomItem;
-		IInventory randomItemInv = new InventoryBasic("ancientItem", true, 1);
-		LOTRChestContents itemPool = null;
-		if (itemstack.getItemDamage() == 0) {
-			itemPool = LOTRChestContents.ANCIENT_SWORD;
-		} else if (itemstack.getItemDamage() == 1) {
-			itemPool = LOTRChestContents.ANCIENT_DAGGER;
-		} else if (itemstack.getItemDamage() == 2) {
-			itemPool = LOTRChestContents.ANCIENT_HELMET;
-		} else if (itemstack.getItemDamage() == 3) {
-			itemPool = LOTRChestContents.ANCIENT_BODY;
-		} else if (itemstack.getItemDamage() == 4) {
-			itemPool = LOTRChestContents.ANCIENT_LEGS;
-		} else if (itemstack.getItemDamage() == 5) {
-			itemPool = LOTRChestContents.ANCIENT_BOOTS;
-		}
-		LOTRChestContents.fillInventory(randomItemInv, itemRand, itemPool, 1);
-		randomItem = randomItemInv.getStackInSlot(0);
-		if (randomItem != null) {
-			LOTREnchantment wraithbane;
-			if (LOTRConfig.enchantingLOTR && (wraithbane = LOTREnchantment.baneWraith).canApply(randomItem, false) && itemRand.nextInt(4) == 0) {
-				LOTREnchantmentHelper.setHasEnchant(randomItem, wraithbane);
-			}
-			return randomItem;
-		}
-		return itemstack;
 	}
 }

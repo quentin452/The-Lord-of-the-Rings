@@ -1,9 +1,9 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenDaleVillage extends LOTRWorldGenStructureBase2 {
 	public LOTRWorldGenDaleVillage(boolean flag) {

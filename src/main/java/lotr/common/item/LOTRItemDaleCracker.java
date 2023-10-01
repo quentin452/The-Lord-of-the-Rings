@@ -1,18 +1,27 @@
 package lotr.common.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.util.*;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRItemDaleCracker extends Item {
 	public static int emptyMeta = 4096;
@@ -26,6 +35,84 @@ public class LOTRItemDaleCracker extends Item {
 		setHasSubtypes(true);
 		setMaxDamage(0);
 		setCreativeTab(LOTRCreativeTabs.tabMisc);
+	}
+
+	public static int getBaseCrackerMetadata(int i) {
+		return i & ~emptyMeta;
+	}
+
+	public static String getSealingPlayerName(ItemStack itemstack) {
+		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("SealingPlayer")) {
+			return itemstack.getTagCompound().getString("SealingPlayer");
+		}
+		return null;
+	}
+
+	public static boolean isEmpty(ItemStack itemstack) {
+		return (itemstack.getItemDamage() & emptyMeta) == emptyMeta;
+	}
+
+	public static IInventory loadCustomCrackerContents(ItemStack itemstack) {
+		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("CustomCracker")) {
+			NBTTagCompound invData = itemstack.getTagCompound().getCompoundTag("CustomCracker");
+			int size = invData.getInteger("Size");
+			IInventory inv = new InventoryBasic("cracker", false, size);
+			NBTTagList items = invData.getTagList("Items", 10);
+			for (int i = 0; i < items.tagCount(); ++i) {
+				NBTTagCompound itemData = items.getCompoundTagAt(i);
+				byte slot = itemData.getByte("Slot");
+				if (slot < 0 || slot >= inv.getSizeInventory()) {
+					continue;
+				}
+				inv.setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(itemData));
+			}
+			return inv;
+		}
+		return null;
+	}
+
+	public static void setCustomCrackerContents(ItemStack itemstack, IInventory inv) {
+		if (itemstack.getTagCompound() == null) {
+			itemstack.setTagCompound(new NBTTagCompound());
+		}
+		if (inv == null) {
+			itemstack.getTagCompound().removeTag("CustomCracker");
+		} else {
+			NBTTagCompound invData = new NBTTagCompound();
+			int size = inv.getSizeInventory();
+			invData.setInteger("Size", size);
+			NBTTagList items = new NBTTagList();
+			for (int i = 0; i < inv.getSizeInventory(); ++i) {
+				ItemStack invItem = inv.getStackInSlot(i);
+				if (invItem == null) {
+					continue;
+				}
+				NBTTagCompound itemData = new NBTTagCompound();
+				itemData.setByte("Slot", (byte) i);
+				invItem.writeToNBT(itemData);
+				items.appendTag(itemData);
+			}
+			invData.setTag("Items", items);
+			itemstack.getTagCompound().setTag("CustomCracker", invData);
+		}
+	}
+
+	public static ItemStack setEmpty(ItemStack itemstack, boolean flag) {
+		int i = itemstack.getItemDamage();
+		i = flag ? i | emptyMeta : i & ~emptyMeta;
+		itemstack.setItemDamage(i);
+		return itemstack;
+	}
+
+	public static void setSealingPlayerName(ItemStack itemstack, String name) {
+		if (itemstack.getTagCompound() == null) {
+			itemstack.setTagCompound(new NBTTagCompound());
+		}
+		if (name == null) {
+			itemstack.getTagCompound().removeTag("SealingPlayer");
+		} else {
+			itemstack.getTagCompound().setString("SealingPlayer", name);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -134,84 +221,6 @@ public class LOTRItemDaleCracker extends Item {
 		crackerIcons = new IIcon[crackerNames.length];
 		for (int i = 0; i < crackerNames.length; ++i) {
 			crackerIcons[i] = iconregister.registerIcon(getIconString() + "_" + crackerNames[i]);
-		}
-	}
-
-	public static int getBaseCrackerMetadata(int i) {
-		return i & ~emptyMeta;
-	}
-
-	public static String getSealingPlayerName(ItemStack itemstack) {
-		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("SealingPlayer")) {
-			return itemstack.getTagCompound().getString("SealingPlayer");
-		}
-		return null;
-	}
-
-	public static boolean isEmpty(ItemStack itemstack) {
-		return (itemstack.getItemDamage() & emptyMeta) == emptyMeta;
-	}
-
-	public static IInventory loadCustomCrackerContents(ItemStack itemstack) {
-		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("CustomCracker")) {
-			NBTTagCompound invData = itemstack.getTagCompound().getCompoundTag("CustomCracker");
-			int size = invData.getInteger("Size");
-			IInventory inv = new InventoryBasic("cracker", false, size);
-			NBTTagList items = invData.getTagList("Items", 10);
-			for (int i = 0; i < items.tagCount(); ++i) {
-				NBTTagCompound itemData = items.getCompoundTagAt(i);
-				byte slot = itemData.getByte("Slot");
-				if (slot < 0 || slot >= inv.getSizeInventory()) {
-					continue;
-				}
-				inv.setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(itemData));
-			}
-			return inv;
-		}
-		return null;
-	}
-
-	public static void setCustomCrackerContents(ItemStack itemstack, IInventory inv) {
-		if (itemstack.getTagCompound() == null) {
-			itemstack.setTagCompound(new NBTTagCompound());
-		}
-		if (inv == null) {
-			itemstack.getTagCompound().removeTag("CustomCracker");
-		} else {
-			NBTTagCompound invData = new NBTTagCompound();
-			int size = inv.getSizeInventory();
-			invData.setInteger("Size", size);
-			NBTTagList items = new NBTTagList();
-			for (int i = 0; i < inv.getSizeInventory(); ++i) {
-				ItemStack invItem = inv.getStackInSlot(i);
-				if (invItem == null) {
-					continue;
-				}
-				NBTTagCompound itemData = new NBTTagCompound();
-				itemData.setByte("Slot", (byte) i);
-				invItem.writeToNBT(itemData);
-				items.appendTag(itemData);
-			}
-			invData.setTag("Items", items);
-			itemstack.getTagCompound().setTag("CustomCracker", invData);
-		}
-	}
-
-	public static ItemStack setEmpty(ItemStack itemstack, boolean flag) {
-		int i = itemstack.getItemDamage();
-		i = flag ? i | emptyMeta : i & ~emptyMeta;
-		itemstack.setItemDamage(i);
-		return itemstack;
-	}
-
-	public static void setSealingPlayerName(ItemStack itemstack, String name) {
-		if (itemstack.getTagCompound() == null) {
-			itemstack.setTagCompound(new NBTTagCompound());
-		}
-		if (name == null) {
-			itemstack.getTagCompound().removeTag("SealingPlayer");
-		} else {
-			itemstack.getTagCompound().setString("SealingPlayer", name);
 		}
 	}
 }

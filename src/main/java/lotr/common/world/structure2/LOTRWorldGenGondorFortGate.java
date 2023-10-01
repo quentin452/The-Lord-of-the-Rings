@@ -1,9 +1,9 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenGondorFortGate extends LOTRWorldGenGondorStructure {
 	public LOTRWorldGenGondorFortGate(boolean flag) {

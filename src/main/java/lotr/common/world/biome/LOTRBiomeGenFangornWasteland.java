@@ -1,10 +1,14 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
-import lotr.common.world.feature.*;
-import lotr.common.world.spawning.*;
+import lotr.common.world.feature.LOTRTreeType;
+import lotr.common.world.feature.LOTRWorldGenBlastedLand;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRInvasions;
+import lotr.common.world.spawning.LOTRSpawnList;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRBiomeGenFangornWasteland extends LOTRBiome {
 	public LOTRBiomeGenFangornWasteland(int i, boolean major) {

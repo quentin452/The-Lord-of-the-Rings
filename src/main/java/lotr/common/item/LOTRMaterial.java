@@ -1,11 +1,15 @@
 package lotr.common.item;
 
-import java.util.*;
-
 import lotr.common.LOTRMod;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class LOTRMaterial {
 	public static float[] protectionBase = {0.14f, 0.4f, 0.32f, 0.14f};
@@ -94,6 +98,76 @@ public class LOTRMaterial {
 		allLOTRMaterials.add(this);
 	}
 
+	public static ItemArmor.ArmorMaterial getArmorMaterialByName(String name) {
+		return ItemArmor.ArmorMaterial.valueOf(name);
+	}
+
+	public static Item.ToolMaterial getToolMaterialByName(String name) {
+		return Item.ToolMaterial.valueOf(name);
+	}
+
+	public static void setCraftingItems() {
+		BRONZE.setCraftingItem(LOTRMod.bronze);
+		MITHRIL.setCraftingItems(LOTRMod.mithril, LOTRMod.mithrilMail);
+		FUR.setCraftingItem(LOTRMod.fur);
+		GEMSBOK.setCraftingItem(LOTRMod.gemsbokHide);
+		GAMBESON.setCraftingItem(Item.getItemFromBlock(Blocks.wool));
+		JACKET.setCraftingItem(Items.leather);
+		GONDOR.setCraftingItem(Items.iron_ingot);
+		DOL_AMROTH.setCraftingItem(Items.iron_ingot);
+		ROHAN.setCraftingItem(Items.iron_ingot);
+		ROHAN_MARSHAL.setCraftingItem(Items.iron_ingot);
+		RANGER.setCraftingItems(Items.iron_ingot, Items.leather);
+		RANGER_ITHILIEN.setCraftingItems(Items.iron_ingot, Items.leather);
+		DUNLENDING.setCraftingItem(Items.iron_ingot);
+		NEAR_HARAD.setCraftingItem(LOTRMod.bronze);
+		HARNEDOR.setCraftingItem(LOTRMod.bronze);
+		UMBAR.setCraftingItem(Items.iron_ingot);
+		CORSAIR.setCraftingItems(Items.iron_ingot, LOTRMod.bronze);
+		GULF_HARAD.setCraftingItem(LOTRMod.bronze);
+		HARAD_NOMAD.setCraftingItem(Item.getItemFromBlock(LOTRMod.driedReeds));
+		ANCIENT_HARAD.setCraftingItem(Items.iron_ingot);
+		MOREDAIN.setCraftingItems(LOTRMod.rhinoHorn, LOTRMod.gemsbokHide);
+		MOREDAIN_SPEAR.setCraftingItem(LOTRMod.gemsbokHorn);
+		MOREDAIN_LION_ARMOR.setCraftingItem(LOTRMod.lionFur);
+		MOREDAIN_BRONZE.setCraftingItem(LOTRMod.bronze);
+		TAUREDAIN.setCraftingItems(LOTRMod.obsidianShard, LOTRMod.bronze);
+		TAUREDAIN_GOLD.setCraftingItem(Items.gold_ingot);
+		BARROW.setCraftingItem(Items.iron_ingot);
+		DALE.setCraftingItem(Items.iron_ingot);
+		DORWINION.setCraftingItem(Items.iron_ingot);
+		LOSSARNACH.setCraftingItem(Items.iron_ingot);
+		PELARGIR.setCraftingItem(Items.iron_ingot);
+		PINNATH_GELIN.setCraftingItem(Items.iron_ingot);
+		BLACKROOT.setCraftingItem(Items.iron_ingot);
+		LAMEDON.setCraftingItem(Items.iron_ingot);
+		ARNOR.setCraftingItem(Items.iron_ingot);
+		RHUN.setCraftingItem(Items.iron_ingot);
+		RHUN_GOLD.setCraftingItem(LOTRMod.gildedIron);
+		BLACK_NUMENOREAN.setCraftingItem(Items.iron_ingot);
+		GALADHRIM.setCraftingItem(LOTRMod.elfSteel);
+		GALVORN.setCraftingItem(LOTRMod.galvorn);
+		WOOD_ELVEN_SCOUT.setCraftingItems(LOTRMod.elfSteel, Items.leather);
+		WOOD_ELVEN.setCraftingItem(LOTRMod.elfSteel);
+		HIGH_ELVEN.setCraftingItem(LOTRMod.elfSteel);
+		GONDOLIN.setCraftingItem(LOTRMod.elfSteel);
+		HITHLAIN.setCraftingItem(LOTRMod.hithlain);
+		DORWINION_ELF.setCraftingItem(LOTRMod.elfSteel);
+		RIVENDELL.setCraftingItem(LOTRMod.elfSteel);
+		DWARVEN.setCraftingItem(LOTRMod.dwarfSteel);
+		BLUE_DWARVEN.setCraftingItem(LOTRMod.blueDwarfSteel);
+		BLADORTHIN.setCraftingItem(LOTRMod.dwarfSteel);
+		MORDOR.setCraftingItem(LOTRMod.orcSteel);
+		URUK.setCraftingItem(LOTRMod.urukSteel);
+		MORGUL.setCraftingItem(LOTRMod.morgulSteel);
+		GUNDABAD_URUK.setCraftingItem(LOTRMod.urukSteel);
+		ANGMAR.setCraftingItem(LOTRMod.orcSteel);
+		DOL_GULDUR.setCraftingItem(LOTRMod.orcSteel);
+		BLACK_URUK.setCraftingItem(LOTRMod.blackUrukSteel);
+		UTUMNO.setCraftingItem(LOTRMod.orcSteel);
+		HALF_TROLL.setCraftingItems(Items.flint, LOTRMod.gemsbokHide);
+	}
+
 	public boolean canHarvestManFlesh() {
 		return canHarvestManFlesh;
 	}
@@ -166,75 +240,5 @@ public class LOTRMaterial {
 			toolMaterial = EnumHelper.addToolMaterial(materialName, harvestLevel, uses, speed, damage, enchantability);
 		}
 		return toolMaterial;
-	}
-
-	public static ItemArmor.ArmorMaterial getArmorMaterialByName(String name) {
-		return ItemArmor.ArmorMaterial.valueOf(name);
-	}
-
-	public static Item.ToolMaterial getToolMaterialByName(String name) {
-		return Item.ToolMaterial.valueOf(name);
-	}
-
-	public static void setCraftingItems() {
-		BRONZE.setCraftingItem(LOTRMod.bronze);
-		MITHRIL.setCraftingItems(LOTRMod.mithril, LOTRMod.mithrilMail);
-		FUR.setCraftingItem(LOTRMod.fur);
-		GEMSBOK.setCraftingItem(LOTRMod.gemsbokHide);
-		GAMBESON.setCraftingItem(Item.getItemFromBlock(Blocks.wool));
-		JACKET.setCraftingItem(Items.leather);
-		GONDOR.setCraftingItem(Items.iron_ingot);
-		DOL_AMROTH.setCraftingItem(Items.iron_ingot);
-		ROHAN.setCraftingItem(Items.iron_ingot);
-		ROHAN_MARSHAL.setCraftingItem(Items.iron_ingot);
-		RANGER.setCraftingItems(Items.iron_ingot, Items.leather);
-		RANGER_ITHILIEN.setCraftingItems(Items.iron_ingot, Items.leather);
-		DUNLENDING.setCraftingItem(Items.iron_ingot);
-		NEAR_HARAD.setCraftingItem(LOTRMod.bronze);
-		HARNEDOR.setCraftingItem(LOTRMod.bronze);
-		UMBAR.setCraftingItem(Items.iron_ingot);
-		CORSAIR.setCraftingItems(Items.iron_ingot, LOTRMod.bronze);
-		GULF_HARAD.setCraftingItem(LOTRMod.bronze);
-		HARAD_NOMAD.setCraftingItem(Item.getItemFromBlock(LOTRMod.driedReeds));
-		ANCIENT_HARAD.setCraftingItem(Items.iron_ingot);
-		MOREDAIN.setCraftingItems(LOTRMod.rhinoHorn, LOTRMod.gemsbokHide);
-		MOREDAIN_SPEAR.setCraftingItem(LOTRMod.gemsbokHorn);
-		MOREDAIN_LION_ARMOR.setCraftingItem(LOTRMod.lionFur);
-		MOREDAIN_BRONZE.setCraftingItem(LOTRMod.bronze);
-		TAUREDAIN.setCraftingItems(LOTRMod.obsidianShard, LOTRMod.bronze);
-		TAUREDAIN_GOLD.setCraftingItem(Items.gold_ingot);
-		BARROW.setCraftingItem(Items.iron_ingot);
-		DALE.setCraftingItem(Items.iron_ingot);
-		DORWINION.setCraftingItem(Items.iron_ingot);
-		LOSSARNACH.setCraftingItem(Items.iron_ingot);
-		PELARGIR.setCraftingItem(Items.iron_ingot);
-		PINNATH_GELIN.setCraftingItem(Items.iron_ingot);
-		BLACKROOT.setCraftingItem(Items.iron_ingot);
-		LAMEDON.setCraftingItem(Items.iron_ingot);
-		ARNOR.setCraftingItem(Items.iron_ingot);
-		RHUN.setCraftingItem(Items.iron_ingot);
-		RHUN_GOLD.setCraftingItem(LOTRMod.gildedIron);
-		BLACK_NUMENOREAN.setCraftingItem(Items.iron_ingot);
-		GALADHRIM.setCraftingItem(LOTRMod.elfSteel);
-		GALVORN.setCraftingItem(LOTRMod.galvorn);
-		WOOD_ELVEN_SCOUT.setCraftingItems(LOTRMod.elfSteel, Items.leather);
-		WOOD_ELVEN.setCraftingItem(LOTRMod.elfSteel);
-		HIGH_ELVEN.setCraftingItem(LOTRMod.elfSteel);
-		GONDOLIN.setCraftingItem(LOTRMod.elfSteel);
-		HITHLAIN.setCraftingItem(LOTRMod.hithlain);
-		DORWINION_ELF.setCraftingItem(LOTRMod.elfSteel);
-		RIVENDELL.setCraftingItem(LOTRMod.elfSteel);
-		DWARVEN.setCraftingItem(LOTRMod.dwarfSteel);
-		BLUE_DWARVEN.setCraftingItem(LOTRMod.blueDwarfSteel);
-		BLADORTHIN.setCraftingItem(LOTRMod.dwarfSteel);
-		MORDOR.setCraftingItem(LOTRMod.orcSteel);
-		URUK.setCraftingItem(LOTRMod.urukSteel);
-		MORGUL.setCraftingItem(LOTRMod.morgulSteel);
-		GUNDABAD_URUK.setCraftingItem(LOTRMod.urukSteel);
-		ANGMAR.setCraftingItem(LOTRMod.orcSteel);
-		DOL_GULDUR.setCraftingItem(LOTRMod.orcSteel);
-		BLACK_URUK.setCraftingItem(LOTRMod.blackUrukSteel);
-		UTUMNO.setCraftingItem(LOTRMod.orcSteel);
-		HALF_TROLL.setCraftingItems(Items.flint, LOTRMod.gemsbokHide);
 	}
 }

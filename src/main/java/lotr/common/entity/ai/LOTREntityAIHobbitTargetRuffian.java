@@ -2,7 +2,8 @@ package lotr.common.entity.ai;
 
 import lotr.common.world.biome.LOTRBiomeGenShire;
 import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
 public class LOTREntityAIHobbitTargetRuffian extends LOTREntityAINearestAttackableTargetBasic {

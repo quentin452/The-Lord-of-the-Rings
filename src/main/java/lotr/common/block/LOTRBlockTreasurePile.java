@@ -1,23 +1,31 @@
 package lotr.common.block;
 
-import java.util.*;
-
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import lotr.common.entity.item.LOTREntityFallingTreasure;
 import lotr.common.recipe.LOTRRecipesTreasurePile;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRBlockTreasurePile extends Block {
 	public static Block.SoundType soundTypeTreasure = new Block.SoundType("lotr:treasure", 1.0f, 1.0f) {
@@ -52,6 +60,26 @@ public class LOTRBlockTreasurePile extends Block {
 		setHardness(0.0f);
 		setStepSound(soundTypeTreasure);
 		setCreativeTab(LOTRCreativeTabs.tabDeco);
+	}
+
+	public static boolean canFallUpon(World world, int i, int j, int k, Block thisBlock, int thisMeta) {
+		Block block = world.getBlock(i, j, k);
+		int meta = world.getBlockMetadata(i, j, k);
+		if (block == thisBlock && meta < 7) {
+			return true;
+		}
+		return BlockFalling.func_149831_e(world, i, j, k);
+	}
+
+	public static void generateTreasureRecipes(Block block, Item ingot) {
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(block, 8, 0), "XX", "XX", 'X', ingot));
+		GameRegistry.addRecipe(new LOTRRecipesTreasurePile(block, ingot));
+	}
+
+	public static void setTreasureBlockBounds(Block block, int meta) {
+		if (block instanceof LOTRBlockTreasurePile) {
+			((LOTRBlockTreasurePile) block).setBlockBoundsMeta(meta);
+		}
 	}
 
 	@Override
@@ -248,26 +276,6 @@ public class LOTRBlockTreasurePile extends Block {
 		if (!world.isRemote && !tryFall(world, i, j, k) && !canBlockStay(world, i, j, k)) {
 			dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
 			world.setBlockToAir(i, j, k);
-		}
-	}
-
-	public static boolean canFallUpon(World world, int i, int j, int k, Block thisBlock, int thisMeta) {
-		Block block = world.getBlock(i, j, k);
-		int meta = world.getBlockMetadata(i, j, k);
-		if (block == thisBlock && meta < 7) {
-			return true;
-		}
-		return BlockFalling.func_149831_e(world, i, j, k);
-	}
-
-	public static void generateTreasureRecipes(Block block, Item ingot) {
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(block, 8, 0), "XX", "XX", 'X', ingot));
-		GameRegistry.addRecipe(new LOTRRecipesTreasurePile(block, ingot));
-	}
-
-	public static void setTreasureBlockBounds(Block block, int meta) {
-		if (block instanceof LOTRBlockTreasurePile) {
-			((LOTRBlockTreasurePile) block).setBlockBoundsMeta(meta);
 		}
 	}
 

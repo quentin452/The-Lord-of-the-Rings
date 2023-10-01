@@ -1,9 +1,9 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
 import lotr.common.item.LOTRItemBanner;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenGulfTotem extends LOTRWorldGenGulfStructure {
 	public LOTRWorldGenGulfTotem(boolean flag) {

@@ -1,13 +1,17 @@
 package lotr.common.world.biome;
 
-import java.util.Random;
-
 import lotr.common.LOTRAchievement;
-import lotr.common.world.map.*;
-import lotr.common.world.spawning.*;
-import lotr.common.world.structure2.*;
+import lotr.common.world.map.LOTRRoadType;
+import lotr.common.world.map.LOTRWorldGenRammasEchor;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRSpawnList;
+import lotr.common.world.structure2.LOTRWorldGenGondorStructure;
+import lotr.common.world.structure2.LOTRWorldGenGondorTurret;
 import lotr.common.world.village.LOTRVillageGenGondor;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRBiomeGenPelennor extends LOTRBiomeGenGondor {
 	public LOTRBiomeGenPelennor(int i, boolean major) {

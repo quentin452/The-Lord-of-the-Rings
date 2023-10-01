@@ -1,18 +1,25 @@
 package lotr.client.gui;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.render.entity.LOTRRenderBiped;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTRSpeech;
 import lotr.common.network.LOTRPacketMiniquestOffer;
 import lotr.common.quest.LOTRMiniQuest;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.model.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.util.*;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
+
+import java.util.List;
+import java.util.Random;
 
 public class LOTRGuiMiniquestOffer extends LOTRGuiScreenBase {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/quest/miniquest.png");

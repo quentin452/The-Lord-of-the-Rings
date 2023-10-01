@@ -1,13 +1,19 @@
 package lotr.common.entity.ai;
 
-import java.util.*;
-
-import lotr.common.*;
-import lotr.common.entity.npc.*;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.entity.npc.LOTREntityBandit;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTREntityNPCRideable;
 import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.player.EntityPlayer;
+
+import java.util.Comparator;
+import java.util.List;
 
 public class LOTREntityAINearestAttackableTargetBasic extends EntityAITarget {
 	public Class targetClass;

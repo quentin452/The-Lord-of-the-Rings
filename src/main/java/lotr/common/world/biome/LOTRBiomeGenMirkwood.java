@@ -1,9 +1,13 @@
 package lotr.common.world.biome;
 
 import lotr.common.LOTRAchievement;
-import lotr.common.entity.animal.*;
-import lotr.common.world.map.*;
-import lotr.common.world.spawning.*;
+import lotr.common.entity.animal.LOTREntityButterfly;
+import lotr.common.entity.animal.LOTREntityDeer;
+import lotr.common.entity.animal.LOTREntityElk;
+import lotr.common.world.map.LOTRRoadType;
+import lotr.common.world.map.LOTRWaypoint;
+import lotr.common.world.spawning.LOTRBiomeSpawnList;
+import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure.LOTRWorldGenRuinedWoodElfTower;
 import net.minecraft.world.biome.BiomeGenBase;
 

@@ -1,14 +1,17 @@
 package lotr.common.entity.ai;
 
-import java.util.List;
-
-import lotr.common.*;
-import lotr.common.entity.npc.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTRTradeable;
 import lotr.common.item.LOTRItemMug;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+
+import java.util.List;
 
 public class LOTREntityAIDrink extends LOTREntityAIConsumeBase {
 	public LOTREntityAIDrink(LOTREntityNPC entity, LOTRFoods foods, int chance) {

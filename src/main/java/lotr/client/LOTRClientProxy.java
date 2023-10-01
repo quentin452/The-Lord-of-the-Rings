@@ -120,6 +120,58 @@ public class LOTRClientProxy extends LOTRCommonProxy {
 
 	public int trapdoorRenderID;
 
+	public static boolean doesClientChunkExist(World world, int i, int k) {
+		int chunkX = i >> 4;
+		int chunkZ = k >> 4;
+		Chunk chunk = world.getChunkProvider().provideChunk(chunkX, chunkZ);
+		return !(chunk instanceof EmptyChunk);
+	}
+
+	public static int getAlphaInt(float alphaF) {
+		int alphaI = (int) (alphaF * 255.0f);
+		return MathHelper.clamp_int(alphaI, 4, 255);
+	}
+
+	public static void renderEnchantmentEffect() {
+		Tessellator tessellator = Tessellator.instance;
+		TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
+		GL11.glDepthFunc(514);
+		GL11.glDisable(2896);
+		texturemanager.bindTexture(enchantmentTexture);
+		GL11.glEnable(3042);
+		GL11.glBlendFunc(768, 1);
+		float shade = 0.76f;
+		GL11.glColor4f(0.5f * shade, 0.25f * shade, 0.8f * shade, 1.0f);
+		GL11.glMatrixMode(5890);
+		GL11.glPushMatrix();
+		float scale = 0.125f;
+		GL11.glScalef(scale, scale, scale);
+		float randomShift = Minecraft.getSystemTime() % 3000L / 3000.0f * 8.0f;
+		GL11.glTranslatef(randomShift, 0.0f, 0.0f);
+		GL11.glRotatef(-50.0f, 0.0f, 0.0f, 1.0f);
+		ItemRenderer.renderItemIn2D(tessellator, 0.0f, 0.0f, 1.0f, 1.0f, 256, 256, 0.0625f);
+		GL11.glPopMatrix();
+		GL11.glPushMatrix();
+		GL11.glScalef(scale, scale, scale);
+		randomShift = Minecraft.getSystemTime() % 4873L / 4873.0f * 8.0f;
+		GL11.glTranslatef(-randomShift, 0.0f, 0.0f);
+		GL11.glRotatef(10.0f, 0.0f, 0.0f, 1.0f);
+		ItemRenderer.renderItemIn2D(tessellator, 0.0f, 0.0f, 1.0f, 1.0f, 256, 256, 0.0625f);
+		GL11.glPopMatrix();
+		GL11.glMatrixMode(5888);
+		GL11.glDisable(3042);
+		GL11.glEnable(2896);
+		GL11.glDepthFunc(515);
+	}
+
+	public static void sendClientInfoPacket(LOTRFaction viewingFaction, Map<LOTRDimension.DimensionRegion, LOTRFaction> changedRegionMap) {
+		boolean showWP = LOTRGuiMap.showWP;
+		boolean showCWP = LOTRGuiMap.showCWP;
+		boolean showHiddenSWP = LOTRGuiMap.showHiddenSWP;
+		IMessage packet = new LOTRPacketClientInfo(viewingFaction, changedRegionMap, showWP, showCWP, showHiddenSWP);
+		LOTRPacketHandler.networkWrapper.sendToServer(packet);
+	}
+
 	@Override
 	public void addMapPlayerLocation(GameProfile player, double posX, double posZ) {
 		LOTRGuiMap.addPlayerLocationInfo(player, posX, posZ);
@@ -1011,57 +1063,5 @@ public class LOTRClientProxy extends LOTRCommonProxy {
 				guiBanner.validateUsername(slot, prevText, valid);
 			}
 		}
-	}
-
-	public static boolean doesClientChunkExist(World world, int i, int k) {
-		int chunkX = i >> 4;
-		int chunkZ = k >> 4;
-		Chunk chunk = world.getChunkProvider().provideChunk(chunkX, chunkZ);
-		return !(chunk instanceof EmptyChunk);
-	}
-
-	public static int getAlphaInt(float alphaF) {
-		int alphaI = (int) (alphaF * 255.0f);
-		return MathHelper.clamp_int(alphaI, 4, 255);
-	}
-
-	public static void renderEnchantmentEffect() {
-		Tessellator tessellator = Tessellator.instance;
-		TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
-		GL11.glDepthFunc(514);
-		GL11.glDisable(2896);
-		texturemanager.bindTexture(enchantmentTexture);
-		GL11.glEnable(3042);
-		GL11.glBlendFunc(768, 1);
-		float shade = 0.76f;
-		GL11.glColor4f(0.5f * shade, 0.25f * shade, 0.8f * shade, 1.0f);
-		GL11.glMatrixMode(5890);
-		GL11.glPushMatrix();
-		float scale = 0.125f;
-		GL11.glScalef(scale, scale, scale);
-		float randomShift = Minecraft.getSystemTime() % 3000L / 3000.0f * 8.0f;
-		GL11.glTranslatef(randomShift, 0.0f, 0.0f);
-		GL11.glRotatef(-50.0f, 0.0f, 0.0f, 1.0f);
-		ItemRenderer.renderItemIn2D(tessellator, 0.0f, 0.0f, 1.0f, 1.0f, 256, 256, 0.0625f);
-		GL11.glPopMatrix();
-		GL11.glPushMatrix();
-		GL11.glScalef(scale, scale, scale);
-		randomShift = Minecraft.getSystemTime() % 4873L / 4873.0f * 8.0f;
-		GL11.glTranslatef(-randomShift, 0.0f, 0.0f);
-		GL11.glRotatef(10.0f, 0.0f, 0.0f, 1.0f);
-		ItemRenderer.renderItemIn2D(tessellator, 0.0f, 0.0f, 1.0f, 1.0f, 256, 256, 0.0625f);
-		GL11.glPopMatrix();
-		GL11.glMatrixMode(5888);
-		GL11.glDisable(3042);
-		GL11.glEnable(2896);
-		GL11.glDepthFunc(515);
-	}
-
-	public static void sendClientInfoPacket(LOTRFaction viewingFaction, Map<LOTRDimension.DimensionRegion, LOTRFaction> changedRegionMap) {
-		boolean showWP = LOTRGuiMap.showWP;
-		boolean showCWP = LOTRGuiMap.showCWP;
-		boolean showHiddenSWP = LOTRGuiMap.showHiddenSWP;
-		IMessage packet = new LOTRPacketClientInfo(viewingFaction, changedRegionMap, showWP, showCWP, showHiddenSWP);
-		LOTRPacketHandler.networkWrapper.sendToServer(packet);
 	}
 }

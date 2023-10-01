@@ -1,7 +1,5 @@
 package lotr.client.render.entity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.item.LOTREntityOrcBomb;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -9,6 +7,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderOrcBomb extends Render {
 	public RenderBlocks blockRenderer = new RenderBlocks();

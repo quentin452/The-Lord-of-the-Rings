@@ -1,8 +1,10 @@
 package lotr.common;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 public class LOTRCreativeTabs extends CreativeTabs {
@@ -22,6 +24,19 @@ public class LOTRCreativeTabs extends CreativeTabs {
 		super(label);
 	}
 
+	public static void setupIcons() {
+		tabBlock.theIcon = new ItemStack(LOTRMod.brick, 1, 11);
+		tabUtil.theIcon = new ItemStack(LOTRMod.dwarvenForge);
+		tabDeco.theIcon = new ItemStack(LOTRMod.simbelmyne);
+		tabFood.theIcon = new ItemStack(LOTRMod.lembas);
+		tabMaterials.theIcon = new ItemStack(LOTRMod.mithril);
+		tabMisc.theIcon = new ItemStack(LOTRMod.hobbitPipe);
+		tabTools.theIcon = new ItemStack(LOTRMod.pickaxeOrc);
+		tabCombat.theIcon = new ItemStack(LOTRMod.helmetGondor);
+		tabStory.theIcon = new ItemStack(LOTRMod.anduril);
+		tabSpawn.theIcon = new ItemStack(LOTRMod.spawnEgg, 1, 55);
+	}
+
 	@Override
 	public ItemStack getIconItemStack() {
 		return theIcon;
@@ -37,18 +52,5 @@ public class LOTRCreativeTabs extends CreativeTabs {
 	@Override
 	public String getTranslatedTabLabel() {
 		return StatCollector.translateToLocal("lotr.creativetab." + getTabLabel());
-	}
-
-	public static void setupIcons() {
-		tabBlock.theIcon = new ItemStack(LOTRMod.brick, 1, 11);
-		tabUtil.theIcon = new ItemStack(LOTRMod.dwarvenForge);
-		tabDeco.theIcon = new ItemStack(LOTRMod.simbelmyne);
-		tabFood.theIcon = new ItemStack(LOTRMod.lembas);
-		tabMaterials.theIcon = new ItemStack(LOTRMod.mithril);
-		tabMisc.theIcon = new ItemStack(LOTRMod.hobbitPipe);
-		tabTools.theIcon = new ItemStack(LOTRMod.pickaxeOrc);
-		tabCombat.theIcon = new ItemStack(LOTRMod.helmetGondor);
-		tabStory.theIcon = new ItemStack(LOTRMod.anduril);
-		tabSpawn.theIcon = new ItemStack(LOTRMod.spawnEgg, 1, 55);
 	}
 }

@@ -1,11 +1,10 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.item.LOTRItemHaradRobes;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelHaradRobes extends LOTRModelHuman {
 	public ItemStack robeItem;

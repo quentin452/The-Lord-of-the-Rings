@@ -4,9 +4,13 @@ import lotr.client.model.LOTRModelHuorn;
 import lotr.common.entity.LOTRRandomSkinEntity;
 import lotr.common.entity.npc.LOTREntityHuornBase;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.entity.*;
-import net.minecraft.util.*;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 
 public class LOTRRenderHuorn extends RenderLiving {
 	public static LOTRRandomSkins faceSkins;

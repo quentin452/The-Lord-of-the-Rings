@@ -1,8 +1,7 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntityNPCRespawner;
 import lotr.common.entity.npc.*;
 import lotr.common.item.LOTRItemBanner;
@@ -12,6 +11,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.Random;
 
 public class LOTRWorldGenWoodElfTower extends LOTRWorldGenStructureBase {
 	public WorldGenerator treeGen = new LOTRWorldGenMirkOak(true, 6, 6, 0, false).setGreenOak().disableRestrictions().disableRoots();

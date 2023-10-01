@@ -1,14 +1,17 @@
 package lotr.common.block;
 
-import java.util.*;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityMallornEnt;
 import lotr.common.tileentity.LOTRTileEntityCorruptMallorn;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LOTRBlockCorruptMallorn extends LOTRBlockFlower {
 	public static int ENT_KILLS = 3;
@@ -18,6 +21,15 @@ public class LOTRBlockCorruptMallorn extends LOTRBlockFlower {
 		setBlockBounds(0.5f - f, 0.0f, 0.5f - f, 0.5f + f, f * 2.0f, 0.5f + f);
 		setCreativeTab(LOTRCreativeTabs.tabDeco);
 		setLightLevel(0.625f);
+	}
+
+	public static void summonEntBoss(World world, int i, int j, int k) {
+		world.setBlockToAir(i, j, k);
+		LOTREntityMallornEnt ent = new LOTREntityMallornEnt(world);
+		ent.setLocationAndAngles(i + 0.5, j, k + 0.5, world.rand.nextFloat() * 360.0f, 0.0f);
+		ent.onSpawnWithEgg(null);
+		world.spawnEntityInWorld(ent);
+		ent.sendEntBossSpeech("summon");
 	}
 
 	@Override
@@ -61,14 +73,5 @@ public class LOTRBlockCorruptMallorn extends LOTRBlockFlower {
 		if (!world.isRemote) {
 			super.updateTick(world, i, j, k, random);
 		}
-	}
-
-	public static void summonEntBoss(World world, int i, int j, int k) {
-		world.setBlockToAir(i, j, k);
-		LOTREntityMallornEnt ent = new LOTREntityMallornEnt(world);
-		ent.setLocationAndAngles(i + 0.5, j, k + 0.5, world.rand.nextFloat() * 360.0f, 0.0f);
-		ent.onSpawnWithEgg(null);
-		world.spawnEntityInWorld(ent);
-		ent.sendEntBossSpeech("summon");
 	}
 }

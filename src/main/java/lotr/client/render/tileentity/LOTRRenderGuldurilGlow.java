@@ -1,15 +1,15 @@
 package lotr.client.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRTickHandlerClient;
 import lotr.common.tileentity.LOTRTileEntityGulduril;
 import net.minecraft.client.model.PositionTextureVertex;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRRenderGuldurilGlow extends TileEntitySpecialRenderer {
 	public static ResourceLocation texture = new ResourceLocation("lotr:misc/gulduril_glow.png");

@@ -2,8 +2,11 @@ package lotr.common.entity.ai;
 
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.entity.projectile.LOTREntitySpear;
-import lotr.common.item.*;
-import net.minecraft.entity.*;
+import lotr.common.item.LOTRItemSpear;
+import lotr.common.item.LOTRWeaponStats;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;

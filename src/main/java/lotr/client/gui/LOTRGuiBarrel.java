@@ -1,18 +1,21 @@
 package lotr.client.gui;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.inventory.LOTRContainerBarrel;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketBrewingButton;
+import lotr.common.network.LOTRPacketHandler;
 import lotr.common.tileentity.LOTRTileEntityBarrel;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRGuiBarrel extends GuiContainer {
 	public static ResourceLocation guiTexture = new ResourceLocation("lotr:gui/barrel/barrel.png");

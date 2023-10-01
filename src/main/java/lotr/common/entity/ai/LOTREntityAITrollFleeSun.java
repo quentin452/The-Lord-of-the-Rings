@@ -1,13 +1,15 @@
 package lotr.common.entity.ai;
 
-import java.util.Random;
-
 import lotr.common.entity.npc.LOTREntityTroll;
 import lotr.common.world.biome.LOTRBiome;
-import net.minecraft.entity.ai.*;
-import net.minecraft.util.*;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.RandomPositionGenerator;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.Random;
 
 public class LOTREntityAITrollFleeSun extends EntityAIBase {
 	public LOTREntityTroll theTroll;

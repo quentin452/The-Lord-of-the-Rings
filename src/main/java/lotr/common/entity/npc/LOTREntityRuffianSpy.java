@@ -1,16 +1,26 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
-import lotr.common.entity.ai.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAIBanditFlee;
+import lotr.common.entity.ai.LOTREntityAIBanditSteal;
 import lotr.common.inventory.LOTRInventoryNPC;
-import lotr.common.item.*;
-import lotr.common.quest.*;
+import lotr.common.item.LOTRItemCoin;
+import lotr.common.item.LOTRItemGem;
+import lotr.common.item.LOTRItemRing;
+import lotr.common.quest.LOTRMiniQuest;
+import lotr.common.quest.LOTRMiniQuestFactory;
+import lotr.common.quest.MiniQuestSelector;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 
 public class LOTREntityRuffianSpy extends LOTREntityBreeRuffian implements IBandit {

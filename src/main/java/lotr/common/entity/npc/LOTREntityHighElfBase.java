@@ -1,6 +1,7 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRMod;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.item.LOTRItemMug;
 import net.minecraft.init.Blocks;

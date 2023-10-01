@@ -1,10 +1,15 @@
 package lotr.common.entity.npc;
 
-import lotr.common.*;
-import lotr.common.entity.ai.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRFoods;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.entity.ai.LOTREntityAINearestAttackableTargetWoodElf;
+import lotr.common.entity.ai.LOTREntityAIRangedAttack;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.item.LOTRItemMug;
-import lotr.common.quest.*;
+import lotr.common.quest.LOTRMiniQuest;
+import lotr.common.quest.LOTRMiniQuestFactory;
 import lotr.common.world.biome.LOTRBiomeGenWoodlandRealm;
 import lotr.common.world.structure.LOTRChestContents;
 import net.minecraft.entity.IEntityLivingData;
@@ -21,6 +26,10 @@ public class LOTREntityWoodElf extends LOTREntityElf {
 		super(world);
 		tasks.addTask(2, rangedAttackAI);
 		addTargetTasks(true, LOTREntityAINearestAttackableTargetWoodElf.class);
+	}
+
+	public static float getWoodlandTrustLevel() {
+		return LOTRFaction.WOOD_ELF.getFirstRank().alignment;
 	}
 
 	@Override
@@ -124,9 +133,5 @@ public class LOTREntityWoodElf extends LOTREntityElf {
 	@Override
 	public void setupNPCName() {
 		familyInfo.setName(LOTRNames.getSindarinName(rand, familyInfo.isMale()));
-	}
-
-	public static float getWoodlandTrustLevel() {
-		return LOTRFaction.WOOD_ELF.getFirstRank().alignment;
 	}
 }

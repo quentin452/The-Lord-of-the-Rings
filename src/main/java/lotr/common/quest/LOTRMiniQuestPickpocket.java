@@ -1,18 +1,29 @@
 package lotr.common.quest;
 
-import java.util.*;
-
-import lotr.common.*;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRLevelData;
+import lotr.common.LOTRMod;
+import lotr.common.LOTRPlayerData;
 import lotr.common.entity.npc.LOTREntityNPC;
-import lotr.common.fac.*;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
 import lotr.common.item.LOTRItemLeatherHat;
 import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
-import net.minecraft.util.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.Vec3;
+
+import java.util.*;
 
 public class LOTRMiniQuestPickpocket extends LOTRMiniQuestCollectBase {
 	public LOTRFaction pickpocketFaction;
@@ -20,6 +31,13 @@ public class LOTRMiniQuestPickpocket extends LOTRMiniQuestCollectBase {
 
 	public LOTRMiniQuestPickpocket(LOTRPlayerData pd) {
 		super(pd);
+	}
+
+	public static ItemStack createPickpocketIcon() {
+		ItemStack hat = new ItemStack(LOTRMod.leatherHat);
+		LOTRItemLeatherHat.setHatColor(hat, 0);
+		LOTRItemLeatherHat.setFeatherColor(hat, 16777215);
+		return hat;
 	}
 
 	@Override
@@ -206,13 +224,6 @@ public class LOTRMiniQuestPickpocket extends LOTRMiniQuestCollectBase {
 			ids.appendTag(new NBTTagString(id.toString()));
 		}
 		nbt.setTag("PickpocketedIDs", ids);
-	}
-
-	public static ItemStack createPickpocketIcon() {
-		ItemStack hat = new ItemStack(LOTRMod.leatherHat);
-		LOTRItemLeatherHat.setHatColor(hat, 0);
-		LOTRItemLeatherHat.setFeatherColor(hat, 16777215);
-		return hat;
 	}
 
 	public static class QFPickpocket<Q extends LOTRMiniQuestPickpocket> extends LOTRMiniQuest.QuestFactoryBase<Q> {

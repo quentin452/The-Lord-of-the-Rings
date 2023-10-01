@@ -1,10 +1,10 @@
 package lotr.common.quest;
 
-import java.util.UUID;
-
 import lotr.common.util.LOTRLog;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.UUID;
 
 public interface IPickpocketable {
 	boolean canPickpocket();

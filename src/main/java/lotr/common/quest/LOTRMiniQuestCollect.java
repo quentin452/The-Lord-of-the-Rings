@@ -1,13 +1,14 @@
 package lotr.common.quest;
 
-import java.util.Random;
-
 import lotr.common.LOTRPlayerData;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.item.LOTRItemMug;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
+
+import java.util.Random;
 
 public class LOTRMiniQuestCollect extends LOTRMiniQuestCollectBase {
 	public ItemStack collectItem;

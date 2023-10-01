@@ -1,10 +1,12 @@
 package io.gitlab.dwarfyassassin.lotrucp.core.patches;
 
-import org.objectweb.asm.tree.*;
-
 import io.gitlab.dwarfyassassin.lotrucp.core.UCPCoreMod;
-import io.gitlab.dwarfyassassin.lotrucp.core.patches.base.*;
+import io.gitlab.dwarfyassassin.lotrucp.core.patches.base.ModPatcher;
 import io.gitlab.dwarfyassassin.lotrucp.core.utils.ASMUtils;
+import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.TypeInsnNode;
 
 public class BotaniaPatcher extends ModPatcher {
 	public BotaniaPatcher() {

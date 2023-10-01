@@ -1,10 +1,12 @@
 package lotr.common.world.map;
 
-import java.util.*;
-
 import lotr.common.fac.LOTRFaction;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class LOTRConquestZone {
 	public static List<LOTRFaction> allPlayableFacs;
@@ -24,6 +26,32 @@ public class LOTRConquestZone {
 			throw new RuntimeException("Too many factions! Need to upgrade LOTRConquestZone data format.");
 		}
 		conquestStrengths = new float[allPlayableFacs.size()];
+	}
+
+	public static LOTRConquestZone readFromNBT(NBTTagCompound nbt) {
+		short x = nbt.getShort("X");
+		short z = nbt.getShort("Z");
+		long time = nbt.getLong("Time");
+		LOTRConquestZone zone = new LOTRConquestZone(x, z);
+		zone.isLoaded = false;
+		zone.lastChangeTime = time;
+		block0:
+		for (LOTRFaction fac : allPlayableFacs) {
+			Collection<String> nameAndAliases = new ArrayList<>();
+			nameAndAliases.add(fac.codeName());
+			nameAndAliases.addAll(fac.listAliases());
+			for (String alias : nameAndAliases) {
+				String facKey = alias + "_str";
+				if (!nbt.hasKey(facKey)) {
+					continue;
+				}
+				float str = nbt.getFloat(facKey);
+				zone.setConquestStrengthRaw(fac, str);
+				continue block0;
+			}
+		}
+		zone.isLoaded = true;
+		return zone;
 	}
 
 	public void addConquestStrength(LOTRFaction fac, float add, World world) {
@@ -89,6 +117,11 @@ public class LOTRConquestZone {
 		return lastChangeTime;
 	}
 
+	public void setLastChangeTime(long l) {
+		lastChangeTime = l;
+		markDirty();
+	}
+
 	public boolean isEmpty() {
 		return isEmptyKey == 0L;
 	}
@@ -129,11 +162,6 @@ public class LOTRConquestZone {
 		return this;
 	}
 
-	public void setLastChangeTime(long l) {
-		lastChangeTime = l;
-		markDirty();
-	}
-
 	@Override
 	public String toString() {
 		return "LOTRConquestZone: " + gridX + ", " + gridZ;
@@ -163,31 +191,5 @@ public class LOTRConquestZone {
 			}
 			nbt.setFloat(facKey, str);
 		}
-	}
-
-	public static LOTRConquestZone readFromNBT(NBTTagCompound nbt) {
-		short x = nbt.getShort("X");
-		short z = nbt.getShort("Z");
-		long time = nbt.getLong("Time");
-		LOTRConquestZone zone = new LOTRConquestZone(x, z);
-		zone.isLoaded = false;
-		zone.lastChangeTime = time;
-		block0:
-		for (LOTRFaction fac : allPlayableFacs) {
-			Collection<String> nameAndAliases = new ArrayList<>();
-			nameAndAliases.add(fac.codeName());
-			nameAndAliases.addAll(fac.listAliases());
-			for (String alias : nameAndAliases) {
-				String facKey = alias + "_str";
-				if (!nbt.hasKey(facKey)) {
-					continue;
-				}
-				float str = nbt.getFloat(facKey);
-				zone.setConquestStrengthRaw(fac, str);
-				continue block0;
-			}
-		}
-		zone.isLoaded = true;
-		return zone;
 	}
 }

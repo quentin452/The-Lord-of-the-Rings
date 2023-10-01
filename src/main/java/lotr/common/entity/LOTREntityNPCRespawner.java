@@ -1,23 +1,31 @@
 package lotr.common.entity;
 
-import java.util.List;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.fac.LOTRFaction;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketNPCRespawner;
 import net.minecraft.block.Block;
 import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.List;
 
 public class LOTREntityNPCRespawner extends Entity {
 	public static int MAX_SPAWN_BLOCK_RANGE = 64;
@@ -43,6 +51,32 @@ public class LOTREntityNPCRespawner extends Entity {
 		super(world);
 		setSize(1.0f, 1.0f);
 		spawnerSpin = rand.nextFloat() * 360.0f;
+	}
+
+	public static boolean isSpawnBlocked(Entity entity, LOTRFaction spawnFaction) {
+		int j;
+		int k;
+		int range;
+		World world = entity.worldObj;
+		int i = MathHelper.floor_double(entity.posX);
+		AxisAlignedBB originBB = AxisAlignedBB.getBoundingBox(i, j = MathHelper.floor_double(entity.boundingBox.minY), k = MathHelper.floor_double(entity.posZ), i + 1, j + 1, k + 1);
+		AxisAlignedBB searchBB = originBB.expand(range = 64, range, range);
+		List spawners = world.getEntitiesWithinAABB(LOTREntityNPCRespawner.class, searchBB);
+		if (!spawners.isEmpty()) {
+			for (Object obj : spawners) {
+				AxisAlignedBB spawnBlockBB;
+				LOTREntityNPCRespawner spawner = (LOTREntityNPCRespawner) obj;
+				if (!spawner.blockEnemySpawns() || !(spawnBlockBB = spawner.createSpawnBlockRegion()).intersectsWith(searchBB) || !spawnBlockBB.intersectsWith(originBB) || !spawner.isEnemySpawnBlocked(spawnFaction)) {
+					continue;
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean isSpawnBlocked(LOTREntityNPC npc) {
+		return isSpawnBlocked(npc, npc.getFaction());
 	}
 
 	@Override
@@ -344,32 +378,6 @@ public class LOTREntityNPCRespawner extends Entity {
 		nbt.setBoolean("HomeSpawn", setHomePosFromSpawn);
 		nbt.setByte("MountSetting", (byte) mountSetting);
 		nbt.setByte("BlockEnemy", (byte) blockEnemySpawns);
-	}
-
-	public static boolean isSpawnBlocked(Entity entity, LOTRFaction spawnFaction) {
-		int j;
-		int k;
-		int range;
-		World world = entity.worldObj;
-		int i = MathHelper.floor_double(entity.posX);
-		AxisAlignedBB originBB = AxisAlignedBB.getBoundingBox(i, j = MathHelper.floor_double(entity.boundingBox.minY), k = MathHelper.floor_double(entity.posZ), i + 1, j + 1, k + 1);
-		AxisAlignedBB searchBB = originBB.expand(range = 64, range, range);
-		List spawners = world.getEntitiesWithinAABB(LOTREntityNPCRespawner.class, searchBB);
-		if (!spawners.isEmpty()) {
-			for (Object obj : spawners) {
-				AxisAlignedBB spawnBlockBB;
-				LOTREntityNPCRespawner spawner = (LOTREntityNPCRespawner) obj;
-				if (!spawner.blockEnemySpawns() || !(spawnBlockBB = spawner.createSpawnBlockRegion()).intersectsWith(searchBB) || !spawnBlockBB.intersectsWith(originBB) || !spawner.isEnemySpawnBlocked(spawnFaction)) {
-					continue;
-				}
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public static boolean isSpawnBlocked(LOTREntityNPC npc) {
-		return isSpawnBlocked(npc, npc.getFaction());
 	}
 
 }

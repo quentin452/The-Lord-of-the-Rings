@@ -1,10 +1,15 @@
 package lotr.common.tileentity;
 
 import lotr.common.item.LOTRWeaponStats;
-import net.minecraft.entity.*;
-import net.minecraft.item.*;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemFishingRod;
+import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.*;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
@@ -39,6 +44,15 @@ public class LOTRTileEntityWeaponRack extends TileEntity {
 		return weaponItem;
 	}
 
+	public void setWeaponItem(ItemStack item) {
+		if (item != null && item.stackSize <= 0) {
+			item = null;
+		}
+		weaponItem = item;
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		markDirty();
+	}
+
 	@Override
 	public void onDataPacket(NetworkManager manager, S35PacketUpdateTileEntity packet) {
 		NBTTagCompound data = packet.func_148857_g();
@@ -50,15 +64,6 @@ public class LOTRTileEntityWeaponRack extends TileEntity {
 		super.readFromNBT(nbt);
 		boolean hasWeapon = nbt.getBoolean("HasWeapon");
 		weaponItem = hasWeapon ? ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("WeaponItem")) : null;
-	}
-
-	public void setWeaponItem(ItemStack item) {
-		if (item != null && item.stackSize <= 0) {
-			item = null;
-		}
-		weaponItem = item;
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-		markDirty();
 	}
 
 	@Override

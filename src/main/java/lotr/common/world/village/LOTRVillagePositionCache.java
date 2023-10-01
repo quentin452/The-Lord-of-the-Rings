@@ -1,8 +1,9 @@
 package lotr.common.world.village;
 
-import java.util.*;
-
 import net.minecraft.world.ChunkCoordIntPair;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRVillagePositionCache {
 	public Map<ChunkCoordIntPair, LocationInfo> cacheMap = new HashMap<>();

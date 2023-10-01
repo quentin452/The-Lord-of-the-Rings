@@ -1,11 +1,9 @@
 package lotr.common.world.village;
 
-import java.util.Random;
-
 import com.google.common.math.IntMath;
-
 import lotr.common.entity.LOTREntityNPCRespawner;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityGondorMan;
+import lotr.common.entity.npc.LOTRNames;
 import lotr.common.world.biome.LOTRBiome;
 import lotr.common.world.map.LOTRRoadType;
 import lotr.common.world.structure2.*;
@@ -13,6 +11,8 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRVillageGenGondor extends LOTRVillageGen {
 	public LOTRWorldGenGondorStructure.GondorFiefdom villageFief;
@@ -29,6 +29,11 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 	@Override
 	public LOTRVillageGen.AbstractInstance<?> createVillageInstance(World world, int i, int k, Random random, LocationInfo loc) {
 		return new Instance(this, world, i, k, random, loc);
+	}
+
+	public enum VillageType {
+		VILLAGE, TOWN, FORT
+
 	}
 
 	public static class Instance extends LOTRVillageGen.AbstractInstance<LOTRVillageGenGondor> {
@@ -586,11 +591,6 @@ public class LOTRVillageGenGondor extends LOTRVillageGen {
 			villageName = LOTRNames.getGondorVillageName(random);
 			villageType = random.nextInt(4) == 0 ? VillageType.FORT : random.nextInt(4) == 0 ? VillageType.TOWN : VillageType.VILLAGE;
 		}
-
-	}
-
-	public enum VillageType {
-		VILLAGE, TOWN, FORT
 
 	}
 

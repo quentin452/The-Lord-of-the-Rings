@@ -1,6 +1,7 @@
 package lotr.common.item;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
 import lotr.common.block.LOTRBlockTallGrass;
 import net.minecraft.block.Block;

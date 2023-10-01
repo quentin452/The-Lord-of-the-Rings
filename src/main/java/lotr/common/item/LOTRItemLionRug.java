@@ -1,6 +1,7 @@
 package lotr.common.item;
 
-import lotr.common.entity.item.*;
+import lotr.common.entity.item.LOTREntityLionRug;
+import lotr.common.entity.item.LOTREntityRugBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -27,10 +28,6 @@ public class LOTRItemLionRug extends LOTRItemRugBase {
 			lionID = i;
 		}
 
-		public String textureName() {
-			return name().toLowerCase(Locale.ROOT);
-		}
-
 		public static LionRugType forID(int ID) {
 			for (LionRugType t : values()) {
 				if (t.lionID != ID) {
@@ -47,6 +44,10 @@ public class LOTRItemLionRug extends LOTRItemRugBase {
 				names[i] = values()[i].textureName();
 			}
 			return names;
+		}
+
+		public String textureName() {
+			return name().toLowerCase(Locale.ROOT);
 		}
 	}
 

@@ -1,18 +1,41 @@
 package lotr.client.gui;
 
-import java.util.ArrayList;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.common.LOTRDimension;
 import lotr.common.quest.LOTRMiniQuestWelcome;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
 
 public class LOTRGuiMenu extends LOTRGuiScreenBase {
 	public static ResourceLocation menuIconsTexture = new ResourceLocation("lotr:gui/menu_icons.png");
 	public static Class<? extends LOTRGuiMenuBase> lastMenuScreen;
+
+	public static GuiScreen openMenu(EntityPlayer entityplayer) {
+		boolean[] map_factions = LOTRMiniQuestWelcome.forceMenu_Map_Factions(entityplayer);
+		if (map_factions[0]) {
+			return new LOTRGuiMap();
+		}
+		if (map_factions[1]) {
+			return new LOTRGuiFactions();
+		}
+		if (lastMenuScreen != null) {
+			try {
+				return lastMenuScreen.getConstructor().newInstance();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return new LOTRGuiMenu();
+	}
+
+	public static void resetLastMenuScreen() {
+		lastMenuScreen = null;
+	}
 
 	@Override
 	public void actionPerformed(GuiButton button) {
@@ -100,27 +123,5 @@ public class LOTRGuiMenu extends LOTRGuiScreenBase {
 			return;
 		}
 		super.keyTyped(c, i);
-	}
-
-	public static GuiScreen openMenu(EntityPlayer entityplayer) {
-		boolean[] map_factions = LOTRMiniQuestWelcome.forceMenu_Map_Factions(entityplayer);
-		if (map_factions[0]) {
-			return new LOTRGuiMap();
-		}
-		if (map_factions[1]) {
-			return new LOTRGuiFactions();
-		}
-		if (lastMenuScreen != null) {
-			try {
-				return lastMenuScreen.getConstructor().newInstance();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return new LOTRGuiMenu();
-	}
-
-	public static void resetLastMenuScreen() {
-		lastMenuScreen = null;
 	}
 }

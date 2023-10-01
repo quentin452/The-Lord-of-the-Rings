@@ -1,37 +1,51 @@
 package lotr.common;
 
-import java.util.*;
-
-import net.minecraft.command.ICommandSender;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.google.common.collect.ImmutableList;
-
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.common.block.LOTRBlockCraftingTable;
 import lotr.common.command.LOTRCommandAdminHideMap;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityGollum;
+import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.fac.*;
 import lotr.common.fellowship.*;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemArmor;
+import lotr.common.item.LOTRItemCrossbowBolt;
+import lotr.common.item.LOTRMaterial;
 import lotr.common.network.*;
-import lotr.common.quest.*;
+import lotr.common.quest.LOTRMiniQuest;
+import lotr.common.quest.LOTRMiniQuestEvent;
+import lotr.common.quest.LOTRMiniQuestWelcome;
+import lotr.common.quest.MiniQuestSelector;
 import lotr.common.util.LOTRLog;
-import lotr.common.world.*;
-import lotr.common.world.biome.*;
+import lotr.common.world.LOTRUtumnoLevel;
+import lotr.common.world.LOTRWorldProvider;
+import lotr.common.world.biome.LOTRBiome;
+import lotr.common.world.biome.LOTRBiomeGenMistyMountains;
 import lotr.common.world.map.*;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.*;
 
 public class LOTRPlayerData {
 	public static int PLEDGE_KILL_COOLDOWN_MAX = 24000;
@@ -105,6 +119,10 @@ public class LOTRPlayerData {
 		playerUUID = uuid;
 		viewingFaction = LOTRFaction.HOBBIT;
 		ftSinceTick = LOTRLevelData.getWaypointCooldownMax() * 20;
+	}
+
+	public static boolean isTimerAutosaveTick() {
+		return MinecraftServer.getServer() != null && MinecraftServer.getServer().getTickCounter() % 200 == 0;
 	}
 
 	public void acceptFellowshipInvite(LOTRFellowship fs, boolean respectSizeLimit) {
@@ -853,8 +871,22 @@ public class LOTRPlayerData {
 		return adminHideMap;
 	}
 
+	public void setAdminHideMap(boolean flag) {
+		adminHideMap = flag;
+		markDirty();
+	}
+
 	public int getAlcoholTolerance() {
 		return alcoholTolerance;
+	}
+
+	public void setAlcoholTolerance(int i) {
+		EntityPlayer entityplayer;
+		alcoholTolerance = i;
+		markDirty();
+		if (alcoholTolerance >= 250 && (entityplayer = getPlayer()) != null && !entityplayer.worldObj.isRemote) {
+			addAchievement(LOTRAchievement.gainHighAlcoholTolerance);
+		}
 	}
 
 	public float getAlignment(LOTRFaction faction) {
@@ -876,6 +908,11 @@ public class LOTRPlayerData {
 		return brokenPledgeFaction;
 	}
 
+	public void setBrokenPledgeFaction(LOTRFaction f) {
+		brokenPledgeFaction = f;
+		markDirty();
+	}
+
 	public LOTRFellowship getChatBoundFellowship() {
 		LOTRFellowship fs;
 		if (chatBoundFellowshipID != null && (fs = LOTRFellowshipData.getActiveFellowship(chatBoundFellowshipID)) != null) {
@@ -884,8 +921,17 @@ public class LOTRPlayerData {
 		return null;
 	}
 
+	public void setChatBoundFellowship(LOTRFellowship fs) {
+		setChatBoundFellowshipID(fs.getFellowshipID());
+	}
+
 	public UUID getChatBoundFellowshipID() {
 		return chatBoundFellowshipID;
+	}
+
+	public void setChatBoundFellowshipID(UUID fsID) {
+		chatBoundFellowshipID = fsID;
+		markDirty();
 	}
 
 	public LOTRFellowshipClient getClientFellowshipByID(UUID fsID) {
@@ -946,6 +992,11 @@ public class LOTRPlayerData {
 		return deathDim;
 	}
 
+	public void setDeathDimension(int dim) {
+		deathDim = dim;
+		markDirty();
+	}
+
 	public ChunkCoordinates getDeathPoint() {
 		return deathPoint;
 	}
@@ -968,8 +1019,20 @@ public class LOTRPlayerData {
 		return conquestKills;
 	}
 
+	public void setEnableConquestKills(boolean flag) {
+		conquestKills = flag;
+		markDirty();
+		sendOptionsPacket(5, flag);
+	}
+
 	public boolean getEnableHiredDeathMessages() {
 		return hiredDeathMessages;
+	}
+
+	public void setEnableHiredDeathMessages(boolean flag) {
+		hiredDeathMessages = flag;
+		markDirty();
+		sendOptionsPacket(1, flag);
 	}
 
 	public LOTRFactionData getFactionData(LOTRFaction faction) {
@@ -1023,16 +1086,43 @@ public class LOTRPlayerData {
 		return femRankOverride;
 	}
 
+	public void setFemRankOverride(boolean flag) {
+		femRankOverride = flag;
+		markDirty();
+		sendOptionsPacket(4, flag);
+	}
+
 	public boolean getFriendlyFire() {
 		return friendlyFire;
+	}
+
+	public void setFriendlyFire(boolean flag) {
+		friendlyFire = flag;
+		markDirty();
+		sendOptionsPacket(0, flag);
 	}
 
 	public boolean getHideAlignment() {
 		return hideAlignment;
 	}
 
+	public void setHideAlignment(boolean flag) {
+		hideAlignment = flag;
+		markDirty();
+		EntityPlayer entityplayer = getPlayer();
+		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
+			LOTRLevelData.sendAlignmentToAllPlayersInWorld(entityplayer, entityplayer.worldObj);
+		}
+	}
+
 	public boolean getHideMapLocation() {
 		return hideOnMap;
+	}
+
+	public void setHideMapLocation(boolean flag) {
+		hideOnMap = flag;
+		markDirty();
+		sendOptionsPacket(3, flag);
 	}
 
 	public LOTRBiome getLastKnownBiome() {
@@ -1123,6 +1213,23 @@ public class LOTRPlayerData {
 		return playerTitle;
 	}
 
+	public void setPlayerTitle(LOTRTitle.PlayerTitle title) {
+		playerTitle = title;
+		markDirty();
+		EntityPlayer entityplayer = getPlayer();
+		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
+			IMessage packet = new LOTRPacketTitle(playerTitle);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
+		}
+		for (UUID fsID : fellowshipIDs) {
+			LOTRFellowship fs = LOTRFellowshipData.getActiveFellowship(fsID);
+			if (fs == null) {
+				continue;
+			}
+			fs.updateForAllMembers(new FellowshipUpdateType.UpdatePlayerTitle(playerUUID, playerTitle));
+		}
+	}
+
 	public UUID getPlayerUUID() {
 		return playerUUID;
 	}
@@ -1131,8 +1238,43 @@ public class LOTRPlayerData {
 		return pledgeBreakCooldown;
 	}
 
+	public void setPledgeBreakCooldown(int i) {
+		boolean bigChange;
+		EntityPlayer entityplayer;
+		int preCD = pledgeBreakCooldown;
+		LOTRFaction preBroken = brokenPledgeFaction;
+		pledgeBreakCooldown = Math.max(0, i);
+		bigChange = (pledgeBreakCooldown == 0 || preCD == 0) && pledgeBreakCooldown != preCD;
+		if (pledgeBreakCooldown > pledgeBreakCooldownStart) {
+			setPledgeBreakCooldownStart(pledgeBreakCooldown);
+			bigChange = true;
+		}
+		if (pledgeBreakCooldown <= 0 && preBroken != null) {
+			setPledgeBreakCooldownStart(0);
+			setBrokenPledgeFaction(null);
+			bigChange = true;
+		}
+		if (bigChange || isTimerAutosaveTick()) {
+			markDirty();
+		}
+		if ((bigChange || pledgeBreakCooldown % 5 == 0) && (entityplayer = getPlayer()) != null && !entityplayer.worldObj.isRemote) {
+			IMessage packet = new LOTRPacketBrokenPledge(pledgeBreakCooldown, pledgeBreakCooldownStart, brokenPledgeFaction);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
+		}
+		if (pledgeBreakCooldown == 0 && preCD != pledgeBreakCooldown && (entityplayer = getPlayer()) != null && !entityplayer.worldObj.isRemote) {
+			String brokenName = preBroken == null ? StatCollector.translateToLocal("lotr.gui.factions.pledgeUnknown") : preBroken.factionName();
+			IChatComponent msg = new ChatComponentTranslation("chat.lotr.pledgeBreakCooldown", brokenName);
+			entityplayer.addChatMessage(msg);
+		}
+	}
+
 	public int getPledgeBreakCooldownStart() {
 		return pledgeBreakCooldownStart;
+	}
+
+	public void setPledgeBreakCooldownStart(int i) {
+		pledgeBreakCooldownStart = i;
+		markDirty();
 	}
 
 	public float getPledgeEnemyAlignmentLimit(LOTRFaction fac) {
@@ -1141,6 +1283,26 @@ public class LOTRPlayerData {
 
 	public LOTRFaction getPledgeFaction() {
 		return pledgeFaction;
+	}
+
+	public void setPledgeFaction(LOTRFaction fac) {
+		EntityPlayer entityplayer;
+		pledgeFaction = fac;
+		pledgeKillCooldown = 0;
+		markDirty();
+		if (fac != null) {
+			checkAlignmentAchievements(fac, getAlignment(fac));
+			addAchievement(LOTRAchievement.pledgeService);
+		}
+		entityplayer = getPlayer();
+		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
+			if (fac != null) {
+				World world = entityplayer.worldObj;
+				world.playSoundAtEntity(entityplayer, "lotr:event.pledge", 1.0f, 1.0f);
+			}
+			IMessage packet = new LOTRPacketPledge(fac);
+			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
+		}
 	}
 
 	public LOTRPlayerQuestData getQuestData() {
@@ -1165,24 +1327,62 @@ public class LOTRPlayerData {
 		return shield;
 	}
 
+	public void setShield(LOTRShields lotrshield) {
+		shield = lotrshield;
+		markDirty();
+	}
+
 	public boolean getStructuresBanned() {
 		return structuresBanned;
+	}
+
+	public void setStructuresBanned(boolean flag) {
+		structuresBanned = flag;
+		markDirty();
 	}
 
 	public LOTRAbstractWaypoint getTargetFTWaypoint() {
 		return targetFTWaypoint;
 	}
 
+	public void setTargetFTWaypoint(LOTRAbstractWaypoint wp) {
+		targetFTWaypoint = wp;
+		markDirty();
+		if (wp != null) {
+			setTicksUntilFT(ticksUntilFT_max);
+		} else {
+			setTicksUntilFT(0);
+		}
+	}
+
 	public boolean getTeleportedME() {
 		return teleportedME;
+	}
+
+	public void setTeleportedME(boolean flag) {
+		teleportedME = flag;
+		markDirty();
 	}
 
 	public int getTicksUntilFT() {
 		return ticksUntilFT;
 	}
 
+	public void setTicksUntilFT(int i) {
+		if (ticksUntilFT != i) {
+			ticksUntilFT = i;
+			if (ticksUntilFT == ticksUntilFT_max || ticksUntilFT == 0) {
+				markDirty();
+			}
+		}
+	}
+
 	public int getTimeSinceFT() {
 		return ftSinceTick;
+	}
+
+	public void setTimeSinceFT(int i) {
+		setTimeSinceFT(i, false);
 	}
 
 	public LOTRMiniQuest getTrackingMiniQuest() {
@@ -1192,8 +1392,24 @@ public class LOTRPlayerData {
 		return getMiniQuestForID(trackingMiniQuestID, false);
 	}
 
+	public void setTrackingMiniQuest(LOTRMiniQuest quest) {
+		setTrackingMiniQuestID(quest == null ? null : quest.questUUID);
+	}
+
 	public LOTRFaction getViewingFaction() {
 		return viewingFaction;
+	}
+
+	public void setViewingFaction(LOTRFaction faction) {
+		if (faction != null) {
+			viewingFaction = faction;
+			markDirty();
+			EntityPlayer entityplayer = getPlayer();
+			if (entityplayer != null && !entityplayer.worldObj.isRemote) {
+				IMessage packet = new LOTRPacketUpdateViewingFaction(viewingFaction);
+				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
+			}
+		}
 	}
 
 	public int getWaypointFTTime(LOTRAbstractWaypoint wp, EntityPlayer entityplayer) {
@@ -1355,6 +1571,10 @@ public class LOTRPlayerData {
 
 	public boolean isSiegeActive() {
 		return siegeActiveTime > 0;
+	}
+
+	public void setSiegeActive(int duration) {
+		siegeActiveTime = Math.max(siegeActiveTime, duration);
 	}
 
 	public void leaveFellowship(LOTRFellowship fs) {
@@ -2672,20 +2892,6 @@ public class LOTRPlayerData {
 		addSharedCustomWaypointsFromAllFellowships();
 	}
 
-	public void setAdminHideMap(boolean flag) {
-		adminHideMap = flag;
-		markDirty();
-	}
-
-	public void setAlcoholTolerance(int i) {
-		EntityPlayer entityplayer;
-		alcoholTolerance = i;
-		markDirty();
-		if (alcoholTolerance >= 250 && (entityplayer = getPlayer()) != null && !entityplayer.worldObj.isRemote) {
-			addAchievement(LOTRAchievement.gainHighAlcoholTolerance);
-		}
-	}
-
 	public void setAlignment(LOTRFaction faction, float alignment) {
 		EntityPlayer entityplayer = getPlayer();
 		if (faction.isPlayableAlignmentFaction()) {
@@ -2706,40 +2912,9 @@ public class LOTRPlayerData {
 		setAlignment(faction, set);
 	}
 
-	public void setBrokenPledgeFaction(LOTRFaction f) {
-		brokenPledgeFaction = f;
-		markDirty();
-	}
-
-	public void setChatBoundFellowship(LOTRFellowship fs) {
-		setChatBoundFellowshipID(fs.getFellowshipID());
-	}
-
-	public void setChatBoundFellowshipID(UUID fsID) {
-		chatBoundFellowshipID = fsID;
-		markDirty();
-	}
-
-	public void setDeathDimension(int dim) {
-		deathDim = dim;
-		markDirty();
-	}
-
 	public void setDeathPoint(int i, int j, int k) {
 		deathPoint = new ChunkCoordinates(i, j, k);
 		markDirty();
-	}
-
-	public void setEnableConquestKills(boolean flag) {
-		conquestKills = flag;
-		markDirty();
-		sendOptionsPacket(5, flag);
-	}
-
-	public void setEnableHiredDeathMessages(boolean flag) {
-		hiredDeathMessages = flag;
-		markDirty();
-		sendOptionsPacket(1, flag);
 	}
 
 	public void setFellowshipAdmin(LOTRFellowship fs, UUID player, boolean flag, String granterUsername) {
@@ -2780,115 +2955,11 @@ public class LOTRPlayerData {
 		}
 	}
 
-	public void setFemRankOverride(boolean flag) {
-		femRankOverride = flag;
-		markDirty();
-		sendOptionsPacket(4, flag);
-	}
-
-	public void setFriendlyFire(boolean flag) {
-		friendlyFire = flag;
-		markDirty();
-		sendOptionsPacket(0, flag);
-	}
-
-	public void setHideAlignment(boolean flag) {
-		hideAlignment = flag;
-		markDirty();
-		EntityPlayer entityplayer = getPlayer();
-		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			LOTRLevelData.sendAlignmentToAllPlayersInWorld(entityplayer, entityplayer.worldObj);
-		}
-	}
-
-	public void setHideMapLocation(boolean flag) {
-		hideOnMap = flag;
-		markDirty();
-		sendOptionsPacket(3, flag);
-	}
-
-	public void setPlayerTitle(LOTRTitle.PlayerTitle title) {
-		playerTitle = title;
-		markDirty();
-		EntityPlayer entityplayer = getPlayer();
-		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			IMessage packet = new LOTRPacketTitle(playerTitle);
-			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
-		}
-		for (UUID fsID : fellowshipIDs) {
-			LOTRFellowship fs = LOTRFellowshipData.getActiveFellowship(fsID);
-			if (fs == null) {
-				continue;
-			}
-			fs.updateForAllMembers(new FellowshipUpdateType.UpdatePlayerTitle(playerUUID, playerTitle));
-		}
-	}
-
-	public void setPledgeBreakCooldown(int i) {
-		boolean bigChange;
-		EntityPlayer entityplayer;
-		int preCD = pledgeBreakCooldown;
-		LOTRFaction preBroken = brokenPledgeFaction;
-		pledgeBreakCooldown = Math.max(0, i);
-		bigChange = (pledgeBreakCooldown == 0 || preCD == 0) && pledgeBreakCooldown != preCD;
-		if (pledgeBreakCooldown > pledgeBreakCooldownStart) {
-			setPledgeBreakCooldownStart(pledgeBreakCooldown);
-			bigChange = true;
-		}
-		if (pledgeBreakCooldown <= 0 && preBroken != null) {
-			setPledgeBreakCooldownStart(0);
-			setBrokenPledgeFaction(null);
-			bigChange = true;
-		}
-		if (bigChange || isTimerAutosaveTick()) {
-			markDirty();
-		}
-		if ((bigChange || pledgeBreakCooldown % 5 == 0) && (entityplayer = getPlayer()) != null && !entityplayer.worldObj.isRemote) {
-			IMessage packet = new LOTRPacketBrokenPledge(pledgeBreakCooldown, pledgeBreakCooldownStart, brokenPledgeFaction);
-			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
-		}
-		if (pledgeBreakCooldown == 0 && preCD != pledgeBreakCooldown && (entityplayer = getPlayer()) != null && !entityplayer.worldObj.isRemote) {
-			String brokenName = preBroken == null ? StatCollector.translateToLocal("lotr.gui.factions.pledgeUnknown") : preBroken.factionName();
-			IChatComponent msg = new ChatComponentTranslation("chat.lotr.pledgeBreakCooldown", brokenName);
-			entityplayer.addChatMessage(msg);
-		}
-	}
-
-	public void setPledgeBreakCooldownStart(int i) {
-		pledgeBreakCooldownStart = i;
-		markDirty();
-	}
-
-	public void setPledgeFaction(LOTRFaction fac) {
-		EntityPlayer entityplayer;
-		pledgeFaction = fac;
-		pledgeKillCooldown = 0;
-		markDirty();
-		if (fac != null) {
-			checkAlignmentAchievements(fac, getAlignment(fac));
-			addAchievement(LOTRAchievement.pledgeService);
-		}
-		entityplayer = getPlayer();
-		if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-			if (fac != null) {
-				World world = entityplayer.worldObj;
-				world.playSoundAtEntity(entityplayer, "lotr:event.pledge", 1.0f, 1.0f);
-			}
-			IMessage packet = new LOTRPacketPledge(fac);
-			LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
-		}
-	}
-
 	public void setRegionLastViewedFaction(LOTRDimension.DimensionRegion region, LOTRFaction fac) {
 		if (region.factionList.contains(fac)) {
 			prevRegionFactions.put(region, fac);
 			markDirty();
 		}
-	}
-
-	public void setShield(LOTRShields lotrshield) {
-		shield = lotrshield;
-		markDirty();
 	}
 
 	public void setShowCustomWaypoints(boolean flag) {
@@ -2904,43 +2975,6 @@ public class LOTRPlayerData {
 	public void setShowWaypoints(boolean flag) {
 		showWaypoints = flag;
 		markDirty();
-	}
-
-	public void setSiegeActive(int duration) {
-		siegeActiveTime = Math.max(siegeActiveTime, duration);
-	}
-
-	public void setStructuresBanned(boolean flag) {
-		structuresBanned = flag;
-		markDirty();
-	}
-
-	public void setTargetFTWaypoint(LOTRAbstractWaypoint wp) {
-		targetFTWaypoint = wp;
-		markDirty();
-		if (wp != null) {
-			setTicksUntilFT(ticksUntilFT_max);
-		} else {
-			setTicksUntilFT(0);
-		}
-	}
-
-	public void setTeleportedME(boolean flag) {
-		teleportedME = flag;
-		markDirty();
-	}
-
-	public void setTicksUntilFT(int i) {
-		if (ticksUntilFT != i) {
-			ticksUntilFT = i;
-			if (ticksUntilFT == ticksUntilFT_max || ticksUntilFT == 0) {
-				markDirty();
-			}
-		}
-	}
-
-	public void setTimeSinceFT(int i) {
-		setTimeSinceFT(i, false);
 	}
 
 	public void setTimeSinceFT(int i, boolean forceUpdate) {
@@ -2962,10 +2996,6 @@ public class LOTRPlayerData {
 		setTimeSinceFT(i, true);
 	}
 
-	public void setTrackingMiniQuest(LOTRMiniQuest quest) {
-		setTrackingMiniQuestID(quest == null ? null : quest.questUUID);
-	}
-
 	public void setTrackingMiniQuestID(UUID npcID) {
 		trackingMiniQuestID = npcID;
 		markDirty();
@@ -2980,18 +3010,6 @@ public class LOTRPlayerData {
 		uuidToMount = uuid;
 		uuidToMountTime = uuidToMount != null ? 10 : 0;
 		markDirty();
-	}
-
-	public void setViewingFaction(LOTRFaction faction) {
-		if (faction != null) {
-			viewingFaction = faction;
-			markDirty();
-			EntityPlayer entityplayer = getPlayer();
-			if (entityplayer != null && !entityplayer.worldObj.isRemote) {
-				IMessage packet = new LOTRPacketUpdateViewingFaction(viewingFaction);
-				LOTRPacketHandler.networkWrapper.sendTo(packet, (EntityPlayerMP) entityplayer);
-			}
-		}
 	}
 
 	public void setWPUseCount(LOTRAbstractWaypoint wp, int count) {
@@ -3154,10 +3172,6 @@ public class LOTRPlayerData {
 		return false;
 	}
 
-	public static boolean isTimerAutosaveTick() {
-		return MinecraftServer.getServer() != null && MinecraftServer.getServer().getTickCounter() % 200 == 0;
-	}
-
 	public static class CWPSharedKey extends Pair<UUID, Integer> {
 		public UUID sharingPlayer;
 		public int waypointID;
@@ -3165,6 +3179,10 @@ public class LOTRPlayerData {
 		public CWPSharedKey(UUID player, int id) {
 			sharingPlayer = player;
 			waypointID = id;
+		}
+
+		public static CWPSharedKey keyFor(UUID player, int id) {
+			return new CWPSharedKey(player, id);
 		}
 
 		@Override
@@ -3180,10 +3198,6 @@ public class LOTRPlayerData {
 		@Override
 		public Integer setValue(Integer value) {
 			throw new UnsupportedOperationException();
-		}
-
-		public static CWPSharedKey keyFor(UUID player, int id) {
-			return new CWPSharedKey(player, id);
 		}
 	}
 

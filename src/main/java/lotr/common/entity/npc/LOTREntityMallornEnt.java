@@ -1,23 +1,37 @@
 package lotr.common.entity.npc;
 
-import java.util.List;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
-import lotr.common.entity.ai.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRAchievement;
+import lotr.common.LOTRMod;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAIBossJumpAttack;
+import lotr.common.entity.ai.LOTREntityAIRangedAttack;
 import lotr.common.entity.projectile.LOTREntityMallornLeafBomb;
 import lotr.common.item.LOTRItemBossTrophy;
-import lotr.common.network.*;
-import net.minecraft.block.*;
-import net.minecraft.entity.*;
+import lotr.common.network.LOTRPacketHandler;
+import lotr.common.network.LOTRPacketMallornEntHeal;
+import lotr.common.network.LOTRPacketMallornEntSummon;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFire;
+import net.minecraft.block.BlockLeavesBase;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.management.PlayerManager;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+
+import java.util.List;
 
 public class LOTREntityMallornEnt extends LOTREntityEnt implements LOTRBoss {
 	public static float BOSS_SCALE = 1.5f;
@@ -137,6 +151,10 @@ public class LOTREntityMallornEnt extends LOTREntityEnt implements LOTRBoss {
 
 	public int getEntSpawnTick() {
 		return dataWatcher.getWatchableObjectShort(22);
+	}
+
+	public void setEntSpawnTick(int i) {
+		dataWatcher.updateObject(22, (short) i);
 	}
 
 	@Override
@@ -467,10 +485,6 @@ public class LOTREntityMallornEnt extends LOTREntityEnt implements LOTRBoss {
 			}
 			healing.sendData(entityplayer);
 		}
-	}
-
-	public void setEntSpawnTick(int i) {
-		dataWatcher.updateObject(22, (short) i);
 	}
 
 	public void setHasWeaponShield(boolean flag) {

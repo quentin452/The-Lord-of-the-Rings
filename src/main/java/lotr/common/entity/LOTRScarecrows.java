@@ -1,6 +1,9 @@
 package lotr.common.entity;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFence;
+import net.minecraft.block.BlockPumpkin;
+import net.minecraft.block.BlockSkull;
 import net.minecraft.world.IBlockAccess;
 
 public class LOTRScarecrows {

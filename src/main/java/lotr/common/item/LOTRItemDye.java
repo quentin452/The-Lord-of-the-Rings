@@ -1,9 +1,9 @@
 package lotr.common.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
-import lotr.common.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import lotr.common.LOTRCreativeTabs;
+import lotr.common.LOTRMod;
 import net.minecraft.block.BlockColored;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -11,9 +11,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.List;
 
 public class LOTRItemDye extends Item {
 	@SideOnly(Side.CLIENT)
@@ -24,6 +27,23 @@ public class LOTRItemDye extends Item {
 		setHasSubtypes(true);
 		setMaxDamage(0);
 		setCreativeTab(LOTRCreativeTabs.tabMaterials);
+	}
+
+	public static int isItemDye(ItemStack itemstack) {
+		if (itemstack.getItem() == Items.dye) {
+			return itemstack.getItemDamage();
+		}
+		for (int id : OreDictionary.getOreIDs(itemstack)) {
+			String oreName = OreDictionary.getOreName(id);
+			for (int j = 0; j <= 15; ++j) {
+				ItemStack dye = new ItemStack(Items.dye, 1, j);
+				if (!LOTRMod.isOreNameEqual(dye, oreName)) {
+					continue;
+				}
+				return j;
+			}
+		}
+		return -1;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -73,22 +93,5 @@ public class LOTRItemDye extends Item {
 		for (int i = 0; i < dyeNames.length; ++i) {
 			dyeIcons[i] = iconregister.registerIcon(getIconString() + "_" + dyeNames[i]);
 		}
-	}
-
-	public static int isItemDye(ItemStack itemstack) {
-		if (itemstack.getItem() == Items.dye) {
-			return itemstack.getItemDamage();
-		}
-		for (int id : OreDictionary.getOreIDs(itemstack)) {
-			String oreName = OreDictionary.getOreName(id);
-			for (int j = 0; j <= 15; ++j) {
-				ItemStack dye = new ItemStack(Items.dye, 1, j);
-				if (!LOTRMod.isOreNameEqual(dye, oreName)) {
-					continue;
-				}
-				return j;
-			}
-		}
-		return -1;
 	}
 }

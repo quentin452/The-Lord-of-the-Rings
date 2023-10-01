@@ -1,6 +1,7 @@
 package lotr.client.fx;
 
-import lotr.common.fac.*;
+import lotr.common.fac.LOTRAlignmentBonusMap;
+import lotr.common.fac.LOTRFaction;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;

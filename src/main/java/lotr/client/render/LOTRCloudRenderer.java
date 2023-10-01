@@ -1,21 +1,25 @@
 package lotr.client.render;
 
-import java.util.Random;
-
-import org.lwjgl.opengl.*;
-import org.lwjgl.util.glu.Project;
-
 import com.google.common.math.IntMath;
-
 import lotr.client.LOTRReflectionClient;
-import lotr.common.*;
+import lotr.common.LOTRConfig;
+import lotr.common.LOTRDate;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.*;
-import net.minecraft.util.*;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.client.IRenderHandler;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GLContext;
+import org.lwjgl.util.glu.Project;
+
+import java.util.Random;
 
 public class LOTRCloudRenderer extends IRenderHandler {
 	public static ResourceLocation cloudTexture = new ResourceLocation("lotr:sky/clouds.png");
@@ -27,6 +31,24 @@ public class LOTRCloudRenderer extends IRenderHandler {
 	public static double cloudPosX;
 	public static double cloudPosZPre;
 	public static double cloudPosZ;
+
+	public static void resetClouds() {
+		cloudOpacity.reset();
+		cloudSpeed.reset();
+		cloudAngle.reset();
+	}
+
+	public static void updateClouds(WorldClient world) {
+		cloudOpacity.update(world);
+		cloudSpeed.update(world);
+		cloudAngle.update(world);
+		float angle = cloudAngle.getValue(1.0F);
+		float speed = cloudSpeed.getValue(1.0F);
+		cloudPosXPre = cloudPosX;
+		cloudPosX += MathHelper.cos(angle) * speed;
+		cloudPosZPre = cloudPosZ;
+		cloudPosZ += MathHelper.sin(angle) * speed;
+	}
 
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
@@ -120,24 +142,6 @@ public class LOTRCloudRenderer extends IRenderHandler {
 			GL11.glPopMatrix();
 		}
 		world.theProfiler.endSection();
-	}
-
-	public static void resetClouds() {
-		cloudOpacity.reset();
-		cloudSpeed.reset();
-		cloudAngle.reset();
-	}
-
-	public static void updateClouds(WorldClient world) {
-		cloudOpacity.update(world);
-		cloudSpeed.update(world);
-		cloudAngle.update(world);
-		float angle = cloudAngle.getValue(1.0F);
-		float speed = cloudSpeed.getValue(1.0F);
-		cloudPosXPre = cloudPosX;
-		cloudPosX += MathHelper.cos(angle) * speed;
-		cloudPosZPre = cloudPosZ;
-		cloudPosZ += MathHelper.sin(angle) * speed;
 	}
 
 	public static class CloudProperty {

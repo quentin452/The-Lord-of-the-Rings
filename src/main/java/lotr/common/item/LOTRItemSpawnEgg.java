@@ -1,27 +1,53 @@
 package lotr.common.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRCreativeTabs;
 import lotr.common.dispenser.LOTRDispenseSpawnEgg;
 import lotr.common.entity.LOTREntities;
 import lotr.common.entity.npc.LOTREntityNPC;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Facing;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRItemSpawnEgg extends Item {
 	public LOTRItemSpawnEgg() {
 		setHasSubtypes(true);
 		setCreativeTab(LOTRCreativeTabs.tabSpawn);
 		BlockDispenser.dispenseBehaviorRegistry.putObject(this, new LOTRDispenseSpawnEgg());
+	}
+
+	public static Entity spawnCreature(World world, int id, double d, double d1, double d2) {
+		if (!LOTREntities.spawnEggs.containsKey(id)) {
+			return null;
+		}
+		String entityName = LOTREntities.getStringFromID(id);
+		Entity entity = EntityList.createEntityByName(entityName, world);
+		if (entity instanceof EntityLiving) {
+			EntityLiving entityliving = (EntityLiving) entity;
+			entityliving.setLocationAndAngles(d, d1, d2, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0f), 0.0f);
+			entityliving.rotationYawHead = entityliving.rotationYaw;
+			entityliving.renderYawOffset = entityliving.rotationYaw;
+			entityliving.onSpawnWithEgg(null);
+			world.spawnEntityInWorld(entityliving);
+			entityliving.playLivingSound();
+		}
+		return entity;
 	}
 
 	@Override
@@ -103,23 +129,5 @@ public class LOTRItemSpawnEgg extends Item {
 	@SideOnly(Side.CLIENT)
 	public boolean requiresMultipleRenderPasses() {
 		return true;
-	}
-
-	public static Entity spawnCreature(World world, int id, double d, double d1, double d2) {
-		if (!LOTREntities.spawnEggs.containsKey(id)) {
-			return null;
-		}
-		String entityName = LOTREntities.getStringFromID(id);
-		Entity entity = EntityList.createEntityByName(entityName, world);
-		if (entity instanceof EntityLiving) {
-			EntityLiving entityliving = (EntityLiving) entity;
-			entityliving.setLocationAndAngles(d, d1, d2, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0f), 0.0f);
-			entityliving.rotationYawHead = entityliving.rotationYaw;
-			entityliving.renderYawOffset = entityliving.rotationYaw;
-			entityliving.onSpawnWithEgg(null);
-			world.spawnEntityInWorld(entityliving);
-			entityliving.playLivingSound();
-		}
-		return entity;
 	}
 }

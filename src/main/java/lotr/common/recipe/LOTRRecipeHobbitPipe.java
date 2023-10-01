@@ -1,7 +1,8 @@
 package lotr.common.recipe;
 
 import lotr.common.LOTRMod;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemDye;
+import lotr.common.item.LOTRItemHobbitPipe;
 import net.minecraft.block.BlockColored;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;

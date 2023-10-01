@@ -1,11 +1,14 @@
 package lotr.common.tileentity;
 
 import lotr.common.LOTRMod;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemMug;
+import lotr.common.item.LOTRPoisonedDrinks;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.*;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
@@ -39,6 +42,15 @@ public class LOTRTileEntityMug extends TileEntity {
 		return copy;
 	}
 
+	public void setMugItem(ItemStack itemstack) {
+		if (itemstack != null && itemstack.stackSize <= 0) {
+			itemstack = null;
+		}
+		mugItem = itemstack;
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		markDirty();
+	}
+
 	public ItemStack getMugItemForRender() {
 		return LOTRItemMug.getEquivalentDrink(getMugItem());
 	}
@@ -54,6 +66,12 @@ public class LOTRTileEntityMug extends TileEntity {
 			return LOTRItemMug.Vessel.MUG;
 		}
 		return mugVessel;
+	}
+
+	public void setVessel(LOTRItemMug.Vessel v) {
+		mugVessel = v;
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		markDirty();
 	}
 
 	public boolean isEmpty() {
@@ -93,21 +111,6 @@ public class LOTRTileEntityMug extends TileEntity {
 
 	public void setEmpty() {
 		setMugItem(null);
-	}
-
-	public void setMugItem(ItemStack itemstack) {
-		if (itemstack != null && itemstack.stackSize <= 0) {
-			itemstack = null;
-		}
-		mugItem = itemstack;
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-		markDirty();
-	}
-
-	public void setVessel(LOTRItemMug.Vessel v) {
-		mugVessel = v;
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-		markDirty();
 	}
 
 	@Override

@@ -3,7 +3,8 @@ package lotr.common.world.biome;
 import lotr.common.entity.animal.LOTREntityGorcrow;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRTreeType;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRInvasions;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class LOTRBiomeGenMirkwoodNorth extends LOTRBiomeGenMirkwood {

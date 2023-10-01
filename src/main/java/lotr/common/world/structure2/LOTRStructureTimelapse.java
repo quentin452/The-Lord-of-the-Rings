@@ -1,7 +1,5 @@
 package lotr.common.world.structure2;
 
-import java.util.*;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import lotr.common.LOTRConfig;
@@ -11,6 +9,10 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class LOTRStructureTimelapse {
 	public static List<ThreadTimelapse> allThreads = Collections.synchronizedList(new ArrayList<>());
 
@@ -19,16 +21,16 @@ public class LOTRStructureTimelapse {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
+	public static void start(WorldGenerator gen, World world, int i, int j, int k) {
+		new ThreadTimelapse(gen, world, i, j, k).start();
+	}
+
 	@SubscribeEvent
 	public void onWorldUnload(WorldEvent.Unload event) {
 		for (ThreadTimelapse thr : allThreads) {
 			thr.interrupt();
 		}
 		allThreads.clear();
-	}
-
-	public static void start(WorldGenerator gen, World world, int i, int j, int k) {
-		new ThreadTimelapse(gen, world, i, j, k).start();
 	}
 
 	public static class ThreadTimelapse extends Thread {

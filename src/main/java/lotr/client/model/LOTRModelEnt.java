@@ -1,12 +1,12 @@
 package lotr.client.model;
 
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.render.entity.LOTRGlowingEyes;
 import lotr.common.entity.npc.LOTREntityEnt;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
+import org.lwjgl.opengl.GL11;
 
 public class LOTRModelEnt extends ModelBase implements LOTRGlowingEyes.Model {
 	public ModelRenderer trunk;

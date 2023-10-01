@@ -1,22 +1,24 @@
 package lotr.client.render.entity;
 
-import lotr.common.entity.LOTRRandomSkinEntity;
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelTroll;
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.LOTRRandomSkinEntity;
+import lotr.common.entity.npc.LOTREntityNPC;
+import lotr.common.entity.npc.LOTREntityTroll;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Locale;
 
 public class LOTRRenderTroll extends RenderLiving {
 	public static LOTRRandomSkins trollSkins;
-	public static ResourceLocation[] trollOutfits  = new ResourceLocation[]{new ResourceLocation("lotr:mob/troll/outfit_0.png"), new ResourceLocation("lotr:mob/troll/outfit_1.png"), new ResourceLocation("lotr:mob/troll/outfit_2.png")};
-	public static ResourceLocation weaponsTexture  = new ResourceLocation("lotr:mob/troll/weapons.png");
+	public static ResourceLocation[] trollOutfits = new ResourceLocation[]{new ResourceLocation("lotr:mob/troll/outfit_0.png"), new ResourceLocation("lotr:mob/troll/outfit_1.png"), new ResourceLocation("lotr:mob/troll/outfit_2.png")};
+	public static ResourceLocation weaponsTexture = new ResourceLocation("lotr:mob/troll/weapons.png");
 
 	public LOTRModelTroll shirtModel = new LOTRModelTroll(1.0f, 0);
 	public LOTRModelTroll trousersModel = new LOTRModelTroll(0.75f, 1);

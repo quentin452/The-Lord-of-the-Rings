@@ -1,22 +1,22 @@
 package lotr.common.world.structure2.scan;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.*;
-import java.util.zip.*;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.input.BOMInputStream;
-
 import com.google.common.base.Charsets;
-
-import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.ModContainer;
 import lotr.common.LOTRMod;
 import lotr.common.util.LOTRLog;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.DimensionManager;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.input.BOMInputStream;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class LOTRStructureScan {
 	public static String strscanFormat = ".strscan";
@@ -27,24 +27,6 @@ public class LOTRStructureScan {
 
 	public LOTRStructureScan(String name) {
 		scanName = name;
-	}
-
-	public void addScanStep(ScanStepBase e) {
-		scanSteps.add(e);
-	}
-
-	public void includeAlias(LOTRScanAlias alias) {
-		for (LOTRScanAlias existingAlias : aliases) {
-			if (!existingAlias.name.equals(alias.name)) {
-				continue;
-			}
-			return;
-		}
-		aliases.add(alias);
-	}
-
-	public void includeAlias(String alias, LOTRScanAlias.Type type) {
-		includeAlias(new LOTRScanAlias(alias, type));
 	}
 
 	public static LOTRStructureScan getScanByName(String name) {
@@ -288,6 +270,24 @@ public class LOTRStructureScan {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public void addScanStep(ScanStepBase e) {
+		scanSteps.add(e);
+	}
+
+	public void includeAlias(LOTRScanAlias alias) {
+		for (LOTRScanAlias existingAlias : aliases) {
+			if (!existingAlias.name.equals(alias.name)) {
+				continue;
+			}
+			return;
+		}
+		aliases.add(alias);
+	}
+
+	public void includeAlias(String alias, LOTRScanAlias.Type type) {
+		includeAlias(new LOTRScanAlias(alias, type));
 	}
 
 	public static class ScanStep extends ScanStepBase {

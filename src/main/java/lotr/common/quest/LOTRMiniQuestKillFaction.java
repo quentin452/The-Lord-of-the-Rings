@@ -1,13 +1,14 @@
 package lotr.common.quest;
 
-import java.util.Random;
-
-import lotr.common.*;
+import lotr.common.LOTRMod;
+import lotr.common.LOTRPlayerData;
 import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.fac.LOTRFaction;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.Random;
 
 public class LOTRMiniQuestKillFaction extends LOTRMiniQuestKill {
 	public LOTRFaction killFaction;

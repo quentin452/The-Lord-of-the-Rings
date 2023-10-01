@@ -1,20 +1,24 @@
 package lotr.common.entity.npc;
 
-import java.util.List;
-
 import lotr.common.LOTRMod;
 import lotr.common.entity.ai.LOTREntityAINearestAttackableTargetBasic;
 import lotr.common.fac.LOTRFaction;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemLeatherHat;
+import lotr.common.item.LOTRItemMug;
 import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public abstract class LOTREntityBreeRuffian extends LOTREntityBreeMan {
 	public static ItemStack[] ruffianWeapons = {new ItemStack(Items.iron_sword), new ItemStack(Items.iron_sword), new ItemStack(LOTRMod.daggerIron), new ItemStack(LOTRMod.battleaxeIron)};

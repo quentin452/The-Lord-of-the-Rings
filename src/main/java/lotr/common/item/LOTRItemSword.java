@@ -1,18 +1,21 @@
 package lotr.common.item;
 
-import java.util.UUID;
-
 import com.google.common.collect.Multimap;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRCreativeTabs;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import java.util.UUID;
 
 public class LOTRItemSword extends ItemSword {
 	@SideOnly(Side.CLIENT)
@@ -28,6 +31,10 @@ public class LOTRItemSword extends ItemSword {
 
 	public LOTRItemSword(LOTRMaterial material) {
 		this(material.toToolMaterial());
+	}
+
+	public static UUID accessWeaponDamageModifier() {
+		return field_111210_e;
 	}
 
 	public LOTRItemSword addWeaponDamage(float f) {
@@ -71,9 +78,5 @@ public class LOTRItemSword extends ItemSword {
 	public LOTRItemSword setIsElvenBlade() {
 		isElvenBlade = true;
 		return this;
-	}
-
-	public static UUID accessWeaponDamageModifier() {
-		return field_111210_e;
 	}
 }

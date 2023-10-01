@@ -1,9 +1,11 @@
 package lotr.common.world.structure2;
 
-import java.util.Random;
-
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityNearHaradrimBase;
+import lotr.common.entity.npc.LOTREntityUmbarArcher;
+import lotr.common.entity.npc.LOTREntityUmbarWarrior;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenUmbarBarracks extends LOTRWorldGenSouthronBarracks {
 	public LOTRWorldGenUmbarBarracks(boolean flag) {

@@ -1,10 +1,15 @@
 package lotr.common.entity.npc;
 
 import lotr.common.LOTRMod;
-import lotr.common.entity.ai.*;
+import lotr.common.entity.ai.LOTREntityAIAttackOnCollide;
+import lotr.common.entity.ai.LOTREntityAISauronUseMace;
 import lotr.common.fac.LOTRFaction;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -62,6 +67,10 @@ public class LOTREntitySauron extends LOTREntityNPC {
 		return dataWatcher.getWatchableObjectByte(17) == 1;
 	}
 
+	public void setIsUsingMace(boolean flag) {
+		dataWatcher.updateObject(17, flag ? (byte) 1 : 0);
+	}
+
 	@Override
 	public int getTotalArmorValue() {
 		return 20;
@@ -111,9 +120,5 @@ public class LOTREntitySauron extends LOTREntityNPC {
 		data = super.onSpawnWithEgg(data);
 		setCurrentItemOrArmor(0, new ItemStack(LOTRMod.sauronMace));
 		return data;
-	}
-
-	public void setIsUsingMace(boolean flag) {
-		dataWatcher.updateObject(17, flag ? (byte) 1 : 0);
 	}
 }

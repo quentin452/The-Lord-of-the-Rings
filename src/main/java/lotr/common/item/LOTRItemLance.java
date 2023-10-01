@@ -1,9 +1,9 @@
 package lotr.common.item;
 
-import java.util.UUID;
-
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.Item;
+
+import java.util.UUID;
 
 public class LOTRItemLance extends LOTRItemPolearmLong {
 	public static UUID lanceSpeedBoost_id = UUID.fromString("4da96302-7457-42ed-9709-f1be0c465ec3");

@@ -1,9 +1,8 @@
 package lotr.common.world.structure;
 
-import java.util.Random;
-
 import lotr.common.LOTRMod;
-import lotr.common.entity.npc.*;
+import lotr.common.entity.npc.LOTREntityGaladhrimLord;
+import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.item.LOTRItemBanner;
 import lotr.common.world.feature.LOTRWorldGenMallornExtreme;
 import lotr.common.world.structure2.LOTRWorldGenElfHouse;
@@ -13,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LOTRWorldGenElfLordHouse extends LOTRWorldGenStructureBase {
 	public LOTRWorldGenElfLordHouse(boolean flag) {

@@ -1,8 +1,7 @@
 package lotr.common.block;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import lotr.common.LOTRMod;
 import lotr.common.entity.animal.LOTREntityBird;
 import net.minecraft.block.Block;
@@ -10,9 +9,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.*;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LOTRBlockBirdCage extends LOTRBlockAnimalJar {
 	@SideOnly(Side.CLIENT)
@@ -29,6 +32,14 @@ public class LOTRBlockBirdCage extends LOTRBlockAnimalJar {
 		setHardness(0.5f);
 		setStepSound(Block.soundTypeMetal);
 		setCageTypes("bronze", "iron", "silver", "gold");
+	}
+
+	public static boolean isSameBirdCage(IBlockAccess world, int i, int j, int k, int i1, int j1, int k1) {
+		Block block = world.getBlock(i, j, k);
+		int meta = world.getBlockMetadata(i, j, k);
+		Block block1 = world.getBlock(i1, j1, k1);
+		int meta1 = world.getBlockMetadata(i1, j1, k1);
+		return block instanceof LOTRBlockBirdCage && block == block1 && meta == meta1;
 	}
 
 	@Override
@@ -89,13 +100,5 @@ public class LOTRBlockBirdCage extends LOTRBlockAnimalJar {
 
 	public void setCageTypes(String... s) {
 		cageTypes = s;
-	}
-
-	public static boolean isSameBirdCage(IBlockAccess world, int i, int j, int k, int i1, int j1, int k1) {
-		Block block = world.getBlock(i, j, k);
-		int meta = world.getBlockMetadata(i, j, k);
-		Block block1 = world.getBlock(i1, j1, k1);
-		int meta1 = world.getBlockMetadata(i1, j1, k1);
-		return block instanceof LOTRBlockBirdCage && block == block1 && meta == meta1;
 	}
 }

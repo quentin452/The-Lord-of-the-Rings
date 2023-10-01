@@ -32,6 +32,12 @@ public class LOTRItemUtumnoKey extends Item {
 		setHasSubtypes(true);
 	}
 
+	public static ItemStack getRandomKeyPart(Random rand) {
+		ItemStack itemstack = new ItemStack(LOTRMod.utumnoKey);
+		itemstack.setItemDamage(MathHelper.getRandomIntegerInRange(rand, 2, keyTypes.length - 1));
+		return itemstack;
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int i) {
@@ -142,11 +148,5 @@ public class LOTRItemUtumnoKey extends Item {
 		for (int i = 0; i < keyTypes.length; ++i) {
 			keyIcons[i] = iconregister.registerIcon(getIconString() + "_" + keyTypes[i]);
 		}
-	}
-
-	public static ItemStack getRandomKeyPart(Random rand) {
-		ItemStack itemstack = new ItemStack(LOTRMod.utumnoKey);
-		itemstack.setItemDamage(MathHelper.getRandomIntegerInRange(rand, 2, keyTypes.length - 1));
-		return itemstack;
 	}
 }

@@ -3,12 +3,16 @@ package lotr.common.entity.npc;
 import lotr.common.LOTRMod;
 import lotr.common.world.biome.LOTRBiomeGenFangorn;
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
-import net.minecraft.init.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.*;
-import net.minecraft.util.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.ForgeHooks;
@@ -117,6 +121,10 @@ public abstract class LOTREntityTree extends LOTREntityNPC {
 		return i;
 	}
 
+	public void setTreeType(int i) {
+		dataWatcher.updateObject(16, (byte) i);
+	}
+
 	public boolean isTreeEffectiveDamage(DamageSource damagesource) {
 		ItemStack itemstack;
 		if (damagesource.isFireDamage()) {
@@ -149,10 +157,6 @@ public abstract class LOTREntityTree extends LOTREntityNPC {
 			return;
 		}
 		super.setAttackTarget(target, speak);
-	}
-
-	public void setTreeType(int i) {
-		dataWatcher.updateObject(16, (byte) i);
 	}
 
 	@Override

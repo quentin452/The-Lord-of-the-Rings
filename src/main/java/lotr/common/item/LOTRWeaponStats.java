@@ -1,17 +1,21 @@
 package lotr.common.item;
 
-import java.util.*;
-
 import com.google.common.collect.Multimap;
-
 import lotr.common.enchant.LOTREnchantmentHelper;
-import net.minecraft.enchantment.*;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ISpecialArmor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRWeaponStats {
 	public static int basePlayerMeleeTime = 15;

@@ -1,20 +1,35 @@
 package lotr.client.render.tileentity;
 
-import java.util.*;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.model.LOTRModelKebabStand;
 import lotr.common.tileentity.LOTRTileEntityKebabStand;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StringUtils;
+import org.lwjgl.opengl.GL11;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRRenderKebabStand extends TileEntitySpecialRenderer {
 	public static LOTRModelKebabStand standModel = new LOTRModelKebabStand();
 	public static Map<String, ResourceLocation> standTextures = new HashMap<>();
 	public static ResourceLocation rawTexture = new ResourceLocation("lotr:item/kebab/raw.png");
 	public static ResourceLocation cookedTexture = new ResourceLocation("lotr:item/kebab/cooked.png");
+
+	public static ResourceLocation getStandTexture(LOTRTileEntityKebabStand kebabStand) {
+		ResourceLocation r;
+		String s = kebabStand.getStandTextureName();
+		if (!StringUtils.isNullOrEmpty(s)) {
+			s = "_" + s;
+		}
+		r = standTextures.get(s = "stand" + s);
+		if (r == null) {
+			r = new ResourceLocation("lotr:item/kebab/" + s + ".png");
+			standTextures.put(s, r);
+		}
+		return r;
+	}
 
 	@Override
 	public void renderTileEntityAt(TileEntity tileentity, double d, double d1, double d2, float f) {
@@ -60,19 +75,5 @@ public class LOTRRenderKebabStand extends TileEntitySpecialRenderer {
 		GL11.glEnable(2884);
 		GL11.glDisable(32826);
 		GL11.glPopMatrix();
-	}
-
-	public static ResourceLocation getStandTexture(LOTRTileEntityKebabStand kebabStand) {
-		ResourceLocation r;
-		String s = kebabStand.getStandTextureName();
-		if (!StringUtils.isNullOrEmpty(s)) {
-			s = "_" + s;
-		}
-		r = standTextures.get(s = "stand" + s);
-		if (r == null) {
-			r = new ResourceLocation("lotr:item/kebab/" + s + ".png");
-			standTextures.put(s, r);
-		}
-		return r;
 	}
 }

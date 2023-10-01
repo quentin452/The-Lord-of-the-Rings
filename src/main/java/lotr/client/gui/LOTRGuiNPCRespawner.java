@@ -1,9 +1,14 @@
 package lotr.client.gui;
 
-import lotr.common.entity.*;
-import lotr.common.network.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.util.*;
+import lotr.common.entity.LOTREntities;
+import lotr.common.entity.LOTREntityNPCRespawner;
+import lotr.common.network.LOTRPacketEditNPCRespawner;
+import lotr.common.network.LOTRPacketHandler;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.StringUtils;
 
 public class LOTRGuiNPCRespawner extends LOTRGuiScreenBase {
 	public int xSize = 256;

@@ -1,18 +1,20 @@
 package lotr.client.render.item;
 
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-
 import lotr.client.LOTRClientProxy;
 import lotr.common.LOTRConfig;
 import lotr.common.entity.npc.LOTREntityOrc;
 import lotr.common.item.LOTRItemSword;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
+import org.lwjgl.opengl.GL11;
+
+import java.util.List;
 
 public class LOTRRenderElvenBlade implements IItemRenderer {
 	public double distance;
