@@ -1,7 +1,8 @@
 package lotr.common.tileentity;
 
 import lotr.common.entity.LOTREntities;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
 

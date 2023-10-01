@@ -1,8 +1,5 @@
 package lotr.common;
 
-import java.awt.Color;
-import java.util.*;
-
 import lotr.common.entity.npc.LOTREntityWickedDwarf;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.item.LOTRItemManFlesh;
@@ -11,10 +8,16 @@ import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.HoverEvent;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.*;
+
+import java.awt.*;
+import java.util.List;
+import java.util.*;
 
 public class LOTRAchievement {
 	public static LOTRAchievement enterMiddleEarth;
@@ -540,124 +543,6 @@ public class LOTRAchievement {
 		}
 		category.list.add(this);
 		getDimension().allAchievements.add(this);
-	}
-
-	public void broadcastEarning(EntityPlayer entityplayer) {
-		if (LOTRConfig.protectHobbitKillers && this == killHobbit) {
-			return;
-		}
-		ChatComponentTranslation dimName = new ChatComponentTranslation(getDimension().getUntranslatedDimensionName());
-		IChatComponent earnName = getChatComponentForEarn(entityplayer);
-		IChatComponent msg = new ChatComponentTranslation("chat.lotr.achievement", entityplayer.func_145748_c_(), dimName, earnName);
-		MinecraftServer.getServer().getConfigurationManager().sendChatMsg(msg);
-	}
-
-	public boolean canPlayerEarn(EntityPlayer entityplayer) {
-		float alignment;
-		LOTRPlayerData playerData = LOTRLevelData.getData(entityplayer);
-		if (!enemyFactions.isEmpty()) {
-			boolean anyEnemies = false;
-			for (LOTRFaction f : enemyFactions) {
-				alignment = playerData.getAlignment(f);
-				if (alignment > 0.0f) {
-					continue;
-				}
-				anyEnemies = true;
-			}
-			if (!anyEnemies) {
-				return false;
-			}
-		}
-		if (!allyFactions.isEmpty()) {
-			boolean anyAllies = false;
-			for (LOTRFaction f : allyFactions) {
-				alignment = playerData.getAlignment(f);
-				if (alignment < 0.0f) {
-					continue;
-				}
-				anyAllies = true;
-			}
-			return anyAllies;
-		}
-		return true;
-	}
-
-	public LOTRAchievement createTitle() {
-		return createTitle(null);
-	}
-
-	public LOTRAchievement createTitle(String s) {
-		if (achievementTitle != null) {
-			throw new IllegalArgumentException("LOTR achievement " + name + " already has an associated title!");
-		}
-		achievementTitle = new LOTRTitle(s, this);
-		return this;
-	}
-
-	public IChatComponent getAchievementChatComponent(EntityPlayer entityplayer) {
-		ChatComponentTranslation component = new ChatComponentTranslation(getUntranslatedTitle(entityplayer)).createCopy();
-		component.getChatStyle().setColor(EnumChatFormatting.YELLOW);
-		component.getChatStyle().setChatHoverEvent(new HoverEvent(LOTRChatEvents.SHOW_LOTR_ACHIEVEMENT, new ChatComponentText(category.name() + "$" + ID)));
-		return component;
-	}
-
-	public LOTRTitle getAchievementTitle() {
-		return achievementTitle;
-	}
-
-	public IChatComponent getChatComponentForEarn(EntityPlayer entityplayer) {
-		IChatComponent base = getAchievementChatComponent(entityplayer);
-		IChatComponent component = new ChatComponentText("[").appendSibling(base).appendText("]");
-		component.setChatStyle(base.getChatStyle());
-		return component;
-	}
-
-	public String getCodeName() {
-		return name;
-	}
-
-	public String getDescription(EntityPlayer entityplayer) {
-		return StatCollector.translateToLocal("lotr.achievement." + name + ".desc");
-	}
-
-	public LOTRDimension getDimension() {
-		return category.dimension;
-	}
-
-	public String getTitle(EntityPlayer entityplayer) {
-		return StatCollector.translateToLocal(getUntranslatedTitle(entityplayer));
-	}
-
-	public String getUntranslatedTitle(EntityPlayer entityplayer) {
-		return "lotr.achievement." + name + ".title";
-	}
-
-	public LOTRAchievement setBiomeAchievement() {
-		isBiomeAchievement = true;
-		return this;
-	}
-
-	public LOTRAchievement setRequiresAlly(LOTRFaction... f) {
-		allyFactions.addAll(Arrays.asList(f));
-		return this;
-	}
-
-	public LOTRAchievement setRequiresAnyAlly(List<LOTRFaction> f) {
-		return setRequiresAlly(f.toArray(new LOTRFaction[0]));
-	}
-
-	public LOTRAchievement setRequiresAnyEnemy(List<LOTRFaction> f) {
-		return setRequiresEnemy(f.toArray(new LOTRFaction[0]));
-	}
-
-	public LOTRAchievement setRequiresEnemy(LOTRFaction... f) {
-		enemyFactions.addAll(Arrays.asList(f));
-		return this;
-	}
-
-	public LOTRAchievement setSpecial() {
-		isSpecial = true;
-		return this;
 	}
 
 	public static LOTRAchievement achievementForCategoryAndID(Category category, int ID) {
@@ -1219,6 +1104,124 @@ public class LOTRAchievement {
 			}
 			return 1;
 		};
+	}
+
+	public void broadcastEarning(EntityPlayer entityplayer) {
+		if (LOTRConfig.protectHobbitKillers && this == killHobbit) {
+			return;
+		}
+		ChatComponentTranslation dimName = new ChatComponentTranslation(getDimension().getUntranslatedDimensionName());
+		IChatComponent earnName = getChatComponentForEarn(entityplayer);
+		IChatComponent msg = new ChatComponentTranslation("chat.lotr.achievement", entityplayer.func_145748_c_(), dimName, earnName);
+		MinecraftServer.getServer().getConfigurationManager().sendChatMsg(msg);
+	}
+
+	public boolean canPlayerEarn(EntityPlayer entityplayer) {
+		float alignment;
+		LOTRPlayerData playerData = LOTRLevelData.getData(entityplayer);
+		if (!enemyFactions.isEmpty()) {
+			boolean anyEnemies = false;
+			for (LOTRFaction f : enemyFactions) {
+				alignment = playerData.getAlignment(f);
+				if (alignment > 0.0f) {
+					continue;
+				}
+				anyEnemies = true;
+			}
+			if (!anyEnemies) {
+				return false;
+			}
+		}
+		if (!allyFactions.isEmpty()) {
+			boolean anyAllies = false;
+			for (LOTRFaction f : allyFactions) {
+				alignment = playerData.getAlignment(f);
+				if (alignment < 0.0f) {
+					continue;
+				}
+				anyAllies = true;
+			}
+			return anyAllies;
+		}
+		return true;
+	}
+
+	public LOTRAchievement createTitle() {
+		return createTitle(null);
+	}
+
+	public LOTRAchievement createTitle(String s) {
+		if (achievementTitle != null) {
+			throw new IllegalArgumentException("LOTR achievement " + name + " already has an associated title!");
+		}
+		achievementTitle = new LOTRTitle(s, this);
+		return this;
+	}
+
+	public IChatComponent getAchievementChatComponent(EntityPlayer entityplayer) {
+		ChatComponentTranslation component = new ChatComponentTranslation(getUntranslatedTitle(entityplayer)).createCopy();
+		component.getChatStyle().setColor(EnumChatFormatting.YELLOW);
+		component.getChatStyle().setChatHoverEvent(new HoverEvent(LOTRChatEvents.SHOW_LOTR_ACHIEVEMENT, new ChatComponentText(category.name() + "$" + ID)));
+		return component;
+	}
+
+	public LOTRTitle getAchievementTitle() {
+		return achievementTitle;
+	}
+
+	public IChatComponent getChatComponentForEarn(EntityPlayer entityplayer) {
+		IChatComponent base = getAchievementChatComponent(entityplayer);
+		IChatComponent component = new ChatComponentText("[").appendSibling(base).appendText("]");
+		component.setChatStyle(base.getChatStyle());
+		return component;
+	}
+
+	public String getCodeName() {
+		return name;
+	}
+
+	public String getDescription(EntityPlayer entityplayer) {
+		return StatCollector.translateToLocal("lotr.achievement." + name + ".desc");
+	}
+
+	public LOTRDimension getDimension() {
+		return category.dimension;
+	}
+
+	public String getTitle(EntityPlayer entityplayer) {
+		return StatCollector.translateToLocal(getUntranslatedTitle(entityplayer));
+	}
+
+	public String getUntranslatedTitle(EntityPlayer entityplayer) {
+		return "lotr.achievement." + name + ".title";
+	}
+
+	public LOTRAchievement setBiomeAchievement() {
+		isBiomeAchievement = true;
+		return this;
+	}
+
+	public LOTRAchievement setRequiresAlly(LOTRFaction... f) {
+		allyFactions.addAll(Arrays.asList(f));
+		return this;
+	}
+
+	public LOTRAchievement setRequiresAnyAlly(List<LOTRFaction> f) {
+		return setRequiresAlly(f.toArray(new LOTRFaction[0]));
+	}
+
+	public LOTRAchievement setRequiresAnyEnemy(List<LOTRFaction> f) {
+		return setRequiresEnemy(f.toArray(new LOTRFaction[0]));
+	}
+
+	public LOTRAchievement setRequiresEnemy(LOTRFaction... f) {
+		enemyFactions.addAll(Arrays.asList(f));
+		return this;
+	}
+
+	public LOTRAchievement setSpecial() {
+		isSpecial = true;
+		return this;
 	}
 
 	public enum Category {

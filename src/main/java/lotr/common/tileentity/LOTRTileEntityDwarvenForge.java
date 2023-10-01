@@ -1,7 +1,8 @@
 package lotr.common.tileentity;
 
 import lotr.common.LOTRMod;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 public class LOTRTileEntityDwarvenForge extends LOTRTileEntityAlloyForgeBase {

@@ -31,11 +31,11 @@ public class ExclusiveGroup {
 		this.name = name;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public static ExclusiveGroup of(String name) {
 		return new ExclusiveGroup(name);
+	}
+
+	public String getName() {
+		return name;
 	}
 }

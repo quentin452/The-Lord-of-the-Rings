@@ -1,27 +1,35 @@
 package lotr.common;
 
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.mojang.authlib.GameProfile;
-
 import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.eventhandler.*;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.IFuelHandler;
+import cpw.mods.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.registry.GameRegistry;
 import lotr.common.block.*;
-import lotr.common.enchant.*;
-import lotr.common.entity.*;
+import lotr.common.enchant.LOTREnchantment;
+import lotr.common.enchant.LOTREnchantmentHelper;
+import lotr.common.enchant.LOTREnchantmentWeaponSpecial;
+import lotr.common.entity.LOTRBannerProtectable;
+import lotr.common.entity.LOTREntityRegistry;
+import lotr.common.entity.LOTRPlateFallingInfo;
+import lotr.common.entity.LOTRRandomSkinEntity;
 import lotr.common.entity.ai.LOTREntityAINearestAttackableTargetBasic;
-import lotr.common.entity.animal.*;
-import lotr.common.entity.item.*;
+import lotr.common.entity.animal.LOTREntityButterfly;
+import lotr.common.entity.animal.LOTREntityHorse;
+import lotr.common.entity.animal.LOTREntityZebra;
+import lotr.common.entity.item.LOTREntityArrowPoisoned;
+import lotr.common.entity.item.LOTREntityBanner;
 import lotr.common.entity.npc.*;
 import lotr.common.entity.projectile.*;
-import lotr.common.fac.*;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
+import lotr.common.fac.LOTRFactionBounties;
+import lotr.common.fac.LOTRFactionRelations;
 import lotr.common.inventory.LOTRContainerCraftingTable;
 import lotr.common.item.*;
 import lotr.common.network.*;
@@ -40,29 +48,44 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.*;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.entity.projectile.*;
-import net.minecraft.init.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityFishHook;
+import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.potion.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.common.*;
+import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.event.*;
+import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.minecart.*;
+import net.minecraftforge.event.entity.minecart.MinecartInteractEvent;
+import net.minecraftforge.event.entity.minecart.MinecartUpdateEvent;
 import net.minecraftforge.event.entity.player.*;
-import net.minecraftforge.event.entity.player.PlayerEvent.*;
+import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
+import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
+import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 import net.minecraftforge.event.world.*;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.*;
 
 public class LOTREventHandler implements IFuelHandler {
 	public LOTRItemBow proxyBowItemServer;
@@ -74,6 +97,24 @@ public class LOTREventHandler implements IFuelHandler {
 		MinecraftForge.TERRAIN_GEN_BUS.register(this);
 		GameRegistry.registerFuelHandler(this);
 		new LOTRStructureTimelapse();
+	}
+
+	public static void dechant(ItemStack itemstack, EntityPlayer entityplayer) {
+		if (!entityplayer.capabilities.isCreativeMode && itemstack != null && itemstack.isItemEnchanted() && !(itemstack.getItem() instanceof ItemFishingRod)) {
+			itemstack.getTagCompound().removeTag("ench");
+		}
+	}
+
+	public static String getUsernameWithoutWebservice(UUID player) {
+		GameProfile profile = MinecraftServer.getServer().func_152358_ax().func_152652_a(player);
+		if (profile != null && !StringUtils.isBlank(profile.getName())) {
+			return profile.getName();
+		}
+		String cachedName = UsernameCache.getLastKnownUsername(player);
+		if (cachedName != null && !StringUtils.isBlank(cachedName)) {
+			return cachedName;
+		}
+		return player.toString();
 	}
 
 	public void cancelAttackEvent(LivingAttackEvent event) {
@@ -1924,24 +1965,6 @@ public class LOTREventHandler implements IFuelHandler {
 		if (world.provider instanceof LOTRWorldProvider) {
 			LOTRBiomeVariantStorage.clearAllVariants(world);
 		}
-	}
-
-	public static void dechant(ItemStack itemstack, EntityPlayer entityplayer) {
-		if (!entityplayer.capabilities.isCreativeMode && itemstack != null && itemstack.isItemEnchanted() && !(itemstack.getItem() instanceof ItemFishingRod)) {
-			itemstack.getTagCompound().removeTag("ench");
-		}
-	}
-
-	public static String getUsernameWithoutWebservice(UUID player) {
-		GameProfile profile = MinecraftServer.getServer().func_152358_ax().func_152652_a(player);
-		if (profile != null && !StringUtils.isBlank(profile.getName())) {
-			return profile.getName();
-		}
-		String cachedName = UsernameCache.getLastKnownUsername(player);
-		if (cachedName != null && !StringUtils.isBlank(cachedName)) {
-			return cachedName;
-		}
-		return player.toString();
 	}
 
 }

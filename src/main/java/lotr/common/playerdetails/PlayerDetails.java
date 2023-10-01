@@ -1,6 +1,8 @@
 package lotr.common.playerdetails;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 public class PlayerDetails {
 	public UUID uuid;
@@ -11,6 +13,14 @@ public class PlayerDetails {
 		this.uuid = uuid;
 		this.exclusiveGroups = exclusiveGroups;
 		this.isReceivedFromApi = isReceivedFromApi;
+	}
+
+	public static PlayerDetails fromResponse(UUID uuid, List<String> exclusiveGroups) {
+		return new PlayerDetails(uuid, exclusiveGroups, true);
+	}
+
+	public static PlayerDetails getPlaceholder(UUID uuid) {
+		return new PlayerDetails(uuid, Collections.emptyList(), false);
 	}
 
 	public boolean hasAnyExclusiveGroup(ExclusiveGroup... groups) {
@@ -34,13 +44,5 @@ public class PlayerDetails {
 	@Override
 	public String toString() {
 		return String.format("PlayerDetails[uuid=%s,groups=%s,isReceivedFromApi=%b]", uuid, exclusiveGroups, isReceivedFromApi);
-	}
-
-	public static PlayerDetails fromResponse(UUID uuid, List<String> exclusiveGroups) {
-		return new PlayerDetails(uuid, exclusiveGroups, true);
-	}
-
-	public static PlayerDetails getPlaceholder(UUID uuid) {
-		return new PlayerDetails(uuid, Collections.emptyList(), false);
 	}
 }

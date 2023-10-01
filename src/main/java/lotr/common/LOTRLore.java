@@ -1,23 +1,28 @@
 package lotr.common;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.util.*;
-import java.util.regex.*;
-import java.util.zip.*;
-
-import org.apache.commons.io.input.BOMInputStream;
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.common.base.Charsets;
-
 import cpw.mods.fml.common.ModContainer;
 import lotr.common.entity.npc.LOTRNames;
 import lotr.common.util.LOTRLog;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.MathHelper;
+import org.apache.commons.io.input.BOMInputStream;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class LOTRLore {
 	public static String newline = "\n";
@@ -41,90 +46,6 @@ public class LOTRLore {
 		loreText = text;
 		loreCategories = categories;
 		isRewardable = reward;
-	}
-
-	public ItemStack createLoreBook(Random random) {
-		ItemStack itemstack = new ItemStack(Items.written_book);
-		NBTTagCompound data = new NBTTagCompound();
-		itemstack.setTagCompound(data);
-		String title = formatRandom(loreTitle, random);
-		String author = formatRandom(loreAuthor, random);
-		String text = formatRandom(loreText, random);
-		List<String> textPages = organisePages(text);
-		data.setString("title", title);
-		data.setString("author", author);
-		NBTTagList pages = new NBTTagList();
-		for (String pageText : textPages) {
-			pages.appendTag(new NBTTagString(pageText));
-		}
-		data.setTag("pages", pages);
-		return itemstack;
-	}
-
-	public String formatRandom(String text, Random random) {
-		int lastIndexStart = -1;
-		do {
-			String formatted;
-			String unformatted;
-			block16:
-			{
-				String s1;
-				int indexStart = text.indexOf('{', lastIndexStart + 1);
-				int indexEnd = text.indexOf('}');
-				lastIndexStart = indexStart;
-				if (indexStart < 0 || indexEnd <= indexStart) {
-					break;
-				}
-				unformatted = text.substring(indexStart, indexEnd + 1);
-				formatted = unformatted.substring(1, unformatted.length() - 1);
-				if (formatted.startsWith("num:")) {
-					try {
-						s1 = formatted.substring("num:".length());
-						int i1 = s1.indexOf(codeCategorySeparator);
-						String s2 = s1.substring(0, i1);
-						String s3 = s1.substring(i1 + codeCategorySeparator.length());
-						int min = Integer.parseInt(s2);
-						int max = Integer.parseInt(s3);
-						int number = MathHelper.getRandomIntegerInRange(random, min, max);
-						formatted = String.valueOf(number);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				} else if (formatted.startsWith("name:")) {
-					try {
-						String namebank = formatted.substring("name:".length());
-						if (!LOTRNames.nameBankExists(namebank)) {
-							break block16;
-						}
-						formatted = LOTRNames.getRandomName(namebank, random);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				} else if (formatted.startsWith("choose:")) {
-					try {
-						String remaining = formatted.substring("choose:".length());
-						ArrayList<String> words = new ArrayList<>();
-						while (!remaining.isEmpty()) {
-							String word;
-							int indexOf = remaining.indexOf('/');
-							if (indexOf >= 0) {
-								word = remaining.substring(0, indexOf);
-								remaining = remaining.substring(indexOf + "/".length());
-							} else {
-								word = remaining;
-								remaining = "";
-							}
-							words.add(word);
-						}
-						formatted = words.get(random.nextInt(words.size()));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			text = Pattern.compile(unformatted, Pattern.LITERAL).matcher(text).replaceFirst(Matcher.quoteReplacement(formatted));
-		} while (true);
-		return text;
 	}
 
 	public static LOTRLore getMultiRandomLore(Iterable<LoreCategory> categories, Random random, boolean rewardsOnly) {
@@ -350,6 +271,90 @@ public class LOTRLore {
 		return loreTextPages;
 	}
 
+	public ItemStack createLoreBook(Random random) {
+		ItemStack itemstack = new ItemStack(Items.written_book);
+		NBTTagCompound data = new NBTTagCompound();
+		itemstack.setTagCompound(data);
+		String title = formatRandom(loreTitle, random);
+		String author = formatRandom(loreAuthor, random);
+		String text = formatRandom(loreText, random);
+		List<String> textPages = organisePages(text);
+		data.setString("title", title);
+		data.setString("author", author);
+		NBTTagList pages = new NBTTagList();
+		for (String pageText : textPages) {
+			pages.appendTag(new NBTTagString(pageText));
+		}
+		data.setTag("pages", pages);
+		return itemstack;
+	}
+
+	public String formatRandom(String text, Random random) {
+		int lastIndexStart = -1;
+		do {
+			String formatted;
+			String unformatted;
+			block16:
+			{
+				String s1;
+				int indexStart = text.indexOf('{', lastIndexStart + 1);
+				int indexEnd = text.indexOf('}');
+				lastIndexStart = indexStart;
+				if (indexStart < 0 || indexEnd <= indexStart) {
+					break;
+				}
+				unformatted = text.substring(indexStart, indexEnd + 1);
+				formatted = unformatted.substring(1, unformatted.length() - 1);
+				if (formatted.startsWith("num:")) {
+					try {
+						s1 = formatted.substring("num:".length());
+						int i1 = s1.indexOf(codeCategorySeparator);
+						String s2 = s1.substring(0, i1);
+						String s3 = s1.substring(i1 + codeCategorySeparator.length());
+						int min = Integer.parseInt(s2);
+						int max = Integer.parseInt(s3);
+						int number = MathHelper.getRandomIntegerInRange(random, min, max);
+						formatted = String.valueOf(number);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else if (formatted.startsWith("name:")) {
+					try {
+						String namebank = formatted.substring("name:".length());
+						if (!LOTRNames.nameBankExists(namebank)) {
+							break block16;
+						}
+						formatted = LOTRNames.getRandomName(namebank, random);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else if (formatted.startsWith("choose:")) {
+					try {
+						String remaining = formatted.substring("choose:".length());
+						ArrayList<String> words = new ArrayList<>();
+						while (!remaining.isEmpty()) {
+							String word;
+							int indexOf = remaining.indexOf('/');
+							if (indexOf >= 0) {
+								word = remaining.substring(0, indexOf);
+								remaining = remaining.substring(indexOf + "/".length());
+							} else {
+								word = remaining;
+								remaining = "";
+							}
+							words.add(word);
+						}
+						formatted = words.get(random.nextInt(words.size()));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			text = Pattern.compile(unformatted, Pattern.LITERAL).matcher(text).replaceFirst(Matcher.quoteReplacement(formatted));
+		} while (true);
+		return text;
+	}
+
 	public enum LoreCategory {
 		RUINS("ruins"), SHIRE("shire"), BREE("bree"), BLUE_MOUNTAINS("blue_mountains"), LINDON("lindon"), ERIADOR("eriador"), RIVENDELL("rivendell"), EREGION("eregion"), DUNLAND("dunland"), GUNDABAD("gundabad"), ANGMAR("angmar"), WOODLAND_REALM("woodland_realm"), DOL_GULDUR("dol_guldur"), DALE("dale"), DURIN("durins_folk"), LOTHLORIEN("lothlorien"), ROHAN("rohan"), ISENGARD("isengard"), GONDOR("gondor"), MORDOR("mordor"), DORWINION("dorwinion"), RHUN("rhun"), HARNENNOR("harnennor"), SOUTHRON("southron"), UMBAR("umbar"), NOMAD("nomad"), GULF("gulf"), FAR_HARAD("far_harad"), FAR_HARAD_JUNGLE("far_harad_jungle"), HALF_TROLL("half_troll");
 
@@ -361,10 +366,6 @@ public class LOTRLore {
 			categoryName = s;
 		}
 
-		public void addLore(LOTRLore lore) {
-			loreList.add(lore);
-		}
-
 		public static LoreCategory forName(String s) {
 			for (LoreCategory r : values()) {
 				if (!s.equalsIgnoreCase(r.categoryName)) {
@@ -373,6 +374,10 @@ public class LOTRLore {
 				return r;
 			}
 			return null;
+		}
+
+		public void addLore(LOTRLore lore) {
+			loreList.add(lore);
 		}
 	}
 

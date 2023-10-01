@@ -11,14 +11,6 @@ public enum LOTRGuiMessageTypes {
 		messageName = s;
 	}
 
-	public String getMessage() {
-		return StatCollector.translateToLocal("lotr.gui.message." + messageName);
-	}
-
-	public String getSaveName() {
-		return messageName;
-	}
-
 	public static LOTRGuiMessageTypes forSaveName(String name) {
 		for (LOTRGuiMessageTypes message : values()) {
 			if (!message.messageName.equals(name)) {
@@ -27,5 +19,13 @@ public enum LOTRGuiMessageTypes {
 			return message;
 		}
 		return null;
+	}
+
+	public String getMessage() {
+		return StatCollector.translateToLocal("lotr.gui.message." + messageName);
+	}
+
+	public String getSaveName() {
+		return messageName;
 	}
 }

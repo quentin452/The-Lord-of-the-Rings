@@ -1,7 +1,6 @@
 package lotr.common;
 
 import com.google.common.collect.ImmutableList;
-
 import cpw.mods.fml.common.event.FMLInterModComms;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;

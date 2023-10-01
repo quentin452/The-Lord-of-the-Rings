@@ -1,11 +1,14 @@
 package lotr.common.tileentity;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.*;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
 
 public class LOTRTileEntityCommandTable extends TileEntity {
 	public int zoomExp;
@@ -27,6 +30,12 @@ public class LOTRTileEntityCommandTable extends TileEntity {
 		return zoomExp;
 	}
 
+	public void setZoomExp(int i) {
+		zoomExp = MathHelper.clamp_int(i, -2, 2);
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		markDirty();
+	}
+
 	@Override
 	public void onDataPacket(NetworkManager manager, S35PacketUpdateTileEntity packet) {
 		NBTTagCompound data = packet.func_148857_g();
@@ -41,12 +50,6 @@ public class LOTRTileEntityCommandTable extends TileEntity {
 
 	public void readTableFromNBT(NBTTagCompound nbt) {
 		zoomExp = nbt.getByte("Zoom");
-	}
-
-	public void setZoomExp(int i) {
-		zoomExp = MathHelper.clamp_int(i, -2, 2);
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-		markDirty();
 	}
 
 	public void toggleZoomExp() {

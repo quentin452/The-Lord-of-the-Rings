@@ -1598,6 +1598,301 @@ public class LOTRMod {
 	public static WorldType worldTypeMiddleEarthClassic;
 	public static LOTRPlayerDetailsCache playerDetailsCache = new LOTRPlayerDetailsCache();
 
+	public static boolean canDropLoot(World world) {
+		return world.getGameRules().getGameRuleBooleanValue("doMobLoot");
+	}
+
+	public static boolean canGrief(World world) {
+		return world.getGameRules().getGameRuleBooleanValue("mobGriefing");
+	}
+
+	public static boolean canNPCAttackEntity(EntityCreature attacker, EntityLivingBase target, boolean isPlayerDirected) {
+		if (target == null || !target.isEntityAlive()) {
+			return false;
+		}
+		LOTRFaction attackerFaction = getNPCFaction(attacker);
+		if (attacker instanceof LOTREntityNPC) {
+			LOTREntityNPC npc = (LOTREntityNPC) attacker;
+			EntityPlayer hiringPlayer = npc.hiredNPCInfo.getHiringPlayer();
+			if (hiringPlayer != null) {
+				if (target == hiringPlayer || target.riddenByEntity == hiringPlayer) {
+					return false;
+				}
+				LOTREntityNPC targetNPC = null;
+				if (target instanceof LOTREntityNPC) {
+					targetNPC = (LOTREntityNPC) target;
+				} else if (target.riddenByEntity instanceof LOTREntityNPC) {
+					targetNPC = (LOTREntityNPC) target.riddenByEntity;
+				}
+				if (targetNPC != null && targetNPC.hiredNPCInfo.isActive) {
+					UUID hiringPlayerUUID = npc.hiredNPCInfo.getHiringPlayerUUID();
+					UUID targetHiringPlayerUUID = targetNPC.hiredNPCInfo.getHiringPlayerUUID();
+					if (hiringPlayerUUID != null && hiringPlayerUUID.equals(targetHiringPlayerUUID) && !attackerFaction.isBadRelation(getNPCFaction(targetNPC))) {
+						return false;
+					}
+				}
+			}
+		}
+		if (attackerFaction.allowEntityRegistry) {
+			if (attackerFaction.isGoodRelation(getNPCFaction(target)) && attacker.getAttackTarget() != target) {
+				return false;
+			}
+			if (target.riddenByEntity != null && attackerFaction.isGoodRelation(getNPCFaction(target.riddenByEntity)) && attacker.getAttackTarget() != target && attacker.getAttackTarget() != target.riddenByEntity) {
+				return false;
+			}
+			if (!isPlayerDirected) {
+				if (target instanceof EntityPlayer && LOTRLevelData.getData((EntityPlayer) target).getAlignment(attackerFaction) >= 0.0f && attacker.getAttackTarget() != target) {
+					return false;
+				}
+				return !(target.riddenByEntity instanceof EntityPlayer) || !(LOTRLevelData.getData((EntityPlayer) target.riddenByEntity).getAlignment(attackerFaction) >= 0.0f) || attacker.getAttackTarget() == target || attacker.getAttackTarget() == target.riddenByEntity;
+			}
+		}
+		return true;
+	}
+
+	public static boolean canPlayerAttackEntity(EntityPlayer attacker, EntityLivingBase target, boolean warnFriendlyFire) {
+		if (target == null || !target.isEntityAlive()) {
+			return false;
+		}
+		LOTRPlayerData playerData = LOTRLevelData.getData(attacker);
+		boolean friendlyFire = false;
+		boolean friendlyFireEnabled = playerData.getFriendlyFire();
+		if (target instanceof EntityPlayer && target != attacker) {
+			EntityPlayer targetPlayer = (EntityPlayer) target;
+			if (!playerData.isSiegeActive()) {
+				List<LOTRFellowship> fellowships = playerData.getFellowships();
+				for (LOTRFellowship fs : fellowships) {
+					if (!fs.getPreventPVP() || !fs.containsPlayer(targetPlayer.getUniqueID())) {
+						continue;
+					}
+					return false;
+				}
+			}
+		}
+		Entity targetNPC = null;
+		LOTRFaction targetNPCFaction;
+		if (getNPCFaction(target) != LOTRFaction.UNALIGNED) {
+			targetNPC = target;
+		} else if (getNPCFaction(target.riddenByEntity) != LOTRFaction.UNALIGNED) {
+			targetNPC = target.riddenByEntity;
+		}
+		if (targetNPC != null) {
+			targetNPCFaction = getNPCFaction(targetNPC);
+			if (targetNPC instanceof LOTREntityNPC) {
+				LOTREntityNPC targetLotrNPC = (LOTREntityNPC) targetNPC;
+				LOTRHiredNPCInfo hiredInfo = targetLotrNPC.hiredNPCInfo;
+				if (hiredInfo.isActive) {
+					if (hiredInfo.getHiringPlayer() == attacker) {
+						return false;
+					}
+					if (targetLotrNPC.getAttackTarget() != attacker && !playerData.isSiegeActive()) {
+						UUID hiringPlayerID = hiredInfo.getHiringPlayerUUID();
+						List<LOTRFellowship> fellowships = playerData.getFellowships();
+						for (LOTRFellowship fs : fellowships) {
+							if (!fs.getPreventHiredFriendlyFire() || !fs.containsPlayer(hiringPlayerID)) {
+								continue;
+							}
+							return false;
+						}
+					}
+				}
+			}
+			if (targetNPC instanceof EntityLiving && ((EntityLiving) targetNPC).getAttackTarget() != attacker && LOTRLevelData.getData(attacker).getAlignment(targetNPCFaction) > 0.0f) {
+				friendlyFire = true;
+			}
+		}
+		if (!friendlyFireEnabled && friendlyFire) {
+			if (warnFriendlyFire) {
+				LOTRLevelData.getData(attacker).sendMessageIfNotReceived(LOTRGuiMessageTypes.FRIENDLY_FIRE);
+			}
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean canSpawnMobs(World world) {
+		return world.getGameRules().getGameRuleBooleanValue("doMobSpawning");
+	}
+
+	public static boolean doDayCycle(World world) {
+		return world.getGameRules().getGameRuleBooleanValue("doDaylightCycle");
+	}
+
+	public static boolean doFireTick(World world) {
+		return world.getGameRules().getGameRuleBooleanValue("doFireTick");
+	}
+
+	public static void dropContainerItems(IInventory container, World world, int i, int j, int k) {
+		for (int l = 0; l < container.getSizeInventory(); ++l) {
+			ItemStack item = container.getStackInSlot(l);
+			if (item == null) {
+				continue;
+			}
+			float f = world.rand.nextFloat() * 0.8f + 0.1f;
+			float f1 = world.rand.nextFloat() * 0.8f + 0.1f;
+			float f2 = world.rand.nextFloat() * 0.8f + 0.1f;
+			while (item.stackSize > 0) {
+				int i1 = world.rand.nextInt(21) + 10;
+				if (i1 > item.stackSize) {
+					i1 = item.stackSize;
+				}
+				item.stackSize -= i1;
+				EntityItem entityItem = new EntityItem(world, i + f, j + f1, k + f2, new ItemStack(item.getItem(), i1, item.getItemDamage()));
+				if (item.hasTagCompound()) {
+					entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
+				}
+				entityItem.motionX = world.rand.nextGaussian() * 0.05000000074505806;
+				entityItem.motionY = world.rand.nextGaussian() * 0.05000000074505806 + 0.20000000298023224;
+				entityItem.motionZ = world.rand.nextGaussian() * 0.05000000074505806;
+				world.spawnEntityInWorld(entityItem);
+			}
+		}
+	}
+
+	public static EntityPlayer getDamagingPlayerIncludingUnits(DamageSource damagesource) {
+		if (damagesource.getEntity() instanceof EntityPlayer) {
+			return (EntityPlayer) damagesource.getEntity();
+		}
+		if (damagesource.getEntity() instanceof LOTREntityNPC) {
+			LOTREntityNPC npc = (LOTREntityNPC) damagesource.getEntity();
+			if (npc.hiredNPCInfo.isActive && npc.hiredNPCInfo.getHiringPlayer() != null) {
+				return npc.hiredNPCInfo.getHiringPlayer();
+			}
+		}
+		return null;
+	}
+
+	public static ModContainer getModContainer() {
+		return FMLCommonHandler.instance().findContainerFor(instance);
+	}
+
+	public static LOTRFaction getNPCFaction(Entity entity) {
+		return getNPCFaction(entity, false);
+	}
+
+	public static LOTRFaction getNPCFaction(Entity entity, boolean forInfluence) {
+		if (entity == null) {
+			return LOTRFaction.UNALIGNED;
+		}
+		if (entity instanceof LOTREntityNPC) {
+			LOTREntityNPC npc = (LOTREntityNPC) entity;
+			if (forInfluence) {
+				return npc.getInfluenceZoneFaction();
+			}
+			return npc.getFaction();
+		}
+		String s = EntityList.getEntityString(entity);
+		if (LOTREntityRegistry.registeredNPCs.get(s) != null) {
+			LOTREntityRegistry.RegistryInfo info = (LOTREntityRegistry.RegistryInfo) LOTREntityRegistry.registeredNPCs.get(s);
+			return info.alignmentFaction;
+		}
+		return LOTRFaction.UNALIGNED;
+	}
+
+	public static int getTrueTopBlock(World world, int i, int k) {
+		Chunk chunk = world.getChunkProvider().provideChunk(i >> 4, k >> 4);
+		for (int j = chunk.getTopFilledSegment() + 15; j > 0; --j) {
+			Block block = world.getBlock(i, j, k);
+			if (!block.getMaterial().blocksMovement() || block.getMaterial() == Material.leaves || block.isFoliage(world, i, j, k)) {
+				continue;
+			}
+			return j + 1;
+		}
+		return -1;
+	}
+
+	public static boolean isAprilFools() {
+		LocalDate today = LocalDate.now();
+		return today.getMonth() == Month.APRIL && today.getDayOfMonth() == 1;
+	}
+
+	public static boolean isChristmas() {
+		LocalDate today = LocalDate.now();
+		Month month = today.getMonth();
+		int day = today.getDayOfMonth();
+		return month == Month.DECEMBER && (day == 24 || day == 25 || day == 26);
+	}
+
+	public static boolean isHalloween() {
+		LocalDate today = LocalDate.now();
+		return today.getMonth() == Month.OCTOBER && today.getDayOfMonth() == 31;
+	}
+
+	public static boolean isNewYearsDay() {
+		LocalDate today = LocalDate.now();
+		return today.getMonth() == Month.JANUARY && today.getDayOfMonth() == 1;
+	}
+
+	public static boolean isOpaque(IBlockAccess world, int i, int j, int k) {
+		return world.getBlock(i, j, k).isOpaqueCube();
+	}
+
+	public static boolean isOreNameEqual(ItemStack itemstack, String name) {
+		Iterable<ItemStack> list = OreDictionary.getOres(name);
+		for (ItemStack obj : list) {
+			if (!OreDictionary.itemMatches(obj, itemstack, false)) {
+				continue;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@SuppressWarnings("Convert2Lambda")
+	public static IEntitySelector selectLivingExceptCreativePlayers() {
+		return new IEntitySelector() {
+
+			@Override
+			public boolean isEntityApplicable(Entity entity) {
+				if (entity instanceof EntityLivingBase && entity.isEntityAlive()) {
+					if (entity instanceof EntityPlayer) {
+						return !((EntityPlayer) entity).capabilities.isCreativeMode;
+					}
+					return true;
+				}
+				return false;
+			}
+		};
+	}
+
+	@SuppressWarnings("Convert2Lambda")
+	public static IEntitySelector selectNonCreativePlayers() {
+		return new IEntitySelector() {
+
+			@Override
+			public boolean isEntityApplicable(Entity entity) {
+				return entity instanceof EntityPlayer && entity.isEntityAlive() && !((EntityPlayer) entity).capabilities.isCreativeMode;
+			}
+		};
+	}
+
+	public static void transferEntityToDimension(Entity entity, int newDimension, Teleporter teleporter) {
+		if (entity instanceof LOTREntityPortal) {
+			return;
+		}
+		if (!entity.worldObj.isRemote && !entity.isDead) {
+			MinecraftServer minecraftserver = MinecraftServer.getServer();
+			int oldDimension = entity.dimension;
+			WorldServer oldWorld = minecraftserver.worldServerForDimension(oldDimension);
+			WorldServer newWorld = minecraftserver.worldServerForDimension(newDimension);
+			entity.dimension = newDimension;
+			entity.worldObj.removeEntity(entity);
+			entity.isDead = false;
+			minecraftserver.getConfigurationManager().transferEntityToWorld(entity, oldDimension, oldWorld, newWorld, teleporter);
+			Entity newEntity = EntityList.createEntityByName(EntityList.getEntityString(entity), newWorld);
+			if (newEntity != null) {
+				newEntity.copyDataFrom(entity, true);
+				newWorld.spawnEntityInWorld(newEntity);
+			}
+			entity.isDead = true;
+			oldWorld.resetUpdateEntityTick();
+			newWorld.resetUpdateEntityTick();
+			if (newEntity != null) {
+				newEntity.timeUntilPortal = newEntity.getPortalCooldown();
+			}
+		}
+	}
+
 	@Mod.EventHandler
 	public void load(FMLInitializationEvent event) {
 		proxy.onLoad();
@@ -4949,301 +5244,6 @@ public class LOTRMod {
 	public void registerItem(Item item) {
 		String prefixUnlocal = "item:lotr.";
 		GameRegistry.registerItem(item, "item." + item.getUnlocalizedName().substring(prefixUnlocal.length()));
-	}
-
-	public static boolean canDropLoot(World world) {
-		return world.getGameRules().getGameRuleBooleanValue("doMobLoot");
-	}
-
-	public static boolean canGrief(World world) {
-		return world.getGameRules().getGameRuleBooleanValue("mobGriefing");
-	}
-
-	public static boolean canNPCAttackEntity(EntityCreature attacker, EntityLivingBase target, boolean isPlayerDirected) {
-		if (target == null || !target.isEntityAlive()) {
-			return false;
-		}
-		LOTRFaction attackerFaction = getNPCFaction(attacker);
-		if (attacker instanceof LOTREntityNPC) {
-			LOTREntityNPC npc = (LOTREntityNPC) attacker;
-			EntityPlayer hiringPlayer = npc.hiredNPCInfo.getHiringPlayer();
-			if (hiringPlayer != null) {
-				if (target == hiringPlayer || target.riddenByEntity == hiringPlayer) {
-					return false;
-				}
-				LOTREntityNPC targetNPC = null;
-				if (target instanceof LOTREntityNPC) {
-					targetNPC = (LOTREntityNPC) target;
-				} else if (target.riddenByEntity instanceof LOTREntityNPC) {
-					targetNPC = (LOTREntityNPC) target.riddenByEntity;
-				}
-				if (targetNPC != null && targetNPC.hiredNPCInfo.isActive) {
-					UUID hiringPlayerUUID = npc.hiredNPCInfo.getHiringPlayerUUID();
-					UUID targetHiringPlayerUUID = targetNPC.hiredNPCInfo.getHiringPlayerUUID();
-					if (hiringPlayerUUID != null && hiringPlayerUUID.equals(targetHiringPlayerUUID) && !attackerFaction.isBadRelation(getNPCFaction(targetNPC))) {
-						return false;
-					}
-				}
-			}
-		}
-		if (attackerFaction.allowEntityRegistry) {
-			if (attackerFaction.isGoodRelation(getNPCFaction(target)) && attacker.getAttackTarget() != target) {
-				return false;
-			}
-			if (target.riddenByEntity != null && attackerFaction.isGoodRelation(getNPCFaction(target.riddenByEntity)) && attacker.getAttackTarget() != target && attacker.getAttackTarget() != target.riddenByEntity) {
-				return false;
-			}
-			if (!isPlayerDirected) {
-				if (target instanceof EntityPlayer && LOTRLevelData.getData((EntityPlayer) target).getAlignment(attackerFaction) >= 0.0f && attacker.getAttackTarget() != target) {
-					return false;
-				}
-				return !(target.riddenByEntity instanceof EntityPlayer) || !(LOTRLevelData.getData((EntityPlayer) target.riddenByEntity).getAlignment(attackerFaction) >= 0.0f) || attacker.getAttackTarget() == target || attacker.getAttackTarget() == target.riddenByEntity;
-			}
-		}
-		return true;
-	}
-
-	public static boolean canPlayerAttackEntity(EntityPlayer attacker, EntityLivingBase target, boolean warnFriendlyFire) {
-		if (target == null || !target.isEntityAlive()) {
-			return false;
-		}
-		LOTRPlayerData playerData = LOTRLevelData.getData(attacker);
-		boolean friendlyFire = false;
-		boolean friendlyFireEnabled = playerData.getFriendlyFire();
-		if (target instanceof EntityPlayer && target != attacker) {
-			EntityPlayer targetPlayer = (EntityPlayer) target;
-			if (!playerData.isSiegeActive()) {
-				List<LOTRFellowship> fellowships = playerData.getFellowships();
-				for (LOTRFellowship fs : fellowships) {
-					if (!fs.getPreventPVP() || !fs.containsPlayer(targetPlayer.getUniqueID())) {
-						continue;
-					}
-					return false;
-				}
-			}
-		}
-		Entity targetNPC = null;
-		LOTRFaction targetNPCFaction;
-		if (getNPCFaction(target) != LOTRFaction.UNALIGNED) {
-			targetNPC = target;
-		} else if (getNPCFaction(target.riddenByEntity) != LOTRFaction.UNALIGNED) {
-			targetNPC = target.riddenByEntity;
-		}
-		if (targetNPC != null) {
-			targetNPCFaction = getNPCFaction(targetNPC);
-			if (targetNPC instanceof LOTREntityNPC) {
-				LOTREntityNPC targetLotrNPC = (LOTREntityNPC) targetNPC;
-				LOTRHiredNPCInfo hiredInfo = targetLotrNPC.hiredNPCInfo;
-				if (hiredInfo.isActive) {
-					if (hiredInfo.getHiringPlayer() == attacker) {
-						return false;
-					}
-					if (targetLotrNPC.getAttackTarget() != attacker && !playerData.isSiegeActive()) {
-						UUID hiringPlayerID = hiredInfo.getHiringPlayerUUID();
-						List<LOTRFellowship> fellowships = playerData.getFellowships();
-						for (LOTRFellowship fs : fellowships) {
-							if (!fs.getPreventHiredFriendlyFire() || !fs.containsPlayer(hiringPlayerID)) {
-								continue;
-							}
-							return false;
-						}
-					}
-				}
-			}
-			if (targetNPC instanceof EntityLiving && ((EntityLiving) targetNPC).getAttackTarget() != attacker && LOTRLevelData.getData(attacker).getAlignment(targetNPCFaction) > 0.0f) {
-				friendlyFire = true;
-			}
-		}
-		if (!friendlyFireEnabled && friendlyFire) {
-			if (warnFriendlyFire) {
-				LOTRLevelData.getData(attacker).sendMessageIfNotReceived(LOTRGuiMessageTypes.FRIENDLY_FIRE);
-			}
-			return false;
-		}
-		return true;
-	}
-
-	public static boolean canSpawnMobs(World world) {
-		return world.getGameRules().getGameRuleBooleanValue("doMobSpawning");
-	}
-
-	public static boolean doDayCycle(World world) {
-		return world.getGameRules().getGameRuleBooleanValue("doDaylightCycle");
-	}
-
-	public static boolean doFireTick(World world) {
-		return world.getGameRules().getGameRuleBooleanValue("doFireTick");
-	}
-
-	public static void dropContainerItems(IInventory container, World world, int i, int j, int k) {
-		for (int l = 0; l < container.getSizeInventory(); ++l) {
-			ItemStack item = container.getStackInSlot(l);
-			if (item == null) {
-				continue;
-			}
-			float f = world.rand.nextFloat() * 0.8f + 0.1f;
-			float f1 = world.rand.nextFloat() * 0.8f + 0.1f;
-			float f2 = world.rand.nextFloat() * 0.8f + 0.1f;
-			while (item.stackSize > 0) {
-				int i1 = world.rand.nextInt(21) + 10;
-				if (i1 > item.stackSize) {
-					i1 = item.stackSize;
-				}
-				item.stackSize -= i1;
-				EntityItem entityItem = new EntityItem(world, i + f, j + f1, k + f2, new ItemStack(item.getItem(), i1, item.getItemDamage()));
-				if (item.hasTagCompound()) {
-					entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
-				}
-				entityItem.motionX = world.rand.nextGaussian() * 0.05000000074505806;
-				entityItem.motionY = world.rand.nextGaussian() * 0.05000000074505806 + 0.20000000298023224;
-				entityItem.motionZ = world.rand.nextGaussian() * 0.05000000074505806;
-				world.spawnEntityInWorld(entityItem);
-			}
-		}
-	}
-
-	public static EntityPlayer getDamagingPlayerIncludingUnits(DamageSource damagesource) {
-		if (damagesource.getEntity() instanceof EntityPlayer) {
-			return (EntityPlayer) damagesource.getEntity();
-		}
-		if (damagesource.getEntity() instanceof LOTREntityNPC) {
-			LOTREntityNPC npc = (LOTREntityNPC) damagesource.getEntity();
-			if (npc.hiredNPCInfo.isActive && npc.hiredNPCInfo.getHiringPlayer() != null) {
-				return npc.hiredNPCInfo.getHiringPlayer();
-			}
-		}
-		return null;
-	}
-
-	public static ModContainer getModContainer() {
-		return FMLCommonHandler.instance().findContainerFor(instance);
-	}
-
-	public static LOTRFaction getNPCFaction(Entity entity) {
-		return getNPCFaction(entity, false);
-	}
-
-	public static LOTRFaction getNPCFaction(Entity entity, boolean forInfluence) {
-		if (entity == null) {
-			return LOTRFaction.UNALIGNED;
-		}
-		if (entity instanceof LOTREntityNPC) {
-			LOTREntityNPC npc = (LOTREntityNPC) entity;
-			if (forInfluence) {
-				return npc.getInfluenceZoneFaction();
-			}
-			return npc.getFaction();
-		}
-		String s = EntityList.getEntityString(entity);
-		if (LOTREntityRegistry.registeredNPCs.get(s) != null) {
-			LOTREntityRegistry.RegistryInfo info = (LOTREntityRegistry.RegistryInfo) LOTREntityRegistry.registeredNPCs.get(s);
-			return info.alignmentFaction;
-		}
-		return LOTRFaction.UNALIGNED;
-	}
-
-	public static int getTrueTopBlock(World world, int i, int k) {
-		Chunk chunk = world.getChunkProvider().provideChunk(i >> 4, k >> 4);
-		for (int j = chunk.getTopFilledSegment() + 15; j > 0; --j) {
-			Block block = world.getBlock(i, j, k);
-			if (!block.getMaterial().blocksMovement() || block.getMaterial() == Material.leaves || block.isFoliage(world, i, j, k)) {
-				continue;
-			}
-			return j + 1;
-		}
-		return -1;
-	}
-
-	public static boolean isAprilFools() {
-		LocalDate today = LocalDate.now();
-		return today.getMonth() == Month.APRIL && today.getDayOfMonth() == 1;
-	}
-
-	public static boolean isChristmas() {
-		LocalDate today = LocalDate.now();
-		Month month = today.getMonth();
-		int day = today.getDayOfMonth();
-		return month == Month.DECEMBER && (day == 24 || day == 25 || day == 26);
-	}
-
-	public static boolean isHalloween() {
-		LocalDate today = LocalDate.now();
-		return today.getMonth() == Month.OCTOBER && today.getDayOfMonth() == 31;
-	}
-
-	public static boolean isNewYearsDay() {
-		LocalDate today = LocalDate.now();
-		return today.getMonth() == Month.JANUARY && today.getDayOfMonth() == 1;
-	}
-
-	public static boolean isOpaque(IBlockAccess world, int i, int j, int k) {
-		return world.getBlock(i, j, k).isOpaqueCube();
-	}
-
-	public static boolean isOreNameEqual(ItemStack itemstack, String name) {
-		Iterable<ItemStack> list = OreDictionary.getOres(name);
-		for (ItemStack obj : list) {
-			if (!OreDictionary.itemMatches(obj, itemstack, false)) {
-				continue;
-			}
-			return true;
-		}
-		return false;
-	}
-
-	@SuppressWarnings("Convert2Lambda")
-	public static IEntitySelector selectLivingExceptCreativePlayers() {
-		return new IEntitySelector() {
-
-			@Override
-			public boolean isEntityApplicable(Entity entity) {
-				if (entity instanceof EntityLivingBase && entity.isEntityAlive()) {
-					if (entity instanceof EntityPlayer) {
-						return !((EntityPlayer) entity).capabilities.isCreativeMode;
-					}
-					return true;
-				}
-				return false;
-			}
-		};
-	}
-
-	@SuppressWarnings("Convert2Lambda")
-	public static IEntitySelector selectNonCreativePlayers() {
-		return new IEntitySelector() {
-
-			@Override
-			public boolean isEntityApplicable(Entity entity) {
-				return entity instanceof EntityPlayer && entity.isEntityAlive() && !((EntityPlayer) entity).capabilities.isCreativeMode;
-			}
-		};
-	}
-
-	public static void transferEntityToDimension(Entity entity, int newDimension, Teleporter teleporter) {
-		if (entity instanceof LOTREntityPortal) {
-			return;
-		}
-		if (!entity.worldObj.isRemote && !entity.isDead) {
-			MinecraftServer minecraftserver = MinecraftServer.getServer();
-			int oldDimension = entity.dimension;
-			WorldServer oldWorld = minecraftserver.worldServerForDimension(oldDimension);
-			WorldServer newWorld = minecraftserver.worldServerForDimension(newDimension);
-			entity.dimension = newDimension;
-			entity.worldObj.removeEntity(entity);
-			entity.isDead = false;
-			minecraftserver.getConfigurationManager().transferEntityToWorld(entity, oldDimension, oldWorld, newWorld, teleporter);
-			Entity newEntity = EntityList.createEntityByName(EntityList.getEntityString(entity), newWorld);
-			if (newEntity != null) {
-				newEntity.copyDataFrom(entity, true);
-				newWorld.spawnEntityInWorld(newEntity);
-			}
-			entity.isDead = true;
-			oldWorld.resetUpdateEntityTick();
-			newWorld.resetUpdateEntityTick();
-			if (newEntity != null) {
-				newEntity.timeUntilPortal = newEntity.getPortalCooldown();
-			}
-		}
 	}
 
 }

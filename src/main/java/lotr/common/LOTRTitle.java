@@ -1,13 +1,15 @@
 package lotr.common;
 
-import java.util.*;
-
 import io.netty.buffer.ByteBuf;
 import lotr.common.entity.npc.LOTREntityWickedDwarf;
-import lotr.common.fac.*;
+import lotr.common.fac.LOTRAlignmentValues;
+import lotr.common.fac.LOTRFaction;
+import lotr.common.fac.LOTRFactionRank;
 import lotr.common.playerdetails.ExclusiveGroup;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.*;
+
+import java.util.*;
 
 public class LOTRTitle {
 	public static Collection<LOTRTitle> allTitles = new ArrayList<>();
@@ -293,172 +295,6 @@ public class LOTRTitle {
 		}
 	}
 
-	public boolean canDisplay(EntityPlayer entityplayer) {
-		return !isHidden || canPlayerUse(entityplayer);
-	}
-
-	public boolean canPlayerUse(EntityPlayer entityplayer) {
-		switch (titleType) {
-			case STARTER: {
-				return true;
-			}
-			case PLAYER_EXCLUSIVE: {
-				return LOTRMod.playerDetailsCache.getPlayerDetails(entityplayer).hasAnyExclusiveGroup(exclusiveGroups);
-			}
-			case ALIGNMENT: {
-				LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
-				boolean requirePledge = isAlignmentGreaterThanOrEqualToAllFactionPledges() && LOTRConfig.areStrictFactionTitleRequirementsEnabled(entityplayer.worldObj);
-				for (LOTRFaction f : alignmentFactions) {
-					if (pd.getAlignment(f) < alignmentRequired || requirePledge && !pd.isPledgedTo(f)) {
-						continue;
-					}
-					return true;
-				}
-				return false;
-			}
-			case ACHIEVEMENT: {
-				return LOTRLevelData.getData(entityplayer).hasAchievement(titleAchievement);
-			}
-			case RANK: {
-				LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
-				LOTRFaction fac = titleRank.fac;
-				float align = pd.getAlignment(fac);
-				if (align >= titleRank.alignment) {
-					boolean requirePledge;
-					requirePledge = titleRank.isAbovePledgeRank() || titleRank.isPledgeRank() && LOTRConfig.areStrictFactionTitleRequirementsEnabled(entityplayer.worldObj);
-					return !requirePledge || pd.isPledgedTo(fac);
-				}
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public String getDescription(EntityPlayer entityplayer) {
-		switch (titleType) {
-			case STARTER: {
-				return StatCollector.translateToLocal("lotr.titles.unlock.starter");
-			}
-			case PLAYER_EXCLUSIVE: {
-				return StatCollector.translateToLocal("lotr.titles.unlock.exclusive");
-			}
-			case ALIGNMENT: {
-				boolean requirePledge;
-				String alignLevel = LOTRAlignmentValues.formatAlignForDisplay(alignmentRequired);
-				if (anyAlignment) {
-					return StatCollector.translateToLocalFormatted("lotr.titles.unlock.alignment.any", alignLevel);
-				}
-				StringBuilder s = new StringBuilder();
-				if (alignmentFactions.size() > 1) {
-					for (int i = 0; i < alignmentFactions.size(); ++i) {
-						LOTRFaction f = alignmentFactions.get(i);
-						if (i > 0) {
-							s.append(" / ");
-						}
-						s.append(f.factionName());
-					}
-				} else {
-					LOTRFaction f = alignmentFactions.get(0);
-					s = new StringBuilder(f.factionName());
-				}
-				requirePledge = isAlignmentGreaterThanOrEqualToAllFactionPledges() && LOTRConfig.areStrictFactionTitleRequirementsEnabled(entityplayer.worldObj);
-				if (requirePledge) {
-					return StatCollector.translateToLocalFormatted("lotr.titles.unlock.alignment.pledge", s.toString(), alignLevel);
-				}
-				return StatCollector.translateToLocalFormatted("lotr.titles.unlock.alignment", s.toString(), alignLevel);
-			}
-			case ACHIEVEMENT: {
-				return titleAchievement.getDescription(entityplayer);
-			}
-			case RANK: {
-				boolean requirePledge;
-				String alignS = LOTRAlignmentValues.formatAlignForDisplay(titleRank.alignment);
-				requirePledge = titleRank.isAbovePledgeRank() || titleRank.isPledgeRank() && LOTRConfig.areStrictFactionTitleRequirementsEnabled(entityplayer.worldObj);
-				if (requirePledge) {
-					return StatCollector.translateToLocalFormatted("lotr.titles.unlock.alignment.pledge", titleRank.fac.factionName(), alignS);
-				}
-				return StatCollector.translateToLocalFormatted("lotr.titles.unlock.alignment", titleRank.fac.factionName(), alignS);
-			}
-		}
-		return "If you can read this, something has gone hideously wrong";
-	}
-
-	public String getDisplayName(EntityPlayer entityplayer) {
-		if (titleType == TitleType.RANK) {
-			if (isFeminineRank) {
-				return titleRank.getDisplayFullNameFem();
-			}
-			return titleRank.getDisplayFullName();
-		}
-		return StatCollector.translateToLocal(getUntranslatedName(entityplayer));
-	}
-
-	public String getTitleName() {
-		return name;
-	}
-
-	public String getUntranslatedName(EntityPlayer entityplayer) {
-		if (useAchievementName && titleAchievement != null) {
-			return titleAchievement.getUntranslatedTitle(entityplayer);
-		}
-		if (titleType == TitleType.RANK) {
-			if (isFeminineRank) {
-				return titleRank.getCodeFullNameFem();
-			}
-			return titleRank.getCodeFullName();
-		}
-		return "lotr.title." + name;
-	}
-
-	public boolean isAlignmentGreaterThanOrEqualToAllFactionPledges() {
-		if (titleType == TitleType.ALIGNMENT && !anyAlignment) {
-			for (LOTRFaction fac : alignmentFactions) {
-				if (alignmentRequired >= fac.getPledgeAlignment()) {
-					continue;
-				}
-				return false;
-			}
-			return true;
-		}
-		return false;
-	}
-
-	public boolean isFeminineRank() {
-		return titleType == TitleType.RANK && isFeminineRank;
-	}
-
-	public LOTRTitle setAlignment(LOTRFaction faction) {
-		return setAlignment(faction, faction.getPledgeAlignment());
-	}
-
-	public LOTRTitle setAlignment(LOTRFaction faction, float alignment) {
-		return setMultiAlignment(alignment, faction);
-	}
-
-	public LOTRTitle setAnyAlignment(float alignment) {
-		setMultiAlignment(alignment, LOTRFaction.getPlayableAlignmentFactions());
-		anyAlignment = true;
-		return this;
-	}
-
-	public LOTRTitle setMultiAlignment(float alignment, Collection<LOTRFaction> factions) {
-		titleType = TitleType.ALIGNMENT;
-		alignmentFactions.addAll(factions);
-		alignmentRequired = alignment;
-		return this;
-	}
-
-	public LOTRTitle setMultiAlignment(float alignment, LOTRFaction... factions) {
-		return setMultiAlignment(alignment, Arrays.asList(factions));
-	}
-
-	public LOTRTitle setPlayerExclusive(ExclusiveGroup... groups) {
-		titleType = TitleType.PLAYER_EXCLUSIVE;
-		exclusiveGroups = groups;
-		isHidden = true;
-		return this;
-	}
-
 	public static void createTitles() {
 		adventurer = new LOTRTitle("adventurer");
 		rogue = new LOTRTitle("rogue");
@@ -730,6 +566,177 @@ public class LOTRTitle {
 		return null;
 	}
 
+	public boolean canDisplay(EntityPlayer entityplayer) {
+		return !isHidden || canPlayerUse(entityplayer);
+	}
+
+	public boolean canPlayerUse(EntityPlayer entityplayer) {
+		switch (titleType) {
+			case STARTER: {
+				return true;
+			}
+			case PLAYER_EXCLUSIVE: {
+				return LOTRMod.playerDetailsCache.getPlayerDetails(entityplayer).hasAnyExclusiveGroup(exclusiveGroups);
+			}
+			case ALIGNMENT: {
+				LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
+				boolean requirePledge = isAlignmentGreaterThanOrEqualToAllFactionPledges() && LOTRConfig.areStrictFactionTitleRequirementsEnabled(entityplayer.worldObj);
+				for (LOTRFaction f : alignmentFactions) {
+					if (pd.getAlignment(f) < alignmentRequired || requirePledge && !pd.isPledgedTo(f)) {
+						continue;
+					}
+					return true;
+				}
+				return false;
+			}
+			case ACHIEVEMENT: {
+				return LOTRLevelData.getData(entityplayer).hasAchievement(titleAchievement);
+			}
+			case RANK: {
+				LOTRPlayerData pd = LOTRLevelData.getData(entityplayer);
+				LOTRFaction fac = titleRank.fac;
+				float align = pd.getAlignment(fac);
+				if (align >= titleRank.alignment) {
+					boolean requirePledge;
+					requirePledge = titleRank.isAbovePledgeRank() || titleRank.isPledgeRank() && LOTRConfig.areStrictFactionTitleRequirementsEnabled(entityplayer.worldObj);
+					return !requirePledge || pd.isPledgedTo(fac);
+				}
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public String getDescription(EntityPlayer entityplayer) {
+		switch (titleType) {
+			case STARTER: {
+				return StatCollector.translateToLocal("lotr.titles.unlock.starter");
+			}
+			case PLAYER_EXCLUSIVE: {
+				return StatCollector.translateToLocal("lotr.titles.unlock.exclusive");
+			}
+			case ALIGNMENT: {
+				boolean requirePledge;
+				String alignLevel = LOTRAlignmentValues.formatAlignForDisplay(alignmentRequired);
+				if (anyAlignment) {
+					return StatCollector.translateToLocalFormatted("lotr.titles.unlock.alignment.any", alignLevel);
+				}
+				StringBuilder s = new StringBuilder();
+				if (alignmentFactions.size() > 1) {
+					for (int i = 0; i < alignmentFactions.size(); ++i) {
+						LOTRFaction f = alignmentFactions.get(i);
+						if (i > 0) {
+							s.append(" / ");
+						}
+						s.append(f.factionName());
+					}
+				} else {
+					LOTRFaction f = alignmentFactions.get(0);
+					s = new StringBuilder(f.factionName());
+				}
+				requirePledge = isAlignmentGreaterThanOrEqualToAllFactionPledges() && LOTRConfig.areStrictFactionTitleRequirementsEnabled(entityplayer.worldObj);
+				if (requirePledge) {
+					return StatCollector.translateToLocalFormatted("lotr.titles.unlock.alignment.pledge", s.toString(), alignLevel);
+				}
+				return StatCollector.translateToLocalFormatted("lotr.titles.unlock.alignment", s.toString(), alignLevel);
+			}
+			case ACHIEVEMENT: {
+				return titleAchievement.getDescription(entityplayer);
+			}
+			case RANK: {
+				boolean requirePledge;
+				String alignS = LOTRAlignmentValues.formatAlignForDisplay(titleRank.alignment);
+				requirePledge = titleRank.isAbovePledgeRank() || titleRank.isPledgeRank() && LOTRConfig.areStrictFactionTitleRequirementsEnabled(entityplayer.worldObj);
+				if (requirePledge) {
+					return StatCollector.translateToLocalFormatted("lotr.titles.unlock.alignment.pledge", titleRank.fac.factionName(), alignS);
+				}
+				return StatCollector.translateToLocalFormatted("lotr.titles.unlock.alignment", titleRank.fac.factionName(), alignS);
+			}
+		}
+		return "If you can read this, something has gone hideously wrong";
+	}
+
+	public String getDisplayName(EntityPlayer entityplayer) {
+		if (titleType == TitleType.RANK) {
+			if (isFeminineRank) {
+				return titleRank.getDisplayFullNameFem();
+			}
+			return titleRank.getDisplayFullName();
+		}
+		return StatCollector.translateToLocal(getUntranslatedName(entityplayer));
+	}
+
+	public String getTitleName() {
+		return name;
+	}
+
+	public String getUntranslatedName(EntityPlayer entityplayer) {
+		if (useAchievementName && titleAchievement != null) {
+			return titleAchievement.getUntranslatedTitle(entityplayer);
+		}
+		if (titleType == TitleType.RANK) {
+			if (isFeminineRank) {
+				return titleRank.getCodeFullNameFem();
+			}
+			return titleRank.getCodeFullName();
+		}
+		return "lotr.title." + name;
+	}
+
+	public boolean isAlignmentGreaterThanOrEqualToAllFactionPledges() {
+		if (titleType == TitleType.ALIGNMENT && !anyAlignment) {
+			for (LOTRFaction fac : alignmentFactions) {
+				if (alignmentRequired >= fac.getPledgeAlignment()) {
+					continue;
+				}
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isFeminineRank() {
+		return titleType == TitleType.RANK && isFeminineRank;
+	}
+
+	public LOTRTitle setAlignment(LOTRFaction faction) {
+		return setAlignment(faction, faction.getPledgeAlignment());
+	}
+
+	public LOTRTitle setAlignment(LOTRFaction faction, float alignment) {
+		return setMultiAlignment(alignment, faction);
+	}
+
+	public LOTRTitle setAnyAlignment(float alignment) {
+		setMultiAlignment(alignment, LOTRFaction.getPlayableAlignmentFactions());
+		anyAlignment = true;
+		return this;
+	}
+
+	public LOTRTitle setMultiAlignment(float alignment, Collection<LOTRFaction> factions) {
+		titleType = TitleType.ALIGNMENT;
+		alignmentFactions.addAll(factions);
+		alignmentRequired = alignment;
+		return this;
+	}
+
+	public LOTRTitle setMultiAlignment(float alignment, LOTRFaction... factions) {
+		return setMultiAlignment(alignment, Arrays.asList(factions));
+	}
+
+	public LOTRTitle setPlayerExclusive(ExclusiveGroup... groups) {
+		titleType = TitleType.PLAYER_EXCLUSIVE;
+		exclusiveGroups = groups;
+		isHidden = true;
+		return this;
+	}
+
+	public enum TitleType {
+		STARTER, PLAYER_EXCLUSIVE, ALIGNMENT, ACHIEVEMENT, RANK
+
+	}
+
 	public static class PlayerTitle {
 		public LOTRTitle theTitle;
 		public EnumChatFormatting theColor;
@@ -744,24 +751,6 @@ public class LOTRTitle {
 				color = EnumChatFormatting.WHITE;
 			}
 			theColor = color;
-		}
-
-		public EnumChatFormatting getColor() {
-			return theColor;
-		}
-
-		public String getFormattedTitle(EntityPlayer entityplayer) {
-			return getFullTitleComponent(entityplayer).getFormattedText();
-		}
-
-		public IChatComponent getFullTitleComponent(EntityPlayer entityplayer) {
-			IChatComponent component = new ChatComponentText("[").appendSibling(new ChatComponentTranslation(theTitle.getUntranslatedName(entityplayer))).appendText("]").appendText(" ");
-			component.getChatStyle().setColor(theColor);
-			return component;
-		}
-
-		public LOTRTitle getTitle() {
-			return theTitle;
 		}
 
 		public static EnumChatFormatting colorForID(int ID) {
@@ -795,11 +784,24 @@ public class LOTRTitle {
 				data.writeShort(-1);
 			}
 		}
-	}
 
-	public enum TitleType {
-		STARTER, PLAYER_EXCLUSIVE, ALIGNMENT, ACHIEVEMENT, RANK
+		public EnumChatFormatting getColor() {
+			return theColor;
+		}
 
+		public String getFormattedTitle(EntityPlayer entityplayer) {
+			return getFullTitleComponent(entityplayer).getFormattedText();
+		}
+
+		public IChatComponent getFullTitleComponent(EntityPlayer entityplayer) {
+			IChatComponent component = new ChatComponentText("[").appendSibling(new ChatComponentTranslation(theTitle.getUntranslatedName(entityplayer))).appendText("]").appendText(" ");
+			component.getChatStyle().setColor(theColor);
+			return component;
+		}
+
+		public LOTRTitle getTitle() {
+			return theTitle;
+		}
 	}
 
 }

@@ -1,9 +1,6 @@
 package lotr.common;
 
-import java.util.*;
-
 import com.mojang.authlib.GameProfile;
-
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import lotr.client.gui.*;
@@ -12,27 +9,42 @@ import lotr.common.entity.LOTREntityNPCRespawner;
 import lotr.common.entity.animal.LOTREntityHorse;
 import lotr.common.entity.item.LOTREntityBanner;
 import lotr.common.entity.npc.*;
-import lotr.common.fac.*;
+import lotr.common.fac.LOTRAlignmentBonusMap;
+import lotr.common.fac.LOTRFaction;
 import lotr.common.inventory.*;
-import lotr.common.item.*;
-import lotr.common.network.*;
+import lotr.common.item.LOTRItemDaleCracker;
+import lotr.common.item.LOTRItemPouch;
+import lotr.common.network.LOTRPacketClientsideGUI;
+import lotr.common.network.LOTRPacketFellowshipAcceptInviteResult;
+import lotr.common.network.LOTRPacketHandler;
 import lotr.common.quest.LOTRMiniQuest;
 import lotr.common.tileentity.*;
-import lotr.common.world.map.*;
+import lotr.common.world.map.LOTRAbstractWaypoint;
+import lotr.common.world.map.LOTRConquestZone;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.*;
+import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.GuiDispenser;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecartContainer;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.AnimalChest;
+import net.minecraft.inventory.ContainerChest;
+import net.minecraft.inventory.ContainerDispenser;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.world.*;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class LOTRCommonProxy implements IGuiHandler {
 	public static int GUI_ID_HOBBIT_OVEN;
@@ -100,6 +112,23 @@ public class LOTRCommonProxy implements IGuiHandler {
 	public static int GUI_ID_BREE_TABLE = 62;
 	public static int GUI_ID_CHEST_WITH_POUCH = 63;
 	public static int GUI_ID_MINECART_CHEST_WITH_POUCH = 64;
+
+	public static int packGuiIDWithSlot(int guiID, int slotNo) {
+		return guiID | slotNo << 16;
+	}
+
+	public static void sendClientsideGUI(EntityPlayerMP entityplayer, int guiID, int x, int y, int z) {
+		IMessage packet = new LOTRPacketClientsideGUI(guiID, x, y, z);
+		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
+	}
+
+	public static boolean testForSlotPackedGuiID(int fullID, int guiID) {
+		return (fullID & 0xFFFF) == guiID;
+	}
+
+	public static int unpackSlot(int fullID) {
+		return fullID >> 16;
+	}
 
 	public void addMapPlayerLocation(GameProfile player, double posX, double posZ) {
 	}
@@ -841,22 +870,5 @@ public class LOTRCommonProxy implements IGuiHandler {
 	}
 
 	public void validateBannerUsername(LOTREntityBanner banner, int slot, String prevText, boolean valid) {
-	}
-
-	public static int packGuiIDWithSlot(int guiID, int slotNo) {
-		return guiID | slotNo << 16;
-	}
-
-	public static void sendClientsideGUI(EntityPlayerMP entityplayer, int guiID, int x, int y, int z) {
-		IMessage packet = new LOTRPacketClientsideGUI(guiID, x, y, z);
-		LOTRPacketHandler.networkWrapper.sendTo(packet, entityplayer);
-	}
-
-	public static boolean testForSlotPackedGuiID(int fullID, int guiID) {
-		return (fullID & 0xFFFF) == guiID;
-	}
-
-	public static int unpackSlot(int fullID) {
-		return fullID >> 16;
 	}
 }

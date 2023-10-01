@@ -1,32 +1,42 @@
 package lotr.common;
 
-import java.util.*;
-
-import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import lotr.common.block.LOTRBlockPortal;
 import lotr.common.entity.item.LOTREntityPortal;
-import lotr.common.fac.*;
+import lotr.common.fac.LOTRFaction;
+import lotr.common.fac.LOTRFactionBounties;
+import lotr.common.fac.LOTRFactionRelations;
 import lotr.common.fellowship.LOTRFellowshipData;
 import lotr.common.item.LOTRItemStructureSpawner;
 import lotr.common.world.*;
 import lotr.common.world.biome.variant.LOTRBiomeVariantStorage;
 import lotr.common.world.map.LOTRConquestGrid;
-import lotr.common.world.spawning.*;
+import lotr.common.world.spawning.LOTREventSpawner;
+import lotr.common.world.spawning.LOTRSpawnerNPCs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.item.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.init.*;
+import net.minecraft.entity.item.EntityFireworkRocket;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.common.DimensionManager;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class LOTRTickHandlerServer {
 	public static HashMap playersInPortals = new HashMap();

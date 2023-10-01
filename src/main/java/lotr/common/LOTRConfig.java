@@ -1,17 +1,20 @@
 package lotr.common;
 
-import java.util.*;
-
 import cpw.mods.fml.client.config.IConfigElement;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import lotr.compatibility.LOTRModChecker;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.*;
+import net.minecraftforge.common.config.ConfigCategory;
+import net.minecraftforge.common.config.ConfigElement;
+import net.minecraftforge.common.config.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LOTRConfig {
 	public static Configuration config;
-	public static List<ConfigCategory> allCategories= new ArrayList<>();
+	public static List<ConfigCategory> allCategories = new ArrayList<>();
 	public static String CATEGORY_DIMENSION;
 	public static String CATEGORY_GAMEPLAY;
 	public static String CATEGORY_GUI;

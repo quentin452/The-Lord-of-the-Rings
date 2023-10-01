@@ -1,29 +1,38 @@
 package lotr.common.tileentity;
 
-import java.util.*;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.mojang.authlib.GameProfile;
-
 import lotr.common.LOTRMod;
 import lotr.common.block.LOTRBlockCraftingTable;
 import lotr.common.inventory.LOTRContainerCraftingTable;
-import lotr.common.item.*;
-import lotr.common.recipe.*;
+import lotr.common.item.LOTRItemCrossbow;
+import lotr.common.item.LOTRItemMountArmor;
+import lotr.common.item.LOTRItemThrowingAxe;
+import lotr.common.item.LOTRMaterial;
+import lotr.common.recipe.LOTRRecipePoisonWeapon;
+import lotr.common.recipe.LOTRRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.*;
-import net.minecraft.item.crafting.*;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.*;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.oredict.*;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.*;
 
 public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 	public static Random unsmeltingRand = new Random();
@@ -43,6 +52,58 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 	public boolean serverActive;
 
 	public boolean clientActive;
+
+	public static ItemStack getEquipmentMaterial(ItemStack itemstack) {
+		if (itemstack == null) {
+			return null;
+		}
+		Item item = itemstack.getItem();
+		ItemStack material = null;
+		if (item instanceof ItemTool) {
+			material = ((ItemTool) item).func_150913_i().getRepairItemStack();
+		} else if (item instanceof ItemSword) {
+			material = LOTRMaterial.getToolMaterialByName(((ItemSword) item).getToolMaterialName()).getRepairItemStack();
+		} else if (item instanceof LOTRItemCrossbow) {
+			material = ((LOTRItemCrossbow) item).getCrossbowMaterial().getRepairItemStack();
+		} else if (item instanceof LOTRItemThrowingAxe) {
+			material = ((LOTRItemThrowingAxe) item).getAxeMaterial().getRepairItemStack();
+		} else if (item instanceof ItemArmor) {
+			material = new ItemStack(((ItemArmor) item).getArmorMaterial().func_151685_b());
+		} else if (item instanceof LOTRItemMountArmor) {
+			material = new ItemStack(((LOTRItemMountArmor) item).getMountArmorMaterial().func_151685_b());
+		}
+		if (material != null) {
+			if (item.getIsRepairable(itemstack, material)) {
+				return material;
+			}
+		} else {
+			if (item instanceof ItemHoe) {
+				return LOTRMaterial.getToolMaterialByName(((ItemHoe) item).getToolMaterialName()).getRepairItemStack();
+			}
+			if (item == Items.bucket) {
+				return new ItemStack(Items.iron_ingot);
+			}
+			if (item == LOTRMod.silverRing) {
+				return new ItemStack(LOTRMod.silverNugget);
+			}
+			if (item == LOTRMod.goldRing) {
+				return new ItemStack(Items.gold_nugget);
+			}
+			if (item == LOTRMod.mithrilRing) {
+				return new ItemStack(LOTRMod.mithrilNugget);
+			}
+			if (item == LOTRMod.gobletGold) {
+				return new ItemStack(Items.gold_ingot);
+			}
+			if (item == LOTRMod.gobletSilver) {
+				return new ItemStack(LOTRMod.silver);
+			}
+			if (item == LOTRMod.gobletCopper) {
+				return new ItemStack(LOTRMod.bronze);
+			}
+		}
+		return null;
+	}
 
 	public boolean canBeUnsmelted(ItemStack itemstack) {
 		if (itemstack == null) {
@@ -335,57 +396,5 @@ public class LOTRTileEntityUnsmeltery extends LOTRTileEntityForgeBase {
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			}
 		}
-	}
-
-	public static ItemStack getEquipmentMaterial(ItemStack itemstack) {
-		if (itemstack == null) {
-			return null;
-		}
-		Item item = itemstack.getItem();
-		ItemStack material = null;
-		if (item instanceof ItemTool) {
-			material = ((ItemTool) item).func_150913_i().getRepairItemStack();
-		} else if (item instanceof ItemSword) {
-			material = LOTRMaterial.getToolMaterialByName(((ItemSword) item).getToolMaterialName()).getRepairItemStack();
-		} else if (item instanceof LOTRItemCrossbow) {
-			material = ((LOTRItemCrossbow) item).getCrossbowMaterial().getRepairItemStack();
-		} else if (item instanceof LOTRItemThrowingAxe) {
-			material = ((LOTRItemThrowingAxe) item).getAxeMaterial().getRepairItemStack();
-		} else if (item instanceof ItemArmor) {
-			material = new ItemStack(((ItemArmor) item).getArmorMaterial().func_151685_b());
-		} else if (item instanceof LOTRItemMountArmor) {
-			material = new ItemStack(((LOTRItemMountArmor) item).getMountArmorMaterial().func_151685_b());
-		}
-		if (material != null) {
-			if (item.getIsRepairable(itemstack, material)) {
-				return material;
-			}
-		} else {
-			if (item instanceof ItemHoe) {
-				return LOTRMaterial.getToolMaterialByName(((ItemHoe) item).getToolMaterialName()).getRepairItemStack();
-			}
-			if (item == Items.bucket) {
-				return new ItemStack(Items.iron_ingot);
-			}
-			if (item == LOTRMod.silverRing) {
-				return new ItemStack(LOTRMod.silverNugget);
-			}
-			if (item == LOTRMod.goldRing) {
-				return new ItemStack(Items.gold_nugget);
-			}
-			if (item == LOTRMod.mithrilRing) {
-				return new ItemStack(LOTRMod.mithrilNugget);
-			}
-			if (item == LOTRMod.gobletGold) {
-				return new ItemStack(Items.gold_ingot);
-			}
-			if (item == LOTRMod.gobletSilver) {
-				return new ItemStack(LOTRMod.silver);
-			}
-			if (item == LOTRMod.gobletCopper) {
-				return new ItemStack(LOTRMod.bronze);
-			}
-		}
-		return null;
 	}
 }

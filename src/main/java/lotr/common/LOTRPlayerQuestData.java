@@ -16,6 +16,11 @@ public class LOTRPlayerQuestData {
 		return givenFirstPouches;
 	}
 
+	public void setGivenFirstPouches(boolean flag) {
+		givenFirstPouches = flag;
+		markDirty();
+	}
+
 	public void load(NBTTagCompound questData) {
 		givenFirstPouches = questData.getBoolean("Pouches");
 	}
@@ -30,10 +35,5 @@ public class LOTRPlayerQuestData {
 
 	public void save(NBTTagCompound questData) {
 		questData.setBoolean("Pouches", givenFirstPouches);
-	}
-
-	public void setGivenFirstPouches(boolean flag) {
-		givenFirstPouches = flag;
-		markDirty();
 	}
 }

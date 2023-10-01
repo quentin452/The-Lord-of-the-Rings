@@ -1,7 +1,8 @@
 package lotr.common;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import lotr.common.network.*;
+import lotr.common.network.LOTRPacketEnvironmentOverlay;
+import lotr.common.network.LOTRPacketHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
 
