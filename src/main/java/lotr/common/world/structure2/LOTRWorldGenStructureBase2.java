@@ -229,7 +229,8 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 
 	public abstract boolean generateWithSetRotation(World var1, Random var2, int var3, int var4, int var5, int var6);
 
-	public BiomeGenBase getBiome(IBlockAccess world, int i, int k) {
+	@SuppressWarnings("all")
+	public BiomeGenBase getBiome(World world, int i, int k) {
 		int i1 = i;
 		int k1 = k;
 		i = getX(i1, k1);
@@ -276,7 +277,7 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		return new ItemStack(Blocks.red_flower, 0);
 	}
 
-	public ItemStack getRandomTallGrass(IBlockAccess world, Random random) {
+	public ItemStack getRandomTallGrass(World world, Random random) {
 		BiomeGenBase biome = getBiome(world, 0, 0);
 		if (biome instanceof LOTRBiome) {
 			LOTRBiome.GrassBlockAndMeta gbm = ((LOTRBiome) biome).getRandomGrass(random);
