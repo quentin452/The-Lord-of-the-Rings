@@ -76,7 +76,6 @@ public class LOTRConfig {
 	public static boolean elvenBladeGlow;
 	public static boolean immersiveSpeech;
 	public static boolean immersiveSpeechChatLog;
-	public static boolean meleeAttackMeter;
 	public static boolean mapLabels;
 	public static boolean mapLabelsConquest;
 	public static boolean enableQuestTracker;
@@ -110,7 +109,9 @@ public class LOTRConfig {
 	public static boolean fixRenderDistance;
 	public static boolean preventMessageExploit;
 	public static boolean cwpLog;
-	public static int playerDataClearingInterval;
+    public static boolean enableAttackCooldown;
+
+    public static int playerDataClearingInterval;
 	public static int MIN_PLAYER_DATA_CLEARING_INTERVAL = 600;
 
 	public static boolean areStrictFactionTitleRequirementsEnabled(World world) {
@@ -166,7 +167,8 @@ public class LOTRConfig {
 
 	public static void load() {
 		LOTRDimension.configureDimensions(config, CATEGORY_DIMENSION);
-		allowBannerProtection = config.get(CATEGORY_GAMEPLAY, "Allow Banner Protection", true).getBoolean();
+        enableAttackCooldown = config.get(CATEGORY_GAMEPLAY, "Enable Attack Cooldown?", false).getBoolean();
+        allowBannerProtection = config.get(CATEGORY_GAMEPLAY, "Allow Banner Protection", true).getBoolean();
 		allowSelfProtectingBanners = config.get(CATEGORY_GAMEPLAY, "Allow Self-Protecting Banners", true).getBoolean();
 		allowMiniquests = config.get(CATEGORY_GAMEPLAY, "NPCs give mini-quests", true).getBoolean();
 		allowBountyQuests = config.get(CATEGORY_GAMEPLAY, "NPCs give bounty mini-quests", true, "Allow NPCs to generate mini-quests to kill enemy players").getBoolean();
@@ -222,7 +224,6 @@ public class LOTRConfig {
 		elvenBladeGlow = config.get(CATEGORY_GUI, "Animated Elven blade glow", true).getBoolean();
 		immersiveSpeech = config.get(CATEGORY_GUI, "Immersive Speech", true, "If set to true, NPC speech will appear on-screen with the NPC. If set to false, it will be sent to the chat box").getBoolean();
 		immersiveSpeechChatLog = config.get(CATEGORY_GUI, "Immersive Speech Chat Logs", false, "Toggle whether speech still shows in the chat box when Immersive Speech is enabled").getBoolean();
-		meleeAttackMeter = config.get(CATEGORY_GUI, "Melee attack meter", true).getBoolean();
 		mapLabels = config.get(CATEGORY_GUI, "Map Labels", true).getBoolean();
 		mapLabelsConquest = config.get(CATEGORY_GUI, "Map Labels - Conquest", true).getBoolean();
 		enableQuestTracker = config.get(CATEGORY_GUI, "Enable quest tracker", true).getBoolean();

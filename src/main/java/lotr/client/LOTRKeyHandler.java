@@ -5,10 +5,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
-import lotr.common.LOTRDimension;
-import lotr.common.LOTRLevelData;
-import lotr.common.LOTRMod;
-import lotr.common.LOTRPlayerData;
+import lotr.common.*;
 import lotr.common.fac.LOTRFaction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -47,7 +44,9 @@ public class LOTRKeyHandler {
 
 	@SubscribeEvent
 	public void KeyInputEvent(InputEvent.KeyInputEvent event) {
+        if (LOTRConfig.enableAttackCooldown){
 		LOTRAttackTiming.doAttackTiming();
+        }
 		if (keyBindingMenu.getIsKeyPressed() && mc.currentScreen == null) {
 			mc.thePlayer.openGui(LOTRMod.instance, 11, mc.theWorld, 0, 0, 0);
 		}
@@ -106,6 +105,8 @@ public class LOTRKeyHandler {
 
 	@SubscribeEvent
 	public void MouseInputEvent(InputEvent.MouseInputEvent event) {
+        if (LOTRConfig.enableAttackCooldown){
 		LOTRAttackTiming.doAttackTiming();
+        }
 	}
 }
