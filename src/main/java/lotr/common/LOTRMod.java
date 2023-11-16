@@ -21,6 +21,7 @@ import lotr.common.entity.npc.LOTRSpeech;
 import lotr.common.fac.LOTRFaction;
 import lotr.common.fellowship.LOTRFellowship;
 import lotr.common.item.*;
+import lotr.common.network.LOTRConfigBiomeID;
 import lotr.common.network.LOTRPacketHandler;
 import lotr.common.playerdetails.LOTRPlayerDetailsCache;
 import lotr.common.quest.LOTRMiniQuestFactory;
@@ -2122,6 +2123,7 @@ public class LOTRMod {
 
 	@Mod.EventHandler
 	public void preload(FMLPreInitializationEvent event) {
+        LOTRConfigBiomeID.setupAndLoad(event);
 		LOTRLog.findLogger();
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 		serverTickHandler = new LOTRTickHandlerServer();
