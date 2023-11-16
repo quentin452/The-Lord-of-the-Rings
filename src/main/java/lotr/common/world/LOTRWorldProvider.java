@@ -157,23 +157,16 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 		return Vec3.createVectorHelper(cloudsR, cloudsG, cloudsB);
 	}
 
-	@Override
-	public BiomeGenBase getBiomeGenForCoords(int i, int k) {
-		Chunk chunk;
-		if (worldObj.blockExists(i, 0, k) && (chunk = worldObj.getChunkFromBlockCoords(i, k)) != null) {
-			int chunkX = i & 0xF;
-			int chunkZ = k & 0xF;
-			int biomeID = chunk.getBiomeArray()[chunkZ << 4 | chunkX] & 0xFF;
-			if (biomeID == 255) {
-				BiomeGenBase biomegenbase = worldChunkMgr.getBiomeGenAt((chunk.xPosition << 4) + chunkX, (chunk.zPosition << 4) + chunkZ);
-				biomeID = biomegenbase.biomeID;
-				chunk.getBiomeArray()[chunkZ << 4 | chunkX] = (byte) (biomeID & 0xFF);
-			}
-			LOTRDimension dim = getLOTRDimension();
-			return dim.biomeList[biomeID] == null ? dim.biomeList[0] : dim.biomeList[biomeID];
-		}
-		return worldChunkMgr.getBiomeGenAt(i, k);
-	}
+    @Override
+    public BiomeGenBase getBiomeGenForCoords(int i, int k) {
+        if (worldObj.blockExists(i, 0, k)) {
+            BiomeGenBase biome = worldChunkMgr.getBiomeGenAt(i, k);
+            LOTRDimension dim = getLOTRDimension();
+            int biomeID = biome.biomeID;
+            return dim.biomeList[biomeID] == null ? dim.biomeList[0] : dim.biomeList[biomeID];
+        }
+        return worldChunkMgr.getBiomeGenAt(i, k);
+    }
 
 	@Override
 	@SideOnly(Side.CLIENT)
