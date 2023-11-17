@@ -5223,7 +5223,6 @@ public class LOTRMod {
 		registerItem(brandingIron);
 		registerItem(mechanism);
 		registerItem(ironNugget);
-		LOTRConfig.setupAndLoad(event);
 		proxy.onPreload();
 		LOTREntities.registerEntities();
 		LOTRBiome.initBiomes();
