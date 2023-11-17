@@ -29,6 +29,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class LOTRBlockReplacement {
 	public static boolean initForgeHooks;
@@ -114,51 +115,54 @@ public class LOTRBlockReplacement {
 		}
 	}
 
-	public static void replaceVanillaBlock(Block oldBlock, Block newBlock, Class<? extends ItemBlock> itemClass) {
-		try {
-			Item oldItem = Item.getItemFromBlock(oldBlock);
-			int id = Block.blockRegistry.getIDForObject(oldBlock);
-			String blockName = Reflect.getBlockName(oldBlock);
-			String registryName = Block.blockRegistry.getNameForObject(oldBlock);
-			String itemblockName = blockName;
-			if (oldItem != null) {
-				itemblockName = Reflect.getItemName(oldItem);
-			}
-			GenericModHooks.removeBlockFromOreDictionary(oldBlock);
-			newBlock.setBlockName(blockName);
-			Reflect.overwriteBlockList(oldBlock, newBlock);
-			Reflect.setDelegateName(newBlock.delegate, oldBlock.delegate.name());
-			Reflect.getUnderlyingIntMap(Block.blockRegistry).func_148746_a(newBlock, id);
-			Reflect.getUnderlyingObjMap(Block.blockRegistry).put(registryName, newBlock);
-			if (!initForgeHooks) {
-				ForgeHooks.isToolEffective(new ItemStack(Items.iron_shovel), Blocks.dirt, 0);
-				initForgeHooks = true;
-			}
-			for (int meta = 0; meta <= 15; ++meta) {
-				newBlock.setHarvestLevel(oldBlock.getHarvestTool(meta), oldBlock.getHarvestLevel(meta), meta);
-			}
-			if (itemClass != null) {
-				Constructor<?> itemCtor = null;
-				for (Constructor<?> ct : itemClass.getConstructors()) {
-					Class<?>[] params = ct.getParameterTypes();
-					if (params.length != 1 || !Block.class.isAssignableFrom(params[0])) {
-						continue;
-					}
-					itemCtor = ct;
-					break;
-				}
-				ItemBlock itemblock = ((ItemBlock) itemCtor.newInstance(newBlock)).setUnlocalizedName(itemblockName);
-				Reflect.setDelegateName(itemblock.delegate, oldItem.delegate.name());
-				Reflect.getUnderlyingIntMap(Item.itemRegistry).func_148746_a(itemblock, id);
-				Reflect.getUnderlyingObjMap(Item.itemRegistry).put(registryName, itemblock);
-				replaceBlockStats(id, newBlock, itemblock);
-				replaceRecipesEtc(itemblock);
-			}
-		} catch (Exception e) {
-			FMLLog.severe("Failed to replace vanilla block %s", oldBlock.getUnlocalizedName());
-			throw new RuntimeException(e);
-		}
-	}
+    public static void replaceVanillaBlock(Block oldBlock, Block newBlock, Class<? extends ItemBlock> itemClass) {
+        try {
+            Item oldItem = Item.getItemFromBlock(oldBlock);
+            int id = Block.blockRegistry.getIDForObject(oldBlock);
+            String blockName = Reflect.getBlockName(oldBlock);
+            String registryName = Block.blockRegistry.getNameForObject(oldBlock);
+            String itemblockName = oldItem != null ? Reflect.getItemName(oldItem) : blockName;
+
+            GenericModHooks.removeBlockFromOreDictionary(oldBlock);
+            newBlock.setBlockName(blockName);
+            Reflect.overwriteBlockList(oldBlock, newBlock);
+            Reflect.setDelegateName(newBlock.delegate, oldBlock.delegate.name());
+            Objects.requireNonNull(Reflect.getUnderlyingIntMap(Block.blockRegistry)).func_148746_a(newBlock, id);
+            Reflect.getUnderlyingObjMap(Block.blockRegistry).put(registryName, newBlock);
+
+            if (!initForgeHooks) {
+                ForgeHooks.isToolEffective(new ItemStack(Items.iron_shovel), Blocks.dirt, 0);
+                initForgeHooks = true;
+            }
+
+            for (int meta = 0; meta <= 15; ++meta) {
+                newBlock.setHarvestLevel(oldBlock.getHarvestTool(meta), oldBlock.getHarvestLevel(meta), meta);
+            }
+
+            if (itemClass != null) {
+                Constructor<?> itemCtor = null;
+                for (Constructor<?> ct : itemClass.getConstructors()) {
+                    Class<?>[] params = ct.getParameterTypes();
+                    if (params.length == 1 && Block.class.isAssignableFrom(params[0])) {
+                        itemCtor = ct;
+                        break;
+                    }
+                }
+
+                assert itemCtor != null;
+                ItemBlock itemblock = ((ItemBlock) itemCtor.newInstance(newBlock)).setUnlocalizedName(itemblockName);
+                assert oldItem != null;
+                Reflect.setDelegateName(itemblock.delegate, oldItem.delegate.name());
+                Objects.requireNonNull(Reflect.getUnderlyingIntMap(Item.itemRegistry)).func_148746_a(itemblock, id);
+                Reflect.getUnderlyingObjMap(Item.itemRegistry).put(registryName, itemblock);
+                replaceBlockStats(id, newBlock, itemblock);
+                replaceRecipesEtc(itemblock);
+            }
+        } catch (Exception e) {
+            FMLLog.severe("Failed to replace vanilla block %s. Exception: %s", oldBlock.getUnlocalizedName(), e);
+            //throw new RuntimeException(e);
+        }
+    }
 
 	public static void replaceVanillaItem(Item oldItem, Item newItem) {
 		try {
