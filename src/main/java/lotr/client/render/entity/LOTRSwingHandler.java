@@ -70,7 +70,8 @@ public class LOTRSwingHandler {
 			swt.swingPrev = 0;
 			swt.swingMax = time;
 			entitySwings.put(entity, swt);
-		}}
+        }
+		}
 	}
 
 	@SubscribeEvent
@@ -79,24 +80,22 @@ public class LOTRSwingHandler {
 		EntityClientPlayerMP entityplayer;
 		if (event.phase == TickEvent.Phase.START && (entityplayer = Minecraft.getMinecraft().thePlayer) != null) {
 			tryUpdateSwing(entityplayer);
-		}	}
+		}
+        }
 	}
 
 	@SubscribeEvent
 	public void preRenderLiving(RenderLivingEvent.Pre event) {
-        if (LOTRConfig.enableAttackCooldown){
 		tryUpdateSwing(event.entity);
-	}}
+	}
 
 	@SubscribeEvent
 	public void preRenderPlayer(RenderPlayerEvent.Pre event) {
-        if (LOTRConfig.enableAttackCooldown){
 		tryUpdateSwing(event.entityPlayer);
 	}
-    }
 
 	public void tryUpdateSwing(EntityLivingBase entity) {
-		if (entity == Minecraft.getMinecraft().thePlayer && LOTRConfig.enableAttackCooldown) {
+        if (entity == Minecraft.getMinecraft().thePlayer && LOTRConfig.enableAttackCooldown) {
 			if (LOTRAttackTiming.fullAttackTime > 0) {
 				float max = LOTRAttackTiming.fullAttackTime;
 				float swing = (max - LOTRAttackTiming.attackTime) / max;

@@ -106,7 +106,7 @@ public class LOTRKeyHandler {
 	@SubscribeEvent
 	public void MouseInputEvent(InputEvent.MouseInputEvent event) {
         if (LOTRConfig.enableAttackCooldown){
-		LOTRAttackTiming.doAttackTiming();
+            LOTRAttackTiming.doAttackTiming();
         }
 	}
 }

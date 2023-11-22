@@ -122,23 +122,19 @@ public class LOTRBlockReplacement {
             String blockName = Reflect.getBlockName(oldBlock);
             String registryName = Block.blockRegistry.getNameForObject(oldBlock);
             String itemblockName = oldItem != null ? Reflect.getItemName(oldItem) : blockName;
-
             GenericModHooks.removeBlockFromOreDictionary(oldBlock);
             newBlock.setBlockName(blockName);
             Reflect.overwriteBlockList(oldBlock, newBlock);
             Reflect.setDelegateName(newBlock.delegate, oldBlock.delegate.name());
             Objects.requireNonNull(Reflect.getUnderlyingIntMap(Block.blockRegistry)).func_148746_a(newBlock, id);
             Reflect.getUnderlyingObjMap(Block.blockRegistry).put(registryName, newBlock);
-
             if (!initForgeHooks) {
                 ForgeHooks.isToolEffective(new ItemStack(Items.iron_shovel), Blocks.dirt, 0);
                 initForgeHooks = true;
             }
-
             for (int meta = 0; meta <= 15; ++meta) {
                 newBlock.setHarvestLevel(oldBlock.getHarvestTool(meta), oldBlock.getHarvestLevel(meta), meta);
             }
-
             if (itemClass != null) {
                 Constructor<?> itemCtor = null;
                 for (Constructor<?> ct : itemClass.getConstructors()) {
@@ -148,7 +144,6 @@ public class LOTRBlockReplacement {
                         break;
                     }
                 }
-
                 assert itemCtor != null;
                 ItemBlock itemblock = ((ItemBlock) itemCtor.newInstance(newBlock)).setUnlocalizedName(itemblockName);
                 assert oldItem != null;

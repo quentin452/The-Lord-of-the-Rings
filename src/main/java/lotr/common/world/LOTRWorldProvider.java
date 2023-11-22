@@ -168,7 +168,7 @@ public abstract class LOTRWorldProvider extends WorldProvider {
         return worldChunkMgr.getBiomeGenAt(i, k);
     }
 
-	@Override
+    @Override
 	@SideOnly(Side.CLIENT)
 	public float getCloudHeight() {
 		return 192.0f;

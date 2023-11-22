@@ -625,7 +625,7 @@ public class LOTRTickHandlerClient {
 					LOTRSpeechClient.update();
 					LOTRKeyHandler.update();
                     if (LOTRConfig.enableAttackCooldown){
-					LOTRAttackTiming.update();
+                        LOTRAttackTiming.update();
                     }
 					prevMistTick = mistTick;
 					if (viewer.posY >= 72.0D && biome instanceof lotr.common.world.biome.LOTRBiomeGenMistyMountains && biome != LOTRBiome.mistyMountainsFoothills && world.canBlockSeeTheSky(i, j, k) && world.getSavedLightValue(EnumSkyBlock.Block, i, j, k) < 7) {
@@ -844,7 +844,7 @@ public class LOTRTickHandlerClient {
 					LOTRConquestGrid.needsLoad = true;
 					LOTRSpeechClient.clearAll();
                     if (LOTRConfig.enableAttackCooldown){
-					LOTRAttackTiming.reset();
+                        LOTRAttackTiming.reset();
                     }
 					LOTRGuiMenu.resetLastMenuScreen();
 					LOTRGuiMap.clearPlayerLocations();
@@ -1076,9 +1076,9 @@ public class LOTRTickHandlerClient {
 				}
 			}
 			if (event.type == RenderGameOverlayEvent.ElementType.HOTBAR) {
-                if (LOTRConfig.enableAttackCooldown){
+				if (LOTRConfig.meleeAttackMeter && LOTRConfig.enableAttackCooldown) {
 					LOTRAttackTiming.renderAttackMeter(event.resolution, partialTicks);
-                }
+				}
 				if (entityClientPlayerMP.ridingEntity instanceof LOTREntitySpiderBase) {
 					LOTREntitySpiderBase spider = (LOTREntitySpiderBase) entityClientPlayerMP.ridingEntity;
 					if (spider.shouldRenderClimbingMeter()) {

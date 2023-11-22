@@ -57,7 +57,7 @@ public class LOTRTickHandlerServer {
 		}
 		if (player instanceof EntityPlayerMP) {
 			EntityPlayerMP entityplayer = (EntityPlayerMP) player;
-			if (event.phase == TickEvent.Phase.START && entityplayer.playerNetServerHandler != null && !(entityplayer.playerNetServerHandler instanceof LOTRNetHandlerPlayServer && LOTRConfig.enableAttackCooldown)) {
+            if (event.phase == TickEvent.Phase.START && entityplayer.playerNetServerHandler != null && !(entityplayer.playerNetServerHandler instanceof LOTRNetHandlerPlayServer && LOTRConfig.enableAttackCooldown)) {
 				entityplayer.playerNetServerHandler = new LOTRNetHandlerPlayServer(MinecraftServer.getServer(), entityplayer.playerNetServerHandler.netManager, entityplayer);
 			}
 			if (event.phase == TickEvent.Phase.END) {
