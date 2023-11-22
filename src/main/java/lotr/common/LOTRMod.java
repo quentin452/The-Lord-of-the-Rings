@@ -2122,7 +2122,8 @@ public class LOTRMod {
 
 	@Mod.EventHandler
 	public void preload(FMLPreInitializationEvent event) {
-		LOTRLog.findLogger();
+        LOTRConfigBiomeID.setupAndLoad(event);
+        LOTRLog.findLogger();
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 		serverTickHandler = new LOTRTickHandlerServer();
 		modEventHandler = new LOTREventHandler();
