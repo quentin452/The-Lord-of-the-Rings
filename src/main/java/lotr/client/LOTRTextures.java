@@ -386,14 +386,14 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 
 	public static void loadMapTextures() {
 		mapTexture = new ResourceLocation("lotr:map/map.png");
-		try {
-			BufferedImage mapImage = ImageIO.read(mc.getResourceManager().getResource(mapTexture).getInputStream());
-			sepiaMapTexture = convertToSepia(mapImage, new ResourceLocation("lotr:map_sepia"));
-		} catch (IOException e) {
-			FMLLog.severe("Failed to generate LOTR sepia map");
-			e.printStackTrace();
-			sepiaMapTexture = mapTexture;
-		}
+		//try {
+	//		BufferedImage mapImage = ImageIO.read(mc.getResourceManager().getResource(mapTexture).getInputStream());
+		//	sepiaMapTexture = convertToSepia(mapImage, new ResourceLocation("lotr:map_sepia"));
+	//	} catch (IOException e) {
+		//	FMLLog.severe("Failed to generate LOTR sepia map");
+		//	e.printStackTrace();
+		//	sepiaMapTexture = mapTexture;
+		//}
 	}
 
 	public static void replaceWaterParticles() {
