@@ -743,9 +743,6 @@ public class LOTRClientProxy extends LOTRCommonProxy {
 
 	@Override
 	public void onPostload() {
-		if (LOTRConfig.updateLangFiles) {
-			LOTRLang.runUpdateThread();
-		}
 		musicHandler = new LOTRMusic();
 	}
 
