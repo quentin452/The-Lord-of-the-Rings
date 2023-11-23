@@ -476,7 +476,7 @@ public class LOTRClientProxy extends LOTRCommonProxy {
 	@Override
 	public void onLoad() {
 		customEffectRenderer = new LOTREffectRenderer(Minecraft.getMinecraft());
-		LOTRTextures.load();
+		LOTRTextures.load();  // todo fix this line make ram usage about 350 mb more
 		RenderingRegistry.registerEntityRenderingHandler(LOTREntityPortal.class, new LOTRRenderPortal());
 		RenderingRegistry.registerEntityRenderingHandler(LOTREntityHorse.class, new LOTRRenderHorse());
 		RenderingRegistry.registerEntityRenderingHandler(LOTREntityHobbit.class, new LOTRRenderHobbit());
