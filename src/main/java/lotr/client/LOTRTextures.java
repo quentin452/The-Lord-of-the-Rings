@@ -392,7 +392,7 @@ public class LOTRTextures implements IResourceManagerReloadListener {
 	//	} catch (IOException e) {
 		//	FMLLog.severe("Failed to generate LOTR sepia map");
 		//	e.printStackTrace();
-		//	sepiaMapTexture = mapTexture;
+			sepiaMapTexture = mapTexture;
 		//}
 	}
 
