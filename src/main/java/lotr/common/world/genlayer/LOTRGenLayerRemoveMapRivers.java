@@ -88,7 +88,11 @@ public class LOTRGenLayerRemoveMapRivers extends LOTRGenLayer {
 					ints[i1 + k1 * xSize] = replaceID;
 					continue;
 				}
-				ints[i1 + k1 * xSize] = biomeID;
+                if (biomeID >= 0 && biomeID <= 255) {
+                    ints[i1 + k1 * xSize] = biomeID;
+                } else {
+                    FMLLog.warning("WARNING! Invalid biome ID: %d at %d, %d", biomeID, i, k);
+                }
 			}
 		}
 		return ints;
