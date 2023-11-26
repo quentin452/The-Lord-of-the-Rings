@@ -15,7 +15,7 @@ public class LOTRGenLayerBiome extends LOTRGenLayer {
 
 	@Override
 	public int[] getInts(World world, int i, int k, int xSize, int zSize) {
-		int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+        int[] ints = new int[xSize * zSize];
 		Arrays.fill(ints, theBiome.biomeID);
 		return ints;
 	}

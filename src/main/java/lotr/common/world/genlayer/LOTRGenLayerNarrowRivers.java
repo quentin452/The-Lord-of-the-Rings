@@ -14,8 +14,8 @@ public class LOTRGenLayerNarrowRivers extends LOTRGenLayer {
 	@Override
 	public int[] getInts(World world, int i, int k, int xSize, int zSize) {
 		int[] rivers = lotrParent.getInts(world, i - maxRange, k - maxRange, xSize + maxRange * 2, zSize + maxRange * 2);
-		int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
-		for (int k1 = 0; k1 < zSize; ++k1) {
+		int[] ints = new int[xSize * zSize];
+        for (int k1 = 0; k1 < zSize; ++k1) {
 			for (int i1 = 0; i1 < xSize; ++i1) {
 				initChunkSeed(i + i1, k + k1);
 				int isRiver = rivers[i1 + maxRange + (k1 + maxRange) * (xSize + maxRange * 2)];

@@ -25,7 +25,7 @@ public class LOTRGenLayerRemoveMapRivers extends LOTRGenLayer {
         int maxRange = MAX_PIXEL_RANGE;
         int[] biomes = lotrParent.getInts(world, i - maxRange, k - maxRange, xSize + maxRange * 2, zSize + maxRange * 2);
 
-        int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+        int[] ints = new int[xSize * zSize];
 
         if(ints == null) {
             return new int[xSize * zSize];

@@ -20,7 +20,7 @@ public class LOTRGenLayerZoomVoronoi extends LOTRGenLayer {
 		int[] variants = lotrParent.getInts(world, i1, k1, xSizeZoom, zSizeZoom);
 		int i2 = xSizeZoom - 1 << 2;
 		int k2 = zSizeZoom - 1 << 2;
-		int[] ints = LOTRIntCache.get(world).getIntArray(i2 * k2);
+		int[] ints = new int[i2 * k2];
 		for (int k3 = 0; k3 < zSizeZoom - 1; ++k3) {
 			int i3;
 			int int00 = variants[k3 * xSizeZoom];
@@ -71,7 +71,7 @@ public class LOTRGenLayerZoomVoronoi extends LOTRGenLayer {
 				int01 = int11;
 			}
 		}
-		int[] zoomedInts = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+		int[] zoomedInts = new int[xSize * zSize];
 		for (int k3 = 0; k3 < zSize; ++k3) {
 			System.arraycopy(ints, (k3 + (k & 3)) * i2 + (i & 3), zoomedInts, k3 * xSize, xSize);
 		}

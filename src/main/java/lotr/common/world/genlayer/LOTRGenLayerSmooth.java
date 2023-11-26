@@ -20,7 +20,7 @@ public class LOTRGenLayerSmooth extends LOTRGenLayer {
             return new int[xSize * zSize];
         }
 
-        int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+        int[] ints = new int[xSize * zSize];
 
         for (int k2 = 0; k2 < zSize; ++k2) {
             for (int i2 = 0; i2 < xSize; ++i2) {

@@ -18,7 +18,7 @@ public class LOTRGenLayerRiver extends LOTRGenLayer {
 		int i2 = xSize + 2;
 		int k2 = zSize + 2;
 		int[] riverInit = lotrParent.getInts(world, i1, k1, i2, k2);
-		int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+		int[] ints = new int[xSize * zSize];
 		for (int k3 = 0; k3 < zSize; ++k3) {
 			for (int i3 = 0; i3 < xSize; ++i3) {
 				int centre = riverInit[i3 + 1 + (k3 + 1) * i2];

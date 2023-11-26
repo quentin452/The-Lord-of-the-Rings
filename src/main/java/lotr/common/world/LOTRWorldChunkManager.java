@@ -51,7 +51,6 @@ public class LOTRWorldChunkManager extends WorldChunkManager {
 
 	@Override
 	public boolean areBiomesViable(int i, int k, int range, List list) {
-		LOTRIntCache.get(worldObj).resetIntCache();
 		int i1 = i - range >> 2;
 		int k1 = k - range >> 2;
 		int i2 = i + range >> 2;
@@ -99,7 +98,6 @@ public class LOTRWorldChunkManager extends WorldChunkManager {
 
 	@Override
 	public ChunkPosition findBiomePosition(int i, int k, int range, List list, Random random) {
-		LOTRIntCache.get(worldObj).resetIntCache();
 		int i1 = i - range >> 2;
 		int k1 = k - range >> 2;
 		int i2 = i + range >> 2;
@@ -124,7 +122,6 @@ public class LOTRWorldChunkManager extends WorldChunkManager {
 
 	@Override
 	public BiomeGenBase[] getBiomeGenAt(BiomeGenBase[] biomes, int i, int k, int xSize, int zSize, boolean useCache) {
-		LOTRIntCache.get(worldObj).resetIntCache();
 		if (biomes == null || biomes.length < xSize * zSize) {
 			biomes = new BiomeGenBase[xSize * zSize];
 		}
@@ -148,7 +145,6 @@ public class LOTRWorldChunkManager extends WorldChunkManager {
 
 	@Override
 	public BiomeGenBase[] getBiomesForGeneration(BiomeGenBase[] biomes, int i, int k, int xSize, int zSize) {
-		LOTRIntCache.get(worldObj).resetIntCache();
 		if (biomes == null || biomes.length < xSize * zSize) {
 			biomes = new BiomeGenBase[xSize * zSize];
 		}
@@ -183,7 +179,6 @@ public class LOTRWorldChunkManager extends WorldChunkManager {
 	}
 
 	public LOTRBiomeVariant[] getBiomeVariantsFromLayers(LOTRBiomeVariant[] variants, int i, int k, int xSize, int zSize, BiomeGenBase[] biomeSource, boolean isChunkGeneration) {
-		LOTRIntCache.get(worldObj).resetIntCache();
 		BiomeGenBase[] biomes = new BiomeGenBase[xSize * zSize];
 		if (biomeSource != null) {
 			biomes = biomeSource;
@@ -270,7 +265,6 @@ public class LOTRWorldChunkManager extends WorldChunkManager {
 
     @Override
     public float[] getRainfall(float[] rainfall, int i, int k, int xSize, int zSize) {
-        LOTRIntCache.get(worldObj).resetIntCache();
         if (rainfall == null || rainfall.length < xSize * zSize) {
             rainfall = new float[xSize * zSize];
         }

@@ -23,7 +23,7 @@ public class LOTRGenLayerNearHaradRiverbanks extends LOTRGenLayer {
         int[] biomes = biomeLayer.getInts(world, i - 2, k - 2, xSize + 3, zSize + 3);
         int[] mapRivers = mapRiverLayer.getInts(world, i - 2, k - 2, xSize + 3, zSize + 3);
 
-        int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+        int[] ints = new int[xSize * zSize];
 
         for (int k1 = 0; k1 < zSize; ++k1) {
             for (int i1 = 0; i1 < xSize; ++i1) {
