@@ -189,7 +189,6 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
                     intArray[i1 + k1 * xSize] = biomeID;
                 } else {
                     FMLLog.warning("WARNING! Invalid biome ID: %d at %d, %d", biomeID, i2, k2);
-                    intArray[i1 + k1 * xSize] = 0; // Ou une valeur par défaut appropriée
                 }
             }
         }
