@@ -268,23 +268,28 @@ public class LOTRWorldChunkManager extends WorldChunkManager {
 		return variants;
 	}
 
-	@Override
-	public float[] getRainfall(float[] rainfall, int i, int k, int xSize, int zSize) {
-		LOTRIntCache.get(worldObj).resetIntCache();
-		if (rainfall == null || rainfall.length < xSize * zSize) {
-			rainfall = new float[xSize * zSize];
-		}
-		int[] ints = worldLayers[LAYER_BIOME].getInts(worldObj, i, k, xSize, zSize);
-		for (int l = 0; l < xSize * zSize; ++l) {
-			int biomeID = ints[l];
-			float f = lotrDimension.biomeList[biomeID].getIntRainfall() / 65536.0f;
-			if (f > 1.0f) {
-				f = 1.0f;
-			}
-			rainfall[l] = f;
-		}
-		return rainfall;
-	}
+    @Override
+    public float[] getRainfall(float[] rainfall, int i, int k, int xSize, int zSize) {
+        LOTRIntCache.get(worldObj).resetIntCache();
+        if (rainfall == null || rainfall.length < xSize * zSize) {
+            rainfall = new float[xSize * zSize];
+        }
+        int[] ints = worldLayers[LAYER_BIOME].getInts(worldObj, i, k, xSize, zSize);
+        for (int l = 0; l < xSize * zSize; ++l) {
+            int biomeID = ints[l];
+            if (biomeID >= 0 && biomeID <= 255) {
+                float f = lotrDimension.biomeList[biomeID].getIntRainfall() / 65536.0f;
+                if (f > 1.0f) {
+                    f = 1.0f;
+                }
+                rainfall[l] = f;
+            } else {
+               return null;
+            }
+        }
+        return rainfall;
+    }
+
 
 	public LOTRVillagePositionCache getStructureCache(MapGenStructure structure) {
 		LOTRVillagePositionCache cache = structureCacheMap.get(structure);
