@@ -158,7 +158,7 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 		LOTRGenLayer biomeSubtypes = new LOTRGenLayerBiomeSubtypesInit(3000L);
 		biomeSubtypes = LOTRGenLayerZoom.magnify(3000L, biomeSubtypes, 2);
 		LOTRGenLayer biomes = new LOTRGenLayerWorld();
-		biomes = new LOTRGenLayerRemoveMapRivers(1000L, biomes, dim);
+	//	biomes = new LOTRGenLayerRemoveMapRivers(1000L, biomes, dim);  todo disabled due to null crash
 		biomes = new LOTRGenLayerBiomeSubtypes(1000L, biomes, biomeSubtypes);
 		BufferedImage buf = new BufferedImage(imageWidth, imageHeight, 2);
 		for (int i = 0; i < imageWidth; ++i) {
