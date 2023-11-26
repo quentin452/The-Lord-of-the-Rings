@@ -277,14 +277,14 @@ public class LOTRWorldChunkManager extends WorldChunkManager {
         int[] ints = worldLayers[LAYER_BIOME].getInts(worldObj, i, k, xSize, zSize);
         for (int l = 0; l < xSize * zSize; ++l) {
             int biomeID = ints[l];
-            if (biomeID >= 0 && biomeID <= 255) {
+            if(biomeID >= 0 && biomeID <= 255 && lotrDimension.biomeList.length > biomeID) {
                 float f = lotrDimension.biomeList[biomeID].getIntRainfall() / 65536.0f;
                 if (f > 1.0f) {
                     f = 1.0f;
                 }
                 rainfall[l] = f;
             } else {
-               return null;
+               return new float[0];
             }
         }
         return rainfall;

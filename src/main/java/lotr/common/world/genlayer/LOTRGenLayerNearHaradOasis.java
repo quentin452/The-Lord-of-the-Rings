@@ -14,16 +14,18 @@ public class LOTRGenLayerNearHaradOasis extends LOTRGenLayer {
 		dimension = dim;
 	}
 
-	@Override
-	public int[] getInts(World world, int i, int k, int xSize, int zSize) {
-		int[] biomes = lotrParent.getInts(world, i - 1, k - 1, xSize + 2, zSize + 2);
-		int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
-		for (int k1 = 0; k1 < zSize; ++k1) {
-			for (int i1 = 0; i1 < xSize; ++i1) {
-				initChunkSeed(i + i1, k + k1);
-				int biomeID = biomes[i1 + 1 + (k1 + 1) * (xSize + 2)];
-				LOTRBiome biome = dimension.biomeList[biomeID];
-				int newBiomeID = biomeID;
+    @Override
+    public int[] getInts(World world, int i, int k, int xSize, int zSize) {
+        int[] biomes = lotrParent.getInts(world, i - 1, k - 1, xSize + 2, zSize + 2);
+        int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+        for (int k1 = 0; k1 < zSize; ++k1) {
+            for (int i1 = 0; i1 < xSize; ++i1) {
+                initChunkSeed(i + i1, k + k1);
+                int biomeID = biomes[i1 + 1 + (k1 + 1) * (xSize + 2)];
+                biomeID = Math.max(0, biomeID);
+                biomeID = Math.min(255, biomeID);
+                LOTRBiome biome = dimension.biomeList[biomeID];
+                int newBiomeID = biomeID;
 				if (biome instanceof LOTRBiomeGenNearHarad && nextInt(200) == 0) {
 					boolean surrounded = true;
 					for (int i2 = -1; i2 <= 1; ++i2) {
@@ -40,9 +42,9 @@ public class LOTRGenLayerNearHaradOasis extends LOTRGenLayer {
 						newBiomeID = LOTRBiome.nearHaradOasis.biomeID;
 					}
 				}
-				ints[i1 + k1 * xSize] = newBiomeID;
-			}
-		}
-		return ints;
-	}
+                ints[i1 + k1 * xSize] = newBiomeID;
+            }
+        }
+        return ints;
+    }
 }

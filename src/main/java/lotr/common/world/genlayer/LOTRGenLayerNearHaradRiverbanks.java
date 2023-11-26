@@ -17,16 +17,25 @@ public class LOTRGenLayerNearHaradRiverbanks extends LOTRGenLayer {
 		dimension = dim;
 	}
 
-	@Override
-	public int[] getInts(World world, int i, int k, int xSize, int zSize) {
-		int[] biomes = biomeLayer.getInts(world, i - 2, k - 2, xSize + 3, zSize + 3);
-		int[] mapRivers = mapRiverLayer.getInts(world, i - 2, k - 2, xSize + 3, zSize + 3);
-		int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
-		for (int k1 = 0; k1 < zSize; ++k1) {
-			for (int i1 = 0; i1 < xSize; ++i1) {
-				initChunkSeed(i + i1, k + k1);
-				int biomeID = biomes[i1 + 2 + (k1 + 2) * (xSize + 3)];
-				LOTRBiome biome = dimension.biomeList[biomeID];
+    @Override
+    public int[] getInts(World world, int i, int k, int xSize, int zSize) {
+
+        int[] biomes = biomeLayer.getInts(world, i - 2, k - 2, xSize + 3, zSize + 3);
+        int[] mapRivers = mapRiverLayer.getInts(world, i - 2, k - 2, xSize + 3, zSize + 3);
+
+        int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+
+        for (int k1 = 0; k1 < zSize; ++k1) {
+            for (int i1 = 0; i1 < xSize; ++i1) {
+
+                initChunkSeed(i + i1, k + k1);
+
+                int biomeID = biomes[i1 + 2 + (k1 + 2) * (xSize + 3)];
+
+                biomeID = Math.max(0, biomeID);
+                biomeID = Math.min(255, biomeID);
+
+                LOTRBiome biome = dimension.biomeList[biomeID];
 				int newBiomeID = biomeID;
 				if (biome instanceof LOTRBiomeGenNearHarad) {
 					boolean adjRiver = false;

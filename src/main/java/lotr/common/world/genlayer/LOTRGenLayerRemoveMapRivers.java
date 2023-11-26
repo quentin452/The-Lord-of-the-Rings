@@ -22,9 +22,18 @@ public class LOTRGenLayerRemoveMapRivers extends LOTRGenLayer {
 
 	@Override
 	public int[] getInts(World world, int i, int k, int xSize, int zSize) {
-		int maxRange = MAX_PIXEL_RANGE;
-		int[] biomes = lotrParent.getInts(world, i - maxRange, k - maxRange, xSize + maxRange * 2, zSize + maxRange * 2);
-		int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+        int maxRange = MAX_PIXEL_RANGE;
+        int[] biomes = lotrParent.getInts(world, i - maxRange, k - maxRange, xSize + maxRange * 2, zSize + maxRange * 2);
+
+        int[] ints = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+
+        if(ints == null) {
+            return new int[xSize * zSize];
+        }
+
+        if (biomes == null || biomes.length < (xSize + maxRange * 2) * (zSize + maxRange * 2)) {
+            return new int[xSize * zSize];
+        }
 		for (int k1 = 0; k1 < zSize; ++k1) {
 			for (int i1 = 0; i1 < xSize; ++i1) {
 				initChunkSeed(i + i1, k + k1);
@@ -88,12 +97,10 @@ public class LOTRGenLayerRemoveMapRivers extends LOTRGenLayer {
 					ints[i1 + k1 * xSize] = replaceID;
 					continue;
 				}
-                if (biomeID >= 0 && biomeID <= 255) {
-                    ints[i1 + k1 * xSize] = biomeID;
-                } else {
-                    FMLLog.warning("WARNING! Invalid biome ID: %d at %d, %d", biomeID, i, k);
-                }
-			}
+                biomeID = Math.max(0, Math.min(255, biomeID));
+
+                ints[i1 + k1 * xSize] = biomeID;
+            }
 		}
 		return ints;
 	}

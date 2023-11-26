@@ -178,20 +178,32 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 
     @Override
     public int[] getInts(World world, int i, int k, int xSize, int zSize) {
+
         int[] intArray = LOTRIntCache.get(world).getIntArray(xSize * zSize);
+
         for (int k1 = 0; k1 < zSize; ++k1) {
             for (int i1 = 0; i1 < xSize; ++i1) {
+
                 int i2 = i + i1 + 810;
                 int k2 = k + k1 + 730;
-                int biomeID = i2 < 0 || i2 >= imageWidth || k2 < 0 || k2 >= imageHeight ? LOTRBiome.ocean.biomeID : getBiomeImageID(i2, k2);
+
+                int biomeID = i2 < 0 || i2 >= imageWidth || k2 < 0 || k2 >= imageHeight ?
+                    LOTRBiome.ocean.biomeID :
+                    getBiomeImageID(i2, k2);
+
+                biomeID = Math.max(0, biomeID);
+                biomeID = Math.min(255, biomeID);
 
                 if (biomeID >= 0 && biomeID <= 255) {
                     intArray[i1 + k1 * xSize] = biomeID;
                 } else {
-                    FMLLog.warning("WARNING! Invalid biome ID: %d at %d, %d", biomeID, i2, k2);
+                    FMLLog.warning("Invalid biome ID: %d at %d, %d", biomeID, i2, k2);
                 }
+
             }
         }
+
         return intArray;
+
     }
 }

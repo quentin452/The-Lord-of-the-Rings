@@ -165,7 +165,15 @@ public abstract class LOTRWorldProvider extends WorldProvider {
             int biomeID = biome.biomeID;
 
             if (biomeID >= 0 && biomeID <= 255) {
-                return dim.biomeList[biomeID] == null ? dim.biomeList[0] : dim.biomeList[biomeID];
+                BiomeGenBase[] biomeList = dim.biomeList;
+
+                if (biomeList != null && biomeID < biomeList.length) {
+                    BiomeGenBase selectedBiome = biomeList[biomeID];
+
+                    if (selectedBiome != null) {
+                        return selectedBiome;
+                    }
+                }
             }
         }
         return worldChunkMgr.getBiomeGenAt(i, k);
