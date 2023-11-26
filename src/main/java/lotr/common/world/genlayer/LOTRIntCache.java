@@ -57,15 +57,14 @@ public class LOTRIntCache {
     }
 
     public void resetIntCache() {
-        if (!freeLargeArrays.isEmpty()) {
-            freeLargeArrays.remove(freeLargeArrays.size() - 1);
+        if (!inUseLargeArrays.isEmpty()) {
+            freeLargeArrays.addAll(inUseLargeArrays);
+            inUseLargeArrays.clear();
         }
-        if (!freeSmallArrays.isEmpty()) {
-            freeSmallArrays.remove(freeSmallArrays.size() - 1);
+
+        if (!inUseSmallArrays.isEmpty()) {
+            freeSmallArrays.addAll(inUseSmallArrays);
+            inUseSmallArrays.clear();
         }
-        freeLargeArrays.addAll(inUseLargeArrays);
-        freeSmallArrays.addAll(inUseSmallArrays);
-        inUseLargeArrays.clear();
-        inUseSmallArrays.clear();
     }
 }
