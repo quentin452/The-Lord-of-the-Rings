@@ -97,7 +97,7 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 			biomes = LOTRGenLayerZoom.magnify(300L, biomes, 2);
 		}
 		LOTRGenLayer mapRivers = new LOTRGenLayerExtractMapRivers(5000L, biomes);
-	//	biomes = new LOTRGenLayerRemoveMapRivers(1000L, biomes, dim); disabled due to null crash
+	//	biomes = new LOTRGenLayerRemoveMapRivers(1000L, biomes, dim); todo disabled due to null crash
 		biomes = new LOTRGenLayerBiomeSubtypes(1000L, biomes, biomeSubtypes);
 		biomes = new LOTRGenLayerNearHaradRiverbanks(200L, biomes, mapRivers, dim);
 		biomes = new LOTRGenLayerNearHaradOasis(500L, biomes, dim);
