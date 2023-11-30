@@ -102,56 +102,56 @@ public class LOTRBiomeGenMordor extends LOTRBiome {
 		return true;
 	}
 
-	@Override
-	public void decorate(World world, Random random, int i, int k) {
-		int k1;
-		int j1;
-		int i1;
-		super.decorate(world, random, i, k);
-		if (isGorgoroth()) {
-			int k12;
-			int i12;
-			int j12;
-			int l;
-			if (enableMordorBoulders && random.nextInt(24) == 0) {
-				for (l = 0; l < 6; ++l) {
-					i12 = i + random.nextInt(16) + 8;
-					k12 = k + random.nextInt(16) + 8;
-					boulderGen.generate(world, random, i12, world.getHeightValue(i12, k12), k12);
-				}
-			}
-			if (random.nextInt(60) == 0) {
-				for (l = 0; l < 8; ++l) {
-					i12 = i + random.nextInt(16) + 8;
-					k12 = k + random.nextInt(16) + 8;
-					j12 = world.getHeightValue(i12, k12);
-					decorator.genTree(world, random, i12, j12, k12);
-				}
-			}
-			if (decorator.grassPerChunk > 0) {
-				if (random.nextInt(20) == 0) {
-					for (l = 0; l < 6; ++l) {
-						i12 = i + random.nextInt(6) + 8;
-						if (!world.isAirBlock(i12, j12 = world.getHeightValue(i12, k12 = k + random.nextInt(6) + 8), k12) || !LOTRMod.mordorThorn.canBlockStay(world, i12, j12, k12)) {
-							continue;
-						}
-						world.setBlock(i12, j12, k12, LOTRMod.mordorThorn, 0, 2);
-					}
-				}
-				if (random.nextInt(20) == 0 && world.isAirBlock(i1 = i + random.nextInt(16) + 8, j1 = world.getHeightValue(i1, k1 = k + random.nextInt(16) + 8), k1) && LOTRMod.mordorMoss.canBlockStay(world, i1, j1, k1)) {
-					new LOTRWorldGenMordorMoss().generate(world, random, i1, j1, k1);
-				}
-			}
-		}
-		if (LOTRFixedStructures.MORDOR_CHERRY_TREE.isAt(world, i, k)) {
-			i1 = i + 8;
-			k1 = k + 8;
-			j1 = world.getHeightValue(i1, k1);
-			LOTRTreeType.CHERRY_MORDOR.create(false, random).generate(world, random, i1, j1, k1);
-		}
-	}
+    @Override
+    public void decorate(World world, Random random, int i, int k) {
+        super.decorate(world, random, i, k);
+        if (isGorgoroth()) {
+            if (enableMordorBoulders && random.nextInt(24) == 0) {
+                for (int l = 0; l < 6; ++l) {
+                    int i12 = i + random.nextInt(16) + 8;
+                    int k12 = k + random.nextInt(16) + 8;
+                    boulderGen.generate(world, random, i12, world.getHeight(), k12);
+                }
+            }
 
-	@Override
+            if (random.nextInt(60) == 0) {
+                for (int l = 0; l < 8; ++l) {
+                    int i12 = i + random.nextInt(16) + 8;
+                    int k12 = k + random.nextInt(16) + 8;
+                    int j12 = world.getHeight();
+                    decorator.genTree(world, random, i12, j12, k12);
+                }
+            }
+
+            if (decorator.grassPerChunk > 0) {
+                for (int l = 0; l < 6; ++l) {
+                    int i12 = i + random.nextInt(6) + 8;
+                    int k12 = k + random.nextInt(6) + 8;
+                    int j12 = world.getHeight();
+                    if (world.isAirBlock(i12, j12, k12) && LOTRMod.mordorThorn.canBlockStay(world, i12, j12, k12)) {
+                        world.setBlock(i12, j12, k12, LOTRMod.mordorThorn, 0, 2);
+                    }
+                }
+
+                int i1 = i + random.nextInt(16) + 8;
+                int k1 = k + random.nextInt(16) + 8;
+                int j1 = world.getHeight();
+                if (random.nextInt(20) == 0 && world.isAirBlock(i1, j1, k1) && LOTRMod.mordorMoss.canBlockStay(world, i1, j1, k1)) {
+                    new LOTRWorldGenMordorMoss().generate(world, random, i1, j1, k1);
+                }
+            }
+        }
+
+        if (LOTRFixedStructures.MORDOR_CHERRY_TREE.isAt(world, i, k)) {
+            int i1 = i + 8;
+            int k1 = k + 8;
+            int j1 = world.getHeight();
+            LOTRTreeType.CHERRY_MORDOR.create(false, random).generate(world, random, i1, j1, k1);
+        }
+    }
+
+
+    @Override
 	public void generateBiomeTerrain(World world, Random random, Block[] blocks, byte[] meta, int i, int k, double stoneNoise, int height, LOTRBiomeVariant variant) {
 		Block topBlock_pre = topBlock;
 		int topBlockMeta_pre = topBlockMeta;
