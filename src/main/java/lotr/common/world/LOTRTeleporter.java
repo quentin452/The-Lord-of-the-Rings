@@ -5,7 +5,10 @@ import lotr.common.LOTRLevelData;
 import lotr.common.LOTRMod;
 import lotr.common.entity.item.LOTREntityPortal;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.Teleporter;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
 public class LOTRTeleporter extends Teleporter {

@@ -10,6 +10,8 @@ import net.minecraft.world.WorldServer;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LOTRTime {
 	public static int DAY_LENGTH = 48000;
@@ -63,20 +65,25 @@ public class LOTRTime {
 		worldTime = time;
 	}
 
-	public static void update() {
-		MinecraftServer server = MinecraftServer.getServer();
-		WorldServer overworld = server.worldServerForDimension(0);
-		if (LOTRMod.doDayCycle(overworld)) {
-			++worldTime;
-		}
-		++totalTime;
-		for (WorldServer world : server.worldServers) {
-			if (!(world.provider instanceof LOTRWorldProvider)) {
-				continue;
-			}
-			LOTRWorldInfo worldinfo = (LOTRWorldInfo) world.getWorldInfo();
-			worldinfo.lotr_setTotalTime(totalTime);
-			worldinfo.lotr_setWorldTime(worldTime);
-		}
-	}
+
+    private static final Map<Integer, LOTRWorldInfo> dimensionInfoMap = new HashMap<>();
+
+    public static void update() {
+        MinecraftServer server = MinecraftServer.getServer();
+        WorldServer overworld = server.worldServerForDimension(0);
+        if (LOTRMod.doDayCycle(overworld)) {
+            ++worldTime;
+        }
+        ++totalTime;
+
+        for (WorldServer world : server.worldServers) {
+            if (world.provider instanceof LOTRWorldProvider) {
+                int dimensionId = world.provider.dimensionId;
+                LOTRWorldInfo worldInfo = dimensionInfoMap.getOrDefault(dimensionId, new LOTRWorldInfo(world.getWorldInfo()));
+                worldInfo.lotr_setTotalTime(totalTime);
+                worldInfo.lotr_setWorldTime(worldTime);
+                dimensionInfoMap.put(dimensionId, worldInfo);
+            }
+        }
+    }
 }

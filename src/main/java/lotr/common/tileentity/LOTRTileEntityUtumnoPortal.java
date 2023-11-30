@@ -6,6 +6,7 @@ import lotr.common.LOTRDimension;
 import lotr.common.LOTRGuiMessageTypes;
 import lotr.common.LOTRLevelData;
 import lotr.common.LOTRMod;
+import lotr.common.world.LOTRTeleporter;
 import lotr.common.world.LOTRTeleporterUtumno;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +16,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 
 import java.util.List;
 

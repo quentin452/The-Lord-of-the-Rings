@@ -154,6 +154,8 @@ public class LOTRTickHandlerServer {
                         }
                     }
                 }
+                // DEPRECATED , now whe use onEntityCollision from LOTREntityPortal
+                   /*
                 if ((entityplayer.dimension == 0 || entityplayer.dimension == LOTRDimension.MIDDLE_EARTH.dimensionID) && playersInPortals.containsKey(entityplayer)) {
                     int i;
                     List portals = world.getEntitiesWithinAABB(LOTREntityPortal.class, entityplayer.boundingBox.expand(8.0, 8.0, 8.0));
@@ -166,7 +168,7 @@ public class LOTRTickHandlerServer {
                         inPortal = true;
                         break;
                     }
-                    if (inPortal) {
+                     if (inPortal) {
                         i = (Integer) playersInPortals.get(entityplayer);
                         i++;
                         playersInPortals.put(entityplayer, i);
@@ -183,10 +185,11 @@ public class LOTRTickHandlerServer {
                     } else {
                         playersInPortals.remove(entityplayer);
                     }
-                }
+                }*/
                 updatePlayerInPortal(entityplayer, playersInElvenPortals, (LOTRBlockPortal) LOTRMod.elvenPortal);
                 updatePlayerInPortal(entityplayer, playersInMorgulPortals, (LOTRBlockPortal) LOTRMod.morgulPortal);
-                if (entityplayer.dimension == LOTRDimension.UTUMNO.dimensionID) {
+                // DEPRECATED , now whe use onEntityCollidedWithBlock from LOTRBlockUtumnoPortal
+             /*   if (entityplayer.dimension == LOTRDimension.UTUMNO.dimensionID) {
                     int i = MathHelper.floor_double(entityplayer.posX);
                     int j = MathHelper.floor_double(entityplayer.boundingBox.minY);
                     int k = MathHelper.floor_double(entityplayer.posZ);
@@ -214,6 +217,8 @@ public class LOTRTickHandlerServer {
                         LOTRWorldProviderUtumno.doEvaporateFX(world, i1, j1, k1);
                     }
                 }
+
+              */
             }
         }
     }

@@ -8,10 +8,12 @@ import lotr.common.world.LOTRTeleporter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -144,7 +146,8 @@ public class LOTREntityPortal extends Entity {
 				}
 				transferEntity(entity);
 			}
-			if (rand.nextInt(50) == 0) {
+
+            if (rand.nextInt(50) == 0) {
 				worldObj.playSoundAtEntity(this, "portal.portal", 0.5f, rand.nextFloat() * 0.4f + 0.8f);
 			}
 			for (i = 0; i < 2; ++i) {
@@ -168,6 +171,12 @@ public class LOTREntityPortal extends Entity {
 				worldObj.spawnParticle("flame", d, d1, d2, d8, d9, d10);
 			}
 		}
+        List<Entity> entities = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.expand(0.25, 0.25, 0.25));
+        for (Entity entity : entities) {
+            if (entity instanceof EntityPlayer && !entity.isRiding() && entity.ridingEntity == null) {
+                onEntityCollision(worldObj, (int) posX, (int) posY, (int) posZ, entity);
+            }
+        }
 	}
 
 	@Override
@@ -191,4 +200,22 @@ public class LOTREntityPortal extends Entity {
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		nbt.setInteger("Scale", getScale());
 	}
+    public void onEntityCollision(World world, int x, int y, int z, Entity entity){
+        if(entity.ridingEntity == null && entity.riddenByEntity == null && entity instanceof EntityPlayerMP){
+            EntityPlayerMP thePlayer = (EntityPlayerMP) entity;
+
+            MinecraftServer server = MinecraftServer.getServer();
+            if (thePlayer.timeUntilPortal > 0) {
+                thePlayer.timeUntilPortal = 10;
+
+            } else if (thePlayer.dimension != LOTRDimension.MIDDLE_EARTH.dimensionID) {
+                thePlayer.timeUntilPortal = 10;
+                thePlayer.mcServer.getConfigurationManager().transferPlayerToDimension(thePlayer, LOTRDimension.MIDDLE_EARTH.dimensionID, new LOTRTeleporter(server.worldServerForDimension(LOTRDimension.MIDDLE_EARTH.dimensionID), true));
+
+            } else {
+                thePlayer.timeUntilPortal = 10;
+                thePlayer.mcServer.getConfigurationManager().transferPlayerToDimension(thePlayer, 0, new LOTRTeleporter(server.worldServerForDimension(0), true));
+            }
+        }
+    }
 }
