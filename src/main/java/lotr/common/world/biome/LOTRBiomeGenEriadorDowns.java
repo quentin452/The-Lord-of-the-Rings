@@ -2,6 +2,7 @@ package lotr.common.world.biome;
 
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRWorldGenBoulder;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -21,6 +22,7 @@ public class LOTRBiomeGenEriadorDowns extends LOTRBiomeGenEriador {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(24) == 0) {
 			for (int l = 0; l < 3; ++l) {
@@ -29,6 +31,7 @@ public class LOTRBiomeGenEriadorDowns extends LOTRBiomeGenEriador {
 				boulderGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

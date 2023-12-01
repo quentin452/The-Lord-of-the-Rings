@@ -12,6 +12,7 @@ import lotr.common.world.structure2.LOTRWorldGenRuinedDwarvenTower;
 import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
 import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenMinable;
@@ -76,6 +77,7 @@ public class LOTRBiomeGenMistyMountains extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		for (int count = 0; count < 2; ++count) {
 			int k1;
@@ -86,6 +88,7 @@ public class LOTRBiomeGenMistyMountains extends LOTRBiome {
 			}
 			decorator.genTree(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

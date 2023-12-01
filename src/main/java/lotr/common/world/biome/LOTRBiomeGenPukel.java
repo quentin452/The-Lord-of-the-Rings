@@ -9,6 +9,7 @@ import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.structure2.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -84,6 +85,7 @@ public class LOTRBiomeGenPukel extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(24) == 0) {
 			for (int l = 0; l < 4; ++l) {
@@ -92,6 +94,7 @@ public class LOTRBiomeGenPukel extends LOTRBiome {
 				boulderGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import lotr.common.world.spawning.LOTRInvasions;
 import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -120,6 +121,7 @@ public class LOTRBiomeGenDorwinion extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(50) == 0) {
 			for (int l = 0; l < 3; ++l) {
@@ -128,6 +130,7 @@ public class LOTRBiomeGenDorwinion extends LOTRBiome {
 				boulderGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

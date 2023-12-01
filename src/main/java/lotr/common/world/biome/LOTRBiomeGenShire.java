@@ -13,6 +13,7 @@ import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure.LOTRWorldGenHobbitPicnicBench;
 import lotr.common.world.structure2.*;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenDoublePlant;
@@ -100,6 +101,7 @@ public class LOTRBiomeGenShire extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int k1;
 		int j1;
 		int i1;
@@ -124,6 +126,7 @@ public class LOTRBiomeGenShire extends LOTRBiome {
 			doubleFlowerGen.func_150548_a(0);
 			doubleFlowerGen.generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import lotr.common.world.structure2.LOTRWorldGenBlackUrukFort;
 import lotr.common.world.structure2.LOTRWorldGenMordorCamp;
 import lotr.common.world.structure2.LOTRWorldGenMordorWargPit;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -104,6 +105,7 @@ public class LOTRBiomeGenMordor extends LOTRBiome {
 
     @Override
     public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
         super.decorate(world, random, i, k);
         if (isGorgoroth()) {
             if (enableMordorBoulders && random.nextInt(24) == 0) {
@@ -148,6 +150,7 @@ public class LOTRBiomeGenMordor extends LOTRBiome {
             int j1 = world.getHeight();
             LOTRTreeType.CHERRY_MORDOR.create(false, random).generate(world, random, i1, j1, k1);
         }
+        BlockFalling.fallInstantly = false;
     }
 
 

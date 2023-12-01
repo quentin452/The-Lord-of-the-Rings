@@ -13,6 +13,7 @@ import lotr.common.world.structure2.LOTRWorldGenGondorStructure;
 import lotr.common.world.structure2.LOTRWorldGenLamedonWatchfort;
 import lotr.common.world.village.LOTRVillageGenGondor;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -108,6 +109,7 @@ public class LOTRBiomeGenLamedon extends LOTRBiomeGenGondor {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(16) == 0) {
 			for (int l = 0; l < 4; ++l) {
@@ -116,6 +118,7 @@ public class LOTRBiomeGenLamedon extends LOTRBiomeGenGondor {
 				boulderGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import lotr.common.world.spawning.LOTRInvasions;
 import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure.LOTRWorldGenRuinedDunedainTower;
 import lotr.common.world.structure2.*;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -85,6 +86,7 @@ public class LOTRBiomeGenColdfells extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(3) == 0) {
 			for (int l = 0; l < 3; ++l) {
@@ -93,6 +95,7 @@ public class LOTRBiomeGenColdfells extends LOTRBiome {
 				boulderGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

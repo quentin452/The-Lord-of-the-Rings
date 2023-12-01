@@ -8,6 +8,7 @@ import lotr.common.world.feature.LOTRWorldGenMountainsideBush;
 import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.spawning.LOTREventSpawner;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -43,6 +44,7 @@ public class LOTRBiomeGenWindMountains extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		for (int l = 0; l < 3; ++l) {
 			int i1 = i + random.nextInt(16) + 8;
@@ -50,6 +52,7 @@ public class LOTRBiomeGenWindMountains extends LOTRBiome {
 			int k1 = k + random.nextInt(16) + 8;
 			new LOTRWorldGenMountainsideBush(LOTRMod.leaves5, 0).generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

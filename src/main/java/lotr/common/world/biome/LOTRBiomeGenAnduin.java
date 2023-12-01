@@ -13,6 +13,7 @@ import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.spawning.LOTRInvasions;
 import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.*;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -101,6 +102,7 @@ public class LOTRBiomeGenAnduin extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(24) == 0) {
 			for (int l = 0; l < 3; ++l) {
@@ -109,6 +111,7 @@ public class LOTRBiomeGenAnduin extends LOTRBiome {
 				boulderGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import lotr.common.world.feature.LOTRTreeType;
 import lotr.common.world.feature.LOTRWorldGenBoulder;
 import lotr.common.world.structure2.LOTRWorldGenStructureBase2;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -40,6 +41,7 @@ public class LOTRBiomeGenFarHaradBushland extends LOTRBiomeGenFarHarad {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int l;
 		int k1;
 		int i1;
@@ -75,6 +77,7 @@ public class LOTRBiomeGenFarHaradBushland extends LOTRBiomeGenFarHarad {
 				}
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

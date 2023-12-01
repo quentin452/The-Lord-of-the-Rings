@@ -8,6 +8,7 @@ import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.structure2.LOTRWorldGenRohanWatchtower;
 import lotr.common.world.village.LOTRVillageGenRohan;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -43,6 +44,7 @@ public class LOTRBiomeGenWold extends LOTRBiomeGenRohan {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(16) == 0) {
 			for (int l = 0; l < 4; ++l) {
@@ -82,6 +84,7 @@ public class LOTRBiomeGenWold extends LOTRBiomeGenRohan {
 				block.onPlantGrow(world, i1, j1 - 1, k1, i1, j1, k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

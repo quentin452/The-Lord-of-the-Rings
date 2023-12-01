@@ -20,6 +20,7 @@ import lotr.common.world.structure2.LOTRWorldGenGondorObelisk;
 import lotr.common.world.structure2.LOTRWorldGenIthilienHideout;
 import lotr.common.world.structure2.LOTRWorldGenRuinedBeaconTower;
 import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -149,6 +150,7 @@ public class LOTRBiomeGenIthilien extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int k1;
 		int j1;
 		int i1;
@@ -167,6 +169,7 @@ public class LOTRBiomeGenIthilien extends LOTRBiome {
 			k1 = k + random.nextInt(16) + 8;
 			new WorldGenFlowers(LOTRMod.pipeweedPlant).generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

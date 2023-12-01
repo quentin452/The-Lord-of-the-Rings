@@ -4,6 +4,7 @@ import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRWorldGenStreams;
 import lotr.common.world.feature.LOTRWorldGenVolcanoCrater;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
@@ -25,6 +26,7 @@ public class LOTRBiomeGenFarHaradJungleMountains extends LOTRBiomeGenFarHaradJun
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int k1;
 		int j1;
 		int l;
@@ -56,6 +58,7 @@ public class LOTRBiomeGenFarHaradJungleMountains extends LOTRBiomeGenFarHaradJun
 			k1 = k + random.nextInt(16) + 8;
 			lavaGen.generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

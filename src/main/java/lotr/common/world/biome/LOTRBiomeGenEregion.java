@@ -17,6 +17,7 @@ import lotr.common.world.structure.LOTRWorldGenRuinedHighElvenTurret;
 import lotr.common.world.structure2.LOTRWorldGenRuinedEregionForge;
 import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
 import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -91,6 +92,7 @@ public class LOTRBiomeGenEregion extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(24) == 0) {
 			int boulders = 1 + random.nextInt(4);
@@ -100,6 +102,7 @@ public class LOTRBiomeGenEregion extends LOTRBiome {
 				boulderGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

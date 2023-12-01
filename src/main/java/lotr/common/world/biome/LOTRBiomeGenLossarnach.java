@@ -11,6 +11,7 @@ import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.LOTRWorldGenGondorStructure;
 import lotr.common.world.structure2.LOTRWorldGenLossarnachWatchfort;
 import lotr.common.world.village.LOTRVillageGenGondor;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -103,6 +104,7 @@ public class LOTRBiomeGenLossarnach extends LOTRBiomeGenGondor {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		for (int l = 0; l < 3; ++l) {
 			int i1 = i + random.nextInt(16) + 8;
@@ -110,6 +112,7 @@ public class LOTRBiomeGenLossarnach extends LOTRBiomeGenGondor {
 			int k1 = k + random.nextInt(16) + 8;
 			new LOTRWorldGenBerryBush().generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

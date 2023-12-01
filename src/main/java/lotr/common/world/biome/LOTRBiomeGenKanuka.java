@@ -7,6 +7,7 @@ import lotr.common.world.LOTRWorldChunkManager;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRTreeType;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -45,6 +46,7 @@ public class LOTRBiomeGenKanuka extends LOTRBiomeGenFarHarad {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		for (int count = 0; count < 4; ++count) {
 			int k1;
@@ -80,6 +82,7 @@ public class LOTRBiomeGenKanuka extends LOTRBiomeGenFarHarad {
 			WorldGenerator grassGen = getRandomWorldGenForDoubleGrass(random);
 			grassGen.generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

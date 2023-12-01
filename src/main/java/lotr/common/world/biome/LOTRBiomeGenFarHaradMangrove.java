@@ -2,6 +2,7 @@ package lotr.common.world.biome;
 
 import lotr.common.LOTRMod;
 import lotr.common.world.feature.LOTRTreeType;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -33,6 +34,7 @@ public class LOTRBiomeGenFarHaradMangrove extends LOTRBiomeGenFarHarad {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int i1;
 		int l;
 		super.decorate(world, random, i, k);
@@ -57,6 +59,7 @@ public class LOTRBiomeGenFarHaradMangrove extends LOTRBiomeGenFarHarad {
 				world.setBlock(i1, j2, k1, LOTRMod.wood3, 3, 2);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

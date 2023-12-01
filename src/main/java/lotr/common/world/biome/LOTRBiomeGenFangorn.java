@@ -14,6 +14,7 @@ import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.spawning.LOTRBiomeSpawnList;
 import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.spawning.LOTRSpawnList;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -97,6 +98,7 @@ public class LOTRBiomeGenFangorn extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int j1;
 		int i1;
 		int k1;
@@ -115,6 +117,7 @@ public class LOTRBiomeGenFangorn extends LOTRBiome {
 			j1 = world.getHeightValue(i1, k1);
 			new LOTRWorldGenEntJars().generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

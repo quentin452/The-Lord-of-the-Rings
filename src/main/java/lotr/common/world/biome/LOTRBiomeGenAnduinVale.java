@@ -2,6 +2,7 @@ package lotr.common.world.biome;
 
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.feature.LOTRWorldGenBoulder;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -30,6 +31,7 @@ public class LOTRBiomeGenAnduinVale extends LOTRBiomeGenAnduin {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(16) == 0) {
 			for (int l = 0; l < 3; ++l) {
@@ -38,6 +40,7 @@ public class LOTRBiomeGenAnduinVale extends LOTRBiomeGenAnduin {
 				valeBoulders.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

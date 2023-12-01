@@ -11,6 +11,7 @@ import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure.LOTRWorldGenNurnWheatFarm;
 import lotr.common.world.structure.LOTRWorldGenOrcSlaverTower;
 import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -74,6 +75,7 @@ public class LOTRBiomeGenNurn extends LOTRBiomeGenMordor {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(40) == 0) {
 			for (int l = 0; l < 4; ++l) {
@@ -82,6 +84,7 @@ public class LOTRBiomeGenNurn extends LOTRBiomeGenMordor {
 				nurnBoulderGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

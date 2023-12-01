@@ -20,6 +20,7 @@ import lotr.common.world.structure2.LOTRWorldGenMumakSkeleton;
 import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
 import lotr.common.world.village.LOTRVillageGenGulfHarad;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
@@ -108,6 +109,7 @@ public class LOTRBiomeGenGulfHarad extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(20) == 0) {
 			int boulders = 1 + random.nextInt(3);
@@ -118,6 +120,7 @@ public class LOTRBiomeGenGulfHarad extends LOTRBiome {
 				boulderGen.generate(world, random, i1, j1, k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

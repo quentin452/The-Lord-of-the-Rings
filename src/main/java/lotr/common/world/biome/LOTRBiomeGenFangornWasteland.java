@@ -6,6 +6,7 @@ import lotr.common.world.spawning.LOTRBiomeSpawnList;
 import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.spawning.LOTRInvasions;
 import lotr.common.world.spawning.LOTRSpawnList;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -73,12 +74,14 @@ public class LOTRBiomeGenFangornWasteland extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(60) == 0) {
 			int i1 = i + random.nextInt(16) + 8;
 			int k1 = k + random.nextInt(16) + 8;
 			new LOTRWorldGenBlastedLand(true).generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

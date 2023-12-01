@@ -12,6 +12,7 @@ import lotr.common.world.structure2.LOTRWorldGenRuinedDwarvenTower;
 import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
 import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
@@ -74,6 +75,7 @@ public class LOTRBiomeGenGreyMountains extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int i1;
 		int count;
 		super.decorate(world, random, i, k);
@@ -95,6 +97,7 @@ public class LOTRBiomeGenGreyMountains extends LOTRBiome {
 			}
 			getRandomWorldGenForGrass(random).generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

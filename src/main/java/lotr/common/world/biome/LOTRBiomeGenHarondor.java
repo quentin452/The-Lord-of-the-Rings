@@ -15,6 +15,7 @@ import lotr.common.world.structure.LOTRWorldGenRuinedGondorTower;
 import lotr.common.world.structure2.*;
 import lotr.common.world.village.LOTRVillageGenHarnedor;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
@@ -114,6 +115,7 @@ public class LOTRBiomeGenHarondor extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int i1;
 		int k1;
 		int l;
@@ -135,6 +137,7 @@ public class LOTRBiomeGenHarondor extends LOTRBiome {
 				decorator.genTree(world, random, i1, j1, k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

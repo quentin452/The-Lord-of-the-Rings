@@ -14,6 +14,7 @@ import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.LOTRWorldGenRuinedHouse;
 import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenMinable;
@@ -49,6 +50,7 @@ public class LOTRBiomeGenForodwaith extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int i1;
 		int k1;
 		super.decorate(world, random, i, k);
@@ -76,6 +78,7 @@ public class LOTRBiomeGenForodwaith extends LOTRBiome {
 			int j1 = world.getHeightValue(i1, k12);
 			tree.generate(world, random, i1, j1, k12);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

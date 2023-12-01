@@ -12,6 +12,7 @@ import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.spawning.LOTRInvasions;
 import lotr.common.world.spawning.LOTRSpawnList;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
@@ -60,6 +61,7 @@ public class LOTRBiomeGenDagorlad extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(24) == 0) {
 			int boulders = 1 + random.nextInt(4);
@@ -69,6 +71,7 @@ public class LOTRBiomeGenDagorlad extends LOTRBiome {
 				boulderGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

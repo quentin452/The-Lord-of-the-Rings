@@ -13,6 +13,7 @@ import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.spawning.LOTRInvasions;
 import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -105,6 +106,7 @@ public class LOTRBiomeGenFarHaradJungle extends LOTRBiomeGenFarHarad {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int j1;
 		super.decorate(world, random, i, k);
 		WorldGenVines vines = new WorldGenVines();
@@ -120,6 +122,7 @@ public class LOTRBiomeGenFarHaradJungle extends LOTRBiomeGenFarHarad {
 			j1 = world.getTopSolidOrLiquidBlock(i1, k1);
 			obsidianGen.generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

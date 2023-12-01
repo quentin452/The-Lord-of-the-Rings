@@ -15,6 +15,7 @@ import lotr.common.world.spawning.LOTRInvasions;
 import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure.LOTRWorldGenRuinedDunedainTower;
 import lotr.common.world.structure2.*;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -91,6 +92,7 @@ public class LOTRBiomeGenEttenmoors extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int k1;
 		int i1;
 		int l;
@@ -115,6 +117,7 @@ public class LOTRBiomeGenEttenmoors extends LOTRBiome {
 			k1 = k + random.nextInt(16) + 8;
 			boulderGenSmall.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

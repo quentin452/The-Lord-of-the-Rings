@@ -9,6 +9,7 @@ import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.LOTRWorldGenGondorStructure;
 import lotr.common.world.structure2.LOTRWorldGenGondorTurret;
 import lotr.common.world.village.LOTRVillageGenGondor;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -70,9 +71,11 @@ public class LOTRBiomeGenPelennor extends LOTRBiomeGenGondor {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		LOTRWorldGenRammasEchor.INSTANCE.generateWithSetRotation(world, random, i, 0, k, 0);
-	}
+        BlockFalling.fallInstantly = false;
+    }
 
 	@Override
 	public LOTRAchievement getBiomeAchievement() {

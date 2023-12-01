@@ -12,6 +12,7 @@ import lotr.common.world.structure2.LOTRWorldGenNumenorRuin;
 import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
 import lotr.common.world.structure2.LOTRWorldGenStructureBase2;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -64,6 +65,7 @@ public class LOTRBiomeGenOcean extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int j1;
 		int i1;
 		int k1;
@@ -108,6 +110,7 @@ public class LOTRBiomeGenOcean extends LOTRBiome {
 				}
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

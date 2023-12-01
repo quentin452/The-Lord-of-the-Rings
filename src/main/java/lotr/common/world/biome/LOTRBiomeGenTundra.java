@@ -16,6 +16,7 @@ import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.LOTRWorldGenRuinedHouse;
 import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -86,6 +87,7 @@ public class LOTRBiomeGenTundra extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(2) == 0) {
 			int i1 = i + random.nextInt(16) + 8;
@@ -121,6 +123,7 @@ public class LOTRBiomeGenTundra extends LOTRBiome {
 				boulderGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

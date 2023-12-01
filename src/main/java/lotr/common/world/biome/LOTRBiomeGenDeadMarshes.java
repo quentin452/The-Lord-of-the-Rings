@@ -8,6 +8,7 @@ import lotr.common.world.feature.LOTRWorldGenMarshLights;
 import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.spawning.LOTRInvasions;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenFlowers;
@@ -53,6 +54,7 @@ public class LOTRBiomeGenDeadMarshes extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int k1;
 		int i1;
 		int j1;
@@ -72,6 +74,7 @@ public class LOTRBiomeGenDeadMarshes extends LOTRBiome {
 			}
 			new LOTRWorldGenMarshLights().generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

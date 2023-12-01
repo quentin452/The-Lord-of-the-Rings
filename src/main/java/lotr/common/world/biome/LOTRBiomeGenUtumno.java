@@ -9,6 +9,7 @@ import lotr.common.world.feature.LOTRWorldGenStalactites;
 import lotr.common.world.spawning.LOTRBiomeSpawnList;
 import lotr.common.world.spawning.LOTRSpawnList;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
@@ -58,6 +59,7 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		generateHoles(world, random, i, k);
 		generatePits(world, random, i, k);
 		generateBridges(world, random, i, k);
@@ -67,7 +69,8 @@ public class LOTRBiomeGenUtumno extends LOTRBiome {
 		generateBars(world, random, i, k);
 		generateStalactites(world, random, i, k);
 		generateSkulls(world, random, i, k);
-	}
+        BlockFalling.fallInstantly = false;
+    }
 
 	public void generateBars(World world, Random random, int i, int k) {
 		for (int l = 0; l < 200; ++l) {

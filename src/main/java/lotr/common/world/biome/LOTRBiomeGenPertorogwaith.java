@@ -15,6 +15,7 @@ import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.LOTRWorldGenHalfTrollHouse;
 import lotr.common.world.structure2.LOTRWorldGenHalfTrollWarlordHouse;
 import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -90,6 +91,7 @@ public class LOTRBiomeGenPertorogwaith extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int boulders;
 		int i1;
 		int k1;
@@ -120,6 +122,7 @@ public class LOTRBiomeGenPertorogwaith extends LOTRBiome {
 				new LOTRWorldGenSkullPile().generate(world, random, i12, j1, k12);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

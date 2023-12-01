@@ -17,6 +17,7 @@ import lotr.common.world.spawning.LOTRInvasions;
 import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure.LOTRWorldGenRuinedDunedainTower;
 import lotr.common.world.structure2.*;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -107,6 +108,7 @@ public class LOTRBiomeGenEriador extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		LOTRBiomeVariant biomeVariant = ((LOTRWorldChunkManager) world.getWorldChunkManager()).getBiomeVariantAt(i + 8, k + 8);
 		if (biomeVariant.flowerFactor >= 1.0f) {
@@ -126,6 +128,7 @@ public class LOTRBiomeGenEriador extends LOTRBiome {
 				}
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

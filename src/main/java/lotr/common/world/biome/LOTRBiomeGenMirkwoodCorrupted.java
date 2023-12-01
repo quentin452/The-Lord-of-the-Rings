@@ -7,6 +7,7 @@ import lotr.common.world.feature.LOTRTreeType;
 import lotr.common.world.feature.LOTRWorldGenWebOfUngoliant;
 import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.spawning.LOTRInvasions;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
@@ -47,6 +48,7 @@ public class LOTRBiomeGenMirkwoodCorrupted extends LOTRBiomeGenMirkwood {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int i1;
 		int l;
 		super.decorate(world, random, i, k);
@@ -64,6 +66,7 @@ public class LOTRBiomeGenMirkwoodCorrupted extends LOTRBiomeGenMirkwood {
 			int k1 = k + random.nextInt(16) + 8;
 			new LOTRWorldGenWebOfUngoliant(false, 64).generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import lotr.common.world.structure.LOTRWorldGenAngmarShrine;
 import lotr.common.world.structure.LOTRWorldGenAngmarTower;
 import lotr.common.world.structure2.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -101,6 +102,7 @@ public class LOTRBiomeGenAngmar extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		for (int l = 0; l < 4; ++l) {
 			int k1;
@@ -116,6 +118,7 @@ public class LOTRBiomeGenAngmar extends LOTRBiome {
 			int k1 = k + random.nextInt(16) + 8;
 			boulderGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

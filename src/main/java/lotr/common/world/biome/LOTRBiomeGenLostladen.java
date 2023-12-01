@@ -10,6 +10,7 @@ import lotr.common.world.map.LOTRRoadType;
 import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.spawning.LOTREventSpawner;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
@@ -55,6 +56,7 @@ public class LOTRBiomeGenLostladen extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(20) == 0) {
 			int boulders = 1 + random.nextInt(4);
@@ -69,6 +71,7 @@ public class LOTRBiomeGenLostladen extends LOTRBiome {
 				boulderGenSandstone.generate(world, random, i1, j1, k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

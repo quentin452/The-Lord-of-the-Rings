@@ -13,6 +13,7 @@ import lotr.common.world.structure2.LOTRWorldGenGrukHouse;
 import lotr.common.world.structure2.LOTRWorldGenStructureBase2;
 import lotr.common.world.structure2.LOTRWorldGenTicketBooth;
 import lotr.common.world.village.LOTRVillageGen;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.WeightedRandom;
@@ -192,6 +193,7 @@ public class LOTRBiomeDecorator {
 	}
 
 	public void decorate() {
+        BlockFalling.fallInstantly = true;
 		int l;
 		int j;
 		int l2;
@@ -574,6 +576,7 @@ public class LOTRBiomeDecorator {
 				biomeVariant.boulderGen.generate(worldObj, rand, i, worldObj.getHeightValue(i, k2), k2);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	public void decorate(World world, Random random, int i, int k) {

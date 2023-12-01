@@ -7,6 +7,7 @@ import lotr.common.world.feature.LOTRTreeType;
 import lotr.common.world.feature.LOTRWorldGenDoubleFlower;
 import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.spawning.LOTREventSpawner;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
@@ -46,6 +47,7 @@ public abstract class LOTRBiomeGenFarHarad extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		LOTRBiomeVariant variant = ((LOTRWorldChunkManager) world.getWorldChunkManager()).getBiomeVariantAt(i + 8, k + 8);
 		if (variant == LOTRBiomeVariant.RIVER && random.nextInt(3) == 0) {
@@ -58,6 +60,7 @@ public abstract class LOTRBiomeGenFarHarad extends LOTRBiome {
 				bananaTree.generate(world, random, i1, j1, k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

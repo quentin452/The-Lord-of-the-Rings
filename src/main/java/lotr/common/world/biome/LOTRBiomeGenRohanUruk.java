@@ -16,6 +16,7 @@ import lotr.common.world.structure.LOTRWorldGenRuinedRohanWatchtower;
 import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
 import lotr.common.world.structure2.LOTRWorldGenUrukCamp;
 import lotr.common.world.structure2.LOTRWorldGenUrukWargPit;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -73,6 +74,7 @@ public class LOTRBiomeGenRohanUruk extends LOTRBiomeGenRohan {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(30) == 0) {
 			WorldGenAbstractTree treeGen = random.nextInt(3) == 0 ? LOTRTreeType.OAK_DEAD.create(false, random) : LOTRTreeType.CHARRED.create(false, random);
@@ -92,6 +94,7 @@ public class LOTRBiomeGenRohanUruk extends LOTRBiomeGenRohan {
 				new LOTRWorldGenSkullPile().generate(world, random, i1, j1, k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

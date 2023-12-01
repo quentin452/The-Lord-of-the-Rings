@@ -12,6 +12,7 @@ import lotr.common.world.structure.LOTRWorldGenRuinedGondorTower;
 import lotr.common.world.structure2.LOTRWorldGenGondorObelisk;
 import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
@@ -77,6 +78,7 @@ public class LOTRBiomeGenAndrast extends LOTRBiomeGenGondor {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(5) == 0) {
 			for (int l = 0; l < 4; ++l) {
@@ -89,6 +91,7 @@ public class LOTRBiomeGenAndrast extends LOTRBiomeGenGondor {
 				boulderGenGondor.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

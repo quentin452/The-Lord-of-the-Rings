@@ -6,6 +6,7 @@ import lotr.common.world.feature.*;
 import lotr.common.world.spawning.LOTRBiomeSpawnList;
 import lotr.common.world.spawning.LOTRSpawnList;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
@@ -52,6 +53,7 @@ public class LOTRBiomeGenFarHaradVolcano extends LOTRBiomeGenFarHarad {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int i1;
 		int k1;
 		int i12;
@@ -84,6 +86,7 @@ public class LOTRBiomeGenFarHaradVolcano extends LOTRBiomeGenFarHarad {
 			j1 = world.getTopSolidOrLiquidBlock(i1, k1);
 			obsidianGen.generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

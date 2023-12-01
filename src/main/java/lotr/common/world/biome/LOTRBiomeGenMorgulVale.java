@@ -7,6 +7,7 @@ import lotr.common.world.feature.LOTRTreeType;
 import lotr.common.world.spawning.LOTRBiomeSpawnList;
 import lotr.common.world.spawning.LOTRSpawnList;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -63,6 +64,7 @@ public class LOTRBiomeGenMorgulVale extends LOTRBiomeGenMordor {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		for (int l = 0; l < 4; ++l) {
 			int i1 = i + random.nextInt(16) + 8;
@@ -85,6 +87,7 @@ public class LOTRBiomeGenMorgulVale extends LOTRBiomeGenMordor {
 			WorldGenFlowers flowerGen = new WorldGenFlowers(LOTRMod.morgulFlower);
 			flowerGen.generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = true;
 	}
 
 	@Override

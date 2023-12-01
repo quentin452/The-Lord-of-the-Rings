@@ -10,6 +10,7 @@ import lotr.common.world.feature.LOTRWorldGenBoulder;
 import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.spawning.LOTREventSpawner;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -52,6 +53,7 @@ public class LOTRBiomeGenLastDesert extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int k1;
 		int i1;
 		int j1;
@@ -94,6 +96,7 @@ public class LOTRBiomeGenLastDesert extends LOTRBiome {
 				decorator.genTree(world, random, i1, j12, k12);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import lotr.common.world.structure.LOTRWorldGenDunlendingCampfire;
 import lotr.common.world.structure.LOTRWorldGenRohanBarrow;
 import lotr.common.world.structure.LOTRWorldGenRuinedRohanWatchtower;
 import lotr.common.world.structure2.*;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -110,6 +111,7 @@ public class LOTRBiomeGenAdornland extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int k1;
 		int i1;
 		int l;
@@ -128,6 +130,7 @@ public class LOTRBiomeGenAdornland extends LOTRBiome {
 				boulderGenRohan.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

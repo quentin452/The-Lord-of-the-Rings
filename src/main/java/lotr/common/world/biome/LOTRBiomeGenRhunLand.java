@@ -22,6 +22,7 @@ import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
 import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
 import lotr.common.world.village.LOTRVillageGenRhun;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -123,6 +124,7 @@ public class LOTRBiomeGenRhunLand extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (rhunBoulders && random.nextInt(50) == 0) {
 			for (int l = 0; l < 3; ++l) {
@@ -136,6 +138,7 @@ public class LOTRBiomeGenRhunLand extends LOTRBiome {
 				boulderGen.generate(world, random, i1, j1, k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

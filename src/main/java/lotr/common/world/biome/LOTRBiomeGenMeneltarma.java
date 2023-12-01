@@ -8,6 +8,7 @@ import lotr.common.world.feature.LOTRWorldGenBoulder;
 import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.spawning.LOTREventSpawner;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenFlowers;
@@ -58,6 +59,7 @@ public class LOTRBiomeGenMeneltarma extends LOTRBiomeGenOcean {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int k1;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(2) == 0) {
@@ -73,6 +75,7 @@ public class LOTRBiomeGenMeneltarma extends LOTRBiomeGenOcean {
 			k1 = k + random.nextInt(16) + 8;
 			new WorldGenFlowers(LOTRMod.athelas).generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

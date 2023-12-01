@@ -10,6 +10,7 @@ import lotr.common.world.spawning.LOTREventSpawner;
 import lotr.common.world.spawning.LOTRInvasions;
 import lotr.common.world.spawning.LOTRSpawnList;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -51,6 +52,7 @@ public class LOTRBiomeGenEmynMuil extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int k1;
 		int i1;
 		int l;
@@ -96,6 +98,7 @@ public class LOTRBiomeGenEmynMuil extends LOTRBiome {
 			k1 = k + random.nextInt(16) + 8;
 			grassPatchGen.generate(world, random, i1, world.getHeightValue(i1, k1), k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import lotr.common.world.structure.LOTRWorldGenHaradObelisk;
 import lotr.common.world.structure2.*;
 import lotr.common.world.village.LOTRVillageGenHaradNomad;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
@@ -57,6 +58,7 @@ public class LOTRBiomeGenNearHaradSemiDesert extends LOTRBiomeGenNearHarad {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int j1;
 		int i1;
 		int k1;
@@ -69,6 +71,7 @@ public class LOTRBiomeGenNearHaradSemiDesert extends LOTRBiomeGenNearHarad {
 				world.setBlock(i1, j1, k1, Blocks.sand);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import lotr.common.world.structure.LOTRWorldGenBlueMountainsStronghold;
 import lotr.common.world.structure2.LOTRWorldGenBlueMountainsHouse;
 import lotr.common.world.structure2.LOTRWorldGenBlueMountainsSmithy;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenMinable;
@@ -81,6 +82,7 @@ public class LOTRBiomeGenBlueMountains extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		for (int l = 0; l < 4; ++l) {
 			int i1 = i + random.nextInt(16) + 8;
@@ -88,6 +90,7 @@ public class LOTRBiomeGenBlueMountains extends LOTRBiome {
 			int k1 = k + random.nextInt(16) + 8;
 			new LOTRWorldGenBlueMountainsHouse(false).generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

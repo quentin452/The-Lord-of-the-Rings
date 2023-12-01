@@ -6,6 +6,7 @@ import lotr.common.world.map.LOTRWaypoint;
 import lotr.common.world.spawning.LOTRBiomeSpawnList;
 import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.LOTRWorldGenMordorSpiderPit;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -32,6 +33,7 @@ public class LOTRBiomeGenNanUngol extends LOTRBiomeGenMordor {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		for (int l = 0; l < 4; ++l) {
 			int i1 = i + random.nextInt(16) + 8;
@@ -39,6 +41,7 @@ public class LOTRBiomeGenNanUngol extends LOTRBiomeGenMordor {
 			int k1 = k + random.nextInt(16) + 8;
 			new LOTRWorldGenWebOfUngoliant(false, 64).generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

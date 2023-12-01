@@ -20,6 +20,7 @@ import lotr.common.world.structure2.LOTRWorldGenGondorObelisk;
 import lotr.common.world.structure2.LOTRWorldGenGondorStructure;
 import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
 import lotr.common.world.village.LOTRVillageGenGondor;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -130,6 +131,7 @@ public class LOTRBiomeGenDorEnErnil extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(24) == 0) {
 			int i1 = i + random.nextInt(16) + 8;
@@ -137,6 +139,7 @@ public class LOTRBiomeGenDorEnErnil extends LOTRBiome {
 			int k1 = k + random.nextInt(16) + 8;
 			new WorldGenFlowers(LOTRMod.pipeweedPlant).generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

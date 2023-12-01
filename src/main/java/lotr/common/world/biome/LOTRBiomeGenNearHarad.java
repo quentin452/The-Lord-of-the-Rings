@@ -19,6 +19,7 @@ import lotr.common.world.structure2.LOTRWorldGenHaradRuinedFort;
 import lotr.common.world.structure2.LOTRWorldGenMumakSkeleton;
 import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
 import lotr.common.world.village.LOTRVillageGenHaradNomad;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -77,6 +78,7 @@ public class LOTRBiomeGenNearHarad extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int k1;
 		int k12;
 		int preGrasses;
@@ -127,6 +129,7 @@ public class LOTRBiomeGenNearHarad extends LOTRBiome {
 				decorator.genTree(world, random, i1, j1, k1);
 			}
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

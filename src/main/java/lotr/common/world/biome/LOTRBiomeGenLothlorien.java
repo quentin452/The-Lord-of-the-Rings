@@ -14,6 +14,7 @@ import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.LOTRWorldGenElfHouse;
 import lotr.common.world.structure2.LOTRWorldGenGaladhrimForge;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenMinable;
@@ -94,6 +95,7 @@ public class LOTRBiomeGenLothlorien extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		for (int l = 0; l < 120; ++l) {
 			int j1;
@@ -120,6 +122,7 @@ public class LOTRBiomeGenLothlorien extends LOTRBiome {
 			}
 			world.setBlock(i1, j1, k1, torchBlock, 4, 2);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import lotr.common.world.spawning.LOTRInvasions;
 import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.LOTRWorldGenRhudaurCastle;
 import lotr.common.world.structure2.LOTRWorldGenSmallStoneRuin;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -89,6 +90,7 @@ public class LOTRBiomeGenTrollshaws extends LOTRBiome {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		int k1;
 		int i1;
 		int l;
@@ -108,6 +110,7 @@ public class LOTRBiomeGenTrollshaws extends LOTRBiome {
 			}
 			decorator.genTree(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override

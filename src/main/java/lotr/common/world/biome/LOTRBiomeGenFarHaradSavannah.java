@@ -15,6 +15,7 @@ import lotr.common.world.spawning.LOTRSpawnList;
 import lotr.common.world.structure2.LOTRWorldGenMoredainCamp;
 import lotr.common.world.structure2.LOTRWorldGenMoredainVillage;
 import lotr.common.world.structure2.LOTRWorldGenStoneRuin;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
@@ -113,6 +114,7 @@ public class LOTRBiomeGenFarHaradSavannah extends LOTRBiomeGenFarHarad {
 
 	@Override
 	public void decorate(World world, Random random, int i, int k) {
+        BlockFalling.fallInstantly = true;
 		super.decorate(world, random, i, k);
 		if (random.nextInt(32) == 0) {
 			int boulders = 1 + random.nextInt(4);
@@ -128,6 +130,7 @@ public class LOTRBiomeGenFarHaradSavannah extends LOTRBiomeGenFarHarad {
 			int k1 = k + random.nextInt(16) + 8;
 			new LOTRWorldGenYams().generate(world, random, i1, j1, k1);
 		}
+        BlockFalling.fallInstantly = false;
 	}
 
 	@Override
