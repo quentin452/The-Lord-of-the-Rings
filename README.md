@@ -10,9 +10,9 @@ The documentation below will be useful both to developers and to my future self.
 
 * This repository is a Gradle project that must be opened via IntelliJ IDEA or imported into the Eclipse IDE.
 * The syntax used is Java 8.
-* The Gradle version used is 8.4.
-* ForgeGradle version used is Anatawa12's 1.2-1.1.+.
-* The JDK version used is Eclipse Temurin 1.8.0_392.
+* The Gradle version used is 8.2.1.
+* RetroFuturaGradle version used is 1695409603.
+* The JDK version used is Zulu 1.8.0_392.
 
 Be sure to check that your Java syntax and your JDK are as stated above. Your IDE and your OS environment variables must be configured correctly, otherwise nothing will work.
 
