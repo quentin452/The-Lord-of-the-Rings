@@ -2122,7 +2122,7 @@ public class LOTRMod {
 	@Mod.EventHandler
 	public void preload(FMLPreInitializationEvent event) {
         if(Loader.isModLoaded("herdCraft")) {
-            throw new RuntimeException("HerdCraft mod detected, cannot run with this mod enabled : see https://github.com/quentin452/The-Lord-of-the-Rings/issues/21");
+            throw new RuntimeException("HerdCraft mod detected, cannot run LOTR with this mod enabled : see https://github.com/quentin452/The-Lord-of-the-Rings/issues/21");
         }
         LOTRConfigBiomeID.setupAndLoad(event);
         LOTRLog.findLogger();
