@@ -1,9 +1,6 @@
 package lotr.common;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -2124,6 +2121,9 @@ public class LOTRMod {
 
 	@Mod.EventHandler
 	public void preload(FMLPreInitializationEvent event) {
+        if(Loader.isModLoaded("herdCraft")) {
+            throw new RuntimeException("HerdCraft mod detected, cannot run with this mod enabled : see https://github.com/quentin452/The-Lord-of-the-Rings/issues/21");
+        }
         LOTRConfigBiomeID.setupAndLoad(event);
         LOTRLog.findLogger();
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
