@@ -66,8 +66,6 @@ public class LOTRTime {
 	}
 
 
-    private static final Map<Integer, LOTRWorldInfo> dimensionInfoMap = new HashMap<>();
-
     public static void update() {
         MinecraftServer server = MinecraftServer.getServer();
         WorldServer overworld = server.worldServerForDimension(0);
@@ -75,15 +73,13 @@ public class LOTRTime {
             ++worldTime;
         }
         ++totalTime;
-
         for (WorldServer world : server.worldServers) {
-            if (world.provider instanceof LOTRWorldProvider) {
-                int dimensionId = world.provider.dimensionId;
-                LOTRWorldInfo worldInfo = dimensionInfoMap.getOrDefault(dimensionId, new LOTRWorldInfo(world.getWorldInfo()));
-                worldInfo.lotr_setTotalTime(totalTime);
-                worldInfo.lotr_setWorldTime(worldTime);
-                dimensionInfoMap.put(dimensionId, worldInfo);
+            if (!(world.provider instanceof LOTRWorldProvider)) {
+                continue;
             }
+            LOTRWorldInfo worldinfo = (LOTRWorldInfo) world.getWorldInfo();
+            worldinfo.lotr_setTotalTime(totalTime);
+            worldinfo.lotr_setWorldTime(worldTime);
         }
     }
 }
