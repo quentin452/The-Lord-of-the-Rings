@@ -438,45 +438,48 @@ public class LOTRChunkProvider implements IChunkProvider {
 		tauredainPyramid.func_151539_a(this, worldObj, i, k, null);
 	}
 
-	public void replaceBlocksForBiome(int i, int k, Block[] blocks, byte[] metadata, BiomeGenBase[] biomeArray, LOTRBiomeVariant[] variantArray, ChunkFlags chunkFlags) {
-		double d = 0.03125;
-		stoneNoise = stoneNoiseGen.generateNoiseOctaves(stoneNoise, i * 16, k * 16, 0, 16, 16, 1, d * 2.0, d * 2.0, d * 2.0);
-		int ySize = blocks.length / 256;
-		for (int i1 = 0; i1 < 16; ++i1) {
-			for (int k1 = 0; k1 < 16; ++k1) {
-				int index;
-				int x = i * 16 + i1;
-				int z = k * 16 + k1;
-				int xzIndex = i1 * 16 + k1;
-				int xzIndexBiome = i1 + k1 * 16;
-				LOTRBiome biome = (LOTRBiome) biomeArray[xzIndexBiome];
-				LOTRBiomeVariant variant = variantArray[xzIndexBiome];
-				int height = 0;
-				for (int j = ySize - 1; j >= 0; --j) {
-					int index2 = xzIndex * ySize + j;
-					Block block2 = blocks[index2];
-					if (!block2.isOpaqueCube()) {
-						continue;
-					}
-					height = j;
-					break;
-				}
-				biome.generateBiomeTerrain(worldObj, rand, blocks, metadata, x, z, stoneNoise[xzIndex], height, variant);
-				if (!LOTRFixedStructures.hasMapFeatures(worldObj)) {
-					continue;
-				}
-				chunkFlags.roadFlags[xzIndex] = LOTRRoadGenerator.generateRoad(worldObj, rand, x, z, biome, blocks, metadata, blockHeightNoiseArray);
-				int lavaHeight = LOTRMountains.getLavaHeight(x, z);
-				if (lavaHeight <= 0) {
-					continue;
-				}
-				for (int j = lavaHeight; j >= 0 && !blocks[index = xzIndex * ySize + j].isOpaqueCube(); --j) {
-					blocks[index] = Blocks.lava;
-					metadata[index] = 0;
-				}
-			}
-		}
-	}
+    public void replaceBlocksForBiome(int i, int k, Block[] blocks, byte[] metadata, BiomeGenBase[] biomeArray, LOTRBiomeVariant[] variantArray, ChunkFlags chunkFlags) {
+        double d = 0.03125;
+        stoneNoise = stoneNoiseGen.generateNoiseOctaves(stoneNoise, i * 16, k * 16, 0, 16, 16, 1, d * 2.0, d * 2.0, d * 2.0);
+        int ySize = blocks.length / 256;
+
+        for (int i1 = 0; i1 < 16; ++i1) {
+            for (int k1 = 0; k1 < 16; ++k1) {
+                int x = i * 16 + i1;
+                int z = k * 16 + k1;
+                int xzIndex = i1 * 16 + k1;
+                int xzIndexBiome = i1 + k1 * 16;
+                LOTRBiome biome = (LOTRBiome) biomeArray[xzIndexBiome];
+                LOTRBiomeVariant variant = variantArray[xzIndexBiome];
+                int height = 0;
+
+                for (int j = ySize - 1; j >= 0; --j) {
+                    int index = xzIndex * ySize + j;
+                    Block block = blocks[index];
+
+                    if (block.isOpaqueCube()) {
+                        height = j;
+                        break;
+                    }
+                }
+
+                biome.generateBiomeTerrain(worldObj, rand, blocks, metadata, x, z, stoneNoise[xzIndex], height, variant);
+
+                if (!LOTRFixedStructures.hasMapFeatures(worldObj))
+                    continue;
+
+                chunkFlags.roadFlags[xzIndex] = LOTRRoadGenerator.generateRoad(worldObj, rand, x, z, biome, blocks, metadata, blockHeightNoiseArray);
+                int lavaHeight = LOTRMountains.getLavaHeight(x, z);
+
+                if (lavaHeight > 0) {
+                    for (int j = lavaHeight; j >= 0 && !blocks[xzIndex * ySize + j].isOpaqueCube(); --j) {
+                        blocks[xzIndex * ySize + j] = Blocks.lava;
+                        metadata[xzIndex * ySize + j] = 0;
+                    }
+                }
+            }
+        }
+    }
 
 	@Override
 	public boolean saveChunks(boolean flag, IProgressUpdate update) {

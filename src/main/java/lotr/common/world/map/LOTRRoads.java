@@ -299,51 +299,50 @@ public class LOTRRoads {
 		}
 	}
 
-	public static class RoadPoint {
-		public double x;
-		public double z;
-		public boolean isWaypoint;
+    public static class RoadPoint {
+        public double x;
+        public double z;
+        public boolean isWaypoint;
 
-		public RoadPoint(double i, double j, boolean flag) {
-			x = i;
-			z = j;
-			isWaypoint = flag;
-		}
-	}
+        public RoadPoint(double i, double j, boolean flag) {
+            x = i;
+            z = j;
+            isWaypoint = flag;
+        }
+    }
 
 	public static class RoadPointDatabase {
-		public Map<Pair<Integer, Integer>, List<RoadPoint>> pointMap = new HashMap<>();
+        public static Map<Pair<Integer, Integer>, List<RoadPoint>> pointMap = new HashMap<>();
 
-		public void add(RoadPoint point) {
-			int x = (int) Math.round(point.x / 1000.0);
-			int z = (int) Math.round(point.z / 1000.0);
-			int overlap = 1;
-			for (int i = -overlap; i <= overlap; ++i) {
-				for (int k = -overlap; k <= overlap; ++k) {
-					int xKey = x + i;
-					int zKey = z + k;
-					getRoadList(xKey, zKey, true).add(point);
-				}
-			}
-		}
+        public void add(RoadPoint point) {
+            int x = (int) Math.round(point.x / 1000.0);
+            int z = (int) Math.round(point.z / 1000.0);
+            int overlap = 1;
+            for (int i = -overlap; i <= overlap; ++i) {
+                for (int k = -overlap; k <= overlap; ++k) {
+                    int xKey = x + i;
+                    int zKey = z + k;
+                    getRoadList(xKey, zKey, true).add(point);
+                }
+            }
+        }
 
-		public List<RoadPoint> getPointsForCoords(int x, int z) {
-			int x1 = x / 1000;
-			int z1 = z / 1000;
-			return getRoadList(x1, z1, false);
-		}
+        public List<RoadPoint> getPointsForCoords(int x, int z) {
+            int x1 = x / 1000;
+            int z1 = z / 1000;
+            return getRoadList(x1, z1, false);
+        }
 
-		public List<RoadPoint> getRoadList(int xKey, int zKey, boolean addToMap) {
-			Pair key = Pair.of((Object) xKey, (Object) zKey);
-			List<RoadPoint> list = pointMap.get(key);
-			if (list == null) {
-				list = new ArrayList<>();
-				if (addToMap) {
-					pointMap.put(key, list);
-				}
-			}
-			return list;
-		}
-	}
-
+        public List<RoadPoint> getRoadList(int xKey, int zKey, boolean addToMap) {
+            Pair<Integer, Integer> key = Pair.of(xKey, zKey);
+            List<RoadPoint> list = pointMap.get(key);
+            if (list == null) {
+                list = new ArrayList<>();
+                if (addToMap) {
+                    pointMap.put(key, list);
+                }
+            }
+            return list;
+        }
+    }
 }

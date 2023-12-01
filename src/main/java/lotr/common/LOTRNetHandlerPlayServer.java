@@ -48,16 +48,16 @@ public class LOTRNetHandlerPlayServer extends NetHandlerPlayServer {
 		}
 	}
 
-	public void processMountControl(LOTRPacketMountControl packet) {
-		double x = packet.posX;
-		double y = packet.posY;
-		double z = packet.posZ;
-		float yaw = packet.rotationYaw;
-		float pitch = packet.rotationPitch;
-		if (!Doubles.isFinite(x) || !Doubles.isFinite(y) || !Doubles.isFinite(z) || !Floats.isFinite(yaw) || !Floats.isFinite(pitch)) {
-			playerEntity.playerNetServerHandler.kickPlayerFromServer("Invalid mount movement");
-			return;
-		}
+    public void processMountControl(LOTRPacketMountControl packet) {
+        double x = packet.posX;
+        double y = packet.posY;
+        double z = packet.posZ;
+        float yaw = packet.rotationYaw;
+        float pitch = packet.rotationPitch;
+        if (!Doubles.isFinite(x) || !Doubles.isFinite(y) || !Doubles.isFinite(z) || !Floats.isFinite(yaw) || !Floats.isFinite(pitch)) {
+            playerEntity.playerNetServerHandler.kickPlayerFromServer("Invalid mount movement");
+            return;
+        }
 		Entity mount = playerEntity.ridingEntity;
 		if (mount != null && mount != playerEntity && mount.riddenByEntity == playerEntity && LOTRMountFunctions.isMountControllable(mount)) {
 			WorldServer world = playerEntity.getServerForPlayer();
