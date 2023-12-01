@@ -599,19 +599,23 @@ public class LOTRBiomeDecorator {
 		}
 	}
 
-	public void genStandardOre(float ores, WorldGenerator oreGen, int minHeight, int maxHeight) {
-		while (ores > 0.0f) {
-			boolean generate = ores >= 1.0f || rand.nextFloat() < ores;
-			ores -= 1.0f;
-			if (!generate) {
-				continue;
-			}
-			int i = chunkX + rand.nextInt(16);
-			int j = MathHelper.getRandomIntegerInRange(rand, minHeight, maxHeight);
-			int k = chunkZ + rand.nextInt(16);
-			oreGen.generate(worldObj, rand, i, j, k);
-		}
-	}
+    public void genStandardOre(float ores, WorldGenerator oreGen, int minHeight, int maxHeight) {
+        int maxIterations = (int) ores;
+        for (int iteration = 0; iteration < maxIterations; iteration++) {
+            int i = chunkX + rand.nextInt(16);
+            int j = MathHelper.getRandomIntegerInRange(rand, minHeight, maxHeight);
+            int k = chunkZ + rand.nextInt(16);
+            oreGen.generate(worldObj, rand, i, j, k);
+        }
+        float remainingOres = ores - maxIterations;
+        if (rand.nextFloat() < remainingOres) {
+            int i = chunkX + rand.nextInt(16);
+            int j = MathHelper.getRandomIntegerInRange(rand, minHeight, maxHeight);
+            int k = chunkZ + rand.nextInt(16);
+            oreGen.generate(worldObj, rand, i, j, k);
+        }
+    }
+
 
 	public void genTree(World world, Random random, int i, int j, int k) {
 		WorldGenAbstractTree treeGen = biome.getTreeGen(world, random, i, j, k);
