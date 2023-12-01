@@ -102,7 +102,7 @@ public class LOTRBiomeDecorator {
 
 	public void addDefaultOres() {
 		addSoil(new WorldGenMinable(Blocks.dirt, 32), 40.0f, 0, 256);
-		addSoil(new WorldGenMinable(Blocks.gravel, 32), 20.0f, 0, 256);
+		addSoil(new WorldGenMinable(LOTRMod.Gravel, 32), 20.0f, 0, 256);
 		addOre(new WorldGenMinable(Blocks.coal_ore, 16), 40.0f, 0, 128);
 		addOre(new WorldGenMinable(LOTRMod.oreCopper, 8), 16.0f, 0, 128);
 		addOre(new WorldGenMinable(LOTRMod.oreTin, 8), 16.0f, 0, 128);

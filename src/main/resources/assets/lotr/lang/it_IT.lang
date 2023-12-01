@@ -509,6 +509,7 @@ tile.lotr:oreStorage2.3.name=Blocco di sale
 tile.lotr:mordorGrass.name=Erba di Mordor
 tile.lotr:mordorDirt.name=Terra di Mordor
 tile.lotr:mordorGravel.name=Ghiaia di Mordor
+tile.lotr:Gravel.name=Ghiaia
 tile.lotr:commandTable.name=Tavolo di comando
 tile.lotr:halfTrollCraftingTable.name=Banco da lavoro dei Mezzi Troll
 tile.lotr:butterflyJar.0.name=Barattolo per farfalle

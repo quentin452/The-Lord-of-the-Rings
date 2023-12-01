@@ -509,6 +509,7 @@ tile.lotr:oreStorage2.3.name=Tuz Bloğu
 tile.lotr:mordorGrass.name=Mordor Çalısı
 tile.lotr:mordorDirt.name=Mordor Toprağı
 tile.lotr:mordorGravel.name=Mordor Çakılı
+tile.lotr:Gravel.name=Çakılı
 tile.lotr:commandTable.name=Komuta Haritası
 tile.lotr:halfTrollCraftingTable.name=Yarı Troll Çalışma Masası
 tile.lotr:butterflyJar.0.name=Kelebek Kavanozu

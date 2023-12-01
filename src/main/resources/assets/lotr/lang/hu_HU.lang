@@ -503,6 +503,7 @@ tile.lotr:oreStorage2.3.name=Sótömb
 tile.lotr:mordorGrass.name=Mordori Bozót
 tile.lotr:mordorDirt.name=Mordori Föld
 tile.lotr:mordorGravel.name=Mordori Sóder
+tile.lotr:Gravel.name=Sóder
 tile.lotr:commandTable.name=Terepasztal
 tile.lotr:halfTrollCraftingTable.name=Féltroll Barkácsasztal
 tile.lotr:butterflyJar.0.name=Lepkeüveg

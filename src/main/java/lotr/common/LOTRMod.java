@@ -283,7 +283,8 @@ public class LOTRMod {
 	public static Block mordorGrass;
 	public static Block mordorDirt;
 	public static Block mordorGravel;
-	public static Block utumnoReturnPortal;
+    public static Block Gravel;
+    public static Block utumnoReturnPortal;
 	public static Block utumnoReturnLight;
 	public static Block utumnoReturnPortalBase;
 	public static Block commandTable;
@@ -1965,7 +1966,8 @@ public class LOTRMod {
 		blockOreStorage2.setHarvestLevel("pickaxe", 1, 0);
 		mordorDirt.setHarvestLevel("shovel", 0);
 		mordorGravel.setHarvestLevel("shovel", 0);
-		obsidianGravel.setHarvestLevel("shovel", 0);
+        Gravel.setHarvestLevel("shovel", 0);
+        obsidianGravel.setHarvestLevel("shovel", 0);
 		mud.setHarvestLevel("shovel", 0);
 		mudGrass.setHarvestLevel("shovel", 0);
 		mudFarmland.setHarvestLevel("shovel", 0);
@@ -2344,7 +2346,8 @@ public class LOTRMod {
 		mordorGrass = new LOTRBlockMordorGrass().setBlockName("lotr:mordorGrass");
 		mordorDirt = new LOTRBlockMordorDirt().setBlockName("lotr:mordorDirt");
 		mordorGravel = new LOTRBlockGravel().setBlockName("lotr:mordorGravel");
-		utumnoReturnPortal = new LOTRBlockUtumnoReturnPortal().setBlockName("lotr:utumnoReturnPortal");
+        Gravel = new LOTRBlockGravel().setBlockName("lotr:Gravel");
+        utumnoReturnPortal = new LOTRBlockUtumnoReturnPortal().setBlockName("lotr:utumnoReturnPortal");
 		utumnoReturnLight = new LOTRBlockUtumnoReturnLight().setBlockName("lotr:utumnoReturnLight");
 		utumnoReturnPortalBase = new LOTRBlockUtumnoReturnPortalBase().setBlockName("lotr:utumnoReturnPortalBase");
 		commandTable = new LOTRBlockCommandTable().setBlockName("lotr:commandTable");
@@ -3914,6 +3917,7 @@ public class LOTRMod {
 		registerBlock(mordorGrass);
 		registerBlock(mordorDirt);
 		registerBlock(mordorGravel);
+        registerBlock(Gravel);
 		registerBlock(utumnoReturnPortal);
 		registerBlock(utumnoReturnLight);
 		registerBlock(utumnoReturnPortalBase);

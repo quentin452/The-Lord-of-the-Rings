@@ -509,6 +509,7 @@ tile.lotr:oreStorage2.3.name=Salzblock
 tile.lotr:mordorGrass.name=Garstiges Gestrüpp
 tile.lotr:mordorDirt.name=Mordor-Erde
 tile.lotr:mordorGravel.name=Mordor-Kies
+tile.lotr:Gravel.name=Kies
 tile.lotr:commandTable.name=Tisch der Befehle
 tile.lotr:halfTrollCraftingTable.name=Werkbank der Halbtrolle
 tile.lotr:butterflyJar.0.name=Schmetterlingsglas

@@ -509,6 +509,7 @@ tile.lotr:oreStorage2.3.name=Block of Salt
 tile.lotr:mordorGrass.name=Mordor Scrub
 tile.lotr:mordorDirt.name=Mordor Dirt
 tile.lotr:mordorGravel.name=Mordor Gravel
+tile.lotr:Gravel.name=Gravel
 tile.lotr:commandTable.name=Table of Command
 tile.lotr:halfTrollCraftingTable.name=Half-troll Crafting Table
 tile.lotr:butterflyJar.0.name=Butterfly Jar

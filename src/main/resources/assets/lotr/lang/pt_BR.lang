@@ -509,6 +509,7 @@ tile.lotr:oreStorage2.3.name=Bloco de Sal
 tile.lotr:mordorGrass.name=Arbusto de Mordor
 tile.lotr:mordorDirt.name=Terra de Mordor
 tile.lotr:mordorGravel.name=Cascalho de Mordor
+tile.lotr:Gravel.name=Cascalho
 tile.lotr:commandTable.name=Mesa de Comando
 tile.lotr:halfTrollCraftingTable.name=Bancada de Trabalho de Meio-trol
 tile.lotr:butterflyJar.0.name=Frasco de Borboleta

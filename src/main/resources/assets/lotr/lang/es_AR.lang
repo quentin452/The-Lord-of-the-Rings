@@ -425,6 +425,7 @@ tile.lotr:oreStorage2.0.name=Bloque de Acero de Uruks Negros
 tile.lotr:mordorGrass.name=Zarzas de Mordor
 tile.lotr:mordorDirt.name=Tierra de Mordor
 tile.lotr:mordorGravel.name=Grava de Mordor
+tile.lotr:Gravel.name=Grava
 tile.lotr:commandTable.name=Mesa de Comando
 tile.lotr:halfTrollCraftingTable.name=Mesa de Trabajo de Semi-Trolls
 tile.lotr:butterflyJar.name=Jarro para Mariposas

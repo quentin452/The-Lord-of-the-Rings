@@ -497,6 +497,7 @@ tile.lotr:oreStorage2.1.name=Haltiateräskuutio
 tile.lotr:mordorGrass.name=Mordorin pensas
 tile.lotr:mordorDirt.name=Mordorin maa
 tile.lotr:mordorGravel.name=Mordorin sora
+tile.lotr:Gravel.name=Sora
 tile.lotr:commandTable.name=Komentopöytä
 tile.lotr:halfTrollCraftingTable.name=Puolipeikkojen työpöytä
 tile.lotr:butterflyJar.0.name=Perhospurnukka

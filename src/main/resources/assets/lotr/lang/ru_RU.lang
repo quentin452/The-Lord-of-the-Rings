@@ -5928,6 +5928,7 @@ tile.lotr:mobSpawner.name=Спавнер монстров
 tile.lotr:mordorDirt.name=Мордорская грязь
 tile.lotr:mordorGrass.name=Мордорская поросль
 tile.lotr:mordorGravel.name=Мордорский гравий
+tile.lotr:Gravel.name=Гравий
 tile.lotr:mordorMoss.name=Мордорский мох
 tile.lotr:mordorThorn.name=Мордорская колючка
 tile.lotr:moredainCraftingTable.name=Верстак морвайт

@@ -509,6 +509,7 @@ tile.lotr:oreStorage2.3.name=盐块
 tile.lotr:mordorGrass.name=魔多灌木丛
 tile.lotr:mordorDirt.name=魔多泥土
 tile.lotr:mordorGravel.name=魔多沙砾
+tile.lotr:Gravel.name=砂砾
 tile.lotr:commandTable.name=命令之台
 tile.lotr:halfTrollCraftingTable.name=半食人妖工作台
 tile.lotr:butterflyJar.0.name=蝴蝶罐

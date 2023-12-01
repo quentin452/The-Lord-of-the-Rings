@@ -497,6 +497,7 @@ tile.lotr:oreStorage2.1.name=Bloco de Aço de Elfo
 tile.lotr:mordorGrass.name=Arbusto de Mordor
 tile.lotr:mordorDirt.name=Terra de Mordor
 tile.lotr:mordorGravel.name=Cascalho de Mordor
+tile.lotr:Gravel.name=Cascalho
 tile.lotr:commandTable.name=Mesa de Comando
 tile.lotr:halfTrollCraftingTable.name=Mesa de Trabalho de Meio-troll
 tile.lotr:butterflyJar.0.name=Frasco de Borboletas

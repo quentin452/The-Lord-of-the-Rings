@@ -509,6 +509,7 @@ tile.lotr:oreStorage2.3.name=Bloc de sel
 tile.lotr:mordorGrass.name=Broussailles du Mordor
 tile.lotr:mordorDirt.name=Terre du Mordor
 tile.lotr:mordorGravel.name=Gravelle du Mordor
+tile.lotr:Gravel.name=Gravelle
 tile.lotr:commandTable.name=Table de commandement
 tile.lotr:halfTrollCraftingTable.name=Établi des semi-trolls
 tile.lotr:butterflyJar.0.name=Bocal à papillons

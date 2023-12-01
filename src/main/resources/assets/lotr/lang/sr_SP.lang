@@ -416,7 +416,7 @@ tile.lotr:oreStorage2.0.name=Блок Црно Урукског Челика
 tile.lotr:mordorGrass.name=Мордорско Жбуње
 tile.lotr:mordorDirt.name=Мордорска Земља
 tile.lotr:mordorGravel.name=Мордорски Шљунак
-
+tile.lotr:Gravel.name=Шљунак
 item.lotr:goldRing.name=Златни Прстен
 item.lotr:pouch.0.name=Мала Торбица
 item.lotr:pouch.1.name=Торбица

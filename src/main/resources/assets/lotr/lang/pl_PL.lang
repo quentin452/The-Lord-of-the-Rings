@@ -509,6 +509,7 @@ tile.lotr:oreStorage2.3.name=Blok soli
 tile.lotr:mordorGrass.name=Mordorskie zarośla
 tile.lotr:mordorDirt.name=Mordorska ziemia
 tile.lotr:mordorGravel.name=Mordorski żwir
+tile.lotr:Gravel.name=żwir
 tile.lotr:commandTable.name=Stół dowodzenia
 tile.lotr:halfTrollCraftingTable.name=Półtrollicki stół rzemieślniczy
 tile.lotr:butterflyJar.0.name=Słoik na motyle

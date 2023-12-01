@@ -501,6 +501,7 @@ tile.lotr:oreStorage2.3.name=Zoutblok
 tile.lotr:mordorGrass.name=Mordor Struikje
 tile.lotr:mordorDirt.name=Mordor Aarde
 tile.lotr:mordorGravel.name=Mordor Grind
+tile.lotr:Gravel.name=Grind
 tile.lotr:commandTable.name=Opperbevelhebbers Tafel
 tile.lotr:halfTrollCraftingTable.name=Half-troll Werkbank
 tile.lotr:butterflyJar.0.name=vlinder-pot
