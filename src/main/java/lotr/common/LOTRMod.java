@@ -2028,7 +2028,7 @@ public class LOTRMod {
 		LOTRFaction.initAllProperties();
 		LOTRInvasions.createMobLists();
 		LOTRStructures.registerStructures();
-		LOTRRoads.createRoads();
+		LOTRRoads.createRoads(); // todo fix 200mb ram overhead
 		LOTRMiniQuestFactory.createMiniQuests();
 		LOTRTitle.createTitles();
 	}
