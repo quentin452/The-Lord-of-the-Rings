@@ -889,14 +889,12 @@ public class LOTRPlayerData {
 		}
 	}
 
-	public float getAlignment(LOTRFaction faction) {
-		if (faction.hasFixedAlignment) {
-			return faction.fixedAlignment;
-		}
-		Float alignment = alignments.get(faction);
-		return alignment != null ? alignment : 0.0f;
-	}
-
+    public float getAlignment(LOTRFaction faction) {
+        if (faction.hasFixedAlignment) {
+            return faction.fixedAlignment;
+        }
+        return alignments.getOrDefault(faction, 0.0f);
+    }
 	public List<LOTRAbstractWaypoint> getAllAvailableWaypoints() {
 		List<LOTRAbstractWaypoint> waypoints = new ArrayList<>(LOTRWaypoint.listAllWaypoints());
 		waypoints.addAll(customWaypoints);
@@ -1948,115 +1946,166 @@ public class LOTRPlayerData {
 		}
 	}
 
-	public void onUpdate(EntityPlayerMP entityplayer, WorldServer world) {
-		++pdTick;
-		LOTRDimension.DimensionRegion currentRegion = viewingFaction.factionRegion;
-		LOTRDimension currentDim = LOTRDimension.getCurrentDimensionWithFallback(world);
-		if (currentRegion.getDimension() != currentDim) {
-			currentRegion = currentDim.dimensionRegions.get(0);
-			setViewingFaction(getRegionLastViewedFaction(currentRegion));
-		}
-		runAlignmentDraining(entityplayer);
-		questData.onUpdate(entityplayer, world);
-		if (!isSiegeActive()) {
-			runAchievementChecks(entityplayer, world);
-		}
-		if (LOTRMod.playerDetailsCache.getPlayerDetails(playerUUID).isReceivedFromApi() && playerTitle != null && !playerTitle.getTitle().canPlayerUse(entityplayer)) {
-			IChatComponent msg = new ChatComponentTranslation("chat.lotr.loseTitle", playerTitle.getFullTitleComponent(entityplayer));
-			entityplayer.addChatMessage(msg);
-			setPlayerTitle(null);
-		}
-		if (pledgeKillCooldown > 0) {
-			--pledgeKillCooldown;
-			if (pledgeKillCooldown == 0 || isTimerAutosaveTick()) {
-				markDirty();
-			}
-		}
-		if (pledgeBreakCooldown > 0) {
-			setPledgeBreakCooldown(pledgeBreakCooldown - 1);
-		}
-		if (trackingMiniQuestID != null && getTrackingMiniQuest() == null) {
-			setTrackingMiniQuest(null);
-		}
-		List<LOTRMiniQuest> activeMiniquests = getActiveMiniQuests();
-		for (LOTRMiniQuest quest : activeMiniquests) {
-			quest.onPlayerTick(entityplayer);
-		}
-		if (!bountiesPlaced.isEmpty()) {
-			for (LOTRFaction fac : bountiesPlaced) {
-				IChatComponent msg = new ChatComponentTranslation("chat.lotr.bountyPlaced", fac.factionName());
-				msg.getChatStyle().setColor(EnumChatFormatting.YELLOW);
-				entityplayer.addChatMessage(msg);
-			}
-			bountiesPlaced.clear();
-			markDirty();
-		}
-		setTimeSinceFT(ftSinceTick + 1);
-		if (targetFTWaypoint != null) {
-			if (entityplayer.isPlayerSleeping()) {
-				entityplayer.addChatMessage(new ChatComponentTranslation("lotr.fastTravel.inBed"));
-				setTargetFTWaypoint(null);
-			} else if (ticksUntilFT > 0) {
-				int seconds = ticksUntilFT / 20;
-				if (ticksUntilFT == ticksUntilFT_max) {
-					entityplayer.addChatMessage(new ChatComponentTranslation("lotr.fastTravel.travelTicksStart", seconds));
-				} else if (ticksUntilFT % 20 == 0 && seconds <= 5) {
-					entityplayer.addChatMessage(new ChatComponentTranslation("lotr.fastTravel.travelTicks", seconds));
-				}
-				--ticksUntilFT;
-				setTicksUntilFT(ticksUntilFT);
-			} else {
-				sendFTBouncePacket(entityplayer);
-			}
-		} else {
-			setTicksUntilFT(0);
-		}
-		lastOnlineTime = getCurrentOnlineTime();
-		if (uuidToMount != null) {
-			if (uuidToMountTime > 0) {
-				--uuidToMountTime;
-			} else {
-				double range = 32.0;
-				List entities = world.getEntitiesWithinAABB(EntityLivingBase.class, entityplayer.boundingBox.expand(range, range, range));
-				for (Object obj : entities) {
-					Entity entity = (Entity) obj;
-					if (!entity.getUniqueID().equals(uuidToMount)) {
-						continue;
-					}
-					entityplayer.mountEntity(entity);
-					break;
-				}
-				setUUIDToMount(null);
-			}
-		}
-		if (pdTick % 24000 == 0 && alcoholTolerance > 0) {
-			--alcoholTolerance;
-			setAlcoholTolerance(alcoholTolerance);
-		}
-		unlockSharedCustomWaypoints(entityplayer);
-		if (pdTick % 100 == 0 && world.provider instanceof LOTRWorldProvider) {
-			int i = MathHelper.floor_double(entityplayer.posX);
-			int k = MathHelper.floor_double(entityplayer.posZ);
-			LOTRBiome biome = (LOTRBiome) world.provider.getBiomeGenForCoords(i, k);
-			if (biome.biomeDimension == LOTRDimension.MIDDLE_EARTH) {
-				LOTRBiome prevLastBiome = lastBiome;
-				lastBiome = biome;
-				if (prevLastBiome != biome) {
-					markDirty();
-				}
-			}
-		}
-		if (adminHideMap) {
-			boolean isOp = MinecraftServer.getServer().getConfigurationManager().func_152596_g(entityplayer.getGameProfile());
-			if (!entityplayer.capabilities.isCreativeMode || !isOp) {
-				setAdminHideMap(false);
-				LOTRCommandAdminHideMap.notifyUnhidden(entityplayer);
-			}
-		}
-		if (siegeActiveTime > 0) {
-			--siegeActiveTime;
-		}
-	}
+    public void onUpdate(EntityPlayerMP entityplayer, WorldServer world) {
+        ++pdTick;
+        updateRegionAndViewingFaction(world);
+        runAlignmentDraining(entityplayer);
+        questData.onUpdate(entityplayer, world);
+        checkSiegeAndRunAchievements(entityplayer, world);
+        handlePlayerTitle(entityplayer);
+        handlePledgeCooldowns();
+        handleTrackingMiniQuest(entityplayer);
+        handleBounties(entityplayer);
+        handleFastTravel(entityplayer);
+        updateLastOnlineTime();
+        handleMounting(entityplayer, world);
+        decreaseAlcoholTolerance();
+        unlockSharedCustomWaypoints(entityplayer);
+        checkBiomeAndAdminHideMap(entityplayer, world);
+        decreaseSiegeActiveTime();
+    }
+
+    private void updateRegionAndViewingFaction(WorldServer world) {
+        LOTRDimension.DimensionRegion currentRegion = viewingFaction.factionRegion;
+        LOTRDimension currentDim = LOTRDimension.getCurrentDimensionWithFallback(world);
+        if (currentRegion.getDimension() != currentDim) {
+            currentRegion = currentDim.dimensionRegions.get(0);
+            setViewingFaction(getRegionLastViewedFaction(currentRegion));
+        }
+    }
+
+    private void checkSiegeAndRunAchievements(EntityPlayerMP entityplayer, WorldServer world){
+        if (!isSiegeActive()) {
+            runAchievementChecks(entityplayer, world);
+        }
+    }
+
+    private void handlePlayerTitle(EntityPlayerMP entityplayer){
+        if (LOTRMod.playerDetailsCache.getPlayerDetails(playerUUID).isReceivedFromApi() && playerTitle != null && !playerTitle.getTitle().canPlayerUse(entityplayer)) {
+            IChatComponent msg = new ChatComponentTranslation("chat.lotr.loseTitle", playerTitle.getFullTitleComponent(entityplayer));
+            entityplayer.addChatMessage(msg);
+            setPlayerTitle(null);
+        }
+    }
+
+
+    private void handlePledgeCooldowns(){
+        if (pledgeKillCooldown > 0) {
+            --pledgeKillCooldown;
+            if (pledgeKillCooldown == 0 || isTimerAutosaveTick()) {
+                markDirty();
+            }
+        }
+        if (pledgeBreakCooldown > 0) {
+            setPledgeBreakCooldown(pledgeBreakCooldown - 1);
+        }
+    }
+
+    private void handleTrackingMiniQuest(EntityPlayerMP entityplayer){
+        if (trackingMiniQuestID != null && getTrackingMiniQuest() == null) {
+            setTrackingMiniQuest(null);
+        }
+        List<LOTRMiniQuest> activeMiniquests = getActiveMiniQuests();
+        for (LOTRMiniQuest quest : activeMiniquests) {
+            quest.onPlayerTick(entityplayer);
+        }
+    }
+
+    private void handleBounties(EntityPlayerMP entityplayer){
+        if (!bountiesPlaced.isEmpty()) {
+            for (LOTRFaction fac : bountiesPlaced) {
+                IChatComponent msg = new ChatComponentTranslation("chat.lotr.bountyPlaced", fac.factionName());
+                msg.getChatStyle().setColor(EnumChatFormatting.YELLOW);
+                entityplayer.addChatMessage(msg);
+            }
+            bountiesPlaced.clear();
+            markDirty();
+        }
+    }
+
+
+    private void handleFastTravel(EntityPlayerMP entityplayer){
+        setTimeSinceFT(ftSinceTick + 1);
+        if (targetFTWaypoint != null) {
+            if (entityplayer.isPlayerSleeping()) {
+                entityplayer.addChatMessage(new ChatComponentTranslation("lotr.fastTravel.inBed"));
+                setTargetFTWaypoint(null);
+            } else if (ticksUntilFT > 0) {
+                int seconds = ticksUntilFT / 20;
+                if (ticksUntilFT == ticksUntilFT_max) {
+                    entityplayer.addChatMessage(new ChatComponentTranslation("lotr.fastTravel.travelTicksStart", seconds));
+                } else if (ticksUntilFT % 20 == 0 && seconds <= 5) {
+                    entityplayer.addChatMessage(new ChatComponentTranslation("lotr.fastTravel.travelTicks", seconds));
+                }
+                --ticksUntilFT;
+                setTicksUntilFT(ticksUntilFT);
+            } else {
+                sendFTBouncePacket(entityplayer);
+            }
+        } else {
+            setTicksUntilFT(0);
+        }
+    }
+
+
+    private void updateLastOnlineTime(){
+        lastOnlineTime = getCurrentOnlineTime();
+    }
+
+    private void handleMounting(EntityPlayerMP entityplayer, WorldServer world){
+        if (uuidToMount != null) {
+            if (uuidToMountTime > 0) {
+                --uuidToMountTime;
+            } else {
+                double range = 32.0;
+                List entities = world.getEntitiesWithinAABB(EntityLivingBase.class, entityplayer.boundingBox.expand(range, range, range));
+                for (Object obj : entities) {
+                    Entity entity = (Entity) obj;
+                    if (!entity.getUniqueID().equals(uuidToMount)) {
+                        continue;
+                    }
+                    entityplayer.mountEntity(entity);
+                    break;
+                }
+                setUUIDToMount(null);
+            }
+        }
+    }
+
+    private void decreaseAlcoholTolerance(){
+        if (pdTick % 24000 == 0 && alcoholTolerance > 0) {
+            --alcoholTolerance;
+            setAlcoholTolerance(alcoholTolerance);
+        }
+    }
+
+    private void checkBiomeAndAdminHideMap(EntityPlayerMP entityplayer, WorldServer world){
+        if (pdTick % 100 == 0 && world.provider instanceof LOTRWorldProvider) {
+            int i = MathHelper.floor_double(entityplayer.posX);
+            int k = MathHelper.floor_double(entityplayer.posZ);
+            LOTRBiome biome = (LOTRBiome) world.provider.getBiomeGenForCoords(i, k);
+            if (biome.biomeDimension == LOTRDimension.MIDDLE_EARTH) {
+                LOTRBiome prevLastBiome = lastBiome;
+                lastBiome = biome;
+                if (prevLastBiome != biome) {
+                    markDirty();
+                }
+            }
+        }
+        if (adminHideMap) {
+            boolean isOp = MinecraftServer.getServer().getConfigurationManager().func_152596_g(entityplayer.getGameProfile());
+            if (!entityplayer.capabilities.isCreativeMode || !isOp) {
+                setAdminHideMap(false);
+                LOTRCommandAdminHideMap.notifyUnhidden(entityplayer);
+            }
+        }
+    }
+
+    private void decreaseSiegeActiveTime(){
+        if (siegeActiveTime > 0) {
+            --siegeActiveTime;
+        }
+    }
 
 	public void placeBountyFor(LOTRFaction f) {
 		bountiesPlaced.add(f);
