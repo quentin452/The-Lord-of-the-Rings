@@ -31,16 +31,19 @@ public class LOTRTileEntityMug extends TileEntity {
 		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, data);
 	}
 
-	public ItemStack getMugItem() {
-		if (mugItem == null) {
-			return getVessel().getEmptyVessel();
-		}
-		ItemStack copy = mugItem.copy();
-		if (LOTRItemMug.isItemFullDrink(copy)) {
-			LOTRItemMug.setVessel(copy, getVessel(), true);
-		}
-		return copy;
-	}
+    public ItemStack getMugItem() {
+        if (mugItem == null) {
+            return getVessel().getEmptyVessel();
+        }
+
+        if (LOTRItemMug.isItemFullDrink(mugItem)) {
+            return mugItem.copy();
+        }
+
+        ItemStack copy = mugItem.copy();
+        LOTRItemMug.setVessel(copy, getVessel(), true);
+        return copy;
+    }
 
 	public void setMugItem(ItemStack itemstack) {
 		if (itemstack != null && itemstack.stackSize <= 0) {

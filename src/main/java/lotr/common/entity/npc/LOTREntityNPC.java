@@ -1002,145 +1002,167 @@ public abstract class LOTREntityNPC extends EntityCreature implements IRangedAtt
 		}
 	}
 
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		rescaleNPC(getNPCScale());
-		updateCombat();
-		if (ticksExisted % 10 == 0) {
-			updateNearbyBanners();
-		}
-		familyInfo.onUpdate();
-		questInfo.onUpdate();
-		hiredNPCInfo.onUpdate();
-		if (this instanceof LOTRTradeable) {
-			traderNPCInfo.onUpdate();
-		}
-		if (travellingTraderInfo != null) {
-			travellingTraderInfo.onUpdate();
-		}
-		if ((this instanceof LOTRTradeable || this instanceof LOTRUnitTradeable) && !worldObj.isRemote) {
-			int preventKidnap;
-			if (!setInitialHome) {
-				if (hasHome()) {
-					initHomeX = getHomePosition().posX;
-					initHomeY = getHomePosition().posY;
-					initHomeZ = getHomePosition().posZ;
-					initHomeRange = (int) func_110174_bM();
-				}
-				setInitialHome = true;
-			}
-			preventKidnap = LOTRConfig.preventTraderKidnap;
-			if (preventKidnap > 0 && initHomeRange > 0 && getDistanceSq(initHomeX + 0.5, initHomeY + 0.5, initHomeZ + 0.5) > preventKidnap * preventKidnap) {
-				if (ridingEntity != null) {
-					mountEntity(null);
-				}
-				worldObj.getChunkFromBlockCoords(initHomeX, initHomeZ);
-				setLocationAndAngles(initHomeX + 0.5, initHomeY, initHomeZ + 0.5, rotationYaw, rotationPitch);
-			}
-		}
-		if (bossInfo != null) {
-			bossInfo.onUpdate();
-		}
-		if (!worldObj.isRemote && !addedBurningPanic) {
-			LOTREntityUtils.removeAITask(this, LOTREntityAIBurningPanic.class);
-			if (shouldBurningPanic()) {
-				tasks.addTask(0, new LOTREntityAIBurningPanic(this, 1.5));
-			}
-			addedBurningPanic = true;
-		}
-		if (!worldObj.isRemote && isEntityAlive() && (isTrader() || hiredNPCInfo.isActive) && getAttackTarget() == null) {
-			float healAmount = 0.0f;
-			if (ticksExisted % 40 == 0) {
-				healAmount += 1.0f;
-			}
-			if (hiredNPCInfo.isActive && nearbyBannerFactor > 0 && ticksExisted % (240 - nearbyBannerFactor * 40) == 0) {
-				healAmount += 1.0f;
-			}
-			if (healAmount > 0.0f) {
-				heal(healAmount);
-				if (ridingEntity instanceof EntityLivingBase && !(ridingEntity instanceof LOTREntityNPC)) {
-					((EntityLivingBase) ridingEntity).heal(healAmount);
-				}
-			}
-		}
-		if (!worldObj.isRemote && isEntityAlive() && getAttackTarget() == null) {
-			boolean guiOpen = false;
-			if (this instanceof LOTRTradeable || this instanceof LOTRUnitTradeable || this instanceof LOTRMercenary) {
-				for (Object element : worldObj.playerEntities) {
-					EntityPlayer entityplayer = (EntityPlayer) element;
-					Container container = entityplayer.openContainer;
-					if (container instanceof LOTRContainerTrade && ((LOTRContainerTrade) container).theTraderNPC == this || container instanceof LOTRContainerUnitTrade && ((LOTRContainerUnitTrade) container).theLivingTrader == this) {
-						guiOpen = true;
-						break;
-					}
-					if (container instanceof LOTRContainerCoinExchange && ((LOTRContainerCoinExchange) container).theTraderNPC == this) {
-						guiOpen = true;
-						break;
-					}
-					if (!(container instanceof LOTRContainerAnvil) || ((LOTRContainerAnvil) container).theNPC != this) {
-						continue;
-					}
-					guiOpen = true;
-					break;
-				}
-			}
-			if (hiredNPCInfo.isActive && hiredNPCInfo.isGuiOpen) {
-				guiOpen = true;
-			}
-			if (questInfo.anyOpenOfferPlayers()) {
-				guiOpen = true;
-			}
-			if (guiOpen) {
-				getNavigator().clearPathEntity();
-				if (ridingEntity instanceof LOTRNPCMount) {
-					((EntityLiving) ridingEntity).getNavigator().clearPathEntity();
-				}
-			}
-		}
-		updateArmSwingProgress();
-		if (npcTalkTick < getNPCTalkInterval()) {
-			++npcTalkTick;
-		}
-		if (!worldObj.isRemote && hasHome() && !isWithinHomeDistanceCurrentPosition()) {
-			int homeX = getHomePosition().posX;
-			int homeY = getHomePosition().posY;
-			int homeZ = getHomePosition().posZ;
-			int homeRange = (int) func_110174_bM();
-			double maxDist = homeRange + 128.0;
-			double distToHome = getDistance(homeX + 0.5, homeY + 0.5, homeZ + 0.5);
-			if (distToHome > maxDist) {
-				detachHome();
-			} else if (getAttackTarget() == null && getNavigator().noPath()) {
-				detachHome();
-				boolean goDirectlyHome = false;
-				if (worldObj.blockExists(homeX, homeY, homeZ) && hiredNPCInfo.isGuardMode()) {
-					goDirectlyHome = distToHome < 16.0;
-				}
-				double homeSpeed = 1.3;
-				if (goDirectlyHome) {
-					getNavigator().tryMoveToXYZ(homeX + 0.5, homeY + 0.5, homeZ + 0.5, homeSpeed);
-				} else {
-					Vec3 path = null;
-					for (int l = 0; l < 16 && path == null; ++l) {
-						path = RandomPositionGenerator.findRandomTargetBlockTowards(this, 8, 7, Vec3.createVectorHelper(homeX, homeY, homeZ));
-					}
-					if (path != null) {
-						getNavigator().tryMoveToXYZ(path.xCoord, path.yCoord, path.zCoord, homeSpeed);
-					}
-				}
-				setHomeArea(homeX, homeY, homeZ, homeRange);
-			}
-		}
-		if (isChilly && motionX * motionX + motionY * motionY + motionZ * motionZ >= 0.01) {
-			double d = posX + MathHelper.randomFloatClamp(rand, -0.3f, 0.3f) * width;
-			double d1 = boundingBox.minY + MathHelper.randomFloatClamp(rand, 0.2f, 0.7f) * height;
-			double d2 = posZ + MathHelper.randomFloatClamp(rand, -0.3f, 0.3f) * width;
-			LOTRMod.proxy.spawnParticle("chill", d, d1, d2, -motionX * 0.5, 0.0, -motionZ * 0.5);
-		}
-	}
+    @Override
+    public void onLivingUpdate() {
+        super.onLivingUpdate();
+        updateNPCState();
+        updateHealingLogic();
+        checkGUIOpenAndNavigation();
+        handleNPCMovement();
+        handleChillParticleEffect();
+    }
 
-	public void onPlayerStartTracking(EntityPlayerMP entityplayer) {
+    public void updateNPCState() {
+        rescaleNPC(getNPCScale());
+        updateCombat();
+        if (ticksExisted % 10 == 0) {
+            updateNearbyBanners();
+        }
+        familyInfo.onUpdate();
+        questInfo.onUpdate();
+        hiredNPCInfo.onUpdate();
+        if (this instanceof LOTRTradeable) {
+            traderNPCInfo.onUpdate();
+        }
+        if (travellingTraderInfo != null) {
+            travellingTraderInfo.onUpdate();
+        }
+        if ((this instanceof LOTRTradeable || this instanceof LOTRUnitTradeable) && !worldObj.isRemote) {
+            int preventKidnap;
+            if (!setInitialHome) {
+                if (hasHome()) {
+                    initHomeX = getHomePosition().posX;
+                    initHomeY = getHomePosition().posY;
+                    initHomeZ = getHomePosition().posZ;
+                    initHomeRange = (int) func_110174_bM();
+                }
+                setInitialHome = true;
+            }
+            preventKidnap = LOTRConfig.preventTraderKidnap;
+            if (preventKidnap > 0 && initHomeRange > 0 && getDistanceSq(initHomeX + 0.5, initHomeY + 0.5, initHomeZ + 0.5) > preventKidnap * preventKidnap) {
+                if (ridingEntity != null) {
+                    mountEntity(null);
+                }
+                worldObj.getChunkFromBlockCoords(initHomeX, initHomeZ);
+                setLocationAndAngles(initHomeX + 0.5, initHomeY, initHomeZ + 0.5, rotationYaw, rotationPitch);
+            }
+        }
+        if (bossInfo != null) {
+            bossInfo.onUpdate();
+        }
+        if (!worldObj.isRemote && !addedBurningPanic) {
+            LOTREntityUtils.removeAITask(this, LOTREntityAIBurningPanic.class);
+            if (shouldBurningPanic()) {
+                tasks.addTask(0, new LOTREntityAIBurningPanic(this, 1.5));
+            }
+            addedBurningPanic = true;
+        }
+    }
+
+
+    public void updateHealingLogic() {
+        if (!worldObj.isRemote && isEntityAlive() && (isTrader() || hiredNPCInfo.isActive) && getAttackTarget() == null) {
+            float healAmount = 0.0f;
+            if (ticksExisted % 40 == 0) {
+                healAmount += 1.0f;
+            }
+            if (hiredNPCInfo.isActive && nearbyBannerFactor > 0 && ticksExisted % (240 - nearbyBannerFactor * 40) == 0) {
+                healAmount += 1.0f;
+            }
+            if (healAmount > 0.0f) {
+                heal(healAmount);
+                if (ridingEntity instanceof EntityLivingBase && !(ridingEntity instanceof LOTREntityNPC)) {
+                    ((EntityLivingBase) ridingEntity).heal(healAmount);
+                }
+            }
+        }
+    }
+
+    public void checkGUIOpenAndNavigation() {
+        if (!worldObj.isRemote && isEntityAlive() && getAttackTarget() == null) {
+            boolean guiOpen = false;
+            if (this instanceof LOTRTradeable || this instanceof LOTRUnitTradeable || this instanceof LOTRMercenary) {
+                for (Object element : worldObj.playerEntities) {
+                    EntityPlayer entityplayer = (EntityPlayer) element;
+                    Container container = entityplayer.openContainer;
+                    if (container instanceof LOTRContainerTrade && ((LOTRContainerTrade) container).theTraderNPC == this || container instanceof LOTRContainerUnitTrade && ((LOTRContainerUnitTrade) container).theLivingTrader == this) {
+                        guiOpen = true;
+                        break;
+                    }
+                    if (container instanceof LOTRContainerCoinExchange && ((LOTRContainerCoinExchange) container).theTraderNPC == this) {
+                        guiOpen = true;
+                        break;
+                    }
+                    if (!(container instanceof LOTRContainerAnvil) || ((LOTRContainerAnvil) container).theNPC != this) {
+                        continue;
+                    }
+                    guiOpen = true;
+                    break;
+                }
+            }
+            if (hiredNPCInfo.isActive && hiredNPCInfo.isGuiOpen) {
+                guiOpen = true;
+            }
+            if (questInfo.anyOpenOfferPlayers()) {
+                guiOpen = true;
+            }
+            if (guiOpen) {
+                getNavigator().clearPathEntity();
+                if (ridingEntity instanceof LOTRNPCMount) {
+                    ((EntityLiving) ridingEntity).getNavigator().clearPathEntity();
+                }
+            }
+        }
+    }
+
+    public void handleNPCMovement() {
+        updateArmSwingProgress();
+        if (npcTalkTick < getNPCTalkInterval()) {
+            ++npcTalkTick;
+        }
+        if (!worldObj.isRemote && hasHome() && !isWithinHomeDistanceCurrentPosition()) {
+            int homeX = getHomePosition().posX;
+            int homeY = getHomePosition().posY;
+            int homeZ = getHomePosition().posZ;
+            int homeRange = (int) func_110174_bM();
+            double maxDist = homeRange + 128.0;
+            double distToHome = getDistance(homeX + 0.5, homeY + 0.5, homeZ + 0.5);
+            if (distToHome > maxDist) {
+                detachHome();
+            } else if (getAttackTarget() == null && getNavigator().noPath()) {
+                detachHome();
+                boolean goDirectlyHome = false;
+                if (worldObj.blockExists(homeX, homeY, homeZ) && hiredNPCInfo.isGuardMode()) {
+                    goDirectlyHome = distToHome < 16.0;
+                }
+                double homeSpeed = 1.3;
+                if (goDirectlyHome) {
+                    getNavigator().tryMoveToXYZ(homeX + 0.5, homeY + 0.5, homeZ + 0.5, homeSpeed);
+                } else {
+                    Vec3 path = null;
+                    for (int l = 0; l < 16 && path == null; ++l) {
+                        path = RandomPositionGenerator.findRandomTargetBlockTowards(this, 8, 7, Vec3.createVectorHelper(homeX, homeY, homeZ));
+                    }
+                    if (path != null) {
+                        getNavigator().tryMoveToXYZ(path.xCoord, path.yCoord, path.zCoord, homeSpeed);
+                    }
+                }
+                setHomeArea(homeX, homeY, homeZ, homeRange);
+            }
+        }
+    }
+
+    public void handleChillParticleEffect() {
+        if (isChilly && motionX * motionX + motionY * motionY + motionZ * motionZ >= 0.01) {
+            double d = posX + MathHelper.randomFloatClamp(rand, -0.3f, 0.3f) * width;
+            double d1 = boundingBox.minY + MathHelper.randomFloatClamp(rand, 0.2f, 0.7f) * height;
+            double d2 = posZ + MathHelper.randomFloatClamp(rand, -0.3f, 0.3f) * width;
+            LOTRMod.proxy.spawnParticle("chill", d, d1, d2, -motionX * 0.5, 0.0, -motionZ * 0.5);
+        }
+    }
+
+
+    public void onPlayerStartTracking(EntityPlayerMP entityplayer) {
 		hiredNPCInfo.sendBasicData(entityplayer);
 		familyInfo.sendData(entityplayer);
 		questInfo.sendData(entityplayer);

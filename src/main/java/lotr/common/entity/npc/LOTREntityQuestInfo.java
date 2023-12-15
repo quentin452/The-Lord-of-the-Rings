@@ -329,19 +329,22 @@ public class LOTREntityQuestInfo {
 		}
 	}
 
-	public void sendDataToAllWatchers() {
-		int x = MathHelper.floor_double(theNPC.posX) >> 4;
-		int z = MathHelper.floor_double(theNPC.posZ) >> 4;
-		PlayerManager playermanager = ((WorldServer) theNPC.worldObj).getPlayerManager();
-		List players = theNPC.worldObj.playerEntities;
-		for (Object obj : players) {
-			EntityPlayerMP entityplayer = (EntityPlayerMP) obj;
-			if (!playermanager.isPlayerWatchingChunk(entityplayer, x, z)) {
-				continue;
-			}
-			sendData(entityplayer);
-		}
-	}
+    public void sendDataToAllWatchers() {
+        int x = MathHelper.floor_double(theNPC.posX) >> 4;
+        int z = MathHelper.floor_double(theNPC.posZ) >> 4;
+        PlayerManager playermanager = ((WorldServer) theNPC.worldObj).getPlayerManager();
+        List<EntityPlayerMP> watchedPlayers = new ArrayList<>();
+
+        for (Object entityplayer : theNPC.worldObj.playerEntities) {
+            if (playermanager.isPlayerWatchingChunk((EntityPlayerMP) entityplayer, x, z)) {
+                watchedPlayers.add((EntityPlayerMP) entityplayer);
+            }
+        }
+
+        for (EntityPlayerMP entityplayer : watchedPlayers) {
+            sendData(entityplayer);
+        }
+    }
 
 	public void sendMiniquestOffer(EntityPlayer entityplayer, LOTRMiniQuest quest) {
 		NBTTagCompound nbt = new NBTTagCompound();

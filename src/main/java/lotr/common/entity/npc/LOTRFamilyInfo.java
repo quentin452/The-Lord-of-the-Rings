@@ -170,44 +170,81 @@ public class LOTRFamilyInfo {
 		}
 	}
 
-	public void onUpdate() {
-		if (!theEntity.worldObj.isRemote) {
-			if (!doneFirstUpdate) {
-				doneFirstUpdate = true;
-			}
-			if (resendData) {
-				sendDataToAllWatchers();
-				resendData = false;
-			}
-			if (age < 0) {
-				setAge(age + 1);
-			} else if (age > 0) {
-				setAge(age - 1);
-			}
-			if (drunkTime > 0) {
-				setDrunkTime(drunkTime - 1);
-			}
-			if (isDrunk()) {
-				theEntity.addPotionEffect(new PotionEffect(Potion.confusion.id, 20));
-				if (timeUntilDrunkSpeech > 0) {
-					--timeUntilDrunkSpeech;
-				}
-				if (theEntity.isEntityAlive() && theEntity.getAttackTarget() == null && timeUntilDrunkSpeech == 0) {
-					double range = 12.0;
-					List players = theEntity.worldObj.getEntitiesWithinAABB(EntityPlayer.class, theEntity.boundingBox.expand(range, range, range));
-					for (Object obj : players) {
-						String speechBank;
-						EntityPlayer entityplayer = (EntityPlayer) obj;
-						if (!entityplayer.isEntityAlive() || entityplayer.capabilities.isCreativeMode || (speechBank = theEntity.getSpeechBank(entityplayer)) == null || theEntity.getRNG().nextInt(3) != 0) {
-							continue;
-						}
-						theEntity.sendSpeechBank(entityplayer, speechBank);
-					}
-					timeUntilDrunkSpeech = 20 * MathHelper.getRandomIntegerInRange(theEntity.getRNG(), 5, 20);
-				}
-			}
-		}
-	}
+    public void onUpdate() {
+        if (theEntity.worldObj.isRemote) {
+            return;
+        }
+
+        updateFirstUpdate();
+        updateDataResend();
+        updateAge();
+        updateDrunkTime();
+        handleDrunkBehavior();
+    }
+
+    private void updateFirstUpdate() {
+        if (!doneFirstUpdate) {
+            doneFirstUpdate = true;
+        }
+    }
+
+    private void updateDataResend() {
+        if (resendData) {
+            sendDataToAllWatchers();
+            resendData = false;
+        }
+    }
+
+    private void updateAge() {
+        if (age < 0) {
+            setAge(age + 1);
+        } else if (age > 0) {
+            setAge(age - 1);
+        }
+    }
+
+    private void updateDrunkTime() {
+        if (drunkTime > 0) {
+            setDrunkTime(drunkTime - 1);
+        }
+    }
+
+    private void handleDrunkBehavior() {
+        if (isDrunk()) {
+            applyConfusionEffect();
+            decrementDrunkSpeechTimer();
+            performDrunkSpeech();
+        }
+    }
+
+    private void applyConfusionEffect() {
+        theEntity.addPotionEffect(new PotionEffect(Potion.confusion.id, 20));
+    }
+
+    private void decrementDrunkSpeechTimer() {
+        if (timeUntilDrunkSpeech > 0) {
+            --timeUntilDrunkSpeech;
+        }
+    }
+
+    private void performDrunkSpeech() {
+        if (theEntity.isEntityAlive() && theEntity.getAttackTarget() == null && timeUntilDrunkSpeech == 0) {
+            double range = 12.0;
+            List<EntityPlayer> players = theEntity.worldObj.getEntitiesWithinAABB(EntityPlayer.class, theEntity.boundingBox.expand(range, range, range));
+            for (EntityPlayer entityplayer : players) {
+                handleDrunkSpeech(entityplayer);
+            }
+            timeUntilDrunkSpeech = 20 * MathHelper.getRandomIntegerInRange(theEntity.getRNG(), 5, 20);
+        }
+    }
+
+    private void handleDrunkSpeech(EntityPlayer entityplayer) {
+        String speechBank;
+        if (!entityplayer.isEntityAlive() || entityplayer.capabilities.isCreativeMode || (speechBank = theEntity.getSpeechBank(entityplayer)) == null || theEntity.getRNG().nextInt(3) != 0) {
+            return;
+        }
+        theEntity.sendSpeechBank(entityplayer, speechBank);
+    }
 
 	public void readFromNBT(NBTTagCompound nbt) {
 		setAge(nbt.getInteger("NPCAge"));

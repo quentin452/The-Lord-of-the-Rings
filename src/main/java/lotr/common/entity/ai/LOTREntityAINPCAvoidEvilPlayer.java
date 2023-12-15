@@ -13,6 +13,7 @@ import net.minecraft.util.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LOTREntityAINPCAvoidEvilPlayer extends EntityAIBase {
 	public LOTREntityNPC theNPC;
@@ -42,35 +43,44 @@ public class LOTREntityAINPCAvoidEvilPlayer extends EntityAIBase {
 		closestLivingEntity = null;
 	}
 
-	@Override
-	public boolean shouldExecute() {
-		ArrayList<EntityPlayer> validPlayers = new ArrayList<>();
-		List list = theNPC.worldObj.getEntitiesWithinAABB(EntityPlayer.class, theNPC.boundingBox.expand(distanceFromEntity, distanceFromEntity / 2.0, distanceFromEntity));
-		if (list.isEmpty()) {
-			return false;
-		}
-		for (Object element : list) {
-			EntityPlayer entityplayer = (EntityPlayer) element;
-			if (entityplayer.capabilities.isCreativeMode) {
-				continue;
-			}
-			float alignment = LOTRLevelData.getData(entityplayer).getAlignment(theNPC.getFaction());
-			if ((theNPC.familyInfo.getAge() >= 0 || alignment >= 0.0f) && (!(theNPC instanceof LOTREntityHobbit) || alignment > -100.0f)) {
-				continue;
-			}
-			validPlayers.add(entityplayer);
-		}
-		if (validPlayers.isEmpty()) {
-			return false;
-		}
-		closestLivingEntity = validPlayers.get(0);
-		Vec3 fleePath = RandomPositionGenerator.findRandomTargetBlockAwayFrom(theNPC, 16, 7, Vec3.createVectorHelper(closestLivingEntity.posX, closestLivingEntity.posY, closestLivingEntity.posZ));
-		if (fleePath == null || closestLivingEntity.getDistanceSq(fleePath.xCoord, fleePath.yCoord, fleePath.zCoord) < closestLivingEntity.getDistanceSqToEntity(theNPC)) {
-			return false;
-		}
-		entityPathEntity = entityPathNavigate.getPathToXYZ(fleePath.xCoord, fleePath.yCoord, fleePath.zCoord);
-		return entityPathEntity != null && entityPathEntity.isDestinationSame(fleePath);
-	}
+    private List<EntityPlayer> validPlayers;
+
+    @Override
+    public boolean shouldExecute() {
+        validPlayers = getValidPlayers();
+
+        if (validPlayers.isEmpty()) {
+            return false;
+        }
+
+        closestLivingEntity = validPlayers.get(0);
+        Vec3 fleePath = findFleePath();
+
+        if (fleePath == null || closestLivingEntity.getDistanceSq(fleePath.xCoord, fleePath.yCoord, fleePath.zCoord) < closestLivingEntity.getDistanceSqToEntity(theNPC)) {
+            return false;
+        }
+
+        entityPathEntity = entityPathNavigate.getPathToXYZ(fleePath.xCoord, fleePath.yCoord, fleePath.zCoord);
+        return entityPathEntity != null && entityPathEntity.isDestinationSame(fleePath);
+    }
+
+
+    private List<EntityPlayer> getValidPlayers() {
+        return (List<EntityPlayer>) theNPC.worldObj.getEntitiesWithinAABB(EntityPlayer.class, theNPC.boundingBox.expand(distanceFromEntity, distanceFromEntity / 2.0, distanceFromEntity)).stream()
+            .filter(entity -> !((EntityPlayer) entity).capabilities.isCreativeMode)
+            .map(entity -> (EntityPlayer) entity)
+            .filter(entityplayer -> {
+                float alignment = LOTRLevelData.getData((EntityPlayer) entityplayer).getAlignment(theNPC.getFaction());
+                return (theNPC.familyInfo.getAge() >= 0 || alignment >= 0.0f) &&
+                    (!(theNPC instanceof LOTREntityHobbit) || alignment > -100.0f);
+            })
+            .collect(Collectors.toList());
+    }
+
+    private Vec3 findFleePath() {
+        EntityPlayer closestPlayer = validPlayers.get(0);
+        return RandomPositionGenerator.findRandomTargetBlockAwayFrom(theNPC, 16, 7, Vec3.createVectorHelper(closestPlayer.posX, closestPlayer.posY, closestPlayer.posZ));
+    }
 
 	@Override
 	public void startExecuting() {

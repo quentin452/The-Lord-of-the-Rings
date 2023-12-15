@@ -543,42 +543,55 @@ public class LOTREnchantmentHelper {
 		return false;
 	}
 
-	public static void onEntityUpdate(EntityLivingBase entity) {
-		Random rand = entity.getRNG();
-		if (LOTRConfig.enchantingLOTR) {
-			if (entity instanceof EntityLiving && !entity.getEntityData().getBoolean("LOTREnchantInit")) {
-				for (int i = 0; i < entity.getLastActiveItems().length; ++i) {
-					ItemStack itemstack = entity.getEquipmentInSlot(i);
-					tryApplyRandomEnchantsForEntity(itemstack, rand);
-				}
-				entity.getEntityData().setBoolean("LOTREnchantInit", true);
-			}
-			if (entity instanceof EntityPlayerMP) {
-				EntityPlayerMP entityplayer = (EntityPlayerMP) entity;
-				UUID playerID = entityplayer.getUniqueID();
-				InventoryPlayer inv = entityplayer.inventory;
-				ItemStack[] lastKnownInv = lastKnownPlayerInventories.get(playerID);
-				if (lastKnownInv == null) {
-					lastKnownInv = new ItemStack[inv.getSizeInventory()];
-				}
-				for (int i = 0; i < inv.getSizeInventory(); ++i) {
-					ItemStack itemstack = inv.getStackInSlot(i);
-					if (ItemStack.areItemStacksEqual(itemstack, lastKnownInv[i])) {
-						continue;
-					}
-					tryApplyRandomEnchantsForEntity(itemstack, rand);
-					lastKnownInv[i] = itemstack == null ? null : itemstack.copy();
-				}
-				if (tryApplyRandomEnchantsForEntity(inv.getItemStack(), rand)) {
-					entityplayer.updateHeldItem();
-				}
-				lastKnownPlayerInventories.put(playerID, lastKnownInv);
-				if (lastKnownPlayerInventories.size() > 200) {
-					lastKnownPlayerInventories.clear();
-				}
-			}
-		}
-	}
+    public static void onEntityUpdate(EntityLivingBase entity) {
+        Random rand = entity.getRNG();
+        if (!LOTRConfig.enchantingLOTR || entity.getEntityData().getBoolean("LOTREnchantInit")) {
+            return;
+        }
+
+        // Process entity's equipment
+        if (entity instanceof EntityLiving) {
+            ItemStack[] equipment = entity.getLastActiveItems();
+            tryApplyRandomEnchantsForEquipment(equipment, rand);
+            entity.getEntityData().setBoolean("LOTREnchantInit", true);
+        }
+
+        // Process player-specific inventory changes
+        if (entity instanceof EntityPlayerMP) {
+            handlePlayerInventoryChanges((EntityPlayerMP) entity, rand);
+        }
+    }
+
+    private static void tryApplyRandomEnchantsForEquipment(ItemStack[] equipment, Random rand) {
+        for (ItemStack itemstack : equipment) {
+            tryApplyRandomEnchantsForEntity(itemstack, rand);
+        }
+    }
+
+    private static void handlePlayerInventoryChanges(EntityPlayerMP entityplayer, Random rand) {
+        UUID playerID = entityplayer.getUniqueID();
+        InventoryPlayer inv = entityplayer.inventory;
+        ItemStack[] lastKnownInv = lastKnownPlayerInventories.computeIfAbsent(playerID, k -> new ItemStack[inv.getSizeInventory()]);
+
+        // Track modified slots and apply enchantments
+        for (int i = 0; i < inv.getSizeInventory(); ++i) {
+            ItemStack itemstack = inv.getStackInSlot(i);
+            if (!ItemStack.areItemStacksEqual(itemstack, lastKnownInv[i])) {
+                tryApplyRandomEnchantsForEntity(itemstack, rand);
+                lastKnownInv[i] = itemstack == null ? null : itemstack.copy();
+            }
+        }
+
+        // Update held item
+        if (tryApplyRandomEnchantsForEntity(inv.getItemStack(), rand)) {
+            entityplayer.updateHeldItem();
+        }
+
+        // Limit the size of lastKnownPlayerInventories
+        if (lastKnownPlayerInventories.size() > 200) {
+            lastKnownPlayerInventories.clear();
+        }
+    }
 
 	public static void onKillEntity(EntityPlayer entityplayer, EntityLivingBase target, DamageSource source) {
 		if (source.getSourceOfDamage() == entityplayer) {

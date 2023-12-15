@@ -11,9 +11,11 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.AxisAlignedBB;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LOTREntityAINearestAttackableTargetBasic extends EntityAITarget {
 	public Class targetClass;
@@ -79,31 +81,52 @@ public class LOTREntityAINearestAttackableTargetBasic extends EntityAITarget {
 		return false;
 	}
 
-	@Override
-	public boolean shouldExecute() {
-		LOTREntityNPCRideable rideable;
-		if (targetChance > 0 && taskOwner.getRNG().nextInt(targetChance) != 0) {
-			return false;
-		}
-		if (taskOwner instanceof LOTREntityNPC) {
-			LOTREntityNPC npc = (LOTREntityNPC) taskOwner;
-			if (npc.hiredNPCInfo.isActive && npc.hiredNPCInfo.isHalted() || npc.isChild()) {
-				return false;
-			}
-		}
-		if (taskOwner instanceof LOTREntityNPCRideable && ((rideable = (LOTREntityNPCRideable) taskOwner).isNPCTamed() || rideable.riddenByEntity instanceof EntityPlayer)) {
-			return false;
-		}
-		double range = getTargetDistance();
-		double rangeY = Math.min(range, 8.0);
-		List entities = taskOwner.worldObj.selectEntitiesWithinAABB(targetClass, taskOwner.boundingBox.expand(range, rangeY, range), targetSelector);
-		entities.sort(targetSorter);
-		if (entities.isEmpty()) {
-			return false;
-		}
-		targetEntity = (EntityLivingBase) entities.get(0);
-		return true;
-	}
+    @Override
+    public boolean shouldExecute() {
+        if (targetChance > 0 && taskOwner.getRNG().nextInt(targetChance) != 0) {
+            return false;
+        }
+
+        if (isNPCInactiveOrChild()) {
+            return false;
+        }
+
+        if (isRideableTamedOrRiddenByPlayer()) {
+            return false;
+        }
+
+        double range = getTargetDistance();
+        double rangeY = Math.min(range, 8.0);
+        List<EntityLivingBase> entities = getEntitiesInRange(range, rangeY);
+
+        if (entities.isEmpty()) {
+            return false;
+        }
+
+        targetEntity = entities.get(0);
+        return true;
+    }
+
+    private boolean isNPCInactiveOrChild() {
+        return taskOwner instanceof LOTREntityNPC &&
+            (((LOTREntityNPC) taskOwner).hiredNPCInfo.isActive && ((LOTREntityNPC) taskOwner).hiredNPCInfo.isHalted() ||
+                ((LOTREntityNPC) taskOwner).isChild());
+    }
+
+    private boolean isRideableTamedOrRiddenByPlayer() {
+        return taskOwner instanceof LOTREntityNPCRideable &&
+            (((LOTREntityNPCRideable) taskOwner).isNPCTamed() || ((LOTREntityNPCRideable) taskOwner).riddenByEntity instanceof EntityPlayer);
+    }
+
+
+    private List<EntityLivingBase> getEntitiesInRange(double range, double rangeY) {
+        AxisAlignedBB boundingBox = taskOwner.boundingBox.expand(range, rangeY, range);
+        return (List<EntityLivingBase>) taskOwner.worldObj.selectEntitiesWithinAABB(targetClass, boundingBox, targetSelector).stream()
+            .filter(EntityLivingBase.class::isInstance)
+            .map(EntityLivingBase.class::cast)
+            .sorted(targetSorter)
+            .collect(Collectors.toList());
+    }
 
 	@Override
 	public void startExecuting() {

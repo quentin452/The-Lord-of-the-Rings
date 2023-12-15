@@ -1413,11 +1413,14 @@ public class LOTREventHandler implements IFuelHandler {
     }
     private boolean inWater2;
     private boolean canSpawnWraith(EntityLivingBase entity, World world) {
-        inWater2 = entity.isInWater();
         boolean isPlayerCreative = entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.isCreativeMode;
-        return !world.isRemote && LOTRMod.canSpawnMobs(world) && entity.isEntityAlive()
-            && inWater2 && entity.ridingEntity == null
-            && !(entity instanceof EntityWaterMob) && !(entity instanceof LOTREntityMarshWraith) && !isPlayerCreative;
+
+        if (world.isRemote || !entity.isEntityAlive() || entity.ridingEntity != null || entity instanceof EntityWaterMob || entity instanceof LOTREntityMarshWraith || isPlayerCreative) {
+            return false;
+        }
+
+        inWater2 = entity.isInWater();
+        return inWater2 && LOTRMod.canSpawnMobs(world);
     }
 
     private boolean isDeadMarshes(EntityLivingBase entity, World world) {

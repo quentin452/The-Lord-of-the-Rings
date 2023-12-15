@@ -57,7 +57,7 @@ public class LOTRBlockFallenLeaves extends Block implements IShearable {
 
 	@Override
 	public void addCollisionBoxesToList(World world, int i, int j, int k, AxisAlignedBB bb, List boxes, Entity entity) {
-	}
+    }
 
 	@Override
 	public boolean canBlockStay(World world, int i, int j, int k) {
