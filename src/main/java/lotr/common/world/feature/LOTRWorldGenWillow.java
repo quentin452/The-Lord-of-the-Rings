@@ -7,6 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -114,9 +115,20 @@ public class LOTRWorldGenWillow extends WorldGenAbstractTree {
     private boolean hasWaterNearby(World world, Random random, int i, int j, int k) {
         int attempts = 4;
         for (int l = 0; l < attempts; ++l) {
-            int i1 = i + MathHelper.getRandomIntegerInRange(random, -12, 12);
-            if (world.getBlock(i1, j + MathHelper.getRandomIntegerInRange(random, -8, 4), k + MathHelper.getRandomIntegerInRange(random, -12, 12)).getMaterial() == Material.water) {
-                return true;
+            int xOffset = random.nextInt(13) - 6;
+            int zOffset = random.nextInt(13) - 6;
+            int yOffset = random.nextInt(7) - 4;
+            int i1 = i + xOffset;
+            int j1 = j + yOffset;
+            int k1 = k + zOffset;
+            int chunkX = i1 >> 4;
+            int chunkZ = k1 >> 4;
+            Chunk chunk = world.getChunkFromChunkCoords(chunkX, chunkZ);
+            if (chunk != null && chunk.isChunkLoaded) {
+                Block block = world.getBlock(i1, j1, k1);
+                if (block == Blocks.water || block == Blocks.flowing_water) {
+                    return true;
+                }
             }
         }
         return false;
