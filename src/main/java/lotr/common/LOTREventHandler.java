@@ -1365,19 +1365,38 @@ public class LOTREventHandler implements IFuelHandler {
 		}
 	}
 
+    private boolean flag;
+    private int k;
+
+    boolean inWater;
+
+    int j;
+    int l;
+    int i;
+    int k2;
+
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
-        boolean flag;
-        int k;
-        int j;
-        int l;
-        int i;
-        int k2;
         EntityLivingBase entity = event.entityLiving;
+        inWater = entity.isInWater();
         World world = entity.worldObj;
         if (!world.isRemote) {
             LOTREnchantmentHelper.onEntityUpdate(entity);
         }
+        autoRemoveVanillaEnchantments(world,entity);
+        spawnMarshWraithIfConditionsMet(world,entity);
+        spawnHobbitBoundersIfConditionsMet(world,entity);
+        applyMirkwoodCorruptionEffects(world,entity);
+        applyMorgulValeCursesToEntities(world,entity);
+        applyMorgulValeEffectsIfApplicable(world,entity);
+        updateWoodElvenScoutArmorEffect(world,entity);
+        updateEntityLanceSpeedEffect(world,entity);
+        handleEntityFireDamageEffects(world,entity);
+        if (world.isRemote) {
+            LOTRPlateFallingInfo.getOrCreateFor(entity, true).update();
+        }
+    }
+    public void autoRemoveVanillaEnchantments(World world,EntityLivingBase entity){
         if (LOTRConfig.enchantingAutoRemoveVanilla && !world.isRemote && entity instanceof EntityPlayer && entity.ticksExisted % 60 == 0) {
             EntityPlayer entityplayer = (EntityPlayer) entity;
             for (int l2 = 0; l2 < entityplayer.inventory.getSizeInventory(); ++l2) {
@@ -1388,107 +1407,9 @@ public class LOTREventHandler implements IFuelHandler {
                 dechant(itemstack, entityplayer);
             }
         }
-        boolean inWater = entity.isInWater();
-        if (!world.isRemote && LOTRMod.canSpawnMobs(world) && entity.isEntityAlive() && inWater && entity.ridingEntity == null) {
-            flag = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
-            if (entity instanceof EntityWaterMob || entity instanceof LOTREntityMarshWraith) {
-                flag = false;
-            }
-            if (flag) {
-                int i2 = MathHelper.floor_double(entity.posX);
-                k = MathHelper.floor_double(entity.posZ);
-                int j2 = world.getTopSolidOrLiquidBlock(i2, k);
-                while (world.getBlock(i2, j2 + 1, k).getMaterial().isLiquid() || world.getBlock(i2, j2 + 1, k).getMaterial().isSolid()) {
-                    ++j2;
-                }
-                if (j2 - entity.boundingBox.minY < 2.0 && world.getBlock(i2, j2, k).getMaterial() == Material.water && world.getBiomeGenForCoords(i2, k) instanceof LOTRBiomeGenDeadMarshes) {
-                    List nearbyWraiths = world.getEntitiesWithinAABB(LOTREntityMarshWraith.class, entity.boundingBox.expand(15.0, 15.0, 15.0));
-                    boolean anyNearbyWraiths = false;
-                    for (Object nearbyWraith : nearbyWraiths) {
-                        LOTREntityMarshWraith wraith = (LOTREntityMarshWraith) nearbyWraith;
-                        if (wraith.getAttackTarget() != entity || wraith.getDeathFadeTime() != 0) {
-                            continue;
-                        }
-                        anyNearbyWraiths = true;
-                        break;
-                    }
-                    if (!anyNearbyWraiths) {
-                        LOTREntityMarshWraith wraith = new LOTREntityMarshWraith(world);
-                        int i1 = i2 + MathHelper.getRandomIntegerInRange(world.rand, -3, 3);
-                        int k1 = k + MathHelper.getRandomIntegerInRange(world.rand, -3, 3);
-                        int j1 = world.getTopSolidOrLiquidBlock(i1, k1);
-                        wraith.setLocationAndAngles(i1 + 0.5, j1, k1 + 0.5, world.rand.nextFloat() * 360.0f, 0.0f);
-                        if (wraith.getDistanceSqToEntity(entity) <= 144.0) {
-                            world.spawnEntityInWorld(wraith);
-                            wraith.setAttackTarget(entity);
-                            wraith.attackTargetUUID = entity.getUniqueID();
-                            world.playSoundAtEntity(wraith, "lotr:wraith.spawn", 1.0f, 0.7f + world.rand.nextFloat() * 0.6f);
-                        }
-                    }
-                }
-            }
-        }
-        if (!world.isRemote && LOTRMod.canSpawnMobs(world) && entity.isEntityAlive() && world.isDaytime()) {
-            int i3;
-            float f = 0.0f;
-            int bounders = 0;
-            if (LOTRFaction.HOBBIT.isBadRelation(LOTRMod.getNPCFaction(entity))) {
-                float health = entity.getMaxHealth() + entity.getTotalArmorValue();
-                f = health * 2.5f;
-                i3 = (int) (health / 15.0f);
-                bounders = 2 + world.rand.nextInt(i3 + 1);
-            } else if (entity instanceof EntityPlayer) {
-                EntityPlayer entityplayer = (EntityPlayer) entity;
-                float alignment = LOTRLevelData.getData(entityplayer).getAlignment(LOTRFaction.HOBBIT);
-                if (!entityplayer.capabilities.isCreativeMode && alignment < 0.0f) {
-                    f = -alignment;
-                    int i4 = (int) (f / 50.0f);
-                    bounders = 2 + world.rand.nextInt(i4 + 1);
-                }
-            }
-            if (f > 0.0f) {
-                f = Math.min(f, 2000.0f);
-                int chance = (int) (2000000.0f / f);
-                bounders = Math.min(bounders, 5);
-                i3 = MathHelper.floor_double(entity.posX);
-                int k3 = MathHelper.floor_double(entity.posZ);
-                world.getTopSolidOrLiquidBlock(i3, k3);
-                if (world.rand.nextInt(chance) == 0 && world.getBiomeGenForCoords(i3, k3) instanceof LOTRBiomeGenShire && world.getEntitiesWithinAABB(LOTREntityHobbitBounder.class, entity.boundingBox.expand(12.0, 6.0, 12.0)).isEmpty()) {
-                    boolean sentMessage = false;
-                    boolean playedHorn = false;
-                    block3:
-                    for (int l4 = 0; l4 < bounders; ++l4) {
-                        LOTREntityHobbitBounder bounder = new LOTREntityHobbitBounder(world);
-                        for (int l1 = 0; l1 < 32; ++l1) {
-                            int j1;
-                            int k1;
-                            int i1 = i3 - world.rand.nextInt(12) + world.rand.nextInt(12);
-                            if (!world.getBlock(i1, (j1 = world.getTopSolidOrLiquidBlock(i1, k1 = k3 - world.rand.nextInt(12) + world.rand.nextInt(12))) - 1, k1).isSideSolid(world, i1, j1 - 1, k1, ForgeDirection.UP) || world.getBlock(i1, j1, k1).isNormalCube() || world.getBlock(i1, j1 + 1, k1).isNormalCube()) {
-                                continue;
-                            }
-                            bounder.setLocationAndAngles(i1 + 0.5, j1, k1 + 0.5, 0.0f, 0.0f);
-                            if (!bounder.getCanSpawnHere() || entity.getDistanceToEntity(bounder) <= 6.0) {
-                                continue;
-                            }
-                            bounder.onSpawnWithEgg(null);
-                            world.spawnEntityInWorld(bounder);
-                            bounder.setAttackTarget(entity);
-                            if (!sentMessage && entity instanceof EntityPlayer) {
-                                EntityPlayer entityplayer = (EntityPlayer) entity;
-                                bounder.sendSpeechBank(entityplayer, bounder.getSpeechBank(entityplayer));
-                                sentMessage = true;
-                            }
-                            if (playedHorn) {
-                                continue block3;
-                            }
-                            world.playSoundAtEntity(bounder, "lotr:item.horn", 2.0f, 2.0f);
-                            playedHorn = true;
-                            continue block3;
-                        }
-                    }
-                }
-            }
-        }
+    }
+
+    public void applyMirkwoodCorruptionEffects(World world,EntityLivingBase entity){
         if (!world.isRemote && entity.isEntityAlive() && inWater && entity.ridingEntity == null && entity.ticksExisted % 10 == 0) {
             flag = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
             if (entity instanceof LOTREntityMirkwoodSpider) {
@@ -1501,6 +1422,8 @@ public class LOTREventHandler implements IFuelHandler {
                 entity.addPotionEffect(new PotionEffect(Potion.blindness.id, 600));
             }
         }
+    }
+    public void applyMorgulValeCursesToEntities(World world,EntityLivingBase entity){
         if (!world.isRemote && entity.isEntityAlive() && inWater && entity.ridingEntity == null && entity.ticksExisted % 10 == 0) {
             flag = true;
             if (entity instanceof EntityPlayer) {
@@ -1531,6 +1454,40 @@ public class LOTREventHandler implements IFuelHandler {
                 entity.addPotionEffect(new PotionEffect(Potion.poison.id, 100));
             }
         }
+    }
+    public void applyMorgulValeEffectsIfApplicable(World world,EntityLivingBase entity){
+        if (!world.isRemote && entity.isEntityAlive() && inWater && entity.ridingEntity == null && entity.ticksExisted % 10 == 0) {
+            flag = true;
+            if (entity instanceof EntityPlayer) {
+                EntityPlayer entityplayer = (EntityPlayer) entity;
+                if (entityplayer.capabilities.isCreativeMode) {
+                    flag = false;
+                } else {
+                    float level;
+                    float alignment = LOTRLevelData.getData(entityplayer).getAlignment(LOTRFaction.MORDOR);
+                    level = 100.0f;
+                    if (alignment > level) {
+                        flag = false;
+                    } else {
+                        int chance = Math.round(level);
+                        if (world.rand.nextInt(Math.max(chance, 1)) < alignment) {
+                            flag = false;
+                        }
+                    }
+                }
+            }
+            if (LOTRMod.getNPCFaction(entity).isGoodRelation(LOTRFaction.MORDOR)) {
+                flag = false;
+            }
+            if (flag && world.getBiomeGenForCoords(MathHelper.floor_double(entity.posX), MathHelper.floor_double(entity.posZ)) instanceof LOTRBiomeGenMorgulVale) {
+                entity.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 600, 1));
+                entity.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 600, 1));
+                entity.addPotionEffect(new PotionEffect(Potion.weakness.id, 600));
+                entity.addPotionEffect(new PotionEffect(Potion.poison.id, 100));
+            }
+        }
+    }
+    public void updateWoodElvenScoutArmorEffect(World world,EntityLivingBase entity){
         if (!world.isRemote && entity.isEntityAlive() && entity.ticksExisted % 10 == 0) {
             IAttributeInstance speedAttribute;
             boolean wearingAllWoodElvenScout = true;
@@ -1549,6 +1506,8 @@ public class LOTREventHandler implements IFuelHandler {
                 speedAttribute.applyModifier(LOTREntityWoodElfScout.scoutArmorSpeedBoost);
             }
         }
+    }
+    public void updateEntityLanceSpeedEffect(World world,EntityLivingBase entity){
         if (!world.isRemote && entity.isEntityAlive()) {
             IAttributeInstance speedAttribute;
             ItemStack weapon = entity.getHeldItem();
@@ -1563,48 +1522,9 @@ public class LOTREventHandler implements IFuelHandler {
                 speedAttribute.applyModifier(LOTRItemLance.lanceSpeedBoost);
             }
         }
-        if (!world.isRemote && entity.isEntityAlive() && entity.ticksExisted % 20 == 0) {
-            flag = !(entity instanceof LOTREntityNPC) || !((LOTREntityNPC) entity).isImmuneToFrost;
-            if (entity instanceof EntityPlayer) {
-                flag = !((EntityPlayer) entity).capabilities.isCreativeMode;
-            }
-            if (flag) {
-                i = MathHelper.floor_double(entity.posX);
-                j = MathHelper.floor_double(entity.boundingBox.minY);
-                k2 = MathHelper.floor_double(entity.posZ);
-                BiomeGenBase biome = world.getBiomeGenForCoords(i, k2);
-                if (biome instanceof LOTRBiomeGenForodwaith && (world.canBlockSeeTheSky(i, j, k2) || inWater) && world.getSavedLightValue(EnumSkyBlock.Block, i, j, k2) < 10) {
-                    int frostChance = 50;
-                    int frostProtection = 0;
-                    for (l = 0; l < 4; ++l) {
-                        ItemStack armor = entity.getEquipmentInSlot(l + 1);
-                        if (armor == null || !(armor.getItem() instanceof ItemArmor)) {
-                            continue;
-                        }
-                        ItemArmor.ArmorMaterial material = ((ItemArmor) armor.getItem()).getArmorMaterial();
-                        Item materialItem = material.func_151685_b();
-                        if (materialItem == Items.leather) {
-                            frostProtection += 50;
-                            continue;
-                        }
-                        if (materialItem != LOTRMod.fur) {
-                            continue;
-                        }
-                        frostProtection += 100;
-                    }
-                    frostChance += frostProtection;
-                    if (world.isRaining()) {
-                        frostChance /= 3;
-                    }
-                    if (inWater) {
-                        frostChance /= 20;
-                    }
-                    if (world.rand.nextInt(Math.max(frostChance, 1)) == 0) {
-                        entity.attackEntityFrom(LOTRDamage.frost, 1.0f);
-                    }
-                }
-            }
-        }
+    }
+
+    public void handleEntityFireDamageEffects(World world,EntityLivingBase entity){
         if (!world.isRemote && entity.isEntityAlive() && entity.ticksExisted % 20 == 0) {
             flag = true;
             if (entity instanceof LOTREntityNPC) {
@@ -1648,8 +1568,111 @@ public class LOTREventHandler implements IFuelHandler {
                 }
             }
         }
-        if (world.isRemote) {
-            LOTRPlateFallingInfo.getOrCreateFor(entity, true).update();
+    }
+
+    public void spawnHobbitBoundersIfConditionsMet(World world,EntityLivingBase entity){
+    if (!world.isRemote && LOTRMod.canSpawnMobs(world) && entity.isEntityAlive() && world.isDaytime()) {
+        int i3;
+        float f = 0.0f;
+        int bounders = 0;
+        if (LOTRFaction.HOBBIT.isBadRelation(LOTRMod.getNPCFaction(entity))) {
+            float health = entity.getMaxHealth() + entity.getTotalArmorValue();
+            f = health * 2.5f;
+            i3 = (int) (health / 15.0f);
+            bounders = 2 + world.rand.nextInt(i3 + 1);
+        } else if (entity instanceof EntityPlayer) {
+            EntityPlayer entityplayer = (EntityPlayer) entity;
+            float alignment = LOTRLevelData.getData(entityplayer).getAlignment(LOTRFaction.HOBBIT);
+            if (!entityplayer.capabilities.isCreativeMode && alignment < 0.0f) {
+                f = -alignment;
+                int i4 = (int) (f / 50.0f);
+                bounders = 2 + world.rand.nextInt(i4 + 1);
+            }
+        }
+        if (f > 0.0f) {
+            f = Math.min(f, 2000.0f);
+            int chance = (int) (2000000.0f / f);
+            bounders = Math.min(bounders, 5);
+            i3 = MathHelper.floor_double(entity.posX);
+            int k3 = MathHelper.floor_double(entity.posZ);
+            world.getTopSolidOrLiquidBlock(i3, k3);
+            if (world.rand.nextInt(chance) == 0 && world.getBiomeGenForCoords(i3, k3) instanceof LOTRBiomeGenShire && world.getEntitiesWithinAABB(LOTREntityHobbitBounder.class, entity.boundingBox.expand(12.0, 6.0, 12.0)).isEmpty()) {
+                boolean sentMessage = false;
+                boolean playedHorn = false;
+                block3:
+                for (int l4 = 0; l4 < bounders; ++l4) {
+                    LOTREntityHobbitBounder bounder = new LOTREntityHobbitBounder(world);
+                    for (int l1 = 0; l1 < 32; ++l1) {
+                        int j1;
+                        int k1;
+                        int i1 = i3 - world.rand.nextInt(12) + world.rand.nextInt(12);
+                        if (!world.getBlock(i1, (j1 = world.getTopSolidOrLiquidBlock(i1, k1 = k3 - world.rand.nextInt(12) + world.rand.nextInt(12))) - 1, k1).isSideSolid(world, i1, j1 - 1, k1, ForgeDirection.UP) || world.getBlock(i1, j1, k1).isNormalCube() || world.getBlock(i1, j1 + 1, k1).isNormalCube()) {
+                            continue;
+                        }
+                        bounder.setLocationAndAngles(i1 + 0.5, j1, k1 + 0.5, 0.0f, 0.0f);
+                        if (!bounder.getCanSpawnHere() || entity.getDistanceToEntity(bounder) <= 6.0) {
+                            continue;
+                        }
+                        bounder.onSpawnWithEgg(null);
+                        world.spawnEntityInWorld(bounder);
+                        bounder.setAttackTarget(entity);
+                        if (!sentMessage && entity instanceof EntityPlayer) {
+                            EntityPlayer entityplayer = (EntityPlayer) entity;
+                            bounder.sendSpeechBank(entityplayer, bounder.getSpeechBank(entityplayer));
+                            sentMessage = true;
+                        }
+                        if (playedHorn) {
+                            continue block3;
+                        }
+                        world.playSoundAtEntity(bounder, "lotr:item.horn", 2.0f, 2.0f);
+                        playedHorn = true;
+                        continue block3;
+                    }
+                }
+            }
+        }
+    }
+    }
+
+    public void spawnMarshWraithIfConditionsMet(World world,EntityLivingBase entity){
+        if (!world.isRemote && LOTRMod.canSpawnMobs(world) && entity.isEntityAlive() && inWater && entity.ridingEntity == null) {
+            flag = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
+            if (entity instanceof EntityWaterMob || entity instanceof LOTREntityMarshWraith) {
+                flag = false;
+            }
+            if (flag) {
+                int i2 = MathHelper.floor_double(entity.posX);
+                k = MathHelper.floor_double(entity.posZ);
+                int j2 = world.getTopSolidOrLiquidBlock(i2, k);
+                while (world.getBlock(i2, j2 + 1, k).getMaterial().isLiquid() || world.getBlock(i2, j2 + 1, k).getMaterial().isSolid()) {
+                    ++j2;
+                }
+                if (j2 - entity.boundingBox.minY < 2.0 && world.getBlock(i2, j2, k).getMaterial() == Material.water && world.getBiomeGenForCoords(i2, k) instanceof LOTRBiomeGenDeadMarshes) {
+                    List nearbyWraiths = world.getEntitiesWithinAABB(LOTREntityMarshWraith.class, entity.boundingBox.expand(15.0, 15.0, 15.0));
+                    boolean anyNearbyWraiths = false;
+                    for (Object nearbyWraith : nearbyWraiths) {
+                        LOTREntityMarshWraith wraith = (LOTREntityMarshWraith) nearbyWraith;
+                        if (wraith.getAttackTarget() != entity || wraith.getDeathFadeTime() != 0) {
+                            continue;
+                        }
+                        anyNearbyWraiths = true;
+                        break;
+                    }
+                    if (!anyNearbyWraiths) {
+                        LOTREntityMarshWraith wraith = new LOTREntityMarshWraith(world);
+                        int i1 = i2 + MathHelper.getRandomIntegerInRange(world.rand, -3, 3);
+                        int k1 = k + MathHelper.getRandomIntegerInRange(world.rand, -3, 3);
+                        int j1 = world.getTopSolidOrLiquidBlock(i1, k1);
+                        wraith.setLocationAndAngles(i1 + 0.5, j1, k1 + 0.5, world.rand.nextFloat() * 360.0f, 0.0f);
+                        if (wraith.getDistanceSqToEntity(entity) <= 144.0) {
+                            world.spawnEntityInWorld(wraith);
+                            wraith.setAttackTarget(entity);
+                            wraith.attackTargetUUID = entity.getUniqueID();
+                            world.playSoundAtEntity(wraith, "lotr:wraith.spawn", 1.0f, 0.7f + world.rand.nextFloat() * 0.6f);
+                        }
+                    }
+                }
+            }
         }
     }
 

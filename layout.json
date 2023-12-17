@@ -1,0 +1,13 @@
+{
+  "ideaDirPath": "/home/iamacat/Bureau/githubrepo/The-Lord-of-the-Rings/.idea",
+  "modulesMap": {
+    "The-Lord-of-the-Rings": "/home/iamacat/Bureau/githubrepo/The-Lord-of-the-Rings/.idea/modules/The-Lord-of-the-Rings.iml",
+    "The-Lord-of-the-Rings:api": "/home/iamacat/Bureau/githubrepo/The-Lord-of-the-Rings/.idea/modules/The-Lord-of-the-Rings.api.iml",
+    "The-Lord-of-the-Rings:ideVirtualMain": "/home/iamacat/Bureau/githubrepo/The-Lord-of-the-Rings/.idea/modules/The-Lord-of-the-Rings.ideVirtualMain.iml",
+    "The-Lord-of-the-Rings:injectedTags": "/home/iamacat/Bureau/githubrepo/The-Lord-of-the-Rings/.idea/modules/The-Lord-of-the-Rings.injectedTags.iml",
+    "The-Lord-of-the-Rings:main": "/home/iamacat/Bureau/githubrepo/The-Lord-of-the-Rings/.idea/modules/The-Lord-of-the-Rings.main.iml",
+    "The-Lord-of-the-Rings:mcLauncher": "/home/iamacat/Bureau/githubrepo/The-Lord-of-the-Rings/.idea/modules/The-Lord-of-the-Rings.mcLauncher.iml",
+    "The-Lord-of-the-Rings:patchedMc": "/home/iamacat/Bureau/githubrepo/The-Lord-of-the-Rings/.idea/modules/The-Lord-of-the-Rings.patchedMc.iml",
+    "The-Lord-of-the-Rings:test": "/home/iamacat/Bureau/githubrepo/The-Lord-of-the-Rings/.idea/modules/The-Lord-of-the-Rings.test.iml"
+  }
+}
