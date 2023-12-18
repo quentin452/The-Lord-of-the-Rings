@@ -111,15 +111,18 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 		return worldObj.canSnowAtBody(i, j, k, checkLight);
 	}
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean doesXZShowFog(int i, int k) {
-		BiomeGenBase biome = worldObj.getBiomeGenForCoords(i, k);
-		if (biome instanceof LOTRBiome) {
-			return ((LOTRBiome) biome).hasFog();
-		}
-		return super.doesXZShowFog(i, k);
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean doesXZShowFog(int i, int k) {
+        int chunkX = i >> 4;
+        int chunkZ = k >> 4;
+
+        if (worldObj.getChunkProvider().chunkExists(chunkX, chunkZ)) {
+            BiomeGenBase biome = worldObj.getBiomeGenForCoords(i, k);
+            return biome instanceof LOTRBiome && ((LOTRBiome) biome).hasFog();
+        }
+        return false;
+    }
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -157,27 +160,39 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 		return Vec3.createVectorHelper(cloudsR, cloudsG, cloudsB);
 	}
 
+    private final LOTRDimension dim = getLOTRDimension();
+    private final BiomeGenBase[] biomeList = dim.biomeList;
+
     @Override
     public BiomeGenBase getBiomeGenForCoords(int i, int k) {
-        if (worldObj.blockExists(i, 0, k)) {
-            BiomeGenBase biome = worldChunkMgr.getBiomeGenAt(i, k);
-            LOTRDimension dim = getLOTRDimension();
-            int biomeID = biome.biomeID;
-
-            if (biomeID >= 0 && biomeID <= 255) {
-                BiomeGenBase[] biomeList = dim.biomeList;
-
-                if (biomeList != null && biomeID < biomeList.length) {
-                    BiomeGenBase selectedBiome = biomeList[biomeID];
-
-                    if (selectedBiome != null) {
-                        return selectedBiome;
-                    }
-                }
-            }
+        if (!worldObj.blockExists(i, 0, k)) {
+            return worldChunkMgr.getBiomeGenAt(i, k);
         }
+
+        BiomeGenBase biome = worldChunkMgr.getBiomeGenAt(i, k);
+        int biomeID = biome.biomeID;
+
+        // Early return if the biomeID is out of range
+        if (biomeID < 0 || biomeID >= biomeList.length) {
+            return worldChunkMgr.getBiomeGenAt(i, k);
+        }
+
+        // Lookup override biome
+        return getOverrideBiome(biomeID, i, k);
+    }
+
+
+    private BiomeGenBase getOverrideBiome(int biomeID,int i, int k) {
+        // Lookup logic
+        BiomeGenBase selectedBiome = biomeList[biomeID];
+        if (selectedBiome != null) {
+            return selectedBiome;
+        }
+
+        // If no override biome is found, return default biome
         return worldChunkMgr.getBiomeGenAt(i, k);
     }
+
 
     @Override
 	@SideOnly(Side.CLIENT)
@@ -285,42 +300,40 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 		return rgb;
 	}
 
-	public float[] modifyFogIntensity(float farPlane, int fogMode) {
-		Minecraft mc = Minecraft.getMinecraft();
-		int i = (int) mc.renderViewEntity.posX;
-		int k = (int) mc.renderViewEntity.posZ;
-		float fogStart = 0.0f;
-		float fogEnd = 0.0f;
-		GameSettings settings = mc.gameSettings;
-		int[] ranges = ForgeModContainer.blendRanges;
-		int distance = 0;
-		if (settings.fancyGraphics && settings.renderDistanceChunks >= 0 && settings.renderDistanceChunks < ranges.length) {
-			distance = ranges[settings.renderDistanceChunks];
-		}
-		int l = 0;
-		for (int i1 = -distance; i1 <= distance; ++i1) {
-			for (int k1 = -distance; k1 <= distance; ++k1) {
-				float thisFogStart;
-				float thisFogEnd;
-				boolean foggy = doesXZShowFog(i + i1, k + k1);
-				if (foggy) {
-					thisFogStart = farPlane * 0.05f;
-					thisFogEnd = Math.min(farPlane, 192.0f) * 0.5f;
-				} else {
-					if (fogMode < 0) {
-						thisFogStart = 0.0f;
-					} else {
-						thisFogStart = farPlane * 0.75f;
-					}
-					thisFogEnd = farPlane;
-				}
-				fogStart += thisFogStart;
-				fogEnd += thisFogEnd;
-				++l;
-			}
-		}
-		return new float[]{fogStart / l, fogEnd / l};
-	}
+    public float[] modifyFogIntensity(float farPlane, int fogMode) {
+        Minecraft mc = Minecraft.getMinecraft();
+        int i = (int) mc.renderViewEntity.posX;
+        int k = (int) mc.renderViewEntity.posZ;
+        float fogStart = 0.0f;
+        float fogEnd = 0.0f;
+        GameSettings settings = mc.gameSettings;
+        int[] ranges = ForgeModContainer.blendRanges;
+        int distance = 0;
+
+        if (settings.fancyGraphics && settings.renderDistanceChunks >= 0 && settings.renderDistanceChunks < ranges.length) {
+            distance = ranges[settings.renderDistanceChunks];
+        }
+
+        int totalIterations = (2 * distance + 1) * (2 * distance + 1);
+        float fogMultiplier = 0.05f;
+
+        if (fogMode >= 0) {
+            fogMultiplier = 0.75f;
+        }
+
+        for (int i1 = -distance; i1 <= distance; ++i1) {
+            for (int k1 = -distance; k1 <= distance; ++k1) {
+                boolean foggy = doesXZShowFog(i + i1, k + k1);
+                float thisFogStart = foggy ? farPlane * 0.05f : farPlane * fogMultiplier;
+                float thisFogEnd = foggy ? Math.min(farPlane, 192.0f) * 0.5f : farPlane;
+
+                fogStart += thisFogStart;
+                fogEnd += thisFogEnd;
+            }
+        }
+
+        return new float[]{fogStart / totalIterations, fogEnd / totalIterations};
+    }
 
 	@Override
 	public void registerWorldChunkManager() {

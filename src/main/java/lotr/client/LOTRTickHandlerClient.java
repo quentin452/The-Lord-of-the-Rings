@@ -40,6 +40,7 @@ import lotr.common.util.LOTRVersionChecker;
 import lotr.common.world.LOTRWorldChunkManager;
 import lotr.common.world.LOTRWorldProvider;
 import lotr.common.world.biome.LOTRBiome;
+import lotr.common.world.biome.LOTRBiomeGenBarrowDowns;
 import lotr.common.world.biome.LOTRBiomeGenUtumno;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
 import lotr.common.world.map.LOTRConquestGrid;
@@ -1162,75 +1163,71 @@ public class LOTRTickHandlerClient {
 		}
 	}
 
-	@SubscribeEvent
-	public void onRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
-		Minecraft mc = Minecraft.getMinecraft();
-		EntityLivingBase viewer = event.entity;
-		WorldClient worldClient = mc.theWorld;
-		WorldProvider provider = worldClient.provider;
-		int i = MathHelper.floor_double(viewer.posX);
-		int j = MathHelper.floor_double(viewer.boundingBox.minY);
-		int k = MathHelper.floor_double(viewer.posZ);
-		BiomeGenBase biome = worldClient.getBiomeGenForCoords(i, k);
-		float farPlane = event.farPlaneDistance;
-		int fogMode = event.fogMode;
-		if (provider instanceof LOTRWorldProvider) {
-			LOTRBiome lotrbiome = (LOTRBiome) biome;
-			float[] fogStartEnd = ((LOTRWorldProvider) provider).modifyFogIntensity(farPlane, fogMode);
-			float fogStart = fogStartEnd[0];
-			float fogEnd = fogStartEnd[1];
-			if (LOTRConfig.newWeather && (lotrbiome.getEnableRain() || lotrbiome.getEnableSnow())) {
-				float rain = prevRainFactor + (rainFactor - prevRainFactor) * renderTick;
-				if (rain > 0.0F) {
-					float rainOpacityStart = 0.95F;
-					float rainOpacityEnd = 0.2F;
-					fogStart -= fogStart * rain * rainOpacityStart;
-					fogEnd -= fogEnd * rain * rainOpacityEnd;
-				}
-			}
-			if (mistFactor > 0.0F) {
-				float mistOpacityStart = 0.95F;
-				float mistOpacityEnd = 0.7F;
-				fogStart -= fogStart * mistFactor * mistOpacityStart;
-				fogEnd -= fogEnd * mistFactor * mistOpacityEnd;
-			}
-			float wightFactor = prevWightNearTick + (wightNearTick - prevWightNearTick) * renderTick;
-			wightFactor /= 100.0F;
-			if (wightFactor > 0.0F) {
-				float wightOpacityStart = 0.97F;
-				float wightOpacityEnd = 0.75F;
-				fogStart -= fogStart * wightFactor * wightOpacityStart;
-				fogEnd -= fogEnd * wightFactor * wightOpacityEnd;
-			}
-			if (lotrbiome instanceof lotr.common.world.biome.LOTRBiomeGenBarrowDowns) {
-				if (wightFactor > 0.0F) {
-					int sky0 = lotrbiome.getBaseSkyColorByTemp(i, j, k);
-					int sky1 = 9674385;
-					int clouds0 = 16777215;
-					int clouds1 = 11842740;
-					int fog0 = 16777215;
-					int fog1 = 10197915;
-					lotrbiome.biomeColors.setSky(LOTRColorUtil.lerpColors_I(sky0, sky1, wightFactor));
-					lotrbiome.biomeColors.setClouds(LOTRColorUtil.lerpColors_I(clouds0, clouds1, wightFactor));
-					lotrbiome.biomeColors.setFog(LOTRColorUtil.lerpColors_I(fog0, fog1, wightFactor));
-				} else {
-					lotrbiome.biomeColors.resetSky();
-					lotrbiome.biomeColors.resetClouds();
-					lotrbiome.biomeColors.resetFog();
-				}
-			}
-			balrogFactor = prevBalrogNearTick + (balrogNearTick - prevBalrogNearTick) * renderTick;
-			balrogFactor /= 100.0F;
-			if (balrogFactor > 0.0F) {
-				float balrogOpacityStart = 0.98F;
-				float balrogOpacityEnd = 0.75F;
-				fogStart -= fogStart * balrogFactor * balrogOpacityStart;
-				fogEnd -= fogEnd * balrogFactor * balrogOpacityEnd;
-			}
-			GL11.glFogf(2915, fogStart);
-			GL11.glFogf(2916, fogEnd);
-		}
-	}
+    @SubscribeEvent
+    public void onRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityLivingBase viewer = event.entity;
+        WorldClient worldClient = mc.theWorld;
+        WorldProvider provider = worldClient.provider;
+        int i = MathHelper.floor_double(viewer.posX);
+        int k = MathHelper.floor_double(viewer.posZ);
+
+        if (!(provider instanceof LOTRWorldProvider)) {
+            return;
+        }
+
+        BiomeGenBase biome = worldClient.getBiomeGenForCoords(i, k);
+        LOTRBiome lotrBiome = (LOTRBiome) biome;
+        float farPlane = event.farPlaneDistance;
+        int fogMode = event.fogMode;
+
+        float[] fogStartEnd = ((LOTRWorldProvider) provider).modifyFogIntensity(farPlane, fogMode);
+        float fogStart = fogStartEnd[0];
+        float fogEnd = fogStartEnd[1];
+
+        if (LOTRConfig.newWeather && (lotrBiome.getEnableRain() || lotrBiome.getEnableSnow())) {
+            fogStart -= fogStart * prevRainFactor + (rainFactor - prevRainFactor) * renderTick * 0.95F;
+            fogEnd -= fogEnd * prevRainFactor + (rainFactor - prevRainFactor) * renderTick * 0.2F;
+        }
+
+        if (mistFactor > 0.0F) {
+            fogStart -= fogStart * mistFactor * 0.95F;
+            fogEnd -= fogEnd * mistFactor * 0.7F;
+        }
+
+        float wightFactor = (prevWightNearTick + (wightNearTick - prevWightNearTick) * renderTick) / 100.0F;
+        if (wightFactor > 0.0F) {
+            fogStart -= fogStart * wightFactor * 0.97F;
+            fogEnd -= fogEnd * wightFactor * 0.75F;
+        }
+
+        if (lotrBiome instanceof LOTRBiomeGenBarrowDowns) {
+            if (wightFactor > 0.0F) {
+                int sky0 = lotrBiome.getBaseSkyColorByTemp(i, MathHelper.floor_double(viewer.boundingBox.minY), k);
+                int sky1 = 9674385;
+                int clouds0 = 16777215;
+                int clouds1 = 11842740;
+                int fog0 = 16777215;
+                int fog1 = 10197915;
+                lotrBiome.biomeColors.setSky(LOTRColorUtil.lerpColors_I(sky0, sky1, wightFactor));
+                lotrBiome.biomeColors.setClouds(LOTRColorUtil.lerpColors_I(clouds0, clouds1, wightFactor));
+                lotrBiome.biomeColors.setFog(LOTRColorUtil.lerpColors_I(fog0, fog1, wightFactor));
+            } else {
+                lotrBiome.biomeColors.resetSky();
+                lotrBiome.biomeColors.resetClouds();
+                lotrBiome.biomeColors.resetFog();
+            }
+        }
+
+        balrogFactor = (prevBalrogNearTick + (balrogNearTick - prevBalrogNearTick) * renderTick) / 100.0F;
+        if (balrogFactor > 0.0F) {
+            fogStart -= fogStart * balrogFactor * 0.98F;
+            fogEnd -= fogEnd * balrogFactor * 0.75F;
+        }
+
+        GL11.glFogf(2915, fogStart);
+        GL11.glFogf(2916, fogEnd);
+    }
 
 	@SubscribeEvent
 	public void onRenderTick(TickEvent.RenderTickEvent event) {
