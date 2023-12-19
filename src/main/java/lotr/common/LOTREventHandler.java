@@ -1634,7 +1634,7 @@ public class LOTREventHandler implements IFuelHandler {
     }
     }
 
-    public void spawnMarshWraithIfConditionsMet(World world,EntityLivingBase entity){
+    public void spawnMarshWraithIfConditionsMet(World world, EntityLivingBase entity) {
         if (!world.isRemote && LOTRMod.canSpawnMobs(world) && entity.isEntityAlive() && inWater && entity.ridingEntity == null) {
             flag = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
             if (entity instanceof EntityWaterMob || entity instanceof LOTREntityMarshWraith) {
@@ -1642,34 +1642,38 @@ public class LOTREventHandler implements IFuelHandler {
             }
             if (flag) {
                 int i2 = MathHelper.floor_double(entity.posX);
-                k = MathHelper.floor_double(entity.posZ);
+                int k = MathHelper.floor_double(entity.posZ);
                 int j2 = world.getTopSolidOrLiquidBlock(i2, k);
-                while (world.getBlock(i2, j2 + 1, k).getMaterial().isLiquid() || world.getBlock(i2, j2 + 1, k).getMaterial().isSolid()) {
+
+                Material blockMaterial = world.getBlock(i2, j2, k).getMaterial();
+                BiomeGenBase biome = world.getBiomeGenForCoords(i2, k);
+
+                while (blockMaterial.isLiquid() || blockMaterial.isSolid()) {
                     ++j2;
+                    blockMaterial = world.getBlock(i2, j2, k).getMaterial();
                 }
-                if (j2 - entity.boundingBox.minY < 2.0 && world.getBlock(i2, j2, k).getMaterial() == Material.water && world.getBiomeGenForCoords(i2, k) instanceof LOTRBiomeGenDeadMarshes) {
-                    List nearbyWraiths = world.getEntitiesWithinAABB(LOTREntityMarshWraith.class, entity.boundingBox.expand(15.0, 15.0, 15.0));
-                    boolean anyNearbyWraiths = false;
-                    for (Object nearbyWraith : nearbyWraiths) {
-                        LOTREntityMarshWraith wraith = (LOTREntityMarshWraith) nearbyWraith;
-                        if (wraith.getAttackTarget() != entity || wraith.getDeathFadeTime() != 0) {
-                            continue;
-                        }
-                        anyNearbyWraiths = true;
-                        break;
+
+                if (j2 - entity.boundingBox.minY < 2.0 && blockMaterial == Material.water && biome instanceof LOTRBiomeGenDeadMarshes) {
+                    double expandValue = 10.0;
+                    AxisAlignedBB boundingBox = entity.boundingBox.expand(expandValue, expandValue, expandValue);
+                    List<LOTREntityMarshWraith> nearbyWraiths = world.getEntitiesWithinAABB(LOTREntityMarshWraith.class, boundingBox);
+
+                    if (!nearbyWraiths.isEmpty()) {
+                        return;
                     }
-                    if (!anyNearbyWraiths) {
-                        LOTREntityMarshWraith wraith = new LOTREntityMarshWraith(world);
-                        int i1 = i2 + MathHelper.getRandomIntegerInRange(world.rand, -3, 3);
-                        int k1 = k + MathHelper.getRandomIntegerInRange(world.rand, -3, 3);
-                        int j1 = world.getTopSolidOrLiquidBlock(i1, k1);
-                        wraith.setLocationAndAngles(i1 + 0.5, j1, k1 + 0.5, world.rand.nextFloat() * 360.0f, 0.0f);
-                        if (wraith.getDistanceSqToEntity(entity) <= 144.0) {
-                            world.spawnEntityInWorld(wraith);
-                            wraith.setAttackTarget(entity);
-                            wraith.attackTargetUUID = entity.getUniqueID();
-                            world.playSoundAtEntity(wraith, "lotr:wraith.spawn", 1.0f, 0.7f + world.rand.nextFloat() * 0.6f);
-                        }
+
+                    int i1 = i2 + MathHelper.getRandomIntegerInRange(world.rand, -3, 3);
+                    int k1 = k + MathHelper.getRandomIntegerInRange(world.rand, -3, 3);
+                    int j1 = world.getTopSolidOrLiquidBlock(i1, k1);
+
+                    LOTREntityMarshWraith wraith = new LOTREntityMarshWraith(world);
+                    wraith.setLocationAndAngles(i1 + 0.5, j1, k1 + 0.5, world.rand.nextFloat() * 360.0f, 0.0f);
+
+                    if (wraith.getDistanceSqToEntity(entity) <= 144.0) {
+                        world.spawnEntityInWorld(wraith);
+                        wraith.setAttackTarget(entity);
+                        wraith.attackTargetUUID = entity.getUniqueID();
+                        world.playSoundAtEntity(wraith, "lotr:wraith.spawn", 1.0f, 0.7f + world.rand.nextFloat() * 0.6f);
                     }
                 }
             }
