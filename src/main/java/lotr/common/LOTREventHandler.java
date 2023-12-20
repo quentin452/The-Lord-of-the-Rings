@@ -5,6 +5,7 @@ import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -818,41 +819,55 @@ public class LOTREventHandler implements IFuelHandler {
 			event.setResult(Event.Result.DENY);
 		}
 	}
+    // LOTRBannerProtection is disabled due to LAG TPS when exploding something and also i disabled EXPLOSIONS in lotr dimensions
+ /*   @SubscribeEvent
+    public void onExplosionDetonate(ExplosionEvent.Detonate event) {
+        Explosion expl = event.explosion;
+        World world = event.world;
+        Entity exploder = expl.exploder;
+        if (!world.isRemote && exploder != null) {
+             LOTRBannerProtection.IFilter protectFilter = getiFilter(exploder);
+             if (protectFilter != null) {
+            List<ChunkPosition> blockList = expl.affectedBlockPositions;
+            Collection<ChunkPosition> removes = new ArrayList<>();
+            for (ChunkPosition blockPos : blockList) {
+                int i = blockPos.chunkPosX;
+                int j = blockPos.chunkPosY;
+                int k = blockPos.chunkPosZ;
+                 if (!LOTRBannerProtection.isProtected(world, i, j, k, protectFilter, false)) {
+                     continue;
+                 }
+                removes.add(blockPos);
+            }
+            blockList.removeAll(removes);
+             }
+        }
+    }
 
-	@SubscribeEvent
-	public void onExplosionDetonate(ExplosionEvent.Detonate event) {
-		Explosion expl = event.explosion;
-		World world = event.world;
-		Entity exploder = expl.exploder;
-		if (!world.isRemote && exploder != null) {
-			LOTRBannerProtection.IFilter protectFilter = null;
-			if (exploder instanceof LOTREntityNPC || exploder instanceof EntityMob) {
-				protectFilter = LOTRBannerProtection.anyBanner();
-			} else if (exploder instanceof EntityThrowable) {
-				protectFilter = LOTRBannerProtection.forThrown((EntityThrowable) exploder);
-			} else if (exploder instanceof EntityTNTPrimed) {
-				protectFilter = LOTRBannerProtection.forTNT((EntityTNTPrimed) exploder);
-			} else if (exploder instanceof EntityMinecartTNT) {
-				protectFilter = LOTRBannerProtection.forTNTMinecart((EntityMinecartTNT) exploder);
-			}
-			if (protectFilter != null) {
-				List<ChunkPosition> blockList = expl.affectedBlockPositions;
-				Collection<ChunkPosition> removes = new ArrayList<>();
-				for (ChunkPosition blockPos : blockList) {
-					int i = blockPos.chunkPosX;
-					int j = blockPos.chunkPosY;
-					int k = blockPos.chunkPosZ;
-					if (!LOTRBannerProtection.isProtected(world, i, j, k, protectFilter, false)) {
-						continue;
-					}
-					removes.add(blockPos);
-				}
-				blockList.removeAll(removes);
-			}
-		}
-	}
+  */
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onExplosionDetonate(ExplosionEvent.Start event) {
+        int dimensionId = event.world.provider.dimensionId;
+        if (dimensionId ==LOTRDimension.UTUMNO.dimensionID || dimensionId == LOTRDimension.MIDDLE_EARTH.dimensionID) {
+            event.setCanceled(true);
+        }
+    }
 
-	@SubscribeEvent
+    private static LOTRBannerProtection.IFilter getiFilter(Entity exploder) {
+        LOTRBannerProtection.IFilter protectFilter = null;
+        if (exploder instanceof LOTREntityNPC || exploder instanceof EntityMob) {
+            protectFilter = LOTRBannerProtection.anyBanner();
+        } else if (exploder instanceof EntityThrowable) {
+            protectFilter = LOTRBannerProtection.forThrown((EntityThrowable) exploder);
+        } else if (exploder instanceof EntityTNTPrimed) {
+            protectFilter = LOTRBannerProtection.forTNT((EntityTNTPrimed) exploder);
+        } else if (exploder instanceof EntityMinecartTNT) {
+            protectFilter = LOTRBannerProtection.forTNTMinecart((EntityMinecartTNT) exploder);
+        }
+        return protectFilter;
+    }
+
+    @SubscribeEvent
 	public void onFillBucket(FillBucketEvent event) {
 		EntityPlayer entityplayer = event.entityPlayer;
 		ItemStack itemstack = event.current;
@@ -1369,24 +1384,27 @@ public class LOTREventHandler implements IFuelHandler {
     private boolean flag;
     private int k;
 
-    boolean inWater;
-
     int j;
     int l;
     int i;
     int k2;
 
+    public boolean inWater(EntityLivingBase entityLivingBase){
+        return entityLivingBase.isInWater();
+    }
 
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
         EntityLivingBase entity = event.entityLiving;
-        inWater = entity.isInWater();
         World world = entity.worldObj;
         if (!world.isRemote) {
             LOTREnchantmentHelper.onEntityUpdate(entity);
         }
         autoRemoveVanillaEnchantments(world,entity);
-        spawnMarshWraithIfConditionsMet(world,entity);
+        BiomeGenBase biome = world.getBiomeGenForCoords(MathHelper.floor_double(entity.posX), MathHelper.floor_double(entity.posZ));
+        if(biome instanceof LOTRBiomeGenDeadMarshes) {
+            spawnMarshWraithIfConditionsMet(world, entity);
+        }
         spawnHobbitBoundersIfConditionsMet(world,entity);
         applyMirkwoodCorruptionEffects(world,entity);
         applyMorgulValeCursesToEntities(world,entity);
@@ -1412,7 +1430,7 @@ public class LOTREventHandler implements IFuelHandler {
     }
 
     public void applyMirkwoodCorruptionEffects(World world, EntityLivingBase entity) {
-        if (world.isRemote || !entity.isEntityAlive() || !inWater || entity.ridingEntity != null || entity.ticksExisted % 10 != 0) {
+        if (world.isRemote || !entity.isEntityAlive() || !inWater(entity) || entity.ridingEntity != null || entity.ticksExisted % 10 != 0) {
             return;
         }
 
@@ -1434,7 +1452,7 @@ public class LOTREventHandler implements IFuelHandler {
     }
 
     public void applyMorgulValeCursesToEntities(World world,EntityLivingBase entity){
-        if (!world.isRemote && entity.isEntityAlive() && inWater && entity.ridingEntity == null && entity.ticksExisted % 10 == 0) {
+        if (!world.isRemote && entity.isEntityAlive() && inWater(entity) && entity.ridingEntity == null && entity.ticksExisted % 10 == 0) {
             flag = true;
             if (entity instanceof EntityPlayer) {
                 EntityPlayer entityplayer = (EntityPlayer) entity;
@@ -1466,7 +1484,7 @@ public class LOTREventHandler implements IFuelHandler {
         }
     }
     public void applyMorgulValeEffectsIfApplicable(World world,EntityLivingBase entity){
-        if (!world.isRemote && entity.isEntityAlive() && inWater && entity.ridingEntity == null && entity.ticksExisted % 10 == 0) {
+        if (!world.isRemote && entity.isEntityAlive() && inWater(entity) && entity.ridingEntity == null && entity.ticksExisted % 10 == 0) {
             flag = true;
             if (entity instanceof EntityPlayer) {
                 EntityPlayer entityplayer = (EntityPlayer) entity;
@@ -1554,7 +1572,7 @@ public class LOTREventHandler implements IFuelHandler {
                 int k2 = MathHelper.floor_double(entity.posZ);
 
                 BiomeGenBase biome = world.getBiomeGenForCoords(i, k2);
-                if (biome instanceof LOTRBiomeGenNearHarad && !inWater && world.canBlockSeeTheSky(i, j, k2) && world.isDaytime()) {
+                if (biome instanceof LOTRBiomeGenNearHarad && !inWater(entity) && world.canBlockSeeTheSky(i, j, k2) && world.isDaytime()) {
                     int burnChance = 50;
                     int burnProtection = 0;
 
@@ -1649,7 +1667,7 @@ public class LOTREventHandler implements IFuelHandler {
     }
 
     public void spawnMarshWraithIfConditionsMet(World world, EntityLivingBase entity) {
-        if (world.isRemote || !entity.isEntityAlive() || inWater || entity.ridingEntity != null) {
+        if (world.isRemote || !entity.isEntityAlive() || inWater(entity) || entity.ridingEntity != null) {
             return;
         }
 
