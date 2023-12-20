@@ -44,6 +44,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.*;
 import net.minecraft.entity.monster.EntityMob;
@@ -1375,6 +1376,7 @@ public class LOTREventHandler implements IFuelHandler {
     int i;
     int k2;
 
+
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
         EntityLivingBase entity = event.entityLiving;
@@ -1409,20 +1411,28 @@ public class LOTREventHandler implements IFuelHandler {
         }
     }
 
-    public void applyMirkwoodCorruptionEffects(World world,EntityLivingBase entity){
-        if (!world.isRemote && entity.isEntityAlive() && inWater && entity.ridingEntity == null && entity.ticksExisted % 10 == 0) {
-            flag = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
-            if (entity instanceof LOTREntityMirkwoodSpider) {
-                flag = false;
-            }
-            if (flag && world.getBiomeGenForCoords(MathHelper.floor_double(entity.posX), MathHelper.floor_double(entity.posZ)) instanceof LOTRBiomeGenMirkwoodCorrupted) {
-                entity.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 600, 1));
-                entity.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 600, 1));
-                entity.addPotionEffect(new PotionEffect(Potion.weakness.id, 600));
-                entity.addPotionEffect(new PotionEffect(Potion.blindness.id, 600));
-            }
+    public void applyMirkwoodCorruptionEffects(World world, EntityLivingBase entity) {
+        if (world.isRemote || !entity.isEntityAlive() || !inWater || entity.ridingEntity != null || entity.ticksExisted % 10 != 0) {
+            return;
+        }
+
+        boolean flag = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
+        if (entity instanceof LOTREntityMirkwoodSpider) {
+            flag = false;
+        }
+
+        int posX = MathHelper.floor_double(entity.posX);
+        int posZ = MathHelper.floor_double(entity.posZ);
+        BiomeGenBase biome = world.getBiomeGenForCoords(posX, posZ);
+
+        if (flag && biome instanceof LOTRBiomeGenMirkwoodCorrupted) {
+            entity.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 600, 1));
+            entity.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 600, 1));
+            entity.addPotionEffect(new PotionEffect(Potion.weakness.id, 600));
+            entity.addPotionEffect(new PotionEffect(Potion.blindness.id, 600));
         }
     }
+
     public void applyMorgulValeCursesToEntities(World world,EntityLivingBase entity){
         if (!world.isRemote && entity.isEntityAlive() && inWater && entity.ridingEntity == null && entity.ticksExisted % 10 == 0) {
             flag = true;
@@ -1507,60 +1517,64 @@ public class LOTREventHandler implements IFuelHandler {
             }
         }
     }
-    public void updateEntityLanceSpeedEffect(World world,EntityLivingBase entity){
-        if (!world.isRemote && entity.isEntityAlive()) {
-            IAttributeInstance speedAttribute;
-            ItemStack weapon = entity.getHeldItem();
-            boolean lanceOnFoot = false;
-            if (weapon != null && weapon.getItem() instanceof LOTRItemLance && entity.ridingEntity == null) {
-                lanceOnFoot = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
-            }
-            if ((speedAttribute = entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed)).getModifier(LOTRItemLance.lanceSpeedBoost_id) != null) {
+    public void updateEntityLanceSpeedEffect(World world, EntityLivingBase entity) {
+        if (world.isRemote || !entity.isEntityAlive()) {
+            return;
+        }
+
+        ItemStack weapon = entity.getHeldItem();
+        boolean lanceOnFoot = false;
+
+        if (weapon != null && weapon.getItem() instanceof LOTRItemLance && entity.ridingEntity == null) {
+            lanceOnFoot = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
+        }
+
+        IAttributeInstance speedAttribute = entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+
+        if (speedAttribute != null) {
+            AttributeModifier existingModifier = speedAttribute.getModifier(LOTRItemLance.lanceSpeedBoost_id);
+
+            if (existingModifier != null) {
                 speedAttribute.removeModifier(LOTRItemLance.lanceSpeedBoost);
             }
+
             if (lanceOnFoot) {
                 speedAttribute.applyModifier(LOTRItemLance.lanceSpeedBoost);
             }
         }
     }
-
-    public void handleEntityFireDamageEffects(World world,EntityLivingBase entity){
+    public void handleEntityFireDamageEffects(World world, EntityLivingBase entity) {
         if (!world.isRemote && entity.isEntityAlive() && entity.ticksExisted % 20 == 0) {
-            flag = true;
-            if (entity instanceof LOTREntityNPC) {
-                flag = true;
-            }
-            if (entity instanceof EntityPlayer) {
-                flag = !((EntityPlayer) entity).capabilities.isCreativeMode;
-            }
-            if (entity instanceof LOTRBiomeGenNearHarad.ImmuneToHeat) {
-                flag = false;
-            }
+            boolean flag = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
+            flag = flag && !(entity instanceof LOTRBiomeGenNearHarad.ImmuneToHeat);
+
             if (flag) {
-                i = MathHelper.floor_double(entity.posX);
-                j = MathHelper.floor_double(entity.boundingBox.minY);
-                k2 = MathHelper.floor_double(entity.posZ);
+                int i = MathHelper.floor_double(entity.posX);
+                int j = MathHelper.floor_double(entity.boundingBox.minY);
+                int k2 = MathHelper.floor_double(entity.posZ);
+
                 BiomeGenBase biome = world.getBiomeGenForCoords(i, k2);
                 if (biome instanceof LOTRBiomeGenNearHarad && !inWater && world.canBlockSeeTheSky(i, j, k2) && world.isDaytime()) {
                     int burnChance = 50;
                     int burnProtection = 0;
-                    for (l = 0; l < 4; ++l) {
+
+                    for (int l = 0; l < 4; ++l) {
                         ItemStack armour = entity.getEquipmentInSlot(l + 1);
-                        if (armour == null || !(armour.getItem() instanceof ItemArmor)) {
-                            continue;
+                        if (armour != null && armour.getItem() instanceof ItemArmor) {
+                            ItemArmor.ArmorMaterial material = ((ItemArmor) armour.getItem()).getArmorMaterial();
+
+                            if (material.customCraftingMaterial == Items.leather) {
+                                burnProtection += 50;
+                            }
+                            if (material == LOTRMaterial.HARAD_ROBES.toArmorMaterial()) {
+                                burnProtection += 400;
+                            }
+                            if (material == LOTRMaterial.HARAD_NOMAD.toArmorMaterial()) {
+                                burnProtection += 200;
+                            }
                         }
-                        ItemArmor.ArmorMaterial material = ((ItemArmor) armour.getItem()).getArmorMaterial();
-                        if (material.customCraftingMaterial == Items.leather) {
-                            burnProtection += 50;
-                        }
-                        if (material == LOTRMaterial.HARAD_ROBES.toArmorMaterial()) {
-                            burnProtection += 400;
-                        }
-                        if (material != LOTRMaterial.HARAD_NOMAD.toArmorMaterial()) {
-                            continue;
-                        }
-                        burnProtection += 200;
                     }
+
                     burnChance += burnProtection;
                     if (world.rand.nextInt(Math.max(burnChance, 1)) == 0 && entity.attackEntityFrom(DamageSource.onFire, 1.0f) && entity instanceof EntityPlayerMP) {
                         LOTRDamage.doBurnDamage((EntityPlayerMP) entity);
@@ -1635,47 +1649,51 @@ public class LOTREventHandler implements IFuelHandler {
     }
 
     public void spawnMarshWraithIfConditionsMet(World world, EntityLivingBase entity) {
-        if (!world.isRemote && LOTRMod.canSpawnMobs(world) && entity.isEntityAlive() && inWater && entity.ridingEntity == null) {
-            flag = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
-            if (entity instanceof EntityWaterMob || entity instanceof LOTREntityMarshWraith) {
-                flag = false;
-            }
-            if (flag) {
-                int i2 = MathHelper.floor_double(entity.posX);
-                int k = MathHelper.floor_double(entity.posZ);
-                int j2 = world.getTopSolidOrLiquidBlock(i2, k);
+        if (world.isRemote || !entity.isEntityAlive() || inWater || entity.ridingEntity != null) {
+            return;
+        }
 
-                Material blockMaterial = world.getBlock(i2, j2, k).getMaterial();
-                BiomeGenBase biome = world.getBiomeGenForCoords(i2, k);
+        boolean flag = !(entity instanceof EntityPlayer) || !((EntityPlayer) entity).capabilities.isCreativeMode;
+        if (entity instanceof EntityWaterMob || entity instanceof LOTREntityMarshWraith) {
+            flag = false;
+        }
 
-                while (blockMaterial.isLiquid() || blockMaterial.isSolid()) {
-                    ++j2;
-                    blockMaterial = world.getBlock(i2, j2, k).getMaterial();
-                }
+        if (!flag) {
+            return;
+        }
 
-                if (j2 - entity.boundingBox.minY < 2.0 && blockMaterial == Material.water && biome instanceof LOTRBiomeGenDeadMarshes) {
-                    double expandValue = 10.0;
-                    AxisAlignedBB boundingBox = entity.boundingBox.expand(expandValue, expandValue, expandValue);
-                    List<LOTREntityMarshWraith> nearbyWraiths = world.getEntitiesWithinAABB(LOTREntityMarshWraith.class, boundingBox);
+        double expandValue = 10.0;
+        AxisAlignedBB boundingBox = entity.boundingBox.expand(expandValue, expandValue, expandValue);
+        List<LOTREntityMarshWraith> nearbyWraiths = world.getEntitiesWithinAABB(LOTREntityMarshWraith.class, boundingBox);
+        if (!nearbyWraiths.isEmpty()) {
+            return;
+        }
 
-                    if (!nearbyWraiths.isEmpty()) {
-                        return;
-                    }
+        int i2 = MathHelper.floor_double(entity.posX);
+        int k = MathHelper.floor_double(entity.posZ);
+        int j2 = world.getTopSolidOrLiquidBlock(i2, k);
 
-                    int i1 = i2 + MathHelper.getRandomIntegerInRange(world.rand, -3, 3);
-                    int k1 = k + MathHelper.getRandomIntegerInRange(world.rand, -3, 3);
-                    int j1 = world.getTopSolidOrLiquidBlock(i1, k1);
+        Material blockMaterial = world.getBlock(i2, j2, k).getMaterial();
+        BiomeGenBase biome = world.getBiomeGenForCoords(i2, k);
 
-                    LOTREntityMarshWraith wraith = new LOTREntityMarshWraith(world);
-                    wraith.setLocationAndAngles(i1 + 0.5, j1, k1 + 0.5, world.rand.nextFloat() * 360.0f, 0.0f);
+        while (blockMaterial.isLiquid() || blockMaterial.isSolid()) {
+            ++j2;
+            blockMaterial = world.getBlock(i2, j2, k).getMaterial();
+        }
 
-                    if (wraith.getDistanceSqToEntity(entity) <= 144.0) {
-                        world.spawnEntityInWorld(wraith);
-                        wraith.setAttackTarget(entity);
-                        wraith.attackTargetUUID = entity.getUniqueID();
-                        world.playSoundAtEntity(wraith, "lotr:wraith.spawn", 1.0f, 0.7f + world.rand.nextFloat() * 0.6f);
-                    }
-                }
+        if (j2 - entity.boundingBox.minY < 2.0 && blockMaterial == Material.water && biome instanceof LOTRBiomeGenDeadMarshes) {
+            int i1 = i2 + world.rand.nextInt(7) - 3;
+            int k1 = k + world.rand.nextInt(7) - 3;
+            int j1 = world.getTopSolidOrLiquidBlock(i1, k1);
+
+            LOTREntityMarshWraith wraith = new LOTREntityMarshWraith(world);
+            wraith.setLocationAndAngles(i1 + 0.5, j1, k1 + 0.5, world.rand.nextFloat() * 360.0f, 0.0f);
+
+            if (wraith.getDistanceSq(entity.posX, entity.posY, entity.posZ) <= 144.0) {
+                world.spawnEntityInWorld(wraith);
+                wraith.setAttackTarget(entity);
+                wraith.attackTargetUUID = entity.getUniqueID();
+                world.playSoundAtEntity(wraith, "lotr:wraith.spawn", 1.0f, 0.7f + world.rand.nextFloat() * 0.6f);
             }
         }
     }

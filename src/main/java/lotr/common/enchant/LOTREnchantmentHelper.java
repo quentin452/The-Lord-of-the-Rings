@@ -549,11 +549,13 @@ public class LOTREnchantmentHelper {
             return;
         }
 
+        NBTTagCompound entityData = entity.getEntityData();
+
         // Process entity's equipment
         if (entity instanceof EntityLiving) {
             ItemStack[] equipment = entity.getLastActiveItems();
             tryApplyRandomEnchantsForEquipment(equipment, rand);
-            entity.getEntityData().setBoolean("LOTREnchantInit", true);
+            entityData.setBoolean("LOTREnchantInit", true);
         }
 
         // Process player-specific inventory changes
