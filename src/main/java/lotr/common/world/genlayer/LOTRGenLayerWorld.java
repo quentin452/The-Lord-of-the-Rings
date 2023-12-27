@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -28,52 +29,71 @@ public class LOTRGenLayerWorld extends LOTRGenLayer {
 	public static int imageWidth;
 	public static int imageHeight;
 
-	public LOTRGenLayerWorld() {
-		super(0L);
-		if (!loadedBiomeImage()) {
-			try {
-				BufferedImage biomeImage = null;
-				String imageName = "assets/lotr/map/map.png";
-				ModContainer mc = LOTRMod.getModContainer();
-				if (mc.getSource().isFile()) {
-					ZipFile zip = new ZipFile(mc.getSource());
-					Enumeration<? extends ZipEntry> entries = zip.entries();
-					while (entries.hasMoreElements()) {
-						ZipEntry entry = entries.nextElement();
-						if (!entry.getName().equals(imageName)) {
-							continue;
-						}
-						biomeImage = ImageIO.read(zip.getInputStream(entry));
-					}
-					zip.close();
-				} else {
-					File file = new File(LOTRMod.class.getResource("/" + imageName).toURI());
-					biomeImage = ImageIO.read(Files.newInputStream(file.toPath()));
-				}
-				if (biomeImage == null) {
-					throw new RuntimeException("Could not load LOTR biome map image");
-				}
-				imageWidth = biomeImage.getWidth();
-				imageHeight = biomeImage.getHeight();
-				int[] colors = biomeImage.getRGB(0, 0, imageWidth, imageHeight, null, 0, imageWidth);
-				biomeImageData = new byte[imageWidth * imageHeight];
-				for (int i = 0; i < colors.length; ++i) {
-					int color = colors[i];
-					Integer biomeID = LOTRDimension.MIDDLE_EARTH.colorsToBiomeIDs.get(color);
-					if (biomeID != null) {
-						int cleanUP = biomeID;
-						biomeImageData[i] = (byte) cleanUP;
-						continue;
-					}
-					FMLLog.log(Level.ERROR, "Found unknown biome on map " + Integer.toHexString(color));
-					biomeImageData[i] = (byte) LOTRBiome.ocean.biomeID;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
+    public LOTRGenLayerWorld() {
+        super(0L);
+        if (!loadedBiomeImage()) {
+            loadBiomeImage();
+        }
+    }
+    private void loadBiomeImage() {
+        try {
+            BufferedImage biomeImage = null;
+            String imageName = "assets/lotr/map/map.png";
+            ModContainer mc = LOTRMod.getModContainer();
+            if (mc.getSource().isFile()) {
+                try (ZipFile zip = new ZipFile(mc.getSource())) {
+                    Enumeration<? extends ZipEntry> entries = zip.entries();
+                    while (entries.hasMoreElements()) {
+                        ZipEntry entry = entries.nextElement();
+                        if (!entry.getName().equals(imageName)) {
+                            continue;
+                        }
+                        biomeImage = ImageIO.read(zip.getInputStream(entry));
+                        break;
+                    }
+                }
+            } else {
+                File file = new File(LOTRMod.class.getResource("/" + imageName).toURI());
+                biomeImage = ImageIO.read(Files.newInputStream(file.toPath()));
+            }
+            if (biomeImage == null) {
+                throw new RuntimeException("Could not load LOTR biome map image");
+            }
+            processBiomeImage(biomeImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void processBiomeImage(BufferedImage biomeImage) {
+        if (biomeImage != null) {
+            imageWidth = biomeImage.getWidth();
+            imageHeight = biomeImage.getHeight();
+            int[] colors = biomeImage.getRGB(0, 0, imageWidth, imageHeight, null, 0, imageWidth);
+
+            ArrayList<Byte> biomeImageDataList = new ArrayList<>(imageWidth * imageHeight);
+
+            for (int i = 0; i < colors.length; ++i) {
+                int color = colors[i];
+                Integer biomeID = LOTRDimension.MIDDLE_EARTH.colorsToBiomeIDs.get(color);
+                if (biomeID != null) {
+                    int cleanUP = biomeID;
+                    biomeImageDataList.add((byte) cleanUP);
+                } else {
+                    FMLLog.log(Level.ERROR, "Found unknown biome on map " + Integer.toHexString(color));
+                    biomeImageDataList.add((byte) LOTRBiome.ocean.biomeID);
+                }
+            }
+
+            // Convert ArrayList to byte array
+            biomeImageData = new byte[biomeImageDataList.size()];
+            for (int i = 0; i < biomeImageDataList.size(); i++) {
+                biomeImageData[i] = biomeImageDataList.get(i);
+            }
+        } else {
+            throw new RuntimeException("No biome image provided for processing");
+        }
+    }
 	public static LOTRGenLayer[] createWorld(LOTRDimension dim, WorldType worldType) {
 		int i;
 		if (dim == LOTRDimension.UTUMNO) {
