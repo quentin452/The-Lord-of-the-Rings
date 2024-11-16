@@ -17,6 +17,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 
 import java.util.List;
@@ -184,17 +185,20 @@ public class LOTREntityPortal extends Entity {
 		setScale(nbt.getInteger("Scale"));
 	}
 
-	public void transferEntity(Entity entity) {
-		if (!worldObj.isRemote) {
-			int dimension = 0;
-			if (entity.dimension == 0) {
-				dimension = LOTRDimension.MIDDLE_EARTH.dimensionID;
-			} else if (entity.dimension == LOTRDimension.MIDDLE_EARTH.dimensionID) {
-				dimension = 0;
-			}
-			LOTRMod.transferEntityToDimension(entity, dimension, new LOTRTeleporter(DimensionManager.getWorld(dimension), true));
-		}
-	}
+        public void transferEntity(Entity entity) {
+            if (!worldObj.isRemote) {
+                int dimension = 0;
+                if (entity.dimension == 0) {
+                    dimension = LOTRDimension.MIDDLE_EARTH.dimensionID;
+                }
+                WorldServer targetWorld = DimensionManager.getWorld(dimension);
+                if (targetWorld != null) {
+                    LOTRMod.transferEntityToDimension(entity, dimension, new LOTRTeleporter(targetWorld, true));
+                } else {
+                    System.err.println("[LOTRTeleporter] Target world is null, teleportation aborted for dimension: " + dimension);
+                }
+            }
+        }
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
