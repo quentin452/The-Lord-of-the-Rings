@@ -1177,6 +1177,16 @@ public class LOTRTickHandlerClient {
         }
 
         BiomeGenBase biome = worldClient.getBiomeGenForCoords(i, k);
+        if (biome == null) {
+            System.err.println("[LOTRWeather] Biome is null at coordinates: " + i + ", " + k);
+            return;
+        }
+
+        if (!(biome instanceof LOTRBiome)) {
+            System.err.println("[LOTRWeather] Biome is not an instance of LOTRBiome");
+            return;
+        }
+
         LOTRBiome lotrBiome = (LOTRBiome) biome;
         float farPlane = event.farPlaneDistance;
         int fogMode = event.fogMode;
@@ -1189,7 +1199,7 @@ public class LOTRTickHandlerClient {
             fogStart -= fogStart * prevRainFactor + (rainFactor - prevRainFactor) * renderTick * 0.95F;
             fogEnd -= fogEnd * prevRainFactor + (rainFactor - prevRainFactor) * renderTick * 0.2F;
         }
-
+        
         if (mistFactor > 0.0F) {
             fogStart -= fogStart * mistFactor * 0.95F;
             fogEnd -= fogEnd * mistFactor * 0.7F;
