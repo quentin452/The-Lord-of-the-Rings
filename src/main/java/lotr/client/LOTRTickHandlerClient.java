@@ -1199,7 +1199,7 @@ public class LOTRTickHandlerClient {
             fogStart -= fogStart * prevRainFactor + (rainFactor - prevRainFactor) * renderTick * 0.95F;
             fogEnd -= fogEnd * prevRainFactor + (rainFactor - prevRainFactor) * renderTick * 0.2F;
         }
-        
+
         if (mistFactor > 0.0F) {
             fogStart -= fogStart * mistFactor * 0.95F;
             fogEnd -= fogEnd * mistFactor * 0.7F;
