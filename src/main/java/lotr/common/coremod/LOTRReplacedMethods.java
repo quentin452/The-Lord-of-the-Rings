@@ -57,7 +57,13 @@ import java.util.*;
 public class LOTRReplacedMethods {
 
 	public static class Anvil {
-		public static AxisAlignedBB getCollisionBoundingBoxFromPool(Block block, IBlockAccess world, int i, int j, int k) {
+        @Deprecated
+        public static AxisAlignedBB getCollisionBoundingBoxFromPool(Block block, World world, int i, int j, int k) {
+            block.setBlockBoundsBasedOnState(world, i, j, k);
+            return AxisAlignedBB.getBoundingBox(i + block.getBlockBoundsMinX(), j + block.getBlockBoundsMinY(), k + block.getBlockBoundsMinZ(), i + block.getBlockBoundsMaxX(), j + block.getBlockBoundsMaxY(), k + block.getBlockBoundsMaxZ());
+        }
+
+        public static AxisAlignedBB getCollisionBoundingBoxFromPool(Block block, IBlockAccess world, int i, int j, int k) {
 			block.setBlockBoundsBasedOnState(world, i, j, k);
 			return AxisAlignedBB.getBoundingBox(i + block.getBlockBoundsMinX(), j + block.getBlockBoundsMinY(), k + block.getBlockBoundsMinZ(), i + block.getBlockBoundsMaxX(), j + block.getBlockBoundsMaxY(), k + block.getBlockBoundsMaxZ());
 		}
@@ -258,11 +264,16 @@ public class LOTRReplacedMethods {
 			return 0;
 		}
 
+        @Deprecated
+        public static int getDamageValue(World world, int i, int j, int k) {
+            return world.getBlockMetadata(i, j, k);
+        }
+
 		public static int getDamageValue(IBlockAccess world, int i, int j, int k) {
 			return world.getBlockMetadata(i, j, k);
 		}
 
-		public static void getSubBlocks(Block thisBlock, Item item, CreativeTabs tab, Collection list) {
+		public static void getSubBlocks(Block thisBlock, Item item, CreativeTabs tab, List list) {
 			list.add(new ItemStack(thisBlock, 1, 0));
 			list.add(new ItemStack(thisBlock, 1, 1));
 			list.add(new ItemStack(thisBlock, 1, 2));
@@ -386,7 +397,16 @@ public class LOTRReplacedMethods {
 	}
 
 	public static class Fence {
-		public static boolean canConnectFenceTo(IBlockAccess world, int i, int j, int k) {
+        @Deprecated
+        public static boolean canConnectFenceTo(World world, int i, int j, int k) {
+            Block block = world.getBlock(i, j, k);
+            if (block instanceof BlockFence || block instanceof BlockFenceGate || block instanceof BlockWall) {
+                return true;
+            }
+            return block.getMaterial().isOpaque() && block.renderAsNormalBlock() && block.getMaterial() != Material.gourd;
+        }
+
+        public static boolean canConnectFenceTo(IBlockAccess world, int i, int j, int k) {
 			Block block = world.getBlock(i, j, k);
 			if (block instanceof BlockFence || block instanceof BlockFenceGate || block instanceof BlockWall) {
 				return true;
@@ -659,6 +679,15 @@ public class LOTRReplacedMethods {
 			return defaultIcon;
 		}
 
+        @Deprecated
+        public static IIcon getIconWorld(Block block, World world, int i, int j, int k, int side) {
+            Material aboveMat;
+            if (LOTRConfig.snowyStone && block == Blocks.stone && side != 0 && side != 1 && ((aboveMat = world.getBlock(i, j + 1, k).getMaterial()) == Material.snow || aboveMat == Material.craftedSnow)) {
+                return LOTRCommonIcons.iconStoneSnow;
+            }
+            return block.getIcon(side, world.getBlockMetadata(i, j, k));
+        }
+
 		public static IIcon getIconWorld(Block block, IBlockAccess world, int i, int j, int k, int side) {
 			Material aboveMat;
 			if (LOTRConfig.snowyStone && block == Blocks.stone && side != 0 && side != 1 && ((aboveMat = world.getBlock(i, j + 1, k).getMaterial()) == Material.snow || aboveMat == Material.craftedSnow)) {
@@ -686,7 +715,12 @@ public class LOTRReplacedMethods {
 	}
 
 	public static class Wall {
-		public static boolean canConnectWallTo(IBlockAccess world, int i, int j, int k) {
+        @Deprecated
+        public static boolean canConnectWallTo(World world, int i, int j, int k) {
+            return Fence.canConnectFenceTo(world, i, j, k);
+        }
+
+        public static boolean canConnectWallTo(IBlockAccess world, int i, int j, int k) {
 			return Fence.canConnectFenceTo(world, i, j, k);
 		}
 	}
