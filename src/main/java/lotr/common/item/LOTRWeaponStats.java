@@ -20,9 +20,9 @@ import java.util.Map;
 public class LOTRWeaponStats {
 	public static int basePlayerMeleeTime = 15;
 	public static int baseMobMeleeTime = 20;
-    public static HashMap<Class<? extends LOTRItemSword>, Float> meleeSpeed = new HashMap<>();
-    public static HashMap<Class<? extends LOTRItemSword>, Float> meleeReach = new HashMap<>();
-    public static HashMap<Class<? extends LOTRItemSword>, Integer> meleeExtraKnockback = new HashMap<>();
+    public static Map meleeSpeed = new HashMap();
+    public static Map meleeReach = new HashMap();
+    public static Map meleeExtraKnockback = new HashMap();
 	public static float MAX_MODIFIABLE_REACH;
 	public static float MAX_MODIFIABLE_SPEED;
 	public static int MAX_MODIFIABLE_KNOCKBACK;
@@ -276,15 +276,15 @@ public class LOTRWeaponStats {
 		return false;
 	}
 
-    public static void registerMeleeExtraKnockback(Class<? extends LOTRItemSword> obj, int i) {
+    public static void registerMeleeExtraKnockback(Object obj, int i) {
 		meleeExtraKnockback.put(obj, i);
 	}
 
-    public static void registerMeleeReach(Class<? extends LOTRItemSword> obj, float f) {
+    public static void registerMeleeReach(Object obj, float f) {
 		meleeReach.put(obj, f);
 	}
 
-    public static void registerMeleeSpeed(Class<? extends LOTRItemSword> obj, float f) {
+    public static void registerMeleeSpeed(Object obj, float f) {
         meleeSpeed.put(obj, f);
 	}
 }
