@@ -51,15 +51,15 @@ import java.util.*;
 
 public class LOTRGuiHandler {
 	public static RenderItem itemRenderer = new RenderItem();
-	public static boolean coinCountLeftSide;
-	public static Collection<Class<? extends Container>> coinCount_excludedContainers = new HashSet<>();
-	public static Collection<Class<? extends GuiContainer>> coinCount_excludedGUIs = new HashSet<>();
-	public static Collection<Class<? extends IInventory>> coinCount_excludedInvTypes = new HashSet<>();
-	public static Collection<String> coinCount_excludedContainers_clsNames = new HashSet<>();
-	public static Collection<String> coinCount_excludedGUIs_clsNames = new HashSet<>();
-	public static Collection<String> coinCount_excludedInvTypes_clsNames = new HashSet<>();
-	public static Collection<Class<? extends GuiContainer>> pouchRestock_leftPositionGUIs = new HashSet<>();
-	public static Collection<Class<? extends GuiContainer>> pouchRestock_sidePositionGUIs = new HashSet<>();
+	public static boolean coinCountLeftSide = false;
+	public static Set<Class<? extends Container>> coinCount_excludedContainers = new HashSet<>();
+	public static Set<Class<? extends GuiContainer>> coinCount_excludedGUIs = new HashSet<>();
+	public static Set<Class<? extends IInventory>> coinCount_excludedInvTypes = new HashSet<>();
+	public static Set<String> coinCount_excludedContainers_clsNames = new HashSet<>();
+	public static Set<String> coinCount_excludedGUIs_clsNames = new HashSet<>();
+	public static Set<String> coinCount_excludedInvTypes_clsNames = new HashSet<>();
+	public static Set<Class<? extends GuiContainer>> pouchRestock_leftPositionGUIs = new HashSet<>();
+	public static Set<Class<? extends GuiContainer>> pouchRestock_sidePositionGUIs = new HashSet<>();
 
 	static {
 		coinCount_excludedInvTypes.add(LOTRContainerCoinExchange.InventoryCoinExchangeSlot.class);

@@ -116,6 +116,11 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		scanAliasChances.remove(alias);
 	}
 
+    @Deprecated
+    public void fillChest(World world, Random random, int i, int j, int k, LOTRChestContents contents, int amount) {
+        fillChest((IBlockAccess) world, random, i, j, k, contents, amount);
+    }
+
 	public void fillChest(IBlockAccess world, Random random, int i, int j, int k, LOTRChestContents contents, int amount) {
 		int i1 = i;
 		int k1 = k;
@@ -240,6 +245,11 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		return world.getBiomeGenForCoords(i, k);
 	}
 
+    @Deprecated
+    public Block getBlock(World world, int i, int j, int k) {
+        return getBlock((IBlockAccess) world, i, j, k);
+    }
+
 	public Block getBlock(IBlockAccess world, int i, int j, int k) {
 		int i1 = i;
 		int k1 = k;
@@ -250,6 +260,11 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		}
 		return world.getBlock(i, j, k);
 	}
+
+    @Deprecated
+    public int getMeta(World world, int i, int j, int k) {
+        return getMeta((IBlockAccess) world, i, j, k);
+    }
 
 	public int getMeta(IBlockAccess world, int i, int j, int k) {
 		int i1 = i;
@@ -289,6 +304,11 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 	public int getRotationMode() {
 		return rotationMode;
 	}
+
+    @Deprecated
+    public TileEntity getTileEntity(World world, int i, int j, int k) {
+        return getTileEntity((IBlockAccess) world, i, j, k);
+    }
 
 	public TileEntity getTileEntity(IBlockAccess world, int i, int j, int k) {
 		int i1 = i;
@@ -355,6 +375,11 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		return sbb != null;
 	}
 
+    @Deprecated
+    public boolean isAir(World world, int i, int j, int k) {
+        return getBlock(world, i, j, k).getMaterial() == Material.air;
+    }
+
 	public boolean isAir(IBlockAccess world, int i, int j, int k) {
 		return getBlock(world, i, j, k).getMaterial() == Material.air;
 	}
@@ -363,13 +388,28 @@ public abstract class LOTRWorldGenStructureBase2 extends WorldGenerator {
 		return sbb == null || sbb.isVecInside(i, j, k);
 	}
 
+    @Deprecated
+    public boolean isOpaque(World world, int i, int j, int k) {
+        return getBlock(world, i, j, k).isOpaqueCube();
+    }
+
 	public boolean isOpaque(IBlockAccess world, int i, int j, int k) {
 		return getBlock(world, i, j, k).isOpaqueCube();
 	}
 
+    @Deprecated
+    public boolean isReplaceable(World world, int i, int j, int k) {
+        return getBlock(world, i, j, k).isReplaceable(world, getX(i, k), getY(j), getZ(i, k));
+    }
+
 	public boolean isReplaceable(IBlockAccess world, int i, int j, int k) {
 		return getBlock(world, i, j, k).isReplaceable(world, getX(i, k), getY(j), getZ(i, k));
 	}
+
+    @Deprecated
+    public boolean isSideSolid(World world, int i, int j, int k, ForgeDirection side) {
+        return getBlock(world, i, j, k).isSideSolid(world, getX(i, k), getY(j), getZ(i, k), side);
+    }
 
 	public boolean isSideSolid(IBlockAccess world, int i, int j, int k, ForgeDirection side) {
 		return getBlock(world, i, j, k).isSideSolid(world, getX(i, k), getY(j), getZ(i, k), side);
