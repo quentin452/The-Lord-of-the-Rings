@@ -39,9 +39,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class LOTRTickHandlerServer {
-	public static HashMap playersInPortals = new HashMap();
-	public static HashMap playersInElvenPortals = new HashMap();
-	public static HashMap playersInMorgulPortals = new HashMap();
+    public static HashMap<EntityPlayer, Integer> playersInPortals = new HashMap<>();
+    public static HashMap<EntityPlayer, Integer> playersInElvenPortals = new HashMap<>();
+    public static HashMap<EntityPlayer, Integer> playersInMorgulPortals = new HashMap<>();
+    public static HashMap<Integer, LOTRNetHandlerPlayServer> lotrNetHandlerPlayServerMap = new HashMap<>();
 	public int fireworkDisplay;
 
 	public LOTRTickHandlerServer() {
@@ -59,7 +60,10 @@ public class LOTRTickHandlerServer {
         if (player instanceof EntityPlayerMP) {
             EntityPlayerMP entityplayer = (EntityPlayerMP) player;
             if (event.phase == TickEvent.Phase.START && entityplayer.playerNetServerHandler != null && !(entityplayer.playerNetServerHandler instanceof LOTRNetHandlerPlayServer && LOTRConfig.enableAttackCooldown)) {
-                entityplayer.playerNetServerHandler = new LOTRNetHandlerPlayServer(MinecraftServer.getServer(), entityplayer.playerNetServerHandler.netManager, entityplayer);
+                if (!lotrNetHandlerPlayServerMap.containsKey(entityplayer.getEntityId())) {
+                    lotrNetHandlerPlayServerMap.put(entityplayer.getEntityId(), new LOTRNetHandlerPlayServer(MinecraftServer.getServer(), entityplayer.playerNetServerHandler.netManager, entityplayer));
+                }
+                entityplayer.playerNetServerHandler = lotrNetHandlerPlayServerMap.get(entityplayer.getEntityId());
             }
             if (event.phase == TickEvent.Phase.END) {
                 List items;
