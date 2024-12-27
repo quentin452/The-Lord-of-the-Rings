@@ -1,11 +1,7 @@
 package lotr.common.world.map;
 
-import lotr.common.fac.LOTRFaction;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-
-import java.util.List;
-import java.util.Map;
 
 public interface LOTRAbstractWaypoint {
 	String getCodeName();
@@ -31,8 +27,6 @@ public interface LOTRAbstractWaypoint {
 	int getZCoord();
 
 	boolean hasPlayerUnlocked(EntityPlayer var1);
-
-    boolean hasPlayerUnlockedProxy(EntityPlayer entityplayer, Map<LOTRFaction, List<LOTRConquestZone>> facConquestGrids);
 
 	boolean isHidden();
 

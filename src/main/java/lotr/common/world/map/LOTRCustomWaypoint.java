@@ -3,7 +3,6 @@ package lotr.common.world.map;
 import lotr.common.LOTRLevelData;
 import lotr.common.LOTRMod;
 import lotr.common.LOTRPlayerData;
-import lotr.common.fac.LOTRFaction;
 import lotr.common.fellowship.LOTRFellowship;
 import lotr.common.fellowship.LOTRFellowshipClient;
 import lotr.common.fellowship.LOTRFellowshipData;
@@ -339,11 +338,6 @@ public class LOTRCustomWaypoint implements LOTRAbstractWaypoint {
 		}
 		return true;
 	}
-
-    @Override
-    public boolean hasPlayerUnlockedProxy(EntityPlayer entityplayer, Map<LOTRFaction, List<LOTRConquestZone>> facConquestGrids) {
-        return hasPlayerUnlocked(entityplayer);
-    }
 
 	public boolean hasSharedFellowship(LOTRFellowship fs) {
 		return hasSharedFellowship(fs.getFellowshipID());
