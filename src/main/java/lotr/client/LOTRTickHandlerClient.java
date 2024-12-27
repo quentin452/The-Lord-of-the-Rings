@@ -1170,6 +1170,7 @@ public class LOTRTickHandlerClient {
         WorldClient worldClient = mc.theWorld;
         WorldProvider provider = worldClient.provider;
         int i = MathHelper.floor_double(viewer.posX);
+        int j = MathHelper.floor_double(viewer.boundingBox.minY);
         int k = MathHelper.floor_double(viewer.posZ);
 
         if (!(provider instanceof LOTRWorldProvider)) {
@@ -1177,62 +1178,62 @@ public class LOTRTickHandlerClient {
         }
 
         BiomeGenBase biome = worldClient.getBiomeGenForCoords(i, k);
-        if (biome == null) {
-            System.err.println("[LOTRWeather] Biome is null at coordinates: " + i + ", " + k);
-            return;
-        }
-
-        if (!(biome instanceof LOTRBiome)) {
-            System.err.println("[LOTRWeather] Biome is not an instance of LOTRBiome");
-            return;
-        }
-
-        LOTRBiome lotrBiome = (LOTRBiome) biome;
         float farPlane = event.farPlaneDistance;
         int fogMode = event.fogMode;
 
-        float[] fogStartEnd = ((LOTRWorldProvider) provider).modifyFogIntensity(farPlane, fogMode);
+        float rain;
+        LOTRBiome lotrbiome = (LOTRBiome)biome;
+        float[] fogStartEnd = ((LOTRWorldProvider)provider).modifyFogIntensity(farPlane, fogMode);
         float fogStart = fogStartEnd[0];
         float fogEnd = fogStartEnd[1];
 
-        /*if (LOTRConfig.newWeather && (lotrBiome.getEnableRain() || lotrBiome.getEnableSnow())) {
-            fogStart -= fogStart * prevRainFactor + (rainFactor - prevRainFactor) * renderTick * 0.95F;
-            fogEnd -= fogEnd * prevRainFactor + (rainFactor - prevRainFactor) * renderTick * 0.2F;
-        }*/
-
-        if (mistFactor > 0.0F) {
-            fogStart -= fogStart * mistFactor * 0.95F;
-            fogEnd -= fogEnd * mistFactor * 0.7F;
+        if (LOTRConfig.newWeather && (lotrbiome.getEnableRain() || lotrbiome.getEnableSnow()) && (rain = this.prevRainFactor + (this.rainFactor - this.prevRainFactor) * renderTick) > 0.0f) {
+            float rainOpacityStart = 0.95f;
+            float rainOpacityEnd = 0.2f;
+            fogStart -= fogStart * (rain * rainOpacityStart);
+            fogEnd -= fogEnd * (rain * rainOpacityEnd);
         }
 
-        float wightFactor = (prevWightNearTick + (wightNearTick - prevWightNearTick) * renderTick) / 100.0F;
-        if (wightFactor > 0.0F) {
-            fogStart -= fogStart * wightFactor * 0.97F;
-            fogEnd -= fogEnd * wightFactor * 0.75F;
+        if (this.mistFactor > 0.0f) {
+            float mistOpacityStart = 0.95f;
+            float mistOpacityEnd = 0.7f;
+            fogStart -= fogStart * (this.mistFactor * mistOpacityStart);
+            fogEnd -= fogEnd * (this.mistFactor * mistOpacityEnd);
         }
 
-        if (lotrBiome instanceof LOTRBiomeGenBarrowDowns) {
-            if (wightFactor > 0.0F) {
-                int sky0 = lotrBiome.getBaseSkyColorByTemp(i, MathHelper.floor_double(viewer.boundingBox.minY), k);
+        float wightFactor = this.prevWightNearTick + (this.wightNearTick - this.prevWightNearTick) * renderTick;
+        if ((wightFactor /= 100.0f) > 0.0f) {
+            float wightOpacityStart = 0.97f;
+            float wightOpacityEnd = 0.75f;
+            fogStart -= fogStart * (wightFactor * wightOpacityStart);
+            fogEnd -= fogEnd * (wightFactor * wightOpacityEnd);
+        }
+
+        if (lotrbiome instanceof LOTRBiomeGenBarrowDowns) {
+            if (wightFactor > 0.0f) {
+                int sky0 = lotrbiome.getBaseSkyColorByTemp(i, j, k);
                 int sky1 = 9674385;
                 int clouds0 = 16777215;
                 int clouds1 = 11842740;
                 int fog0 = 16777215;
                 int fog1 = 10197915;
-                lotrBiome.biomeColors.setSky(LOTRColorUtil.lerpColors_I(sky0, sky1, wightFactor));
-                lotrBiome.biomeColors.setClouds(LOTRColorUtil.lerpColors_I(clouds0, clouds1, wightFactor));
-                lotrBiome.biomeColors.setFog(LOTRColorUtil.lerpColors_I(fog0, fog1, wightFactor));
+                lotrbiome.biomeColors.setSky(LOTRColorUtil.lerpColors_I(sky0, sky1, wightFactor));
+                lotrbiome.biomeColors.setClouds(LOTRColorUtil.lerpColors_I(clouds0, clouds1, wightFactor));
+                lotrbiome.biomeColors.setFog(LOTRColorUtil.lerpColors_I(fog0, fog1, wightFactor));
             } else {
-                lotrBiome.biomeColors.resetSky();
-                lotrBiome.biomeColors.resetClouds();
-                lotrBiome.biomeColors.resetFog();
+                lotrbiome.biomeColors.resetSky();
+                lotrbiome.biomeColors.resetClouds();
+                lotrbiome.biomeColors.resetFog();
             }
         }
 
-        balrogFactor = (prevBalrogNearTick + (balrogNearTick - prevBalrogNearTick) * renderTick) / 100.0F;
-        if (balrogFactor > 0.0F) {
-            fogStart -= fogStart * balrogFactor * 0.98F;
-            fogEnd -= fogEnd * balrogFactor * 0.75F;
+        this.balrogFactor = this.prevBalrogNearTick + (this.balrogNearTick - this.prevBalrogNearTick) * renderTick;
+        this.balrogFactor /= 100.0f;
+        if (this.balrogFactor > 0.0f) {
+            float balrogOpacityStart = 0.98f;
+            float balrogOpacityEnd = 0.75f;
+            fogStart -= fogStart * (this.balrogFactor * balrogOpacityStart);
+            fogEnd -= fogEnd * (this.balrogFactor * balrogOpacityEnd);
         }
 
         GL11.glFogf(2915, fogStart);
