@@ -1195,10 +1195,10 @@ public class LOTRTickHandlerClient {
         float fogStart = fogStartEnd[0];
         float fogEnd = fogStartEnd[1];
 
-        if (LOTRConfig.newWeather && (lotrBiome.getEnableRain() || lotrBiome.getEnableSnow())) {
+        /*if (LOTRConfig.newWeather && (lotrBiome.getEnableRain() || lotrBiome.getEnableSnow())) {
             fogStart -= fogStart * prevRainFactor + (rainFactor - prevRainFactor) * renderTick * 0.95F;
             fogEnd -= fogEnd * prevRainFactor + (rainFactor - prevRainFactor) * renderTick * 0.2F;
-        }
+        }*/
 
         if (mistFactor > 0.0F) {
             fogStart -= fogStart * mistFactor * 0.95F;
