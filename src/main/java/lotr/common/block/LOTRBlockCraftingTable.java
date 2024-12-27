@@ -12,9 +12,10 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class LOTRBlockCraftingTable extends Block {
-	public static Collection<LOTRBlockCraftingTable> allCraftingTables = new ArrayList<>();
+    public static List<LOTRBlockCraftingTable> allCraftingTables = new ArrayList<>();
 	public LOTRFaction tableFaction;
 	public int tableGUIID;
 

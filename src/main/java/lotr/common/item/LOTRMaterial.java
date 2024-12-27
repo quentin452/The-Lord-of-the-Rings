@@ -10,11 +10,12 @@ import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class LOTRMaterial {
 	public static float[] protectionBase = {0.14f, 0.4f, 0.32f, 0.14f};
 	public static float maxProtection = 25.0f;
-	public static Collection<LOTRMaterial> allLOTRMaterials = new ArrayList<>();
+	public static List<LOTRMaterial> allLOTRMaterials = new ArrayList<>();
 	public static LOTRMaterial ANCIENT_HARAD = new LOTRMaterial("ANCIENT_HARAD").setUses(450).setDamage(2.5f).setProtection(0.6f).setHarvestLevel(2).setSpeed(6.0f).setEnchantability(10);
 	public static LOTRMaterial ANGMAR = new LOTRMaterial("ANGMAR").setUses(350).setDamage(2.5f).setProtection(0.6f).setHarvestLevel(2).setSpeed(6.0f).setEnchantability(8).setManFlesh();
 	public static LOTRMaterial ARNOR = new LOTRMaterial("ARNOR").setUses(450).setDamage(2.5f).setProtection(0.6f).setHarvestLevel(2).setSpeed(6.0f).setEnchantability(10);

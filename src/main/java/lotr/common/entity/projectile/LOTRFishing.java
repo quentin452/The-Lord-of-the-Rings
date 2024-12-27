@@ -11,12 +11,13 @@ import net.minecraftforge.common.FishingHooks;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 
 public class LOTRFishing {
-	public static Collection<FishingItem> fish = new ArrayList<>();
-	public static Collection<FishingItem> junk = new ArrayList<>();
-	public static Collection<FishingItem> treasure = new ArrayList<>();
+    public static List<FishingItem> fish = new ArrayList<>();
+    public static List<FishingItem> junk = new ArrayList<>();
+    public static List<FishingItem> treasure = new ArrayList<>();
 
 	static {
 		fish.add(new FishingItem(new ItemStack(Items.fish, 1, ItemFishFood.FishType.COD.func_150976_a()), 60));

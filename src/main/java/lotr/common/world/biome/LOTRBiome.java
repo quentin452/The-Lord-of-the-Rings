@@ -10,6 +10,7 @@ import lotr.common.LOTRMod;
 import lotr.common.entity.animal.*;
 import lotr.common.entity.npc.LOTREntityBandit;
 import lotr.common.entity.npc.LOTREntityDwarf;
+import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.entity.npc.LOTREntityWickedDwarf;
 import lotr.common.world.LOTRWorldChunkManager;
 import lotr.common.world.biome.variant.LOTRBiomeVariant;
@@ -1104,7 +1105,7 @@ public abstract class LOTRBiome extends BiomeGenBase {
 		addFlower(LOTRMod.bluebell, 0, 5);
 	}
 
-	public void registerTravellingTrader(Class entityClass) {
+    public void registerTravellingTrader(Class<? extends LOTREntityNPC> entityClass) {
 		spawnableTraders.add(entityClass);
 		LOTREventSpawner.createTraderSpawner(entityClass);
 	}

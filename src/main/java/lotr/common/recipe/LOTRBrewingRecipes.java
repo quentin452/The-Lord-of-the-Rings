@@ -9,9 +9,10 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class LOTRBrewingRecipes {
-	public static Collection<ShapelessOreRecipe> recipes = new ArrayList<>();
+	public static List<ShapelessOreRecipe> recipes = new ArrayList<>();
 	public static int BARREL_CAPACITY = 16;
 
 	public static void addBrewingRecipe(ItemStack result, Object... ingredients) {

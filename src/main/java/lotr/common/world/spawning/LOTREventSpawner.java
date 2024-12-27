@@ -8,6 +8,7 @@ import lotr.common.LOTRMod;
 import lotr.common.entity.LOTREntities;
 import lotr.common.entity.LOTREntityInvasionSpawner;
 import lotr.common.entity.npc.LOTREntityBandit;
+import lotr.common.entity.npc.LOTREntityNPC;
 import lotr.common.world.LOTRWorldProvider;
 import lotr.common.world.biome.LOTRBiome;
 import net.minecraft.block.Block;
@@ -29,9 +30,9 @@ import java.util.*;
 public class LOTREventSpawner {
 	public static Set<ChunkCoordIntPair> eligibleSpawnChunks = new HashSet<>();
 	public static Collection<LOTRTravellingTraderSpawner> travellingTraders = new ArrayList<>();
-	public static Collection<Class> traderClasses = new HashSet<>();
+    public static Collection<Class<? extends LOTREntityNPC>> traderClasses = new HashSet<>();
 
-	public static void createTraderSpawner(Class entityClass) {
+    public static void createTraderSpawner(Class<? extends LOTREntityNPC> entityClass) {
 		if (!traderClasses.contains(entityClass)) {
 			traderClasses.add(entityClass);
 			travellingTraders.add(new LOTRTravellingTraderSpawner(entityClass));

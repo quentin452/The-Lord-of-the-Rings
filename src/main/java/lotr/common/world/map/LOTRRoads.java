@@ -9,7 +9,7 @@ import java.util.*;
 
 public class LOTRRoads {
 	public static List<LOTRRoads> allRoads = new ArrayList<>();
-	public static Collection<LOTRRoads> displayOnlyRoads = new ArrayList<>();
+	public static List<LOTRRoads> displayOnlyRoads = new ArrayList<>();
 	public static RoadPointDatabase roadPointDatabase = new RoadPointDatabase();
 	public RoadPoint[] roadPoints;
 	public Collection<RoadPoint> endpoints = new ArrayList<>();

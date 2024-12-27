@@ -13,8 +13,8 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 public abstract class LOTREnchantment {
-	public static Collection<LOTREnchantment> allEnchantments = new ArrayList<>();
-	public static Map<String, LOTREnchantment> enchantsByName = new HashMap<>();
+    public static List<LOTREnchantment> allEnchantments = new ArrayList<>();
+    private static Map<String, LOTREnchantment> enchantsByName = new HashMap<>();
 	public static LOTREnchantment strong1 = new LOTREnchantmentDamage("strong1", 0.5f).setEnchantWeight(10);
 	public static LOTREnchantment strong2 = new LOTREnchantmentDamage("strong2", 1.0f).setEnchantWeight(5);
 	public static LOTREnchantment strong3 = new LOTREnchantmentDamage("strong3", 2.0f).setEnchantWeight(2).setSkilful();

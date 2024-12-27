@@ -10,9 +10,10 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class LOTRItemBerry extends LOTRItemFood {
-	public static Collection<Item> allBerries = new ArrayList<>();
+	public static List<Item> allBerries = new ArrayList<>();
 	public boolean isPoisonous;
 
 	public LOTRItemBerry() {

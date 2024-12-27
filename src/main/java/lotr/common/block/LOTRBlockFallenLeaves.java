@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Random;
 
 public class LOTRBlockFallenLeaves extends Block implements IShearable {
-	public static Collection<LOTRBlockFallenLeaves> allFallenLeaves = new ArrayList<>();
+    public static List<LOTRBlockFallenLeaves> allFallenLeaves = new ArrayList<>();
 	public Block[] leafBlocks;
 
 	public LOTRBlockFallenLeaves() {

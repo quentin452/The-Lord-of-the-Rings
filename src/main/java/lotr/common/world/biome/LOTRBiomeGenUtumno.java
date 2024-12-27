@@ -17,10 +17,11 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 
 public class LOTRBiomeGenUtumno extends LOTRBiome {
-	public static Collection<LOTRBiome> utumnoBiomes = new ArrayList<>();
+    public static List<LOTRBiome> utumnoBiomes = new ArrayList<>();
 	public LOTRWorldGenStalactites stalactiteGen = new LOTRWorldGenStalactites(LOTRMod.stalactite);
 	public LOTRWorldGenStalactites stalactiteIceGen = new LOTRWorldGenStalactites(LOTRMod.stalactiteIce);
 	public LOTRWorldGenStalactites stalactiteObsidianGen = new LOTRWorldGenStalactites(LOTRMod.stalactiteObsidian);

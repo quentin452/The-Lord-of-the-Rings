@@ -6,9 +6,10 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class LOTREnchantmentCombining {
-	public static Collection<CombineRecipe> allCombineRecipes = new ArrayList<>();
+    public static List<CombineRecipe> allCombineRecipes = new ArrayList<>();
 
 	public static void combine(LOTREnchantment in, LOTREnchantment out, int cost) {
 		if (!in.hasTemplateItem() || !out.hasTemplateItem()) {

@@ -28,7 +28,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 public class LOTRRecipes {
-	public static Collection<IRecipe> woodenSlabRecipes = new ArrayList<>();
+	public static List<IRecipe> woodenSlabRecipes = new ArrayList<>();
 	public static List<IRecipe> morgulRecipes = new ArrayList<>();
 	public static List<IRecipe> elvenRecipes = new ArrayList<>();
 	public static List<IRecipe> dwarvenRecipes = new ArrayList<>();

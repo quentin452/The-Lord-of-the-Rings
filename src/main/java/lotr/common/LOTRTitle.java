@@ -12,7 +12,7 @@ import net.minecraft.util.*;
 import java.util.*;
 
 public class LOTRTitle {
-	public static Collection<LOTRTitle> allTitles = new ArrayList<>();
+    public static List<LOTRTitle> allTitles = new ArrayList<>();
 	public static LOTRTitle adventurer;
 	public static LOTRTitle rogue;
 	public static LOTRTitle bartender;
