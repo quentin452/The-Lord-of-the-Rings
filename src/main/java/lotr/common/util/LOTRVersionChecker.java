@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 
 public class LOTRVersionChecker {
 	public static String versionURL = "https://dl.dropboxusercontent.com/s/sidxw1dicl2nsev/version.txt";
-	public static boolean checkedUpdate;
+	public static boolean checkedUpdate = true;
 
 	public static void checkForUpdates() {
 		if (!checkedUpdate) {
