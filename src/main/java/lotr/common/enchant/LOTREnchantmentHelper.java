@@ -46,12 +46,16 @@ public class LOTREnchantmentHelper {
 		} else {
 			clearEnchantsAndProgress(itemstack);
 		}
-		if (itemstack.getItem() instanceof ItemSword && LOTRMaterial.getToolMaterialByName(((ItemSword) itemstack.getItem()).getToolMaterialName()) == LOTRMaterial.BARROW.toToolMaterial() && (ench = LOTREnchantment.baneWight).canApply(itemstack, false)) {
-			setHasEnchant(itemstack, ench);
-		}
-		if (itemstack.getItem() == LOTRMod.sting && (ench = LOTREnchantment.baneSpider).canApply(itemstack, false)) {
-			setHasEnchant(itemstack, ench);
-		}
+        try {
+            if (itemstack.getItem() instanceof ItemSword && LOTRMaterial.getToolMaterialByName(((ItemSword) itemstack.getItem()).getToolMaterialName()) == LOTRMaterial.BARROW.toToolMaterial() && (ench = LOTREnchantment.baneWight).canApply(itemstack, false)) {
+                setHasEnchant(itemstack, ench);
+            }
+            if (itemstack.getItem() == LOTRMod.sting && (ench = LOTREnchantment.baneSpider).canApply(itemstack, false)) {
+                setHasEnchant(itemstack, ench);
+            }
+        } catch (IllegalArgumentException e) {
+            System.err.println("[LOTRMOD] Error when applying enchant : " + e.getMessage());
+        }
 		int enchants = 0;
 		float chance = random.nextFloat();
 		if (skilful) {
