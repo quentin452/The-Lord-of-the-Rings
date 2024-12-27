@@ -348,6 +348,13 @@ public class LOTREntityHorse extends EntityHorse implements LOTRNPCMount {
 		super.onDeath(damagesource);
 	}
 
+    private boolean isSprinting = false;
+    private static final float STRENGTH_MULTIPLIER = 9.0f;
+    private static final double ATTACK_RANGE = 1.0;
+    private static final float KNOCKBACK_MULTIPLIER = 0.03f;
+    private static final float SPRINT_THRESHOLD = 0.15f;
+    private static final float ATTACK_THRESHOLD = 0.25f;
+
 	@Override
 	public void onLivingUpdate() {
 		if (!worldObj.isRemote) {
@@ -388,7 +395,84 @@ public class LOTREntityHorse extends EntityHorse implements LOTRNPCMount {
 			setMountEnraged(getAttackTarget() != null);
 		}
 		prevIsChild = isChild();
-	}
+        if (!worldObj.isRemote && riddenByEntity instanceof EntityLivingBase) {// 检查是否有骑乘者
+            // 示例条件：当马匹的水平速度超过某个阈值时，进入冲刺状态
+            float momentum = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
+            boolean shouldSprint = momentum > SPRINT_THRESHOLD;
+
+            if (shouldSprint != isSprinting) {
+                setSprinting(shouldSprint);
+                isSprinting = shouldSprint;
+
+                // 播放冲刺或停止冲刺的声音
+                if (isSprinting) {
+                    playSound("mob.horse.sprint", 0.5f, 1.0f);
+                } else {
+                    playSound("mob.horse.stop_sprint", 0.5f, 1.0f);
+                }
+            }
+
+            // 其他冲刺相关逻辑，例如攻击
+            if (isSprinting) {
+                performSprintingActions(momentum);
+            }
+        } else {
+            // 无骑乘者时，停止冲刺
+            if (isSprinting) {
+                setSprinting(false);
+                isSprinting = false;
+            }
+        }
+    }
+
+    /**
+     * Perform specific actions while sprinting, such as attacking entities in front of you
+     */
+    private void performSprintingActions(float momentum) {
+        if (momentum < ATTACK_THRESHOLD) return;
+        float strength = momentum * STRENGTH_MULTIPLIER; // 攻击强度
+        Vec3 look = getLookVec();
+        float sightWidth = 1.0f;
+        List<Entity> entities = worldObj.getEntitiesWithinAABBExcludingEntity(this,
+            boundingBox.contract(1.0, 1.0, 1.0).addCoord(look.xCoord * ATTACK_RANGE, look.yCoord * ATTACK_RANGE, look.zCoord * ATTACK_RANGE
+            ).expand(sightWidth, sightWidth, sightWidth));
+        for (Entity entity : entities) {
+            if (entity instanceof EntityLivingBase target && entity != riddenByEntity) {
+                if (riderCanAttack(target)) {
+                    target.attackEntityFrom(DamageSource.causeMobDamage(this), strength);
+                    // 应用击退效果
+                    applyKnockback(target, strength);
+                    // 播放攻击声音
+                    worldObj.playSoundAtEntity(this, "mob.horse.attack_sprint", 1.0f, 1.0f);
+                }
+            }
+        }
+    }
+
+    /**
+     * Checks if the rider has permission to attack the target entity
+     */
+    private boolean riderCanAttack(EntityLivingBase target) {
+        if (riddenByEntity instanceof EntityPlayer) {
+            return LOTRMod.canPlayerAttackEntity((EntityPlayer) riddenByEntity, target, false);
+        } else if (riddenByEntity instanceof EntityCreature) {
+            return LOTRMod.canNPCAttackEntity((EntityCreature) riddenByEntity, target, false);
+        }
+        return false;
+    }
+
+    /**
+     * Apply knockback effect
+     */
+    private void applyKnockback(EntityLivingBase target, float strength) {
+        float knockback = strength * KNOCKBACK_MULTIPLIER;
+        float radians = (float) Math.toRadians(rotationYaw);
+        target.addVelocity(
+            -MathHelper.sin(radians) * knockback,
+            knockback,
+            MathHelper.cos(radians) * knockback
+        );
+    }
 
 	public void onLOTRHorseSpawn() {
 		int i = MathHelper.floor_double(posX);
