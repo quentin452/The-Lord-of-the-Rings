@@ -605,7 +605,7 @@ public class LOTRGuiMap extends LOTRGuiMenuBase {
 			if (isMiddleEarth() && selectedWaypoint != null) {
 				zLevel += 500.0f;
 				LOTRPlayerData pd = LOTRLevelData.getData(mc.thePlayer);
-				boolean hasUnlocked = selectedWaypoint.hasPlayerUnlocked(mc.thePlayer);
+                boolean hasUnlocked = selectedWaypoint.hasPlayerUnlockedProxy(mc.thePlayer, facConquestGrids);
 				int ftSince = pd.getTimeSinceFT();
 				int wpTimeThreshold = pd.getWaypointFTTime(selectedWaypoint, mc.thePlayer);
 				int timeRemaining = wpTimeThreshold - ftSince;
@@ -1109,7 +1109,7 @@ public class LOTRGuiMap extends LOTRGuiMenuBase {
 		} else {
 			if (!loadingConquestGrid) {
 				LOTRPlayerData pd = LOTRLevelData.getData(mc.thePlayer);
-				if (i == LOTRKeyHandler.keyBindingFastTravel.getKeyCode() && isMiddleEarth() && selectedWaypoint != null && selectedWaypoint.hasPlayerUnlocked(mc.thePlayer) && pd.getTimeSinceFT() >= pd.getWaypointFTTime(selectedWaypoint, mc.thePlayer)) {
+                if (i == LOTRKeyHandler.keyBindingFastTravel.getKeyCode() && isMiddleEarth() && selectedWaypoint != null && selectedWaypoint.hasPlayerUnlockedProxy(mc.thePlayer, facConquestGrids) && pd.getTimeSinceFT() >= pd.getWaypointFTTime(selectedWaypoint, mc.thePlayer)) {
 					IMessage packet = new LOTRPacketFastTravel(selectedWaypoint);
 					LOTRPacketHandler.networkWrapper.sendToServer(packet);
 					mc.thePlayer.closeScreen();
@@ -1233,7 +1233,7 @@ public class LOTRGuiMap extends LOTRGuiMenuBase {
 				double distToWP;
 				float[] pos;
 				float dx;
-				boolean unlocked = waypoint.hasPlayerUnlocked(mc.thePlayer);
+                boolean unlocked = waypoint.hasPlayerUnlockedProxy(mc.thePlayer, facConquestGrids);
 				boolean hidden = waypoint.isHidden();
 				if (!isWaypointVisible(waypoint) || hidden && !unlocked || (distToWP = Math.sqrt((dx = (pos = transformCoords(waypoint.getXCoord(), waypoint.getZCoord()))[0] - i) * dx + (dy = pos[1] - j) * dy)) > 5.0 || distToWP > distanceSelectedWP) {
 					continue;
@@ -1837,7 +1837,7 @@ public class LOTRGuiMap extends LOTRGuiMenuBase {
 		}
 		if (wpZoomlerp > 0.0F) {
 			for (LOTRAbstractWaypoint waypoint : waypoints) {
-				boolean unlocked = mc.thePlayer != null && waypoint.hasPlayerUnlocked(mc.thePlayer);
+                boolean unlocked = mc.thePlayer != null && waypoint.hasPlayerUnlockedProxy(mc.thePlayer, facConquestGrids);
 				boolean hidden = waypoint.isHidden();
 				boolean custom = waypoint instanceof LOTRCustomWaypoint;
 				boolean shared = waypoint instanceof LOTRCustomWaypoint && ((LOTRCustomWaypoint) waypoint).isShared();
