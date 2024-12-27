@@ -19,6 +19,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ChestGenHooks;
 
 import java.util.ArrayList;
@@ -123,10 +124,19 @@ public class LOTRChestContents {
 		maxItems = j;
 		items = w;
 	}
-
+    @Deprecated
+    public static void fillChest(World world, Random random, int i, int j, int k, LOTRChestContents itemPool) {
+        fillChest(world, random, i, j, k, itemPool, -1);
+    }
+    
 	public static void fillChest(IBlockAccess world, Random random, int i, int j, int k, LOTRChestContents itemPool) {
 		fillChest(world, random, i, j, k, itemPool, -1);
 	}
+
+    @Deprecated
+    public static void fillChest(World world, Random random, int i, int j, int k, LOTRChestContents itemPool, int amount) {
+        fillChest((IBlockAccess) world, random, i, j, k, itemPool, amount);
+    }
 
 	public static void fillChest(IBlockAccess world, Random random, int i, int j, int k, LOTRChestContents itemPool, int amount) {
 		TileEntity tileentity = world.getTileEntity(i, j, k);
