@@ -1187,13 +1187,17 @@ public class LOTRTickHandlerClient {
         float fogStart = fogStartEnd[0];
         float fogEnd = fogStartEnd[1];
 
-        if (LOTRConfig.newWeather && (lotrbiome.getEnableRain() || lotrbiome.getEnableSnow()) && (rain = this.prevRainFactor + (this.rainFactor - this.prevRainFactor) * renderTick) > 0.0f) {
+        if (LOTRConfig.newWeather && lotrbiome != null &&
+            (lotrbiome.getEnableRain() ||lotrbiome.getEnableSnow()) &&
+            (rain = this.prevRainFactor + (this.rainFactor - this.prevRainFactor) * renderTick) > 0.0f) {
+
             float rainOpacityStart = 0.95f;
             float rainOpacityEnd = 0.2f;
+
             fogStart -= fogStart * (rain * rainOpacityStart);
             fogEnd -= fogEnd * (rain * rainOpacityEnd);
         }
-
+        
         if (this.mistFactor > 0.0f) {
             float mistOpacityStart = 0.95f;
             float mistOpacityEnd = 0.7f;
