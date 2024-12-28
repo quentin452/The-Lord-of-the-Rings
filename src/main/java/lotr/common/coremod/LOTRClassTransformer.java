@@ -631,47 +631,6 @@ public class LOTRClassTransformer implements IClassTransformer {
 		return writer.toByteArray();
 	}
 
-	public byte[] patchDoorInteract(String name, byte[] bytes) {
-		String targetMethodName;
-		String targetMethodNameObf = targetMethodName = "func_151503_a";
-		String targetMethodSign = "(III)Lnet/minecraft/block/BlockDoor;";
-		String targetMethodSignObf = "(III)Lakn;";
-		ClassNode classNode = new ClassNode();
-		ClassReader classReader = new ClassReader(bytes);
-		classReader.accept(classNode, 0);
-		for (MethodNode method : classNode.methods) {
-			if (!method.name.equals(targetMethodName) || !method.desc.equals(targetMethodSign) && !method.desc.equals(targetMethodSignObf)) {
-				continue;
-			}
-			FieldInsnNode nodeFound = null;
-			block1:
-			for (boolean blocksObf : new boolean[]{false, true}) {
-				for (boolean doorObf : new boolean[]{false, true}) {
-					String _blocks = blocksObf ? cls_Blocks_obf : cls_Blocks;
-					String _door = doorObf ? "field_150466_ao" : "wooden_door";
-					FieldInsnNode nodeGetDoor = new FieldInsnNode(178, _blocks, _door, "Lnet/minecraft/block/Block;");
-					nodeFound = findNodeInMethod(method, nodeGetDoor);
-					if (nodeFound != null) {
-						break block1;
-					}
-				}
-			}
-			MethodInsnNode nodeCheckDoor = new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$PathFinder", "isWoodenDoor", "(Lnet/minecraft/block/Block;)Z", false);
-			method.instructions.set(nodeFound, nodeCheckDoor);
-			JumpInsnNode nodeIf = (JumpInsnNode) nodeCheckDoor.getNext();
-			if (nodeIf.getOpcode() != 165) {
-				System.out.println("WARNING! WARNING! THIS OPCODE SHOULD HAVE BEEN IF_ACMPEQ!");
-				System.out.println("WARNING! INSTEAD IT WAS " + nodeIf.getOpcode());
-				System.out.println("WARNING! Setting it to IF_NE anyway");
-			}
-			nodeIf.setOpcode(154);
-			System.out.println("LOTRCore: Patched method " + method.name);
-		}
-		ClassWriter writer = new ClassWriter(1);
-		classNode.accept(writer);
-		return writer.toByteArray();
-	}
-
 	public byte[] patchEnchantmentHelper(String name, byte[] bytes) {
 		String targetMethodName2;
 		String targetMethodName = "getEnchantmentModifierLiving";
@@ -1194,89 +1153,6 @@ public class LOTRClassTransformer implements IClassTransformer {
 		return writer.toByteArray();
 	}
 
-	public byte[] patchPathFinder(String name, byte[] bytes) {
-		String targetMethodName = "func_82565_a";
-		String targetMethodSign = "(Lnet/minecraft/entity/Entity;IIILnet/minecraft/pathfinding/PathPoint;ZZZ)I";
-		String targetMethodSignObf = "(Lsa;IIILaye;ZZZ)I";
-		ClassNode classNode = new ClassNode();
-		ClassReader classReader = new ClassReader(bytes);
-		classReader.accept(classNode, 0);
-		for (MethodNode method : classNode.methods) {
-			if ((method.name.equals(targetMethodName)) && (method.desc.equals(targetMethodSign) || method.desc.equals(targetMethodSignObf))) {
-				FieldInsnNode nodeFound1 = null;
-				FieldInsnNode nodeFound2 = null;
-				for (int pass = 0; pass <= 1; pass++) {
-					label97:
-					for (boolean blocksObf : new boolean[]{false, true}) {
-						for (boolean doorObf : new boolean[]{false, true}) {
-							String _blocks = blocksObf ? "ajn" : "net/minecraft/init/Blocks";
-							String _door = doorObf ? "field_150466_ao" : "wooden_door";
-							FieldInsnNode nodeGetDoor = new FieldInsnNode(178, _blocks, _door, "Lnet/minecraft/block/Block;");
-							if (pass == 0) {
-								nodeFound1 = findNodeInMethod(method, nodeGetDoor, 0);
-								if (nodeFound1 != null) {
-									break label97;
-								}
-							} else {
-								nodeFound2 = findNodeInMethod(method, nodeGetDoor, 1);
-								if (nodeFound2 != null) {
-									break label97;
-								}
-							}
-						}
-					}
-				}
-				MethodInsnNode nodeCheckDoor1 = new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$PathFinder", "isWoodenDoor", "(Lnet/minecraft/block/Block;)Z", false);
-				method.instructions.set(nodeFound1, nodeCheckDoor1);
-				JumpInsnNode nodeIf1 = (JumpInsnNode) nodeCheckDoor1.getNext();
-				nodeIf1.setOpcode(153);
-				MethodInsnNode nodeCheckDoor2 = new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$PathFinder", "isWoodenDoor", "(Lnet/minecraft/block/Block;)Z", false);
-				method.instructions.set(nodeFound2, nodeCheckDoor2);
-				JumpInsnNode nodeIf2 = (JumpInsnNode) nodeCheckDoor2.getNext();
-				if (nodeIf2.getOpcode() == 165) {
-					nodeIf2.setOpcode(154);
-				} else {
-					System.out.println("WARNING! WARNING! THIS OPCODE SHOULD HAVE BEEN IF_ACMPEQ!");
-					System.out.println("WARNING! INSTEAD IT WAS " + nodeIf2.getOpcode());
-					if (nodeIf2.getOpcode() == 166) {
-						System.out.println("WARNING! Opcode is IF_ACMPNE instead of expected IF_ACMPEQ, so setting it to IFEQ instead of IFNE");
-						System.out.println("WARNING! Hopefully this works...");
-						nodeIf2.setOpcode(153);
-					} else {
-						System.out.println("WARNING! NOT SURE WHAT TO DO HERE! THINGS MIGHT BREAK!");
-					}
-				}
-				FieldInsnNode nodeFoundGate = null;
-				label95:
-				for (boolean blocksObf : new boolean[]{false, true}) {
-					for (boolean gateObf : new boolean[]{false, true}) {
-						String _blocks = blocksObf ? "ajn" : "net/minecraft/init/Blocks";
-						String _gate = gateObf ? "field_150396_be" : "fence_gate";
-						FieldInsnNode nodeGetGate = new FieldInsnNode(178, _blocks, _gate, "Lnet/minecraft/block/Block;");
-						nodeFoundGate = findNodeInMethod(method, nodeGetGate, 0);
-						if (nodeFoundGate != null) {
-							break label95;
-						}
-					}
-				}
-				MethodInsnNode nodeCheckGate = new MethodInsnNode(184, "lotr/common/coremod/LOTRReplacedMethods$PathFinder", "isFenceGate", "(Lnet/minecraft/block/Block;)Z", false);
-				method.instructions.set(nodeFoundGate, nodeCheckGate);
-				JumpInsnNode nodeIfGate = (JumpInsnNode) nodeCheckGate.getNext();
-				if (nodeIfGate.getOpcode() == 165) {
-					nodeIfGate.setOpcode(154);
-				} else {
-					System.out.println("WARNING! WARNING! THIS OPCODE SHOULD HAVE BEEN IF_ACMPEQ!");
-					System.out.println("WARNING! INSTEAD IT WAS " + nodeIfGate.getOpcode());
-					System.out.println("WARNING! NOT SURE WHAT TO DO HERE! THINGS MIGHT BREAK!");
-				}
-				System.out.println("LOTRCore: Patched method " + method.name);
-			}
-		}
-		ClassWriter writer = new ClassWriter(1);
-		classNode.accept(writer);
-		return writer.toByteArray();
-	}
-
 	public byte[] patchPotionDamage(String name, byte[] bytes) {
 		String targetMethodName;
 		String targetMethodNameObf = targetMethodName = "func_111183_a";
@@ -1436,12 +1312,6 @@ public class LOTRClassTransformer implements IClassTransformer {
 		}
 		if ("aho".equals(name) || "net.minecraft.world.SpawnerAnimals".equals(name)) {
 			return patchSpawnerAnimals(name, basicClass);
-		}
-		if ("ayg".equals(name) || "net.minecraft.pathfinding.PathFinder".equals(name)) {
-			return patchPathFinder(name, basicClass);
-		}
-		if ("uc".equals(name) || "net.minecraft.entity.ai.EntityAIDoorInteract".equals(name)) {
-			return patchDoorInteract(name, basicClass);
 		}
 		if ("afv".equals(name) || "net.minecraft.enchantment.EnchantmentHelper".equals(name)) {
 			return patchEnchantmentHelper(name, basicClass);

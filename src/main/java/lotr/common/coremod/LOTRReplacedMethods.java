@@ -549,16 +549,6 @@ public class LOTRReplacedMethods {
 		}
 	}
 
-	public static class PathFinder {
-		public static boolean isFenceGate(Block block) {
-			return block instanceof BlockFenceGate;
-		}
-
-		public static boolean isWoodenDoor(Block block) {
-			return block instanceof BlockDoor && block.getMaterial() == Material.wood;
-		}
-	}
-
 	public static class Piston {
 		@SuppressWarnings("Convert2Lambda")
 		public static boolean canPushBlock(Block block, World world, int i, int j, int k, boolean flag) {
