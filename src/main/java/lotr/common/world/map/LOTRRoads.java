@@ -8,12 +8,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.*;
 
 public class LOTRRoads {
-	public static List<LOTRRoads> allRoads = new ArrayList<>();
-	public static List<LOTRRoads> displayOnlyRoads = new ArrayList<>();
-	public static RoadPointDatabase roadPointDatabase = new RoadPointDatabase();
+	private static List<LOTRRoads> allRoads = new ArrayList();
+	private static List<LOTRRoads> displayOnlyRoads = new ArrayList();
+	private static RoadPointDatabase roadPointDatabase = new RoadPointDatabase();
 	public RoadPoint[] roadPoints;
-	public Collection<RoadPoint> endpoints = new ArrayList<>();
-	public String roadName;
+	public List<RoadPoint> endpoints = new ArrayList<>();
+	public final String roadName;
 
 	public LOTRRoads(String name, RoadPoint... ends) {
 		roadName = name;
@@ -143,28 +143,26 @@ public class LOTRRoads {
 		return leastSqRatio;
 	}
 
-	public static void registerDisplayOnlyRoad(String name, Object... waypoints) {
+	private static void registerDisplayOnlyRoad(String name, Object... waypoints) {
 		registerRoadToList(displayOnlyRoads, name, waypoints);
 	}
 
-	public static void registerRoad(String name, Object... waypoints) {
+	private static void registerRoad(String name, Object... waypoints) {
 		registerRoadToList(allRoads, name, waypoints);
 	}
 
-	public static void registerRoadToList(Collection<LOTRRoads> targetList, String name, Object... waypoints) {
+	private static void registerRoadToList(List<LOTRRoads> targetList, String name, Object... waypoints) {
 		List<RoadPoint> points = new ArrayList<>();
+
 		for (Object obj : waypoints) {
-			if (obj instanceof LOTRWaypoint) {
-				LOTRAbstractWaypoint wp = (LOTRAbstractWaypoint) obj;
+			if (obj instanceof LOTRWaypoint wp) {
 				points.add(new RoadPoint(wp.getXCoord(), wp.getZCoord(), true));
-			} else if (obj instanceof int[]) {
-				int[] coords = (int[]) obj;
+			} else if (obj instanceof int[] coords) {
 				if (coords.length != 2) {
 					throw new IllegalArgumentException("Coords length must be 2!");
 				}
 				points.add(new RoadPoint(LOTRWaypoint.mapToWorldX(coords[0]), LOTRWaypoint.mapToWorldZ(coords[1]), false));
-			} else if (obj instanceof double[]) {
-				double[] coords = (double[]) obj;
+			} else if (obj instanceof double[] coords) {
 				if (coords.length != 2) {
 					throw new IllegalArgumentException("Coords length must be 2!");
 				}
@@ -182,10 +180,10 @@ public class LOTRRoads {
 		return StatCollector.translateToLocal("lotr.road." + roadName);
 	}
 
-	public static class BezierCurves {
-		public static int roadLengthFactor = 1;
+	private static class BezierCurves {
+		private static int roadLengthFactor = 1;
 
-		public static RoadPoint bezier(RoadPoint a, RoadPoint b, RoadPoint c, RoadPoint d, double t) {
+		private static RoadPoint bezier(RoadPoint a, RoadPoint b, RoadPoint c, RoadPoint d, double t) {
 			RoadPoint ab = lerp(a, b, t);
 			RoadPoint bc = lerp(b, c, t);
 			RoadPoint cd = lerp(c, d, t);
@@ -194,8 +192,7 @@ public class LOTRRoads {
 			return lerp(abbc, bccd, t);
 		}
 
-		public static double[][] getControlPoints(double[] src) {
-			int i;
+		private static double[][] getControlPoints(double[] src) {
 			int length = src.length - 1;
 			double[] p1 = new double[length];
 			double[] p2 = new double[length];
@@ -207,28 +204,37 @@ public class LOTRRoads {
 			b[0] = 2.0;
 			c[0] = 1.0;
 			r[0] = src[0] + 2.0 * src[1];
+
+			int i;
 			for (i = 1; i < length - 1; ++i) {
 				a[i] = 1.0;
 				b[i] = 4.0;
 				c[i] = 1.0;
 				r[i] = 4.0 * src[i] + 2.0 * src[i + 1];
 			}
+
 			a[length - 1] = 2.0;
 			b[length - 1] = 7.0;
 			c[length - 1] = 0.0;
 			r[length - 1] = 8.0 * src[length - 1] + src[length];
+
+			double p;
 			for (i = 1; i < length; ++i) {
-				double m = a[i] / b[i - 1];
-				b[i] = b[i] - m * c[i - 1];
-				r[i] = r[i] - m * r[i - 1];
+				p = a[i] / b[i - 1];
+				b[i] -= p * c[i - 1];
+				r[i] -= p * r[i - 1];
 			}
+
 			p1[length - 1] = r[length - 1] / b[length - 1];
+
 			for (i = length - 2; i >= 0; --i) {
 				p1[i] = (r[i] - c[i] * p1[i + 1]) / b[i];
 			}
+
 			for (i = 0; i < length - 1; ++i) {
 				p2[i] = 2.0 * src[i + 1] - p1[i + 1];
 			}
+
 			p2[length - 1] = 0.5 * (src[length] + p1[length - 1]);
 			return new double[][]{p1, p2};
 		}
@@ -292,40 +298,59 @@ public class LOTRRoads {
 			return roads;
 		}
 
-		public static RoadPoint lerp(RoadPoint a, RoadPoint b, double t) {
+		private static RoadPoint lerp(RoadPoint a, RoadPoint b, double t) {
 			double x = a.x + (b.x - a.x) * t;
 			double z = a.z + (b.z - a.z) * t;
 			return new RoadPoint(x, z, false);
 		}
 	}
 
-    public static class RoadPoint {
-        public double x;
-        public double z;
-        public boolean isWaypoint;
+	public static class RoadPoint {
+		public final double x;
+		public final double z;
+		public final boolean isWaypoint;
 
-        public RoadPoint(double i, double j, boolean flag) {
-            x = i;
-            z = j;
-            isWaypoint = flag;
-        }
-    }
+		public RoadPoint(double x, double z, boolean flag) {
+			this.x = x;
+			this.z = z;
+			isWaypoint = flag;
+		}
+	}
 
-    public static class RoadPointDatabase {
-        public static Map<Pair<Integer, Integer>, List<RoadPoint>> pointMap = new HashMap<>();
+	private static class RoadPointDatabase {
+		private final Map<Pair<Integer, Integer>, List<RoadPoint>> pointMap = new HashMap<>();
+		private static final int COORD_LOOKUP_SIZE = 1000;
 
-        public void add(RoadPoint point) {
-            int x = (int) Math.round(point.x / 1000.0);
-            int z = (int) Math.round(point.z / 1000.0);
-            Pair<Integer, Integer> key = Pair.of(x, z);
-            List<RoadPoint> list = pointMap.computeIfAbsent(key, k -> new ArrayList<>());
-            list.add(point);
-        }
+		public void add(RoadPoint point) {
+			int x = (int) Math.round(point.x / COORD_LOOKUP_SIZE);
+			int z = (int) Math.round(point.z / COORD_LOOKUP_SIZE);
+			int overlap = 1;
 
-        public List<RoadPoint> getPointsForCoords(int x, int z) {
-            int x1 = x / 1000;
-            int z1 = z / 1000;
-            return pointMap.getOrDefault(Pair.of(x1, z1), new ArrayList<>());
-        }
-    }
+			for (int i = -overlap; i <= overlap; ++i) {
+				for (int k = -overlap; k <= overlap; ++k) {
+					int xKey = x + i;
+					int zKey = z + k;
+					this.getRoadList(xKey, zKey, true).add(point);
+				}
+			}
+		}
+
+		public List<RoadPoint> getPointsForCoords(int x, int z) {
+			int x1 = x / COORD_LOOKUP_SIZE;
+			int z1 = z / COORD_LOOKUP_SIZE;
+			return this.getRoadList(x1, z1, false);
+		}
+
+		private List<RoadPoint> getRoadList(int xKey, int zKey, boolean addToMap) {
+			Pair<Integer, Integer> key = Pair.of(xKey, zKey);
+			List<RoadPoint> list = this.pointMap.get(key);
+			if (list == null) {
+				list = new ArrayList<>();
+				if (addToMap) {
+					this.pointMap.put(key, list);
+				}
+			}
+			return list;
+		}
+	}
 }

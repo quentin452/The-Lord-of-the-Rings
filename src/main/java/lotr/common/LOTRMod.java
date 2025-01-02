@@ -280,8 +280,8 @@ public class LOTRMod {
 	public static Block mordorGrass;
 	public static Block mordorDirt;
 	public static Block mordorGravel;
-    public static Block Gravel;
-    public static Block utumnoReturnPortal;
+	public static Block Gravel;
+	public static Block utumnoReturnPortal;
 	public static Block utumnoReturnLight;
 	public static Block utumnoReturnPortalBase;
 	public static Block commandTable;
@@ -1821,6 +1821,11 @@ public class LOTRMod {
 		return today.getMonth() == Month.JANUARY && today.getDayOfMonth() == 1;
 	}
 
+	@Deprecated
+	public static boolean isOpaque(World world, int i, int j, int k) {
+		return world.getBlock(i, j, k).isOpaqueCube();
+	}
+
 	public static boolean isOpaque(IBlockAccess world, int i, int j, int k) {
 		return world.getBlock(i, j, k).isOpaqueCube();
 	}
@@ -1963,8 +1968,8 @@ public class LOTRMod {
 		blockOreStorage2.setHarvestLevel("pickaxe", 1, 0);
 		mordorDirt.setHarvestLevel("shovel", 0);
 		mordorGravel.setHarvestLevel("shovel", 0);
-        Gravel.setHarvestLevel("shovel", 0);
-        obsidianGravel.setHarvestLevel("shovel", 0);
+		Gravel.setHarvestLevel("shovel", 0);
+		obsidianGravel.setHarvestLevel("shovel", 0);
 		mud.setHarvestLevel("shovel", 0);
 		mudGrass.setHarvestLevel("shovel", 0);
 		mudFarmland.setHarvestLevel("shovel", 0);
@@ -2121,11 +2126,11 @@ public class LOTRMod {
 
 	@Mod.EventHandler
 	public void preload(FMLPreInitializationEvent event) {
-        if(Loader.isModLoaded("herdCraft")) {
-            throw new RuntimeException("HerdCraft mod detected, cannot run LOTR with this mod enabled : see https://github.com/quentin452/The-Lord-of-the-Rings/issues/21");
-        }
-        LOTRConfigBiomeID.setupAndLoad(event);
-        LOTRLog.findLogger();
+		if(Loader.isModLoaded("herdCraft")) {
+			throw new RuntimeException("HerdCraft mod detected, cannot run LOTR with this mod enabled : see https://github.com/quentin452/The-Lord-of-the-Rings/issues/21");
+		}
+		LOTRConfigBiomeID.setupAndLoad(event);
+		LOTRLog.findLogger();
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 		serverTickHandler = new LOTRTickHandlerServer();
 		modEventHandler = new LOTREventHandler();
@@ -2346,8 +2351,8 @@ public class LOTRMod {
 		mordorGrass = new LOTRBlockMordorGrass().setBlockName("lotr:mordorGrass");
 		mordorDirt = new LOTRBlockMordorDirt().setBlockName("lotr:mordorDirt");
 		mordorGravel = new LOTRBlockGravel().setBlockName("lotr:mordorGravel");
-        Gravel = new LOTRBlockGravel().setBlockName("lotr:Gravel");
-        utumnoReturnPortal = new LOTRBlockUtumnoReturnPortal().setBlockName("lotr:utumnoReturnPortal");
+		Gravel = new LOTRBlockGravel().setBlockName("lotr:Gravel");
+		utumnoReturnPortal = new LOTRBlockUtumnoReturnPortal().setBlockName("lotr:utumnoReturnPortal");
 		utumnoReturnLight = new LOTRBlockUtumnoReturnLight().setBlockName("lotr:utumnoReturnLight");
 		utumnoReturnPortalBase = new LOTRBlockUtumnoReturnPortalBase().setBlockName("lotr:utumnoReturnPortalBase");
 		commandTable = new LOTRBlockCommandTable().setBlockName("lotr:commandTable");
@@ -3917,7 +3922,7 @@ public class LOTRMod {
 		registerBlock(mordorGrass);
 		registerBlock(mordorDirt);
 		registerBlock(mordorGravel);
-        registerBlock(Gravel);
+		registerBlock(Gravel);
 		registerBlock(utumnoReturnPortal);
 		registerBlock(utumnoReturnLight);
 		registerBlock(utumnoReturnPortalBase);
