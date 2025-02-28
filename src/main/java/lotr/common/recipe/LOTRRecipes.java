@@ -2236,6 +2236,10 @@ public class LOTRRecipes {
 		woodenSlabRecipes.add(new ShapedOreRecipe(new ItemStack(LOTRMod.rottenSlabSingle, 6, 0), "XXX", 'X', new ItemStack(LOTRMod.planksRotten, 1, 0)));
 	}
 
+    //compatibility for Middle-Earth Thaumaturgy
+    public static ItemStack findMatchingRecipe(List recipeList, InventoryCrafting inv, World world) {
+        return findMatchingRecipe((Iterable)recipeList,inv,world);
+    }
 	public static ItemStack findMatchingRecipe(Iterable recipeList, InventoryCrafting inv, World world) {
 		for (Object element : recipeList) {
 			IRecipe recipe = (IRecipe) element;
