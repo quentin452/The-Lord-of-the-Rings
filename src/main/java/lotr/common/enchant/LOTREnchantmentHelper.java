@@ -673,7 +673,9 @@ public class LOTREnchantmentHelper {
 				}
 				if (progressChanged && !enchantsChanged) {
 					IMessage pkt = new LOTRPacketCancelItemHighlight();
-					LOTRPacketHandler.networkWrapper.sendTo(pkt, (EntityPlayerMP) entityplayer);
+					if (entityplayer instanceof EntityPlayerMP) {
+                        LOTRPacketHandler.networkWrapper.sendTo(pkt, (EntityPlayerMP) entityplayer);
+                    }
 				}
 			}
 		}
