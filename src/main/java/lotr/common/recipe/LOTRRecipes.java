@@ -111,7 +111,7 @@ public class LOTRRecipes {
 		}
 	}
 
-	public static void addSmeltingXPForItem(Item item, float xp) {
+	private static void addSmeltingXPForItem(Item item, float xp) {
 		try {
 			Field field = FurnaceRecipes.class.getDeclaredFields()[2];
 			field.setAccessible(true);
