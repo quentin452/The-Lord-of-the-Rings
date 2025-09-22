@@ -206,8 +206,7 @@ public class LOTRSpawnerAnimals {
 	}
 
 	public static class DimInfo {
-		public Map<EnumCreatureType, TypeInfo> types = new EnumMap<>(EnumCreatureType.class);
-
+		public Map<EnumCreatureType, TypeInfo> types = new HashMap<>();
 	}
 
 	public static class TypeInfo {
@@ -215,5 +214,4 @@ public class LOTRSpawnerAnimals {
 		public int blockedCycles;
 
 	}
-
 }
