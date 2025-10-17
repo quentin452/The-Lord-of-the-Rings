@@ -61,6 +61,9 @@ public abstract class LOTRWorldProvider extends WorldProvider {
 	@Override
 	public boolean canBlockFreeze(int i, int j, int k, boolean isBlockUpdate) {
 		BiomeGenBase biome = worldObj.getBiomeGenForCoords(i, k);
+		if (biome == null) {
+			return false;
+		}
 		if (biome instanceof LOTRBiomeGenOcean) {
 			return LOTRBiomeGenOcean.isFrozen(i, k) && canFreeze_ignoreTemp(i, j, k, isBlockUpdate);
 		}
