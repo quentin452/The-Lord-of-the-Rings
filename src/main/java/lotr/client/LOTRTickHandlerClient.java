@@ -1158,7 +1158,9 @@ public class LOTRTickHandlerClient {
 			LOTRBiome biome = (LOTRBiome) mc.theWorld.getBiomeGenForCoords(i, k);
 			LOTRBiomeVariant variant = chunkManager.getBiomeVariantAt(i, k);
 			event.left.add(null);
-			biome.addBiomeF3Info(event.left, mc.theWorld, variant, i, j, k);
+			if (biome != null) {
+				biome.addBiomeF3Info(event.left, mc.theWorld, variant, i, j, k);
+			}
 			mc.theWorld.theProfiler.endSection();
 		}
 	}
