@@ -34,13 +34,26 @@ public class LOTRValuableItems {
 	public static void registerToolMaterials() {
 		if (!initTools) {
 			toolMaterials.clear();
+
 			for (Item.ToolMaterial material : Item.ToolMaterial.values()) {
-				ItemStack repair;
-				if (material.getHarvestLevel() < 2 || (repair = material.getRepairItemStack()) == null || repair.getItem() == null) {
+				try {
+					ItemStack repair = material.getRepairItemStack();
+
+					if (repair == null || repair.getItem() == null) {
+						continue;
+					}
+
+					if (material.getHarvestLevel() < 2) {
+						continue;
+					}
+
+					toolMaterials.add(repair.copy());
+				} catch (Throwable t) {
+					System.err.println("[LOTRValuableItems] Skipping broken ToolMaterial: " + material.name());
 					continue;
 				}
-				toolMaterials.add(repair.copy());
 			}
+
 			initTools = true;
 		}
 	}
